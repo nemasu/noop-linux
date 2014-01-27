@@ -1,0 +1,132 @@
+#!/bin/bash
+set -e
+if [ -z "$1" ];
+then
+	echo "Need a URL for source"
+fi
+pkgr -i git &> /dev/null
+pkgr -i bc &> /dev/null
+
+BLDRTMPDIR=/tmp/bldr
+VERSION=`echo $1 | sed 's/.*linux-//g; s/\.tar\.xz//g'`
+mkdir -p $BLDRTMPDIR
+cd /usr/src
+
+if [ ! -e linux-$VERSION ];
+then
+	if [ ! -e /tmp/linux-$VERSION.tar.xz ];
+	then
+		wget $1 -O/tmp/linux-$VERSION.tar.xz
+	fi
+	tar xf /tmp/linux-$VERSION.tar.xz
+
+	git clone -b aufs3.11 git://git.code.sf.net/p/aufs/aufs3-standalone
+	cd linux-$VERSION
+	patch -Np1 -i ../aufs3-standalone/aufs3-kbuild.patch
+	patch -Np1 -i ../aufs3-standalone/aufs3-base.patch
+	patch -Np1 -i ../aufs3-standalone/aufs3-mmap.patch
+	#patch -Np1 -i ../aufs3-standalone/aufs3-standalone.patch
+	cp -vr ../aufs3-standalone/fs .
+	cp -v ../aufs3-standalone/include/uapi/linux/aufs_type.h include/uapi/linux/
+	echo "header-y += aufs_type.h" >> include/uapi/linux/Kbuild
+	cd ..
+	rm -rf aufs3-standalone
+
+fi
+
+cd linux-$VERSION
+
+if [ ! -e .config ];
+then
+	if [ `uname -m` == "i686" ];
+	then
+		wget http://www.nooplinux.org/noop/config32 -O.config
+	fi
+
+	if [ `uname -m` == "x86_64" ];
+	then
+		wget http://www.nooplinux.org/noop/config64 -O.config
+	fi
+	
+	echo "CONFIG_AUFS_FS=y" >> .config
+	echo "CONFIG_AUFS_BRANCH_MAX_127=y" >> .config
+	echo "# CONFIG_AUFS_BRANCH_MAX_511 is not set" >> .config
+	echo "# CONFIG_AUFS_BRANCH_MAX_1023 is not set" >> .config
+	echo "# CONFIG_AUFS_BRANCH_MAX_32767 is not set" >> .config
+	echo "CONFIG_AUFS_SBILIST=y" >> .config
+	echo "# CONFIG_AUFS_HNOTIFY is not set" >> .config
+	echo "# CONFIG_AUFS_EXPORT is not set" >> .config
+	echo "# CONFIG_AUFS_RDU is not set" >> .config
+	echo "# CONFIG_AUFS_PROC_MAP is not set" >> .config
+	echo "# CONFIG_AUFS_SP_IATTR is not set" >> .config
+	echo "# CONFIG_AUFS_SHWH is not set" >> .config
+	echo "CONFIG_AUFS_BR_RAMFS=y" >> .config
+	echo "# CONFIG_AUFS_BR_FUSE is not set" >> .config
+	echo "# CONFIG_AUFS_BR_HFSPLUS is not set" >> .config
+	echo "CONFIG_AUFS_BDEV_LOOP=y" >> .config
+	echo "# CONFIG_AUFS_DEBUG is not set" >> .config
+
+
+fi
+
+rm -rf /root/noopkern
+mkdir -p /root/noopkern/boot
+mkdir -p /root/noopfirm
+mkdir -p /root/noophead/usr
+
+make -j2
+cp -v arch/x86/boot/bzImage /root/noopkern/boot/vmlinuz-$VERSION
+
+make INSTALL_MOD_PATH=/root/noopkern modules_install
+
+make INSTALL_HDR_PATH=/root/noophead/usr headers_install
+
+cd /root/noopkern
+
+#This is in linux-firmware
+rm -rf lib/firmware
+
+depmod -F /usr/src/linux-${VERSION}/System.map -a -b /root/noopkern -E /usr/src/linux-${VERSION}/Module.symvers ${VERSION}
+
+wget www.nooplinux.org/noop/kbldr-preup -O$BLDRTMPDIR/preup
+wget www.nooplinux.org/noop/kbldr-postup -O $BLDRTMPDIR/postup
+
+pkgr -genmeta linux-kernel ${VERSION}
+pkgr -genpkg
+
+mv *.pkg /root/bldr-done
+
+cd /root/noophead
+
+pkgr -genmeta linux-headers ${VERSION}
+pkgr -genpkg
+
+mv *.pkg /root/bldr-done
+
+cd /root/noopfirm
+
+git clone git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+cd linux-firmware
+git archive --format=tar --prefix linux-firmware-$(date +%Y%m%d)/ master | bzip2 -9 > /tmp/linux-firmware-$(date +%Y%m%d).tar.bz2
+cd ..
+rm -rf *
+mkdir -p lib/firmware
+
+mkdir -p /tmp/noopfirmtmp && cd /tmp/noopfirmtmp && rm -rf *
+tar xf /tmp/linux-firmware-$(date +%Y%m%d).tar.bz2
+cd `ls`
+
+cp -a * /root/noopfirm/lib/firmware/
+rm -rf /tmp/linux-firmware-$(date +%Y%m%d).tar.bz2
+
+cd /root/noopfirm
+
+pkgr -genmeta linux-firmware $(date +%Y%m%d)
+pkgr -genpkg
+
+mv *.pkg /root/bldr-done
+
+rm -rf /tmp/noopfirmtmp
+cd /root
+rm -rf noopfirm/ noopkern/ noophead/
+echo Done!
