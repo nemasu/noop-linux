@@ -83,6 +83,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	$echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
 	$echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
 	$echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a bldj file. If name is given pkgr will try and find it in online bldj repository."
+	$echo -e "\t-V,\t--version-check name          Check(try) if new version is available."
 	#$echo -e "\t"
 	#$echo -e "\t-libdiff"
 	#$echo -e "\t-genmeta package-name version"
@@ -92,6 +93,67 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	#$echo -e "\t-update-bldjs"
 	exit 0;
 fi
+
+function vercomp ()
+{
+    if [[ $1 == $2 ]]
+    then
+        return 0
+    fi
+    
+	#Relpace any "-" with "." and any alpha with "."
+    V1=`$echo $1 | $sed 's/\-/\./g' | tr "a-zA-Z" "."`
+    V2=`$echo $2 | $sed 's/\-/\./g' | tr "a-zA-Z" "."`
+	
+	local IFS=.
+	local i ver1=($V1) ver2=($V2)
+
+	# fill empty fields in ver1 with zeros
+    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
+    do
+        ver1[i]=0
+    done
+    for ((i=0; i<${#ver1[@]}; i++))
+    do
+        if [[ -z ${ver2[i]} ]]
+        then
+            # fill empty fields in ver2 with zeros
+            ver2[i]=0
+        fi
+        if ((10#${ver1[i]} > 10#${ver2[i]}))
+        then
+            return 1 # >
+        fi
+        if ((10#${ver1[i]} < 10#${ver2[i]}))
+        then
+            return 2 # <
+        fi
+    done
+    return 0 # =
+}
+
+function GetFileList
+{
+	curl -s $LISTURL | sed -ne'/'"${NAME}"'-[0-9.]*.tar.\(gz\|xz\|bz2\)/p' | sed -e 's/.*'"${NAME}"'/'"${NAME}"'/g;s/.tar.\(gz\|xz\|bz2\).*/.tar.\1/g' | sort | uniq
+}
+
+function GetOnlineBldj
+	{
+		DIRECTORY_LIST=('Xorg' 'mate' 'e17' 'gnome' 'kde' 'xfce' 'kde/core')
+
+		rm -rf /tmp/blds-list && touch /tmp/blds-list
+		curl -s http://www.nooplinux.org/noop/blds/$i | grep bldj | awk '{print $2;}' | sed -e 's/href="//g; s/".*//g' >> /tmp/blds-list
+
+		for i in ${DIRECTORY_LIST[@]};
+		do
+			curl -s http://www.nooplinux.org/noop/blds/$i/ | grep bldj | awk '{print $2;}' | sed -e 's/href="//g; s/".*//g' > /tmp/blds-list.tmp
+			for j in `cat /tmp/blds-list.tmp`;
+			do
+				echo -n "$i/" >> /tmp/blds-list
+				echo $j >> /tmp/blds-list
+			done
+		done
+	}
 
 function ShowProgress
 {
@@ -146,6 +208,43 @@ if [ $1 == "-update-bldjs" ]; then
 		tar cjf /root/bldj-done/$FILE *
 		rm -rf /root/bldr-inst/*
 	done
+fi
+
+if [ $1 == "--version-check" ] || [ $1 == "-V" ]; then
+		
+		rm -rf /tmp/noop/verchecktmp
+		mkdir -p /tmp/noop/verchecktmp
+		pushd /tmp/noop/verchecktmp
+		
+		GetOnlineBldj
+        DLFILE=`grep "$2" /tmp/blds-list`
+        let DLFILECOUNT=`grep "$2" /tmp/blds-list | wc -l`
+        rm /tmp/blds-list
+
+        if [ $DLFILECOUNT -gt 1 ]; then
+            echo ""
+            echo "Error - multiple packages found, please choose:"
+            echo ""
+            for i in ${DLFILE[@]};
+            do
+                echo $i | sed -e 's/\.bldj//g; s|.*/||g;';
+            done
+            exit 1;
+        fi
+
+        if [ $DLFILECOUNT -eq 0 ]; then
+            echo "No instances of $2 found."
+            exit 1;
+        fi
+
+        wget http://www.nooplinux.org/noop/blds/$DLFILE -Ofile.bldj
+		tar xf file.bldj
+		rm file.bldj
+		BLDFILE=`ls *.bld`
+		source ./$BLDFILE
+		Detect
+		popd
+		rm -rf /tmp/noop/verchecktmp
 fi
 
 if [ $1 == "--show-revdeps" ] || [ $1 == "-D" ]; then
@@ -224,25 +323,6 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	#DEPS=
 	#STRIP=
 	#PKGDEPS=
-
-	
-	function GetOnlineBldj
-	{
-		DIRECTORY_LIST=('Xorg' 'mate' 'e17' 'gnome' 'kde' 'xfce' 'kde/core')
-
-		rm -rf /tmp/blds-list && touch /tmp/blds-list
-		curl -s http://www.nooplinux.org/noop/blds/$i | grep bldj | awk '{print $2;}' | sed -e 's/href="//g; s/".*//g' >> /tmp/blds-list
-
-		for i in ${DIRECTORY_LIST[@]};
-		do
-			curl -s http://www.nooplinux.org/noop/blds/$i/ | grep bldj | awk '{print $2;}' | sed -e 's/href="//g; s/".*//g' > /tmp/blds-list.tmp
-			for j in `cat /tmp/blds-list.tmp`;
-			do
-				echo -n "$i/" >> /tmp/blds-list
-				echo $j >> /tmp/blds-list
-			done
-		done
-	}
 
 	if [ -z $2 ]; then
 		echo Too few arguments.
@@ -651,43 +731,6 @@ if [ $1 == "--remove" ] || [ $1 == "-r" ]; then
 	
 	
 fi
-function vercomp ()
-{
-    if [[ $1 == $2 ]]
-    then
-        return 0
-    fi
-    
-	#Relpace any "-" with "." and any alpha with "."
-    V1=`$echo $1 | $sed 's/\-/\./g' | tr "a-zA-Z" "."`
-    V2=`$echo $2 | $sed 's/\-/\./g' | tr "a-zA-Z" "."`
-	
-	local IFS=.
-	local i ver1=($V1) ver2=($V2)
-
-	# fill empty fields in ver1 with zeros
-    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
-    do
-        ver1[i]=0
-    done
-    for ((i=0; i<${#ver1[@]}; i++))
-    do
-        if [[ -z ${ver2[i]} ]]
-        then
-            # fill empty fields in ver2 with zeros
-            ver2[i]=0
-        fi
-        if ((10#${ver1[i]} > 10#${ver2[i]}))
-        then
-            return 1 # >
-        fi
-        if ((10#${ver1[i]} < 10#${ver2[i]}))
-        then
-            return 2 # <
-        fi
-    done
-    return 0 # =
-}
 
 function SetPerms
 {
