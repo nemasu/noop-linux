@@ -1,24 +1,24 @@
 #package name
-NAME=a52dec
+NAME=anthy
 
 #package version
-VERSION=0.7.4
-DVERSION=0.7.4
+VERSION=9100-1
+DVERSION=9100h
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://liba52.sourceforge.net/files/a52dec-${DVERSION}.tar.gz
+SRC=http://dl.sourceforge.jp/anthy/37536/anthy-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -29,36 +29,31 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  
-  ./bootstrap
-  ./configure --prefix=/usr --enable-shared
-  make
-  
-  make DESTDIR=~/bldr-inst install
-  install -m644 liba52/a52_internal.h ~/bldr-inst/usr/include/a52dec/
-}
+#function BuildAndInstall
+#{
+#}
 
+#Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://liba52.sourceforge.net/downloads.html
+	#NOTE: This only will check versions that dont end with a letter.
+	LISTURL=http://sourceforge.jp/projects/anthy/releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 
 	for i in ${FILELIST[@]};
 	do
-		CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-		vercomp $LATEST $CURVER
-		if [ $? -eq 2 ];
-		then
-			LATEST=$CURVER
-		fi
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
-		echo "$NAME: New Version Available! - $LATEST"
+			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
