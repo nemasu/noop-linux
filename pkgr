@@ -204,7 +204,7 @@ if [ $1 == "-update-bldjs" ]; then
 		done;
 		NEW_DEPS=`echo -n $NEW_DEPS;echo -n " )";`
 
-		sed -i -e 's|DEPS=.*|DEPS='"${NEW_DEPS}"'|' `echo $FILE | sed -e 's/.$//g'`
+		sed -i -e 's|^DEPS=.*|DEPS='"${NEW_DEPS}"'|' `echo $FILE | sed -e 's/.$//g'`
 		tar cjf /root/bldj-done/$FILE *
 		rm -rf /root/bldr-inst/*
 	done
