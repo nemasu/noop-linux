@@ -1,0 +1,43 @@
+#package name
+NAME=aufs3-utils
+
+#package version
+VERSION=3.0.20131128
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=0
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+        git clone -b aufs${VERSION} git://aufs.git.sourceforge.net/gitroot/aufs/aufs-util.git
+        cd `ls`
+        make
+        make DESTDIR=~/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "$NAME: Git Based"
+}

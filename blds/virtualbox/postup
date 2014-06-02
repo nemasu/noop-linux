@@ -1,0 +1,6 @@
+cd /usr/lib/virtualbox
+for i in VirtualBox VBoxHeadless VBoxSDL VBoxNetDHCP VBoxNetAdpCtl; do
+  chown root.root $i
+  chmod 4511 $i
+done
+depmod

@@ -1,0 +1,226 @@
+NAME=virtualbox
+DVERSION=4.3.12
+VERSION=4.3.12
+ISUSR=1
+SRC=http://download.virtualbox.org/virtualbox/${DVERSION}/VirtualBox-${DVERSION}.tar.bz2
+EXTRACONF=
+ISSPECIAL=1
+DEPS=('libxslt' 'libvpx' 'qt' 'iasl' 'alsa-lib' 'mesalib' 'openssl' 'dbus' 'cdrkit' 'libidl' 'sdl' 'pulseaudio')
+#Note! You need to have the correct kernel in /usr/src/linux and at least started to bulid it (for autoconf.h)
+
+function BuildAndInstall
+{
+	sed -i 's/^check_gcc$/#check_gcc/' configure
+
+	ln -s /bin/echo makeself
+    export PATH="$CWD:$PATH"
+
+	mv -v $BLDRTMPDIR/LocalConfig.kmk .
+
+	./configure --disable-docs --disable-java --enable-vde --enable-vnc
+	source ./env.sh
+
+	kmk all
+
+    pushd src/VBox/RDP/client >/dev/null
+    kmk
+    popd >/dev/null
+
+    pushd src/VBox/ExtPacks/VNC >/dev/null
+    kmk packing
+    popd >/dev/null
+
+	#outputs to out/linux.{amd64,x86}/release/bin
+	if [ `uname -m` == "i686" ];
+    then
+        pushd out/linux.x86/release/bin
+    else
+        pushd out/linux.amd64/release/bin
+    fi
+
+	#directories (copy stuff)
+	install -dm755 ~/bldr-inst/usr/{bin,lib/virtualbox/components,lib/virtualbox/ExtensionPacks,share/virtualbox/nls,share/virtualbox/rdesktop-vrdp-keymaps}
+
+	#wrappers
+	install -m 0755 VBox.sh ~/bldr-inst/usr/bin/VBox
+
+	for i in VBoxHeadless VBoxManage VBoxSDL VirtualBox vboxwebsrv VBoxBalloonCtrl; do
+        ln -sf VBox ~/bldr-inst/usr/bin/$i
+        ln -sf VBox ~/bldr-inst/usr/bin/${i,,}
+    done
+
+	install -m 0755 VBoxTunctl ~/bldr-inst/usr/bin	
+
+	#libs
+	install -m 0755 components/* -t ~/bldr-inst/usr/lib/virtualbox/components
+
+	install -m 0755 *.so ~/bldr-inst/usr/lib/virtualbox
+    install -m 0644 *.gc *.r0  VBoxEFI*.fd ~/bldr-inst/usr/lib/virtualbox
+
+	#binaries
+	install -m 4755 VBoxSDL VirtualBox VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl -t ~/bldr-inst/usr/lib/virtualbox
+    
+	install -m 0755 VBoxManage VBoxSVC VBoxExtPackHelperApp VBoxXPCOMIPCD VBoxTestOGL VBoxBalloonCtrl -t ~/bldr-inst/usr/lib/virtualbox
+
+	#language
+	install -m 0755 nls/*.qm -t ~/bldr-inst/usr/share/virtualbox/nls
+
+	#some useless stuff
+	install -m 0755 VBoxCreateUSBNode.sh VBoxSysInfo.sh -t ~/bldr-inst/usr/share/virtualbox
+
+	#icons
+	install -D -m 0644 VBox.png ~/bldr-inst/usr/share/pixmaps/VBox.png
+
+	pushd icons
+    for i in *; do
+        install -d ~/bldr-inst/usr/share/icons/hicolor/$i/mimetypes
+        cp $i/* ~/bldr-inst/usr/share/icons/hicolor/$i/mimetypes
+    done
+
+	popd
+
+	#desktop
+	install -D -m 0644 virtualbox.desktop ~/bldr-inst/usr/share/applications/virtualbox.desktop
+    install -D -m 0644 virtualbox.xml ~/bldr-inst/usr/share/mime/packages/virtualbox.xml
+
+	#config
+	mkdir -p ~/bldr-inst/etc/vbox
+    echo "INSTALL_DIR=/usr/lib/virtualbox" > ~/bldr-inst/etc/vbox/vbox.cfg
+	
+	popd
+
+	PushScripts	
+
+	#virtualbox-guest-additions package----------------------------------------------------------------------
+	if [ `uname -m` == "i686" ];
+    then
+        pushd out/linux.x86/release/bin/additions
+    else
+        pushd out/linux.amd64/release/bin/additions
+    fi
+	
+	
+	install -d ~/guest-inst/{usr/bin,sbin}
+	install -m755 VBoxClient VBoxControl VBoxService ~/guest-inst/usr/bin
+	install -m755 mount.vboxsf ~/guest-inst/sbin
+
+	install -m755 -D ../../../../../src/VBox/Additions/x11/Installer/98vboxadd-xclient \
+        ~/guest-inst/usr/bin/VBoxClient-all
+    install -m755 -D ../../../../..//src/VBox/Additions/x11/Installer/vboxclient.desktop \
+        ~/guest-inst/etc/xdg/autostart/vboxclient.desktop
+    install -D vboxvideo_drv_112.so \
+        ~/guest-inst/usr/lib/xorg/modules/drivers/vboxvideo.so
+    install -d ~/guest-inst/usr/lib/xorg/modules/dri
+    install -m755 VBoxOGL*.so ~/guest-inst/usr/lib
+    ln -s /usr/lib/VBoxOGL.so ~/guest-inst/usr/lib/xorg/modules/dri/vboxvideo_dri.so
+    install -m755 -D pam_vbox.so ~/guest-inst/usr/lib/security/pam_vbox.so
+
+	mkdir -p ~/guest-inst/usr/lib/udev/rules.d/
+
+cat <<EOF >> ~/guest-inst/usr/lib/udev/rules.d/60-vboxguest.rules
+ACTION=="add", KERNEL=="vboxguest", SUBSYSTEM=="misc", OWNER="root", MODE="0600"
+ACTION=="add", KERNEL=="vboxuser", SUBSYSTEM=="misc", OWNER="root", MODE="0666"
+EOF
+
+	mkdir -p ~/guest-inst/etc/systemd/system/
+
+cat <<EOF >> ~/guest-inst/etc/systemd/system/vboxservice.service
+[Unit]
+Description=VirtualBox Guest Service
+ConditionVirtualization=oracle
+
+[Service]
+ExecStart=/usr/bin/VBoxService -f
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+
+	pushd ~/guest-inst
+
+	pkgr -genmeta virtualbox-guest-additions $VERSION
+	pkgr -genpkg
+	mv *.pkg ~/bldr-done
+
+	popd
+
+	rm -rf ~/guest-inst
+
+	popd
+	
+	#virtualbox-modules package------------------------------------------------------------------------------
+	echo "depmod" > /tmp/bldr/postinst
+	echo "depmod" > /tmp/bldr/postup
+
+	if [ `uname -m` == "i686" ];
+	then
+		pushd out/linux.x86/release/bin/src
+	else
+		pushd out/linux.amd64/release/bin/src
+	fi
+
+	make
+
+	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed 's/VER://g'`
+	mkdir -p ~/mod-inst/lib/modules/${KERVER}/misc
+
+	#install host mods
+	for i in vboxdrv.ko vboxnetadp.ko vboxnetflt.ko vboxpci.ko;
+	do
+		install -m 644 $i ~/mod-inst/lib/modules/${KERVER}/misc
+	done
+
+	popd
+
+#if [ `uname -m` == "i686" ];
+#then
+#pushd out/linux.x86/release/obj
+#else
+#pushd out/linux.amd64/release/obj
+#fi
+
+	#install guest mods
+#for i in vboxvideo_drm/vboxvideo_drm.ko vboxsf/vboxsf.ko VBoxGuest/vboxguest.ko;
+#do
+#install -m 644 $i ~/mod-inst/lib/modules/${KERVER}/misc
+#done
+
+#popd
+
+	#guest mods, take 2
+	mkdir -p ~/mod-bld
+	src/VBox/Additions/linux/export_modules ~/mod-bld/guest_mods.tar.gz
+
+	pushd ~/mod-bld
+	tar xf guest_mods.tar.gz
+	rm guest_mods.tar.gz
+	make
+	mv *.ko ~/mod-inst/lib/modules/${KERVER}/misc
+	popd
+
+	rm -rf ~/mod-bld
+
+
+	pushd ~/mod-inst
+	pkgr -genmeta virtualbox-modules $VERSION
+	pkgr -genpkg
+	mv *.pkg ~/bldr-done
+	popd
+
+	rm -rf ~/mod-inst
+
+	PopScripts
+}
+
+function Detect
+{
+        LATEST=`curl -s http://download.virtualbox.org/virtualbox/LATEST.TXT`
+		
+		vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                echo "$NAME: New Version Available! - $LATEST"
+        fi
+}
+

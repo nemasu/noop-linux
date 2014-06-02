@@ -1,0 +1,89 @@
+NAME=nvidia
+DVERSION=337.19
+VERSION=${DVERSION}
+ISUSR=1
+
+if [ "`uname -m`" == "x86_64" ];
+then
+	SSRC=ftp://download.nvidia.com/XFree86/Linux-x86_64/${DVERSION}/NVIDIA-Linux-x86_64-${DVERSION}.run
+	PKGDEPS=('mesalib' 'lib32-mesalib' 'xorg-server')
+else
+	SSRC=ftp://download.nvidia.com/XFree86/Linux-x86/${DVERSION}/NVIDIA-Linux-x86-${DVERSION}.run
+	PKGDEPS=('mesalib' 'xorg-server')
+fi
+
+SRC=
+EXTRACONF=
+ISSPECIAL=1
+DEPS=
+
+STRIP="no"
+RESTORELIBDB=1
+
+#The way this works is that it will backup mesa's opengl library and xorg-server's libglx library
+#nvidia package cannot be installed without mesa/xorg-server, and mesa/xorg-server cannot be removed before nvidia
+
+function BuildAndInstall
+{
+	wget $SSRC -Oout
+	sh ./out --extract-only
+	rm out
+	cd `ls`
+
+	mv $BLDRTMPDIR/linux314 .
+	patch -Np1 -i linux314 && rm linux314
+
+	#Module
+	pushd kernel
+	make SYSSRC=/lib/modules/`uname -r`/build module
+	install -D -m644 nvidia.ko ~/bldr-inst/lib/modules/`uname -r`/misc/nvidia.ko
+	popd
+
+	#The rest
+	install -D -m644 libGL.so.${DVERSION} ~/bldr-inst/usr/lib/libGL.so.${DVERSION}
+	ln -s libGL.so.${DVERSION} ~/bldr-inst/usr/lib/libGL.so.1
+	ln -s libGL.so.${DVERSION} ~/bldr-inst/usr/lib/libGL.so
+
+	install -D -m755 nvidia_drv.so ~/bldr-inst/usr/lib/xorg/modules/drivers/nvidia_drv.so
+	install -D -m755 libglx.so.${DVERSION} ~/bldr-inst/usr/lib/xorg/modules/extensions/libglx.so
+	install -D -m755 libnvidia-glcore.so.${DVERSION} ~/bldr-inst/usr/lib/libnvidia-glcore.so
+	install -D -m755 libvdpau_nvidia.so.${DVERSION} ~/bldr-inst/usr/lib/vdpau/libvdpau_nvidia.so
+	install -D -m755 tls/libnvidia-tls.so.${DVERSION} ~/bldr-inst/usr/lib/libnvidia-tls.so.${DVERSION}
+	install -D -m755 libnvidia-cfg.so.${DVERSION} ~/bldr-inst/usr/lib/libnvidia-cfg.so.${DVERSION}
+	install -D -m755 libnvidia-ml.so.${DVERSION} ~/bldr-inst/usr/lib/libnvidia-ml.so.${DVERSION}
+	install -D -m755 libcuda.so.${DVERSION} ~/bldr-inst/usr/lib/libcuda.so.${DVERSION}
+	install -D -m755 libnvcuvid.so.${DVERSION} ~/bldr-inst/usr/lib/libnvcuvid.so.${DVERSION}
+	install -D -m755 nvidia-cuda-mps-control ~/bldr-inst/usr/bin/nvidia-cuda-mps-control
+	install -D -m644 nvidia-cuda-mps-control.1.gz ~/bldr-inst/usr/share/man/man1/nvidia-cuda-mps-control.1.gz
+	install -D -m755 nvidia-cuda-mps-server ~/bldr-inst/usr/bin/nvidia-cuda-mps-server
+	install -D -m755 nvidia-debugdump ~/bldr-inst/usr/bin/nvidia-debugdump
+	install -D -m755 nvidia-xconfig ~/bldr-inst/usr/bin/nvidia-xconfig
+	install -D -m644 nvidia-xconfig.1.gz ~/bldr-inst/usr/share/man/man1/nvidia-xconfig.1.gz
+	install -D -m755 nvidia-settings ~/bldr-inst/usr/bin/nvidia-settings
+	install -D -m644 nvidia-settings.1.gz ~/bldr-inst/usr/share/man/man1/nvidia-settings.1.gz
+	install -D -m644 nvidia-settings.desktop ~/bldr-inst/usr/share/applications/nvidia-settings.desktop
+	install -D -m644 nvidia-settings.png ~/bldr-inst/usr/share/pixmaps/nvidia-settings.png
+	sed -e 's:__UTILS_PATH__:/usr/bin:' -e 's:__PIXMAP_PATH__:/usr/share/pixmaps:' -i ~/bldr-inst/usr/share/applications/nvidia-settings.desktop
+	install -D -m755 nvidia-bug-report.sh ~/bldr-inst/usr/bin/nvidia-bug-report.sh
+	install -D -m755 nvidia-smi ~/bldr-inst/usr/bin/nvidia-smi
+	install -D -m644 nvidia-smi.1.gz ~/bldr-inst/usr/share/man/man1/nvidia-smi.1.gz
+	
+	if [ "`uname -m`" == "x86_64" ];
+	then
+		#lib32
+		install -D -m755 32/libGL.so.${DVERSION} ~/bldr-inst/usr/lib32/libGL.so.${DVERSION}
+		ln -s libGL.so.${DVERSION} ~/bldr-inst/usr/lib32/libGL.so.1
+	    ln -s libGL.so.${DVERSION} ~/bldr-inst/usr/lib32/libGL.so
+
+		install -D -m755 32/libnvidia-glcore.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvidia-glcore.so
+		install -D -m755 32/libvdpau_nvidia.so.${DVERSION} ~/bldr-inst/usr/lib32/vdpau/libvdpau_nvidia.so
+		install -D -m755 32/libcuda.so.${DVERSION} ~/bldr-inst/usr/lib32/libcuda.so
+		install -D -m755 32/libnvcuvid.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvcuvid.so
+		install -D -m755 32/tls/libnvidia-tls.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvidia-tls.so
+		install -D -m755 32/libnvidia-compiler.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvidia-compiler.so
+		install -D -m755 32/libOpenCL.so.1.0.0 ~/bldr-inst/usr/lib32/libOpenCL.so.1.0.0
+		install -D -m755 32/libnvidia-ml.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvidia-ml.so
+	fi
+
+
+}
