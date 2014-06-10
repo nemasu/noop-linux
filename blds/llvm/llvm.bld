@@ -1,0 +1,59 @@
+#package name
+NAME=llvm
+
+#package version
+VERSION=3.4-1
+DVERSION=3.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://llvm.org/releases/${DVERSION}/llvm-${DVERSION}.src.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF="--enable-shared  --enable-libffi --enable-targets=all --disable-expensive-checks --disable-debug-runtime --disable-assertions --with-python=/usr/bin/python2"
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=( 'gcc-libs' 'glibc' 'libffi' 'libxml2' 'ncurses' 'zlib' )
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=( 'gcc-libs' 'glibc' 'libffi' 'libxml2' 'ncurses' 'zlib' )
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+
+function BuildAndInstall
+{
+	export REQUIRES_RTTI=1
+	
+	pushd tools
+	wget http://llvm.org/releases/${DVERSION}/clang-${DVERSION}.src.tar.gz
+	tar xf clang-${DVERSION}.src.tar.gz
+	mv clang-${DVERSION} clang
+	popd
+
+	mv $BLDRTMPDIR/*.p .
+
+	mv clang-3.4-max_align_t.p tools/clang
+	mv clang-3.4-fstack-protector-strong.p tools/clang
+
+	patch -d tools/clang -Np0 -i clang-3.4-max_align_t.p
+	patch -d tools/clang -Np0 -i clang-3.4-fstack-protector-strong.p
+	patch -Np0 -i llvm-3.4-provide-cmake-modules.p
+
+	./configure $STDUSRCONF $EXTRACONF
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	cd tools/clang
+	make DESTDIR=/root/bldr-inst install
+
+}
