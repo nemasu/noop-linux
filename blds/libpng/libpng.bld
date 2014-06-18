@@ -1,0 +1,32 @@
+#!/bin/bash
+# NAME
+# VERSION
+# ISUSR
+# SRC
+# POST,PRE
+# EXTRAFILES
+# ISSPECIAL
+
+NAME=libpng
+VERSION=1.6.10
+ISUSR=1
+SRC=http://prdownloads.sourceforge.net/libpng/libpng-${VERSION}.tar.xz?download
+EXTRACONF=
+ISSPECIAL=1
+
+function BuildAndInstall
+{
+	wget http://downloads.sourceforge.net/sourceforge/libpng-apng/libpng-${VERSION}-apng.patch.gz
+	gunzip libpng-${VERSION}-apng.patch.gz
+	patch -Np1 -i libpng-${VERSION}-apng.patch
+
+	./configure $STDUSRCONF --disable-static
+	make -j4
+	make DESTDIR=/root//bldr-inst install
+
+	cd contrib/pngminus
+	make PNGLIB="-L/root/bldr-inst/usr/lib -lpng" -f makefile.std png2pnm pnm2png
+	install -m755 png2pnm pnm2png /root/bldr-inst/usr/bin/
+}
+
+
