@@ -1,0 +1,6 @@
+# clean up certificates
+_backup=/tmp/ca-cert.bak
+mv /etc/ca-certificates.conf ${_backup}
+echo > /etc/ca-certificates.conf
+/usr/bin/update-ca-certificates --fresh >/dev/null 2>&1
+mv ${_backup} /etc/ca-certificates.conf

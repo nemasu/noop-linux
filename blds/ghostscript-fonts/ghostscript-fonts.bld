@@ -1,0 +1,41 @@
+#package name
+NAME=ghostscript-fonts
+
+#package version
+VERSION=8.11
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://downloads.sourceforge.net/gs-fonts/ghostscript-fonts-std-8.11.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=('mkfontdir' 'mkfontscale')
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	mkdir -p ~/bldr-inst/usr/share/fonts/Type1
+	install -m644 *.{pfb,pfm,afm} ~/bldr-inst/usr/share/fonts/Type1/
+}
+
+#Default HTTP curl new version detection
+#Hasn't been an update since Jan 2004
+function Detect
+{
+}
