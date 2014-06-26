@@ -4,7 +4,7 @@ NAME=avahi
 DVERSION=0.6.31
 
 #package version
-VERSION=$DVERSION-2
+VERSION=0.6.31-2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

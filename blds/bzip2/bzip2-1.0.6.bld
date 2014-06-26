@@ -1,0 +1,38 @@
+#!/bin/bash
+# NAME
+# VERSION
+# ISUSR
+# SRC
+# POST,PRE
+# EXTRAFILES
+# ISSPECIAL
+
+NAME=bzip2
+VERSION=1.0.6
+ISUSR=1
+SRC=http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz
+EXTRACONF=
+ISSPECIAL=1
+
+function BuildAndInstall
+{
+	pushd .
+	sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
+	sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
+	make -f Makefile-libbz2_so
+	make
+	make PREFIX=`pwd`/../../bldr-inst install
+	cp -v *.so* `pwd`/../../bldr-inst/lib
+	cd `pwd`/../../bldr-inst
+	mkdir usr
+	mv bin/ usr/
+	mv include/ usr/
+	mv lib/ usr/
+ 	mv share/ usr/
+	cd usr/lib
+	rm libbz2.so.1.0
+	ln -s libbz2.so.1.0.6 libbz2.so.1.0
+	popd
+}
+
+
