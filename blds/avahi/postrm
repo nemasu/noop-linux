@@ -1,0 +1,2 @@
+getent passwd avahi &>/dev/null && userdel avahi >/dev/null
+getent group avahi &>/dev/null && groupdel avahi >/dev/null
