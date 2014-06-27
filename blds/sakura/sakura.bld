@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	# Set default font size a bit smaller
-    sed -i 's|#define DEFAULT_FONT "Bitstream Vera Sans Mono 14"|#define DEFAULT_FONT "Bitstream Vera Sans Mono 10"|g' src/sakura.c
+    sed -i 's|#define DEFAULT_FONT "Ubuntu Mono,monospace 13"|#define DEFAULT_FONT "DejaVu Sans Mono 10"|g' src/sakura.c
 
 	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RELEASE . 
     make -j3
