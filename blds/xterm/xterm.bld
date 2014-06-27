@@ -1,0 +1,90 @@
+#package name
+NAME=xterm
+
+#package version
+VERSION=308
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://invisible-island.net/xterm/xterm-${VERSION}.tgz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure --prefix=/usr \
+      --libdir=/etc \
+      --mandir=/usr/share/man \
+      --with-app-defaults=/usr/share/X11/app-defaults/ \
+      --with-x \
+      --disable-full-tgetent \
+      --disable-imake \
+      --enable-ansi-color \
+      --enable-88-color \
+      --enable-256-color \
+      --enable-broken-osc \
+      --enable-broken-st \
+      --enable-load-vt-fonts \
+      --enable-i18n \
+      --enable-wide-chars \
+      --enable-doublechars \
+      --enable-warnings \
+      --enable-tcap-query \
+      --enable-logging \
+      --enable-dabbrev \
+      --enable-freetype \
+      --enable-luit \
+      --enable-mini-luit \
+      --enable-narrowproto \
+      --enable-exec-xterm \
+      --with-tty-group=tty \
+      --with-utempter
+
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	mkdir -p /root/bldr-inst/usr/share/applications/
+	cp {xterm,uxterm}.desktop /root/bldr-inst/usr/share/applications/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=ftp://invisible-island.net/xterm/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
