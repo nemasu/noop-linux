@@ -1,0 +1,93 @@
+#package name
+NAME=rxvt-unicode
+
+#package version
+VERSION=9.20
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.20.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure \
+    --prefix=/usr \
+    --with-terminfo=/usr/share/terminfo \
+    --enable-256-color \
+    --enable-combining \
+    --enable-fading \
+    --enable-font-styles \
+    --enable-iso14755 \
+    --enable-keepscrolling \
+    --enable-lastlog \
+    --enable-mousewheel \
+    --enable-next-scroll \
+    --enable-perl \
+    --enable-pointer-blank \
+    --enable-rxvt-scroll \
+    --enable-selectionscrolling \
+    --enable-slipwheeling \
+    --disable-smart-resize \
+    --enable-startup-notification \
+    --enable-transparency \
+    --enable-unicode3 \
+    --enable-utmp \
+    --enable-wtmp \
+    --enable-xft \
+    --enable-xim \
+    --enable-xterm-scroll \
+    --disable-pixbuf \
+    --disable-frills
+
+	make -j3
+	export TERMINFO=`pwd`/terminfo
+	install -d "$TERMINFO"
+	make DESTDIR=/root/bldr-inst install
+	sed -i 's/\"rxvt\"/"urxvt"/' doc/rxvt-tabbed
+	install -Dm 755 doc/rxvt-tabbed /root/bldr-inst/usr/bin/urxvt-tabbed
+	mv terminfo /root/bldr-inst/usr/share/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://dist.schmorp.de/rxvt-unicode/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
