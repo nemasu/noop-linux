@@ -1,16 +1,16 @@
 #package name
 NAME=pango
 
-DVERSION=1.30.1
+DVERSION=1.36.5
 
 #package version
-VERSION=1.30.1-2
+VERSION=1.36.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/GNOME/sources/pango/1.30/pango-1.30.1.tar.xz
+SRC=http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.5.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-introspection=yes"
