@@ -1,20 +1,20 @@
 #package name
-NAME=dotconf
+NAME=compton
 
 #package version
-VERSION=1.3
+VERSION=0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/williamh/dotconf/tarball/v${VERSION}
+SRC=https://github.com/chjj/compton/archive/v0.1_beta2.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -28,12 +28,15 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	make PREFIX=/usr
+	make docs
+	make PREFIX=/root/bldr-inst/usr install
+	install -D -m644 compton.sample.conf /root/bldr-inst/etc/xdg/compton.conf.example
+}
 
-#No update in 4 years
 function Detect
 {
-	echo $NAME: Old
+	echo $NAME: Git Based
 }

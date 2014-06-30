@@ -1,14 +1,14 @@
 #package name
-NAME=dotconf
+NAME=libconfig
 
 #package version
-VERSION=1.3
+VERSION=1.4.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/williamh/dotconf/tarball/v${VERSION}
+SRC=http://www.hyperrealm.com/libconfig/libconfig-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -32,8 +32,26 @@ RESTORELIBDB=
 #{
 #}
 
-#No update in 4 years
+#Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: Old
+	LISTURL=http://www.hyperrealm.com/libconfig/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
 }

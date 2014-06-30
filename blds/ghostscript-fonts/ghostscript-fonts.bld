@@ -38,4 +38,5 @@ function BuildAndInstall
 #Hasn't been an update since Jan 2004
 function Detect
 {
+	echo $NAME: Old
 }
