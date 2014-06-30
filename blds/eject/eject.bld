@@ -1,0 +1,58 @@
+#package name
+NAME=eject
+
+#package version
+VERSION=2.1.5
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+#Using Arch Linux sourcetarball.
+SRC=ftp://ftp.archlinux.org/other/eject/eject-2.1.5.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF="--enable-default-device=sr0"
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=0
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=ftp://ftp.archlinux.org/other/eject/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
