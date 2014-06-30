@@ -1,0 +1,2 @@
+groupadd dnsmasq &> /dev/null
+useradd -M -N -s /bin/false -g dnsmasq dnsmasq &> /dev/null

@@ -1,0 +1,13 @@
+NAME=dosfstools
+VERSION=3.0.26
+ISUSR=1
+SRC=http://ftp.de.debian.org/debian/pool/main/d/dosfstools/dosfstools_3.0.26.orig.tar.xz
+EXTRACONF=
+ISSPECIAL=1
+DEPS=('glibc')
+
+function BuildAndInstall
+{
+	make
+	make PREFIX=/root/bldr-inst MANDIR=/root/bldr-inst/usr/share/man DOCDIR=/root/bldr-inst/usr/share/doc install
+}
