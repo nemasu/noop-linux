@@ -1,0 +1,94 @@
+diff -crB slim-1.3.6/app.cpp slim-1.3.6-mine/app.cpp
+*** slim-1.3.6/app.cpp	Wed Oct  2 07:38:05 2013
+--- slim-1.3.6-mine/app.cpp	Wed Jul  2 15:38:41 2014
+***************
+*** 629,637 ****
+  
+  		/* Login process starts here */
+  		SwitchUser Su(pw, cfg, DisplayName, child_env);
+! 		string session = LoginPanel->getSession();
+! 		string loginCommand = cfg->getOption("login_cmd");
+! 		replaceVariables(loginCommand, SESSION_VAR, session);
+  		replaceVariables(loginCommand, THEME_VAR, themeName);
+  		string sessStart = cfg->getOption("sessionstart_cmd");
+  		if (sessStart != "") {
+--- 629,635 ----
+  
+  		/* Login process starts here */
+  		SwitchUser Su(pw, cfg, DisplayName, child_env);
+! 		string loginCommand = LoginPanel->getSession();
+  		replaceVariables(loginCommand, THEME_VAR, themeName);
+  		string sessStart = cfg->getOption("sessionstart_cmd");
+  		if (sessStart != "") {
+diff -crB slim-1.3.6/cfg.cpp slim-1.3.6-mine/cfg.cpp
+*** slim-1.3.6/cfg.cpp	Wed Oct  2 07:38:05 2013
+--- slim-1.3.6-mine/cfg.cpp	Wed Jul  2 15:47:02 2014
+***************
+*** 54,59 ****
+--- 54,60 ----
+  	options.insert(option("authfile","/var/run/slim.auth"));
+  	options.insert(option("shutdown_msg","The system is halting..."));
+  	options.insert(option("reboot_msg","The system is rebooting..."));
++ 	options.insert(option("sessions",""));
+  	options.insert(option("sessiondir",""));
+  	options.insert(option("hidecursor","false"));
+  
+***************
+*** 327,333 ****
+                               desktop_file.close();
+                               pair<string,string> session(session_name,session_exec);
+                               sessions.push_back(session);
+!                              cout << session_exec << " - " << session_name << endl;
+                          }
+  
+  					}
+--- 328,334 ----
+                               desktop_file.close();
+                               pair<string,string> session(session_name,session_exec);
+                               sessions.push_back(session);
+! 							 cout << session_exec << " - " << session_name << endl;
+                          }
+  
+  					}
+***************
+*** 338,345 ****
+  	}
+  
+  	if (sessions.empty()){
+!         pair<string,string> session("","");
+!         sessions.push_back(session);
+  	}
+  }
+  
+--- 339,369 ----
+  	}
+  
+  	if (sessions.empty()){
+!         //Revert back to old 'sessions' list method
+! 		string strSessionList  = getOption("sessions");
+! 		if( !strSessionList.empty() ) {
+! 			vector<string> newSessions;
+! 			split(newSessions, strSessionList, ',', false);
+! 			vector<string>::iterator beg = newSessions.begin();
+! 			vector<string>::iterator end = newSessions.end();
+! 			
+! 			string sessionKey = ("%session");
+! 			
+! 			while( beg != end ) {
+! 				string loginCommand = getOption("login_cmd");
+! 				size_t sessionLocation = loginCommand.find( sessionKey );
+! 				loginCommand.replace(sessionLocation, sessionKey.length(), (*beg));
+! 				
+! 				pair<string,string> session( (*beg), loginCommand );
+! 				cout << loginCommand << " - " << (*beg) << endl;
+! 				sessions.push_back(session);
+! 				beg++;
+! 			}
+! 
+! 		} else {
+! 			pair<string,string> session("","");
+! 			sessions.push_back(session);
+! 		}
+  	}
+  }
+  
