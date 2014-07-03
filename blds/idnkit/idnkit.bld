@@ -1,0 +1,59 @@
+#package name
+NAME=idnkit
+
+#package version
+VERSION=1.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="http://www.nic.ad.jp/ja/idn/idnkit/download/sources/idnkit-${VERSION}-src.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('glibc')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--mandir=/usr/share/man \
+		--enable-static=no
+	make
+	
+	make DESTDIR=/root/bldr-inst install
+	install -Dm644 LICENSE.txt /root/bldr-inst/usr/share/licenses/idnkit/LICENSE
+	rm /root/bldr-inst/etc/*.sample
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=https://www.nic.ad.jp/ja/idn/idnkit/download/
+	LATEST=`curl -s https://www.nic.ad.jp/ja/idn/idnkit/download/ | grep "sources/idnkit" | sed -e 's/.*idnkit-\(.*\)-src.tar.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

@@ -1,0 +1,21 @@
+diff -rcB iproute2-3.4.0/misc/Makefile iproute2-3.4.0-1/misc/Makefile
+*** iproute2-3.4.0/misc/Makefile    Mon May 21 21:12:19 2012
+--- iproute2-3.4.0-1/misc/Makefile  Wed Jun 20 02:13:49 2012
+***************
+*** 1,7 ****
+  SSOBJ=ss.o ssfilter.o
+  LNSTATOBJ=lnstat.o lnstat_util.o
+
+! TARGETS=ss nstat ifstat rtacct arpd lnstat
+
+  include ../Config
+
+--- 1,7 ----
+  SSOBJ=ss.o ssfilter.o
+  LNSTATOBJ=lnstat.o lnstat_util.o
+
+! TARGETS=ss nstat ifstat rtacct lnstat
+
+  include ../Config
+
+
