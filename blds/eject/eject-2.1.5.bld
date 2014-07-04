@@ -1,9 +1,0 @@
-NAME=eject
-VERSION=2.1.5
-ISUSR=1
-#use Arch source
-SRC=ftp://ftp.archlinux.org/other/eject/eject-${VERSION}.tar.bz2
-EXTRACONF="--enable-default-device=sr0"
-ISSPECIAL=0
-DEPS=('glibc')
-
