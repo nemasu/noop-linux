@@ -1,0 +1,41 @@
+#package name
+NAME=ttf-noto
+
+#package version
+VERSION=20140716
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.google.com/get/noto/pkgs/Noto-hinted.zip
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	unzip *.zip
+	mkdir -p /root/bldr-inst/usr/share/fonts/TTF/
+	cp *.ttf /root/bldr-inst/usr/share/fonts/TTF/
+}
+
+function Detect
+{
+	echo "$NAME: Not versioned"
+}
