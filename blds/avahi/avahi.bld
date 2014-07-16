@@ -40,7 +40,6 @@ function BuildAndInstall
                 --with-distro=none \
                 --sysconfdir=/etc \
                 --localstatedir=/var \
-                --disable-static \
                 --disable-monodoc \
                 --enable-compat-libdns_sd \
                 --enable-compat-howl \

@@ -469,7 +469,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 		fi
 	done
 
-	STDUSRCONF="--disable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datadir=/usr/share --bindir=/usr/bin --prefix=/usr"
+	STDUSRCONF="--includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datadir=/usr/share --bindir=/usr/bin --prefix=/usr"
 	STDSYSCONF="--includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datadir=/usr/share --bindir=/bin --prefix=/"
 
 	if [ $ISUSR == 1 ]; then

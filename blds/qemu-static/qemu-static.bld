@@ -1,14 +1,14 @@
 #package name
-NAME=json-c
+NAME=qemu-static
 
 #package version
-VERSION=0.12
+VERSION=2.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://s3.amazonaws.com/json-c_releases/releases/json-c-${VERSION}.tar.gz
+SRC=http://wiki.qemu-project.org/download/qemu-2.1.0-rc2.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -30,17 +30,31 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  
-  CFLAGS=$CFLAGS -Wno-error
-  ./configure --prefix=/usr
-  make -j3
-  make DESTDIR=/root/bldr-inst install
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+               --static --python=/usr/bin/python2 --disable-werror \
+              --disable-docs --disable-gtk --disable-vnc --disable-kvm --disable-libssh2 \
+              --enable-user --disable-system --disable-fdt
+	make -j3
+	make DESTDIR=/root/bldr-inst libexecdir=/usr/lib/qemu install
+	
+	# remove conflicting /var/run directory
+	rm -rf /root/bldr-inst/var
+	
+	# add sample config
+	mkdir -p /root/bldr-inst/etc/qemu/
+	echo "allow br0" > /root/bldr-inst/etc/qemu/bridge.conf.sample
+	cd /root/bldr-inst/usr/bin/
+	for f in `ls -1`;
+	do
+		mv "$f" "$f-static"
+	done
+	
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://s3.amazonaws.com/json-c_releases/releases/index.html
+	LISTURL=http://wiki.qemu-project.org/download/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -60,4 +74,3 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
-

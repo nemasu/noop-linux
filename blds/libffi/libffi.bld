@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
   	autoreconf -fi
-	./configure --prefix=/usr --disable-static
+	./configure --prefix=/usr
 	make -j3
 
 	make DESTDIR=/root/bldr-inst install

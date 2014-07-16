@@ -20,7 +20,7 @@ function BuildAndInstall
 	gunzip libpng-${VERSION}-apng.patch.gz
 	patch -Np1 -i libpng-${VERSION}-apng.patch
 
-	./configure $STDUSRCONF --disable-static
+	./configure $STDUSRCONF
 	make -j4
 	make DESTDIR=/root//bldr-inst install
 
