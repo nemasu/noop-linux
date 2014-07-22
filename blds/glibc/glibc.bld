@@ -1,0 +1,68 @@
+#package name
+NAME=glibc
+
+#package version
+VERSION=2.19
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://ftp.gnu.org/gnu/glibc/glibc-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cd ..
+	mkdir build-dir
+	cd build-dir
+	../glibc-$VERSION/configure --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/bin --prefix=/
+	make -j3
+	make DESTDIR=`pwd`/../../bldr-inst install
+
+	mkdir -p /root/bldr-inst/usr/include/{rpc,rpcsvc}
+	cp -r ../glibc-$VERSION/sunrpc/rpc/*.h /root/bldr-inst/usr/include/rpc
+	cp -r ../glibc-$VERSION/sunrpc/rpcsvc/*.h /root/bldr-inst/usr/include/rpcsvc
+	cp -r ../glibc-$VERSION/nis/rpcsvc/*.h /root/bldr-inst/usr/include/rpcsvc
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=ftp://ftp.gnu.org/gnu/glibc/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

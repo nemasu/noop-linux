@@ -14,7 +14,6 @@ ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-$VERSION.tar.bz2
 EXTRACONF=
 ISSPECIAL=1
-#DEPS=('zip')
 
 function BuildAndInstall
 {
@@ -22,11 +21,17 @@ function BuildAndInstall
 	cd ..
     mkdir build-dir
     cd build-dir
-    ../gcc-$VERSION/configure --prefix=/usr \
+    
+	# This is raspberry pi, only ARM triplet supported at the moment
+	[[ "$ARCH" == "armv6l" ]] && EXTRACONFIGFLAGS="--host=armv6l-unknown-linux-gnueabihf --build=armv6l-unknown-linux-gnueabihf --with-arch=armv6 --with-float=hard --with-fpu=vfp"
+
+	
+	#No Ada support for now	
+	../gcc-$VERSION/configure --prefix=/usr \
 		  --libdir=/usr/lib --libexecdir=/usr/lib \
 		  --mandir=/usr/share/man --infodir=/usr/share/info \
 		  --with-bugurl=http://www.nooplinux.org/bugs/ \
-		  --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ \
+		  --enable-languages=c,c++,fortran,go,lto,objc,obj-c++ \
 		  --enable-shared --enable-threads=posix \
 		  --with-system-zlib --enable-__cxa_atexit \
 		  --enable-clocale=gnu \
@@ -35,28 +40,24 @@ function BuildAndInstall
 		  --enable-lto --enable-plugin --enable-install-libiberty \
 		  --with-linker-hash-style=gnu \
 		  --disable-multilib --disable-werror \
-		  --enable-checking=release
+		  --enable-checking=release $EXTRACONFIGFLAGS
     
 	
 	make -j3
     make DESTDIR=`pwd`/../../bldr-inst install
 	pushd .
-	if [ $ARCH == "i686" ]; then
-		ARCHMACH="i686-pc"
-	elif [ $ARCH == "x86_64" ]; then
-		ARCHMACH="x86_64-unknown"
-	fi
 
-
-	mkdir -p `pwd`/../../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION
-
-	cd `pwd`/../../bldr-inst
-
-	mv -v usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION/
-
-	if [ $ARCH == "i686" ]; then
+	if [ $ARCH == "armv6l" ]; then
+		ARCHMACH="armv6l-unknown"
+		mkdir -p `pwd`/../../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION
+		cd `pwd`/../../bldr-inst
+		mv -v usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/
 		mv -v usr/lib/*.so* `pwd`/../gcc-libs-inst/usr/lib/
 	elif [ $ARCH == "x86_64" ]; then
+		ARCHMACH="x86_64-unknown"
+		mkdir -p `pwd`/../../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION
+		cd `pwd`/../../bldr-inst
+		mv -v usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION/
 		mkdir -p `pwd`/../gcc-libs-inst/usr/lib64
 		mv -v usr/lib64/*.so* `pwd`/../gcc-libs-inst/usr/lib64/
 	fi
@@ -65,10 +66,9 @@ function BuildAndInstall
 
 	mkdir -p usr/share/gdb/auto-load/usr/lib
 	
-	if [ $ARCH == "i686" ]; then
+	if [ $ARCH == "armv6l" ]; then
 		mv -v usr/lib/*.py usr/share/gdb/auto-load/usr/lib/
     elif [ $ARCH == "x86_64" ]; then
-		mkdir -p usr/share/gdb/auto-load/usr/lib
 		mv -v usr/lib64/*.py usr/share/gdb/auto-load/usr/lib/
     fi
 	
@@ -93,7 +93,7 @@ function BuildAndInstall
 
 	pkgr -genmeta gcc-libs $VERSION
 	pkgr -genpkg
-	mv -v *.pkg ~/bldr-done
+	mv -v *.pkg /root/bldr-done
 	cd ..
 	rm -rf gcc-libs-inst/
 	

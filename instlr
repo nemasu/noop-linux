@@ -2,7 +2,7 @@
 HOST=http://www.nooplinux.org/noop
 PKGHOST=$HOST/packages/`uname -m`
 
-#CHeck for stuff
+#Check for stuff
 if [ -e /usr/bin/which ];
 then
 	WHICH=/usr/bin/which

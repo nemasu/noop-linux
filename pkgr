@@ -1346,8 +1346,7 @@ if [ $1 = "-genmeta" ]; then
 	#determine if each file is 32-bit or 64-bit
 	for i in `cat $TMPFILE.list`;
 	do
-		#for j in `ldd $i | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d' | $awk '{print $1;}' | sort | uniq`;
-		for j in `readelf -d $i | grep NEEDED | awk '{print $5;}' | sed -e 's/\[//g;s/\]//g;' | sed -e '/ld-linux-x86-64.so.2/d'`
+		for j in `readelf -d $i | grep NEEDED | awk '{print $5;}' | sed -e 's/\[//g;s/\]//g;' | sed -e '/ld-linux-x86-64.so.2/d; /ld-linux-armhf.so.3/d;'`
         do
             let is64bit=`ldd $i | $grep "linux-vdso.so.1" | wc -l`
             $cp $LIBDB $LIBDB.tmp
@@ -1670,8 +1669,7 @@ fi
 if [ $1 = "-readmeta" ] ; then
 		
 	offset=`$ls -al $2 | $awk '{print $5-16;}'`
-	$dd if=$2 skip=$offset bs=1 count=16 &> /tmp/dd.log
-	$sed -i -e '/records/d; /copied,/d' /tmp/dd.log
+	$dd if=$2 skip=$offset bs=1 count=16 2>/dev/null 1>/tmp/dd.log
 	size=`$cat /tmp/dd.log | $sed -e 's/MSIZ://g' | $sed 's/0*//'`
 	filesize=`$ls -al $2 | $awk '{print $5;}'`
 
@@ -1699,14 +1697,14 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
 
 	let is64bit=`ldd $2 | $grep "linux-vdso.so.1" | wc -l`
 
-	if [ $is64bit -gt 0 ] || [ "`$uname -m`" == "i686" ];
+	if [ $is64bit -gt 0 ] || [ "`$uname -m`" == "i686" ] || [ "`$uname -m`" == "armv6l" ];
 	then
 		$sed -i '/^lib32-.*/ d;' $LIBDB.tmp;
 	else
 		$sed -i '/^lib32-.*/ !d;' $LIBDB.tmp;
 	fi
 
-    for j in `ldd $2 | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d' | $awk '{print $1;}' | sort | uniq`;
+    for j in `ldd $2 | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d; /ld-linux-armhf.so.3/d;' | $awk '{print $1;}' | sort | uniq`;
     do
 
 		let isFound=`$grep -e ",$j$" $LIBDB.tmp | $sed -e 's/,.*//g' | uniq | wc -l`
