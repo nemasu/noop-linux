@@ -1,0 +1,51 @@
+#package name
+NAME=icu4c
+
+#package version
+VERSION=49.1.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://download.icu-project.org/files/icu4c/49.1.2/icu4c-49_1_2-src.tgz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cd source
+
+	./configure $STDUSRCONF
+	
+	#Raspberry Pi Fix
+	if [ "`uname -m`" = "armv6l" ];
+	then
+		sed -i -e '/LDFLAGSICUDT/d' config/mh-linux
+	fi
+
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+}
+
+function Detect
+{
+	echo $NAME: Tricky Versioning
+}

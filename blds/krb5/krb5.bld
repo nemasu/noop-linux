@@ -1,0 +1,83 @@
+#package name
+NAME=krb5
+
+#package version
+VERSION=1.10.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://web.mit.edu/kerberos/dist/krb5/1.10/krb5-${VERSION}-signed.tar
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	rm -rf *.asc
+	tar xf *.gz
+	rm *.gz
+	cd `ls`/src
+
+	cd build-tools
+	patch -Np2 -i $BLDRTMPDIR/*.p && rm $BLDRTMPDIR/*.p
+	cd ..
+
+	sed -i "/KRB5ROOT=/s/\/local//" util/ac_check_krb5.m4
+
+	export CFLAGS+=" -fPIC -fno-strict-aliasing -fstack-protector-all"
+    export CPPFLAGS+=" -I/usr/include/et"
+
+	./configure --prefix=/usr \
+               --sbindir=/usr/bin \
+               --sysconfdir=/etc \
+               --localstatedir=/var/lib \
+               --enable-shared \
+               --with-system-et \
+               --with-system-ss \
+               --disable-rpath \
+               --without-tcl \
+               --enable-dns-for-realm \
+               --with-ldap \
+               --without-system-verto
+	make -j3
+
+	make DESTDIR=/root/bldr-inst EXAMPLEDIR=/usr/share/doc/krb5/examplesinstall
+	install -m 644 plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} /root/bldr-inst/usr/share/doc/krb5/examples
+
+	install -dm 755 /root/bldr-inst/var/lib/krb5kdc
+	install -pm 644 config-files/kdc.conf /root/bldr-inst/var/lib/krb5kdc/kdc.conf
+
+	install -dm 755 /root/bldr-inst/etc
+    install -pm 644 config-files/krb5.conf /root/bldr-inst/etc/krb5.conf
+
+	install -dm 755 /root/bldr-inst/usr/share/aclocal
+    install -m 644 util/ac_check_krb5.m4 /root/bldr-inst/usr/share/aclocal
+}
+
+function Detect
+{
+	LATEST=`curl -s "http://web.mit.edu/kerberos/dist/" | grep -E "krb5-[0-9\.]*-signed.tar" | sed 's/.*krb5-\([0-9\.]*\)-signed.tar.*/\1/g' | sort | uniq | tail -n1`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
