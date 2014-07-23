@@ -1629,8 +1629,7 @@ fi
 if [ $1 = "-getfiles" ] ; then
 
 	offset=`$ls -al $2 | $awk '{print $5-16;}'`
-	$dd if=$2 skip=$offset bs=1 count=16 &> /tmp/dd.log
-	$sed -i -e '/records/d; /copied,/d' /tmp/dd.log 
+	$dd if=$2 skip=$offset bs=1 count=16 2>/dev/null 1>/tmp/dd.log
 	size=`$cat /tmp/dd.log | $sed -e 's/MSIZ://g' | $sed 's/0*//'`
 	filesize=`$ls -al $2 | $awk '{print $5;}'`
 
