@@ -1,0 +1,31 @@
+diff -crB pam_unix2-2.6-orig/src/read-files.c pam_unix2-2.6/src/read-files.c
+*** pam_unix2-2.6-orig/src/read-files.c	Thu Jan 12 17:16:52 2006
+--- pam_unix2-2.6/src/read-files.c	Fri Sep 21 18:54:52 2012
+***************
+*** 30,38 ****
+  #include <errno.h>
+  #include <fcntl.h>
+  #include <nss.h>
+! #include <bits/libc-lock.h>
+  #define __libc_lock_t pthread_mutex_t
+  
+  #include "read-files.h"
+  
+  static enum { none, getent, getby }last_use;
+--- 30,45 ----
+  #include <errno.h>
+  #include <fcntl.h>
+  #include <nss.h>
+! #include <pthread.h>
+  #define __libc_lock_t pthread_mutex_t
+  
++ #define __libc_lock_define_initialized(CLASS,NAME) \
++ 	CLASS __libc_lock_t NAME = PTHREAD_MUTEX_INITIALIZER;
++ #define __libc_lock_lock(NAME) \
++ 	pthread_mutex_lock, (&(NAME))
++ #define __libc_lock_unlock(NAME) \
++ 	pthread_mutex_unlock, (&(NAME))
++ 
+  #include "read-files.h"
+  
+  static enum { none, getent, getby }last_use;

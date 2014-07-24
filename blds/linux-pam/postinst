@@ -1,0 +1,2 @@
+ldconfig
+chmod +s /sbin/unix_chkpwd
