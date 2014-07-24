@@ -1,0 +1,20 @@
+[Unit]
+Description=PostgreSQL database server
+
+[Service]
+User=postgres
+Group=postgres
+
+Type=oneshot
+RemainAfterExit=true
+SyslogIdentifier=postgres
+PIDFile=/var/lib/postgres/data/postmaster.pid
+ExecStart=/usr/bin/pg_ctl -s -D /var/lib/postgres/data start
+ExecStop=/usr/bin/pg_ctl -s -D /var/lib/postgres/data stop -m fast
+
+# Due to PostgreSQL's use of shared memory, OOM killer is often overzealous in
+# killing Postgres
+OOMScoreAdjust=-200
+
+[Install]
+WantedBy=multi-user.target

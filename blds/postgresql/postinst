@@ -1,0 +1,21 @@
+if [ ! -d /var/lib/postgres ]; then
+    mkdir -p /var/lib/postgres
+fi
+getent group postgres >/dev/null || groupadd -g 88 postgres
+getent passwd postgres >/dev/null || useradd -c 'PostgreSQL user' -u 88 -g postgres -d '/var/lib/postgres' -s /bin/bash postgres
+passwd -l postgres >/dev/null
+
+PGROOT=/var/lib/postgres
+PGDATA=$PGROOT/data
+
+if [ ! -e $PGDATA ];
+then
+	echo "Initializing database in $PGDATA"
+
+	mkdir -p "$PGDATA"
+	chown -R postgres:postgres "$PGROOT"
+	chmod 0700 "$PGDATA"
+
+	su postgres -c "/usr/bin/initdb --locale en_US.UTF-8 -D $PGDATA"
+fi
+

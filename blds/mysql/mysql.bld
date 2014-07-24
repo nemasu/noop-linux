@@ -1,0 +1,125 @@
+#package name
+NAME=mysql
+
+#package version
+VERSION=5.6.19
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://mysql.llarian.net/pub/mysql/Downloads/MySQL-5.6/mysql-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cmake .                                     \
+	   -DBUILD_CONFIG=mysql_release \
+	   -DSYSCONFDIR=/etc                           \
+	   -DMYSQL_DATADIR=/var/lib/mysql                  \
+	   -DINSTALL_MYSQLDATADIR=/var/lib/mysql           \
+	   -DCMAKE_INSTALL_PREFIX=/usr                 \
+	   -DINSTALL_BINDIR=bin                        \
+	   -DINSTALL_SBINDIR=sbin                      \
+	   -DINSTALL_DOCDIR=share/doc/mysql            \
+	   -DINSTALL_DOCREADMEDIR=share/doc/mysql      \
+	   -DINSTALL_INCLUDEDIR=include/mysql          \
+	   -DINSTALL_INFODIR=share/info                \
+	   -DINSTALL_LIBDIR=lib                        \
+	   -DINSTALL_MANDIR=share/man                  \
+	   -DINSTALL_MYSQLSHAREDIR=share/mysql         \
+	   -DINSTALL_MYSQLTESTDIR=share/mysql-test     \
+	   -DINSTALL_PLUGINDIR=lib/plugin              \
+	   -DINSTALL_SCRIPTDIR=bin                     \
+	   -DINSTALL_SHAREDIR=share/mysql              \
+	   -DINSTALL_SQLBENCHDIR=share/mysql-bench     \
+	   -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
+	   -DWITH_ZLIB=system                          \
+	   -DWITH_SSL=system                           \
+	   -DWITH_READLINE=system                      \
+	   -DMYSQL_UNIX_ADDR=/run/mysql/mysql.sock \
+	   -DWITH_ARCHIVE_STORAGE_ENGINE=1             \
+	   -DWITH_FEDERATED_STORAGE_ENGINE=1           \
+	   -DWITH_BLACKHOLE_STORAGE_ENGINE=1           \
+	   -DMYSQL_MAINTAINER_MODE=OFF                 \
+	   -DWITH_DEBUG=OFF \
+	   -DHAVE_LIBAIO_H=/usr/include \
+	   -DIGNORE_AIO_CHECK=1 \
+	   -DWITH_EMBEDDED_SERVER=ON \
+	   -DWITH_INNODB_MEMCACHED=ON \
+	   -DCMAKE_C_FLAGS="-fPIC ${CFLAGS} -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer" \
+	   -DCMAKE_CXX_FLAGS="-fPIC ${CXXFLAGS} -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-rtti" \
+	   -DWITH_MYSQLD_LDFLAGS="${LDFLAGS}"
+	#-DWITH_LIBEVENT=system \
+
+	make -j3
+
+	export SEGMENTS="Client Server IniFiles ManPages Embedded Development Documentation Info Readme"
+	for segment in $SEGMENTS; do
+			DESTDIR=/root/bldr-inst cmake -DCMAKE_INSTALL_COMPONENT=$segment -P cmake_install.cmake
+	done
+	unset SEGMENTS
+
+	export SEGMENTS="SharedLibraries"
+for segment in $SEGMENTS; do
+	DESTDIR=/root/mysql-libs-inst cmake -DCMAKE_INSTALL_COMPONENT=$segment -P cmake_install.cmake
+done
+unset SEGMENTS
+
+	cd /root/mysql-libs-inst
+
+	PushScripts
+	pkgr -genmeta mysql-libs $VERSION
+	pkgr -genpkg
+	PopScripts
+	mv *.pkg /root/bldr-done
+
+
+	cd /root/bldr-inst
+	rm -rf /root/mysql-libs-inst
+
+	mkdir -p etc/
+	cp usr/share/mysql/support-files/my-default.cnf etc/my.cnf
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=ftp://mysql.llarian.net/pub/mysql/Downloads/MySQL-5.6/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
