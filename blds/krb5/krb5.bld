@@ -35,11 +35,9 @@ function BuildAndInstall
 	rm *.gz
 	cd `ls`/src
 
-	cd build-tools
-	patch -Np2 -i $BLDRTMPDIR/*.p && rm $BLDRTMPDIR/*.p
-	cd ..
-
 	sed -i "/KRB5ROOT=/s/\/local//" util/ac_check_krb5.m4
+
+	patch -Np1 -i $BLDRTMPDIR/*.p && rm $BLDRTMPDIR/*.p
 
 	export CFLAGS+=" -fPIC -fno-strict-aliasing -fstack-protector-all"
     export CPPFLAGS+=" -I/usr/include/et"
@@ -58,7 +56,7 @@ function BuildAndInstall
                --without-system-verto
 	make -j3
 
-	make DESTDIR=/root/bldr-inst EXAMPLEDIR=/usr/share/doc/krb5/examplesinstall
+	make DESTDIR=/root/bldr-inst EXAMPLEDIR=/usr/share/doc/krb5/examples install
 	install -m 644 plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} /root/bldr-inst/usr/share/doc/krb5/examples
 
 	install -dm 755 /root/bldr-inst/var/lib/krb5kdc
