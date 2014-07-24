@@ -34,7 +34,7 @@ function BuildAndInstall
 	make -j3
 	make DESTDIR=/root/bldr-inst install
 
-	GetSource "ftp://ftp.suse.com/pub/people/kukuk/pam/pam_unix2/pam_unix2-2.6.tar.bz2"
+	GetSource "http://ftp.sunet.se/pub/Linux/distributions/suse/people/kukuk/pam/pam_unix2/pam_unix2-2.6.tar.bz2"
 	mv $BLDRTMPDIR/pam_unix2-glibc-2.16.patch_other .
 	patch -Np1 -i pam_unix2-glibc-2.16.patch_other
 	rm pam_unix2-glibc-2.16.patch_other
