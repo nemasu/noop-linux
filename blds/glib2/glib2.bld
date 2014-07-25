@@ -1,0 +1,66 @@
+#package name
+NAME=glib2
+
+#package version
+VERSION=2.38.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://ftp.gnome.org/pub/GNOME/sources/glib/2.38/glib-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('glibc' 'libelf' 'libffi' 'pcre' 'zlib')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  
+  PYTHON=/usr/bin/python2 ./configure --prefix=/usr --libdir=/usr/lib \
+      --sysconfdir=/etc \
+      --with-pcre=system \
+      --disable-fam
+   make -j3
+   make completiondir=/usr/share/bash-completion/completions DESTDIR=/root/bldr-inst install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LISTURL=http://ftp.gnome.org/pub/GNOME/sources/glib/2.38/
+        FILELIST=`GetFileList`
+        LATEST=0
+
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}
+
