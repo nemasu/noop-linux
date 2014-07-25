@@ -1351,7 +1351,7 @@ if [ $1 = "-genmeta" ]; then
             let is64bit=`ldd $i | $grep "linux-vdso.so.1" | wc -l`
             $cp $LIBDB $LIBDB.tmp
 
-            if [ $is64bit -gt 0 ] || [ "`$uname -m`" == "i686" ];
+            if [ $is64bit -gt 0 ] || [ "$ARCH" == "i686" ] || [ "$ARCH" == "armv6l" ];
             then
                 $sed -i '/^lib32-.*/ d;' $LIBDB.tmp;
             else
