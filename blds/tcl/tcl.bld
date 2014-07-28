@@ -1,0 +1,77 @@
+#package name
+NAME=tcl
+
+#package version
+VERSION=8.6.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://downloads.sourceforge.net/sourceforge/tcl/tcl${VERSION}-src.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cd unix
+	if [ `uname -m` = "x86_64" ]; then
+		./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --enable-64bit
+	else
+		./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --disable-64bit
+	fi
+
+	make -j3
+
+	make INSTALL_ROOT=/root/bldr-inst install install-private-headers
+	mkdir -p /root/bldr-inst/usr/bin/
+	mkdir -p /root/bldr-inst/usr/lib/
+	ln -sf tclsh8.6 /root/bldr-inst/usr/bin/tclsh
+	ln -sf libtcl${VERSION%.*}.so /root/bldr-inst/usr/lib/libtcl.so
+
+
+# remove buildroot traces
+  sed -e "s#/root/bldr-tmp/tcl${VERSION}/unix#/usr/lib#" \
+      -e "s#/root/tcl${VERSION}#/usr/include#" \
+      -i /root/bldr-inst/usr/lib/tclConfig.sh
+
+  sed -e "s#/root/bldr-tmp/tcl${VERSION}/unix/pkgs/tdbc1.0.0#/usr/lib/tdbc1.0.0#" \
+      -e "s#/root/bldr-tmp/tcl${VERSION}/pkgs/tdbc1.0.0/generic#/usr/include#" \
+      -e "s#/root/bldr-tmp/tcl${VERSION}/pkgs/tdbc1.0.0/library#/usr/lib/tcl${VERSION%.*}#" \
+      -e "s#/root/bldr-tmp/tcl${VERSION}/pkgs/tdbc1.0.0#/usr/include#" \
+      -i /root/bldr-inst/usr/lib/tdbc1.0.0/tdbcConfig.sh
+
+  sed -e "s#/root/bldr-tmp/tcl${VERSION}/unix/pkgs/itcl4.0.0#/usr/lib/itcl4.0.0#" \
+      -e "s#/root/bldr-tmp/tcl${VERSION}/pkgs/itcl4.0.0/generic#/usr/include#" \
+      -e "s#/root/bldr-tmp/tcl${VERSION}/pkgs/itcl4.0.0#/usr/include#" \
+      -i /root/bldr-inst/usr/lib/itcl4.0.0/itclConfig.sh
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s http://www.tcl.tk/software/tcltk/download.html | grep -E "tcl[0-9\.]*-src\.tar\.gz" | sed -e 's/.*tcl\([0-9\.]*\)-src\.tar\.gz.*/\1/g' | sort | uniq | tail -n`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
