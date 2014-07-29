@@ -1,0 +1,17 @@
+#!/bin/bash
+# NAME
+# VERSION
+# ISUSR
+# SRC
+# POST,PRE
+# EXTRAFILES
+# ISSPECIAL
+
+NAME=dbus
+VERSION=1.6.8
+ISUSR=1
+SRC=http://dbus.freedesktop.org/releases/dbus/dbus-${VERSION}.tar.gz
+EXTRACONF="--with-systemdsystemunitdir=/usr/lib/systemd/system --enable-systemd --with-x --enable-x11-autolaunch --disable-tests --disable-asserts --disable-static"
+ISSPECIAL=0
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
+
