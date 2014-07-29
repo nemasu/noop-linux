@@ -43,12 +43,6 @@ function BuildAndInstall
 	sed -i "s/python2.3/python2/g" Lib/distutils/tests/test_build_scripts.py \
 	 Lib/distutils/tests/test_install_scripts.py
 
-	# Ensure that we are using the system copy of various libraries (expat, zlib and libffi),
-	# rather than copies shipped in the tarball
-	rm -r Modules/expat
-	rm -r Modules/zlib
-	rm -r Modules/_ctypes/{darwin,libffi}*
-
 	# clean up #!s
 	find . -name '*.py' | \
 	xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|"
