@@ -14,7 +14,7 @@ SRC=http://www.mr511.de/software/libelf-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -28,9 +28,12 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./configure $STDUSRCONF --enable-shared
+	make -j3
+	make instroot=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
