@@ -1,0 +1,58 @@
+#package name
+NAME=tzdata
+
+#package version
+VERSION=20144
+DVERSION=2014e
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.iana.org/time-zones/repository/releases/tzdata${DVERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+
+	timezones=('africa' 'antarctica' 'asia' 'australasia'
+           'europe' 'northamerica' 'southamerica'
+           'pacificnew' 'etcetera' 'backward'
+           'systemv' 'factory')
+
+	chmod +x yearistype.sh
+	zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo ${timezones[@]}
+	zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/posix ${timezones[@]}
+	zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/right -L leapseconds ${timezones[@]}
+	zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo -p America/New_York
+	install -m444 -t /root/bldr-inst/usr/share/zoneinfo iso3166.tab zone.tab
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s http://www.iana.org/time-zones | grep -E 'tzdata[0-9a-z]*\.tar\.gz' | sed -e 's/.*tzdata\([0-9a-z]*\)\.tar\.gz.*/\1/g' | tr a-z 0-9`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
