@@ -1,0 +1,89 @@
+#package name
+NAME=sasl
+
+#package version
+VERSION=2.1.26
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://ftp.cyrusimap.org/cyrus-sasl/cyrus-sasl-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	 ./configure --prefix=/usr \
+		  --mandir=/usr/share/man \
+		  --infodir=/usr/share/info \
+		  --enable-shared \
+		  --enable-alwaystrue \
+		  --enable-checkapop \
+		  --enable-cram \
+		  --enable-digest \
+		  --disable-otp \
+		  --disable-srp \
+		  --disable-srp-setpass \
+		  --disable-krb4 \
+		  --enable-gssapi \
+		  --enable-auth-sasldb \
+		  --enable-plain \
+		  --enable-anon \
+		  --enable-login \
+		  --enable-ntlm \
+		  --disable-passdss \
+		  --enable-sql \
+		  --enable-ldapdb \
+		  --disable-macos-framework \
+		  --with-pam \
+		  --with-saslauthd=/var/run/saslauthd \
+		  --with-ldap \
+		  --with-configdir=/etc/sasl2:/etc/sasl:/usr/lib/sasl2 \
+		  --sysconfdir=/etc \
+		  --with-devrandom=/dev/urandom
+
+      make -j3
+      make DESTDIR=/root/bldr-inst install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=ftp://ftp.cyrusimap.org/cyrus-sasl/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
