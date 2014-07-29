@@ -1,23 +1,24 @@
 #package name
-NAME=libpng
+NAME=qrencode
 
 #package version
-VERSION=1.6.10
+VERSION=3.4.1-1
+DVERSION=3.4.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://prdownloads.sourceforge.net/libpng/libpng-${VERSION}.tar.xz?download
+SRC=http://megaui.net/fukuchi/works/qrencode/qrencode-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'libpng')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,28 +29,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	wget http://downloads.sourceforge.net/sourceforge/libpng-apng/libpng-${VERSION}-apng.patch.gz
-	gunzip libpng-${VERSION}-apng.patch.gz
-	patch -Np1 -i libpng-${VERSION}-apng.patch
-
-	./configure $STDUSRCONF
-	make -j4
-	make DESTDIR=/root//bldr-inst install
-
-	cd contrib/pngminus
-	make PNGLIB="-L/root/bldr-inst/usr/lib -lpng" -f makefile.std png2pnm pnm2png
-	install -m755 png2pnm pnm2png /root/bldr-inst/usr/bin/
-
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.libpng.org/pub/png/libpng.html
-	FILELIST=`GetFileList`
-	LATEST=0
+	LATEST=`curl -s http://fukuchi.org/works/qrencode/ | grep -m1 -E 'qrencode-[0-9\.]*\.tar\.bz2' | sed -e 's/.*qrencode-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
 	for i in ${FILELIST[@]};
 	do
