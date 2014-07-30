@@ -1,0 +1,20 @@
+# Static / Custom IP Networking
+# Disable NetworkManager Service before using.
+# Example for enp0s3
+
+[Unit]
+Description=Networking
+Wants=network.target
+Before=network.target
+BindTo=sys-subsystem-net-devices-enp0s3.device
+After=sys-subsystem-net-devices-enp0s3.device
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/ip link set dev enp0s3 up
+ExecStart=/sbin/ip addr add 192.168.1.101 dev enp0s3
+ExecStart=/sbin/ip route add default via 192.168.1.101
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

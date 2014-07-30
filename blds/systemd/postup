@@ -1,0 +1,5 @@
+if [ -e /tmp/network.service ];
+then
+        echo "Restoring old network configuration"
+        cp -v /tmp/network.service /etc/systemd/system/
+fi

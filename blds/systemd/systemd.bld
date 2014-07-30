@@ -1,0 +1,69 @@
+#package name
+NAME=systemd
+
+#package version
+VERSION=208
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.freedesktop.org/software/systemd/systemd-$VERSION.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('acl' 'attr' 'dbus' 'glib2' 'glibc' 'kmod' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'linux-pam' 'pcre' 'python2' 'qrencode' 'util-linux' 'xz' 'zlib')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig:$PKG_CONFIG_PATH
+
+function BuildAndInstall
+{
+	PYTHON=/usr/bin/python2 ./configure CFLAGS='-g -O0 -Wp,-U_FORTIFY_SOURCE' --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/bin --with-pamlibdir=/usr/lib/security --enable-split-usr
+
+	sed -i -e 's/\"\/bin\/loadkeys/\"\/usr\/bin\/loadkeys/g' Makefile Makefile.am Makefile.in
+	sed -i -e 's/\"\/bin\/setfont/\"\/usr\/bin\/setfont/g' Makefile Makefile.am Makefile.in
+	sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
+	sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
+
+	#No -j3, make race :(
+	make
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://www.freedesktop.org/software/systemd/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
