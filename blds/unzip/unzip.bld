@@ -1,0 +1,53 @@
+#package name
+NAME=unzip
+
+#package version
+VERSION=6.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://downloads.sourceforge.net/infozip/unzip60.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  # set CFLAGS -- from Debian
+  export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64 -DACORN_FTYPE_NFS \
+	  -DWILD_STOP_AT_DIR -DLARGE_FILE_SUPPORT -DUNICODE_SUPPORT \
+	  -DUNICODE_WCHAR -DUTF8_MAYBE_NATIVE -DNO_LCHMOD -DDATE_FORMAT=DF_YMD \
+	  -DUSE_BZIP2 -DNATIVE"
+
+  sed -i "/MANDIR =/s#)/#)/share/#" unix/Makefile
+
+  # make -- from Debian
+  make -f unix/Makefile LOCAL_UNZIP="$CFLAGS" prefix=/usr LF2="" \
+  D_USE_BZ2=-DUSE_BZIP2 L_BZ2=-lbz2 unzips
+
+  make -f unix/Makefile prefix=/root/bldr-inst/usr INSTALL_PROGRAM="install" install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo $NAME: Too old
+}

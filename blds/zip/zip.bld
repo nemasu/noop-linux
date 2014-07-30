@@ -1,21 +1,20 @@
 #package name
-NAME=vte2
+NAME=zip
 
 #package version
-VERSION=0.37.2
+VERSION=3.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/vte/$MAJOR/vte-0.37.2.tar.xz
+SRC=http://downloads.sourceforge.net/infozip/zip30.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -29,20 +28,15 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	make -f unix/Makefile generic_gcc
+	make prefix=/root/bldr-inst/usr -f unix/Makefile install
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-
-	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/vte/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/vte/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
-
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+	echo $NAME: Too Old
 }

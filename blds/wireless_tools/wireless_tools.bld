@@ -1,14 +1,14 @@
 #package name
-NAME=iproute2
+NAME=wireless_tools
 
 #package version
-VERSION=3.15.0
+VERSION=29
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${VERSION}.tar.xz
+SRC=http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -30,23 +30,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i 's/-Werror//' Makefile
-	./configure $STDUSRCONF
 	make -j3
-	make DESTDIR=/root/bldr-inst install
-	install -Dm644 include/libnetlink.h /root/bldr-inst/usr/include/libnetlink.h
-	install -Dm644 lib/libnetlink.a /root/bldr-inst/usr/lib/libnetlink.a
-	cd /root/bldr-inst
-	mkdir -p usr/bin/
-	mv sbin/* usr/bin/
-	rm -rf sbin
-
+	make INSTALL_DIR="/root/bldr-inst/usr/sbin" INSTALL_LIB="/root/bldr-inst/usr/lib" INSTALL_INC="/root/bldr-inst/usr/include" INSTALL_MAN="/root/bldr-inst/usr/share/man" install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://www.kernel.org/pub/linux/utils/net/iproute2/
+	LISTURL=http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html
 	FILELIST=`GetFileList`
 	LATEST=0
 

@@ -2,7 +2,7 @@
 NAME=systemd
 
 #package version
-VERSION=208
+VERSION=215
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -32,7 +32,7 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig:$PKG_CONFIG_PATH
 
 function BuildAndInstall
 {
-	PYTHON=/usr/bin/python2 ./configure CFLAGS='-g -O0 -Wp,-U_FORTIFY_SOURCE' --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/bin --with-pamlibdir=/usr/lib/security --enable-split-usr
+	PYTHON=/usr/bin/python2 ./configure CFLAGS='-g -O0 -Wp,-U_FORTIFY_SOURCE' --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/bin --with-pamlibdir=/usr/lib/security --enable-split-usr --enable-compat-libs
 
 	sed -i -e 's/\"\/bin\/loadkeys/\"\/usr\/bin\/loadkeys/g' Makefile Makefile.am Makefile.in
 	sed -i -e 's/\"\/bin\/setfont/\"\/usr\/bin\/setfont/g' Makefile Makefile.am Makefile.in

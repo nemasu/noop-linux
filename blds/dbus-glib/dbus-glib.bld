@@ -1,20 +1,20 @@
 #package name
-NAME=iproute2
+NAME=dbus-glib
 
 #package version
-VERSION=3.15.0
+VERSION=0.100
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${VERSION}.tar.xz
+SRC=http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
 DEPS=
@@ -28,25 +28,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	sed -i 's/-Werror//' Makefile
-	./configure $STDUSRCONF
-	make -j3
-	make DESTDIR=/root/bldr-inst install
-	install -Dm644 include/libnetlink.h /root/bldr-inst/usr/include/libnetlink.h
-	install -Dm644 lib/libnetlink.a /root/bldr-inst/usr/lib/libnetlink.a
-	cd /root/bldr-inst
-	mkdir -p usr/bin/
-	mv sbin/* usr/bin/
-	rm -rf sbin
-
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://www.kernel.org/pub/linux/utils/net/iproute2/
+	LISTURL=http://dbus.freedesktop.org/releases/dbus-glib/
 	FILELIST=`GetFileList`
 	LATEST=0
 

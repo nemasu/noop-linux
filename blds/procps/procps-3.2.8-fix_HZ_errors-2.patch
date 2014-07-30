@@ -1,0 +1,47 @@
+Submitted By: DJ Lucas <dj_AT_linuxfromscratch_DOT_org>
+Date: 2011-09-04
+Initial Package Version: 3.2.8
+Origin: http://procps.cvs.sourceforge.net/viewvc/procps/procps/proc/
+Upstream Status: Committed
+Description: Fixes "unknown HZ value (##)" errors in procps utils.
+
+diff -Naurp procps-3.2.8-orig/proc/sysinfo.c procps-3.2.8/proc/sysinfo.c
+--- procps-3.2.8-orig/proc/sysinfo.c	2011-09-05 02:39:32.000000000 +0000
++++ procps-3.2.8/proc/sysinfo.c	2011-09-05 02:41:04.000000000 +0000
+@@ -212,6 +212,7 @@ static int check_for_privs(void){
+ static void init_libproc(void) __attribute__((constructor));
+ static void init_libproc(void){
+   have_privs = check_for_privs();
++   init_Linux_version();
+   // ought to count CPUs in /proc/stat instead of relying
+   // on glibc, which foolishly tries to parse /proc/cpuinfo
+   //
+diff -Naurp procps-3.2.8-orig/proc/version.c procps-3.2.8/proc/version.c
+--- procps-3.2.8-orig/proc/version.c	2011-09-05 02:39:32.000000000 +0000
++++ procps-3.2.8/proc/version.c	2011-09-05 02:44:03.000000000 +0000
+@@ -33,9 +33,9 @@ void display_version(void) {
+ 
+ int linux_version_code;
+ 
+-static void init_Linux_version(void) __attribute__((constructor));
+-static void init_Linux_version(void) {
+-    static struct utsname uts;
++  void init_Linux_version(void) {
++    struct utsname uts;
++
+     int x = 0, y = 0, z = 0;	/* cleared in case sscanf() < 3 */
+     
+     if (uname(&uts) == -1)	/* failure implies impending death */
+diff -Naurp procps-3.2.8-orig/proc/version.h procps-3.2.8/proc/version.h
+--- procps-3.2.8-orig/proc/version.h	2011-09-05 02:39:32.000000000 +0000
++++ procps-3.2.8/proc/version.h	2011-09-05 02:45:13.000000000 +0000
+@@ -20,6 +20,9 @@ extern const char procps_version[];		/*
+ extern int linux_version_code;		/* runtime version of LINUX_VERSION_CODE
+ 					   in /usr/include/linux/version.h */
+ 
++
++extern void init_Linux_version(void);
++
+ /* Convenience macros for composing/decomposing version codes */
+ #define LINUX_VERSION(x,y,z)   (0x10000*(x) + 0x100*(y) + z)
+ #define LINUX_VERSION_MAJOR(x) (((x)>>16) & 0xFF)

@@ -1,0 +1,55 @@
+#package name
+NAME=networkmanager
+
+#package version
+VERSION=0.9.8.8
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://ftp.acc.umu.se/pub/GNOME/sources/NetworkManager/$MAJOR/NetworkManager-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	 AUTOPOINT="intltoolize -f -c --automake" autoreconf -fi
+	./configure $STDUSRCONF --with-dhcpcd=/usr/bin/dhcpcd --enable-vala=no --with-systemdsystemunitdir=/usr/lib/systemd/system --with-iptables=/usr/sbin/iptables --with-udev-dir=/usr/lib/udev --with-session-tracking=systemd --disable-wimax --with-crypto=nss --with-resolvconf=/usr/sbin/resolvconf
+
+	#Get rid of warnings as errors
+	find . -name Makefile | xargs sed -i 's/-Werror//g'
+
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	MAJOR=`curl -s http://ftp.acc.umu.se/pub/GNOME/sources/NetworkManager/ | grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+	LATEST=`curl -s http://ftp.acc.umu.se/pub/GNOME/sources/NetworkManager/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

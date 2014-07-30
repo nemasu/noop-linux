@@ -1,0 +1,113 @@
+#package name
+NAME=nss
+
+#package version
+VERSION=3.16
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+MAJOR=`echo $VERSION | sed 's/\./_/g'`
+SRC=http://ftp.mozilla.org/pub/security/nss/releases/NSS_${MAJOR}_RTM/src/nss-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=( 'glibc' 'nspr' 'sqlite' 'zlib' )
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+
+  mv -v $BLDRTMPDIR/nss-config.in .
+  mv -v $BLDRTMPDIR/nss.pc.in .
+
+  cd nss
+  export BUILD_OPT=1
+  export NSS_USE_SYSTEM_SQLITE=1
+  export NSS_ENABLE_ECC=1
+  export NSPR_INCLUDE_DIR=`nspr-config --includedir`
+  export NSPR_LIB_DIR=`nspr-config --libdir`
+  export XCFLAGS=${CFLAGS}
+  [ "`uname -m`" = "x86_64" ] && export USE_64=1
+  make -C coreconf
+  make -C lib/dbm
+  make
+  
+  install -d /root/bldr-inst/usr/{bin,include/nss,lib/pkgconfig}
+
+  NSS_VMAJOR=$(grep '#define.*NSS_VMAJOR' lib/nss/nss.h | awk '{print $3}')
+  NSS_VMINOR=$(grep '#define.*NSS_VMINOR' lib/nss/nss.h | awk '{print $3}')
+  NSS_VPATCH=$(grep '#define.*NSS_VPATCH' lib/nss/nss.h | awk '{print $3}')
+
+  _nsprver=`cat /var/noop/installed/nspr | grep VER | sed 's/.*://g'`
+
+  sed ../nss.pc.in \
+    -e "s,%libdir%,/usr/lib,g" \
+    -e "s,%prefix%,/usr,g" \
+    -e "s,%exec_prefix%,/usr/bin,g" \
+    -e "s,%includedir%,/usr/include/nss,g" \
+    -e "s,%NSPR_VERSION%,${_nsprver},g" \
+    -e "s,%NSS_VERSION%,${VERSION},g" \
+    > "/root/bldr-inst/usr/lib/pkgconfig/nss.pc"
+  ln -s nss.pc "/root/bldr-inst/usr/lib/pkgconfig/mozilla-nss.pc"
+
+  sed ../nss-config.in \
+    -e "s,@libdir@,/usr/lib,g" \
+    -e "s,@prefix@,/usr/bin,g" \
+    -e "s,@exec_prefix@,/usr/bin,g" \
+    -e "s,@includedir@,/usr/include/nss,g" \
+    -e "s,@MOD_MAJOR_VERSION@,${NSS_VMAJOR},g" \
+    -e "s,@MOD_MINOR_VERSION@,${NSS_VMINOR},g" \
+    -e "s,@MOD_PATCH_VERSION@,${NSS_VPATCH},g" \
+    > "/root/bldr-inst/usr/bin/nss-config"
+  
+  chmod 755 /root/bldr-inst/usr/bin/nss-config
+ 
+
+  cd ../dist/*.OBJ/bin
+  install -t /root/bldr-inst/usr/bin *util shlibsign signtool signver ssltap
+  
+  cd ../lib
+  install -t /root/bldr-inst/usr/lib *.so
+  install -t /root/bldr-inst/usr/lib -m644 libcrmf.a *.chk
+  
+  cd ../../public/nss
+  install -t /root/bldr-inst/usr/include/nss -m644 *.h
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	FILELIST=`curl -s http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/ | grep -E "NSS_[0-9_]*_RTM" | sed -e 's/.*NSS_\([0-9_]*\)_RTM.*/\1/g;s/_/\./g'`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+		vercomp $LATEST $i
+		if [ $? -eq 2 ];
+		then
+						LATEST=$CURVER
+		fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+					echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

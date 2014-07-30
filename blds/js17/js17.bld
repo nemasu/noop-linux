@@ -1,14 +1,14 @@
 #package name
-NAME=iproute2
+NAME=js17
 
 #package version
-VERSION=3.15.0
+VERSION=17.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${VERSION}.tar.xz
+SRC=http://ftp.mozilla.org/pub/mozilla.org/js/mozjs${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -30,23 +30,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i 's/-Werror//' Makefile
-	./configure $STDUSRCONF
-	make -j3
-	make DESTDIR=/root/bldr-inst install
-	install -Dm644 include/libnetlink.h /root/bldr-inst/usr/include/libnetlink.h
-	install -Dm644 lib/libnetlink.a /root/bldr-inst/usr/lib/libnetlink.a
-	cd /root/bldr-inst
-	mkdir -p usr/bin/
-	mv sbin/* usr/bin/
-	rm -rf sbin
-
+  unset CPPFLAGS
+  cd js/src  
+  sed -i -e 's/\-lreadline/\-lreadline \-lncurses/g' configure
+  ./configure --prefix=/usr --with-system-nspr --with-system-ffi \
+     --enable-readline --enable-threadsafe
+  make -j3
+  
+  make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://www.kernel.org/pub/linux/utils/net/iproute2/
+	LISTURL=
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -66,3 +63,4 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+

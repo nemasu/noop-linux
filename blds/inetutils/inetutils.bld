@@ -1,14 +1,15 @@
 #package name
-NAME=iproute2
+NAME=inetutils
 
 #package version
-VERSION=3.15.0
+VERSION=1.9.1-1
+DVERSION=1.9.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${VERSION}.tar.xz
+SRC=http://ftp.gnu.org/gnu/inetutils/inetutils-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -30,23 +31,32 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i 's/-Werror//' Makefile
-	./configure $STDUSRCONF
+	sed -i 's|_GL_WARN_ON_USE (gets|//_GL_WARN_ON_USE (gets|' lib/stdio.in.h
+	./configure --prefix=/usr --libexec=/usr/sbin --localstatedir=/var \
+		--sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info \
+		--without-wrap --with-pam \
+		--enable-ftp --enable-ftpd \
+		--enable-telnet --enable-telnetd \
+		--enable-talk --enable-talkd \
+		--enable-rlogin --enable-rlogind \
+		--enable-rsh --enable-rshd \
+		--enable-rcp --enable-hostname \
+		--enable-rexec --disable-rexecd \
+		--enable-tftp --enable-tftpd \
+		--enable-ping --enable-ping6 \
+		--disable-logger --disable-syslogd \
+		--enable-inetd --enable-whois \
+		--disable-uucpd --enable-ifconfig --enable-traceroute
+
 	make -j3
 	make DESTDIR=/root/bldr-inst install
-	install -Dm644 include/libnetlink.h /root/bldr-inst/usr/include/libnetlink.h
-	install -Dm644 lib/libnetlink.a /root/bldr-inst/usr/lib/libnetlink.a
-	cd /root/bldr-inst
-	mkdir -p usr/bin/
-	mv sbin/* usr/bin/
-	rm -rf sbin
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://www.kernel.org/pub/linux/utils/net/iproute2/
+	LISTURL=http://ftp.gnu.org/gnu/inetutils/
 	FILELIST=`GetFileList`
 	LATEST=0
 

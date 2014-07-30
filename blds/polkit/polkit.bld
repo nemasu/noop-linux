@@ -1,14 +1,15 @@
 #package name
-NAME=iproute2
+NAME=polkit
 
 #package version
-VERSION=3.15.0
+VERSION=0.112-1
+DVERSION=0.112
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${VERSION}.tar.xz
+SRC=http://www.freedesktop.org/software/polkit/releases/polkit-$DVERSION.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -28,25 +29,24 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
+
 function BuildAndInstall
 {
-	sed -i 's/-Werror//' Makefile
-	./configure $STDUSRCONF
+	./configure --prefix=/usr --sysconfdir=/etc \
+		--localstatedir=/var --libexecdir=/usr/lib/polkit-1 \
+		--with-systemdsystemunitdir=/usr/lib/systemd/system \
+		--disable-static --disable-gtk-doc --enable-libsystemd-login=yes \
+		--with-authfw=pam --with-pam-module-dir=/usr/lib/security
 	make -j3
 	make DESTDIR=/root/bldr-inst install
-	install -Dm644 include/libnetlink.h /root/bldr-inst/usr/include/libnetlink.h
-	install -Dm644 lib/libnetlink.a /root/bldr-inst/usr/lib/libnetlink.a
-	cd /root/bldr-inst
-	mkdir -p usr/bin/
-	mv sbin/* usr/bin/
-	rm -rf sbin
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://www.kernel.org/pub/linux/utils/net/iproute2/
+	LISTURL=http://www.freedesktop.org/software/polkit/releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 

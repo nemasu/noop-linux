@@ -8,7 +8,8 @@ VERSION=2.3.21
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/libart_lgpl-${VERSION}.tar.bz2
+MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/$MAJOR/libart_lgpl-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,20 +36,10 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
-
+	NAME=libart_lgpl
+	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+	
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then

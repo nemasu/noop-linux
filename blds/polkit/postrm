@@ -1,0 +1,6 @@
+if getent passwd polkitd >/dev/null; then
+	userdel polkitd
+fi
+if getent group polkitd >/dev/null; then
+	groupdel polkitd
+fi

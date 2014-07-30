@@ -8,7 +8,8 @@ VERSION=2.38.2
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/GNOME/sources/glib/2.38/glib-${VERSION}.tar.xz
+MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/glib-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -43,25 +44,13 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        MAJOR=`curl -s https://developer.gnome.org/glib/ | grep "<strong>" | sed -e 's/.*href="\([0-9\.]*\)\/.*/\1/g'`
-		LISTURL=http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/
-        FILELIST=`GetFileList`
-        LATEST=0
+	MAJOR=`curl -s https://developer.gnome.org/glib/ | grep "<strong>" | sed -e 's/.*href="\([0-9\.]*\)\/.*/\1/g'`
+	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-        for i in ${FILELIST[@]};
-        do
-                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-                        vercomp $LATEST $CURVER
-                        if [ $? -eq 2 ];
-                        then
-                                        LATEST=$CURVER
-                        fi
-        done
-
-        vercomp $VERSION $LATEST
-        if [ $? -eq 2 ];
-        then
-                        echo "$NAME: New Version Available! - $LATEST"
-        fi
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+					echo "$NAME: New Version Available! - $LATEST"
+	fi
 }
 
