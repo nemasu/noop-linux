@@ -56,6 +56,11 @@ cp -r -v firmware-master/hardfp/opt .
 
 rm -rf firmware-master
 
+cd boot
+wget http://www.nooplinux.org/noop/cmdline.txt
+wget http://www.nooplinux.org/noop/config.txt
+cd ..
+
 pkgr -genmeta linux-firmware ${VERSION}
 pkgr -genpkg
 mv *.pkg /root/bldr-done
