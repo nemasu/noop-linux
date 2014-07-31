@@ -62,7 +62,12 @@ export PATH=$PREFIX/usr/sbin:$PATH
 PREFIX=$PREFIX pkgr -s
 export PKGR_SUPPRESS_P_OUTPUT=1
 
-for i in glibc trunc which busybox bc tzdata systemd shadow coreutils bash wget grep sed perl findutils gawk procps tar bzip2 gzip dhcpcd inetutils iproute2 wpa_supplicant wireless_tools kbd vim grub ca-certificates openresolv networkmanager linux-kernel linux-firmware;
+if [ "`$UNAME -m`" != "armv6l" ];
+then
+	EXTRA=grub
+fi
+
+for i in glibc trunc which busybox bc tzdata systemd shadow coreutils bash wget grep sed perl findutils gawk procps tar bzip2 gzip dhcpcd inetutils iproute2 wpa_supplicant wireless_tools kbd vim ca-certificates openresolv networkmanager linux-kernel linux-firmware $EXTRA;
 do
 	PREFIX=$PREFIX pkgr -i $i
 done
