@@ -1,0 +1,50 @@
+#package name
+NAME=openssh
+
+#package version
+VERSION=6.6-1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+DVERSION=`echo $VERSION | sed -e 's/-/p/g'`
+SRC=http://www.ftp.ne.jp/OpenBSD/OpenSSH/portable/openssh-${DVERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure $STDUSRCONF --with-pam --with-kerberos5=/usr --with-xauth=/usr/bin/xauth --with-mantype=man --with-md5-passwords --with-pid-dir=/run
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+	sed -e '/^#ChallengeResponseAuthentication yes$/c ChallengeResponseAuthentication no' -e '/^#UsePAM no$/c UsePAM yes' -i /root/bldr-inst/etc/sshd_config
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s http://www.ftp.ne.jp/OpenBSD/OpenSSH/portable/ | grep -E "openssh-[0-6\.]*p[0-9]\.tar\.gz<" | tail -n1 | sed -e 's/.*openssh-\([0-6\.]*p[0-9]\)\.tar\.gz<.*/\1/g' | sed -e 's/p/-/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

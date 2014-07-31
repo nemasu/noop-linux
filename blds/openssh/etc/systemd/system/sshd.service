@@ -1,0 +1,11 @@
+[Unit]
+Description=OpenSSH daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/sshd -D
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
