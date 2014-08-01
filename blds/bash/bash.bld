@@ -41,11 +41,6 @@ function BuildAndInstall
 	./configure $STDUSRCONF --enable-static-link --without-bash-malloc --disable-nls
 	make -j3
 	make DESTDIR=/root/bldr-inst install
-
-	#Users have to replace binary themselves, because shell package manager
-	cd /root/bldr-inst/usr/bin/
-	mv bash bash-new
-
 }
 
 #Default HTTP curl new version detection
