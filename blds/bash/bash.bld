@@ -1,20 +1,20 @@
 #package name
-NAME=readline
+NAME=bash
 
 #package version
-VERSION=6.3
+VERSION=4.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnu.org/gnu/readline/readline-${VERSION}.tar.gz
+SRC=ftp://ftp.gnu.org/gnu/bash/bash-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -28,14 +28,30 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	#Patching Fun!
+	PATCH_LIST=`curl -s http://ftp.gnu.org/gnu/bash/bash-4.3-patches/ | sed -e '/\.sig/d' | grep -E "bash43-[0-9]*" | sed -e 's/.*\(bash43-[0-9]*\)<.*/\1/g'`
+	for i in ${PATCH_LIST[@]};
+	do
+		curl -s http://ftp.gnu.org/gnu/bash/bash-4.3-patches/$i | patch -p0
+	done
+
+	#Build
+	./configure $STDUSRCONF --enable-static-link --without-bash-malloc --disable-nls
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	#Users have to replace binary themselves, because shell package manager
+	cd /root/bldr-inst/usr/bin/
+	mv bash bash-new
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnu.org/gnu/readline/
+	LISTURL=ftp://ftp.gnu.org/gnu/bash/
 	FILELIST=`GetFileList`
 	LATEST=0
 

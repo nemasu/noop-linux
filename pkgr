@@ -915,13 +915,17 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 		$sed -i -e '/\.'"$p"'/d' $INSTALLEDDIR/$NAME
 	done
 
-	#remove files
-	$echo Removing old non config files
-	for i in `$sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$NAME | $sed 's/^/\//g'`;
-        do
-            $rm -v $i 2>&1 | $sed -e '/directory/d'
+	#Skip file removal if upgrading bash
+	if [ "$NAME" != "bash" ];
+	then
 
-        done
+		#remove files
+		$echo Removing old non config files
+		for i in `$sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$NAME | $sed 's/^/\//g'`;
+		do
+			$rm -v $i 2>&1 | $sed -e '/directory/d'
+		done
+	fi
 	
 	#get new pkg, extract, rename cfg files
 	pkgr -getfiles $TMPDIR/$PKGNAME $TMPDIR/pkgtar.tar.bz2
@@ -1756,6 +1760,7 @@ if [ $1 = "-libdiff" ]; then
 fi
 
 if [ $1 = "-init" ]; then
+	$mv /usr/bin/bash-new /usr/bin/bash
 	$cp -r /etc/skel/* ~/ &> /dev/null
 	$cp /etc/skel/.* ~/ &> /dev/null
 	$mkdir -p /lib/locale
