@@ -1,23 +1,23 @@
 #package name
-NAME=mkfontscale
+NAME=xorg-fonts-alias
 
 #package version
-VERSION=1.1.0
+VERSION=1.0.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/app/mkfontscale-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/font/font-alias-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--with-fontrootdir=/usr/share/fonts"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('freetype2')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/app/
+	LISTURL=http://xorg.freedesktop.org/releases/individual/font/
 	FILELIST=`GetFileList`
 	LATEST=0
 

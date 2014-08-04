@@ -1,0 +1,4 @@
+fc-cache -f 
+mkfontscale /usr/share/fonts/100dpi
+mkfontdir /usr/share/fonts/100dpi
+chmod 644 /usr/share/fonts/100dpi/fonts.*

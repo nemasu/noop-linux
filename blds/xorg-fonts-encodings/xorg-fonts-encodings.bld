@@ -1,23 +1,23 @@
 #package name
-NAME=mkfontscale
+NAME=xorg-fonts-encodings
 
 #package version
-VERSION=1.1.0
+VERSION=1.0.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/app/mkfontscale-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/font/encodings-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('freetype2')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +28,25 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./configure --prefix=/usr --with-fontrootdir=/usr/share/fonts
+	make
+	make DESTDIR=/root/bldr-inst install
+
+	# regenerate encodngs file not to include non-compressed versions
+	cd /root/bldr-inst/usr/share/fonts/encodings/large
+	mkfontscale -b -s -l -n -r -p /usr/share/fonts/encodings/large -e . .
+	cd /root/bldr-inst/usr/share/fonts/encodings/
+	mkfontscale -b -s -l -n -r -p /usr/share/fonts/encodings -e . -e large .
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/app/
+	NAME=encodings
+	LISTURL=http://xorg.freedesktop.org/releases/individual/font/
 	FILELIST=`GetFileList`
 	LATEST=0
 
