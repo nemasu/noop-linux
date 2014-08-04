@@ -1,0 +1,3 @@
+echo -n "updating font cache... "
+/usr/bin/fc-cache -f
+echo "done."
