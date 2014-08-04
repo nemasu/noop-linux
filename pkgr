@@ -1770,6 +1770,7 @@ if [ $1 = "-init" ]; then
 	groupadd lock &> /dev/null
 	groupadd adm &> /dev/null
 	groupadd systemd-journal &> /dev/null
+	find /usr/lib/systemd/system/ | xargs chmod -x
 	groupadd -g 102 polkitd
 	useradd -c 'Policy Kit Daemon' -u 102 -g polkitd -d '/' -s /bin/false polkitd
 	passwd -l polkitd &>/dev/null
