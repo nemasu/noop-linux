@@ -1,0 +1,9 @@
+echo "Backing up files..."
+for i in 'inputrc' 'profile' 'skel/.bash_profile' 'skel/.bashrc';
+do
+	if [ -e /etc/$i ];
+	then
+		mv /etc/${i} /etc/${i}.pkgr.bak
+	fi
+done
+
