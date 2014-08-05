@@ -2,14 +2,13 @@
 NAME=cairo
 
 #package version
-VERSION=1.12.2-1
-DVERSION=1.12.2
+VERSION=1.12.16
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://cairographics.org/releases/cairo-${DVERSION}.tar.xz
+SRC=http://cairographics.org/releases/cairo-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -50,7 +49,7 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

@@ -2,7 +2,7 @@
 NAME=pixman
 
 #package version
-VERSION=0.26.2
+VERSION=0.32.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -14,7 +14,7 @@ SRC=http://cairographics.org/releases/pixman-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -28,9 +28,17 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	#Autodetection fails
+	CARCH=`uname -m`
+	[[ $CARCH = "armv6l" ]] && CONFIG="--disable-arm-simd --disable-arm-neon --disable-arm-iwmmxt"
+	[[ $CARCH = "armv7l" ]] && CONFIG="--disable-arm-neon --disable-arm-iwmmxt"
+
+	./configure $STDUSRCONF $CONFIG
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
