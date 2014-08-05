@@ -47,6 +47,7 @@ libSM
 libpciaccess
 libpthread-stubs
 libXau
+libXdmcp
 libxcb
 libX11
 libxkbfile
@@ -61,7 +62,6 @@ libXcomposite
 libXrender
 libXcursor
 libXdamage
-libXdmcp
 libXft
 libXi
 libXinerama
@@ -94,7 +94,6 @@ xinput
 xkbcomp
 xkbevd
 xkbutils
-xkeyboard-config
 xkill
 xlsatoms
 xlsclients
@@ -147,4 +146,4 @@ xf86-video-v4l
 xf86-video-vesa
 xf86-video-vmware
 xf86-video-voodoo
-
+xkeyboard-config

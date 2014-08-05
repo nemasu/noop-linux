@@ -8,7 +8,7 @@ VERSION=1.7.1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/proto/xcb-proto-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/xcb/xcb-proto-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/proto/
+	LISTURL=http://xorg.freedesktop.org/releases/individual/xcb/
 	FILELIST=`GetFileList`
 	LATEST=0
 

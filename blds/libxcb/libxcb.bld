@@ -8,7 +8,7 @@ VERSION=1.8.1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/lib/libxcb-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/xcb/libxcb-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('libxslt' 'libXau' 'libXdmcp')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/lib/
+	LISTURL=http://xorg.freedesktop.org/releases/individual/xcb/
 	FILELIST=`GetFileList`
 	LATEST=0
 

@@ -1,14 +1,15 @@
 #package name
-NAME=xkeyboard-config
+NAME=cairo
 
 #package version
-VERSION=2.6
+VERSION=1.12.2-1
+DVERSION=1.12.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/data/xkeyboard-config/xkeyboard-config-${VERSION}.tar.bz2
+SRC=http://cairographics.org/releases/cairo-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,7 +36,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/data/xkeyboard-config/
+	LISTURL=http://cairographics.org/releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -49,7 +50,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

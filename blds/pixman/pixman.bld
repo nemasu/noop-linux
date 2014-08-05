@@ -1,14 +1,14 @@
 #package name
-NAME=xkeyboard-config
+NAME=pixman
 
 #package version
-VERSION=2.6
+VERSION=0.26.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/data/xkeyboard-config/xkeyboard-config-${VERSION}.tar.bz2
+SRC=http://cairographics.org/releases/pixman-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/data/xkeyboard-config/
+	LISTURL=http://cairographics.org/releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 

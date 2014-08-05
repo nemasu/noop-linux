@@ -2,7 +2,7 @@
 NAME=libpthread-stubs
 
 #package version
-VERSION=0.3
+VERSION=0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
