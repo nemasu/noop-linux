@@ -28,6 +28,8 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+
 #function BuildAndInstall
 #{
 #}
