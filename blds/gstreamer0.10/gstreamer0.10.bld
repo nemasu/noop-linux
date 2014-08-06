@@ -1,15 +1,14 @@
 #package name
-NAME=alsa-lib
+NAME=gstreamer0.10
 
 #package version
-VERSION=1.0.28
-DVERSION=1.0.28
+VERSION=0.10.36
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.alsa-project.org/pub/lib/alsa-lib-${DVERSION}.tar.bz2
+SRC=http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -31,26 +30,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr
+	sed -e 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/' -i configure.ac
+	NOCONFIGURE=1 ./autogen.sh
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --libexecdir=/usr/lib --disable-gtk-doc --disable-static
+  	
 	make -j3
+	
 	make DESTDIR=/root/bldr-inst install
+
+	cd /root/bldr-inst/usr/bin
+	for bins in `ls *-0.10`; do
+		rm -f ${bins/-0.10/}
+	done
 }
 
+#Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.alsa-project.org/pub/lib/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -s http://gstreamer.freedesktop.org/src/gstreamer/ | grep -E "gstreamer-0\.10\.[0-9]*\.tar\.bz2" | sed -e 's/.*gstreamer-\(0\.10\.[0-9]*\)\.tar\.bz2.*/\1/g' | uniq | tail -n1`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

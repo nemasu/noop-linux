@@ -1,18 +1,17 @@
 #package name
-NAME=alsa-lib
+NAME=libjpeg
 
 #package version
-VERSION=1.0.28
-DVERSION=1.0.28
+VERSION=1.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.alsa-project.org/pub/lib/alsa-lib-${DVERSION}.tar.bz2
+SRC=http://sourceforge.net/projects/libjpeg-turbo/files/${VERSION}/libjpeg-turbo-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF=""
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
@@ -31,26 +30,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr
+
+	[[ `uname -m` == armv6l ]] && CONF="--without-simd"
+
+	./configure $STDUSRCONF --with-jpeg8 $CONF
 	make -j3
-	make DESTDIR=/root/bldr-inst install
+	make DESTDIR=/root/bldr-inst docdir="/usr/share/doc/libjpeg" exampledir="/usr/share/doc/libjpeg" install
+
+	install -m644 jpegint.h /root/bldr-inst/usr/include/
 }
 
+#Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.alsa-project.org/pub/lib/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -s http://sourceforge.net/projects/libjpeg-turbo/files/ | grep -E "files\/[0-9\.][0-9\.]*\/\"" | sed -e 's/.*files\/\([0-9\.][0-9\.]*\)\/\".*/\1/g' | head -n1`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

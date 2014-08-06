@@ -2,7 +2,7 @@
 NAME=freetype2
 
 #package version
-VERSION=2.4.10
+VERSION=2.5.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

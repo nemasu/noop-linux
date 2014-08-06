@@ -1,15 +1,14 @@
 #package name
-NAME=alsa-lib
+NAME=libtheora
 
 #package version
-VERSION=1.0.28
-DVERSION=1.0.28
+VERSION=1.1.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.alsa-project.org/pub/lib/alsa-lib-${DVERSION}.tar.bz2
+SRC="http://downloads.xiph.org/releases/theora/libtheora-${VERSION}.tar.bz2"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -31,14 +30,16 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr
+	./configure --prefix=/usr --enable-shared --disable-static
 	make -j3
+
 	make DESTDIR=/root/bldr-inst install
 }
 
+#Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.alsa-project.org/pub/lib/
+	LISTURL=http://downloads.xiph.org/releases/theora/
 	FILELIST=`GetFileList`
 	LATEST=0
 

@@ -1,0 +1,79 @@
+#package name
+NAME=libfbclient
+
+#package version
+VERSION=2.5.1.26351
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://downloads.sourceforge.net/firebird/Firebird-${VERSION}-0.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure --prefix=/usr --with-system-icu --without-fbudf \
+		--without-fbsbin --without-fbconf --without-fbdoc --without-fbsample \
+		--without-fbsample-db --without-fbintl --without-fbmisc --without-fbhelp \
+		--without-fbsecure-db --with-fbmsg=/usr/share/firebird --without-fblog \
+		--without-fbglock --without-fbplugins
+
+	make
+
+	pkgdir=/root/bldr-inst
+	srcdir=`pwd`
+
+	mkdir -p $pkgdir/usr/{bin,share/firebird}
+	cp -R gen/firebird/{lib,include} $pkgdir/usr
+	rm -f $pkgdir/usr/lib/libedit.a
+	install -m644 gen/firebird/*.msg $pkgdir/usr/share/firebird
+	install -m755 gen/firebird/bin/fb_config $pkgdir/usr/bin
+
+	# Add libgds support FS#30062 FS#30282
+	cd $pkgdir/usr/lib
+	ln -s libfbclient.so libgds.so.0
+	ln -s libfbclient.so libgds.so
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://www.firebirdsql.org/en/firebird-2-5-3/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
