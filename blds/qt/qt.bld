@@ -1,12 +1,28 @@
 NAME=qt
 VERSION=4.8.6
 ISUSR=1
-SRC=http://releases.qt-project.org/qt4/source/qt-everywhere-opensource-src-${VERSION}.tar.gz
+MMVER=`echo $VERSION | sed -e 's/\([0-9]*\.[0-9]*\).*/\1/g'`
+SRC=http://download.qt-project.org/official_releases/qt/$MMVER/$VERSION/qt-everywhere-opensource-src-${VERSION}.tar.gz
 EXTRACONF=
 ISSPECIAL=1
-DEPS=('alsa-lib' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'libICE' 'libSM' 'libX11' 'libXext' 'libXrender' 'libfbclient' 'libjpeg' 'libmng' 'libpng' 'libxml2' 'mesalib' 'mysql-libs' 'openssl' 'postgresql' 'sqlite' 'tiff' 'unixodbc' 'zlib')
+
+if [ "`uname -m`" == "x86_64" ];
+then
+
+	EXDEP=('libfbclient' 'mesalib')
+
+fi
+
+DEPS=('alsa-lib' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'libICE' 'libSM' 'libX11' 'libXext' 'libXrender' 'libjpeg' 'libmng' 'libpng' 'libxml2' 'mysql-libs' 'openssl' 'postgresql' 'sqlite' 'tiff' 'unixodbc' 'zlib' $EXDEP)
+
+
 function BuildAndInstall
 {
+	if [ "`uname -m`" == "armv6l" ];
+	then
+		CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
+	fi
+
 	./configure -confirm-license -opensource \
 		-prefix /usr \
 		-docdir /usr/share/doc/qt \
@@ -31,7 +47,7 @@ function BuildAndInstall
 		-optimized-qmake \
 		-reduce-relocations \
 		-dbus-linked \
-		-no-openvg
+		-no-openvg $CONF
 		make -j3
 		make INSTALL_ROOT=/root/bldr-inst install
 
