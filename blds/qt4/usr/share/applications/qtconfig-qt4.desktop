@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Qt Config 
-Comment=Configure Qt behavior, styles, fonts
-Exec=/usr/bin/qtconfig
-Icon=qtlogo
+Comment=Configure Qt4 behavior, styles, fonts
+Exec=qtconfig-qt4
+Icon=qt4logo
 Terminal=false
 Encoding=UTF-8
 Type=Application

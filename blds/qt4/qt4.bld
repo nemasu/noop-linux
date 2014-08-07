@@ -1,0 +1,129 @@
+NAME=qt4
+VERSION=4.8.6
+DVERSION=4.8.6
+ISUSR=1
+MMVER=`echo $DVERSION | sed -e 's/\([0-9]*\.[0-9]*\).*/\1/g'`
+SRC=http://download.qt-project.org/official_releases/qt/$MMVER/$DVERSION/qt-everywhere-opensource-src-${DVERSION}.tar.gz
+EXTRACONF=
+ISSPECIAL=1
+
+if [ "`uname -m`" == "x86_64" ];
+then
+
+	EXDEP=('libfbclient' 'mesalib')
+
+fi
+
+DEPS=('alsa-lib' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'libICE' 'libSM' 'libX11' 'libXext' 'libXrender' 'libjpeg' 'libmng' 'libpng' 'libxml2' 'mysql-libs' 'openssl' 'postgresql' 'sqlite' 'tiff' 'unixodbc' 'zlib' $EXDEP)
+
+
+function BuildAndInstall
+{
+	sed -i "s|-O2|${CXXFLAGS}|" mkspecs/common/{g++,gcc}-base.conf
+	sed -i "/^QMAKE_LFLAGS_RPATH/s| -Wl,-rpath,||g" mkspecs/common/gcc-base-unix.conf
+	sed -i "/^QMAKE_LFLAGS\s/s|+=|+= ${LDFLAGS}|g" mkspecs/common/gcc-base.conf
+
+	cp mkspecs/common/linux{,32}.conf
+	sed -i "/^QMAKE_LIBDIR\s/s|=|= /usr/lib32|g" mkspecs/common/linux32.conf
+	sed -i "s|common/linux.conf|common/linux32.conf|" mkspecs/linux-g++-32/qmake.conf
+
+	export QT4DIR="${srcdir}"/${_pkgfqn}
+	export LD_LIBRARY_PATH=${QT4DIR}/lib:${LD_LIBRARY_PATH}
+	
+
+	if [ "`uname -m`" == "armv6l" ];
+	then
+		CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
+	fi
+
+	./configure -confirm-license -opensource \
+		-prefix /usr \
+		-bindir /usr/lib/qt4/bin \
+		-headerdir /usr/include/qt4 \
+		-docdir /usr/share/doc/qt4 \
+		-plugindir /usr/lib/qt4/plugins \
+		-importdir /usr/lib/qt4/imports \
+		-datadir /usr/share/qt4 \
+		-translationdir /usr/share/qt4/translations \
+		-sysconfdir /etc/xdg \
+		-examplesdir /usr/share/doc/qt4/examples \
+		-demosdir /usr/share/doc/qt4/demos \
+		-plugin-sql-{psql,mysql,sqlite,odbc,ibase} \
+		-system-sqlite \
+		-no-phonon \
+		-no-phonon-backend \
+		-graphicssystem raster \
+		-openssl-linked \
+		-nomake demos \
+		-nomake examples \
+		-nomake docs \
+		-silent \
+		-no-rpath \
+		-optimized-qmake \
+		-reduce-relocations \
+		-dbus-linked \
+		-no-openvg $CONF
+		make -j3
+		make INSTALL_ROOT=/root/bldr-inst install
+
+	# install missing icons and desktop files
+    for icon in tools/linguist/linguist/images/icons/linguist-*-32.png ; do
+      size=$(echo $(basename ${icon}) | cut -d- -f2)
+      install -p -D -m644 ${icon} \
+        /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/linguist.png
+    done
+    install -p -D -m644 src/gui/dialogs/images/qtlogo-64.png \
+      /root/bldr-inst/usr/share/icons/hicolor/64x64/apps/qt4logo.png
+    install -p -D -m644 tools/assistant/tools/assistant/images/assistant.png \
+      /root/bldr-inst/usr/share/icons/hicolor/32x32/apps/assistant-qt4.png
+    install -p -D -m644 tools/designer/src/designer/images/designer.png \
+      /root/bldr-inst/usr/share/icons/hicolor/128x128/apps/designer-qt4.png
+    install -d /root/bldr-inst/usr/share/applications
+
+	for icon in tools/linguist/linguist/images/icons/linguist-*-32.png ; do
+      size=$(echo $(basename ${icon}) | cut -d- -f2)
+      install -D -m644 ${icon} \
+          /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/linguist-qt4.png
+    done
+    install -D -m644 tools/qdbus/qdbusviewer/images/qdbusviewer.png \
+      /root/bldr-inst/usr/share/icons/hicolor/32x32/apps/qdbusviewer-qt4.png
+    install -D -m644 tools/qdbus/qdbusviewer/images/qdbusviewer-128.png \
+      /root/bldr-inst/usr/share/icons/hicolor/128x128/apps/qdbusviewer-qt4.png
+
+    # Useful symlinks for cmake and configure scripts
+    install -d /root/bldr-inst/usr/bin
+    for b in /root/bldr-inst/usr/lib/qt4/bin/*; do
+      ln -s /usr/lib/qt4/bin/$(basename $b) /root/bldr-inst/usr/bin/$(basename $b)-qt4
+    done
+
+	 # Fix wrong libs path in pkgconfig files
+	srcdir=`pwd`
+    find /root/bldr-inst/usr/lib/pkgconfig -type f -name '*.pc' \
+      -exec perl -pi -e "s, -L${srcdir}/?\S+,,g" {} \;
+
+    # Fix wrong bins path in pkgconfig files
+    find /root/bldr-inst/usr/lib/pkgconfig -type f -name '*.pc' \
+      -exec sed -i 's|/usr/bin/|/usr/lib/qt4/bin/|g' {} \;
+
+    # Fix wrong path in prl files
+    find /root/bldr-inst/usr/lib -type f -name '*.prl' \
+      -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d;s/\(QMAKE_PRL_LIBS =\).*/\1/' {} \;
+
+    # The TGA plugin is broken
+    rm "${pkgdir}"/usr/lib/qt4/plugins/imageformats/libqtga.so
+
+	
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s http://download.qt-project.org/official_releases/qt/4.8/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+					echo "$NAME: New Version Available! - $LATEST"
+	fi
+	}
+

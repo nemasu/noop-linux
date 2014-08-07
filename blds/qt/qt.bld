@@ -1,89 +1,120 @@
-NAME=qt
-VERSION=4.8.6
+#package name
+NAME=qt5-base
+
+#package version
+VERSION=5.3.1
+
+#directory locations, 99.99% of the time this is 1
 ISUSR=1
-MMVER=`echo $VERSION | sed -e 's/\([0-9]*\.[0-9]*\).*/\1/g'`
-SRC=http://download.qt-project.org/official_releases/qt/$MMVER/$VERSION/qt-everywhere-opensource-src-${VERSION}.tar.gz
+
+#source location (used by wget)
+MM=`echo $VERSION | sed -e 's/\([0-9]\.[0-9]\)\.[0-9\.]*/\1/g'`
+SRC="http://download.qt-project.org/official_releases/qt/$MM/${VERSION}/single/qt-everywhere-opensource-src-${VERSION}.tar.xz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
 
-if [ "`uname -m`" == "x86_64" ];
-then
+# build/package dependancies
+DEPS=
 
-	EXDEP=('libfbclient' 'mesalib')
+# 'no' to skip calls to strip
+STRIP=
 
-fi
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
 
-DEPS=('alsa-lib' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'libICE' 'libSM' 'libX11' 'libXext' 'libXrender' 'libjpeg' 'libmng' 'libpng' 'libxml2' 'mysql-libs' 'openssl' 'postgresql' 'sqlite' 'tiff' 'unixodbc' 'zlib' $EXDEP)
-
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
 
 function BuildAndInstall
 {
-	if [ "`uname -m`" == "armv6l" ];
+ 
+  sed -i "s|-O2|${CXXFLAGS}|" qtbase/mkspecs/common/{g++,gcc}-base.conf
+  sed -i "/^QMAKE_LFLAGS_RPATH/s| -Wl,-rpath,||g" qtbase/mkspecs/common/gcc-base-unix.conf
+  sed -i "/^QMAKE_LFLAGS\s/s|+=|+= ${LDFLAGS}|g" qtbase/mkspecs/common/gcc-base.conf
+
+  export QTDIR=`pwd`
+  export LD_LIBRARY_PATH=${QTDIR}/qtbase/lib:${QTDIR}/qttools/lib:${LD_LIBRARY_PATH}
+  export QT_PLUGIN_PATH=${QTDIR}/qtbase/plugins
+
+  [[ ${CARCH} = i686 ]] && CONF=-no-sse2
+
+  	if [ "`uname -m`" == "armv6l" ];
 	then
 		CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
 	fi
 
-	./configure -confirm-license -opensource \
-		-prefix /usr \
-		-docdir /usr/share/doc/qt \
-		-plugindir /usr/lib/qt/plugins \
-		-importdir /usr/lib/qt/imports \
-		-datadir /usr/share/qt \
-		-translationdir /usr/share/qt/translations \
-		-sysconfdir /etc/xdg \
-		-examplesdir /usr/share/doc/qt/examples \
-		-demosdir /usr/share/doc/qt/demos \
-		-plugin-sql-{psql,mysql,sqlite,odbc,ibase} \
-		-system-sqlite \
-		-no-phonon \
-		-no-phonon-backend \
-		-graphicssystem raster \
-		-openssl-linked \
-		-nomake demos \
-		-nomake examples \
-		-nomake docs \
-		-silent \
-		-no-rpath \
-		-optimized-qmake \
-		-reduce-relocations \
-		-dbus-linked \
-		-no-openvg $CONF
-		make -j3
-		make INSTALL_ROOT=/root/bldr-inst install
+  PYTHON=/usr/bin/python2 ./configure -confirm-license -opensource \
+    -prefix /usr \
+    -bindir /usr/lib/qt/bin \
+    -docdir /usr/share/doc/qt \
+    -headerdir /usr/include/qt \
+    -archdatadir /usr/lib/qt \
+    -datadir /usr/share/qt \
+    -sysconfdir /etc/xdg \
+    -examplesdir /usr/share/doc/qt/examples \
+    -plugin-sql-{psql,mysql,sqlite,odbc,ibase} \
+    -system-sqlite \
+    -openssl-linked \
+    -nomake examples \
+    -no-rpath \
+    -optimized-qmake \
+    -dbus-linked \
+    -system-harfbuzz \
+    -journald \
+    -reduce-relocations ${CONF}
+  make -j3
+  # Fix paths
+  find ${QTDIR} -name Makefile -exec sed -i s|/usr/lib/qt/bin/qdoc|${QTDIR}/qtbase/bin/qdoc|g {} +
+  find ${QTDIR} -name Makefile.qmake-docs -exec sed -i s|/usr/lib/qt/bin/qdoc|${QTDIR}/qtbase/bin/qdoc|g {} +
+  find ${QTDIR} -name Makefile -exec sed -i s|/usr/lib/qt/bin/qhelpgenerator|${QTDIR}/qttools/bin/qhelpgenerator|g {} +
+  find ${QTDIR} -name Makefile.qmake-docs -exec sed -i s|/usr/lib/qt/bin/qhelpgenerator|${QTDIR}/qttools/bin/qhelpgenerator|g {} +
+  sed -i s|/usr/lib/qt/bin/qhelpgenerator|${QTDIR}/qttools/bin/qhelpgenerator|g qtwebkit/Source/Makefile.api
+  make docs
 
-	# install missing icons and desktop files
-    for icon in tools/linguist/linguist/images/icons/linguist-*-32.png ; do
-      size=$(echo $(basename ${icon}) | cut -d- -f2)
-      install -p -D -m644 ${icon} \
-        /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/linguist.png
-    done
-    install -p -D -m644 src/gui/dialogs/images/qtlogo-64.png \
-      /root/bldr-inst/usr/share/icons/hicolor/64x64/apps/qtlogo.png
-    install -p -D -m644 tools/assistant/tools/assistant/images/assistant.png \
-      /root/bldr-inst/usr/share/icons/hicolor/32x32/apps/assistant.png
-    install -p -D -m644 tools/designer/src/designer/images/designer.png \
-      /root/bldr-inst/usr/share/icons/hicolor/128x128/apps/designer.png
-    install -d /root/bldr-inst/usr/share/applications
-	
-    # Fix wrong path in pkgconfig files
-	srcdir=`pwd`
-    find /root/bldr-inst/usr/lib/pkgconfig -type f -name '*.pc' \
-      -exec perl -pi -e "s, -L${srcdir}/?\S+,,g" {} \;
+  make DESTDIR=/root/bldrs-inst install
+ 
+  #From Arch, cheating
+  pkgdir=/root/bldr-inst
 
-    # Fix wrong path in prl files
-    find /root/bldr-inst/usr/lib -type f -name '*.prl' \
-      -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d;s/\(QMAKE_PRL_LIBS =\).*/\1/' {} \;
+  # Fix wrong path in prl files
+  find "${pkgdir}/usr/lib" -type f -name '*.prl' \
+    -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d;s/\(QMAKE_PRL_LIBS =\).*/\1/' {} \;
+
+  # Fix wrong qmake path in pri file
+  sed -i "s|${srcdir}/${_pkgfqn}/qtbase|/usr|" \
+    "${pkgdir}"/usr/lib/qt/mkspecs/modules/qt_lib_bootstrap_private.pri
+
+  # Useful symlinks
+  install -d "${pkgdir}"/usr/bin
+  for b in "${pkgdir}"/usr/lib/qt/bin/*; do
+    ln -s /usr/lib/qt/bin/$(basename $b) "${pkgdir}"/usr/bin/$(basename $b)-qt5
+  done
+
+  # install missing icons and desktop files
+  for icon in src/linguist/linguist/images/icons/linguist-*-32.png ; do
+    size=$(echo $(basename ${icon}) | cut -d- -f2)
+    install -p -D -m644 ${icon} \
+      "${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/linguist.png"
+  done
+
+
+
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://download.qt-project.org/official_releases/qt/4.8/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g'`
+	MM=`curl -s http://download.qt-project.org/official_releases/qt/ | grep -E "href=\"[0-9\.][0-9\.]*\/" | sed -e 's/.*href=\"\([0-9\.][0-9\.]*\)\/.*/\1/g' | head -n1`
+	LATEST=`curl -s http://download.qt-project.org/official_releases/qt/$MM/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g' | head -n1`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
-					echo "$NAME: New Version Available! - $LATEST"
+			echo "$NAME: New Version Available! - $LATEST"
 	fi
-	}
+}
 
