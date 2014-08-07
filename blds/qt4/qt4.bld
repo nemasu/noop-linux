@@ -29,11 +29,10 @@ function BuildAndInstall
 
 	export QT4DIR="${srcdir}"/${_pkgfqn}
 	export LD_LIBRARY_PATH=${QT4DIR}/lib:${LD_LIBRARY_PATH}
-	
 
 	if [ "`uname -m`" == "armv6l" ];
 	then
-		EXTRACONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
+		EXTRACONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon -lpthread"
 	else
 		EXTRACONF="-plugin-sql-ibase"
 	fi
