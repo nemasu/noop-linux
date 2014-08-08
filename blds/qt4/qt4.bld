@@ -27,7 +27,7 @@ function BuildAndInstall
 	sed -i "/^QMAKE_LIBDIR\s/s|=|= /usr/lib32|g" mkspecs/common/linux32.conf
 	sed -i "s|common/linux.conf|common/linux32.conf|" mkspecs/linux-g++-32/qmake.conf
 
-	export QT4DIR="${srcdir}"/${_pkgfqn}
+	export QT4DIR=`pwd`
 	export LD_LIBRARY_PATH=${QT4DIR}/lib:${LD_LIBRARY_PATH}
 
 	if [ "`uname -m`" == "armv6l" ];
@@ -68,6 +68,7 @@ function BuildAndInstall
 		make INSTALL_ROOT=/root/bldr-inst install
 
 	# install missing icons and desktop files
+	srcdir=`pwd`
     for icon in tools/linguist/linguist/images/icons/linguist-*-32.png ; do
       size=$(echo $(basename ${icon}) | cut -d- -f2)
       install -p -D -m644 ${icon} \
@@ -98,7 +99,6 @@ function BuildAndInstall
     done
 
 	 # Fix wrong libs path in pkgconfig files
-	srcdir=`pwd`
     find /root/bldr-inst/usr/lib/pkgconfig -type f -name '*.pc' \
       -exec perl -pi -e "s, -L${srcdir}/?\S+,,g" {} \;
 
