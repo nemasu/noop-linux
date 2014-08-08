@@ -3,7 +3,7 @@ NAME=tigervnc
 
 #package version
 VERSION=1.3.1
-XORGVERSION=1.12.2
+XORGVERSION=1.13.4
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
@@ -37,6 +37,10 @@ function BuildAndInstall
   cd $CURDIR
   cp -r ../xorg-server-$XORGVERSION/* unix/xserver
   
+  pushd unix/xserver
+  patch -Np1 -i ../xserver113.patch
+  popd
+
   cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr
   make -j3
   make DESTDIR=/root/bldr-inst install
@@ -45,7 +49,6 @@ function BuildAndInstall
   [[ `uname -m` == "armv6l" ]] && CONFIG="--disable-glx --disable-dri2"
 
 	cd unix/xserver
-	patch -Np1 -i ../xserver112.patch
 	autoreconf -fiv
 	./configure --prefix=/usr \
 		--disable-static --disable-xinerama --without-dtrace \
