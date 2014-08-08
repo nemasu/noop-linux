@@ -1,0 +1,72 @@
+#package name
+NAME=cronie
+
+#package version
+VERSION=1.4.11
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="https://fedorahosted.org/releases/c/r/${NAME}/${NAME}-${VERSION}.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+   ./configure \
+			--prefix=/usr \
+			--sysconfdir=/etc \
+			--localstatedir=/var \
+			--enable-anacron \
+			--with-inotify \
+			--with-pam
+
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	install -Dm644 crond.sysconfig /root/bldr-inst/etc/conf.d/crond
+	install -Dm644 contrib/anacrontab /root/bldr-inst/etc/anacrontab
+	install -Dm644 contrib/0hourly /root/bldr-inst/etc/cron.d/0hourly
+	install -Dm755 contrib/0anacron /root/bldr-inst/etc/cron.hourly/0anacron
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=https://fedorahosted.org/releases/c/r/cronie/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
