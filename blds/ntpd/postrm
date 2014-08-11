@@ -1,0 +1,2 @@
+getent passwd ntp &>/dev/null && userdel ntp >/dev/null
+getent group ntp &>/dev/null && groupdel ntp >/dev/null

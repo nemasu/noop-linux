@@ -1768,7 +1768,6 @@ if [ $1 = "-libdiff" ]; then
 fi
 
 if [ $1 = "-init" ]; then
-	$mv /usr/bin/bash-new /usr/bin/bash
 	$cp -r /etc/skel/* ~/ &> /dev/null
 	$cp /etc/skel/.* ~/ &> /dev/null
 	$mkdir -p /lib/locale
