@@ -88,12 +88,13 @@ function BuildAndInstall
   if [ "`uname -m`" != "armv6l" ];
   then
 	# Prepare NaCL toolchain - this is way easier
-  	python2 ./native_client/build/download_toolchains.py -k
+	#python2 ./native_client/build/download_toolchains.py -k
+	python2 ./build/download_nacl_toolchains.py
   fi
   
   build/linux/unbundle/replace_gyp_files.py "${options[@]}"
   build/gyp_chromium -f make --depth=. "${options[@]}"
-  
+ 
   if [ "`uname -m`" == "armv6l" ];
   then
   	make -j3 BUILDTYPE=Release chrome chrome_sandbox
