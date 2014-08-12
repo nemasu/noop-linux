@@ -9,7 +9,8 @@ DVERSION=2.24.23
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-$DVERSION.tar.xz
+MM=`echo $DVERSION | sed -e 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
+SRC=http://ftp.gnome.org/pub/gnome/sources/gtk+/$MM/gtk+-$DVERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,8 +18,13 @@ EXTRACONF=
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
 
+if [ "`uname -m`" == "x86_64" ];
+then
+	EXTRADEPS='cups' 'gail' 
+fi
+
 # build/package dependancies
-DEPS=('atk' 'cairo' 'cups' 'expat' 'fontconfig' 'freetype2' 'gail' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libffi' 'libpng' 'libxcb' 'pango' 'pcre' 'pixman' 'zlib')
+DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libffi' 'libpng' 'libxcb' 'pango' 'pcre' 'pixman' 'zlib' $EXTRADEPS)
 
 # 'no' to skip calls to strip
 STRIP=

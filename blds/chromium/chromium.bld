@@ -1,0 +1,159 @@
+#!/bin/bash
+# NAME
+# VERSION
+# ISUSR
+# SRC
+# POST,PRE
+# EXTRAFILES
+# ISSPECIAL
+
+NAME=chromium
+DVERSION=36.0.1985.125
+VERSION=36.0.1985.125
+ISUSR=1
+#SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
+SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
+EXTRACONF=
+ISSPECIAL=1
+STRIP="no"
+DEPS=( 'alsa-lib' 'atk' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libcap2' 'libevent' 'libgcrypt' 'libjpeg' 'libpng' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libxml2' 'libXrender' 'libXScrnSaver' 'libxslt' 'libXtst' 'nspr' 'nss' 'pango' 'pciutils' 'speech-dispatcher' 'systemd' )
+function BuildAndInstall
+{
+
+  export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+
+  # CFLAGS are passed through release_extra_cflags below
+  export -n CFLAGS CXXFLAGS
+
+  # Silence "identifier 'nullptr' is a keyword in C++11" warnings
+  CFLAGS+=' -Wno-c++0x-compat'
+
+  if [ "i686" == `uname -m` ];
+  then
+		CFLAGS+=' -march=i686'
+  fi
+
+  if [ "`uname -m`" == "armv6l" ]; then
+	arch_specific_flags="
+		-Darmv7=0 \
+		-Darmv6=1 \
+		-Darm_fpu=vfp \
+		-Darm_thumb=0 \
+		-Dv8_can_use_vfp_instructions=false \
+		-Dv8_can_use_vfp2_instructions=true"
+	fi
+
+  # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
+# Note: These are for noop Linux use ONLY. For your own distribution, please
+# get your own set of keys. Feel free to contact chromium@nooplinux.org for
+# more information.
+	_google_api_key=AIzaSyB9Q6_d-Yce6g1iFO0rLj4N74ANKqWnrNc
+	_google_default_client_id=89099530172.apps.googleusercontent.com
+	_google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ
+
+    
+     options=(
+	-Dwerror= 
+	-Dgoogle_api_key=$_google_api_key 
+    -Dgoogle_default_client_id=$_google_default_client_id 
+    -Dgoogle_default_client_secret=$_google_default_client_secret 
+    -Dlinux_sandbox_path=/usr/lib/chromium/chromium-sandbox 
+	-Dlinux_link_libpci=1 
+	-Dlinux_link_libspeechd=1 
+	-Dlinux_link_gsettings=1 
+    -Dlinux_strip_binary=1 
+    -Dlinux_use_gold_binary=0 
+    -Dlinux_use_gold_flags=0 
+    -Drelease_extra_cflags="$CFLAGS" 
+    -Dproprietary_codecs=1 
+    -Duse_system_bzip2=1 
+    -Dffmpeg_branding=Chrome 
+    -Duse_system_ffmpeg=0 
+    -Duse_system_libevent=1 
+    -Duse_system_libjpeg=1 
+    -Duse_system_libpng=1 
+    -Duse_system_libxml=1 
+    -Duse_system_ssl=0 
+    -Duse_system_yasm=1 
+    -Duse_system_zlib=0 
+    -Duse_gconf=0 
+    -Ddisable_sse2=1 ${arch_specific_flags})
+
+  srcdir=.
+
+  # Use Python 2 - this is terrible -_-
+  rm /usr/bin/python
+  ln -s /usr/bin/python2 /usr/bin/python
+
+  if [ "`uname -m`" != "armv6l" ];
+  then
+	# Prepare NaCL toolchain - this is way easier
+  	python2 ./native_client/build/download_toolchains.py -k
+  fi
+  
+  build/linux/unbundle/replace_gyp_files.py "${options[@]}"
+  build/gyp_chromium -f make --depth=. "${options[@]}"
+  
+  if [ "`uname -m`" == "armv6l" ];
+  then
+  	make -j3 BUILDTYPE=Release chrome chrome_sandbox
+  else
+  	make -j10 BUILDTYPE=Release chrome chrome_sandbox chromedriver
+  fi
+
+  srcdir=./
+  pkgdir=/root/bldr-inst
+
+  install -D out/Release/chrome "$pkgdir/usr/lib/chromium/chromium"
+
+  install -Dm4755 -o root -g root out/Release/chrome_sandbox \
+    "$pkgdir/usr/lib/chromium/chromium-sandbox"
+
+  install -D out/Release/chromedriver "$pkgdir/usr/lib/chromium/chromedriver"
+
+  if [ "`uname -m`" != "armv6l" ];
+  then
+	  cp out/Release/{*.pak,libffmpegsumo.so,nacl_helper{,_bootstrap}} \
+		out/Release/{libppGoogleNaClPluginChrome.so,nacl_irt_*.nexe} \
+		"$pkgdir/usr/lib/chromium/"
+  
+    # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
+	strip "$pkgdir/usr/lib/chromium/chromedriver" \
+    	"$pkgdir/usr/lib/chromium/"nacl_helper{,_bootstrap}
+
+  	strip --strip-all "$pkgdir/usr/lib/chromium/libffmpegsumo.so" \
+    	"$pkgdir/usr/lib/chromium/libppGoogleNaClPluginChrome.so"
+  fi
+
+  strip --strip-debug "$pkgdir/usr/lib/chromium/"{chromium,chromium-sandbox} 
+
+  
+  cp -a out/Release/locales out/Release/icudtl.dat "$pkgdir/usr/lib/chromium/"
+
+  install -Dm644 out/Release/chrome.1 "$pkgdir/usr/share/man/man1/chromium.1"
+
+  for size in 22 24 48 64 128 256; do
+    install -Dm644 "chrome/app/theme/chromium/product_logo_$size.png" \
+      "$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png"
+  done
+
+  for size in 16 32; do
+    install -Dm644 "chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
+      "$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png"
+  done
+  mkdir -p $pkgdir/usr/bin
+  ln -s /usr/lib/chromium/chromedriver "$pkgdir/usr/bin/chromedriver"
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	#This cant be accurate...
+	LATEST=`curl -s "http://googlechromereleases.blogspot.jp/search/label/Stable%20updates" | grep "Linux" | grep -E "Chrome [0-9\.][0-9\.]*" | sed -e 's/.*Chrome \([0-9\.][0-9\.]*\).*/\1/g' | head -n1`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
