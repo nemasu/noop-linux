@@ -8,8 +8,8 @@
 # ISSPECIAL
 
 NAME=chromium
-DVERSION=36.0.1985.125
-VERSION=36.0.1985.125
+DVERSION=36.0.1985.143
+VERSION=36.0.1985.143
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -153,7 +153,7 @@ function BuildAndInstall
 function Detect
 {
 	#This cant be accurate...
-	LATEST=`curl -s "http://googlechromereleases.blogspot.jp/search/label/Stable%20updates" | grep "Linux" | grep -E "Chrome [0-9\.][0-9\.]*" | sed -e 's/.*Chrome \([0-9\.][0-9\.]*\).*/\1/g' | head -n1`
+	LATEST=`curl -s "http://googlechromereleases.blogspot.jp/search/label/Stable%20updates" | grep "Linux" | grep -E "[0-9\.][0-9\.]*" | head -n1 | sed -e 's/.*\s\([0-9\.]*\)\s.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
