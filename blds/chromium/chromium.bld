@@ -16,7 +16,7 @@ SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.ta
 EXTRACONF=
 ISSPECIAL=1
 STRIP="no"
-DEPS=( 'alsa-lib' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libcap2' 'libevent' 'libgcrypt' 'libjpeg' 'libpng' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libxml2' 'libXrender' 'libXScrnSaver' 'libxslt' 'libXtst' 'nspr' 'nss' 'pango' 'pciutils' 'systemd' 'cups' 'libdrm' 'pulseaudio' 'speech-dispatcher')
+DEPS=('ninja' 'alsa-lib' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libcap2' 'libevent' 'libgcrypt' 'libjpeg' 'libpng' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libxml2' 'libXrender' 'libXScrnSaver' 'libxslt' 'libXtst' 'nspr' 'nss' 'pango' 'pciutils' 'systemd' 'cups' 'libdrm' 'pulseaudio' 'speech-dispatcher')
 
 function BuildAndInstall
 {
@@ -59,6 +59,11 @@ function BuildAndInstall
     -Dgoogle_default_client_id=$_google_default_client_id 
     -Dgoogle_default_client_secret=$_google_default_client_secret 
     -Dlinux_sandbox_path=/usr/lib/chromium/chromium-sandbox 
+	-Dlinux_use_bundled_binutils=0
+    -Dlogging_like_official_build=1
+	-Dproprietary_codecs=1
+	-Dlinux_use_bundled_gold=0
+    -Dlinux_use_gold_flags=0
 	-Dlinux_link_libpci=1 
 	-Dlinux_link_libspeechd=1 
 	-Dlinux_link_gsettings=1 
@@ -77,7 +82,11 @@ function BuildAndInstall
     -Duse_system_ssl=0 
     -Duse_system_yasm=1 
     -Duse_system_zlib=0 
-    -Duse_gconf=0 
+    -Duse_gconf=0
+	-Duse_mojo=0
+    -Duse_gconf=0
+    -Ddisable_fatal_linker_warnings=1
+    -Ddisable_glibc=1
     -Ddisable_sse2=1 ${arch_specific_flags})
 
   srcdir=.
@@ -94,16 +103,18 @@ function BuildAndInstall
   fi
   
   build/linux/unbundle/replace_gyp_files.py "${options[@]}"
-  build/gyp_chromium -f make --depth=. "${options[@]}"
+  build/gyp_chromium --depth=. "${options[@]}"
 
   #Bug? Opus has -Wno-#pragma-messages, i think the # is commenting the pragma-messages part out
   sed -i -e '/-Wno-/d' third_party/opus/opus.gyp
 
+  export PATH=`pwd`/python2-path:$PATH
+
   if [ "`uname -m`" == "armv6l" ];
   then
-  	make -j3 BUILDTYPE=Release chrome chrome_sandbox
+  	ninja -C out/Release chrome chrome_sandbox
   else
-  	make -j10 BUILDTYPE=Release chrome chrome_sandbox chromedriver
+  	ninja -C out/Release chrome chrome_sandbox chromedriver
   fi
 
   srcdir=./

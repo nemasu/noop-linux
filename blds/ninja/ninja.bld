@@ -1,0 +1,49 @@
+#package name
+NAME=ninja
+
+#package version
+VERSION=1.5.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/martine/ninja/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	python2 ./bootstrap.py
+	install -m755 -D ninja /root/bldr-inst/usr/bin/ninja
+	install -m644 -D misc/bash-completion /root/bldr-inst/usr/share/bash-completion/completions/ninja
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s https://github.com/martine/ninja/releases/latest | sed -e 's/.*tag\/v\([0-9\.]*\)".*/\1/g'`
+	
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
