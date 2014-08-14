@@ -102,7 +102,7 @@ function BuildAndInstall
 	python2 ./build/download_nacl_toolchains.py
   fi
  
-#Using clang, cause gcc build is borked
+  #Using clang, cause gcc build is borked
   mkdir -p third_party/llvm-build/Release+Asserts/bin
   ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
   ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
@@ -111,7 +111,7 @@ function BuildAndInstall
   sed -i '/-Wno-absolute-value/d' build/common.gypi
 
   build/linux/unbundle/replace_gyp_files.py "${options[@]}"
-  GYP_DEFINES=clang=1 build/gyp_chromium --depth=. "${options[@]}"
+  build/gyp_chromium --depth=. "${options[@]}"
 
   #Bug? Opus has -Wno-#pragma-messages, i think the # is commenting the pragma-messages part out
   sed -i -e '/-Wno-/d' third_party/opus/opus.gyp
