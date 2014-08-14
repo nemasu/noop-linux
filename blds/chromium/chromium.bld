@@ -16,7 +16,7 @@ SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.ta
 EXTRACONF=
 ISSPECIAL=1
 STRIP="no"
-DEPS=('llvm' 'ninja' 'alsa-lib' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libcap2' 'libevent' 'libgcrypt' 'libjpeg' 'libpng' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libxml2' 'libXrender' 'libXScrnSaver' 'libxslt' 'libXtst' 'nspr' 'nss' 'pango' 'pciutils' 'systemd' 'cups' 'libdrm' 'pulseaudio' 'speech-dispatcher')
+DEPS=('ninja' 'alsa-lib' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libcap2' 'libevent' 'libgcrypt' 'libjpeg' 'libpng' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libxml2' 'libXrender' 'libXScrnSaver' 'libxslt' 'libXtst' 'nspr' 'nss' 'pango' 'pciutils' 'systemd' 'cups' 'libdrm' 'pulseaudio' 'speech-dispatcher')
 
 function BuildAndInstall
 {
@@ -25,9 +25,6 @@ function BuildAndInstall
 
   # CFLAGS are passed through release_extra_cflags below
   export -n CFLAGS CXXFLAGS
-
-  # Silence "identifier 'nullptr' is a keyword in C++11" warnings
-  CFLAGS+=' -Wno-c++0x-compat'
 
   if [ "i686" == `uname -m` ];
   then
@@ -42,7 +39,12 @@ function BuildAndInstall
 		-Darm_thumb=0 \
 		-Dv8_can_use_vfp_instructions=false \
 		-Dv8_can_use_vfp2_instructions=true"
-	fi
+  fi
+
+  if [ "`uname -m`" == "x86_64" ]; then
+	 arch_specific_flags="
+		 -Dtarget_arch=x64"
+  fi
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for noop Linux use ONLY. For your own distribution, please
@@ -55,23 +57,19 @@ function BuildAndInstall
     
      options=(
 	-Dwerror= 
-	-Dclang=1
-    -Dclang_use_chrome_plugins=0
+	-Dlinux_use_bundled_gold=0
+    -Dlinux_use_bundled_binutils=0
+	-Dlinux_use_gold_flags=0
 	-Dgoogle_api_key=$_google_api_key 
     -Dgoogle_default_client_id=$_google_default_client_id 
     -Dgoogle_default_client_secret=$_google_default_client_secret 
     -Dlinux_sandbox_path=/usr/lib/chromium/chromium-sandbox 
-	-Dlinux_use_bundled_binutils=0
     -Dlogging_like_official_build=1
 	-Dproprietary_codecs=1
-	-Dlinux_use_bundled_gold=0
-    -Dlinux_use_gold_flags=0
 	-Dlinux_link_libpci=1 
 	-Dlinux_link_libspeechd=1 
 	-Dlinux_link_gsettings=1 
     -Dlinux_strip_binary=1 
-    -Dlinux_use_gold_binary=0 
-    -Dlinux_use_gold_flags=0 
     -Drelease_extra_cflags="$CFLAGS" 
     -Dproprietary_codecs=1 
     -Duse_system_bzip2=1 
@@ -86,39 +84,30 @@ function BuildAndInstall
     -Duse_system_zlib=0 
     -Duse_gconf=0
 	-Duse_mojo=0
-    -Duse_gconf=0
-    -Ddisable_fatal_linker_warnings=1
-    -Ddisable_glibc=1
+	-Ddisable_fatal_linker_warnings=1
+	-Ddisable_glibc=1
     -Ddisable_sse2=1 ${arch_specific_flags})
 
   srcdir=.
 
   # Use Python 2 - this is terrible -_-
-  rm /usr/bin/python
+  if [ -e /usr/bin/python ];
+  then
+  	rm /usr/bin/python
+  fi
   ln -s /usr/bin/python2 /usr/bin/python
 
   if [ "`uname -m`" != "armv6l" ];
   then
 	# Prepare NaCL toolchain - this is way easier
-	#python2 ./native_client/build/download_toolchains.py -k
-	python2 ./build/download_nacl_toolchains.py
+	python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator
   fi
  
-  #Using clang, cause gcc build is borked
-  mkdir -p third_party/llvm-build/Release+Asserts/bin
-  ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
-  ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
-  ln -s /usr/bin/llvm-symbolizer third_party/llvm-build/Release+Asserts/bin/
-  # clang apperently doesn't support this option
-  sed -i '/-Wno-absolute-value/d' build/common.gypi
-
   build/linux/unbundle/replace_gyp_files.py "${options[@]}"
-  build/gyp_chromium --depth=. "${options[@]}"
+  build/gyp_chromium --depth . "${options[@]}"
 
   #Bug? Opus has -Wno-#pragma-messages, i think the # is commenting the pragma-messages part out
   sed -i -e '/-Wno-/d' third_party/opus/opus.gyp
-
-  export PATH=`pwd`/python2-path:$PATH
 
   if [ "`uname -m`" == "armv6l" ];
   then
