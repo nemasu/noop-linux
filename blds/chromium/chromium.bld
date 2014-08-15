@@ -90,8 +90,6 @@ function BuildAndInstall
 	-Ddisable_glibc=1
     -Ddisable_sse2=1 ${arch_specific_flags})
 
-  srcdir=.
-
   # Use Python 2 - this is terrible -_-
   if [ -e /usr/bin/python ];
   then
@@ -126,48 +124,49 @@ function BuildAndInstall
   	ninja -C out/Release chrome chrome_sandbox chromedriver
   fi
 
-  srcdir=./
-  pkgdir=/root/bldr-inst
-
-  install -D out/Release/chrome "$pkgdir/usr/lib/chromium/chromium"
+  install -D out/Release/chrome /root/bldr-inst/usr/lib/chromium/chromium
 
   install -Dm4755 -o root -g root out/Release/chrome_sandbox \
-    "$pkgdir/usr/lib/chromium/chromium-sandbox"
+    /root/bldr-inst/usr/lib/chromium/chromium-sandbox
 
-  install -D out/Release/chromedriver "$pkgdir/usr/lib/chromium/chromedriver"
+  install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
 
   if [ "`uname -m`" != "armv6l" ];
   then
 	  cp out/Release/{*.pak,libffmpegsumo.so,nacl_helper{,_bootstrap}} \
 		out/Release/{libppGoogleNaClPluginChrome.so,nacl_irt_*.nexe} \
-		"$pkgdir/usr/lib/chromium/"
+		/root/bldr-inst/usr/lib/chromium/
   
     # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
-	strip "$pkgdir/usr/lib/chromium/chromedriver" \
-    	"$pkgdir/usr/lib/chromium/"nacl_helper{,_bootstrap}
+	strip /root/bldr-inst/usr/lib/chromium/chromedriver" \
+    	/root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap}
 
-  	strip --strip-all "$pkgdir/usr/lib/chromium/libffmpegsumo.so" \
-    	"$pkgdir/usr/lib/chromium/libppGoogleNaClPluginChrome.so"
+  	strip --strip-all /root/bldr-inst/usr/lib/chromium/libffmpegsumo.so \
+    	/root/bldr-inst/usr/lib/chromium/libppGoogleNaClPluginChrome.so
   fi
 
-  strip --strip-debug "$pkgdir/usr/lib/chromium/"{chromium,chromium-sandbox} 
+  strip --strip-debug /root/bldr-inst/usr/lib/chromium/{chromium,chromium-sandbox} 
 
   
-  cp -a out/Release/locales out/Release/icudtl.dat "$pkgdir/usr/lib/chromium/"
+  cp -a out/Release/locales out/Release/icudtl.dat /root/bldr-inst/usr/lib/chromium/
 
-  install -Dm644 out/Release/chrome.1 "$pkgdir/usr/share/man/man1/chromium.1"
+  install -Dm644 out/Release/chrome.1 /root/bldr-inst/usr/share/man/man1/chromium.1
 
   for size in 22 24 48 64 128 256; do
     install -Dm644 "chrome/app/theme/chromium/product_logo_$size.png" \
-      "$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png"
+      /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
   done
 
   for size in 16 32; do
     install -Dm644 "chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
-      "$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png"
+      /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
   done
   mkdir -p $pkgdir/usr/bin
-  ln -s /usr/lib/chromium/chromedriver "$pkgdir/usr/bin/chromedriver"
+
+  if [ "`uname -m`" != "armv6l" ];
+  then
+  	ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
+  fi
 }
 
 #Default HTTP curl new version detection
