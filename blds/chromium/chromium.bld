@@ -56,7 +56,9 @@ function BuildAndInstall
 
     
      options=(
-	-Dwerror= 
+	-Dwerror=
+	-Dclang=1
+    -Dclang_use_chrome_plugins=0
 	-Dlinux_use_bundled_gold=0
     -Dlinux_use_bundled_binutils=0
 	-Dlinux_use_gold_flags=0
@@ -108,6 +110,14 @@ function BuildAndInstall
 
   #Bug? Opus has -Wno-#pragma-messages, i think the # is commenting the pragma-messages part out
   sed -i -e '/-Wno-/d' third_party/opus/opus.gyp
+
+  # Build with clang as a temporary solution to startup crash with GCC 4.9
+  mkdir -p third_party/llvm-build/Release+Asserts/bin
+  ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
+  ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
+  ln -s /usr/bin/llvm-symbolizer third_party/llvm-build/Release+Asserts/bin/
+  # clang 3.4 doesn't support this option
+  sed -i '/-Wno-absolute-value/d' build/common.gypi
 
   if [ "`uname -m`" == "armv6l" ];
   then
