@@ -49,14 +49,7 @@ function BuildAndInstall
 
 	make configure-host
 	make tooldir=/usr -j3
-	make prefix=/root/bldr-inst/usr tooldir=/root/bldr-inst/usr install
-
-	# Remove unwanted files - From Arch
-	rm /root/bldr-inst/usr/share/man/man1/{dlltool,nlmconv,windres,windmc}*
-	rm /root/bldr-inst/usr/share/info/{configure,standards}.info
-	# No shared linking to these files outside binutils
-	rm /root/bldr-inst/usr/lib/lib{bfd,opcodes}.so
-
+	make DESTDIR=/root/bldr-inst tooldir=/root/bldr-inst/usr install
 }
 
 #Default HTTP curl new version detection
