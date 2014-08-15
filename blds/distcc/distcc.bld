@@ -1,0 +1,73 @@
+#package name
+NAME=distcc
+
+#package version
+VERSION=3.2
+DVERSION=3.2rc1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://distcc.googlecode.com/files/distcc-${DVERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	[ -f Makefile ] || PYTHON=/usr/bin/python2 ./configure --prefix=/usr \
+	--with-gtk \
+	--sysconfdir=/etc \
+	--mandir=/usr/share/man \
+	--without-avahi 
+
+	make -j3 WERROR_CFLAGS= INCLUDESERVER_PYTHON=/usr/bin/python2
+	make DESTDIR=/root/bldr-inst/ INCLUDESERVER_PYTHON=/usr/bin/python2 install
+
+	install -d /root/bldr-inst/usr/lib/distcc/bin
+	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/cc
+	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/gcc
+	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/g++
+	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/c++
+	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/cpp
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://distcc.googlecode.com/files/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
