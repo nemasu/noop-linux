@@ -2,8 +2,8 @@
 NAME=llvm
 
 #package version
-VERSION=3.4-1
-DVERSION=3.4
+VERSION=3.4.2
+DVERSION=3.4.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -12,7 +12,7 @@ ISUSR=1
 SRC=http://llvm.org/releases/${DVERSION}/llvm-${DVERSION}.src.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-shared  --enable-libffi --enable-targets=all --disable-expensive-checks --disable-debug-runtime --disable-assertions --with-python=/usr/bin/python2"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
@@ -32,25 +32,37 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export REQUIRES_RTTI=1
-	
-	pushd tools
-	wget http://llvm.org/releases/${DVERSION}/clang-${DVERSION}.src.tar.gz
-	tar xf clang-${DVERSION}.src.tar.gz
-	mv clang-${DVERSION} clang
-	popd
+	wget http://llvm.org/releases/${DVERSION}/cfe-${DVERSION}.src.tar.gz
+	tar xf cfe-${DVERSION}.src.tar.gz
+	mv cfe-${DVERSION}.src tools/clang
+
+	wget http://llvm.org/releases/3.4/compiler-rt-3.4.src.tar.gz
+	tar xf compiler-rt-3.4.src.tar.gz
+	mv compiler-rt-3.4 projects/compiler-rt
+
+	wget http://llvm.org/releases/3.4/clang-tools-extra-3.4.src.tar.gz
+	tar xf clang-tools-extra-3.4.src.tar.gz
+	mv clang-tools-extra-3.4 tools/clang/tools/extra
 
 	mv $BLDRTMPDIR/*.p .
 
-	mv clang-3.4-max_align_t.p tools/clang
-	mv clang-3.4-fstack-protector-strong.p tools/clang
+	mv clang-3.3-use-gold-linker.p tools/clang
 
-	patch -d tools/clang -Np0 -i clang-3.4-max_align_t.p
-	patch -d tools/clang -Np0 -i clang-3.4-fstack-protector-strong.p
+	patch -d tools/clang -Np1 -i clang-3.3-use-gold-linker.p
 	patch -Np0 -i llvm-3.4-provide-cmake-modules.p
 
-	./configure $STDUSRCONF $EXTRACONF
-	make -j3
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--enable-shared \
+		--enable-libffi \
+		--enable-targets=all \
+		--disable-expensive-checks \
+		--disable-debug-runtime \
+		--disable-assertions \
+		--with-binutils-include=/usr/include \
+		--with-python=/usr/bin/python2
+	make REQUIRES_RTTI=1 -j3
 	make DESTDIR=/root/bldr-inst install
 
 	cd tools/clang
