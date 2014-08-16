@@ -8,7 +8,7 @@ VERSION=20140716
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.google.com/get/noto/pkgs/Noto-hinted.zip
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -30,6 +30,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+	wget http://www.google.com/get/noto/pkgs/Noto-hinted.zip
 	unzip *.zip
 	mkdir -p /root/bldr-inst/usr/share/fonts/TTF/
 	cp *.ttf /root/bldr-inst/usr/share/fonts/TTF/
