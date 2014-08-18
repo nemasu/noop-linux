@@ -1,0 +1,58 @@
+#package name
+NAME=deadbeef
+
+#package version
+VERSION=0.5.6-1
+DVERSION=0.5.6
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://download.sourceforge.net/deadbeef/deadbeef-${DVERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF="--disable-gtk3 --enable-gtk2"
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=0
+
+# build/package dependancies
+DEPS=('alsa-lib' 'atk' 'cairo' 'curl' 'dbus' 'expat' 'flac' 'fontconfig' 'freetype2' 'gcc-libs' 'gdbm' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'json-c' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libcap2' 'libcddb' 'libcdio' 'libffi' 'libidn' 'libmad' 'libogg' 'libpng' 'libsamplerate' 'libsndfile' 'libvorbis' 'libxcb' 'openssl' 'pango' 'pcre' 'pixman' 'pulseaudio' 'util-linux' 'zlib')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

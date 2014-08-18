@@ -1,0 +1,66 @@
+#package name
+NAME=chromium-plugins
+
+#package version
+VERSION=36.0.1985.143
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	wget https://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome-stable-${VERSION}-1.x86_64.rpm -O plugins.rpm
+	bash $BLDRTMPDIR/rpm2cpio plugins.rpm | bsdtar -xf -
+	rm $BLDRTMPDIR/rpm2cpio
+
+	mkdir -p /root/bldr-inst/usr/lib/chromium
+	install -m644 opt/google/chrome/libpdf.so /root/bldr-inst/usr/lib/chromium
+	mkdir -p /root/bldr-inst/usr/lib/PepperFlash
+	install -m644 opt/google/chrome/PepperFlash/* /root/bldr-inst/usr/lib/PepperFlash
+	
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
