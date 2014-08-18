@@ -1,0 +1,2 @@
+useradd -M lp
+groupadd lpadmin
