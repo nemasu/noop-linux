@@ -1,0 +1,68 @@
+#package name
+NAME=libvpx
+
+#package version
+VERSION=1.1.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://webm.googlecode.com/files/libvpx-v1.1.0.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure --prefix=/usr --enable-vp8 \
+		--enable-runtime-cpu-detect \
+		--enable-shared \
+		--enable-postproc \
+		--enable-pic \
+		--disable-install-docs \
+		--disable-install-srcs
+
+	make -j3
+	make DIST_DIR=/root/bldr-inst/usr install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=https://code.google.com/p/webm/downloads/list
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
