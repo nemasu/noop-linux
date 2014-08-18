@@ -1,0 +1,71 @@
+#package name
+NAME=lzo2
+
+#package version
+VERSION=2.06
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.oberhumer.com/opensource/lzo/download/lzo-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure --prefix=/usr --enable-shared
+	make -j3
+
+	# build minilzo
+	gcc $CFLAGS -fpic -Iinclude/lzo -o minilzo/minilzo.o -c minilzo/minilzo.c
+	gcc $LDFLAGS -shared -o libminilzo.so.0 -Wl,-soname,libminilzo.so.0 minilzo/minilzo.o
+
+	make -j3 DESTDIR=/root/bldr-inst install
+
+	install -m 755 libminilzo.so.0 /root/bldr-inst/usr/lib
+	install -p -m 644 minilzo/minilzo.h /root/bldr-inst/usr/include/lzo
+	cd /root/bldr-inst/usr/lib
+	ln -s libminilzo.so.0 libminilzo.so
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://www.oberhumer.com/opensource/lzo/download/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

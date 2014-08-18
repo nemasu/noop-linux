@@ -1,0 +1,20 @@
+diff -crb net-tools-1.60-orig/lib/inet_sr.c net-tools-1.60/lib/inet_sr.c
+*** net-tools-1.60-orig/lib/inet_sr.c	Sun Feb 20 14:46:45 2000
+--- net-tools-1.60/lib/inet_sr.c	Thu May  9 16:57:55 2013
+***************
+*** 104,110 ****
+         isnet = 1; break;
+      case 2:
+         isnet = 0; break;
+!     default:
+      }
+  
+      /* Fill in the other fields. */
+--- 104,110 ----
+         isnet = 1; break;
+      case 2:
+         isnet = 0; break;
+!     default: break;
+      }
+  
+      /* Fill in the other fields. */

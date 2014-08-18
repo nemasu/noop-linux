@@ -1,0 +1,88 @@
+diff -crB net-tools-1.60-orig/hostname.c net-tools-1.60/hostname.c
+*** net-tools-1.60-orig/hostname.c	Sun Apr  8 11:04:23 2001
+--- net-tools-1.60/hostname.c	Thu May  9 16:55:13 2013
+***************
+*** 77,83 ****
+          case EINVAL:
+              fprintf(stderr, _("%s: name too long\n"), program_name);
+              break;
+!         default:
+          }
+  	exit(1);
+      }
+--- 77,83 ----
+          case EINVAL:
+              fprintf(stderr, _("%s: name too long\n"), program_name);
+              break;
+!         default: break;
+          }
+  	exit(1);
+      }
+***************
+*** 97,103 ****
+  	case EINVAL:
+  	    fprintf(stderr, _("%s: name too long\n"), program_name);
+  	    break;
+! 	default:
+  	}
+  	exit(1);
+      };
+--- 97,103 ----
+  	case EINVAL:
+  	    fprintf(stderr, _("%s: name too long\n"), program_name);
+  	    break;
+! 	default: break;
+  	}
+  	exit(1);
+      };
+***************
+*** 116,122 ****
+  	case EINVAL:
+  	    fprintf(stderr, _("%s: name too long\n"), program_name);
+  	    break;
+! 	default:
+  	}
+  	exit(1);
+      };
+--- 116,122 ----
+  	case EINVAL:
+  	    fprintf(stderr, _("%s: name too long\n"), program_name);
+  	    break;
+! 	default: break;
+  	}
+  	exit(1);
+      };
+***************
+*** 173,179 ****
+  	    *p = '\0';
+  	printf("%s\n", hp->h_name);
+  	break;
+!     default:
+      }
+  }
+  
+--- 173,179 ----
+  	    *p = '\0';
+  	printf("%s\n", hp->h_name);
+  	break;
+!     default: break;
+      }
+  }
+  
+***************
+*** 330,336 ****
+  	case 'h':
+  	default:
+  	    usage();
+! 
+  	};
+  
+  
+--- 330,336 ----
+  	case 'h':
+  	default:
+  	    usage();
+! 		break;
+  	};
+  
+  

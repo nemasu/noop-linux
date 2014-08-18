@@ -1,0 +1,49 @@
+#package name
+NAME=nasm
+
+#package version
+VERSION=2.10.01
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.nasm.us/pub/nasm/releasebuilds/2.10.01/nasm-2.10.01.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/usr/bin --prefix=/usr
+	make -j3
+	INSTALLROOT=/root/bldr-inst make install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s http://www.nasm.us/ | grep -E "\/\">[0-9\.]*<\/" | sed -e 's/.*\/\">\([0-9\.]*\)<\/.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

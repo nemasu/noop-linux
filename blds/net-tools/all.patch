@@ -1,0 +1,54 @@
+diff -crB net-tools-1.60-orig/lib/strip.c net-tools-1.60/lib/strip.c
+*** net-tools-1.60-orig/lib/strip.c     Sat Oct 28 04:59:42 2000
+--- net-tools-1.60/lib/strip.c  Thu May  9 16:50:12 2013
+***************
+*** 21,27 ****
+  #include <sys/socket.h>
+  #include <net/if_arp.h>
+  #include <linux/types.h>
+- #include <linux/if_strip.h>
+  #include <stdlib.h>
+  #include <stdio.h>
+  #include <ctype.h>
+--- 21,26 ----
+***************
+*** 35,41 ****
+  #include "util.h"
+  #include "intl.h"
+  
+! 
+  extern struct hwtype strip_hwtype;
+  
+  static char *
+--- 34,43 ----
+  #include "util.h"
+  #include "intl.h"
+  
+! typedef struct {
+!      __u8 c[6];
+! } MetricomAddress;
+!  
+  extern struct hwtype strip_hwtype;
+  
+  static char *
+diff -crB net-tools-1.60-orig/lib/x25_sr.c net-tools-1.60/lib/x25_sr.c
+*** net-tools-1.60-orig/lib/x25_sr.c    Sat May 20 07:38:10 2000
+--- net-tools-1.60/lib/x25_sr.c Thu May  9 16:51:50 2013
+***************
+*** 77,83 ****
+    rt.sigdigits=sigdigits;
+  
+    /* x25_route_struct.address isn't type struct sockaddr_x25, Why? */
+!   memcpy(&rt.address, &sx25.sx25_addr, sizeof(x25_address));
+  
+    while (*args) {
+        if (!strcmp(*args,"device") || !strcmp(*args,"dev")) {
+--- 77,83 ----
+    rt.sigdigits=sigdigits;
+  
+    /* x25_route_struct.address isn't type struct sockaddr_x25, Why? */
+!   memcpy(&rt.address, &sx25.sx25_addr, sizeof(sx25.sx25_addr));
+  
+    while (*args) {
+        if (!strcmp(*args,"device") || !strcmp(*args,"dev")) {
+
