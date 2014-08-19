@@ -1,23 +1,23 @@
 #package name
-NAME=json-c
+NAME=pulseaudio
 
 #package version
-VERSION=0.12
+VERSION=5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://s3.amazonaws.com/json-c_releases/releases/json-c-${VERSION}.tar.gz
+SRC=http://freedesktop.org/software/pulseaudio/releases/pulseaudio-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--enable-udev --with-udev-rules-dir=/usr/lib/udev/rules.d --enable-systemd --disable-default-build-tests --with-database=gdbm --disable-tcpwrap --disable-bluez4 --disable-rpath"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'dbus' 'dbus-glib' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libcap2' 'libffi' 'libsndfile' 'libtool' 'openssl' 'pcre' 'speex' 'systemd' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,19 +28,16 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  export CFLAGS="$CFLAGS -Wno-error"
-  ./configure --prefix=/usr
-  make -j3
-  make DESTDIR=/root/bldr-inst install
-  unset CFLAGS
-}
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://s3.amazonaws.com/json-c_releases/releases/index.html
+	LISTURL=http://freedesktop.org/software/pulseaudio/releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -60,4 +57,3 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
-

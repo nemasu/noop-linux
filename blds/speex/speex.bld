@@ -1,20 +1,21 @@
 #package name
-NAME=json-c
+NAME=speex
 
 #package version
-VERSION=0.12
+VERSION=1.2-1
+DVERSION=1.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://s3.amazonaws.com/json-c_releases/releases/json-c-${VERSION}.tar.gz
+SRC=http://downloads.xiph.org/releases/speex/speex-${DVERSION}rc1.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
 DEPS=
@@ -28,19 +29,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  export CFLAGS="$CFLAGS -Wno-error"
-  ./configure --prefix=/usr
-  make -j3
-  make DESTDIR=/root/bldr-inst install
-  unset CFLAGS
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://s3.amazonaws.com/json-c_releases/releases/index.html
+	LISTURL=http://downloads.xiph.org/releases/speex/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -54,10 +50,9 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
-

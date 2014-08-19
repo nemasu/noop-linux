@@ -1096,14 +1096,6 @@ function InstallPkg
 	local FORCE=$2
 
 	
-	#Conflict checks
-	if [[ $PKG == "gcc"  &&  -e /var/noop/installed/gcc-multilib ]] || 
-		[[ $PKG == "gcc-multilib"  &&  -e /var/noop/installed/gcc ]];
-	then
-		echo "gcc and gcc-multilib cannot be installed at the same time."
-		exit 1;
-	fi
-
 	if [  -e $INSTALLEDDIR/$PKG ] ; then
 		if [ $FORCE == 0 ] ; then
 				$echo "ERROR: The package $PKG is already installed."

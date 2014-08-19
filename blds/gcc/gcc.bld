@@ -9,7 +9,7 @@
 
 ARCH=`uname -m`
 NAME=gcc
-VERSION=4.9.0
+VERSION=4.9.1
 ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-$VERSION.tar.bz2
 EXTRACONF=
@@ -17,16 +17,24 @@ ISSPECIAL=1
 
 function BuildAndInstall
 {
-	sed -i 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in
+ 	[[ "`uname -m`" == "x86_64" ]] && sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
+
+	# Do not run fixincludes
+	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+
+	
 	cd ..
     mkdir build-dir
     cd build-dir
     
 	# This is raspberry pi, only ARM triplet supported at the moment
-	[[ "$ARCH" == "armv6l" ]] && EXTRACONFIGFLAGS="--host=armv6l-unknown-linux-gnueabihf --build=armv6l-unknown-linux-gnueabihf --with-arch=armv6 --with-float=hard --with-fpu=vfp"
+	[[ "$ARCH" == "armv6l" ]] && EXTRACONFIGFLAGS="--disable-multilib --host=armv6l-unknown-linux-gnueabihf --build=armv6l-unknown-linux-gnueabihf --with-arch=armv6 --with-float=hard --with-fpu=vfp"
 
+	[[ "$ARCH" == "x86_64" ]] && EXTRACONFIGFLAGS="--enable-multilib --enable-languages=ada"
+
+	export CFLAGS=${CFLAGS/-pipe/}
+	export CXXFLAGS=${CXXFLAGS/-pipe/}
 	
-	#No Ada support for now	
 	../gcc-$VERSION/configure --prefix=/usr \
 		  --libdir=/usr/lib --libexecdir=/usr/lib \
 		  --mandir=/usr/share/man --infodir=/usr/share/info \
@@ -39,38 +47,36 @@ function BuildAndInstall
 		  --enable-cloog-backend=isl --disable-cloog-version-check \
 		  --enable-lto --enable-plugin --enable-install-libiberty \
 		  --with-linker-hash-style=gnu \
-		  --disable-multilib --disable-werror \
-		  --enable-checking=release $EXTRACONFIGFLAGS
+		  --disable-werror --enable-checking=release $EXTRACONFIGFLAGS
     
 	
 	make -j3
-    make DESTDIR=`pwd`/../../bldr-inst install
+    make DESTDIR=/root/bldr-inst install
 	pushd .
 
 	if [ $ARCH == "armv6l" ]; then
 		ARCHMACH="armv6l-unknown"
 		mkdir -p `pwd`/../../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION
-		cd `pwd`/../../bldr-inst
+		cd /root/bldr-inst
 		mv -v usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/
 		mv -v usr/lib/*.so* `pwd`/../gcc-libs-inst/usr/lib/
 	elif [ $ARCH == "x86_64" ]; then
 		ARCHMACH="x86_64-unknown"
 		mkdir -p `pwd`/../../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION
-		cd `pwd`/../../bldr-inst
+		cd /root/bldr-inst
 		mv -v usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION/
-		mkdir -p `pwd`/../gcc-libs-inst/usr/lib64
-		mv -v usr/lib64/*.so* `pwd`/../gcc-libs-inst/usr/lib64/
+		mkdir -p `pwd`/../gcc-libs-inst/usr/lib
+        mkdir -p `pwd`/../gcc-libs-inst/usr/lib32
+        mv -v usr/lib/*.so* `pwd`/../gcc-libs-inst/usr/lib/
+        mv -v usr/lib32/*.so* `pwd`/../gcc-libs-inst/usr/lib32/
+
 	fi
 
 	cd `pwd`/../gcc-libs-inst/
 
 	mkdir -p usr/share/gdb/auto-load/usr/lib
 	
-	if [ $ARCH == "armv6l" ]; then
-		mv -v usr/lib/*.py usr/share/gdb/auto-load/usr/lib/
-    elif [ $ARCH == "x86_64" ]; then
-		mv -v usr/lib64/*.py usr/share/gdb/auto-load/usr/lib/
-    fi
+	mv -v usr/lib/*.py usr/share/gdb/auto-load/usr/lib/
 	
 	echo Moving any lib64 contents to lib
 	if [ -e ./lib64 ]; then

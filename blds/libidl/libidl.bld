@@ -1,20 +1,21 @@
 #package name
-NAME=json-c
+NAME=libidl
 
 #package version
-VERSION=0.12
+VERSION=0.8.14
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://s3.amazonaws.com/json-c_releases/releases/json-c-${VERSION}.tar.gz
+MM=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://ftp.gnome.org/pub/GNOME/sources/libIDL/$MM/libIDL-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
 DEPS=
@@ -28,31 +29,15 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  export CFLAGS="$CFLAGS -Wno-error"
-  ./configure --prefix=/usr
-  make -j3
-  make DESTDIR=/root/bldr-inst install
-  unset CFLAGS
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://s3.amazonaws.com/json-c_releases/releases/index.html
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libIDL/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libIDL/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
@@ -60,4 +45,3 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
-

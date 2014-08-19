@@ -1,0 +1,3 @@
+ldconfig -r . &> /dev/null
+chmod 755 /etc/gconf/gconf.xml.system &> /dev/null
+/usr/bin/gio-querymodules /usr/lib/gio/modules 
