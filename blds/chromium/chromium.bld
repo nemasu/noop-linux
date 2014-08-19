@@ -35,7 +35,9 @@ function BuildAndInstall
   export -n CFLAGS CXXFLAGS
 
   if [ "`uname -m`" == "armv6l" ]; then
-	arch_specific_flags="
+  export CFLAGS="-march=armv6k"
+  
+  arch_specific_flags="
 		-Dtarget_arch=arm \
 		-Darmv7=0 \
 		-Darmv6=1 \
