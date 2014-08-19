@@ -20,9 +20,13 @@ DEPS=('ninja' 'alsa-lib' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' '
 
 function BuildAndInstall
 {
+  
   for i in `ls $BLDRTMPDIR/*.arm_patch`;
   do
-	patch -Np0 -i $i && rm $i;
+	if [ "`uname -m`" == "armv6l" ]; then
+    	patch -Np0 -i $i 
+	fi
+	rm $i;
   done  
 	
   export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
