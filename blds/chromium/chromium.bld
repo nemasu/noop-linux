@@ -20,7 +20,11 @@ DEPS=('ninja' 'alsa-lib' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' '
 
 function BuildAndInstall
 {
-
+  for i in `ls $BLDRTMPDIR/*.arm_patch`;
+  do
+	patch -Np0 -i $i && rm $i;
+  done  
+	
   export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
   # CFLAGS are passed through release_extra_cflags below
@@ -38,8 +42,8 @@ function BuildAndInstall
 		-Darm_fpu=vfp \
 		-Darm_thumb=0 \
 		-Dv8_can_use_vfp_instructions=false \
-		-Dv8_can_use_vfp2_instructions=true" \
-		-Dsysroot=
+		-Dv8_can_use_vfp2_instructions=true \
+		-Dsysroot="
   fi
 
   if [ "`uname -m`" == "x86_64" ]; then
