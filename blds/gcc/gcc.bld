@@ -29,8 +29,10 @@ function BuildAndInstall
     
 	# This is raspberry pi, only ARM triplet supported at the moment
 	[[ "$ARCH" == "armv6l" ]] && EXTRACONFIGFLAGS="--disable-multilib --host=armv6l-unknown-linux-gnueabihf --build=armv6l-unknown-linux-gnueabihf --with-arch=armv6 --with-float=hard --with-fpu=vfp"
+	[[ "$ARCH" == "armv6l" ]] && ENABLED_LANGS="c,c++,fortran,go,lto,objc,obj-c++"
 
-	[[ "$ARCH" == "x86_64" ]] && EXTRACONFIGFLAGS="--enable-multilib --enable-languages=ada"
+	[[ "$ARCH" == "x86_64" ]] && EXTRACONFIGFLAGS="--enable-multilib"
+	[[ "$ARCH" == "x86_64" ]] && ENABLED_LANGS="c,c++,fortran,go,lto,objc,obj-c++,ada"
 
 	export CFLAGS=${CFLAGS/-pipe/}
 	export CXXFLAGS=${CXXFLAGS/-pipe/}
@@ -39,7 +41,7 @@ function BuildAndInstall
 		  --libdir=/usr/lib --libexecdir=/usr/lib \
 		  --mandir=/usr/share/man --infodir=/usr/share/info \
 		  --with-bugurl=http://www.nooplinux.org/bugs/ \
-		  --enable-languages=c,c++,fortran,go,lto,objc,obj-c++ \
+		  --enable-languages=$ENABLED_LANGS \
 		  --enable-shared --enable-threads=posix \
 		  --with-system-zlib --enable-__cxa_atexit \
 		  --enable-clocale=gnu \
