@@ -55,11 +55,14 @@ function BuildAndInstall
 		-Dv8_can_use_vfp_instructions=false \
 		-Dv8_can_use_vfp2_instructions=true \
 		-Dsysroot= \
+		-Dclang=0 \
 		-Ddisable_nacl=1"
   fi
 
   if [ "`uname -m`" == "x86_64" ]; then
 	 arch_specific_flags="
+		-Dclang=1 \
+		-Dclang_use_chrome_plugins=0 \
 		-Dtarget_arch=x64"
   fi
 
@@ -74,8 +77,6 @@ function BuildAndInstall
     
      options=(
 	-Dwerror=
-	-Dclang=1
-	-Dclang_use_chrome_plugins=0
 	-Dlinux_use_bundled_gold=0
     -Dlinux_use_bundled_binutils=0
 	-Dlinux_use_gold_flags=0
@@ -117,6 +118,14 @@ function BuildAndInstall
   then
 	# Prepare NaCL toolchain - this is way easier
 	python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator
+	
+	# Build with clang
+	mkdir -p third_party/llvm-build/Release+Asserts/bin
+	ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
+	ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
+	ln -s /usr/bin/llvm-symbolizer third_party/llvm-build/Release+Asserts/bin/
+	# remove unsupported clang option
+	sed -i '/-Wno-absolute-value/d' build/common.gypi
   fi
  
   build/linux/unbundle/replace_gyp_files.py "${options[@]}"
@@ -124,15 +133,7 @@ function BuildAndInstall
 
   #Bug? Opus has -Wno-#pragma-messages, i think the # is commenting the pragma-messages part out
   sed -i -e '/-Wno-/d' third_party/opus/opus.gyp
-
-  # Build with clang
-  mkdir -p third_party/llvm-build/Release+Asserts/bin
-  ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
-  ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
-  ln -s /usr/bin/llvm-symbolizer third_party/llvm-build/Release+Asserts/bin/
-  # remove unsupported clang option
-  sed -i '/-Wno-absolute-value/d' build/common.gypi
-
+  
   if [ "`uname -m`" == "armv6l" ];
   then
   	ninja -C out/Release chrome chrome_sandbox
