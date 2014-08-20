@@ -35,7 +35,7 @@ function BuildAndInstall
   export -n CFLAGS CXXFLAGS
 
   if [ "`uname -m`" == "armv6l" ]; then
-  export CFLAGS="-march=armv6k"
+  export CFLAGS="-DUSE_EABI_HARDFLOAT $CFLAGS"
   
   arch_specific_flags="
 		-Dtarget_arch=arm \
@@ -44,18 +44,21 @@ function BuildAndInstall
 		-Darm_neon=0 \
 		-Darm_fpu=vfp \
 		-Darm_thumb=0 \
-		-Dlinux_use_tcmalloc=0 \
+		-Duse_allocator=none \
 		-Darm_float_abi=hard \
 		-Dv8_use_arm_eabi_hardfloat=true \
 		-Dv8_can_use_vfp_instructions=false \
 		-Dv8_can_use_vfp2_instructions=true \
 		-Dsysroot= \
+		-Dclang=0 \
 		-Ddisable_nacl=1"
   fi
 
   if [ "`uname -m`" == "x86_64" ]; then
 	 arch_specific_flags="
-		 -Dtarget_arch=x64"
+		-Dclang=1
+		-Dclang_use_chrome_plugins=0
+		-Dtarget_arch=x64"
   fi
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
@@ -69,8 +72,6 @@ function BuildAndInstall
     
      options=(
 	-Dwerror=
-	-Dclang=1
-    -Dclang_use_chrome_plugins=0
 	-Dlinux_use_bundled_gold=0
     -Dlinux_use_bundled_binutils=0
 	-Dlinux_use_gold_flags=0
