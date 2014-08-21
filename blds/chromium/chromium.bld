@@ -127,7 +127,16 @@ function BuildAndInstall
 	# remove unsupported clang option
 	sed -i '/-Wno-absolute-value/d' build/common.gypi
   fi
- 
+
+  if [ "`uname -m`" == "armv6l" ];
+  then
+	# Re-configure bundled ffmpeg.
+	pushd third_party/ffmpeg
+	chromium/scripts/build_ffmpeg.sh linux arm "${PWD}" config-only
+	chromium/scripts/copy_config.sh
+	popd
+  fi
+
   build/linux/unbundle/replace_gyp_files.py "${options[@]}"
   build/gyp_chromium --depth . "${options[@]}"
 
