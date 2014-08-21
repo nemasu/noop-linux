@@ -155,11 +155,12 @@ function BuildAndInstall
   install -Dm4755 -o root -g root out/Release/chrome_sandbox \
     /root/bldr-inst/usr/lib/chromium/chrome-sandbox
 
-  install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
 
   if [ "`uname -m`" != "armv6l" ];
   then
-	  cp out/Release/{*.pak,libffmpegsumo.so,nacl_helper{,_bootstrap}} \
+  	install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
+
+  	cp out/Release/{*.pak,libffmpegsumo.so,nacl_helper{,_bootstrap}} \
 		out/Release/{libppGoogleNaClPluginChrome.so,nacl_irt_*.nexe} \
 		/root/bldr-inst/usr/lib/chromium/
   
