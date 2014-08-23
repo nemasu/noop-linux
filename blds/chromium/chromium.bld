@@ -160,7 +160,7 @@ function BuildAndInstall
   then
   	install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
 
-  	cp out/Release/{*.pak,libffmpegsumo.so,nacl_helper{,_bootstrap}} \
+  	cp out/Release/{libffmpegsumo.so,nacl_helper{,_bootstrap}} \
 		out/Release/{libppGoogleNaClPluginChrome.so,nacl_irt_*.nexe} \
 		/root/bldr-inst/usr/lib/chromium/
   
@@ -173,7 +173,8 @@ function BuildAndInstall
   fi
 
   strip --strip-debug /root/bldr-inst/usr/lib/chromium/{chromium,chromium-sandbox} 
-
+	
+  cp out/Release/*.pak /root/bldr-inst/usr/lib/chromium/
   
   cp -a out/Release/locales out/Release/icudtl.dat /root/bldr-inst/usr/lib/chromium/
 
