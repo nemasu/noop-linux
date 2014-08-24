@@ -43,9 +43,6 @@ function BuildAndInstall
 	make DESTDIR=/root/bldr-inst install
 
 
-	# support python2
-	sed -i '1s/python$/python2/' /root/bldr-inst/usr/sbin/{nfsiostat,mountstats}
-
 	# Configuration
 	install -D -m 644 utils/mount/nfsmount.conf /root/bldr-inst/etc/nfsmount.conf
 
