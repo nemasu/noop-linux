@@ -1,0 +1,5 @@
+echo "Checking & Backing up existing exports"
+if [ -e /etc/exports ];
+then
+	mv /etc/exports /etc/exports.instbak
+fi

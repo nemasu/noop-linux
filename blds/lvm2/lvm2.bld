@@ -1,0 +1,60 @@
+#package name
+NAME=lvm2
+
+#package version
+VERSION=2.2.02.109
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://sources.redhat.com/pub/lvm2/LVM${VERSION}.tgz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+function BuildAndInstall
+{
+
+	# enable lvmetad
+	sed -i 's|use_lvmetad = 0|use_lvmetad = 1|' conf/example.conf.in
+
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --sbindir=/usr/bin \
+      --with-udev-prefix=/usr --with-systemdsystemunitdir=/usr/lib/systemd/system \
+      --with-default-pid-dir=/run --with-default-dm-run-dir=/run --with-default-run-dir=/run/lvm \
+      --enable-pkgconfig --enable-readline --enable-dmeventd --enable-cmdlib --enable-applib \
+      --enable-udev_sync --enable-udev_rules --with-default-locking-dir=/run/lock/lvm \
+      --enable-lvmetad --with-thin=internal --with-cache=internal --enable-udev-systemd-background-jobs
+
+
+	make -j3
+	make DESTDIR=/root/bldr-inst install_device-mapper install_lvm2 install_systemd_units install_systemd_generators
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s ftp://sources.redhat.com/pub/lvm2/ | grep -E "LVM[0-9\.]*\.tgz$" | tail -n1 | sed -e 's/.*LVM\([0-9\.]*\)*\.tgz$/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

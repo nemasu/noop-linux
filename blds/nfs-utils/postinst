@@ -1,0 +1,7 @@
+groupadd nobody
+if [ -e /etc/exports.instbak ];
+then
+	mv /etc/exports /etc/exports.new
+	mv /etc/exports.instbak /etc/exports
+	echo Installed new exports file as /etc/exports.new
+fi

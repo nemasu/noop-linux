@@ -1,20 +1,20 @@
 #package name
-NAME=sqlite
+NAME=rpcbind
 
 #package version
-VERSION=3080600
+VERSION=0.2.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.sqlite.org/2014/sqlite-autoconf-${VERSION}.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--enable-warmstarts --with-statedir=/run"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
 DEPS=
@@ -28,24 +28,16 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	export CFLAGS="$CFLAGS -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY -DSQLITE_SECURE_DELETE"
-
-	./configure $STDUSRCONF
-	make -j3
-	make DESTDIR=/root/bldr-inst install
-
-	cd tea
-	./configure $STDUSRCONF --with-system-sqlite
-	make -j3
-	make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://www.sqlite.org/download.html | grep -E 'sqlite-autoconf-[0-9]*\.tar\.gz' | sed -e 's/.*sqlite-autoconf-\([0-9]*\)\.tar\.gz.*/\1/g' | sort | uniq`
+	LISTURL=http://sourceforge.net/projects/rpcbind/files/
+	FILELIST=`GetFileList`
+	LATEST=0
 
 	for i in ${FILELIST[@]};
 	do
