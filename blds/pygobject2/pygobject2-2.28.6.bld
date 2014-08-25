@@ -1,0 +1,24 @@
+NAME=pygobject2
+VERSION=2.28.6
+ISUSR=1
+SRC=http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.6.tar.xz
+EXTRACONF="--disable-introspection"
+ISSPECIAL=1
+
+function BuildAndInstall
+{
+	export PYTHON=`which python2`  
+	sed -i \
+       	-e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:' \
+	    -e 's:AM_PROG_CC_STDC:AC_PROG_CC:' \
+	    configure.ac || die
+
+
+	autoreconf -fi
+	
+	./configure $STDUSRCONF $EXTRACONF
+	make -j2
+	make DESTDIR=/root/bldr-inst install
+	
+}
+

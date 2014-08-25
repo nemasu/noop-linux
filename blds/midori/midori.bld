@@ -1,23 +1,23 @@
 #package name
-NAME=freetype2
+NAME=midori
 
 #package version
-VERSION=2.5.3
+VERSION=0.5.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.bz2
+SRC=http://archive.xfce.org/src/apps/midori/0.4/midori-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--without-bzip2"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libnotify' 'libsoup' 'libunique1' 'libxml2' 'pango' 'sqlite' 'webkitgtk2')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +28,25 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+  export PYTHON=/usr/bin/python2
+  sed -i -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" wscript waf
+
+  ./configure --prefix=/usr \
+              --enable-addons \
+              --disable-hildon \
+              --enable-unique \
+              --enable-nls
+  make -j3
+  make DESTDIR=/root/bldr-inst install
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.savannah.gnu.org/releases/freetype/
+	LISTURL=http://midori-browser.org/download/source/
 	FILELIST=`GetFileList`
 	LATEST=0
 

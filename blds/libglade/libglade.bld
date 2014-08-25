@@ -1,23 +1,24 @@
 #package name
-NAME=freetype2
+NAME=libglade
 
 #package version
-VERSION=2.5.3
+VERSION=2.6.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.bz2
+MM=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://ftp.gnome.org/pub/gnome/sources/libglade/$MM/libglade-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--without-bzip2"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libxml2' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,9 +36,13 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.savannah.gnu.org/releases/freetype/
+	LISTURL=
 	FILELIST=`GetFileList`
 	LATEST=0
+
+	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libglade/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libglade/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+
 
 	for i in ${FILELIST[@]};
 	do

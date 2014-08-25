@@ -1,20 +1,20 @@
 #package name
-NAME=freetype2
+NAME=pygobject2
 
 #package version
-VERSION=2.5.3
+VERSION=2.28.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.bz2
+SRC=http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.6.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--without-bzip2"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -28,30 +28,25 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	export PYTHON=`which python2`
+	sed -i \
+	-e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:' \
+		-e 's:AM_PROG_CC_STDC:AC_PROG_CC:' \
+		configure.ac
+
+
+	autoreconf -fi
+
+	./configure $STDUSRCONF --disable-introspection
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.savannah.gnu.org/releases/freetype/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
-
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+	echo $NAME: Not updated
 }

@@ -1,20 +1,20 @@
 #package name
-NAME=freetype2
+NAME=py2cairo
 
 #package version
-VERSION=2.5.3
+VERSION=1.10.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.bz2
+SRC=http://cairographics.org/releases/py2cairo-1.10.0.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--without-bzip2"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -28,14 +28,20 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	sed -i 's:bin/env python:bin/env python2:' waf
+	python2 ./waf --version
+	PYTHON=/usr/bin/python2 ./waf configure --prefix=/usr
+	PYTHON=/usr/bin/python2 ./waf build
+	PYTHON=/usr/bin/python2 DESTDIR=/root/bldr-inst ./waf install --destdir=/root/bldr-inst
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.savannah.gnu.org/releases/freetype/
+	LISTURL=http://cairographics.org/releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 

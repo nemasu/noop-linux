@@ -1,23 +1,23 @@
 #package name
-NAME=freetype2
+NAME=webkitgtk2
 
 #package version
-VERSION=2.5.3
+VERSION=2.4.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.bz2
+SRC=http://webkitgtk.org/releases/webkit-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--without-bzip2"
+EXTRACONF="--with-gtk=2.0"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'enchant' 'fontconfig' 'freetype2' 'gail' 'gcc-libs' 'gdk-pixbuf' 'geoclue' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'gtk+2' 'icu4c' 'libX11' 'libXrender' 'libXt' 'libffi' 'libjpeg' 'libpng' 'libsoup' 'libxml2' 'libxslt' 'mesalib' 'pango' 'pcre' 'sqlite' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,19 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.savannah.gnu.org/releases/freetype/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

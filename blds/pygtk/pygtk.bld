@@ -34,9 +34,9 @@ function BuildAndInstall
 {
 	PYTHON=/usr/bin/python2 ./configure --prefix=/usr
 	make
-	make DESTDIR=~/bldr-inst install
-	cp gtk/gtk-extrafuncs.defs ~/bldr-inst/usr/share/pygtk/2.0/defs/
-	sed -i -e 's#env python$#env python2#' ~/bldr-inst/usr/lib/pygtk/2.0/{,demos/}*.py
+	make DESTDIR=/root/bldr-inst install
+	cp gtk/gtk-extrafuncs.defs /root/bldr-inst/usr/share/pygtk/2.0/defs/
+	sed -i -e 's#env python$#env python2#' /root/bldr-inst/usr/lib/pygtk/2.0/{,demos/}*.py
 }
 
 #Default HTTP curl new version detection
