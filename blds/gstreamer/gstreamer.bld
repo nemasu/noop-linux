@@ -1,14 +1,14 @@
 #package name
-NAME=webkitgtk2
+NAME=gstreamer
 
 #package version
-VERSION=2.4.4
+VERSION=1.4.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://webkitgtk.org/releases/webkitgtk-${VERSION}.tar.xz
+SRC=http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'enchant' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'geoclue' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'gtk+2' 'icu4c' 'libX11' 'libXrender' 'libXt' 'libffi' 'libjpeg' 'libpng' 'libsoup' 'libxml2' 'libxslt' 'pango' 'pcre' 'sqlite' 'zlib' 'gtk+')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -30,22 +30,35 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr \
-	    --libexecdir=/usr/lib/webkitgtk2 \
-		--disable-webkit2 -with-gtk=2.0
+  
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --libexecdir=/usr/lib \
+    --with-package-name="GStreamer (noop Linux)" \
+    --with-package-origin="http://www.nooplinux.org/"
+  
   # https://bugzilla.gnome.org/show_bug.cgi?id=655517
-  sed -i 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
-#-j3 no good
-  make all
+  make -j3
+  
   make DESTDIR=/root/bldr-inst install
-
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
+	LISTURL=http://gstreamer.freedesktop.org/src/gstreamer/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
@@ -53,3 +66,4 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+

@@ -2,7 +2,7 @@
 NAME=atk
 
 #package version
-VERSION=2.5.3
+VERSION=2.13.90
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

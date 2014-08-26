@@ -20,7 +20,7 @@ ISSPECIAL=1
 
 if [ "`uname -m`" == "x86_64" ];
 then
-	EXTRADEPS="cups gail"
+	EXTRADEPS="cups"
 fi
 
 # build/package dependancies

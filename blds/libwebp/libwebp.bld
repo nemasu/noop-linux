@@ -1,21 +1,20 @@
 #package name
-NAME=vte2
+NAME=libwebp
 
 #package version
-VERSION=0.37.2
+VERSION=0.4.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/vte/$MAJOR/vte-${VERSION}.tar.xz
+SRC="http://downloads.webmproject.org/releases/webp/libwebp-${VERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -29,16 +28,36 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
-
+function BuildAndInstall
+{
+  
+  ./configure --prefix=/usr \
+     --enable-swap-16bit-csp \
+     --enable-experimental \
+     --enable-libwebpmux \
+     --enable-libwebpdemux \
+     --enable-libwebpdecoder \
+     --disable-static
+  make -j3
+  
+  make DESTDIR=/root/bldr-inst/ install
+}
 #Default HTTP curl new version detection
 function Detect
 {
+	LISTURL=http://downloads.webmproject.org/releases/webp/index.html
+	FILELIST=`GetFileList`
+	LATEST=0
 
-	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/vte/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/vte/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
@@ -46,3 +65,4 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+

@@ -1,23 +1,23 @@
 #package name
-NAME=midori
+NAME=gst-plugins-base
 
 #package version
-VERSION=0.5.8
+VERSION=1.4.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://archive.xfce.org/src/apps/midori/0.4/midori-${VERSION}.tar.bz2
+SRC=http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libnotify' 'libsoup' 'libunique1' 'libxml2' 'pango' 'sqlite' 'webkitgtk')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -30,23 +30,26 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  export PYTHON=/usr/bin/python2
-  sed -i -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" wscript waf
+  
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+    --disable-static --enable-experimental \
+    --with-package-name="GStreamer Base Plugins (noop Linux)" \
+    --with-package-origin="http://www.nooplinux.org/"
 
-  ./configure --prefix=/usr \
-              --enable-addons \
-              --disable-hildon \
-              --enable-unique \
-              --enable-nls
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+  
   make -j3
+  
+  sed -e 's/^SUBDIRS_EXT =.*/SUBDIRS_EXT =/' -i Makefile
+  
   make DESTDIR=/root/bldr-inst install
-
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://midori-browser.org/download/source/
+	LISTURL=http://gstreamer.freedesktop.org/src/gst-plugins-base/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -66,3 +69,4 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+

@@ -1,10 +1,10 @@
 #package name
 NAME=pango
 
-DVERSION=1.36.5
+DVERSION=1.36.6
 
 #package version
-VERSION=1.36.5
+VERSION=1.36.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
