@@ -1,0 +1,53 @@
+#package name
+NAME=geoclue
+
+#package version
+VERSION=2.1.8
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+MM=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://www.freedesktop.org/software/geoclue/releases/$MM/geoclue-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure $STDUSRCONF
+	find . -name Makefile | xargs sed -i -e 's/-Werror=missing-prototypes -Werror=implicit-function-declaration -Werror=pointer-arith -Werror=init-self -Werror=format=2 -Werror=missing-include-dirs//g;'
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+
+	MM=`curl -s http://www.freedesktop.org/software/geoclue/releases/ | grep -E "href=\"[0-9\.]*\/\"" | tail -n1 | sed -e 's/.*href=\"\([0-9\.]*\)\/\".*/\1/g'`
+	LATEST=`curl -s http://www.freedesktop.org/software/geoclue/releases/$MM/ | grep -E "geoclue-[0-9\.]*\.tar\.xz" | tail -n1 | sed -e 's/.*geoclue-\([0-9\.]*\)\.tar\.xz.*/\1/g'`
+	
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

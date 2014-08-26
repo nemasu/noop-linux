@@ -1,23 +1,23 @@
 #package name
-NAME=webkitgtk2
+NAME=modemmanager
 
 #package version
-VERSION=2.5.3
+VERSION=1.4.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://webkitgtk.org/releases/webkit-${VERSION}.tar.xz
+SRC=http://www.freedesktop.org/software/ModemManager/ModemManager-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-gtk=2.0"
+EXTRACONF="--with-udev-base-dir=/usr/lib/udev --with-polkit=permissive --without-mbim --without-qmi"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'enchant' 'fontconfig' 'freetype2' 'gail' 'gcc-libs' 'gdk-pixbuf' 'geoclue' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'gtk+2' 'icu4c' 'libX11' 'libXrender' 'libXt' 'libffi' 'libjpeg' 'libpng' 'libsoup' 'libxml2' 'libxslt' 'pango' 'pcre' 'sqlite' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,6 +28,8 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+
 #function BuildAndInstall
 #{
 #}
@@ -35,7 +37,19 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
+	LISTURL=http://www.freedesktop.org/software/ModemManager/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

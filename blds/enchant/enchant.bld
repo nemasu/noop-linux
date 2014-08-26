@@ -1,24 +1,23 @@
 #package name
-NAME=libsoup
+NAME=enchant
 
 #package version
-VERSION=2.47.4
+VERSION=1.6.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/libsoup/$MAJOR/libsoup-${VERSION}.tar.xz
+SRC=http://www.abisource.com/downloads/enchant/${VERSION}/enchant-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--disable-ispell --with-myspell-dir=/usr/share/myspell --disable-static"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('aspell' 'gcc-libs' 'glib2' 'glibc' 'hunspell' 'pcre')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -36,13 +35,5 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-
-	 MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libsoup/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libsoup/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
-
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+	echo $NAME: Too Old
 }

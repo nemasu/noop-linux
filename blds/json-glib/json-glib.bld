@@ -1,23 +1,24 @@
 #package name
-NAME=webkitgtk2
+NAME=json-glib
 
 #package version
-VERSION=2.5.3
+VERSION=1.0.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://webkitgtk.org/releases/webkit-${VERSION}.tar.xz
+MM=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=https://download.gnome.org/sources/json-glib/$MM/json-glib-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-gtk=2.0"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'enchant' 'fontconfig' 'freetype2' 'gail' 'gcc-libs' 'gdk-pixbuf' 'geoclue' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'gtk+2' 'icu4c' 'libX11' 'libXrender' 'libXt' 'libffi' 'libjpeg' 'libpng' 'libsoup' 'libxml2' 'libxslt' 'pango' 'pcre' 'sqlite' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,7 +36,8 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
+	MAJOR=`curl -s https://download.gnome.org/sources/json-glib/ | grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+	LATEST=`curl -s https://download.gnome.org/sources/json-glib/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
