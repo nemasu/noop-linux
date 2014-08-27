@@ -8,16 +8,16 @@ VERSION=0.5.8
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://archive.xfce.org/src/apps/midori/0.4/midori-${VERSION}.tar.bz2
+SRC=http://midori-browser.org/downloads/midori_${VERSION}_all_.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libnotify' 'libsoup' 'libunique1' 'libxml2' 'pango' 'sqlite' 'webkitgtk')
+DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libnotify' 'libsoup' 'libunique1' 'libxml2' 'pango' 'sqlite' 'webkitgtk2')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,13 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
   export PYTHON=/usr/bin/python2
-  sed -i -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" wscript waf
-
-  ./configure --prefix=/usr \
-              --enable-addons \
-              --disable-hildon \
-              --enable-unique \
-              --enable-nls
+  ./configure --prefix=/usr --disable-zeitgeist
   make -j3
   make DESTDIR=/root/bldr-inst install
 
