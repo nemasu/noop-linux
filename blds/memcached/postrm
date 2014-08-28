@@ -1,0 +1,6 @@
+if getent passwd memcached >/dev/null; then
+	userdel memcached
+fi
+if getent group memcached >/dev/null; then
+	groupdel memcached
+fi
