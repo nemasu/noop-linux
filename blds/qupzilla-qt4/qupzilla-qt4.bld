@@ -1,5 +1,5 @@
 #package name
-NAME=qupzilla
+NAME=qupzilla-qt4
 
 #package version
 VERSION=1.6.6
