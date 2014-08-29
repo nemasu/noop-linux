@@ -1,20 +1,20 @@
 #package name
-NAME=gdbm
+NAME=db
 
 #package version
-VERSION=1.11
+VERSION=5.3.28
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnu.org/gnu/gdbm/gdbm-${VERSION}.tar.gz
+SRC=http://download.oracle.com/berkeley-db/db-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-libgdbm-compat"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -28,14 +28,20 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./dist/configure --prefix=/usr --enable-sql --enable-cxx --enable-compat185  --enable-shared --enable-static --enable-cxx --enable-dbm
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+	
+	#Waaay too many docs
+	rm -rf /root/bldr-inst/usr/docs
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnu.org/gnu/gdbm/
+	LISTURL=http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html
 	FILELIST=`GetFileList`
 	LATEST=0
 

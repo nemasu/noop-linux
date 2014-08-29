@@ -1076,6 +1076,9 @@ gdb,libinproctrace.so
 gdbm,libgdbm.so
 gdbm,libgdbm.so.4
 gdbm,libgdbm.so.4.0.0
+gdbm,libgdbm_compat.so
+gdbm,libgdbm_compat.so.4
+gdbm,libgdbm_compat.so.4.0.0
 gdk-pixbuf,libgdk_pixbuf-2.0.so
 gdk-pixbuf,libgdk_pixbuf-2.0.so.0
 gdk-pixbuf,libgdk_pixbuf-2.0.so.0.3100.0
@@ -5730,10 +5733,13 @@ lvm2,libdevmapper-event-lvm2.so.2.02
 lvm2,libdevmapper-event-lvm2mirror.so
 lvm2,libdevmapper-event-lvm2raid.so
 lvm2,libdevmapper-event-lvm2snapshot.so
+lvm2,libdevmapper-event-lvm2thin.so
 lvm2,libdevmapper-event.so
 lvm2,libdevmapper-event.so.1.02
 lvm2,libdevmapper.so
 lvm2,libdevmapper.so.1.02
+lvm2,liblvm2app.so
+lvm2,liblvm2app.so.2.2
 lvm2,liblvm2cmd.so
 lvm2,liblvm2cmd.so.2.02
 lzo2,liblzo2.so
@@ -8492,10 +8498,10 @@ vte2,libvte.so.9
 vte2,libvte.so.9.2800.2
 webkitgtk2,libjavascriptcoregtk-1.0.so
 webkitgtk2,libjavascriptcoregtk-1.0.so.0
-webkitgtk2,libjavascriptcoregtk-1.0.so.0.13.2
+webkitgtk2,libjavascriptcoregtk-1.0.so.0.16.12
 webkitgtk2,libwebkitgtk-1.0.so
 webkitgtk2,libwebkitgtk-1.0.so.0
-webkitgtk2,libwebkitgtk-1.0.so.0.13.2
+webkitgtk2,libwebkitgtk-1.0.so.0.22.10
 wine,acledit.dll.so
 wine,aclui.dll.so
 wine,activeds.dll.so
