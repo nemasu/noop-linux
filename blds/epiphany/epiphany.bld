@@ -2,7 +2,7 @@
 NAME=epiphany
 
 #package version
-VERSION=3.13.90
+VERSION=3.12.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
