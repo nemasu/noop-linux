@@ -2,7 +2,7 @@
 NAME=webkitgtk
 
 #package version
-VERSION=2.4.4
+VERSION=2.4.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
