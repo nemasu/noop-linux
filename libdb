@@ -5556,9 +5556,9 @@ libwmf,libwmf.so
 libwmf,libwmflite-0.2.so.7
 libwmf,libwmflite-0.2.so.7.0.1
 libwmf,libwmflite.so
-libwnck,libwnck-1.so
-libwnck,libwnck-1.so.22
-libwnck,libwnck-1.so.22.4.0
+libwnck2,libwnck-1.so
+libwnck2,libwnck-1.so.22
+libwnck2,libwnck-1.so.22.4.0
 libx264,libx264.so
 libx264,libx264.so.140
 libxcb,libxcb-composite.so

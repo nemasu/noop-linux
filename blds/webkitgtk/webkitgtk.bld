@@ -1,0 +1,54 @@
+#package name
+NAME=webkitgtk
+
+#package version
+VERSION=2.4.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://webkitgtk.org/releases/webkitgtk-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'enchant' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'geoclue' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'gtk+2' 'icu4c' 'libX11' 'libXrender' 'libXt' 'libffi' 'libjpeg' 'libpng' 'libsoup' 'libxml2' 'libxslt' 'pango' 'pcre' 'sqlite' 'zlib' 'gtk+')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure --prefix=/usr \
+	    --libexecdir=/usr/lib/webkitgtk --with-gtk=3.0
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
+#-j3 no good
+  make all
+  make DESTDIR=/root/bldr-inst install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
