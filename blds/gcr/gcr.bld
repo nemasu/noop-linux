@@ -1,18 +1,18 @@
 #package name
-NAME=gobject-introspection
+NAME=gcr
 
 #package version
-VERSION=1.40.0
+VERSION=3.12.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/gobject-introspection/$MAJOR/gobject-introspection-${VERSION}.tar.xz
+SRC=http://ftp.gnome.org/pub/GNOME/sources/gcr/$MAJOR/gcr-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--disable-static --disable-update-mime --disable-schemas-compile"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
@@ -29,8 +29,6 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-export PYTHON=/usr/bin/python2
-
 #function BuildAndInstall
 #{
 #}
@@ -39,8 +37,8 @@ export PYTHON=/usr/bin/python2
 function Detect
 {
 
-	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gobject-introspection/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gobject-introspection/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gcr/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gcr/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

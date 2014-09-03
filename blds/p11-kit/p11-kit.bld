@@ -1,15 +1,14 @@
 #package name
-NAME=gtk+
+NAME=p11-kit
 
 #package version
-VERSION=3.12.2
+VERSION=0.21.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/gnome/sources/gtk+/$MM/gtk+-${VERSION}.tar.xz
+SRC=http://p11-glue.freedesktop.org/releases/p11-kit-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -31,28 +30,27 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	CXX=/bin/false ./configure --prefix=/usr \
-        --sysconfdir=/etc \
-        --localstatedir=/var \
-        --enable-gtk2-dependency \
-        --disable-schemas-compile \
-        --enable-x11-backend \
-		--enable-introspection
-
-	#https://bugzilla.gnome.org/show_bug.cgi?id=655517
-    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-
-    make -j3
-
+	./configure --prefix=/usr
+	make -j3
 	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
+	LISTURL=http://p11-glue.freedesktop.org/releases/
+	FILELIST=`GetFileList`
+	LATEST=0
 
-	 MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gtk+/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gtk+/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
