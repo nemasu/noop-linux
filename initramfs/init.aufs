@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #Create all the symlinks to /bin/busybox
 /usr/bin/busybox --install -s
 
