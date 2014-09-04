@@ -1,0 +1,87 @@
+#!/bin/bash
+
+HOST=http://www.nooplinux.org/noop
+PKGHOST=$HOST/packages/`uname -m`
+
+#Check for stuff
+if [ -e /usr/bin/which ];
+then
+	WHICH=/usr/bin/which
+else
+	if [ -e /bin/which ];
+	then
+		WHICH=/bin/which
+	else
+		echo '"which" not found in /usr/bin or /bin, please install which to continue';
+		exit 1
+	fi
+fi
+
+PROGS=('wget' 'tar' 'uname' 'chmod' 'mount' 'chroot' 'rm' 'ln')
+for i in ${PROGS[@]};
+do
+	if [ `$WHICH $i | wc -l` == "0" ];
+	then
+		echo "$i not found, please install to continue";
+		exit 1
+	fi
+done
+
+WGET=`$WHICH wget`
+TAR=`$WHICH tar`
+UNAME=`$WHICH uname`
+CHMOD=`$WHICH chmod`
+MOUNT=`$WHICH mount`
+CHROOT=`$WHICH chroot`
+RM=`$WHICH rm`
+LN=`$WHICH ln`
+
+PREFIX=~/initramfs
+
+mkdir -p $PREFIX
+
+#prereqs
+pkgr -i aufs3-utils &> /dev/null
+
+cd $PREFIX
+$WGET $PKGHOST/file-base.tar.bz2 -O$PREFIX/file-base.tar.bz2
+$TAR xf file-base.tar.bz2
+$RM file-base.tar.bz2
+
+if [ `$UNAME -m` == "x86_64" ]; then
+	$LN -s lib lib64
+	cd usr
+	$LN -s lib lib64
+fi
+
+cp -v `which mount.aufs` $PREFIX/sbin
+
+$WGET $HOST/pkgr -O$PREFIX/usr/sbin/pkgr
+
+$CHMOD a+x $PREFIX/usr/sbin/pkgr
+export PATH=$PREFIX/usr/sbin:$PATH
+
+PREFIX=$PREFIX pkgr -s
+export PKGR_SUPPRESS_P_OUTPUT=1
+
+for i in busybox bash;
+do
+	PREFIX=$PREFIX pkgr -i $i
+done
+
+rm -rf $PREFIX/tmp/*
+rm -rf $PREFIX/etc/*
+rm -rf $PREFIX/usr/sbin/pkgr
+rm -rf $PREFIX/var/noop
+
+touch $PREFIX/etc/mtab
+
+$WGET $HOST/init.aufs -O$PREFIX/init && $CHMOD +x $PREFIX/init
+
+cd $PREFIX
+find . | cpio -H newc -o > ../initramfs.cpio
+cd ..
+cat initramfs.cpio | gzip > noop-initramfs-live.igz
+rm initramfs.cpio
+
+rm -rf $PREFIX

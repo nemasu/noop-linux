@@ -689,6 +689,8 @@ eet,libeet.so.1.7.4
 eeze,libeeze.so
 eeze,libeeze.so.1
 eeze,libeeze.so.1.7.4
+efivar,libefivar.so
+efivar,libefivar.so.0
 efreet,libefreet.so
 efreet,libefreet.so.1
 efreet,libefreet.so.1.7.4
@@ -1068,7 +1070,9 @@ gcr,libgcr-3.so.1.0.0
 gcr,libgcr-base-3.so
 gcr,libgcr-base-3.so.1
 gcr,libgcr-base-3.so.1.0.0
-gcr,libmock-test-module.so
+gcr,libgcr-ui-3.so
+gcr,libgcr-ui-3.so.1
+gcr,libgcr-ui-3.so.1.0.0
 gd2,libgd.so
 gd2,libgd.so.2
 gd2,libgd.so.2.0.0
@@ -6428,6 +6432,7 @@ p11-kit,libp11-kit.so
 p11-kit,libp11-kit.so.0
 p11-kit,libp11-kit.so.0.0.0
 p11-kit,p11-kit-proxy.so
+p11-kit,p11-kit-trust.so
 p7zip,7z.so
 p7zip,Rar29.so
 palapeli,libpala.so
@@ -8496,6 +8501,16 @@ vlc,libzip_plugin.so
 vte2,libvte.so
 vte2,libvte.so.9
 vte2,libvte.so.9.2800.2
+webkitgtk,libjavascriptcoregtk-3.0.so
+webkitgtk,libjavascriptcoregtk-3.0.so.0
+webkitgtk,libjavascriptcoregtk-3.0.so.0.16.12
+webkitgtk,libwebkit2gtk-3.0.so
+webkitgtk,libwebkit2gtk-3.0.so.25
+webkitgtk,libwebkit2gtk-3.0.so.25.10.7
+webkitgtk,libwebkit2gtkinjectedbundle.so
+webkitgtk,libwebkitgtk-3.0.so
+webkitgtk,libwebkitgtk-3.0.so.0
+webkitgtk,libwebkitgtk-3.0.so.0.22.10
 webkitgtk2,libjavascriptcoregtk-1.0.so
 webkitgtk2,libjavascriptcoregtk-1.0.so.0
 webkitgtk2,libjavascriptcoregtk-1.0.so.0.16.12
