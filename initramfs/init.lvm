@@ -43,6 +43,8 @@ mkdir -p /newroot
 
 #LVM2
 lvm vgscan --mknodes
+lvm vgchange -ay
+dmsetup mknodes
 
 #Check if $init exists and is executable
 if [[ -x "/newroot/${init}" ]] ; then

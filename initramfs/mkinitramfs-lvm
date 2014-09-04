@@ -60,6 +60,7 @@ fi
 
 cp -v `which mount.aufs` $PREFIX/sbin
 cp -v `which lvm.static` $PREFIX/sbin/lvm
+cp -v `which dmsetup.static` $PREFIX/sbin/dmsetup
 
 $WGET $HOST/pkgr -O$PREFIX/usr/sbin/pkgr
 
