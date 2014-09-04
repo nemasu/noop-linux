@@ -1,9 +1,8 @@
-#!/bin/bash
 
 HOST=http://www.nooplinux.org/noop
 PKGHOST=$HOST/packages/`uname -m`
 
-#Check for stuff
+#CHeck for stuff
 if [ -e /usr/bin/which ];
 then
 	WHICH=/usr/bin/which
@@ -36,12 +35,13 @@ CHROOT=`$WHICH chroot`
 RM=`$WHICH rm`
 LN=`$WHICH ln`
 
-PREFIX=~/initramfs
+#prereqs
+pkgr -i cpio &> /dev/null
+pkgr -i aufs3-utils &> /dev/null
+
+PREFIX=/root/initramfs
 
 mkdir -p $PREFIX
-
-#prereqs
-pkgr -i aufs3-utils &> /dev/null
 
 cd $PREFIX
 $WGET $PKGHOST/file-base.tar.bz2 -O$PREFIX/file-base.tar.bz2
@@ -64,7 +64,7 @@ export PATH=$PREFIX/usr/sbin:$PATH
 PREFIX=$PREFIX pkgr -s
 export PKGR_SUPPRESS_P_OUTPUT=1
 
-for i in busybox bash;
+for i in busybox bash lvm2;
 do
 	PREFIX=$PREFIX pkgr -i $i
 done
@@ -76,12 +76,12 @@ rm -rf $PREFIX/var/noop
 
 touch $PREFIX/etc/mtab
 
-$WGET $HOST/init.aufs -O$PREFIX/init && $CHMOD +x $PREFIX/init
+cp ../init.lvm $PREFIX/init && $CHMOD +x $PREFIX/init
 
 cd $PREFIX
 find . | cpio -H newc -o > ../initramfs.cpio
 cd ..
-cat initramfs.cpio | gzip > noop-initramfs-live.igz
+cat initramfs.cpio | gzip > noop-initramfs.igz
 rm initramfs.cpio
 
 rm -rf $PREFIX
