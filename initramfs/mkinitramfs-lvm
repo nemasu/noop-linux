@@ -1,3 +1,6 @@
+#!/bin/bash
+
+set -e 
 
 HOST=http://www.nooplinux.org/noop
 PKGHOST=$HOST/packages/`uname -m`
@@ -78,7 +81,7 @@ rm -rf $PREFIX/var/noop
 
 touch $PREFIX/etc/mtab
 
-cp ../init.lvm $PREFIX/init && $CHMOD +x $PREFIX/init
+$WGET https://github.com/nemasu/noop-linux/raw/master/initramfs/init.lvm -O$PREFIX/init && $CHMOD +x $PREFIX/init
 
 cd $PREFIX
 find . | cpio -H newc -o > ../initramfs.cpio
