@@ -59,7 +59,7 @@ if [ `$UNAME -m` == "x86_64" ]; then
 fi
 
 cp -v `which mount.aufs` $PREFIX/sbin
-cp -v `which lvm.static` $PREFIX/sbin
+cp -v `which lvm.static` $PREFIX/sbin/lvm
 
 $WGET $HOST/pkgr -O$PREFIX/usr/sbin/pkgr
 
