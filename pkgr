@@ -346,29 +346,37 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 
 	if [ "$ISFILE" == "0" ]; then
 		echo "Searching noop bldj repository..."
-		GetOnlineBldj
-		DLFILE=`grep "$2" /tmp/blds-list`
-		let DLFILECOUNT=`grep "$2" /tmp/blds-list | wc -l`
-		rm /tmp/blds-list
+#GetOnlineBldj
+#DLFILE=`grep "$2" /tmp/blds-list`
+#let DLFILECOUNT=`grep "$2" /tmp/blds-list | wc -l`
+#rm /tmp/blds-list
 
-		if [ $DLFILECOUNT -gt 1 ]; then
-			echo ""
-			echo "Error - multiple packages found, please choose:"
-			echo ""
-			for i in ${DLFILE[@]};
-			do
-				echo $i | sed -e 's/\.bldj//g; s|.*/||g;';
-			done
-			exit 1;
-		fi
+#if [ $DLFILECOUNT -gt 1 ]; then
+#echo ""
+#echo "Error - multiple packages found, please choose:"
+#echo ""
+#for i in ${DLFILE[@]};
+#do
+#echo $i | sed -e 's/\.bldj//g; s|.*/||g;';
+#done
+#exit 1;
+#fi
 
-		if [ $DLFILECOUNT -eq 0 ]; then
-			echo "No instances of $2 found."
-			exit 1;
-		fi
+#if [ $DLFILECOUNT -eq 0 ]; then
+#echo "No instances of $2 found."
+#exit 1;
+#fi
 
 
-		wget http://www.nooplinux.org/noop/blds/$DLFILE -O/tmp/file.bldj
+#wget http://www.nooplinux.org/noop/blds/$DLFILE -O/tmp/file.bldj
+
+		rm -rf /tmp/svn-noop-tmp && mkdir -p /tmp/svn-noop-tmp && cd /tmp/svn-noop-tmp
+		svn checkout http://github.com/nemasu/noop-linux/trunk/blds/$2 || exit 1
+		cd `ls`
+		tar cjf /tmp/file.bldj *
+		cd ../..
+		rm -rf /tmp/svn-noop-tmp
+
 		FILE="/tmp/file.bldj"
 	else
 		cp `readlink -f $2` /tmp/file.bldj

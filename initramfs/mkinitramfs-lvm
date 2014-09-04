@@ -2,7 +2,7 @@
 HOST=http://www.nooplinux.org/noop
 PKGHOST=$HOST/packages/`uname -m`
 
-#CHeck for stuff
+#Check for stuff
 if [ -e /usr/bin/which ];
 then
 	WHICH=/usr/bin/which
@@ -38,6 +38,7 @@ LN=`$WHICH ln`
 #prereqs
 pkgr -i cpio &> /dev/null
 pkgr -i aufs3-utils &> /dev/null
+pkgr -i lvm2 &> /dev/null
 
 PREFIX=/root/initramfs
 
@@ -55,6 +56,7 @@ if [ `$UNAME -m` == "x86_64" ]; then
 fi
 
 cp -v `which mount.aufs` $PREFIX/sbin
+cp -v `which lvm.static` $PREFIX/sbin
 
 $WGET $HOST/pkgr -O$PREFIX/usr/sbin/pkgr
 
@@ -64,7 +66,7 @@ export PATH=$PREFIX/usr/sbin:$PATH
 PREFIX=$PREFIX pkgr -s
 export PKGR_SUPPRESS_P_OUTPUT=1
 
-for i in busybox bash lvm2;
+for i in busybox bash;
 do
 	PREFIX=$PREFIX pkgr -i $i
 done

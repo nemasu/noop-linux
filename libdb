@@ -266,7 +266,6 @@ attr,libattr.so.1.1.0
 aufs3-utils,libau.so
 aufs3-utils,libau.so.2
 aufs3-utils,libau.so.2.6
-avahi,avahi-daemon.socket
 avahi,libavahi-client.so
 avahi,libavahi-client.so.3
 avahi,libavahi-client.so.3.2.9
@@ -449,7 +448,6 @@ cracklib,_cracklibmodule.so
 cracklib,libcrack.so
 cracklib,libcrack.so.2
 cracklib,libcrack.so.2.8.1
-cups,cups.socket
 cups,libcups.so
 cups,libcups.so.2
 cups,libcupscgi.so
@@ -478,7 +476,6 @@ db,libdb_cxx.so
 db,libdb_sql-5.3.so
 db,libdb_sql-5.so
 db,libdb_sql.so
-dbus,dbus.socket
 dbus,libdbus-1.so
 dbus,libdbus-1.so.3
 dbus,libdbus-1.so.3.7.2
@@ -4110,7 +4107,6 @@ lib32-cairo,libcairo-trace.so.0.0.0
 lib32-cairo,libcairo.so
 lib32-cairo,libcairo.so.2
 lib32-cairo,libcairo.so.2.11200.10
-lib32-dbus,dbus.socket
 lib32-dbus,libdbus-1.so
 lib32-dbus,libdbus-1.so.3
 lib32-dbus,libdbus-1.so.3.7.2
@@ -6128,7 +6124,6 @@ mutter,libmutter.so.0
 mutter,libmutter.so.0.0.0
 mysql,adt_null.so
 mysql,auth.so
-mysql,auth_socket.so
 mysql,auth_test_plugin.so
 mysql,innodb_engine.so
 mysql,libdaemon_example.so
@@ -7528,7 +7523,6 @@ samba,smb.so
 samba,smb_acl.so
 samba,smb_traffic_analyzer.so
 samba,smbd.so
-samba,smbd.socket
 samba,smbpasswd.so
 samba,srvsvc.so
 samba,standard.so
@@ -7911,20 +7905,6 @@ systemd,libudev.so
 systemd,libudev.so.1
 systemd,libudev.so.1.5.0
 systemd,pam_systemd.so
-systemd,syslog.socket
-systemd,systemd-initctl.socket
-systemd,systemd-initctl.socket.8
-systemd,systemd-journald-dev-log.socket
-systemd,systemd-journald-dev-log.socket.8
-systemd,systemd-journald.socket
-systemd,systemd-journald.socket.8
-systemd,systemd-shutdownd.socket
-systemd,systemd-shutdownd.socket.8
-systemd,systemd-udevd-control.socket
-systemd,systemd-udevd-control.socket.8
-systemd,systemd-udevd-kernel.socket
-systemd,systemd-udevd-kernel.socket.8
-systemd,systemd.socket.5
 taglib,libtag.so
 taglib,libtag.so.1
 taglib,libtag.so.1.12.0
@@ -8134,7 +8114,6 @@ util-linux,libmount.so.1.1.0
 util-linux,libuuid.so
 util-linux,libuuid.so.1
 util-linux,libuuid.so.1.3.0
-util-linux,uuidd.socket
 vala,libvala-0.22.so
 vala,libvala-0.22.so.0
 vala,libvala-0.22.so.0.0.0
