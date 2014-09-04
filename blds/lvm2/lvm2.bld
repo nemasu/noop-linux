@@ -2,7 +2,7 @@
 NAME=lvm2
 
 #package version
-VERSION=2.2.02.109
+VERSION=2.2.02.111
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('udev-static')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,8 +31,7 @@ RESTORELIBDB=
 export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
-
-	# enable lvmetad
+	autoreconf -fi 
 	sed -i 's|use_lvmetad = 0|use_lvmetad = 1|' conf/example.conf.in
 
 	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --sbindir=/usr/bin \
@@ -40,10 +39,11 @@ function BuildAndInstall
       --with-default-pid-dir=/run --with-default-dm-run-dir=/run --with-default-run-dir=/run/lvm \
       --enable-pkgconfig --enable-readline --enable-dmeventd --enable-cmdlib --enable-applib \
       --enable-udev_sync --enable-udev_rules --with-default-locking-dir=/run/lock/lvm \
-      --enable-lvmetad --with-thin=internal --with-cache=internal --enable-udev-systemd-background-jobs
+      --enable-lvmetad --with-thin=internal --with-cache=internal --enable-udev-systemd-background-jobs  \
+	  --enable-static_link --with-staticdir=/usr/sbin
 
 
-	make -j3
+	CFLAGS="-pthread" make -j3
 	make DESTDIR=/root/bldr-inst install_device-mapper install_lvm2 install_systemd_units install_systemd_generators
 	make -C liblvm DESTDIR=/root/bldr-inst install
 }

@@ -1,0 +1,56 @@
+#package name
+NAME=udev-static
+
+#package version
+VERSION=1.10
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://dev.gentoo.org/~blueness/eudev/eudev-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	export LDFLAGS="-static"
+	./configure --enable-split-usr --enable-static --prefix=/usr --disable-shared
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	rm -rf /root/bldr-inst/usr/{etc,sbin,bin,lib/pkgconfig,lib/udev,lib/girepository-1.0,include}
+	rm -rf /root/bldr-inst/usr/share
+
+	mkdir -p /root/bldr-inst/lib/
+	mv /root/bldr-inst/usr/lib/* /root/bldr-inst/lib/
+	rm -rf /root/bldr-inst/usr
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s https://github.com/gentoo/eudev/releases | grep -E "v[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
