@@ -345,31 +345,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	fi
 
 	if [ "$ISFILE" == "0" ]; then
-		echo "Searching noop bldj repository..."
-#GetOnlineBldj
-#DLFILE=`grep "$2" /tmp/blds-list`
-#let DLFILECOUNT=`grep "$2" /tmp/blds-list | wc -l`
-#rm /tmp/blds-list
-
-#if [ $DLFILECOUNT -gt 1 ]; then
-#echo ""
-#echo "Error - multiple packages found, please choose:"
-#echo ""
-#for i in ${DLFILE[@]};
-#do
-#echo $i | sed -e 's/\.bldj//g; s|.*/||g;';
-#done
-#exit 1;
-#fi
-
-#if [ $DLFILECOUNT -eq 0 ]; then
-#echo "No instances of $2 found."
-#exit 1;
-#fi
-
-
-#wget http://www.nooplinux.org/noop/blds/$DLFILE -O/tmp/file.bldj
-
+		echo "Retrieving bldj from github..."
 		rm -rf /tmp/svn-noop-tmp && mkdir -p /tmp/svn-noop-tmp && cd /tmp/svn-noop-tmp
 		svn checkout http://github.com/nemasu/noop-linux/trunk/blds/$2 || exit 1
 		cd `ls`
@@ -624,7 +600,7 @@ fi
 if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 	$mkdir -p $PREFIX/var/noop
 	
-	$wget $HOST/libdb -O$LIBDB.new
+	$wget http://cdn.rawgit.com/nemasu/noop-linux/master/libdb -O$LIBDB.new
 	if [ $? == 0 ]; then
 		$mv $LIBDB.new $LIBDB
 	else
@@ -660,7 +636,7 @@ if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 
 	for i in xorg-meta xfce4-meta dev-meta mate-meta enlightenment-meta kde-core-meta kde-all-meta;
 	do
-		$wget $HOST/$i -O$METADIR/$i.new
+		$wget http://cdn.rawgit.com/nemasu/noop-linux/master/meta/$i -O$METADIR/$i.new
 		if [ $? == 0 ]; then
 			$mv $METADIR/$i.new $METADIR/$i
 		else
@@ -672,7 +648,7 @@ if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 		fi
 	done
 
-	$wget $HOST/pkgr -O$PREFIX/usr/sbin/pkgr.new
+	$wget http://cdn.rawgit.com/nemasu/noop-linux/master/pkgr -O$PREFIX/usr/sbin/pkgr.new
 	if [ $? == 0 ]; then
 	    $mv $PREFIX/usr/sbin/pkgr.new $PREFIX/usr/sbin/pkgr
 		$chmod a+x $PREFIX/usr/sbin/pkgr
