@@ -16,7 +16,7 @@ else
 	fi
 fi
 
-PROGS=('wget' 'tar' 'uname' 'chmod' 'mount' 'chroot' 'rm' 'ln')
+PROGS=('wget' 'tar' 'uname' 'chmod' 'mount' 'chroot' 'rm' 'ln' 'curl')
 for i in ${PROGS[@]};
 do
 	if [ `$WHICH $i | wc -l` == "0" ];
@@ -34,6 +34,7 @@ MOUNT=`$WHICH mount`
 CHROOT=`$WHICH chroot`
 RM=`$WHICH rm`
 LN=`$WHICH ln`
+CURL=`$WHICH curl`
 
 if [ -z $1 ]; then
 	echo instlr PREFIX
@@ -54,7 +55,7 @@ if [ `$UNAME -m` == "x86_64" ]; then
 fi
 
 
-$WGET $HOST/pkgr -O$PREFIX/usr/sbin/pkgr
+$CURL -L -s https://github.com/nemasu/noop-linux/raw/master/pkgr > $PREFIX/usr/sbin/pkgr
 
 $CHMOD a+x $PREFIX/usr/sbin/pkgr
 export PATH=$PREFIX/usr/sbin:$PATH
@@ -67,7 +68,7 @@ then
 	EXTRA=grub
 fi
 
-for i in glibc trunc which busybox bc tzdata systemd shadow coreutils bash wget grep sed perl findutils gawk procps tar bzip2 gzip dhcpcd inetutils iproute2 wpa_supplicant wireless_tools kbd vim ca-certificates openresolv networkmanager linux-kernel linux-firmware $EXTRA;
+for i in glibc trunc which busybox bc tzdata systemd shadow coreutils bash wget grep sed perl findutils curl gawk procps tar bzip2 gzip dhcpcd inetutils iproute2 wpa_supplicant wireless_tools kbd vim ca-certificates openresolv networkmanager linux-kernel linux-firmware $EXTRA;
 do
 	PREFIX=$PREFIX pkgr -i $i
 done
