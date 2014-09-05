@@ -6,6 +6,9 @@ EXTRACONF=
 ISSPECIAL=1
 DEPS=
 
+#Firefox and thunderbird produce same libraries, no need to have them in libdb anyways.
+RESTORELIBDB=1
+
 function BuildAndInstall
 {
 
@@ -26,7 +29,7 @@ function BuildAndInstall
   export DISPLAY=:99
   Xvfb -nolisten tcp -extension GLX -screen 0 1280x1024x24 $DISPLAY &
 
-  if ! make -f client.mk build MOZ_PGO=1; then
+  if ! make -j1 -f client.mk build MOZ_PGO=1; then
     kill $!
     return 1
   fi

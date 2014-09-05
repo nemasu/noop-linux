@@ -2,13 +2,13 @@
 NAME=icu4c
 
 #package version
-VERSION=49.1.2
+VERSION=53.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.icu-project.org/files/icu4c/49.1.2/icu4c-49_1_2-src.tgz
+SRC=http://download.icu-project.org/files/icu4c/53.1/icu4c-53_1-src.tgz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
