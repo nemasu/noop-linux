@@ -1714,7 +1714,7 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
 fi
 
 if [ $1 = "-libdiff" ]; then
-	wget nooplinux.org/noop/libdb -O/tmp/libdb.server
+	curl -s -L https://github.com/nemasu/noop-linux/raw/master/libdb > /tmp/libdb.server
 	diff /var/noop/libdb /tmp/libdb.server
 	rm /tmp/libdb.server
 fi
