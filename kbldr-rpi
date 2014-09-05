@@ -57,8 +57,8 @@ cp -r -v firmware-master/hardfp/opt .
 rm -rf firmware-master
 
 cd boot
-wget http://www.nooplinux.org/noop/cmdline.txt
-wget http://www.nooplinux.org/noop/config.txt
+wget https://github.com/nemasu/noop-linux/raw/master/etc/cmdline.txt
+wget https://github.com/nemasu/noop-linux/raw/master/etc/config.txt
 cd ..
 
 pkgr -genmeta linux-firmware ${VERSION}
