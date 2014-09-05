@@ -2,14 +2,13 @@
 NAME=deadbeef
 
 #package version
-VERSION=0.5.6-1
-DVERSION=0.5.6
+VERSION=0.6.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.sourceforge.net/deadbeef/deadbeef-${DVERSION}.tar.bz2
+SRC=http://download.sourceforge.net/deadbeef/deadbeef-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--disable-gtk3 --enable-gtk2"

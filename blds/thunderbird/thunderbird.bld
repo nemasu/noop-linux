@@ -1,0 +1,77 @@
+#package name
+NAME=thunderbird
+
+#package version
+VERSION=31.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="http://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/${VERSION}/source/thunderbird-${VERSION}.source.tar.bz2"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('alsa-lib' 'dbus-glib' 'desktop-file-utils' 'gtk+2' 'hicolor-icon-theme' 'hunspell' 'libevent' 'libnotify' 'libvpx' 'libXt' 'mime-types' 'nss' 'sqlite' 'startup-notification' 'unzip' 'zip' 'pkg-config' 'python2' 'wireless_tools' 'yasm' 'mesalib' 'autoconf')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	mv $BLDRTMPDIR/mozconfig .mozconfig
+	export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/thunderbird"
+	export PYTHON="/usr/bin/python2"
+
+	make -j1 -f client.mk build MOZ_MAKE_FLAGS="$MAKEFLAGS"
+
+	make -j1 -f client.mk DESTDIR=/root/bldr-inst install
+
+	for i in 16x16 22x22 24x24 32x32 48x48 256x256;
+	do
+	install -Dm644 other-licenses/branding/thunderbird/mailicon${i/x*/}.png \
+	  /root/bldr-inst/usr/share/icons/hicolor/$i/apps/thunderbird.png
+	done
+
+	rm -rf /root/bldr-inst/usr/lib/thunderbird-$VERSION/{dictionaries,hyphenation}
+	ln -sf /usr/share/hunspell /root/bldr-inst/usr/lib/thunderbird-$VERSION/dictionaries
+	ln -sf /usr/share/hyphen /root/bldr-inst/usr/lib/thunderbird-$VERSION/hyphenation
+
+	rm -rf /root/bldr-inst/usr/{include,lib/thunderbird-devel-$VERSION,share/idl}
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=ftp://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/latest/source/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
