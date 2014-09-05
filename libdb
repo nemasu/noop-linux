@@ -5420,9 +5420,11 @@ libplist,libplist.so
 libplist,libplist.so.1
 libplist,libplist.so.1.1.10
 libpng,libpng.so
-libpng,libpng15.so
-libpng,libpng15.so.15
-libpng,libpng15.so.15.12.0
+libpng,libpng16.so
+libpng,libpng16.so.16
+libpng,libpng16.so.16.10.0
+libpng15,libpng15.so
+libpng15,libpng15.so.15
 libpthread_workqueue,libpthread_workqueue.so
 libpthread_workqueue,libpthread_workqueue.so.0
 libpthread_workqueue,libpthread_workqueue.so.0.0.0
