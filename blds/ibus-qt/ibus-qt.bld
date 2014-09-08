@@ -1,23 +1,24 @@
 #package name
-NAME=libxcb
+NAME=ibus-qt
 
 #package version
-VERSION=1.11
+VERSION=1.3.1-1
+DVERSION=1.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/xcb/libxcb-${VERSION}.tar.bz2
+SRC=http://ibus.googlecode.com/files/ibus-qt-${DVERSION}-Source.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-xinput --enable-xkb"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('libxslt' 'libXau' 'libXdmcp')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +29,25 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	 #Disable doxygen requirment
+	sed -i -e '/Doxygen REQUIRED/d' CMakeLists.txt
+
+	mkdir -p build
+	cd build
+
+	cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+	make -j3
+
+	make DESTDIR=/root/bldr-inst install
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/xcb/
+	LISTURL=https://code.google.com/p/ibus/downloads/list
 	FILELIST=`GetFileList`
 	LATEST=0
 

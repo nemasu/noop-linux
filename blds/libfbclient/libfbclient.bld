@@ -2,13 +2,14 @@
 NAME=libfbclient
 
 #package version
-VERSION=2.5.1.26351
+VERSION=2.5.1.26351-1
+DVERSION=2.5.1.26351
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/firebird/Firebird-${VERSION}-0.tar.bz2
+SRC=http://downloads.sourceforge.net/firebird/Firebird-${DVERSION}-0.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -71,7 +72,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

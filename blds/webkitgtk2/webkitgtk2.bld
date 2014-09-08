@@ -2,13 +2,14 @@
 NAME=webkitgtk2
 
 #package version
-VERSION=2.4.4
+VERSION=2.4.4-1
+DVERSION=2.4.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://webkitgtk.org/releases/webkitgtk-${VERSION}.tar.xz
+SRC=http://webkitgtk.org/releases/webkitgtk-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -47,7 +48,7 @@ function Detect
 {
 	LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

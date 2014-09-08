@@ -1,0 +1,104 @@
+#package name
+NAME=mesalib
+
+#package version
+VERSION=10.2.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://ftp.freedesktop.org/pub/mesa/${VERSION}/MesaLib-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('expat' 'gcc-libs' 'glibc' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXxf86vm' 'libdrm' 'libpciaccess' 'libvdpau' 'libxcb' 'systemd')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+
+function BuildAndInstall
+{
+
+	if [ "`uname -m`" == "armv6l" ];
+	then
+		GALLIUM_DRIVERS=swrast
+		DRI_DRIVERS=swrast
+	else
+		GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,svga,swrast"
+		DRI_DRIVERS="i915,i965,r200,radeon,nouveau,swrast"
+		ARCHCONF="--enable-opencl --enable-opencl-icd --enable-xa"
+	fi
+
+
+	 autoreconf -vfi
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--with-clang-libdir=/usr/lib \
+		--with-gallium-drivers=${GALLIUM_DRIVERS} \
+		--with-dri-drivers=${DRI_DRIVERS} \
+		--disable-gallium-egl \
+		--disable-gallium-gbm \
+		--enable-gallium-llvm \
+		--enable-llvm-shared-libs \
+		--enable-egl \
+		--with-egl-platforms=x11,drm \
+		--enable-shared-glapi \
+		--enable-gbm \
+		--enable-glx-tls \
+		--enable-dri \
+		--enable-glx \
+		--enable-osmesa \
+		--enable-gles1 \
+		--enable-gles2 \
+		--enable-texture-float \
+		--enable-dri3 \
+		--enable-omx \
+		--enable-vdpau ${ARCHCONF}
+
+		# fix a build break with new llvm
+		sed -i "s:-Werror=implicit-function-declaration::" src/gallium/drivers/r600/Makefile
+	
+		make -j3
+		make DESTDIR=/root/bldr-inst install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	NAME=MesaLib
+	LISTURL=ftp://ftp.freedesktop.org/pub/mesa/current
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

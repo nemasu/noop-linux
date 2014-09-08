@@ -1,23 +1,24 @@
 #package name
-NAME=libxcb
+NAME=raptor
 
 #package version
-VERSION=1.11
+VERSION=2.0.8-1
+DVERSION=2.0.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/xcb/libxcb-${VERSION}.tar.bz2
+SRC=http://librdf.org/dist/source/raptor2-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-xinput --enable-xkb"
+EXTRACONF="--with-yajl=no --with-icu-config=/usr/bin/icu-config"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('libxslt' 'libXau' 'libXdmcp')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,7 +36,8 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/xcb/
+	NAME=raptor2
+	LISTURL=http://librdf.org/dist/source/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -49,7 +51,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

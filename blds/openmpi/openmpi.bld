@@ -1,14 +1,15 @@
 #package name
-NAME=libdrm
+NAME=openmpi
 
 #package version
-VERSION=2.4.56
+VERSION=1.8.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://dri.freedesktop.org/libdrm/libdrm-${VERSION}.tar.bz2
+MM=`echo $VERSION | sed -e 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
+SRC=http://www.open-mpi.org/software/ompi/v${MM}/downloads/openmpi-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -28,25 +29,34 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
-
 function BuildAndInstall
 {
-	autoreconf --force --install
-	./configure --prefix=/usr \
-		--enable-udev \
-		--enable-omap-experimental-api \
-		--enable-exynos-experimental-api \
-		--enable-intel --enable-libkms --enable-radeon --enable-nouveau
-	make -j3
-	make DESTDIR=/root/bldr-inst install
+	# Make sure we use the system ltdl library rather than the ones in the tarball
+   rm -r opal/libltdl
 
+   ./configure --prefix=/usr \
+               --sysconfdir=/etc/${pkgname} \
+               --enable-mpi-fortran=all \
+               --libdir=/usr/lib/openmpi \
+               --with-threads=posix \
+               --enable-smp-locks \
+               --enable-memchecker \
+               --enable-debug \
+               --enable-pretty-print-stacktrace \
+               --without-slurm \
+               --with-hwloc=/usr \
+               --with-libltdl=/usr  \
+               FC=/usr/bin/gfortran \
+               LDFLAGS="$LDFLAGS -Wl,-z,noexecstack"
+
+   make -j3
+   make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://dri.freedesktop.org/libdrm/
+	LISTURL=http://www.open-mpi.org/software/ompi/
 	FILELIST=`GetFileList`
 	LATEST=0
 

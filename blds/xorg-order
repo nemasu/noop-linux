@@ -3,6 +3,8 @@ compositeproto
 damageproto
 dmxproto
 dri2proto
+dri3proto
+presentproto
 fixesproto
 fontsproto
 glproto
@@ -23,6 +25,8 @@ xf86dgaproto
 xf86driproto
 xf86vidmodeproto
 xineramaproto
+libxshmfence
+libomxil-bellagio
 util-macros
 font-util
 mkfontdir

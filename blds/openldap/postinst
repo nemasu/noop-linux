@@ -1,0 +1,4 @@
+groupadd -g 439 ldap &>/dev/null
+useradd -u 439 -g ldap -d /var/lib/openldap -s /bin/false ldap &>/dev/null
+systemd-tmpfiles --create /etc/tmpfiles.d/slapd.conf
+chown -R ldap:ldap /var/lib/openldap &>/dev/null

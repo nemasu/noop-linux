@@ -1,23 +1,23 @@
 #package name
-NAME=libxcb
+NAME=libvdpau
 
 #package version
-VERSION=1.11
+VERSION=0.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/xcb/libxcb-${VERSION}.tar.bz2
+SRC=http://people.freedesktop.org/~aplattner/vdpau/libvdpau-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-xinput --enable-xkb"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('libxslt' 'libXau' 'libXdmcp')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/xcb/
+	LISTURL=http://people.freedesktop.org/~aplattner/vdpau/
 	FILELIST=`GetFileList`
 	LATEST=0
 

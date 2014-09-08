@@ -888,7 +888,7 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 	then
 
 		#remove files
-		$echo Removing old non config files
+		$echo Removing old package
 		for i in `$sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$NAME | $sed 's/^/\//g'`;
 		do
 			$rm -v $i 2>&1 | $sed -e '/directory/d'
