@@ -2476,6 +2476,9 @@ jovie,kcm_kttsd.so
 jovie,libkttsd.so
 jovie,libkttsd.so.4
 jovie,libkttsd.so.4.10.1
+jq,libjq.so
+jq,libjq.so.1
+jq,libjq.so.1.0.4
 js17,libmozjs-17.0.so
 json-c,libjson.so
 json-c,libjson.so.0
