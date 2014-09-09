@@ -711,7 +711,7 @@ function RenameConfigFiles
 {
 	for p in {"cnf","config","conf","cfg"};
     do
-        for i in `$find . -name "*."$p`;
+        for i in `$find . -type f -name "*."$p`;
         do
 			FS_PATH=$PREFIX/`echo $i | $sed 's/^.//g'`
 			if [ -e $FS_PATH ]
