@@ -42,7 +42,8 @@ function BuildAndInstall
 		--enable-mergelibs --with-system-cairo --with-system-boost \
 		--with-system-headers --with-alloc=system --enable-split-app-modules \
 		--without-system-mdds --without-system-vigra --without-system-sane \
-		--enable-release-build=yes --with-system-nss --with-parallelism=3
+		--enable-release-build=yes --with-system-nss --with-parallelism=3 \
+		--with-system-neon
 
 	make build
 	make DESTDIR=/root/bldr-inst distro-pack-install
