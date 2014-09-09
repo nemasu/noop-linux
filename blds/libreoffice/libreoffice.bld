@@ -39,11 +39,12 @@ function BuildAndInstall
 		--with-system-expat --with-system-lcms2 --with-system-libxml \
 		--with-system-icu --with-system-mesa-headers --without-system-npapi-headers \
 		--with-system-libpng --with-gssapi --without-java --without-doxygen \
-		--enable-mergelibs --with-system-cairo --without-system-boost \
+		--enable-mergelibs --with-system-cairo --with-system-boost \
 		--with-system-headers --with-alloc=system --enable-split-app-modules \
-		--without-system-mdds --without-system-vigra --without-system-sane
+		--without-system-mdds --without-system-vigra --without-system-sane \
+		--enable-release-build=yes --with-system-nss --with-parallelism=3
 
-	make -j3
+	make build
 	make DESTDIR=/root/bldr-inst distro-pack-install
 }
 
