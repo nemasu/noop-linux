@@ -33,15 +33,14 @@ function BuildAndInstall
 {
 	export PYTHON=python2
 	export PTHREAD_LIBS="-pthread"
-	./autogen.sh $STDUSRCONF \
+	./autogen.sh --prefix=/usr \
 		--disable-gtk3 --disable-gnome-vfs --disable-gconf \
 		--with-system-zlib --with-system-openssl --with-system-jpeg \
 		--with-system-expat --with-system-lcms2 --with-system-libxml \
-		--with-system-icu --with-system-mesa-headers --with-system-gettext \
+		--with-system-icu --with-system-mesa-headers --without-system-npapi-headers \
 		--with-system-libpng --with-gssapi --without-java --without-doxygen \
 		--enable-mergelibs --with-system-cairo --without-system-boost \
 		--with-system-headers --with-alloc=system --enable-split-app-modules \
-		--disable-mozilla --without-system-mozilla --without-system-mozilla-headers \
 		--without-system-mdds --without-system-vigra --without-system-sane
 
 	make -j3
