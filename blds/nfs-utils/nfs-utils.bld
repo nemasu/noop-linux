@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('e2fsprogs' 'glibc' 'krb5' 'libcap2' 'libevent' 'libgssglue' 'libnfsidmap' 'libtirpc' 'lvm2' 'util-linux')
+DEPS=('attr' 'e2fsprogs' 'glibc' 'krb5' 'libcap2' 'libevent' 'libgssglue' 'libnfsidmap' 'libtirpc' 'lvm2' 'systemd' 'util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

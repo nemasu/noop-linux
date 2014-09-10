@@ -16,7 +16,7 @@ SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.ta
 EXTRACONF=
 ISSPECIAL=1
 STRIP="no"
-DEPS=('ninja' 'alsa-lib' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libcap2' 'libevent' 'libgcrypt' 'libjpeg' 'libpng' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libxml2' 'libXrender' 'libXScrnSaver' 'libxslt' 'libXtst' 'nspr' 'nss' 'pango' 'pciutils' 'systemd' 'cups' 'libdrm' 'pulseaudio' 'speech-dispatcher' 'libexif')
+DEPS=('alsa-lib' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libcap2' 'libevent' 'libgcrypt' 'libjpeg' 'libpng15' 'libX11' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libxml2' 'libXrandr' 'libXrender' 'libXScrnSaver' 'libxslt' 'libXtst' 'nspr' 'nss' 'pango' 'pciutils' 'speech-dispatcher' 'systemd')
 
 function BuildAndInstall
 {

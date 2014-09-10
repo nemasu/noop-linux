@@ -18,7 +18,7 @@ EXTRACONF="--with-glib --with-freetype --with-cairo --with-icu --with-gobject"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('cairo' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'icu4c' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libffi' 'libpng15' 'libxcb' 'pcre' 'pixman' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

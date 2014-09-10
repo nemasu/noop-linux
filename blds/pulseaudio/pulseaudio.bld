@@ -17,7 +17,7 @@ EXTRACONF="--enable-udev --with-udev-rules-dir=/usr/lib/udev/rules.d --enable-sy
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('alsa-lib' 'dbus' 'dbus-glib' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libcap2' 'libffi' 'libsndfile' 'libtool' 'openssl' 'pcre' 'speex' 'systemd' 'zlib')
+DEPS=('alsa-lib' 'attr' 'dbus' 'dbus-glib' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libcap2' 'libffi' 'libsndfile' 'libtool' 'openssl' 'orbit2' 'pcre' 'speex' 'systemd' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

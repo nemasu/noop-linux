@@ -4,7 +4,7 @@ ISUSR=1
 SRC=http://librdf.org/dist/source/raptor2-${VERSION}.tar.gz
 EXTRACONF="--disable-static --with-yajl=no 	--with-icu-config=/usr/bin/icu-config"
 ISSPECIAL=0
-DEPS=('curl' 'glibc' 'icu4c' 'libxml2' 'libxslt' 'zlib')
+DEPS=('curl' 'gcc-libs' 'glibc' 'icu4c' 'libidn' 'libxml2' 'libxslt' 'openssl' 'xz' 'zlib')
 
 #function BuildAndInstall
 #{

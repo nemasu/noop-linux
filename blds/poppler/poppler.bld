@@ -18,7 +18,7 @@ EXTRACONF="--disable-static --enable-cairo-output --enable-xpdf-headers --enable
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'lcms2' 'libjpeg' 'libpng' 'openjpeg' 'pango' 'qt4' 'tiff' 'zlib')
+DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'lcms2' 'libjpeg' 'libpng' 'openjpeg' 'pango' 'qt' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

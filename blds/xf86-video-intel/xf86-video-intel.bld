@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'libdrm' 'libpciaccess')
 
 # 'no' to skip calls to strip
 STRIP=

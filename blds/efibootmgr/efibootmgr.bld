@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('efivar')
+DEPS=('efivar' 'glibc' 'pciutils' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -18,7 +18,7 @@ EXTRACONF="--with-yajl=no --with-icu-config=/usr/bin/icu-config"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('curl' 'gcc-libs' 'glibc' 'icu4c' 'libidn' 'libxml2' 'libxslt' 'openssl' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

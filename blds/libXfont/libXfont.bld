@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('freetype2' 'glibc' 'libfontenc' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

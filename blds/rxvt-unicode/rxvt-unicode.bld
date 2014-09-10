@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'libX11' 'libXft' 'libXrender' 'perl' 'startup-notification')
 
 # 'no' to skip calls to strip
 STRIP=

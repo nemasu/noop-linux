@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('expat' 'glib2' 'glibc' 'js17' 'libffi' 'libgcrypt' 'libgpg-error' 'linux-pam' 'pcre' 'systemd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

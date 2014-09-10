@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc' 'libffi' 'libnl' 'libsoup' 'libxml2' 'nspr' 'nss' 'pcre' 'polkit' 'systemd' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc' 'krb5' 'libxml2' 'linux-pam' 'ncurses' 'openssl' 'perl' 'readline' 'tcl' 'zlib')
+DEPS=('glibc' 'krb5' 'libxml2' 'linux-pam' 'ncurses' 'openssl' 'postgresql-libs' 'readline' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

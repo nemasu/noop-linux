@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('alsa-lib' 'dbus-glib' 'desktop-file-utils' 'gtk+2' 'hicolor-icon-theme' 'hunspell' 'libevent' 'libnotify' 'libvpx' 'libXt' 'mime-types' 'nss' 'sqlite' 'startup-notification' 'unzip' 'zip' 'pkg-config' 'python2' 'wireless_tools' 'yasm' 'mesalib' 'autoconf')
+DEPS=('alsa-lib' 'atk' 'cairo' 'dbus' 'dbus-glib' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'hunspell' 'icu4c' 'libX11' 'libXext' 'libXrender' 'libXt' 'libevent' 'libffi' 'libjpeg' 'libpng' 'libvpx' 'nspr' 'nss' 'pango' 'pixman' 'sqlite' 'startup-notification' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('curl' 'glibc' 'imlib2' 'libX11' 'libXinerama' 'libexif' 'libpng')
 
 # 'no' to skip calls to strip
 STRIP=

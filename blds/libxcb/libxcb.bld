@@ -17,7 +17,7 @@ EXTRACONF="--enable-xinput --enable-xkb"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('libxslt' 'libXau' 'libXdmcp')
+DEPS=('glibc' 'libXau' 'libXdmcp')
 
 # 'no' to skip calls to strip
 STRIP=

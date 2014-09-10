@@ -18,7 +18,7 @@ EXTRACONF="--enable-default-device=sr0"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc')
 
 # 'no' to skip calls to strip
 STRIP=

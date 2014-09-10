@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('at-spi2-core' 'atk' 'dbus' 'glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libffi' 'libxcb' 'pcre')
 
 # 'no' to skip calls to strip
 STRIP=
