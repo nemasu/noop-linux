@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc' 'openssl')
+DEPS=('lib32-e2fsprogs' 'lib32-glibc' 'lib32-openldap' 'lib32-openssl')
 
 # 'no' to skip calls to strip
 STRIP=

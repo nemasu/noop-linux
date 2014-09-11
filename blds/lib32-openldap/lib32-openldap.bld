@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('db' 'glibc' 'icu4c' 'libtool' 'openssl' 'sasl' 'util-linux')
+DEPS=('lib32-glibc' 'lib32-openssl')
 
 # 'no' to skip calls to strip
 STRIP=

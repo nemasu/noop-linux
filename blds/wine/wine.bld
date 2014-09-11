@@ -19,7 +19,7 @@ ISSPECIAL=1
 # 'no' to skip calls to strip
 STRIP=
 
-DEPS=('alsa-lib' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'lcms' 'lib32-alsa-lib' 'lib32-glibc' 'lib32-libX11' 'lib32-libXau' 'lib32-libXdmcp' 'lib32-libXext' 'lib32-libjpeg' 'lib32-libxml2' 'libjpeg' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libffi' 'libxcb' 'libxml2' 'openldap' 'openssl' 'pcre' 'sasl' 'util-linux' 'xz' 'zlib')
+DEPS=('alsa-lib' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'lcms2' 'lib32-alsa-lib' 'lib32-glibc' 'lib32-libX11' 'lib32-libXext' 'lib32-libxml2' 'lib32-zlib' 'libX11' 'libXext' 'libexif' 'libglu' 'libgphoto2' 'libpcap' 'libxml2' 'mesalib' 'openal' 'openldap' 'zlib')
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
 PKGDEPS=
