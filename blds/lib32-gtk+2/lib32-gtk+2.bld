@@ -43,6 +43,8 @@ function BuildAndInstall
 
 
 	CXX=/bin/false ./configure --prefix=/usr \
+		--libdir=/usr/lib32 \
+		--libexecdir=/usr/lib32 \
         --sysconfdir=/etc \
         --localstatedir=/var \
         --with-xinput=yes
