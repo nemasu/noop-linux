@@ -51,21 +51,20 @@ function BuildAndInstall
 		-sysconfdir /etc/xdg \
 		-examplesdir /usr/share/doc/qt4/examples \
 		-demosdir /usr/share/doc/qt4/demos \
-		-plugin-sql-{psql,mysql,sqlite,odbc} \
+		-plugin-sql-sqlite \
 		-system-sqlite \
 		-no-phonon \
 		-no-phonon-backend \
 		-graphicssystem raster \
-		-openssl-linked \
-		-nomake demos \
-		-nomake examples \
-		-nomake docs \
-		-silent \
+		-openssl-linked -nomake demos -nomake examples -nomake docs -silent \
 		-no-rpath \
 		-optimized-qmake \
 		-reduce-relocations \
 		-dbus-linked \
 		-no-openvg
+		
+		#-plugin-sql-{psql,mysql,sqlite,odbc} \
+		
 		make -j3
 		make INSTALL_ROOT=/root/bldr-inst install
 
