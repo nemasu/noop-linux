@@ -38,13 +38,6 @@ function BuildAndInstall
       -e "/^QMAKE_LFLAGS\s/s|+=|+= $LDFLAGS|g" \
       -i mkspecs/common/g++.conf
 
-	if [ "`uname -m`" == "armv6l" ];
-	then
-		EXTRACONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon -lpthread"
-	else
-		EXTRACONF="-plugin-sql-ibase"
-	fi
-
 	./configure -confirm-license -opensource \
 		-prefix /usr \
 		-libdir /usr/lib32 \
@@ -72,7 +65,7 @@ function BuildAndInstall
 		-optimized-qmake \
 		-reduce-relocations \
 		-dbus-linked \
-		-no-openvg $EXTRACONF
+		-no-openvg
 		make -j3
 		make INSTALL_ROOT=/root/bldr-inst install
 
