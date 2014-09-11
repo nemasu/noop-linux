@@ -17,13 +17,13 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('lib32-libX11' 'lib32-gcc-libs' 'lib32-mesalib')
+DEPS=('lib32-libX11' 'lib32-mesalib')
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('lib32-mesalib' 'lib32-gcc-libs' 'lib32-libX11')
+PKGDEPS=('lib32-mesalib' 'lib32-libX11')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -34,6 +34,13 @@ function BuildAndInstall
 	
 	# blank steamdeps because apt-get
 	ln -sf /bin/true /root/bldr-inst/usr/bin/steamdeps
+
+	mkdir tmp && cd tmp
+	wget https://support.steampowered.com/downloads/1974-YFKL-4947/SteamFonts.zip
+	unzip SteamFonts.zip
+	mkdir -p /root/bldr-inst/usr/share/fonts/steam-fonts/
+	cp * /root/bldr-inst/usr/share/fonts/steam-fonts/
+
 }
 
 #Default HTTP curl new version detection
