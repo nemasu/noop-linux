@@ -61,7 +61,7 @@ function BuildAndInstall
 		-optimized-qmake \
 		-reduce-relocations \
 		-dbus-linked \
-		-no-openvg
+		-no-openvg -no-gstreamer
 		
 		#-plugin-sql-{psql,mysql,sqlite,odbc} \
 		

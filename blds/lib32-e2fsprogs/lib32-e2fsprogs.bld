@@ -1,23 +1,23 @@
 #package name
-NAME=gst-plugins-base0.10
+NAME=lib32-e2fsprogs
 
 #package version
-VERSION=0.10.36
+VERSION=1.42.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${VERSION}.tar.xz
+SRC=http://downloads.sourceforge.net/sourceforge/e2fsprogs/e2fsprogs-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('alsa-lib' 'cairo' 'cdparanoia' 'glib2' 'glibc' 'gstreamer0.10' 'libICE' 'libSM' 'libX11' 'libXext' 'libXv' 'libogg' 'libtheora' 'libvorbis' 'libxml2' 'pango' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +28,32 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+  # Remove unnecessary init.d directory
+  sed -i '/init\.d/s|^|#|' misc/Makefile.in
+
+  ./configure --prefix=/usr --with-root-prefix="" --libdir=/usr/lib32 \
+      --enable-elf-shlibs --disable-{debugfs,imager,resizer,fsck,uuidd,libuuid,libblkid}
+
+  make -j3
+  make DESTDIR=/root/bldr-inst install-libs
+
+  sed -i -e 's/^AWK=.*/AWK=awk/' /root/bldr-inst/usr/bin/compile_et
+
+  rm -rf /root/bldr-inst/usr/{bin,include,share}
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://gstreamer.freedesktop.org/src/gst-plugins-base/
+	LISTURL=http://sourceforge.net/projects/e2fsprogs/files/
 	FILELIST=`GetFileList`
 	LATEST=0
 

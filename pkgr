@@ -1667,7 +1667,7 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
 		$sed -i '/^lib32-.*/ !d;' $LIBDB.tmp;
 	fi
 
-    for j in `ldd $2 | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d; /ld-linux-armhf.so.3/d;' | $awk '{print $1;}' | sort | uniq`;
+    for j in `ldd $2 | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d; /ld-linux-armhf.so.3/d; /libgcc/d; /libstdc++/d;' | $awk '{print $1;}' | sort | uniq`;
     do
 
 		let isFound=`$grep -e ",$j$" $LIBDB.tmp | $sed -e 's/,.*//g' | uniq | wc -l`

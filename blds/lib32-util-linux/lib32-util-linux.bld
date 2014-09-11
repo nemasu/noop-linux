@@ -1,23 +1,24 @@
 #package name
-NAME=gst-plugins-base0.10
+NAME=lib32-util-linux
 
 #package version
-VERSION=0.10.36
+VERSION=2.25
+DVERSION=2.25
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${VERSION}.tar.xz
+SRC=http://www.kernel.org/pub/linux/utils/util-linux/v${DVERSION}/util-linux-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('alsa-lib' 'cairo' 'cdparanoia' 'glib2' 'glibc' 'gstreamer0.10' 'libICE' 'libSM' 'libX11' 'libXext' 'libXv' 'libogg' 'libtheora' 'libvorbis' 'libxml2' 'pango' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +29,25 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+  ./configure \
+      CC="gcc -m32" \
+      PKG_CONFIG_PATH="/usr/lib32/pkgconfig" \
+      --libdir=/usr/lib32 \
+	  --prefix=/usr
+
+  make -j3 lib{uuid,blkid,mount,smartcols}.la
+  make DESTDIR=/root/bldr-inst install-usrlib_execLTLIBRARIES install-pkgconfigDATA
+
+  rm -rf /root/bldr-inst/usr/{bin,sbin,share}
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://gstreamer.freedesktop.org/src/gst-plugins-base/
+	BASE=`curl -L -s "https://www.kernel.org/pub/linux/utils/util-linux/" | grep -E "v[0-9\.]*" | tail -n1 | sed -e 's/.*v\([0-9\.]*\)\/.*/\1/g'`
+	LISTURL="https://www.kernel.org/pub/linux/utils/util-linux/v${BASE}/"
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -49,7 +61,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

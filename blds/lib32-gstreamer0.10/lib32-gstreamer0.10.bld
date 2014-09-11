@@ -1,0 +1,64 @@
+#package name
+NAME=lib32-gstreamer0.10
+
+#package version
+VERSION=0.10.36
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	export CC='gcc -m32'
+	export CXX='g++ -m32'
+	export PKG_CONFIG_PATH='/usr/lib32/pkgconfig'
+
+	sed -e 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/' -i configure.ac
+	
+	NOCONFIGURE=1 ./autogen.sh
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --libexecdir=/usr/lib32 --libdir=/usr/lib32 --disable-gtk-doc --disable-static --disable-examples --disable-tests --disable-introspection
+  	
+	make -j3
+	
+	make DESTDIR=/root/bldr-inst install
+
+	cd /root/bldr-inst/usr/bin
+	for bins in `ls *-0.10`; do
+		rm -f ${bins/-0.10/}
+	done
+
+	rm -rf /root/bldr-inst/usr/{bin,include,share}
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s http://gstreamer.freedesktop.org/src/gstreamer/ | grep -E "gstreamer-0\.10\.[0-9]*\.tar\.bz2" | sed -e 's/.*gstreamer-\(0\.10\.[0-9]*\)\.tar\.bz2.*/\1/g' | uniq | tail -n1`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

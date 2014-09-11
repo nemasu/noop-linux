@@ -1,23 +1,23 @@
 #package name
-NAME=gst-plugins-base0.10
+NAME=lib32-cups
 
 #package version
-VERSION=0.10.36
+VERSION=1.7.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${VERSION}.tar.xz
+SRC=http://www.cups.org/software/$VERSION/cups-$VERSION-source.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('alsa-lib' 'cairo' 'cdparanoia' 'glib2' 'glibc' 'gstreamer0.10' 'libICE' 'libSM' 'libX11' 'libXext' 'libXv' 'libogg' 'libtheora' 'libvorbis' 'libxml2' 'pango' 'zlib')
+DEPS=('acl' 'avahi' 'dbus' 'gcc-libs' 'glibc' 'gnutls' 'krb5' 'libusb' 'linux-pam' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +28,29 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+  export CC="gcc -m32"
+  export CXX="g++ -m32"
+  export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+  aclocal -I config-scripts
+  autoconf -I config-scripts
+
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+     --disable-ldap --enable-raw-printing --disable-gssapi --disable-dbus \
+     --enable-ssl=no --disable-gnutls --enable-threads --enable-libusb=no \
+	 --disable-avahi --disable-dnssd \
+     --with-optim="$CFLAGS" --libdir=/usr/lib32
+  
+  make -j3 libs
+  make BUILDROOT=/root/bldr-inst install-libs
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://gstreamer.freedesktop.org/src/gst-plugins-base/
+	LISTURL=http://www.cups.org/
 	FILELIST=`GetFileList`
 	LATEST=0
 
