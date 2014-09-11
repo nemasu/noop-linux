@@ -14,7 +14,7 @@ then
 
 fi
 
-DEPS=('gcc-libs' 'lib32-alsa-lib' 'lib32-dbus' 'lib32-fontconfig' 'lib32-freetype2' 'lib32-glib2' 'lib32-glibc' 'lib32-gst-plugins-base0.10' 'lib32-gstreamer0.10' 'lib32-libjpeg' 'lib32-libmng' 'lib32-libpng' 'lib32-libX11' 'lib32-libXext' 'lib32-libxml2' 'lib32-libXrender' 'lib32-mesalib' 'lib32-openssl' 'lib32-sqlite' 'lib32-tiff' 'lib32-zlib' 'lib32-SM' 'lib32-ICE')
+DEPS=('gcc-libs' 'lib32-alsa-lib' 'lib32-dbus' 'lib32-fontconfig' 'lib32-freetype2' 'lib32-glib2' 'lib32-glibc' 'lib32-gst-plugins-base0.10' 'lib32-gstreamer0.10' 'lib32-libjpeg' 'lib32-libmng' 'lib32-libpng' 'lib32-libX11' 'lib32-libXext' 'lib32-libxml2' 'lib32-libXrender' 'lib32-mesalib' 'lib32-openssl' 'lib32-sqlite' 'lib32-tiff' 'lib32-zlib' 'lib32-libSM' 'lib32-libICE')
 
 
 function BuildAndInstall
