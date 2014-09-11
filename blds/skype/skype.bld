@@ -1,0 +1,71 @@
+#package name
+NAME=skype
+
+#package version
+VERSION=4.3.0.37
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://download.skype.com/linux/skype-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+
+  mkdir -p /root/bldr-inst/usr/bin
+  # Executable
+  cp skype /root/bldr-inst/usr/bin/skype
+
+  # Data
+  mkdir -p /root/bldr-inst/usr/share/skype/{avatars,lang,sounds}
+  install -m 644 avatars/* /root/bldr-inst/usr/share/skype/avatars
+  install -m 644 lang/*    /root/bldr-inst/usr/share/skype/lang
+  install -m 644 sounds/*  /root/bldr-inst/usr/share/skype/sounds
+
+  # DBus Service
+  install -Dm 644 skype.conf \
+    /root/bldr-inst/etc/dbus-1/system.d/skype.conf
+
+  # Icons
+  for _i in 16 32 48; do
+    install -Dm 644 icons/SkypeBlue_${_i}x${_i}.png \
+      /root/bldr-inst/usr/share/icons/hicolor/${_i}x${_i}/apps/skype.png
+  done
+  install -Dm 644 icons/SkypeBlue_48x48.png \
+    /root/bldr-inst/usr/share/pixmaps/skype.png
+
+  # Desktop file
+  install -Dm 644 skype.desktop \
+    /root/bldr-inst/usr/share/applications/skype.desktop
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LASTEST=`curl -s -I -L http://www.skype.com/go/getskype-linux-beta-dynamic | grep -E "skype-[0-9\.]*\.tar\.bz2" | sed 's/.*skype-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+		echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
