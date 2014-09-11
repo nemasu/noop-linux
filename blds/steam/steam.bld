@@ -2,7 +2,7 @@
 NAME=steam
 
 #package version
-VERSION=1.0.0.47
+VERSION=1.0.0.49
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -39,19 +39,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://repo.steampowered.com/steam/pool/steam/s/steam/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'_//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -L -s http://repo.steampowered.com/steam/pool/steam/s/steam/ | grep -E "steam_[0-9\.]*\.tar\.gz" | tail -n1 | sed -e 's/.*steam_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

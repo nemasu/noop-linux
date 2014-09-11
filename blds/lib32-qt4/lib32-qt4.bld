@@ -1,4 +1,4 @@
-NAME=qt4
+NAME=lib32-qt4
 VERSION=4.8.6
 DVERSION=4.8.6
 ISUSR=1
@@ -43,10 +43,7 @@ function BuildAndInstall
 		-libdir /usr/lib32 \
 		-plugindir /usr/lib32/qt/plugins \
 		-importdir /usr/lib32/qt/imports \
-		-bindir /usr/lib/qt4/bin \
-		-headerdir /usr/include/qt4 \
-		-docdir /usr/share/doc/qt4 \
-		-datadir /usr/share/qt4 \
+		-datadir /usr/share/qt \
 		-translationdir /usr/share/qt4/translations \
 		-sysconfdir /etc/xdg \
 		-examplesdir /usr/share/doc/qt4/examples \
