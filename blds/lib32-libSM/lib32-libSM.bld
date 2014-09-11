@@ -1,14 +1,14 @@
 #package name
-NAME=steam
+NAME=lib32-libSM
 
 #package version
-VERSION=1.0.0.49
+VERSION=1.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://repo.steampowered.com/steam/pool/steam/s/steam/steam_${VERSION}.tar.gz
+SRC=http://xorg.freedesktop.org/releases/individual/lib/libSM-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,29 +17,45 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('lib32-libX11' 'lib32-gcc-libs' 'lib32-mesalib')
+DEPS=('lib32-glibc' 'lib32-libICE' 'lib32-util-linux')
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('lib32-mesalib' 'lib32-gcc-libs' 'lib32-libX11')
+PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
 function BuildAndInstall
 {
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+	./configure --prefix=/usr --libexecdir=/usr/lib32 --libdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var --disable-static
+	make -j3
 	make DESTDIR=/root/bldr-inst install
-	
-	# blank steamdeps because apt-get
-	ln -sf /bin/true /root/bldr-inst/usr/bin/steamdeps
+	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s http://repo.steampowered.com/steam/pool/steam/s/steam/ | grep -E "steam_[0-9\.]*\.tar\.gz" | tail -n1 | sed -e 's/.*steam_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+	LISTURL=http://xorg.freedesktop.org/releases/individual/lib/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

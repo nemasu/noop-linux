@@ -4655,6 +4655,12 @@ lib32-krb5,libverto.so
 lib32-krb5,libverto.so.0
 lib32-krb5,libverto.so.0.0
 lib32-krb5,pkinit.so
+lib32-libSM,libSM.so
+lib32-libSM,libSM.so.6
+lib32-libSM,libSM.so.6.0.1
+lib32-libICE,libICE.so
+lib32-libICE,libICE.so.6
+lib32-libICE,libICE.so.6.3.0
 lib32-libX11,libX11-xcb.so
 lib32-libX11,libX11-xcb.so.1
 lib32-libX11,libX11-xcb.so.1.0.0
