@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'lib32-glibc' 'lib32-libX11' 'lib32-libXScrnSaver' 'lib32-libXext' 'lib32-libXv' 'lib32-qt4')
 
 # 'no' to skip calls to strip
 STRIP=
