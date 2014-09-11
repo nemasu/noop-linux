@@ -38,7 +38,7 @@ function BuildAndInstall
       -e "/^QMAKE_LFLAGS\s/s|+=|+= $LDFLAGS|g" \
       -i mkspecs/common/g++.conf
 
-	./configure -confirm-license -opensource \
+	./configure -confirm-license -opensource -v -platform linux-g++-32 \
 		-prefix /usr \
 		-libdir /usr/lib32 \
 		-plugindir /usr/lib32/qt/plugins \

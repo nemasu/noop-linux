@@ -1,0 +1,107 @@
+#package name
+NAME=wine
+
+#package version
+VERSION=1.7.26
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://prdownloads.sourceforge.net/wine/wine-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# 'no' to skip calls to strip
+STRIP=
+
+DEPS=('alsa-lib' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'lcms' 'lib32-alsa-lib' 'lib32-glibc' 'lib32-libX11' 'lib32-libXau' 'lib32-libXdmcp' 'lib32-libXext' 'lib32-libjpeg' 'lib32-libxml2' 'libjpeg' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libffi' 'libxcb' 'libxml2' 'openldap' 'openssl' 'pcre' 'sasl' 'util-linux' 'xz' 'zlib')
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=1
+
+
+function BuildAndInstall
+{
+        cd ..
+        mv `ls` wine
+        mkdir -p {wine32-build,wine64-build}
+
+        export CFLAGS="${CFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"
+        export CXXFLAGS="${CXXFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"
+
+        if [[ "`uname -m`" == "x86_64" ]];
+        then
+
+                cd wine64-build
+                ../wine/configure \
+                  --prefix=/usr \
+                  --sysconfdir=/etc \
+                  --libdir=/usr/lib \
+                  --with-x \
+                  --enable-win64
+
+                make -j3
+                make prefix=/root/bldr-inst/usr \
+                libdir=/root/bldr-inst/usr/lib \
+                dlldir=/root/bldr-inst/usr/lib/wine install
+
+                _wine32opts=(
+                  --libdir=/usr/lib32
+                  --with-wine64="/root/bldr-tmp/wine64-build"
+                )
+
+                export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+                cd ..
+        fi
+
+  cd wine32-build
+  ../wine/configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --with-x \
+        "${_wine32opts[@]}"
+
+        # These additional CFLAGS solve FS#27560 and FS#23277
+        make -j3 CFLAGS+="-mstackrealign -mincoming-stack-boundary=2" CXXFLAGS+="-mstackrealign -mincoming-stack-boundary=2"
+
+        if [[ "`uname -m`" == "i686" ]]; then
+        make prefix=/root/bldr-inst/usr install
+        else
+        make prefix=/root/bldr-inst/usr \
+                libdir=/root/bldr-inst/usr/lib32 \
+                dlldir=/root/bldr-inst/usr/lib32/wine install
+        fi
+}
+
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://sourceforge.net/projects/wine/files/Source/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
