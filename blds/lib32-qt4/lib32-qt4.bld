@@ -58,7 +58,7 @@ function BuildAndInstall
 		-optimized-qmake \
 		-reduce-relocations \
 		-dbus-linked \
-		-no-openvg -no-gstreamer
+		-no-openvg
 		
 		#-plugin-sql-{psql,mysql,sqlite,odbc} \
 		
@@ -89,5 +89,5 @@ function Detect
 	then
 					echo "$NAME: New Version Available! - $LATEST"
 	fi
-	}
+}
 
