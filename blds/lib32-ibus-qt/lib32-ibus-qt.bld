@@ -1,20 +1,22 @@
 #package name
-NAME=util-macros
+NAME=lib32-ibus-qt
 
 #package version
-VERSION=1.19.0
+VERSION=1.3.3
+DVERSION=1.3.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/util/util-macros-${VERSION}.tar.bz2
+#SRC=http://ibus.googlecode.com/files/ibus-qt-${DVERSION}-Source.tar.gz
+SRC=http://pkgs.fedoraproject.org/repo/pkgs/ibus-qt/ibus-qt-1.3.3-Source.tar.gz/952fa987dc3675dc1df7721b552770c1/ibus-qt-1.3.3-Source.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -28,14 +30,32 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+    #Disable doxygen requirment
+    sed -i -e '/Doxygen REQUIRED/d' CMakeLists.txt
+
+	mkdir -p build
+	cd build
+
+	cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIBDIR=lib32 -DQT_PLUGINS_DIR=/usr/lib32/qt/plugins/
+	make -j3
+
+	make DESTDIR=/root/bldr-inst install
+
+	rm -rf /root/bldr-inst/usr/{usr,share,include,bin}
+
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/util/
+	LISTURL=https://code.google.com/p/ibus/downloads/list
 	FILELIST=`GetFileList`
 	LATEST=0
 
