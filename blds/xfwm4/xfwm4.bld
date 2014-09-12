@@ -1,24 +1,24 @@
 #package name
-NAME=tdb
+NAME=xfwm4
 
 #package version
-VERSION=1.3.0-1
-DVERSION=1.3.0
+VERSION=4.10.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://samba.org/ftp/tdb/tdb-${DVERSION}.tar.gz
+MM=`echo $VERSION | sed 's/\([0-9]*\.[0-9]*\).*/\1/g'`
+SRC=http://archive.xfce.org/src/xfce/${NAME}/${MM}/${NAME}-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('attr' 'glibc' 'python2')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -29,21 +29,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	sed -i -e 's#python#python2#g' buildtools/bin/waf
-	./configure --prefix=/usr \
-	   --localstatedir=/var \
-	   --sysconfdir=/etc/samba
-	make -j3
-	make DESTDIR=/root/bldr-inst install
-
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://samba.org/ftp/tdb/
+	LISTURL=http://archive.xfce.org/src/xfce/${NAME}/4.10/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -57,7 +50,7 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

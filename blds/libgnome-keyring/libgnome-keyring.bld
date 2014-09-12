@@ -2,8 +2,8 @@
 NAME=libgnome-keyring
 
 #package version
-VERSION=3.5.3-1
-DVERSION=3.5.3
+VERSION=3.12.0
+DVERSION=3.12.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
