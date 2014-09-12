@@ -1,0 +1,65 @@
+#package name
+NAME=xscreensaver
+
+#package version
+VERSION=5.29
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.jwz.org/xscreensaver/xscreensaver-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libICE' 'libSM' 'libX11' 'libXext' 'libXi' 'libXinerama' 'libXmu' 'libXpm' 'libXrandr' 'libXrender' 'libXt' 'libXxf86vm' 'libglade' 'libglu' 'libjpeg' 'libxml2' 'linux-pam' 'mesalib' 'pango')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+    --libexecdir=/usr/lib --with-x-app-defaults=/usr/share/X11/app-defaults \
+	--with-pam --with-login-manager --with-gtk --with-gl \
+    --without-gle --with-pixbuf --with-jpeg
+  make -j3
+  make install_prefix=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://www.jwz.org/xscreensaver/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+
