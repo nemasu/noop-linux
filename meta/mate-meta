@@ -1,7 +1,10 @@
 xdg-utils
 gvfs
 desktop-file-utils
+gtk+2
+gdk-pixbuf
 gtk-engines
+mime-types
 shared-mime-info
 mate-conf
 hicolor-icon-theme

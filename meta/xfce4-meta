@@ -1,6 +1,9 @@
+mime-types
 shared-mime-info
 librsvg
 hicolor-icon-theme
+gtk+2
+gdk-pixbuf
 gnome-icon-theme
 desktop-file-utils
 libxfce4util
