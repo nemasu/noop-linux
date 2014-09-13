@@ -2,11 +2,11 @@ xdg-utils
 gvfs
 desktop-file-utils
 librsvg
+mime-types
+shared-mime-info
 gtk+2
 gdk-pixbuf
 gtk-engines
-mime-types
-shared-mime-info
 mate-conf
 hicolor-icon-theme
 gnome-icon-theme
