@@ -1,6 +1,7 @@
 xdg-utils
 gvfs
 desktop-file-utils
+librsvg
 gtk+2
 gdk-pixbuf
 gtk-engines
