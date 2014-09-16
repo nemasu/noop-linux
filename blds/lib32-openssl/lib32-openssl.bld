@@ -1,0 +1,52 @@
+#!/bin/bash
+# NAME
+# VERSION
+# ISUSR
+# SRC
+# POST,PRE
+# EXTRAFILES
+# ISSPECIAL
+
+NAME=lib32-openssl
+VERSION=1.0.1-3
+ISUSR=1
+SRC=http://www.openssl.org/source/openssl-1.0.1c.tar.gz
+EXTRACONF=
+ISSPECIAL=1
+
+function BuildAndInstall
+{
+
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+	openssltarget='linux-elf'
+	optflags=''
+	
+	./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib32 \
+		shared zlib enable-md2 ${optflags} \
+		-Wa,--noexecstack "${CFLAGS}" "${LDFLAGS}" \
+		-DOPENSSL_NO_TLS1_2_CLIENT \
+		"${openssltarget}"
+
+	make MAKEDEPPROG="${CC}" depend
+	make -j3
+
+	make INSTALL_PREFIX=/root/bldr-inst MANDIR=/usr/share/man install
+	rm -rf /root/bldr-inst/{usr/{include,share,bin},etc}
+	
+}
+
+function Detect
+{
+	#Letters in versions are evil, converting them to digits here
+	LATEST=`curl -s http://www.openssl.org/source/ | grep LATEST | sed -e 's/.*openssl-\([0-9a-z\.]*\).tar.gz.*/\1/g' | tr a-z 0-9`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+		echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

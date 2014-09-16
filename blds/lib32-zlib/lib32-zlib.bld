@@ -1,0 +1,54 @@
+#!/bin/bash
+# NAME
+# VERSION
+# ISUSR
+# SRC
+# POST,PRE
+# EXTRAFILES
+# ISSPECIAL
+
+NAME=lib32-zlib
+VERSION=1.2.7
+ISUSR=1
+SRC=http://zlib.net/zlib-${VERSION}.tar.bz2
+EXTRACONF=
+ISSPECIAL=1
+
+function BuildAndInstall
+{
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+	./configure --prefix=/usr --libdir=/usr/lib32 --sharedlibdir=/usr/lib32 --includedir=/usr/include
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	cd /root/bldr-inst
+	rm -rf usr/{include,share}
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://zlib.net/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+		CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+		vercomp $LATEST $CURVER
+		if [ $? -eq 2 ];
+		then
+				LATEST=$CURVER
+		fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+		echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+
