@@ -2,7 +2,7 @@
 NAME=libXfixes
 
 #package version
-VERSION=5.0
+VERSION=5.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

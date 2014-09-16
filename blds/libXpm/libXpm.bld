@@ -2,7 +2,7 @@
 NAME=libXpm
 
 #package version
-VERSION=3.5.10
+VERSION=3.5.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

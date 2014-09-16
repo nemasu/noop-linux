@@ -2,7 +2,7 @@
 NAME=libX11
 
 #package version
-VERSION=1.5.0
+VERSION=1.6.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

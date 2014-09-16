@@ -2,7 +2,7 @@
 NAME=libXrender
 
 #package version
-VERSION=0.9.7
+VERSION=0.9.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
