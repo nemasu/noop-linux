@@ -16,7 +16,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/gnome-keyring/$MAJOR/gnome-keyring-${
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=('dbus' 'glib2' 'glibc' 'libffi' 'libgcrypt' 'libgpg-error')
@@ -30,9 +30,17 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./configure --prefix=/usr --sysconfdir=/etc \
+      --localstatedir=/var --disable-static \
+      --libexecdir=/usr/lib/gnome-keyring \
+      --with-pam-dir=/usr/lib/security --with-root-certs=/etc/ssl/certs \
+      --disable-schemas-compile
+
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
