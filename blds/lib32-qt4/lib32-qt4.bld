@@ -41,9 +41,9 @@ function BuildAndInstall
 	./configure -confirm-license -opensource -v -platform linux-g++-32 \
 		-prefix /usr \
 		-libdir /usr/lib32 \
-		-plugindir /usr/lib32/qt/plugins \
-		-importdir /usr/lib32/qt/imports \
-		-datadir /usr/share/qt \
+		-plugindir /usr/lib32/qt4/plugins \
+		-importdir /usr/lib32/qt4/imports \
+		-datadir /usr/share/qt4 \
 		-translationdir /usr/share/qt4/translations \
 		-sysconfdir /etc/xdg \
 		-examplesdir /usr/share/doc/qt4/examples \
