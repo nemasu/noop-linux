@@ -1,0 +1,60 @@
+#package name
+NAME=pidgin
+
+#package version
+VERSION=2.10.9
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://downloads.sourceforge.net/project/pidgin/Pidgin/${VERSION}/pidgin-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--disable-schemas-install \
+		--disable-meanwhile \
+		--disable-gnutls \
+		--disable-gtkspell \
+		--disable-tk \
+		--enable-cyrus-sasl \
+		--disable-doxygen \
+		--enable-nm \
+		--with-python=/usr/bin/python2 \
+		--with-system-ssl-certs=/etc/ssl/certs
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s http://sourceforge.net/projects/pidgin/files/Pidgin/ | grep -E "Pidgin\/[0-9\.]*\/\"" | head -n1 | sed -e 's/.*Pidgin\/\([0-9\.]*\)\/\".*/\1/g'`
+	
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

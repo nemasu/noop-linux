@@ -7091,10 +7091,11 @@ pidgin,idle.so
 pidgin,irssi.so
 pidgin,joinpart.so
 pidgin,libaim.so
+pidgin,libbonjour.so
 pidgin,libgg.so
 pidgin,libgnt.so
 pidgin,libgnt.so.0
-pidgin,libgnt.so.0.0.0
+pidgin,libgnt.so.0.8.10
 pidgin,libicq.so
 pidgin,libirc.so
 pidgin,libjabber.so
@@ -7109,10 +7110,10 @@ pidgin,liboscar.so.0
 pidgin,liboscar.so.0.0.0
 pidgin,libpurple-client.so
 pidgin,libpurple-client.so.0
-pidgin,libpurple-client.so.0.10.6
+pidgin,libpurple-client.so.0.10.9
 pidgin,libpurple.so
 pidgin,libpurple.so.0
-pidgin,libpurple.so.0.10.6
+pidgin,libpurple.so.0.10.9
 pidgin,libsimple.so
 pidgin,libxmpp.so
 pidgin,libyahoo.so
@@ -7134,10 +7135,10 @@ pidgin,relnot.so
 pidgin,s.so
 pidgin,sendbutton.so
 pidgin,spellchk.so
-pidgin,ssl-gnutls.so
 pidgin,ssl-nss.so
 pidgin,ssl.so
 pidgin,statenotify.so
+pidgin,tcl.so
 pidgin,themeedit.so
 pidgin,ticker.so
 pidgin,timestamp.so
@@ -8122,6 +8123,8 @@ sg3_utils,libsgutils2.so
 sg3_utils,libsgutils2.so.2
 sg3_utils,libsgutils2.so.2.0.0
 sip,sip.so
+skype4pidgin,libskype.so
+skype4pidgin,libskype_dbus.so
 smokegen,generator_dump.so
 smokegen,generator_smoke.so
 smokegen,libcppparser.so

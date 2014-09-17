@@ -1,0 +1,51 @@
+#package name
+NAME=skype4pidgin
+
+#package version
+VERSION=664
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.nooplinux.org/dist/skype4pidgin-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	make all
+	install -D -m 0755 libskype.so "/root/bldr-inst/$(pkg-config --variable=plugindir purple)/libskype.so"
+	install -D -m 0755 libskype_dbus.so "/root/bldr-inst/$(pkg-config --variable=plugindir purple)/libskype_dbus.so"
+	install -D -m 0644 icons/16/skype.png /root/bldr-inst/usr/share/pixmaps/pidgin/protocols/16/skype.png
+	install -D -m 0644 icons/22/skype.png /root/bldr-inst/usr/share/pixmaps/pidgin/protocols/22/skype.png
+	install -D -m 0644 icons/48/skype.png /root/bldr-inst/usr/share/pixmaps/pidgin/protocols/48/skype.png
+	install -D -m 0644 theme /root/bldr-inst/usr/share/pixmaps/pidgin/emotes/skype/theme
+
+	GetSource https://sync.dray.be/public/packages/skype_icons_empathy.tar.xz
+	install -d -m 0755 /root/bldr-inst/usr/share/empathy/icons
+	cp -r . /root/bldr-inst/usr/share/empathy/icons/
+		
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo $NAME: SVN Based
+}
