@@ -8480,6 +8480,7 @@ tiff,libtiff.so.5.1.0
 tiff,libtiffxx.so
 tiff,libtiffxx.so.5
 tiff,libtiffxx.so.5.1.0
+tigervnc,libvnc.so
 transcode,a52_decore.so
 transcode,export_ac3.so
 transcode,export_divx5.so
