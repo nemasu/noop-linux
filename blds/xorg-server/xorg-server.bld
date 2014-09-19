@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('freetype2' 'glibc' 'libICE' 'libSM' 'libX11' 'libXau' 'libXaw' 'libXdmcp' 'libXext' 'libXfixes' 'libXfont' 'libXi' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libdmx' 'libdrm' 'libfontenc' 'libgcrypt' 'libgpg-error' 'libpciaccess' 'libxcb' 'pixman' 'util-linux' 'zlib')
+DEPS=('dbus' 'glibc' 'libX11' 'libXau' 'libXaw' 'libXdmcp' 'libXext' 'libXfixes' 'libXfont' 'libXi' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libdmx' 'libdrm' 'libepoxy' 'libpciaccess' 'libxshmfence' 'mesalib' 'nettle' 'pixman' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

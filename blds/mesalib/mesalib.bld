@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('expat' 'gcc-libs' 'glibc' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXxf86vm' 'libdrm' 'libelf' 'libffi' 'libomxil-bellagio' 'libpciaccess' 'libxcb' 'libxshmfence' 'llvm' 'ncurses' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

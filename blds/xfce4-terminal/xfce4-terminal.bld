@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libxfce4ui' 'libxfce4util' 'pango' 'vte2')
 
 # 'no' to skip calls to strip
 STRIP=

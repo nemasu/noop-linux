@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('lib32-libX11' 'lib32-mesalib')
+DEPS=('lib32-libX11' 'lib32-gcc-libs' 'lib32-mesalib')
 
 # 'no' to skip calls to strip
 STRIP=

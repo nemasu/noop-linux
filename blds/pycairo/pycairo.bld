@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('cairo' 'glibc' 'python')
 
 # 'no' to skip calls to strip
 STRIP=

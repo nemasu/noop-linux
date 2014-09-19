@@ -14,7 +14,7 @@ then
 
 fi
 
-DEPS=('alsa-lib' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'libICE' 'libSM' 'libX11' 'libXext' 'libXrender' 'libfbclient' 'libjpeg' 'libmng' 'libpng' 'libxml2' 'mesalib' 'mysql-libs' 'openssl' 'postgresql-libs' 'sqlite' 'tiff' 'unixodbc' 'zlib')
+DEPS=('alsa-lib' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'libfbclient' 'libICE' 'libjpeg' 'libmng' 'libpng' 'libSM' 'libX11' 'libXext' 'libxml2' 'libXrender' 'mesalib' 'mysql-libs' 'openssl' 'postgresql-libs' 'sqlite' 'tiff' 'unixodbc' 'zlib')
 
 
 function BuildAndInstall

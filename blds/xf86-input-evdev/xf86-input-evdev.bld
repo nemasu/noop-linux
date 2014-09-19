@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=('glibc' 'libevdev' 'mtdev' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

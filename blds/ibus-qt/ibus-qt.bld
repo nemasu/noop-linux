@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('dbus' 'gcc-libs' 'glibc' 'icu4c' 'qt4')
+DEPS=('dbus' 'gcc-libs' 'glibc' 'icu4c' 'libICE' 'libSM' 'libX11' 'libXext' 'qt4')
 
 # 'no' to skip calls to strip
 STRIP=

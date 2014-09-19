@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-bzip2' 'lib32-glib2' 'lib32-glibc' 'lib32-harfbuzz' 'lib32-libpng' 'lib32-zlib')
 
 # 'no' to skip calls to strip
 STRIP=

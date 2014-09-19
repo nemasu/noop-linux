@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc' 'libdrm' 'libpciaccess')
+DEPS=('glibc' 'libX11' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXinerama' 'libXrandr' 'libXrender' 'libXtst' 'libXv' 'libXvMC' 'libdrm' 'libpciaccess' 'libxcb' 'libxshmfence' 'pixman' 'xcb-util')
 
 # 'no' to skip calls to strip
 STRIP=

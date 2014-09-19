@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('dbus' 'dbus-glib' 'garcon' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libxfce4ui' 'libxfce4util' 'xfconf')
 
 # 'no' to skip calls to strip
 STRIP=

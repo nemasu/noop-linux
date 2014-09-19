@@ -14,7 +14,7 @@ SRC=http://apache.org/dist/subversion/subversion-$VERSION.tar.bz2
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('apr' 'apr-util' 'db' 'dbus' 'expat' 'file' 'gcc-libs' 'glib2' 'glibc' 'kdelibs' 'libffi' 'libgcrypt' 'libgnome-keyring' 'libgpg-error' 'pcre' 'qt4' 'sasl' 'serf' 'sqlite' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

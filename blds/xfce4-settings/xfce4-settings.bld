@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('cairo' 'dbus' 'dbus-glib' 'exo' 'fontconfig' 'garcon' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXcursor' 'libXi' 'libXrandr' 'libnotify' 'libxfce4ui' 'libxfce4util' 'libxklavier' 'pango' 'xfconf')
 
 # 'no' to skip calls to strip
 STRIP=
