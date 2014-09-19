@@ -2,7 +2,7 @@
 NAME=xf86-video-siliconmotion
 
 #package version
-VERSION=1.7.6
+VERSION=1.7.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

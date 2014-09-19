@@ -1,11 +1,11 @@
 NAME=virtualbox
-DVERSION=4.3.12
-VERSION=4.3.12
+DVERSION=4.3.16
+VERSION=4.3.16
 ISUSR=1
 SRC=http://download.virtualbox.org/virtualbox/${DVERSION}/VirtualBox-${DVERSION}.tar.bz2
 EXTRACONF=
 ISSPECIAL=1
-DEPS=('curl' 'gcc-libs' 'glibc' 'libX11' 'libXcursor' 'libXext' 'libXinerama' 'libXmu' 'libXt' 'libpng' 'libvpx' 'libxml2' 'mesalib' 'openssl' 'python2' 'qt' 'sdl' 'zlib')
+DEPS=('curl' 'gcc-libs' 'glibc' 'libX11' 'libXcursor' 'libXext' 'libXinerama' 'libXmu' 'libXt' 'libpng' 'libvpx' 'libxml2' 'mesalib' 'openssl' 'python2' 'qt4' 'sdl' 'zlib')
 #Note! You need to have the correct kernel in /usr/src/linux and at least started to bulid it (for autoconf.h)
 
 function BuildAndInstall
@@ -108,7 +108,7 @@ function BuildAndInstall
         /root/guest-inst/usr/bin/VBoxClient-all
     install -m755 -D ../../../../..//src/VBox/Additions/x11/Installer/vboxclient.desktop \
         /root/guest-inst/etc/xdg/autostart/vboxclient.desktop
-    install -D vboxvideo_drv_112.so \
+    install -D vboxvideo_drv_116.so \
         /root/guest-inst/usr/lib/xorg/modules/drivers/vboxvideo.so
     install -d /root/guest-inst/usr/lib/xorg/modules/dri
     install -m755 VBoxOGL*.so /root/guest-inst/usr/lib
@@ -160,7 +160,7 @@ EOF
 		pushd out/linux.amd64/release/bin/src
 	fi
 
-	make
+	make -j3
 
 	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed 's/VER://g'`
 	mkdir -p /root/mod-inst/lib/modules/${KERVER}/misc
@@ -195,7 +195,7 @@ EOF
 	pushd /root/mod-bld
 	tar xf guest_mods.tar.gz
 	rm guest_mods.tar.gz
-	make
+	make -j3
 	mv *.ko /root/mod-inst/lib/modules/${KERVER}/misc
 	popd
 

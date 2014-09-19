@@ -2,7 +2,7 @@
 NAME=xf86-video-voodoo
 
 #package version
-VERSION=1.2.4
+VERSION=1.2.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

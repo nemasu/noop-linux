@@ -2,7 +2,7 @@
 NAME=xf86-video-openchrome
 
 #package version
-VERSION=0.2.906
+VERSION=0.3.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

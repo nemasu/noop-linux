@@ -1,23 +1,23 @@
 #package name
-NAME=xf86-video-mga
+NAME=libepoxy
 
 #package version
-VERSION=1.5.0
+VERSION=1.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-mga-${VERSION}.tar.bz2
+SRC="https://github.com/anholt/libepoxy/archive/v${VERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +28,18 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+  
+  ./autogen.sh --prefix=/usr
+  make -j3
+  make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/driver/
+	LISTURL=https://github.com/anholt/libepoxy/releases
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -55,3 +59,4 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+

@@ -2,13 +2,15 @@
 NAME=mesalib
 
 #package version
-VERSION=10.2.2
+VERSION=10.3.0-3
+DVERSION=10.3.0-rc3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.freedesktop.org/pub/mesa/${VERSION}/MesaLib-${VERSION}.tar.bz2
+#SRC=ftp://ftp.freedesktop.org/pub/mesa/${VERSION}/MesaLib-${VERSION}.tar.bz2
+SRC=ftp://ftp.freedesktop.org/pub/mesa/10.3/MesaLib-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('expat' 'gcc-libs' 'glibc' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXxf86vm' 'libdrm' 'libelf' 'libffi' 'libomxil-bellagio' 'libpciaccess' 'libxcb' 'libxshmfence' 'llvm' 'ncurses' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=

@@ -2,7 +2,7 @@
 NAME=xf86-video-ast
 
 #package version
-VERSION=0.93.10
+VERSION=1.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

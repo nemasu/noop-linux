@@ -2,7 +2,7 @@
 NAME=xf86-video-intel
 
 #package version
-VERSION=2.19.0
+VERSION=2.99.916
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

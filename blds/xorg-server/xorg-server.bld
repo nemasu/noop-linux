@@ -2,7 +2,7 @@
 NAME=xorg-server
 
 #package version
-VERSION=1.12.2
+VERSION=1.16.0.901
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,6 +33,7 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
 	[[ `uname -m` == "armv6l" ]] && CONFIG="--disable-glx --disable-dri --disable-dri2"
+	[[ `uname -m` == "x86_64" ]] && CONFIG="--enable-glamor --enable-dri --enable-dmx --enable-xvfb --enable-dri2"
 
 	./configure $STDUSRCONF $CONFIG
 	make -j3

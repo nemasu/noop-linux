@@ -2,7 +2,7 @@
 NAME=xf86-input-vmmouse
 
 #package version
-VERSION=12.8.0
+VERSION=13.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

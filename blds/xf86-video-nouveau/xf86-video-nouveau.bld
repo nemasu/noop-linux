@@ -1,14 +1,14 @@
 #package name
-NAME=xf86-video-neomagic
+NAME=xf86-video-nouveau
 
 #package version
-VERSION=1.2.6
+VERSION=1.0.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-neomagic-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-nouveau-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -27,6 +27,8 @@ PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 #function BuildAndInstall
 #{

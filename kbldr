@@ -20,7 +20,7 @@ then
 	fi
 	tar xf /tmp/linux-$VERSION.tar.xz
 
-	git clone -b aufs3.14 git://git.code.sf.net/p/aufs/aufs3-standalone
+	git clone -b aufs3.16 git://git.code.sf.net/p/aufs/aufs3-standalone
 	cd linux-$VERSION
 	patch -Np1 -i ../aufs3-standalone/aufs3-kbuild.patch
 	patch -Np1 -i ../aufs3-standalone/aufs3-base.patch
@@ -38,14 +38,9 @@ cd linux-$VERSION
 
 if [ ! -e .config ];
 then
-	if [ `uname -m` == "i686" ];
-	then
-		wget http://www.nooplinux.org/noop/config32 -O.config
-	fi
-
 	if [ `uname -m` == "x86_64" ];
 	then
-		wget http://www.nooplinux.org/noop/config64 -O.config
+		wget https://raw.githubusercontent.com/nemasu/noop-linux/master/etc/config64 -O.config
 	fi
 	
 	echo "CONFIG_AUFS_FS=y" >> .config
@@ -65,6 +60,7 @@ then
 	echo "# CONFIG_AUFS_BR_HFSPLUS is not set" >> .config
 	echo "CONFIG_AUFS_BDEV_LOOP=y" >> .config
 	echo "# CONFIG_AUFS_DEBUG is not set" >> .config
+	echo "CONFIG AUFS_FHSM=y" >> .config
 
 
 fi

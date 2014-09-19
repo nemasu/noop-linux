@@ -1,6 +1,6 @@
 NAME=nvidia
-DVERSION=337.19
-VERSION=337.19
+DVERSION=340.32
+VERSION=340.32
 ISUSR=1
 
 if [ "`uname -m`" == "x86_64" ];
@@ -29,9 +29,6 @@ function BuildAndInstall
 	sh ./out --extract-only
 	rm out
 	cd `ls`
-
-	mv $BLDRTMPDIR/linux314 .
-	patch -Np1 -i linux314 && rm linux314
 
 	#Module
 	pushd kernel
