@@ -124,7 +124,6 @@ xf86-video-dummy
 xf86-video-fbdev
 xf86-video-intel
 xf86-video-mach64
-xf86-video-newport
 xf86-video-nv
 xf86-video-nouveau
 xf86-video-openchrome
@@ -133,7 +132,6 @@ xf86-video-savage
 xf86-video-siliconmotion
 xf86-video-suncg6
 xf86-video-sunffb
-xf86-video-trident
 xf86-video-v4l
 xf86-video-vesa
 xf86-video-voodoo

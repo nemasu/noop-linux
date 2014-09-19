@@ -2,13 +2,14 @@
 NAME=xf86-input-evdev
 
 #package version
-VERSION=2.9.0
+VERSION=2.9.0-1
+DVERSION=2.9.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-input-evdev-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-input-evdev-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -51,7 +52,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

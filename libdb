@@ -8666,8 +8666,15 @@ virtualbox,VBoxHostChannel.so
 virtualbox,VBoxKeyboard.so
 virtualbox,VBoxNetDHCP.so
 virtualbox,VBoxNetNAT.so
+virtualbox,VBoxOGL.so
+virtualbox,VBoxOGLarrayspu.so
+virtualbox,VBoxOGLcrutil.so
+virtualbox,VBoxOGLerrorspu.so
+virtualbox,VBoxOGLfeedbackspu.so
 virtualbox,VBoxOGLhostcrutil.so
 virtualbox,VBoxOGLhosterrorspu.so
+virtualbox,VBoxOGLpackspu.so
+virtualbox,VBoxOGLpassthroughspu.so
 virtualbox,VBoxOGLrenderspu.so
 virtualbox,VBoxPython.so
 virtualbox,VBoxPython2_7.so
