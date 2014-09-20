@@ -70,7 +70,7 @@ mkdir -p /root/noopkern/boot
 mkdir -p /root/noopfirm
 mkdir -p /root/noophead/usr
 
-make -j2
+make -j3
 cp -v arch/x86/boot/bzImage /root/noopkern/boot/vmlinuz-$VERSION
 
 make INSTALL_MOD_PATH=/root/noopkern modules_install
