@@ -2,7 +2,8 @@
 NAME=networkmanager
 
 #package version
-VERSION=0.9.8.8
+VERSION=0.9.10.0
+_pppver=2.4.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -18,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc' 'libffi' 'libnl' 'libsoup' 'libxml2' 'nspr' 'nss' 'pcre' 'polkit' 'systemd' 'util-linux' 'xz' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,14 +34,37 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
-	AUTOPOINT="intltoolize -f -c --automake" autoreconf -fi
-	./configure $STDUSRCONF --with-dhcpcd=/usr/bin/dhcpcd --enable-vala=no --with-systemdsystemunitdir=/usr/lib/systemd/system --with-iptables=/usr/sbin/iptables --with-udev-dir=/usr/lib/udev --with-session-tracking=systemd --disable-wimax --with-crypto=nss --with-resolvconf=/usr/sbin/resolvconf
+	NOCONFIGURE=1 ./autogen.sh
 
-	#Get rid of warnings as errors
-	find . -name Makefile | xargs sed -i 's/-Werror//g'
+	 ./configure --prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--sbindir=/usr/bin \
+		--libexecdir=/usr/lib/networkmanager \
+		--with-crypto=nss \
+		--with-dhclient=/usr/bin/dhclient \
+		--with-dhcpcd=/usr/bin/dhcpcd \
+		--with-dnsmasq=/usr/bin/dnsmasq \
+		--with-iptables=/usr/bin/iptables \
+		--with-systemdsystemunitdir=/usr/lib/systemd/system \
+		--with-udev-dir=/usr/lib/udev \
+		--with-resolvconf=/usr/bin/resolvconf \
+		--with-pppd=/usr/bin/pppd \
+		--with-pppd-plugin-dir=/usr/lib/pppd/$_pppver \
+		--with-pppoe=/usr/bin/pppoe \
+		--with-kernel-firmware-dir=/usr/lib/firmware \
+		--with-session-tracking=systemd \
+		--with-modem-manager-1 \
+		--disable-static \
+		--enable-more-warnings=no \
+		--disable-wimax \
+		--enable-modify-system \
+		--disable-doc
 
-	make -j3
-	make DESTDIR=/root/bldr-inst install
+  make -j3
+
+  make DESTDIR=/root/bldr-inst install
+
 }
 
 #Default HTTP curl new version detection

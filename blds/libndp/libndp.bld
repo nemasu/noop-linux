@@ -1,23 +1,23 @@
 #package name
-NAME=ppp
+NAME=libndp
 
 #package version
-VERSION=2.4.7
+VERSION=1.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.samba.org/pub/ppp/ppp-${VERSION}.tar.gz
+SRC=http://libndp.org/files/libndp-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,24 +28,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	./configure --prefix=/usr --sysconfdir=/etc
-	make -j3
-	make DESTDIR=/root/bldr-inst install
-	cd /root/bldr-inst
-	mkdir usr
-	mv lib usr/
-	mv share usr/
-	mv include usr/
-	mv sbin usr/
-
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.samba.org/pub/ppp/
+	LISTURL=http://libndp.org/files/
 	FILELIST=`GetFileList`
 	LATEST=0
 
