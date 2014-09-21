@@ -36,7 +36,7 @@ function BuildAndInstall
   # Support for pulseaudio
   echo 'test -x /usr/bin/pax11publish && /usr/bin/pax11publish -r' >>data/PostLogout.in
   
-  ./configure --prefix=/usr --sbindir=/usr/bin --libexecdir=/usr/lib/lxdm \
+  ./configure --prefix=/usr --sbindir=/usr/sbin --libexecdir=/usr/lib/lxdm \
               --sysconfdir=/etc --localstatedir=/var
   make -j3
   
