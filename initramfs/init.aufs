@@ -65,6 +65,21 @@ if [ "$isfound" != "yes" ];
 then
 	for i in a b c d e f g h i j k l m n o p q r s t u v w x y z;
 	do
+
+		if [ -e /dev/sd$i ];
+		then
+			mount /dev/sd$i /mnttest &> /dev/null
+			if [ -e /mnttest/boot/noop-initramfs-live.igz ];
+			then
+				umount /mnttest
+				mount /dev/sd$i /cdrom
+				isfound="yes"
+				break
+			else
+				umount /mnttest &> /dev/null
+			fi
+		fi
+
 		for j in 1 2 3 4 5 6 7 8 9;
 		do
 			if [ -e /dev/sd$i$j ];
