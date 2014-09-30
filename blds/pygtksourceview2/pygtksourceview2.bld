@@ -1,0 +1,45 @@
+#package name
+NAME=pygtksourceview2
+
+#package version
+VERSION=2.10.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://ftp.gnome.org/pub/GNOME/sources/pygtksourceview/$MAJOR/pygtksourceview-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	#NOTE: There was some weirdness, had to:  ln -s /usr/lib/python2.7/site-packages/gtk-2.0/codegen/codegen.py /usr/share/pygobject/2.0/codegen/codegen.py
+	PYTHON=python2 ./configure --prefix=/usr --sysconfdir=/etc \
+      --localstatedir=/var --disable-static --disable-docs
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo $NAME: Too Old
+}

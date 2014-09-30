@@ -1,0 +1,71 @@
+#package name
+NAME=mate-control-center
+
+#package version
+VERSION=1.8.3
+DVERSION=1.8.3
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
+SRC=http://pub.mate-desktop.org/releases/${MM}/${NAME}-${DVERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --sbindir=/usr/bin \
+        --localstatedir=/var \
+        --with-gtk=2.0 \
+        --disable-static \
+        --disable-update-mimedb
+    make -j3
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	#Limit to same series
+	MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
+	LISTURL=http://pub.mate-desktop.org/releases/${MM}/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
