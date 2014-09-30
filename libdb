@@ -2226,6 +2226,12 @@ harfbuzz,libharfbuzz-icu.so.0.932.0
 harfbuzz,libharfbuzz.so
 harfbuzz,libharfbuzz.so.0
 harfbuzz,libharfbuzz.so.0.932.0
+hexchat,checksum.so
+hexchat,doat.so
+hexchat,fishlim.so
+hexchat,perl.so
+hexchat,python.so
+hexchat,sysinfo.so
 hplip,cupsext.so
 hplip,hpmudext.so
 hplip,libhpip.so
@@ -6025,7 +6031,7 @@ libxkbfile,libxkbfile.so.1
 libxkbfile,libxkbfile.so.1.0.2
 libxklavier,libxklavier.so
 libxklavier,libxklavier.so.16
-libxklavier,libxklavier.so.16.2.0
+libxklavier,libxklavier.so.16.4.0
 libxml++,libxml++-2.6.so
 libxml++,libxml++-2.6.so.2
 libxml++,libxml++-2.6.so.2.0.7
