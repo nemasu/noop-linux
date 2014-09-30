@@ -84,8 +84,8 @@ rm -rf lib/firmware
 
 depmod -F /usr/src/linux-${VERSION}/System.map -a -b /root/noopkern -E /usr/src/linux-${VERSION}/Module.symvers ${VERSION}
 
-wget www.nooplinux.org/noop/kbldr-preup -O$BLDRTMPDIR/preup
-wget www.nooplinux.org/noop/kbldr-postup -O $BLDRTMPDIR/postup
+wget https://raw.githubusercontent.com/nemasu/noop-linux/master/etc/kbldr-preup -O$BLDRTMPDIR/preup
+wget https://raw.githubusercontent.com/nemasu/noop-linux/master/etc/kbldr-postup -O $BLDRTMPDIR/postup
 
 pkgr -genmeta linux-kernel ${VERSION}
 pkgr -genpkg

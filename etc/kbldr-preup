@@ -1,0 +1,6 @@
+KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
+if [ -e /boot/grub/grub.cfg ];
+then
+    cp /boot/grub/grub.cfg /boot/grub/grub.bak
+    sed -i -e 's/'"${KERVER}"'/VERSION/g' /boot/grub/grub.cfg
+fi
