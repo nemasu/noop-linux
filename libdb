@@ -2226,12 +2226,6 @@ harfbuzz,libharfbuzz-icu.so.0.932.0
 harfbuzz,libharfbuzz.so
 harfbuzz,libharfbuzz.so.0
 harfbuzz,libharfbuzz.so.0.932.0
-hexchat,checksum.so
-hexchat,doat.so
-hexchat,fishlim.so
-hexchat,perl.so
-hexchat,python.so
-hexchat,sysinfo.so
 hplip,cupsext.so
 hplip,hpmudext.so
 hplip,libhpip.so
@@ -6031,7 +6025,7 @@ libxkbfile,libxkbfile.so.1
 libxkbfile,libxkbfile.so.1.0.2
 libxklavier,libxklavier.so
 libxklavier,libxklavier.so.16
-libxklavier,libxklavier.so.16.4.0
+libxklavier,libxklavier.so.16.2.0
 libxml++,libxml++-2.6.so
 libxml++,libxml++-2.6.so.2
 libxml++,libxml++-2.6.so.2.0.7
@@ -6234,9 +6228,13 @@ mate-notification-daemon,libcoco.so
 mate-notification-daemon,libnodoka.so
 mate-notification-daemon,libslider.so
 mate-notification-daemon,libstandard.so
+mate-panel,libclock-applet.so
+mate-panel,libfish-applet.so
 mate-panel,libmate-panel-applet-4.so
 mate-panel,libmate-panel-applet-4.so.1
 mate-panel,libmate-panel-applet-4.so.1.0.1
+mate-panel,libnotification-area-applet.so
+mate-panel,libwnck-applet.so
 mate-polkit,libpolkit-gtk-mate-1.so
 mate-polkit,libpolkit-gtk-mate-1.so.0
 mate-polkit,libpolkit-gtk-mate-1.so.0.0.0
@@ -6270,7 +6268,6 @@ mate-settings-daemon,libtyping-break.so
 mate-settings-daemon,libxrandr.so
 mate-settings-daemon,libxrdb.so
 mate-settings-daemon,libxsettings.so
-mate-system-tools,libcaja-gst-shares.so
 mate-user-share,libcaja-share-extension.so
 mate-utils,libmatedict.so
 mate-utils,libmatedict.so.6

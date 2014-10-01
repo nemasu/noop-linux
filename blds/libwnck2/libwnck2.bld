@@ -15,7 +15,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/libwnck/$MAJOR/libwnck-${VERSION}.tar
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libXres' 'libffi' 'libpng' 'libxcb' 'pango' 'pcre' 'pixman' 'startup-notification' 'xcb-util' 'zlib')
@@ -29,9 +29,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
+    make -j3
+	make DESTDIR=/root/bldr-inst install
+	rm -f /root/bldr-inst/usr/bin/wnckprop
+    rm -f /root/bldr-inst/usr/bin/wnck-urgency-monitor
+}
 
 #Default HTTP curl new version detection
 function Detect
