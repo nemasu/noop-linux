@@ -2,8 +2,8 @@
 NAME=cups-filters
 
 #package version
-VERSION=1.0.41-1
-DVERSION=1.0.41
+VERSION=1.0.59
+DVERSION=1.0.59
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -12,10 +12,10 @@ ISUSR=1
 SRC=http://www.openprinting.org/download/cups-filters/cups-filters-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-rcdir=no --enable-avahi --with-test-font-path=/usr/share/fonts/TTF/DejaVuSans.ttf --with-browseremoteprotocols=DNSSD,CUPS"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=('avahi' 'cups' 'fontconfig' 'freetype2' 'gcc-libs' 'ghostscript' 'glib2' 'glibc' 'krb5' 'lcms2' 'libjpeg' 'libpng' 'poppler' 'qpdf' 'tiff' 'zlib')
@@ -29,9 +29,24 @@ PKGDEPS=('bc')
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./configure --prefix=/usr \
+		--sysconfdir=/etc \
+		--sbindir=/usr/bin \
+		--localstatedir=/var \
+		--with-rcdir=no \
+		--enable-avahi \
+		--with-browseremoteprotocols=DNSSD,CUPS \
+		--with-test-font-path=/usr/share/fonts/TTF/DejaVuSans.ttf
+
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	install -Dm644 utils/cups-browsed.service /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
+	sed -i "s|/usr/sbin/cups-browsed|/usr/bin/cups-browsed|" /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
+	chgrp -R lp /root/bldr-inst/etc/cups
+}
 
 #Default HTTP curl new version detection
 function Detect

@@ -6228,13 +6228,9 @@ mate-notification-daemon,libcoco.so
 mate-notification-daemon,libnodoka.so
 mate-notification-daemon,libslider.so
 mate-notification-daemon,libstandard.so
-mate-panel,libclock-applet.so
-mate-panel,libfish-applet.so
 mate-panel,libmate-panel-applet-4.so
 mate-panel,libmate-panel-applet-4.so.1
 mate-panel,libmate-panel-applet-4.so.1.0.1
-mate-panel,libnotification-area-applet.so
-mate-panel,libwnck-applet.so
 mate-polkit,libpolkit-gtk-mate-1.so
 mate-polkit,libpolkit-gtk-mate-1.so.0
 mate-polkit,libpolkit-gtk-mate-1.so.0.0.0
