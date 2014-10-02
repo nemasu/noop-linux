@@ -2,7 +2,7 @@
 NAME=linux-pam
 
 #package version
-VERSION=1.1.6
+VERSION=1.1.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('cracklib' 'db' 'glibc' 'libgssglue' 'libtirpc' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,17 +28,26 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+pam_unix2_version=2.9.1
+
 function BuildAndInstall
 {
-	./configure --libdir=/usr/lib
+	./configure --libdir=/usr/lib --disable-db --sbindir=/usr/bin
 	make -j3
 	make DESTDIR=/root/bldr-inst install
 
-	GetSource "http://ftp.sunet.se/pub/Linux/distributions/suse/people/kukuk/pam/pam_unix2/pam_unix2-2.6.tar.bz2"
-	mv $BLDRTMPDIR/pam_unix2-glibc-2.16.patch_other .
-	patch -Np1 -i pam_unix2-glibc-2.16.patch_other
-	rm pam_unix2-glibc-2.16.patch_other
-	./configure --libdir=/usr/lib
+	cd ..
+	wget http://sourceforge.net/projects/kaosx/files/sources/pam/pam_unix2-${pam_unix2_version}.tar.bz2
+	tar xf pam_unix2-${pam_unix2_version}.tar.bz2
+	cd pam_unix2-${pam_unix2_version}
+
+	mv $BLDRTMPDIR/pam_unix2-glibc216.p .
+	patch -Np1 -i pam_unix2-glibc216.p
+	./configure \
+      CFLAGS="$CFLAGS -I/root/bldr-tmp/Linux-PAM-${VERSION}/libpam/include/" \
+      LDFLAGS="$LDFLAGS -L/root/bldr-tmp/Linux-PAM-${VERSION}/libpam/.libs/" \
+      --libdir=/usr/lib \
+      --sbindir=/usr/bin
 	make -j3
 	make DESTDIR=/root/bldr-inst install
 
@@ -46,12 +55,12 @@ function BuildAndInstall
 
 # add the realtime permissions for audio users
 	sed -i 's|# End of file||' etc/security/limits.conf
-	cat >>etc/security/limits.conf <<_EOT
-	*               -       rtprio          0
-	*               -       nice            0
-	@audio          -       rtprio          65
-	@audio          -       nice           -10
-	@audio          -       memlock         40000
+cat >>etc/security/limits.conf <<_EOT
+*               -       rtprio          0
+*               -       nice            0
+@audio          -       rtprio          65
+@audio          -       nice           -10
+@audio          -       memlock         40000
 _EOT
 
 # fix some missing symlinks from old pam for compatibility
@@ -61,7 +70,7 @@ _EOT
 	ln -s pam_unix.so pam_unix_passwd.so
 	ln -s pam_unix.so pam_unix_session.so
 
-
+	rm -rf /root/bldr-inst/usr/share/doc/Linux-PAM/sag-pam_userdb.html
 }
 
 #Default HTTP curl new version detection

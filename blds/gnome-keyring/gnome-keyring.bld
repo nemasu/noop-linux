@@ -2,8 +2,8 @@
 NAME=gnome-keyring
 
 #package version
-VERSION=3.12.2
-DVERSION=3.12.2
+VERSION=3.14.0
+DVERSION=3.14.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

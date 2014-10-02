@@ -6101,7 +6101,6 @@ linux-pam,pam_unix_acct.so
 linux-pam,pam_unix_auth.so
 linux-pam,pam_unix_passwd.so
 linux-pam,pam_unix_session.so
-linux-pam,pam_userdb.so
 linux-pam,pam_warn.so
 linux-pam,pam_wheel.so
 linux-pam,pam_xauth.so
