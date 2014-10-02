@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('glib2' 'glibc' 'gssdp' 'libsoup' 'libxml2' 'util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

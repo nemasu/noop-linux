@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc' 'polkit')
 
 # 'no' to skip calls to strip
 STRIP=

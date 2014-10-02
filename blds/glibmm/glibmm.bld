@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libffi' 'libpng15' 'libxcb' 'pango' 'pcre' 'pixman' 'zlib')
+DEPS=('gcc-libs' 'glib2' 'glibc' 'libsigc++')
 
 # 'no' to skip calls to strip
 STRIP=
