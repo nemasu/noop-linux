@@ -893,6 +893,9 @@ evolution-data-server,libedataserver-1.2.so.16.0.0
 evolution-data-server,libedataserverui-3.0.so
 evolution-data-server,libedataserverui-3.0.so.1
 evolution-data-server,libedataserverui-3.0.so.1.0.0
+exempi,libexempi.so
+exempi,libexempi.so.3
+exempi,libexempi.so.3.2.3
 exiv2,libexiv2.so
 exiv2,libexiv2.so.12
 exiv2,libexiv2.so.12.0.0
