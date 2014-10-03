@@ -33,14 +33,14 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	./configure \
-        --prefix=/usr \
-        --libexecdir=/usr/lib/mate-panel \
-        --sysconfdir=/etc \
-        --localstatedir=/var \
-        --with-gtk=2.0 \
-        --enable-introspection \
-        --disable-static \
-		--enable-network-manager \
+		--prefix=/usr \
+		--libexecdir=/usr/lib/mate-panel \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--with-gtk=2.0 \
+		--enable-introspection \
+		--disable-static \
+		--enable-network-manager
 #--with-in-process-applets=all \
     make -j3
 	make DESTDIR=/root/bldr-inst install
