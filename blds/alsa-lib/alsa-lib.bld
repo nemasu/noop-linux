@@ -31,7 +31,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr
+	./configure --prefix=/usr --disable-python
 	make -j3
 	make DESTDIR=/root/bldr-inst install
 }
