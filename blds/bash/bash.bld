@@ -2,13 +2,14 @@
 NAME=bash
 
 #package version
-VERSION=4.3
+VERSION=4.3-30
+DVERSION=4.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnu.org/gnu/bash/bash-${VERSION}.tar.gz
+SRC=ftp://ftp.gnu.org/gnu/bash/bash-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -60,7 +61,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
