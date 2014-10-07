@@ -1,0 +1,3 @@
+mkdir -p /etc/pango
+pango-querymodules > /etc/pango/pango.modules
+chmod 644 /etc/pango/pango.modules
