@@ -7,6 +7,8 @@ gtk+2
 gdk-pixbuf
 gnome-icon-theme
 desktop-file-utils
+murrine
+aurora
 mate-common
 mate-desktop
 libmatekbd
