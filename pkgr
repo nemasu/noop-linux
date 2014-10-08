@@ -83,7 +83,8 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	$echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
 	$echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
 	$echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a package (bldj file or grab it from repo)"
-	$echo -e "\t-V,\t--version-check name          Check(try) if new version is available."
+	$echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building."
+	$echo -e "\t-n,\t--new-config                  Process new config files."
 	#$echo -e "\t"
 	#$echo -e "\t-libdiff"
 	#$echo -e "\t-genmeta package-name version"
@@ -190,6 +191,39 @@ if [ $1 == "-update-bldjs" ]; then
 		tar cjf /root/bldj-done/$FILE *
 		rm -rf /root/bldr-inst/*
 	done
+fi
+
+if [ $1 == "--new-config" ] || [ $1 == "-n" ]; then
+	let NUM=`cat $NEWCONF | wc -l`
+	if [ $NUM -gt 0 ]; then
+		echo "You have $NUM files that need updating."
+		echo "What would you like to do?"
+		read -p "Overwrite all old files(a), Quit(q): " INPUT
+		if [ "$INPUT" == "q" ]; then
+			exit 0
+		else
+			if [ "$INPUT" == "a" ];
+			then
+				for i in `cat $NEWCONF`; do
+					if [ -e "$i" ]; then
+						OLD=`echo "$i" | sed 's/\.new$//g'`
+						mv -v $i $OLD
+					else
+						echo "$i not found, skipping.."
+					fi
+					
+					let LOC=`grep -n "$i" $NEWCONF | sed 's/:/ /;' | awk '{print $1;}'`
+					$sed -i -e "${LOC}d" $NEWCONF
+				done
+			else
+				echo "Invalid input, exiting..."
+				exit 1
+			fi
+		fi
+	else
+		echo "No files need updating."
+		exit 0
+	fi
 fi
 
 if [ $1 == "--version-check" ] || [ $1 == "-V" ]; then
@@ -724,7 +758,7 @@ function RenameConfigFiles
 			
 			if [ "$NEW_DIF" != "0" ]; then
 				TGT=`$echo $i | $sed -e 's/\.'"$p"'/\.'"$p"'\.new/g'`;
-    	        $echo "New and old config files differ, renaming new config file $i to $TGT";
+    	        $echo "New and old config files differ, new config file will be `echo $TGT | sed -e 's/^\.//;'`";
         	    $mv $i $TGT;
 				echo $TGT | $sed -e 's/\.//' >> $NEWCONF
 
