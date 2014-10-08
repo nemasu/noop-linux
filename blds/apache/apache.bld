@@ -31,8 +31,8 @@ RESTORELIBDB=
 function BuildAndInstall
 {
     # set default user
-	sed -e 's#User daemon#User httpd#' \
-	  -e 's#Group daemon#Group httpd#' \
+	sed -e 's#User daemon#User http#' \
+	  -e 's#Group daemon#Group http#' \
 	  -i docs/conf/httpd.conf.in
 
 	cat $BLDRTMPDIR/noop.layout >> config.layout
@@ -45,7 +45,7 @@ function BuildAndInstall
       --enable-mods-shared=all \
       --enable-so \
       --enable-suexec \
-      --with-suexec-caller=httpd \
+      --with-suexec-caller=http \
       --with-suexec-docroot=/var/www \
       --with-suexec-logfile=/var/log/httpd/suexec.log \
       --with-suexec-bin=/usr/bin/suexec \

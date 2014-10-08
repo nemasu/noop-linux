@@ -1,2 +1,1 @@
-getent passwd httpd &>/dev/null && userdel httpd >/dev/null
-getent group httpd &>/dev/null && groupdel httpd >/dev/null
+getent passwd http &>/dev/null && userdel http >/dev/null
