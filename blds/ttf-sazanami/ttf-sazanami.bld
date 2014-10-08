@@ -1,0 +1,41 @@
+#package name
+NAME=ttf-sazanami
+
+#package version
+VERSION=20040629
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://osdn.dl.sourceforge.jp/efont/10087/sazanami-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	install -d /root/bldr-inst/usr/share/{fonts/TTF,licenses/"${NAME}"}
+	install *.ttf /root/bldr-inst/usr/share/fonts/TTF
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "${NAME}: Too old"
+}

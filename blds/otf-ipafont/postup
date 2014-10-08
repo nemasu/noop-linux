@@ -1,0 +1,4 @@
+chmod 644 /usr/share/fonts/OTF/*
+fc-cache -f >/dev/null
+mkfontscale /usr/share/fonts/OTF
+mkfontdir /usr/share/fonts/OTF

@@ -1,0 +1,50 @@
+#package name
+NAME=otf-ipafont
+
+#package version
+VERSION=00303
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	wget http://dl.ipafont.ipa.go.jp/IPAfont/IPAfont${VERSION}.zip
+	unzip *.zip && rm *.zip
+	cd `ls`
+	mkdir -p /root/bldr-inst/usr/share/fonts/OTF
+  	cp *.ttf /root/bldr-inst/usr/share/fonts/OTF/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s http://ipafont.ipa.go.jp/ipafont/download.html | grep -E "IPAfont[0-9]*\.zip" | head -n1 | sed 's/.*IPAfont\([0-9]*\)\.zip.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
