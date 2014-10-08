@@ -1,0 +1,92 @@
+#package name
+NAME=postfix
+
+#package version
+VERSION=2.11.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="ftp://ftp.porcupine.org/mirrors/postfix-release/official/postfix-${VERSION}.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	make makefiles DEBUG='' CCARGS=' \
+		-DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl \
+		-DHAS_LDAP \
+		-DUSE_TLS \
+		-DHAS_MYSQL -I/usr/include/mysql \
+		-DHAS_PGSQL -I/usr/include/postgresql \
+		-DHAS_SQLITE \
+		-DHAS_CDB \
+		-DDEF_COMMAND_DIR=\"/usr/bin\" \
+		-DDEF_DAEMON_DIR=\"/usr/lib/postfix\" \
+		-DDEF_SENDMAIL_PATH=\"/usr/bin/sendmail\" \
+		-DDEF_README_DIR=\"/usr/share/doc/postfix\" \
+		-DDEF_SAMPLE_DIR=\"/etc/postfix/sample\" \
+		-DDEF_MANPAGE_DIR=\"/usr/share/man\" \
+	' AUXLIBS=' \
+		-lsasl2 \
+		-lldap -llber \
+		-lssl -lcrypto \
+		-lmysqlclient -lz -lm \
+		-lpq \
+		-lsqlite3 -lpthread \
+		-lcdb \
+	' OPT="${CFLAGS} ${LDFLAGS}"
+
+	make -j3
+
+	sh postfix-install -non-interactive install_root="/root/bldr-inst"
+	for name in posttls-finger {smtp,qmqp}-{sink,source}; do
+		install -Dm644 "man/man1/${name}.1" "/root/bldr-inst/usr/share/man/man1/${name}.1"
+		install -Dm755 "bin/${name}" "/root/bldr-inst/usr/bin/${name}"
+	done
+
+	cd /root/bldr-inst
+	patch -p0 -i $BLDRTMPDIR/aliases.p && rm $BLDRTMPDIR/aliases.p
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=ftp://ftp.porcupine.org/mirrors/postfix-release/official/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

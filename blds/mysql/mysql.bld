@@ -2,7 +2,7 @@
 NAME=mysql
 
 #package version
-VERSION=5.6.19
+VERSION=5.6.21
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

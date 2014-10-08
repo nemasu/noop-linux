@@ -1,0 +1,110 @@
+#package name
+NAME=apache
+
+#package version
+VERSION=2.4.10
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.apache.org/dist/httpd/httpd-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    # set default user
+	sed -e 's#User daemon#User httpd#' \
+	  -e 's#Group daemon#Group httpd#' \
+	  -i docs/conf/httpd.conf.in
+
+	cat $BLDRTMPDIR/noop.layout >> config.layout
+	rm $BLDRTMPDIR/noop.layout
+
+	./configure --sbindir=/usr/bin \
+      --enable-layout=noop \
+      --enable-mpms-shared=all \
+      --enable-modules=all \
+      --enable-mods-shared=all \
+      --enable-so \
+      --enable-suexec \
+      --with-suexec-caller=httpd \
+      --with-suexec-docroot=/var/www \
+      --with-suexec-logfile=/var/log/httpd/suexec.log \
+      --with-suexec-bin=/usr/bin/suexec \
+      --with-suexec-uidmin=99 --with-suexec-gidmin=99 \
+      --enable-ldap --enable-authnz-ldap \
+      --enable-cache --enable-disk-cache --enable-mem-cache --enable-file-cache \
+      --enable-ssl --with-ssl \
+      --enable-deflate --enable-cgi --enable-cgid \
+      --enable-proxy --enable-proxy-connect \
+      --enable-proxy-http --enable-proxy-ftp \
+      --enable-dbd --enable-imagemap --enable-ident --enable-cern-meta \
+      --enable-lua --enable-xml2enc \
+      --with-apr=/usr/bin/apr-1-config \
+      --with-apr-util=/usr/bin/apu-1-config \
+      --with-pcre=/usr
+
+  make -j3
+  make DESTDIR=/root/bldr-inst install
+
+  sed -e 's#/usr/lib/httpd/modules/#modules/#' \
+      -e 's|#\(LoadModule negotiation_module \)|\1|' \
+      -e 's|#\(LoadModule include_module \)|\1|' \
+      -e 's|#\(LoadModule userdir_module \)|\1|' \
+      -e 's|#\(LoadModule slotmem_shm_module \)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-multilang-errordoc.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-autoindex.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-languages.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-userdir.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-default.conf\)|\1|' \
+      -e 's|#\(Include conf/extra/httpd-mpm.conf\)|\1|' \
+      -i "/root/bldr-inst/etc/httpd/conf/httpd.conf"
+
+  # cleanup
+  rm -r "/root/bldr-inst/usr/share/httpd/manual"
+  rm -r "/root/bldr-inst/etc/httpd/conf/original"
+  rm -r "/root/bldr-inst/var/www"
+  rm -r "/root/bldr-inst/run"
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://www.apache.org/dist/httpd/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
