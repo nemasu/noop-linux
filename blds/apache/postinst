@@ -1,1 +1,3 @@
 systemd-tmpfiles --create apache.conf
+getent group httpd &>/dev/null || groupadd -g 25 httpd >/dev/null
+getent passwd httpd &>/dev/null || useradd -u 25 -c "Apache Server" -g httpd -d /var/www -s /bin/false httpd >/dev/null
