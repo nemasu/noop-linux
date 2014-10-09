@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('cracklib' 'glibc' 'libgssglue' 'libtirpc' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

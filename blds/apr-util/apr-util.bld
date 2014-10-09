@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('apr' 'db' 'expat' 'gdbm' 'glibc' 'libtool' 'mysql-libs' 'nspr' 'nss' 'openldap' 'openssl' 'postgresql-libs' 'sasl' 'sqlite' 'unixodbc' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

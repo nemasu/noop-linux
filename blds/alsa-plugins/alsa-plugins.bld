@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'dbus' 'ffmpeg' 'gdbm' 'glibc' 'json-c' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libXtst' 'libcap2' 'libgcrypt' 'libgpg-error' 'libsamplerate' 'libsndfile' 'libxcb' 'pulseaudio' 'speex' 'systemd' 'util-linux' 'xz')
 
 # 'no' to skip calls to strip
 STRIP=

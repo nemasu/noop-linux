@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('apr' 'apr-util' 'db' 'expat' 'gdbm' 'glibc' 'libxml2' 'lua' 'openldap' 'openssl' 'pcre' 'sasl' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

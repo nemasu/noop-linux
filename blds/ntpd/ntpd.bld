@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('avahi' 'gcc-libs' 'glibc' 'libcap2' 'libevent' 'net-snmp' 'openssl')
 
 # 'no' to skip calls to strip
 STRIP=
