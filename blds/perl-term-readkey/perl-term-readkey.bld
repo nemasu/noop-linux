@@ -1,14 +1,14 @@
 #package name
-NAME=git
+NAME=perl-term-readkey
 
 #package version
-VERSION=1.9.0
+VERSION=2.32
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://git-core.googlecode.com/files/git-${VERSION}.tar.gz
+SRC=http://search.cpan.org/CPAN/authors/id/J/JS/JSTOWE/TermReadKey-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,29 +17,29 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('curl' 'expat' 'glibc' 'libidn' 'openssl' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('subversion' 'perl-error' 'perl-term-readkey')
+PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make configure
-	./configure $STDUSRCONF
-	make -j3
+	perl Makefile.PL INSTALLDIRS=vendor
+	make
 	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://code.google.com/p/git-core/downloads/list
+	NAME=TermReadKey
+	LISTURL=http://search.cpan.org/CPAN/authors/id/J/JS/JSTOWE/
 	FILELIST=`GetFileList`
 	LATEST=0
 
