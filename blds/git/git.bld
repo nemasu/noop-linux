@@ -23,7 +23,7 @@ DEPS=('curl' 'expat' 'glibc' 'libidn' 'openssl' 'zlib')
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('subversion' 'perl-error' 'perl-term-readkey')
+PKGDEPS=('subversion' 'perl-error' 'perl-term-readkey' 'tk')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=

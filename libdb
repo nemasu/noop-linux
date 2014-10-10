@@ -7093,6 +7093,7 @@ perl,threads.so
 perl,via.so
 perl-digest-sha1,SHA1.so
 perl-net-ssleay,SSLeay.so
+perl-term-readkey,ReadKey.so
 perl-text-iconv,Iconv.so
 perl-unicode-map,Map.so
 perl-unicode-map8,Map8.so
@@ -8508,7 +8509,15 @@ talloc,libtalloc.so.1
 talloc,libtalloc.so.2
 talloc,libtalloc.so.2.1.1
 talloc,talloc.so
-tcl,libtcl8.5.so
+tcl,libitcl4.0.0.so
+tcl,libsqlite3.8.0.so
+tcl,libtcl.so
+tcl,libtcl8.6.so
+tcl,libtdbc1.0.0.so
+tcl,libtdbcmysql1.0.0.so
+tcl,libtdbcodbc1.0.0.so
+tcl,libtdbcpostgres1.0.0.so
+tcl,libthread2.7.0.so
 tdb,libtdb.so
 tdb,libtdb.so.1
 tdb,libtdb.so.1.3.0
@@ -8543,6 +8552,8 @@ tiff,libtiffxx.so.5.1.0
 tigervnc,libvnc.so
 tinycdb,libcdb.so
 tinycdb,libcdb.so.1
+tk,libtk.so
+tk,libtk8.6.so
 transcode,a52_decore.so
 transcode,export_ac3.so
 transcode,export_divx5.so
