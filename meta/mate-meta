@@ -10,6 +10,7 @@ desktop-file-utils
 gtk-engines
 murrine
 aurora
+gvfs
 mate-common
 mate-desktop
 libmatekbd
