@@ -2,13 +2,13 @@
 NAME=git
 
 #package version
-VERSION=1.9.0
+VERSION=2.1.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://git-core.googlecode.com/files/git-${VERSION}.tar.gz
+SRC=https://www.kernel.org/pub/software/scm/git/git-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -39,7 +39,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://code.google.com/p/git-core/downloads/list
+	LISTURL=https://www.kernel.org/pub/software/scm/git/
 	FILELIST=`GetFileList`
 	LATEST=0
 
