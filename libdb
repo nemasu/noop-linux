@@ -2265,6 +2265,9 @@ gtkmm2,libgdkmm-2.4.so.1.1.0
 gtkmm2,libgtkmm-2.4.so
 gtkmm2,libgtkmm-2.4.so.1
 gtkmm2,libgtkmm-2.4.so.1.1.0
+gtksourceview,libgtksourceview-3.0.so
+gtksourceview,libgtksourceview-3.0.so.1
+gtksourceview,libgtksourceview-3.0.so.1.2.0
 gtksourceview2,libgtksourceview-2.0.so
 gtksourceview2,libgtksourceview-2.0.so.0
 gtksourceview2,libgtksourceview-2.0.so.0.0.0
