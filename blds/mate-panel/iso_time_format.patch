@@ -1,0 +1,23 @@
+diff --git a/applets/clock/clock.c b/applets/clock/clock.c
+index efaba2f..0a9f420 100644
+--- a/applets/clock/clock.c
++++ b/applets/clock/clock.c
+@@ -445,7 +445,8 @@ get_updated_timeformat (ClockData *cd)
+ 		 * the day of the month as a decimal number is a single digit,
+ 		 * it should begin with a 0 in your locale (e.g. "May 01"
+ 		 * instead of "May  1"). */
+-		date_format = _("%a %b %e");
++		//date_format = _("%a %b %e");
++		date_format = _("%F");
+ 
+ 		if (use_two_line_format (cd))
+ 			/* translators: reverse the order of these arguments
+@@ -460,7 +461,7 @@ get_updated_timeformat (ClockData *cd)
+ 			 *              if the time should come before the
+ 			 *              date on a clock in your locale.
+ 			 */
+-			clock_format = g_strdup_printf (_("%1$s, %2$s"),
++			clock_format = g_strdup_printf (_("%1$s %2$s"),
+ 							date_format,
+ 							time_format);
+ 	}
