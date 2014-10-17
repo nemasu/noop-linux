@@ -14,7 +14,7 @@ SRC=http://apache.org/dist/subversion/subversion-$VERSION.tar.bz2
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('apr' 'apr-util' 'db' 'dbus' 'expat' 'file' 'gcc-libs' 'glib2' 'glibc' 'kdelibs' 'libffi' 'libgcrypt' 'libgnome-keyring' 'libgpg-error' 'pcre' 'qt4' 'sasl' 'serf' 'sqlite' 'util-linux' 'zlib')
+DEPS=('apr' 'apr-util' 'db' 'dbus' 'expat' 'file' 'gcc-libs' 'glib2' 'glibc' 'libffi' 'libgcrypt' 'libgnome-keyring' 'libgpg-error' 'pcre' 'qt4' 'sasl' 'serf' 'sqlite' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -27,6 +27,19 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+
+	if [ "`uname -m`" == "x86_64" ]; then
+	
+		if [ ! -e /var/noop/installed/apache ] || [ ! -e /var/noop/installed/kdelibs ];
+		then
+			echo "You need apache and kdelibs to build subversion on x86_64";
+			exit 1
+		fi
+		EXCONF="--with-kwallet --with-apxs"
+	fi
+
+	
+
 		export PYTHON=/usr/bin/python2
 		./configure --prefix=/usr \
 			--with-apr=/usr \
@@ -34,12 +47,10 @@ function BuildAndInstall
 			--with-zlib=/usr \
 			--with-sqlite=/usr \
 			--with-berkeley-db=:/usr/include/:/usr/lib:db-5.3 \
-			--with-kwallet \
 			--with-gnome-keyring \
 			--disable-static \
-			--with-apxs \
 			--with-swig \
-			--with-serf=/usr
+			--with-serf=/usr ${EXCONF}
 
 		make -j3 LT_LDFLAGS="-L/root/bldr-inst/usr/lib"
 		make swig_pydir=/usr/lib/python2.7/site-packages/libsvn swig_pydir_extra=/usr/lib/python2.7/site-packages/svn swig-py swig-pl
