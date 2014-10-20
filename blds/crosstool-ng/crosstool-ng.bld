@@ -2,13 +2,13 @@
 NAME=crosstool-ng
 
 #package version
-VERSION=1.19.0
+VERSION=1.20.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-${VERSION}.tar.bz2
+SRC=http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://crosstool-ng.org/download/crosstool-ng
+	LISTURL=http://crosstool-ng.org/download/crosstool-ng/
 	FILELIST=`GetFileList`
 	LATEST=0
 
