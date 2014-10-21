@@ -2,7 +2,7 @@
 NAME=mate-settings-daemon
 
 #package version
-VERSION=1.8.2
+VERSION=1.8.2-1
 DVERSION=1.8.2
 
 #directory locations, 99.99% of the time this is 1
@@ -64,7 +64,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
