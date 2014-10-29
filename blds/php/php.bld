@@ -2,7 +2,7 @@
 NAME=php
 
 #package version
-VERSION=5.6.1
+VERSION=5.6.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -122,6 +122,8 @@ function BuildAndInstall
 	mv $BLDRTMPDIR/httpd.conf /root/bldr-inst/etc/httpd/conf/
 	make INSTALL_ROOT=/root/bldr-inst install
 	rm -rf /root/bldr-inst/etc/httpd
+	mkdir -p /root/bldr-inst/etc/php/
+	cp php.ini-production /root/bldr-inst/etc/php/php.ini
 }
 
 #Default HTTP curl new version detection

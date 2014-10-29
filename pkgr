@@ -717,7 +717,7 @@ if [ $1 == "--remove" ] || [ $1 == "-r" ]; then
 		pkgr -runprerm $2	
 		
 		#remove cfg files from file list
-		for p in {"cnf","config","conf","cfg"};
+		for p in {"cnf","config","conf","cfg","ini"};
 		do
 			$sed -i -e '/\.'"$p"'/d' $INSTALLEDDIR/$2
 		done
