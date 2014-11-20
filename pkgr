@@ -61,6 +61,7 @@ TMPDIR=$PREFIX/tmp/noop
 TMPFILE=$TMPDIR/meta.tmp
 TMPLIBFILE=$TMPDIR/tmplib.tmp
 HOST=http://www.nooplinux.org/noop
+#HOST=http://service.shoutium.com/noop
 PKGHOST=$HOST/packages/$ARCH
 
 
@@ -679,7 +680,8 @@ if [ $1 == "--list" ] || [ $1 == "-l" ]; then
 		echo -n "$i"
 		if [ -e $INSTALLEDDIR/$i ];
 		then
-			echo " (installed)";
+			VER=`grep -m1 "VER:" $INSTALLEDDIR/$i | sed 's/VER://g'`
+			echo "-$VER - (installed)";
 		else
 			echo ""
 		fi
