@@ -33,9 +33,7 @@ function BuildAndInstall
   mkdir build && cd build
   ../configure --prefix=/usr \
     --enable-sdl-dlopen \
-    --disable-arts --disable-esd --disable-nas \
-    --enable-alsa --enable-pulseaudio-shared \
-    --disable-rpath
+    --enable-alsa --enable-pulseaudio-shared
   make -j3
   make DESTDIR=/root/bldr-inst install
 }

@@ -96,7 +96,7 @@ unset SEGMENTS
 	rm -rf /root/mysql-libs-inst
 
 	mkdir -p etc/
-	cp usr/share/mysql/support-files/my-default.cnf etc/my.cnf
+	cp usr/share/mysql/support-files/my-default.cnf usr/share/mysql/
 
 }
 
