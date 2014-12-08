@@ -9,8 +9,9 @@ diff -Nur VirtualBox-4.1.6_OSE.orig/src/VBox/Frontends/VirtualBox/src/main.cpp V
 -  "as root. If it is available in your distribution, you should install the "
 -  "DKMS package first. This package keeps track of Linux kernel changes and "
 -  "recompiles the vboxdrv kernel module if necessary."
-+  "  <font color=blue>'pkgr -i --force virtualbox-modules && modprobe vboxdrv'</font><br/><br/>"
-+  "as root." 
++  "  <font color=blue>'pacman -S virtualbox-host-modules'</font><br/><br/>"
++  "as root. If you don't use our stock kernel, install virtualbox-host-dkms and "
++  "execute dkms autoinstall ."
    );
  
  QString g_QStrHintOtherWrongDriverVersion = QApplication::tr(

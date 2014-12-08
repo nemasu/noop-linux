@@ -20,7 +20,7 @@ then
 	fi
 	tar xf /tmp/linux-$VERSION.tar.xz
 
-	git clone -b aufs3.16 git://git.code.sf.net/p/aufs/aufs3-standalone
+	git clone -b aufs3.17 git://git.code.sf.net/p/aufs/aufs3-standalone
 	cd linux-$VERSION
 	patch -Np1 -i ../aufs3-standalone/aufs3-kbuild.patch
 	patch -Np1 -i ../aufs3-standalone/aufs3-base.patch
