@@ -51,6 +51,7 @@ ARCH=`$uname -m`
 BLDRTMPDIR=$PREFIX/tmp/bldr
 LIBDB=$PREFIX/var/noop/libdb
 MIRRORS=$PREFIX/var/noop/mirrors
+USER_MIRRORS=$PREFIX/etc/noop/mirrors
 METADIR=$PREFIX/var/noop/meta
 DNTDS=$PREFIX/var/noop/dntds
 NEWCONF=$PREFIX/var/noop/new_config
@@ -63,9 +64,9 @@ TMPFILE=$TMPDIR/meta.tmp
 TMPLIBFILE=$TMPDIR/tmplib.tmp
 HOST=http://www.nooplinux.org/noop
 
-if [ -e $MIRRORS ];
+if [ -e $USER_MIRRORS ];
 then
-	source $MIRRORS
+	source $USER_MIRRORS
 fi
 
 PKGHOST=$HOST/packages/$ARCH
@@ -74,7 +75,8 @@ $mkdir -p $INSTALLEDDIR
 $mkdir -p $METADIR
 $mkdir -p $TMPDIR/run
 if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
-	$echo pkgr -- Usage :
+	$echo -e "\npkgr -- noop Linux package manager"
+	$echo -e "\nUsage:"
 	$echo -e "\t-s,\t--sync                        Sync packgage database"
 	$echo -e "\t-d,\t--download pkg                Only download"
 	$echo -e "\t-i,\t--install pkg                 Install"
@@ -88,8 +90,8 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	$echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
 	$echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
 	$echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a package (bldj file or grab it from repo)"
-	$echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building."
-	$echo -e "\t-n,\t--new-config                  Process new config files."
+	$echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building"
+	$echo -e "\t-n,\t--new-config                  Process new config files"
 	#$echo -e "\t"
 	#$echo -e "\t-libdiff"
 	#$echo -e "\t-genmeta package-name version"
@@ -97,6 +99,9 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	#$echo -e "\t-getfiles pkg-file"
 	#$echo -e "\t-readmeta pkg-file"
 	#$echo -e "\t-update-bldjs"
+	$echo
+	$echo -e "Mirrors:\n\tcopy /var/noop/mirrors to /etc/noop/mirrors and uncomment desired mirror."
+	$echo -e "\n"
 	exit 0;
 fi
 
