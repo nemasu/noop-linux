@@ -1,0 +1,52 @@
+#package name
+NAME=x265
+
+#package version
+VERSION=1.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://bitbucket.org/multicoreware/x265/get/${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  cd build/linux
+  [[ $CARCH == x86_64 ]] && LDFLAGS+=',-z,noexecstack'
+  cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr ../../source
+  make -j3
+  
+  make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s -R https://bitbucket.org/multicoreware/x265/downloads | grep -E "[0-9\.]\.tar.gz" | head -n1 | sed -e 's/.*get\/\([0-9\.]*\)\.tar.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

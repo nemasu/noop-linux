@@ -1,0 +1,101 @@
+#package name
+NAME=ffmpeg
+
+#package version
+VERSION=2.5.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://ffmpeg.org/releases/ffmpeg-$VERSION.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure \
+		--prefix=/usr \
+		--disable-debug \
+		--disable-static \
+		--disable-stripping \
+		--enable-avisynth \
+		--enable-avresample \
+		--enable-fontconfig \
+		--enable-gnutls \
+		--enable-gpl \
+		--enable-libass \
+		--enable-libbluray \
+		--enable-libfreetype \
+		--enable-libfribidi \
+		--enable-libgsm \
+		--enable-libmodplug \
+		--enable-libmp3lame \
+		--enable-libopencore_amrnb \
+		--enable-libopencore_amrwb \
+		--enable-libopenjpeg \
+		--enable-libopus \
+		--enable-libpulse \
+		--enable-librtmp \
+		--enable-libschroedinger \
+		--enable-libspeex \
+		--enable-libtheora \
+		--enable-libv4l2 \
+		--enable-libvorbis \
+		--enable-libvpx \
+		--enable-libx264 \
+		--enable-libx265 \
+		--enable-libxvid \
+		--enable-runtime-cpudetect \
+		--enable-shared \
+		--enable-swresample \
+		--enable-vdpau \
+		--enable-version3 \
+		--enable-x11grab
+
+	make -j3
+	make tools/qt-faststart
+	make doc/ff{mpeg,play,server}.1
+	make DESTDIR=/root/bldr-inst install install-man
+	cp tools/qt-faststart /root/bldr-inst/usr/bin/qt-faststart
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://ffmpeg.org/releases/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
