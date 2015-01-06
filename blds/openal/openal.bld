@@ -1,23 +1,23 @@
 #package name
-NAME=ncurses
+NAME=openal
 
 #package version
-VERSION=5.9
+VERSION=1.16.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnu.org/pub/gnu/ncurses/ncurses-5.9.tar.gz
+SRC=http://kcat.strangesoft.net/openal-releases/openal-soft-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-widec --with-shared --with-normal --without-debug --without-ada --with-cxx-binding --with-cxx-shared --enable-pc-files"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +28,23 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	mkdir -p build && cd build
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release
+	
+    make -j3
+	make DESTDIR=/root/bldr-inst install
+	install -t /root/bldr-inst/usr/share/openal ../env-vars.txt ../hrtf.txt
+
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnu.org/pub/gnu/ncurses/
+	LISTURL=http://kcat.strangesoft.net/openal-releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 

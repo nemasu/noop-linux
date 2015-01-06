@@ -1,23 +1,24 @@
 #package name
-NAME=ncurses
+NAME=k3b
 
 #package version
-VERSION=5.9
+VERSION=2.0.3
+DVERSION=2.0.3a
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnu.org/pub/gnu/ncurses/ncurses-5.9.tar.gz
+SRC=http://download.kde.org/stable/k3b/k3b-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-widec --with-shared --with-normal --without-debug --without-ada --with-cxx-binding --with-cxx-shared --enable-pc-files"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +29,21 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+  mkdir build && cd build
+  cmake .. \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release
+  make -j3
+  
+  make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnu.org/pub/gnu/ncurses/
+	LISTURL=http://download.kde.org/stable/k3b/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -55,3 +63,4 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+

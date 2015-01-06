@@ -1,0 +1,86 @@
+#package name
+NAME=vlc
+
+#package version
+VERSION=2.1.5
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://download.videolan.org/vlc/${VERSION}/vlc-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	autoreconf -fi
+
+	sed -i -e 's:truetype/freefont:TTF:g' modules/text_renderer/freetype.c
+	sed -i -e 's:truetype/ttf-dejavu:TTF:g' modules/visualization/projectm.cpp
+
+	CFLAGS+=" -I/usr/include/samba-4.0" CPPFLAGS+=" -I/usr/include/samba-4.0" \
+		./configure --prefix=/usr \
+			--sysconfdir=/etc \
+			--disable-rpath \
+			--enable-faad \
+			--enable-nls \
+			--enable-lirc \
+			--enable-ncurses \
+			--enable-realrtsp \
+			--enable-aa \
+			--enable-vcdx \
+			--enable-upnp \
+			--enable-opus \
+			--enable-sftp \
+			LUAC=/usr/bin/luac  LUA_LIBS="`pkg-config --libs lua`" \
+			RCC=/usr/bin/rcc-qt4
+
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+  for res in 16 32 48 128; do
+    install -D -m644 "./share/icons/${res}x${res}/vlc.png" \
+                     "/root/bldr-inst/usr/share/icons/hicolor/${res}x${res}/apps/vlc.png"
+  done
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://www.videolan.org/vlc/download-sources.html
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

@@ -1,23 +1,23 @@
 #package name
-NAME=gettext
+NAME=kscd
 
 #package version
-VERSION=0.19.4
+VERSION=4.10.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnu.org/gnu/gettext/gettext-${VERSION}.tar.gz
+SRC="http://download.kde.org/stable/${VERSION}/src/kscd-${VERSION}.tar.xz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('acl' 'attr' 'gcc-libs' 'glibc' 'libxml2' 'ncurses' 'xz' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,30 +28,21 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+  mkdir build && cd build
+  cmake .. \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DKDE4_BUILD_TESTS=OFF \
+    -DCMAKE_INSTALL_PREFIX=/usr
+  make -j3
+  
+  make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnu.org/gnu/gettext/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
-
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+	echo "$NAME: KDE Release"
 }
+

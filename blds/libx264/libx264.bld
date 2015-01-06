@@ -1,0 +1,68 @@
+#package name
+NAME=libx264
+
+#package version
+VERSION=20150106
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://ftp.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+#Can only have 8 bit or 10 bit installed, default to 8 for now
+#   cd ../
+#	DIR=`ls`
+#	cp -r $DIR ${DIR}-10bit
+	
+#	cd ${DIR}-10bit
+
+#	./configure --enable-shared --enable-pic --bit-depth=10
+	
+#	make -j3 DESTDIR=/root/bldr-inst \
+#     bindir=/usr/bin \
+#     libdir=/usr/lib \
+#     includedir=/usr/include \
+#     install
+
+#	mv -v /root/bldr-inst/usr/bin/x264 /root/bldr-inst/usr/bin/x264-10bit
+
+#	cd ../$DIR
+
+	./configure --enable-shared --enable-pic
+	
+	make -j3 DESTDIR=/root/bldr-inst \
+      bindir=/usr/bin \
+      libdir=/usr/lib \
+      includedir=/usr/include \
+      install
+	
+	
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "$NAME: Snapshot based"
+}

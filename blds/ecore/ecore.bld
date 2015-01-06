@@ -1,23 +1,24 @@
 #package name
-NAME=ncurses
+NAME=ecore
 
 #package version
-VERSION=5.9
+VERSION=1.7.4-1
+DVERSION=1.7.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnu.org/pub/gnu/ncurses/ncurses-5.9.tar.gz
+SRC=http://download.enlightenment.org/releases/ecore-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-widec --with-shared --with-normal --without-debug --without-ada --with-cxx-binding --with-cxx-shared --enable-pc-files"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,7 +36,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnu.org/pub/gnu/ncurses/
+	LISTURL=http://download.enlightenment.org/releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 

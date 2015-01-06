@@ -2,13 +2,14 @@
 NAME=alsa-plugins
 
 #package version
-VERSION=1.0.28
+VERSION=1.0.28-1
+DVERSION=1.0.28
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.alsa-project.org/pub/plugins/alsa-plugins-${VERSION}.tar.bz2
+SRC=ftp://ftp.alsa-project.org/pub/plugins/alsa-plugins-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
