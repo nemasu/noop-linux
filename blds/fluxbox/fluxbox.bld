@@ -2,7 +2,7 @@
 NAME=fluxbox
 
 #package version
-VERSION=1.3.5
+VERSION=1.3.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'glibc' 'imlib2' 'libICE' 'libSM' 'libX11' 'libXext' 'libXft' 'libXinerama' 'libXpm' 'libXrandr' 'libXrender' 'zlib')
+DEPS=('fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'glibc' 'imlib2' 'libX11' 'libXext' 'libXft' 'libXinerama' 'libXpm' 'libXrandr' 'libXrender')
 
 # 'no' to skip calls to strip
 STRIP=
