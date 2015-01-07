@@ -52,6 +52,7 @@ BLDRTMPDIR=$PREFIX/tmp/bldr
 LIBDB=$PREFIX/var/noop/libdb
 MIRRORS=$PREFIX/var/noop/mirrors
 USER_MIRRORS=$PREFIX/etc/noop/mirrors
+USER_OVERRIDES=$PREFIX/etc/noop/overrides
 METADIR=$PREFIX/var/noop/meta
 DNTDS=$PREFIX/var/noop/dntds
 NEWCONF=$PREFIX/var/noop/new_config
@@ -67,6 +68,11 @@ HOST=http://www.nooplinux.org/noop
 if [ -e $USER_MIRRORS ];
 then
 	source $USER_MIRRORS
+fi
+
+if [ -e $USER_OVERRIDES ];
+then
+	source $USER_OVERRIDES
 fi
 
 PKGHOST=$HOST/packages/$ARCH
@@ -274,7 +280,7 @@ if [ $1 == "--depcheck-system" ] || [ $1 == "-C" ]; then
 	tput civis
 	$rm -f /tmp/missinglibs && touch /tmp/missinglibs
 	$rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
-	if [ "`uname -m`" == "x86_64" ]; then
+	if [ "$ARCH" == "x86_64" ]; then
 		$find /usr/lib /usr/lib32 /usr/bin /bin /lib -type f > /tmp/filelist
 	else
 		$find /usr/lib /usr/bin /bin /lib -type f > /tmp/filelist
@@ -900,13 +906,13 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 
 	
 
-	ARCH="_`$uname -m`"
+	ARCHPOST="_$ARCH"
     
 	if [ $ISFILE -eq 1 ];
 	then
-		NEW=`pkgr -readmeta $2 | $grep -m1 VER: | $sed -e 's/VER://g' | $sed -e 's/'"$ARCH"'//g'`
+		NEW=`pkgr -readmeta $2 | $grep -m1 VER: | $sed -e 's/VER://g' | $sed -e 's/'"$ARCHPOST"'//g'`
 	else
-		NEW=`$grep -e '^'"$NAME"',' $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g'| $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCH"'//g'`
+		NEW=`$grep -e '^'"$NAME"',' $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g'| $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`
 	fi
 
     
@@ -993,9 +999,9 @@ if [ $1 == "--upgrade-all" ] || [ $1 == "-U" ]; then
 	for i in `$find $INSTALLEDDIR/*` ; 
 	do
 		NAME=`$grep NAME: $i | $sed -e 's/NAME://g'`
-		ARCH="_`$uname -m`"
-		OLD=`$grep -m1 VER: $i | $sed -e 's/VER://g' | $sed -e 's/'"$ARCH"'//g'`
-		NEW=`$grep -e '^'"$NAME"',' $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCH"'//g'`
+		ARCHPOST="_$ARCH"
+		OLD=`$grep -m1 VER: $i | $sed -e 's/VER://g' | $sed -e 's/'"$ARCHPOST"'//g'`
+		NEW=`$grep -e '^'"$NAME"',' $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`
 		vercomp $OLD $NEW
 		if [ $? == 2 ]; then
 			if [ ${#array[@]} -eq 0 ]; then
@@ -1349,7 +1355,7 @@ if [ $1 = "-genmeta" ]; then
 	$echo NAME:$2 > $TMPFILE 
 	$echo -e "VER:$3" >> $TMPFILE
 	
-	$echo -e ARCH:`$uname -m` >> $TMPFILE
+	$echo -e "ARCH:${ARCH}" >> $TMPFILE
 
 	#Update libdb
 	touch $LIBDB
@@ -1495,7 +1501,7 @@ if [ $1 = "-genpkg" ] ; then
 	$cat $MPATH >> /tmp/$PKGNAME
 	$cat $MPATH
 
-	$mv /tmp/$PKGNAME ./$PKGNAME-$VER"_`$uname -m`.pkg"
+	$mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_${ARCH}.pkg"
 fi
 
 #NOTE: This function is no longer used by pkgr.
@@ -1728,7 +1734,7 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
 
 	let is64bit=`ldd $2 | $grep "linux-vdso.so.1" | wc -l`
 
-	if [ $is64bit -gt 0 ] || [ "`$uname -m`" == "i686" ] || [ "`$uname -m`" == "armv6l" ];
+	if [ $is64bit -gt 0 ] || [ "$ARCH" == "i686" ] || [ "$ARCH" == "armv6l" ];
 	then
 		$sed -i '/^lib32-.*/ d;' $LIBDB.tmp;
 	else
@@ -1744,7 +1750,7 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
 		then
 
 			$echo -n "No package found in DB for "
-			if [ $is64bit -eq 0 ] && [ "`$uname -m`" == "x86_64" ];
+			if [ $is64bit -eq 0 ] && [ "$ARCH" == "x86_64" ];
 			then
 				$echo -n "32-bit "
 			fi
