@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('exiv2' 'ffmpeg' 'gcc-libs' 'glibc' 'kdelibs' 'poppler' 'qt4' 'soprano' 'taglib')
 
 # 'no' to skip calls to strip
 STRIP=

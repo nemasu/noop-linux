@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('fontconfig' 'glibc' 'libX11' 'libXScrnSaver' 'libXext' 'libXft' 'tcl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

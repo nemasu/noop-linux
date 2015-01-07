@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'libelf' 'libftdi' 'libusb' 'libusb-compat' 'ncurses' 'readline')
 
 # 'no' to skip calls to strip
 STRIP=

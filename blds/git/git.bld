@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('curl' 'expat' 'glibc' 'libidn' 'openssl' 'zlib')
+DEPS=('tk' 'perl-term-readkey' 'perl-error' 'subversion' 'curl' 'expat' 'glibc' 'openssl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('ffmpeg' 'flac' 'gcc-libs' 'glibc' 'kdelibs' 'lame' 'libdvdread' 'libkcddb' 'libmad' 'libmpcdec' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'qt4' 'soprano' 'taglib')
 
 # 'no' to skip calls to strip
 STRIP=

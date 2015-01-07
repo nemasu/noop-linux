@@ -19,7 +19,7 @@ EXTRACONF="--prefix=/usr  --with-sdl --with-openexr --with-librsvg --with-libavf
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('babl' 'cairo' 'ffmpeg' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'ilmbase' 'jasper' 'libjpeg' 'libpng' 'librsvg' 'openexr' 'pango' 'sdl')
 
 # 'no' to skip calls to strip
 STRIP=
