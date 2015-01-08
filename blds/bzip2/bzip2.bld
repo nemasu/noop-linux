@@ -45,7 +45,8 @@ function BuildAndInstall
 	mv share/ usr/
 	cd usr/lib
 	rm libbz2.so.1.0
-	ln -s libbz2.so.1.0.6 libbz2.so.1.0
+	ln -s libbz2.so.${VERSION} libbz2.so.1.0
+	ln -s libbz2.so.${VERSION} libbz2.so
 	popd
 }
 
