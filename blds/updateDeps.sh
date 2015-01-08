@@ -25,3 +25,7 @@ do
 		echo $i does not exist.
 	fi
 done
+
+
+#Exceptions
+sed -i -e "s/ 'kdelibs'//g" subversion/subversion.bld
