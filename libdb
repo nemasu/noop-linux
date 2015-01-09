@@ -7271,6 +7271,15 @@ prison,libprison.so
 prison,libprison.so.0
 prison,libprison.so.0.0.0
 procps,libproc-3.2.8.so
+protobuf,libprotobuf-lite.so
+protobuf,libprotobuf-lite.so.9
+protobuf,libprotobuf-lite.so.9.0.1
+protobuf,libprotobuf.so
+protobuf,libprotobuf.so.9
+protobuf,libprotobuf.so.9.0.1
+protobuf,libprotoc.so
+protobuf,libprotoc.so.9
+protobuf,libprotoc.so.9.0.1
 pth,libpth.so
 pth,libpth.so.20
 pth,libpth.so.20.0.27
