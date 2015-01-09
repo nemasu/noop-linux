@@ -1,5 +1,5 @@
 #package name
-NAME=qemu-static
+NAME=qemu
 
 #package version
 VERSION=2.2.0
@@ -28,31 +28,15 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#Note: This doesn't work yet, need static Glib, and maybe other things
-
 function BuildAndInstall
 {
-	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
-               --static --python=/usr/bin/python2 --disable-werror \
-              --disable-docs --disable-gtk --disable-vnc --disable-kvm --disable-libssh2 \
-              --enable-user --disable-system --disable-fdt
+	 ./configure --prefix=/usr --sysconfdir=/etc --audio-drv-list='pa alsa sdl' \
+		  --python=/usr/bin/python2 --smbd=/usr/bin/smbd \
+		  --enable-docs --libexecdir=/usr/lib/qemu \
+		  --disable-gtk --enable-linux-aio --enable-seccomp \
+		  --localstatedir=/var --enable-tpm 
 	make -j3
-	make DESTDIR=/root/bldr-inst libexecdir=/usr/lib/qemu install
-	
-	# remove conflicting /var/run directory
-	rm -rf /root/bldr-inst/var
-	
-	# add sample config
-#mkdir -p /root/bldr-inst/etc/qemu/
-#echo "allow br0" > /root/bldr-inst/etc/qemu/bridge.conf.sample
-	cd /root/bldr-inst/usr/bin/
-	for f in `ls -1`;
-	do
-		mv "$f" "$f-static"
-	done
-
-	rm -rf /root/bldr-inst/usr/{share,lib} /root/bldr-inst/etc
-	
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
