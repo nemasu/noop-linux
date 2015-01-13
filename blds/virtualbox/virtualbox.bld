@@ -173,22 +173,8 @@ EOF
 
 	popd
 
-#if [ `uname -m` == "i686" ];
-#then
-#pushd out/linux.x86/release/obj
-#else
-#pushd out/linux.amd64/release/obj
-#fi
 
-	#install guest mods
-#for i in vboxvideo_drm/vboxvideo_drm.ko vboxsf/vboxsf.ko VBoxGuest/vboxguest.ko;
-#do
-#install -m 644 $i /root/mod-inst/lib/modules/${KERVER}/misc
-#done
-
-#popd
-
-	#guest mods, take 2
+	#guest mods
 	mkdir -p /root/mod-bld
 	src/VBox/Additions/linux/export_modules /root/mod-bld/guest_mods.tar.gz
 
@@ -203,6 +189,17 @@ EOF
 
 
 	pushd /root/mod-inst
+	mkdir -p etc/modules-load.d
+cat <<EOF >> etc/modules-load.d/virtualbox.conf
+vboxnetadp
+vboxdrv
+vboxnetflt
+vboxsf
+vboxvideo
+vboxguest
+vboxpci
+EOF
+
 	pkgr -genmeta virtualbox-modules $VERSION
 	pkgr -genpkg
 	mv *.pkg /root/bldr-done

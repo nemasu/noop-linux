@@ -1,1 +1,2 @@
 systemd-tmpfiles --create apache.conf
+chmod +x /usr/share/httpd/build/instdso.sh

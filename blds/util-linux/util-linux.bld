@@ -2,14 +2,15 @@
 NAME=util-linux
 
 #package version
-VERSION=2.22-1
-DVERSION=2.22
+VERSION=2.25.2
+DVERSION=2.25.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.kernel.org/pub/linux/utils/util-linux/v${DVERSION}/util-linux-${DVERSION}.tar.xz
+BASE=`echo ${DVERSION} | sed -e 's/\([0-9]*\.[0-9]*\).*/\1/g'`
+SRC=http://www.kernel.org/pub/linux/utils/util-linux/v${BASE}/util-linux-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
