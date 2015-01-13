@@ -95,6 +95,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	$echo -e "\t-D,\t--show-revdeps pkg            List reverse dependencies for a package"
 	$echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
 	$echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
+	$echo -e "\t-Cr,\t--depcheck-system            Check dependencies for given packages reverse dependencies"
 	$echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a package (bldj file or grab it from repo)"
 	$echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building"
 	$echo -e "\t-n,\t--new-config                  Process new config files"
@@ -272,6 +273,63 @@ if [ $1 == "--show-revdeps" ] || [ $1 == "-D" ]; then
 
 	$grep ":$2$" $DEPDB | $sed -e 's/:.*//g'
 
+fi
+
+if [ $1 == "--depcheck-revdep" ] || [ $1 == "-Cr" ]; then
+
+	$echo "Scanning machine for missing dependencies"
+    ldconfig &>/dev/null
+    tput civis
+    $rm -f /tmp/missinglibs && touch /tmp/missinglibs
+    $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
+	for i in `pkgr -D $2`;
+	do
+		sed -ne '/FILES:/,$p' /var/noop/installed/$i | grep -E "/usr/bin|/usr/lib|/bin|/lib" >> /tmp/filelist
+	done
+
+	#TODO Factorize out these two depcheck functions
+	total_lines=`cat /tmp/filelist | wc -l`
+    let count=0
+    for i in `$cat /tmp/filelist`;
+    do  
+        let count=$count+1
+        ShowProgress $count $total_lines
+        MISSINGLIBS=`ldd $i 2>&1 | $grep "not found" | $awk '{print $1;}' | sort | uniq`
+        for j in ${MISSINGLIBS[@]};
+        do
+    
+            ISDIRECT=`readelf -d $i | $grep NEEDED | $awk '{print $5;}' | grep $j | wc -l`
+    
+            DIRECT="DIRECT"
+            if [ "$ISDIRECT" == "0" ]; then
+                DIRECT="INDIRECT"
+            fi
+    
+            if [ "$DIRECT" != "DIRECT" ];
+            then
+                $echo "$i -> $DIRECT $j" >> /tmp/missinglibs
+            else
+                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
+                then
+                    $echo "$i -> $j $DIRECT" >> /tmp/missinglibs
+                else
+                    $echo "$i -> $j $DIRECT File Found! Probably Okay." >> /tmp/missinglibs.found
+                fi
+            fi
+        done
+    done 
+    $cat /tmp/missinglibs | sort | uniq > /tmp/missinglibs.sorted
+    $echo ""
+    if [ `cat /tmp/missinglibs.sorted | wc -l` -gt 0 ]; then
+        $echo "Missing Libs ( File -> Missing Library ):"
+    else
+        $echo "Nothing broken found!"
+    fi
+    $cat /tmp/missinglibs.sorted
+    $cp /tmp/missinglibs.sorted /tmp/depcheck.results
+    $echo "Results saved in /tmp/depcheck.results"
+    $rm /tmp/missinglibs /tmp/missinglibs.sorted /tmp/filelist 2>/dev/null
+    tput cnorm
 fi
 
 if [ $1 == "--depcheck-system" ] || [ $1 == "-C" ]; then
