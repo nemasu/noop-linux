@@ -1373,7 +1373,7 @@ if [ $1 = "-genmeta" ]; then
 	$echo NAME:$2 > $TMPFILE 
 	$echo -e "VER:$3" >> $TMPFILE
 	
-	$echo -e "ARCH:${ARCH}" >> $TMPFILE
+	$echo -e "ARCH:`uname -m`" >> $TMPFILE
 
 	#Update libdb
 	touch $LIBDB
@@ -1519,7 +1519,7 @@ if [ $1 = "-genpkg" ] ; then
 	$cat $MPATH >> /tmp/$PKGNAME
 	$cat $MPATH
 
-	$mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_${ARCH}.pkg"
+	$mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_`uname -m`.pkg"
 fi
 
 #NOTE: This function is no longer used by pkgr.
