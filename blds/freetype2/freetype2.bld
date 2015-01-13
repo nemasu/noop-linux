@@ -2,7 +2,7 @@
 NAME=freetype2
 
 #package version
-VERSION=2.5.3
+VERSION=2.5.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -11,7 +11,7 @@ ISUSR=1
 SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--without-bzip2"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
