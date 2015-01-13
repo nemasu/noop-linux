@@ -451,13 +451,18 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 
 	
 	pushd .
-	rm -rf $BLDRTMPDIR
-	mkdir -p $BLDRTMPDIR
-
-	cd $BLDRTMPDIR
-	tar xf $FILE
-	rm $FILE
-
+	
+	if [ -z "$BLDR_CONTINUE" ];
+	then
+		rm -rf $BLDRTMPDIR
+		mkdir -p $BLDRTMPDIR
+		
+		cd $BLDRTMPDIR
+		tar xf $FILE
+		rm $FILE
+	fi
+	
+	
 	set -e
 	source $BLDRTMPDIR/*.bld
 	rm $BLDRTMPDIR/*.bld
@@ -480,7 +485,11 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 		CONF=$STDSYSCONF;
 	fi
 
-	rm -rf ~/bldr-tmp
+	if [ -z "$BLDR_CONTINUE" ];
+	then
+		rm -rf ~/bldr-tmp
+	fi
+	
 	rm -rf ~/bldr-inst
 
 	mkdir -p ~/bldr-tmp
@@ -491,14 +500,23 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 
 	if [ -n "$SRC" ];
 	then
-		wget $SRC -Osrc
-		tar xf src
-		rm src
+		
+		if [ -z "$BLDR_CONTINUE" ];
+		then
+			wget $SRC -Osrc
+			tar xf src
+			rm src
+		fi
+		
 		cd `ls` || true
 	fi
 	for i in `ls $BLDRTMPDIR/*.patch`;
 	do
-		patch -Np1 -i $i
+		if [ -z "$BLDR_CONTINUE" ];
+		then
+			patch -Np1 -i $i
+		fi
+		
 		rm -v $i
 	done
 	if [ $ISSPECIAL == 0 ]; then

@@ -14,7 +14,7 @@ SRC=http://downloads.sourceforge.net/docbook/docbook-xsl-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
