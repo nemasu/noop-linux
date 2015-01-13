@@ -16,6 +16,7 @@ SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.ta
 EXTRACONF=
 ISSPECIAL=1
 STRIP="no"
+RESTORELIBDB=1
 DEPS=('alsa-lib' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libcap2' 'libevent' 'libgcrypt' 'libjpeg' 'libpng15' 'libX11' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libxml2' 'libXrandr' 'libXrender' 'libXScrnSaver' 'libxslt' 'libXtst' 'nspr' 'nss' 'pango' 'pciutils' 'speech-dispatcher' 'systemd')
 
 function BuildAndInstall
@@ -121,6 +122,7 @@ function BuildAndInstall
 	
 	# Build with clang
 	mkdir -p third_party/llvm-build/Release+Asserts/bin
+	rm third_party/llvm-build/Release+Asserts/bin/*
 	ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
 	ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
 	ln -s /usr/bin/llvm-symbolizer third_party/llvm-build/Release+Asserts/bin/
@@ -156,12 +158,13 @@ function BuildAndInstall
     /root/bldr-inst/usr/lib/chromium/chrome-sandbox
 
 
+  cp out/Release/{*.pak,libffmpegsumo.so,libpdf.so} /root/bldr-inst/usr/lib/chromium/
+  
   if [ "`uname -m`" != "armv6l" ];
   then
   	install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
 
-  	cp out/Release/{libffmpegsumo.so,nacl_helper{,_bootstrap}} \
-		out/Release/{libppGoogleNaClPluginChrome.so,nacl_irt_*.nexe} \
+  	cp out/Release/nacl_helper{,_bootstrap} out/Release/nacl_irt_*.nexe \
 		/root/bldr-inst/usr/lib/chromium/
   
     # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
@@ -169,13 +172,11 @@ function BuildAndInstall
     	/root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap}
 
   	strip --strip-all /root/bldr-inst/usr/lib/chromium/libffmpegsumo.so \
-    	/root/bldr-inst/usr/lib/chromium/libppGoogleNaClPluginChrome.so
+    	/root/bldr-inst/usr/lib/chromium/libpdf.so
   fi
 
-  strip --strip-debug /root/bldr-inst/usr/lib/chromium/{chromium,chromium-sandbox} 
+  strip --strip-debug /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
 	
-  cp out/Release/*.pak /root/bldr-inst/usr/lib/chromium/
-  
   cp -a out/Release/locales out/Release/icudtl.dat /root/bldr-inst/usr/lib/chromium/
 
   install -Dm644 out/Release/chrome.1 /root/bldr-inst/usr/share/man/man1/chromium.1
@@ -189,8 +190,8 @@ function BuildAndInstall
     install -Dm644 "chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
       /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
   done
-  mkdir -p $pkgdir/usr/bin
 
+  mkdir -p /root/bldr-inst/usr/bin/
   if [ "`uname -m`" != "armv6l" ];
   then
   	ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver

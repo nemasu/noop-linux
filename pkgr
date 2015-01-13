@@ -452,16 +452,12 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	
 	pushd .
 	
-	if [ -z "$BLDR_CONTINUE" ];
-	then
-		rm -rf $BLDRTMPDIR
-		mkdir -p $BLDRTMPDIR
-		
-		cd $BLDRTMPDIR
-		tar xf $FILE
-		rm $FILE
-	fi
+	rm -rf $BLDRTMPDIR
+	mkdir -p $BLDRTMPDIR
 	
+	cd $BLDRTMPDIR
+	tar xf $FILE
+	rm $FILE
 	
 	set -e
 	source $BLDRTMPDIR/*.bld
@@ -1373,7 +1369,7 @@ if [ $1 = "-genmeta" ]; then
 	$echo NAME:$2 > $TMPFILE 
 	$echo -e "VER:$3" >> $TMPFILE
 	
-	$echo -e "ARCH:`uname -m`" >> $TMPFILE
+	$echo -e "ARCH:${ARCH}" >> $TMPFILE
 
 	#Update libdb
 	touch $LIBDB
@@ -1519,7 +1515,7 @@ if [ $1 = "-genpkg" ] ; then
 	$cat $MPATH >> /tmp/$PKGNAME
 	$cat $MPATH
 
-	$mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_`uname -m`.pkg"
+	$mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_${ARCH}.pkg"
 fi
 
 #NOTE: This function is no longer used by pkgr.

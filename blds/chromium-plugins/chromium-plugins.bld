@@ -2,7 +2,8 @@
 NAME=chromium-plugins
 
 #package version
-VERSION=36.0.1985.143
+VERSION=39.0.2171.95
+#UPDATE post stuff
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
