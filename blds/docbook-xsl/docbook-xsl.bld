@@ -1,0 +1,57 @@
+#package name
+NAME=docbook-xsl
+
+#package version
+VERSION=1.78.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://downloads.sourceforge.net/docbook/docbook-xsl-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=0
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	install -v -m755 -d /root/bldr-inst/usr/share/xml/docbook/xsl-stylesheets-1.77.0
+
+	cp -v -R VERSION common eclipse epub extensions fo highlighting html \
+         htmlhelp images javahelp lib manpages params profiling \
+         roundtrip slides template tests tools webhelp website \
+         xhtml xhtml-1_1 \
+		    /root/bldr-inst/usr/share/xml/docbook/xsl-stylesheets-1.77.0 
+
+	install -v -m644 -D README /root/bldr-inst/usr/share/doc/docbook-xsl-1.77.0/README.XSL 
+	install -v -m755    RELEASE-NOTES* NEWS* /root/bldr-inst/usr/share/doc/docbook-xsl-1.77.0
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+
+	LATEST=`curl -L -s http://sourceforge.net/projects/docbook/files/docbook-xsl/ | grep "Download docbook" | sed -e 's/.*Download docbook-xsl-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
