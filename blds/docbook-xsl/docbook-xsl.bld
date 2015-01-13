@@ -3,6 +3,7 @@ NAME=docbook-xsl
 
 #package version
 VERSION=1.78.1
+#POSTINST needs version update too
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
