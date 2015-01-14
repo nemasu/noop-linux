@@ -2,7 +2,7 @@
 NAME=libxml2
 
 #package version
-VERSION=2.9.0
+VERSION=2.9.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -11,7 +11,7 @@ ISUSR=1
 SRC=ftp://xmlsoft.org/libxml2/libxml2-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--with-python=/usr/bin/python2 --with-history --with-threads"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
