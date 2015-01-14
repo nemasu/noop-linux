@@ -7491,6 +7491,7 @@ python-caja,libcaja-python.so
 python-cheetah,_namemapper.so
 python-notify,_pynotify.so
 python2,_bisect.so
+python2,_bsddb.so
 python2,_codecs_cn.so
 python2,_codecs_hk.so
 python2,_codecs_iso2022.so
@@ -7520,6 +7521,7 @@ python2,_sqlite3.so
 python2,_ssl.so
 python2,_struct.so
 python2,_testcapi.so
+python2,_tkinter.so
 python2,array.so
 python2,audioop.so
 python2,binascii.so
@@ -7529,6 +7531,7 @@ python2,cStringIO.so
 python2,cmath.so
 python2,crypt.so
 python2,datetime.so
+python2,dbm.so
 python2,fcntl.so
 python2,future_builtins.so
 python2,gdbm.so

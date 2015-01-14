@@ -2,7 +2,7 @@
 NAME=python2
 
 #package version
-VERSION=2.7.8
+VERSION=2.7.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -45,7 +45,7 @@ function BuildAndInstall
 
 	# clean up #!s
 	find . -name '*.py' | \
-	xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|"
+		xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|"
 
 	# Workaround asdl_c.py error after we touched the shebangs
 	touch Include/Python-ast.h Python/Python-ast.c
@@ -58,7 +58,8 @@ function BuildAndInstall
 			  --enable-unicode=ucs4 \
 			  --with-system-expat \
 			  --with-system-ffi \
-			  --with-dbmliborder=gdbm:ndbm
+			  --with-dbmliborder=gdbm:ndbm \
+			  --without-ensurepip
 
 	make -j3
 	make DESTDIR=/root/bldr-inst altinstall maninstall
