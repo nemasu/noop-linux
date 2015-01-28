@@ -23,6 +23,8 @@ then
 	xargs="$PREFIX/usr/bin/busybox xargs"
 	uname="$PREFIX/usr/bin/busybox uname"
 	diff="$PREFIX/usr/bin/busybox diff"
+	sort="$PREFIX/usr/bin/busybox sort"
+	uniq="$PREFIX/usr/bin/busybox uniq"
 
 else
 	mv="mv"
@@ -45,6 +47,8 @@ else
 	xargs="xargs"
 	uname="uname"
 	diff="diff"
+	sort="sort"
+	uniq="uniq"
 fi
 
 ARCH=`$uname -m`
@@ -870,12 +874,12 @@ function RenameConfigFiles
 			
 			if [ "$NEW_DIF" != "0" ]; then
 				TGT=`$echo $i | $sed -e 's/\.'"$p"'/\.'"$p"'\.new/g'`;
-    	        $echo "New and old config files differ, new config file will be `echo $TGT | sed -e 's/^\.//;'`";
+    	        $echo "New and old config files differ, new config file will be `$echo $TGT | $sed -e 's/^\.//;'`";
         	    $mv $i $TGT;
-				echo $TGT | $sed -e 's/\.//' >> $NEWCONF
+				$echo $TGT | $sed -e 's/\.//' >> $NEWCONF
 
-				cat $NEWCONF | sort | uniq > $NEWCONF.sorted
-				mv $NEWCONF.sorted $NEWCONF
+				$cat $NEWCONF | $sort | $uniq > $NEWCONF.sorted
+				$mv $NEWCONF.sorted $NEWCONF
 			fi
         done
     done
