@@ -5491,7 +5491,7 @@ libftdi,libftdipp1.so.2
 libftdi,libftdipp1.so.2.1.0
 libgcrypt,libgcrypt.so
 libgcrypt,libgcrypt.so.11
-libgcrypt,libgcrypt.so.11.7.0
+libgcrypt,libgcrypt.so.11.8.3
 libgdata,libgdata.so
 libgdata,libgdata.so.13
 libgdata,libgdata.so.13.2.0
@@ -5518,7 +5518,7 @@ libgnomekbd,libgnomekbdui.so.7
 libgnomekbd,libgnomekbdui.so.7.0.0
 libgpg-error,libgpg-error.so
 libgpg-error,libgpg-error.so.0
-libgpg-error,libgpg-error.so.0.8.0
+libgpg-error,libgpg-error.so.0.14.0
 libgphoto2,README.sonix
 libgphoto2,README.sonydscf1
 libgphoto2,README.soundvision
@@ -6142,6 +6142,7 @@ loudmouth,libloudmouth-1.so.0.1.0
 lua,liblua.so
 lua,liblua.so.5.2
 lua,liblua.so.5.2.3
+lvm2,dm-event.socket
 lvm2,libdevmapper-event-lvm2.so
 lvm2,libdevmapper-event-lvm2.so.2.02
 lvm2,libdevmapper-event-lvm2mirror.so
@@ -6156,6 +6157,7 @@ lvm2,liblvm2app.so
 lvm2,liblvm2app.so.2.2
 lvm2,liblvm2cmd.so
 lvm2,liblvm2cmd.so.2.02
+lvm2,lvm2-lvmetad.socket
 lzo2,liblzo2.so
 lzo2,liblzo2.so.2
 lzo2,liblzo2.so.2.0.0

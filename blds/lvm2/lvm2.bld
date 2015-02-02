@@ -2,7 +2,7 @@
 NAME=lvm2
 
 #package version
-VERSION=2.2.02.111
+VERSION=2.2.02.116
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

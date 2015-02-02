@@ -99,7 +99,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	$echo -e "\t-D,\t--show-revdeps pkg            List reverse dependencies for a package"
 	$echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
 	$echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
-	$echo -e "\t-Cr,\t--depcheck-system            Check dependencies for given packages reverse dependencies"
+	$echo -e "\t-Cr,\t--depcheck-revdep            Check dependencies for given packages reverse dependencies"
 	$echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a package (bldj file or grab it from repo)"
 	$echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building"
 	$echo -e "\t-n,\t--new-config                  Process new config files"

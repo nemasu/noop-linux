@@ -1,23 +1,24 @@
 #package name
-NAME=libgpg-error
+NAME=cryptsetup
 
 #package version
-VERSION=1.18
+VERSION=1.6.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-${VERSION}.tar.bz2
+BASE=`echo $VERSION | sed -e 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
+SRC=https://www.kernel.org/pub/linux/utils/cryptsetup/v${BASE}/cryptsetup-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,14 +29,25 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+  export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+  
+  ./configure --disable-shared --prefix=/usr --sbindir=/usr/bin --enable-static --enable-cryptsetup-reencrypt --enable-static-cryptsetup
+  
+  #Weird shared lib found instead of static lib for udev, so we'll just fix it and only install static build
+  sed -i -e 's|-ludev|/lib/libudev.a|g' src/Makefile
+  make -j3
 
+  mkdir -p /root/bldr-inst/usr/bin
+  cp src/veritysetup.static /root/bldr-inst/usr/bin/veritysetup
+  cp src/cryptsetup.static /root/bldr-inst/usr/bin/cryptsetup
+  cp src/cryptsetup-reencrypt.static /root/bldr-inst/usr/bin/cryptsetup-reencrypt
+}
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnupg.org/gcrypt/libgpg-error/
+	LISTURL=https://code.google.com/p/cryptsetup/wiki/Downloads?tm=2
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -55,3 +67,4 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+
