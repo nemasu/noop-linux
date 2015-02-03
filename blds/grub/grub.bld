@@ -2,20 +2,21 @@
 NAME=grub
 
 #package version
-VERSION=2.00-1
-DVERSION=2.00
+VERSION=2.02-2
+DVERSION=2.02
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnu.org/gnu/grub/grub-${DVERSION}.tar.xz
+#SRC=ftp://ftp.gnu.org/gnu/grub/grub-${DVERSION}.tar.xz
+SRC=https://launchpad.net/grub/grub2/${DVERSION}/+download/grub-${DVERSION}~beta2.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=('freetype2' 'fuse' 'glibc' 'lvm2' 'xz' 'zlib')
@@ -34,29 +35,30 @@ function BuildAndInstall
 	cd ..
 	dir1=`ls`
 	cp -r $dir1 ${dir1}_64
-
-	cd $dir1
-
-	 sed 's|/usr/share/fonts/unifont|/usr/share/fonts/unifont /usr/share/fonts/misc|g' -i configure.ac
-	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i configure.ac
-
-	autoconf
-	./configure --enable-device-mapper --enable-cache-stats --enable-grub-mkfont --prefix=/usr --sysconfdir=/etc --with-bootdir=/boot --with-grubdir="grub" --with-platform="pc"
-	make -j3
-	make DESTDIR=/root/bldr-inst install
-
+	
 	if [ "`uname -m`" == "x86_64" ];
 	then
-		cd ../${dir1}_64
+		cd ${dir1}_64
 		sed 's|/usr/share/fonts/unifont|/usr/share/fonts/unifont /usr/share/fonts/misc|g' -i configure.ac
 		sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i configure.ac
 
-		autoconf
+		autoreconf -vfi
 		./configure --enable-device-mapper --enable-cache-stats --enable-grub-mkfont --prefix=/usr --sysconfdir=/etc --with-bootdir=/boot --with-grubdir="grub" --with-platform="efi"
 		make -j3
 		make DESTDIR=/root/bldr-inst install
 	fi
 
+	cd ../$dir1
+
+	sed 's|/usr/share/fonts/unifont|/usr/share/fonts/unifont /usr/share/fonts/misc|g' -i configure.ac
+	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i configure.ac
+
+	autoreconf -vfi
+	./configure --enable-device-mapper --enable-cache-stats --enable-grub-mkfont --prefix=/usr --sysconfdir=/etc --with-bootdir=/boot --with-grubdir="grub" --with-platform="pc"
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	
 }
 
 #Default HTTP curl new version detection

@@ -4060,7 +4060,7 @@ kmix,libkdeinit4_kmixctrl.so
 kmix,plasma_engine_mixer.so
 kmod,libkmod.so
 kmod,libkmod.so.2
-kmod,libkmod.so.2.2.5
+kmod,libkmod.so.2.2.9
 kmplot,libkmplotpart.so
 kolf,libkolfprivate.so
 kolf,libkolfprivate.so.4

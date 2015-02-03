@@ -1,0 +1,13 @@
+diff --git a/grub-core/kern/emu/hostfs.c b/grub-core/kern/emu/hostfs.c
+index 7e725f6..8dd8e65 100644
+--- a/grub-core/kern/emu/hostfs.c
++++ b/grub-core/kern/emu/hostfs.c
+@@ -19,7 +19,7 @@
+ 
+ #include <config-util.h>
+ 
+-#define _BSD_SOURCE
++#define _DEFAULT_SOURCE
+ #include <grub/fs.h>
+ #include <grub/file.h>
+ #include <grub/disk.h>

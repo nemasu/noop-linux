@@ -1,6 +1,6 @@
 NAME=virtualbox
 DVERSION=4.3.20
-VERSION=4.3.20
+VERSION=4.3.20-1
 ISUSR=1
 SRC=http://download.virtualbox.org/virtualbox/${DVERSION}/VirtualBox-${DVERSION}.tar.bz2
 EXTRACONF=

@@ -65,7 +65,7 @@ export PKGR_SUPPRESS_P_OUTPUT=1
 
 if [ "`$UNAME -m`" != "armv6l" ];
 then
-	EXTRA=grub
+	EXTRA="grub cryptsetup"
 fi
 
 for i in glibc trunc which busybox bc tzdata systemd shadow coreutils bash wget grep sed perl findutils curl gawk procps tar bzip2 gzip dhcpcd inetutils iproute2 wpa_supplicant wireless_tools kbd vim ca-certificates openresolv networkmanager linux-kernel linux-firmware $EXTRA;

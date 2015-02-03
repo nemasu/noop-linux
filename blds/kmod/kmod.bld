@@ -2,7 +2,7 @@
 NAME=kmod
 
 #package version
-VERSION=18
+VERSION=19
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -32,8 +32,8 @@ function BuildAndInstall
 {
 	./configure \
 		--sysconfdir=/etc \
-		--with-zlib
-#--enable-gtk-doc \
+		--with-zlib \
+		--with-xz
 
 	make -j3
 

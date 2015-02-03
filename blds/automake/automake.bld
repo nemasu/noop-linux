@@ -2,7 +2,7 @@
 NAME=automake
 
 #package version
-VERSION=1.11.5
+VERSION=1.15
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
