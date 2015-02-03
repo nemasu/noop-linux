@@ -50,7 +50,10 @@ lvm vgchange -ay
 dmsetup mknodes
 
 #Crypt
-cryptsetup open `echo $cryptdevice | sed -e 's/:/ /g'`
+if [ -n "$cryptdevice" ];
+then
+	cryptsetup open `echo $cryptdevice | sed -e 's/:/ /g'`
+fi
 
 mount ${root} /newroot
 
