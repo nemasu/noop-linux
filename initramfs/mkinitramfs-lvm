@@ -43,6 +43,7 @@ CURL=`$WHICH curl`
 pkgr -i cpio &> /dev/null
 pkgr -i aufs3-utils &> /dev/null
 pkgr -i lvm2 &> /dev/null
+pkgr -i cryptsetup &> /dev/null
 
 PREFIX=/root/initramfs
 
@@ -62,6 +63,10 @@ fi
 cp -v `which mount.aufs` $PREFIX/sbin
 cp -v `which lvm.static` $PREFIX/sbin/lvm
 cp -v `which dmsetup.static` $PREFIX/sbin/dmsetup
+cp -v `which veritysetup` $PREFIX/bin/
+cp -v `which cryptsetup-reencrypt` $PREFIX/bin/
+cp -v `which cryptsetup` $PREFIX/bin/
+
 
 $CURL -L -s https://github.com/nemasu/noop-linux/raw/master/pkgr > $PREFIX/usr/sbin/pkgr
 

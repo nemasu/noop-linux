@@ -32,6 +32,9 @@ for i in $(cat /proc/cmdline); do
         init\=*)
             init=$(get_opt $i)
             ;;
+		cryptdevice\=*)
+			cryptdevice=$(get_opt $i)
+			;;
     esac
 done
 
@@ -45,6 +48,9 @@ mkdir -p /newroot
 lvm vgscan --mknodes
 lvm vgchange -ay
 dmsetup mknodes
+
+#Crypt
+cryptsetup open `echo $cryptdevice | sed -e 's/:/ /g'`
 
 mount ${root} /newroot
 
