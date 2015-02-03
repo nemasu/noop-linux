@@ -25,7 +25,7 @@ DEPS=('freetype2' 'fuse' 'glibc' 'lvm2' 'xz' 'zlib')
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('bdf-unifont')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -57,6 +57,8 @@ function BuildAndInstall
 	./configure --enable-device-mapper --enable-cache-stats --enable-grub-mkfont --prefix=/usr --sysconfdir=/etc --with-bootdir=/boot --with-grubdir="grub" --with-platform="pc"
 	make -j3
 	make DESTDIR=/root/bldr-inst install
+
+	grub-mkfont -o /root/bldr-inst/usr/share/grub/unicode.pf2 /usr/share/fonts/misc/unifont.bdf
 
 	
 }
