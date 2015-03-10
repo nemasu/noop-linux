@@ -1,5 +1,6 @@
 #!/bin/bash
 export TERM=xterm
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
 # If id command returns zero, you have root access.
 if [ $(id -u) -eq 0 ];
