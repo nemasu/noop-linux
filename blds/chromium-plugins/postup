@@ -2,7 +2,7 @@
 [ -f /etc/chromium-dev/default ] && _default='/etc/chromium-dev/default'
 [ -f /etc/chromium/default ] && _default='/etc/chromium/default'
 
-flashver=39.0.2171.95
+flashver=41.0.2272.76
 if [[ $(cat "$_default") == *ppapi* ]]; then
 	sed -i "s/ppapi-flash-version=.*[0-9]/ppapi-flash-version=$flashver/g" "$_default"
 else
