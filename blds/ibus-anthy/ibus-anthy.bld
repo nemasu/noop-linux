@@ -30,7 +30,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  ./autogen.sh --prefix=/usr --libexecdir=/usr/lib/ibus --with-python=python3
+  ./autogen.sh --prefix=/usr --libexecdir=/usr/lib/ibus
   make -j3
   make DESTDIR=/root/bldr-inst install
 }
