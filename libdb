@@ -7417,6 +7417,9 @@ pygobject2,_gobject.so
 pygobject2,libpyglib-2.0-python2.so
 pygobject2,libpyglib-2.0-python2.so.0
 pygobject2,libpyglib-2.0-python2.so.0.0.0
+pygobject2,libpyglib-2.0-python3.so
+pygobject2,libpyglib-2.0-python3.so.0
+pygobject2,libpyglib-2.0-python3.so.0.0.0
 pygobject2,unix.so
 pygtk,_gtk.so
 pygtk,atk.so

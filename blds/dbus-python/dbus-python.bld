@@ -2,7 +2,7 @@
 NAME=dbus-python
 
 #package version
-VERSION=1.1.1
+VERSION=1.2.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -14,7 +14,7 @@ SRC=http://dbus.freedesktop.org/releases/dbus-python/dbus-python-${VERSION}.tar.
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc' 'libffi' 'pcre' 'zlib')
@@ -31,8 +31,15 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	mkdir build-python2
+	mkdir build-python3
+
 	cd build-python2
 	PYTHON=python2 ../configure --prefix=/usr
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	cd ../build-python3
+	PYTHON=python3 ../configure --prefix=/usr
 	make -j3
 	make DESTDIR=/root/bldr-inst install
 

@@ -30,7 +30,28 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+	cd ..
+	orig=`ls`
+	cp -r ${orig} ${orig}-py3
+
+	cd ${orig}
 	export PYTHON=`which python2`
+	sed -i \
+	-e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:' \
+		-e 's:AM_PROG_CC_STDC:AC_PROG_CC:' \
+		configure.ac
+
+
+	autoreconf -fi
+
+	./configure $STDUSRCONF  --disable-introspection
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+
+	cd ..
+	cd ${orig}-py3
+	export PYTHON=`which python3`
 	sed -i \
 	-e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:' \
 		-e 's:AM_PROG_CC_STDC:AC_PROG_CC:' \
@@ -42,6 +63,7 @@ function BuildAndInstall
 	./configure $STDUSRCONF --disable-introspection
 	make -j3
 	make DESTDIR=/root/bldr-inst install
+
 
 }
 
