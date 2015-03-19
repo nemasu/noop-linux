@@ -1,12 +1,13 @@
 NAME=virtualbox
-DVERSION=4.3.20
-VERSION=4.3.20-1
+DVERSION=4.3.26
+VERSION=4.3.26
 ISUSR=1
 SRC=http://download.virtualbox.org/virtualbox/${DVERSION}/VirtualBox-${DVERSION}.tar.bz2
 EXTRACONF=
 ISSPECIAL=1
 DEPS=('curl' 'gcc-libs' 'glibc' 'libX11' 'libXcursor' 'libXext' 'libXinerama' 'libXmu' 'libXt' 'libpng' 'libvpx' 'libxml2' 'mesalib' 'openssl' 'python2' 'qt4' 'sdl' 'zlib')
 #Note! You need to have the correct kernel in /usr/src/linux and at least started to bulid it (for autoconf.h)
+RESTORELIBDB=1
 
 function BuildAndInstall
 {
