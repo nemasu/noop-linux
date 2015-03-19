@@ -2,7 +2,7 @@
 NAME=chromium-plugins
 
 #package version
-VERSION=41.0.2272.76
+VERSION=41.0.2272.89
 #UPDATE post stuff
 
 #directory locations, 99.99% of the time this is 1
