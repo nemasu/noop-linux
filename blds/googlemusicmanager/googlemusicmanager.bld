@@ -1,0 +1,72 @@
+#package name
+NAME=googlemusicmanager
+
+#package version
+VERSION=20150327
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+SRC64=https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb
+SRC32=https://dl.google.com/linux/direct/google-musicmanager-beta_current_i386.deb
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('expat' 'flac' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'libX11' 'libXext' 'libXi' 'libXrandr' 'libXrender' 'libidn' 'libogg' 'libvorbis' 'qt4')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=1
+
+function BuildAndInstall
+{
+	if [ "`uname -m`" == "x86_64" ];
+	then
+		wget $SRC64 -O out
+	else
+		wget $SRC32 -O out
+	fi
+	
+	ar x out
+	rm out
+	rm control* debian*
+	tar xf data.tar.lzma && rm data.tar.lzma
+
+	rm -rf etc
+	mv opt lib
+	mv lib usr/
+	pushd usr/bin
+	rm google-musicmanager
+	ln -s ../lib/google/musicmanager/google-musicmanager
+	popd
+
+	mkdir usr/share/applications
+	cp usr/lib/google/musicmanager/google-musicmanager.desktop usr/share/applications/
+	sed -i -e 's|/opt/google/musicmanager/google-musicmanager|/usr/lib/google/musicmanager/google-musicmanager|' usr/share/applications/google-musicmanager.desktop
+
+	mkdir -p usr/share/icons/hicolor/{128x128,16x16,32x32,48x48}/apps
+	
+	cp usr/lib/google/musicmanager/product_logo_128.png usr/share/icons/hicolor/128x128/apps/google-musicmanager.png
+	cp usr/lib/google/musicmanager/product_logo_16.png usr/share/icons/hicolor/16x16/apps/google-musicmanager.png
+	cp usr/lib/google/musicmanager/product_logo_32.xpm usr/share/icons/hicolor/32x32/apps/google-musicmanager.xpm
+	cp usr/lib/google/musicmanager/product_logo_32.png usr/share/icons/hicolor/32x32/apps/google-musicmanager.png
+	cp usr/lib/google/musicmanager/product_logo_48.png usr/share/icons/hicolor/48x48/apps/google-musicmanager.png
+
+	sed -i -e 's|/opt/|/usr/lib/|g' usr/share/menu/google-musicmanager.menu
+
+	cp -r * ~/bldr-inst/
+
+
+}
