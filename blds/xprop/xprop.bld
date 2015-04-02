@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc' 'libX11' 'libXau' 'libXdmcp' 'libxcb')
+DEPS=('glibc' 'libX11')
 
 # 'no' to skip calls to strip
 STRIP=

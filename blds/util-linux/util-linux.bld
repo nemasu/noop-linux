@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc' 'ncurses' 'systemd' 'zlib')
+DEPS=('glibc' 'libcap-ng' 'linux-pam' 'ncurses' 'python2' 'systemd' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

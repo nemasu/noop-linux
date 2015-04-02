@@ -17,7 +17,7 @@ EXTRACONF="--with-udev-base-dir=/usr/lib/udev --with-polkit=permissive --without
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glib2' 'glibc' 'libffi' 'libgcrypt' 'libgpg-error' 'pcre' 'polkit' 'systemd' 'xz' 'zlib')
+DEPS=('glib2' 'glibc' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'pcre' 'polkit' 'systemd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

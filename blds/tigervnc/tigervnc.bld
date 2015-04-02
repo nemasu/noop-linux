@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('expat' 'fltk' 'fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'gmp' 'gnutls' 'libICE' 'libSM' 'libX11' 'libXau' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXfont' 'libXft' 'libXinerama' 'libXtst' 'libXxf86vm' 'libdrm' 'libfontenc' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libtasn1' 'libxcb' 'libxshmfence' 'linux-pam' 'mesalib' 'nettle' 'pixman' 'zlib')
+DEPS=('xorg-font-util' 'expat' 'fltk' 'fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'gmp' 'gnutls' 'libICE' 'libSM' 'libX11' 'libXau' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXfont' 'libXft' 'libXinerama' 'libXtst' 'libXxf86vm' 'libdrm' 'libfontenc' 'libjpeg' 'libtasn1' 'libunwind' 'libxcb' 'libxshmfence' 'linux-pam' 'mesalib' 'nettle' 'pixman' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

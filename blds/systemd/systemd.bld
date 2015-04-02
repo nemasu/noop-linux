@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('acl' 'attr' 'glib2' 'glibc' 'kmod' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'linux-pam' 'pcre' 'qrencode' 'util-linux' 'xz' 'zlib')
+DEPS=('gperf' 'acl' 'attr' 'curl' 'glib2' 'glibc' 'kmod' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libidn' 'libseccomp' 'linux-pam' 'pcre' 'qrencode' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

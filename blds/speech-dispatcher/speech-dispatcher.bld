@@ -17,7 +17,7 @@ EXTRACONF="--without-flite"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('alsa-lib' 'attr' 'dbus' 'dotconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libcap2' 'libsndfile' 'pcre' 'pulseaudio')
+DEPS=('alsa-lib' 'dotconf' 'glib2' 'glibc' 'libsndfile' 'pulseaudio')
 
 # 'no' to skip calls to strip
 STRIP=

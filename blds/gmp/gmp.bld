@@ -18,7 +18,7 @@ EXTRACONF="--enable-cxx"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=

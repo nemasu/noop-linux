@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('dbus' 'glibc' 'libnl' 'ncurses' 'openssl' 'readline' 'zlib')
+DEPS=('dbus' 'glibc' 'libnl' 'ncurses' 'openssl' 'readline')
 
 # 'no' to skip calls to strip
 STRIP=

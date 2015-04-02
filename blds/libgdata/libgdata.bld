@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('curl' 'dbus' 'glib2' 'glibc' 'libffi' 'libgcrypt' 'libgnome-keyring' 'libgpg-error' 'libidn' 'liboauth' 'libsoup' 'libxml2' 'openssl' 'pcre' 'sqlite' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

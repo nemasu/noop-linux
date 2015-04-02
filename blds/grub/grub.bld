@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('freetype2' 'fuse' 'glibc' 'lvm2' 'xz' 'zlib')
+DEPS=('bdf-unifont' 'freetype2' 'fuse' 'glibc' 'lvm2' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

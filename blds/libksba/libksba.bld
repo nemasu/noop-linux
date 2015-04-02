@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('bash' 'libgpg-error' 'glibc')
+DEPS=('glibc' 'libgpg-error')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('curl' 'expat' 'glibc' 'libgcrypt' 'libgpg-error')
 
 # 'no' to skip calls to strip
 STRIP=

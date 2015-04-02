@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('efl' 'elementary' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('libusb' 'libgcrypt')
+DEPS=('glibc' 'libgcrypt' 'libgpg-error' 'libusb')
 
 # 'no' to skip calls to strip
 STRIP=
