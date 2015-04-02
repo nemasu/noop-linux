@@ -59,7 +59,7 @@ function BuildAndInstall
     --disable-pixbuf \
     --disable-frills
 
-	make -j3
+	make -j${BLDR_CORES}
 	export TERMINFO=`pwd`/terminfo
 	install -d "$TERMINFO"
 	make DESTDIR=/root/bldr-inst install

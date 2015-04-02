@@ -2,7 +2,7 @@
 NAME=alsa-utils
 
 #package version
-VERSION=1.0.28
+VERSION=1.0.29
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -23,7 +23,7 @@ DEPS=('alsa-lib' 'glibc' 'libsamplerate' 'ncurses')
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('xmlto')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=

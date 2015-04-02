@@ -38,7 +38,7 @@ function BuildAndInstall
   
   ./configure --prefix=/usr --sbindir=/usr/sbin --libexecdir=/usr/lib/lxdm \
               --sysconfdir=/etc --localstatedir=/var
-  make -j3
+  make -j${BLDR_CORES}
   
   make DESTDIR=/root/bldr-inst install
 }

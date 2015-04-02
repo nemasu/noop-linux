@@ -2,7 +2,7 @@
 NAME=mate-power-manager
 
 #package version
-VERSION=1.8.1
+VERSION=1.8.1-1
 DVERSION=1.8.1
 
 #directory locations, 99.99% of the time this is 1
@@ -40,7 +40,7 @@ function BuildAndInstall
         --sbindir=/usr/bin \
         --enable-applets \
         --enable-unique
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

@@ -76,7 +76,7 @@ function BuildAndInstall
   sed -i -e 's/$(LINKFLTK)/$(LINKSHARED)/' \
          -e 's/$(LINKFLTKIMG)/$(LINKSHARED)/' test/Makefile
   ./configure --prefix=/usr --enable-threads --enable-xft --enable-shared
-  make -j3
+  make -j${BLDR_CORES}
  
   make DESTDIR=/root/bldr-inst install
 

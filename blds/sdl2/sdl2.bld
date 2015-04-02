@@ -34,7 +34,7 @@ function BuildAndInstall
   ../configure --prefix=/usr \
     --enable-sdl-dlopen \
     --enable-alsa --enable-pulseaudio-shared
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
 

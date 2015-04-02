@@ -32,7 +32,7 @@ function BuildAndInstall
 {
 	export LDFLAGS="-static"
 	./configure --enable-split-usr --enable-static --prefix=/usr --disable-shared
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 	rm -rf /root/bldr-inst/usr/{etc,sbin,bin,lib/pkgconfig,lib/udev,lib/girepository-1.0,include}

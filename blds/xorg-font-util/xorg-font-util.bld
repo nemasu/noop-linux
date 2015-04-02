@@ -39,6 +39,7 @@ function Detect
 	LISTURL=http://xorg.freedesktop.org/releases/individual/font/
 	FILELIST=`GetFileList`
 	LATEST=0
+	NAME=xorg-font-util
 
 	for i in ${FILELIST[@]};
 	do

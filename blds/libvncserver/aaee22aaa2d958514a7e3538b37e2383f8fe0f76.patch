@@ -1,0 +1,177 @@
+From aaee22aaa2d958514a7e3538b37e2383f8fe0f76 Mon Sep 17 00:00:00 2001
+From: Floris Bos <bos@je-eigen-domein.nl>
+Date: Mon, 29 Dec 2014 14:33:57 +0100
+Subject: [PATCH] Fix compiler warnings libvncclient + gtkvncviewer
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fixes the following compiler warnings.
+
+gtkvncviewer:
+
+==
+  CC       gtkvncviewer-gtkvncviewer.o
+gtkvncviewer.c: In function ‘GtkDefaultLog’:
+gtkvncviewer.c:591:2: warning: format not a string literal and no format arguments [-Wformat-security]
+  fprintf (stdout, buf);
+  ^
+==
+
+libvncclient:
+
+==
+  CC       rfbproto.lo
+In file included from rfbproto.c:2376:0:
+zrle.c: In function 'HandleZRLE8':
+zrle.c:201:5: warning: pointer targets in passing argument 2 of 'HandleZRLETile8' differ in signedness [-Wpointer-sign]
+     int result=HandleZRLETile(client,buf,remaining,rx+i,ry+j,subWidth,subHeight);
+     ^
+zrle.c:37:33: note: expected 'uint8_t *' but argument is of type 'char *'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                                 ^
+rfbproto.c:2364:22: note: in definition of macro 'CONCAT2'
+ #define CONCAT2(a,b) a##b
+                      ^
+zrle.c:37:24: note: in expansion of macro 'CONCAT2E'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                        ^
+zrle.c:79:12: note: in expansion of macro 'HandleZRLETile'
+ static int HandleZRLETile(rfbClient* client,
+            ^
+In file included from rfbproto.c:2385:0:
+zrle.c: In function 'HandleZRLE16':
+zrle.c:201:5: warning: pointer targets in passing argument 2 of 'HandleZRLETile16' differ in signedness [-Wpointer-sign]
+     int result=HandleZRLETile(client,buf,remaining,rx+i,ry+j,subWidth,subHeight);
+     ^
+zrle.c:37:33: note: expected 'uint8_t *' but argument is of type 'char *'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                                 ^
+rfbproto.c:2364:22: note: in definition of macro 'CONCAT2'
+ #define CONCAT2(a,b) a##b
+                      ^
+zrle.c:37:24: note: in expansion of macro 'CONCAT2E'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                        ^
+zrle.c:79:12: note: in expansion of macro 'HandleZRLETile'
+ static int HandleZRLETile(rfbClient* client,
+            ^
+In file included from rfbproto.c:2387:0:
+zrle.c: In function 'HandleZRLE15':
+zrle.c:201:5: warning: pointer targets in passing argument 2 of 'HandleZRLETile15' differ in signedness [-Wpointer-sign]
+     int result=HandleZRLETile(client,buf,remaining,rx+i,ry+j,subWidth,subHeight);
+     ^
+zrle.c:37:33: note: expected 'uint8_t *' but argument is of type 'char *'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                                 ^
+rfbproto.c:2364:22: note: in definition of macro 'CONCAT2'
+ #define CONCAT2(a,b) a##b
+                      ^
+zrle.c:37:24: note: in expansion of macro 'CONCAT2E'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                        ^
+zrle.c:79:12: note: in expansion of macro 'HandleZRLETile'
+ static int HandleZRLETile(rfbClient* client,
+            ^
+In file included from rfbproto.c:2396:0:
+zrle.c: In function 'HandleZRLE32':
+zrle.c:201:5: warning: pointer targets in passing argument 2 of 'HandleZRLETile32' differ in signedness [-Wpointer-sign]
+     int result=HandleZRLETile(client,buf,remaining,rx+i,ry+j,subWidth,subHeight);
+     ^
+zrle.c:37:33: note: expected 'uint8_t *' but argument is of type 'char *'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                                 ^
+rfbproto.c:2364:22: note: in definition of macro 'CONCAT2'
+ #define CONCAT2(a,b) a##b
+                      ^
+zrle.c:37:24: note: in expansion of macro 'CONCAT2E'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                        ^
+zrle.c:79:12: note: in expansion of macro 'HandleZRLETile'
+ static int HandleZRLETile(rfbClient* client,
+            ^
+In file included from rfbproto.c:2398:0:
+zrle.c: In function 'HandleZRLE24':
+zrle.c:201:5: warning: pointer targets in passing argument 2 of 'HandleZRLETile24' differ in signedness [-Wpointer-sign]
+     int result=HandleZRLETile(client,buf,remaining,rx+i,ry+j,subWidth,subHeight);
+     ^
+zrle.c:37:33: note: expected 'uint8_t *' but argument is of type 'char *'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                                 ^
+rfbproto.c:2364:22: note: in definition of macro 'CONCAT2'
+ #define CONCAT2(a,b) a##b
+                      ^
+zrle.c:37:24: note: in expansion of macro 'CONCAT2E'
+ #define HandleZRLETile CONCAT2E(HandleZRLETile,REALBPP)
+                        ^
+zrle.c:79:12: note: in expansion of macro 'HandleZRLETile'
+ static int HandleZRLETile(rfbClient* client,
+            ^
+In file included from rfbproto.c:2401:0:
+zrle.c: In function 'HandleZRLE24Down':
+zrle.c:201:5: warning: pointer targets in passing argument 2 of 'HandleZRLETile24Down' differ in signedness [-Wpointer-sign]
+     int result=HandleZRLETile(client,buf,remaining,rx+i,ry+j,subWidth,subHeight);
+     ^
+zrle.c:40:33: note: expected 'uint8_t *' but argument is of type 'char *'
+ #define HandleZRLETile CONCAT3E(HandleZRLETile,REALBPP,Down)
+                                 ^
+rfbproto.c:2366:24: note: in definition of macro 'CONCAT3'
+ #define CONCAT3(a,b,c) a##b##c
+                        ^
+zrle.c:40:24: note: in expansion of macro 'CONCAT3E'
+ #define HandleZRLETile CONCAT3E(HandleZRLETile,REALBPP,Down)
+                        ^
+zrle.c:79:12: note: in expansion of macro 'HandleZRLETile'
+ static int HandleZRLETile(rfbClient* client,
+            ^
+In file included from rfbproto.c:2404:0:
+zrle.c: In function 'HandleZRLE24Up':
+zrle.c:201:5: warning: pointer targets in passing argument 2 of 'HandleZRLETile24Up' differ in signedness [-Wpointer-sign]
+     int result=HandleZRLETile(client,buf,remaining,rx+i,ry+j,subWidth,subHeight);
+     ^
+zrle.c:43:33: note: expected 'uint8_t *' but argument is of type 'char *'
+ #define HandleZRLETile CONCAT3E(HandleZRLETile,REALBPP,Up)
+                                 ^
+rfbproto.c:2366:24: note: in definition of macro 'CONCAT3'
+ #define CONCAT3(a,b,c) a##b##c
+                        ^
+zrle.c:43:24: note: in expansion of macro 'CONCAT3E'
+ #define HandleZRLETile CONCAT3E(HandleZRLETile,REALBPP,Up)
+                        ^
+zrle.c:79:12: note: in expansion of macro 'HandleZRLETile'
+ static int HandleZRLETile(rfbClient* client,
+            ^
+==
+
+Signed-off-by: Floris Bos <bos@je-eigen-domein.nl>
+---
+ client_examples/gtkvncviewer.c | 2 +-
+ libvncclient/zrle.c            | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/client_examples/gtkvncviewer.c b/client_examples/gtkvncviewer.c
+index 261b2da..861e4e3 100644
+--- a/client_examples/gtkvncviewer.c
++++ b/client_examples/gtkvncviewer.c
+@@ -588,7 +588,7 @@ static void GtkDefaultLog (const char *format, ...)
+ 
+ 	time (&log_clock);
+ 	strftime (buf, 255, "%d/%m/%Y %X ", localtime (&log_clock));
+-	fprintf (stdout, buf);
++	fprintf (stdout, "%s", buf);
+ 
+ 	vfprintf (stdout, format, args);
+ 	fflush (stdout);
+diff --git a/libvncclient/zrle.c b/libvncclient/zrle.c
+index 7f488b5..0128146 100644
+--- a/libvncclient/zrle.c
++++ b/libvncclient/zrle.c
+@@ -198,7 +198,7 @@ HandleZRLE (rfbClient* client, int rx, int ry, int rw, int rh)
+ 			for(i=0; i<rw; i+=rfbZRLETileWidth) {
+ 				int subWidth=(i+rfbZRLETileWidth>rw)?rw-i:rfbZRLETileWidth;
+ 				int subHeight=(j+rfbZRLETileHeight>rh)?rh-j:rfbZRLETileHeight;
+-				int result=HandleZRLETile(client,buf,remaining,rx+i,ry+j,subWidth,subHeight);
++				int result=HandleZRLETile(client,(uint8_t *)buf,remaining,rx+i,ry+j,subWidth,subHeight);
+ 
+ 				if(result<0) {
+ 					rfbClientLog("ZRLE decoding failed (%d)\n",result);

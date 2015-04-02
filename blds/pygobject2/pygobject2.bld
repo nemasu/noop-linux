@@ -45,7 +45,7 @@ function BuildAndInstall
 	autoreconf -fi
 
 	./configure $STDUSRCONF  --disable-introspection
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 
@@ -61,7 +61,7 @@ function BuildAndInstall
 	autoreconf -fi
 
 	./configure $STDUSRCONF --disable-introspection
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 

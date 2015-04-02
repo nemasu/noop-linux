@@ -43,7 +43,7 @@ function BuildAndInstall
 	  --enable-static_link --with-staticdir=/usr/sbin
 
 
-	CFLAGS="-pthread" make -j3
+	CFLAGS="-pthread" make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install_device-mapper install_lvm2 install_systemd_units install_systemd_generators
 	make -C liblvm DESTDIR=/root/bldr-inst install
 }

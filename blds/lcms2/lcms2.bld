@@ -2,7 +2,7 @@
 NAME=lcms2
 
 #package version
-VERSION=2.6
+VERSION=2.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -2,7 +2,7 @@
 NAME=vlc
 
 #package version
-VERSION=2.1.5
+VERSION=2.2.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -52,7 +52,7 @@ function BuildAndInstall
 			LUAC=/usr/bin/luac  LUA_LIBS="`pkg-config --libs lua`" \
 			RCC=/usr/bin/rcc-qt4
 
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
   for res in 16 32 48 128; do

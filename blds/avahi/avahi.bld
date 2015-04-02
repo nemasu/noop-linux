@@ -56,7 +56,7 @@ function BuildAndInstall
                 --disable-monodoc \
                 --disable-gtk3
 
-        make -j3
+        make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 
         cd ~/bldr-inst

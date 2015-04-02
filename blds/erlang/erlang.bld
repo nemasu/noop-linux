@@ -31,7 +31,7 @@ RESTORELIBDB=1
 function BuildAndInstall
 {
   ./configure --prefix=/usr --enable-smp-support --with-odbc
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
 

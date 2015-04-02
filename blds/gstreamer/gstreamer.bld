@@ -2,7 +2,7 @@
 NAME=gstreamer
 
 #package version
-VERSION=1.4.0
+VERSION=1.4.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -38,7 +38,7 @@ function BuildAndInstall
   # https://bugzilla.gnome.org/show_bug.cgi?id=655517
   sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
-  make -j3
+  make -j${BLDR_CORES}
   
   make DESTDIR=/root/bldr-inst install
 }

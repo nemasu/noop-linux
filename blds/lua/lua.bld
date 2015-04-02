@@ -33,7 +33,7 @@ function BuildAndInstall
   
   export CFLAGS="$CFLAGS -fPIC"
   export LDFLAGS="$LDFLAGS -lncurses" 
-  make -j3 MYCFLAGS="$CFLAGS" MYLDFLAGS="$LDFLAGS" linux
+  make -j${BLDR_CORES} MYCFLAGS="$CFLAGS" MYLDFLAGS="$LDFLAGS" linux
   
   sed 's/%VER%/'"${VERSION%.*}"'/g;s/%REL%/'"${VERSION}"'/g' $BLDRTMPDIR/usr/lib/pkgconfig/lua.pc > lua.pc
   

@@ -37,7 +37,7 @@ function BuildAndInstall
         --libexecdir=/usr/lib/pluma \
         --with-gtk=2.0 \
         --enable-python
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

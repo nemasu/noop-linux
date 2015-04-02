@@ -37,7 +37,7 @@ function BuildAndInstall
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib32 --disable-{gnome_vfs,static,cdparanoia,vorbis,theora,ogg,introspection,examples}
 
 
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
   
   rm -rf /root/bldr-inst/usr/{bin,include,share}

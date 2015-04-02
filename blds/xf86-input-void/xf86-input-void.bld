@@ -2,7 +2,7 @@
 NAME=xf86-input-void
 
 #package version
-VERSION=1.4.0-1
+VERSION=1.4.0-2
 DVERSION=1.4.0
 
 #directory locations, 99.99% of the time this is 1

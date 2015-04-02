@@ -52,7 +52,7 @@ function BuildAndInstall
     # https://bugzilla.gnome.org/show_bug.cgi?id=655517
     sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
-    make -j3
+    make -j${BLDR_CORES}
 
 	make DESTDIR=/root/bldr-inst install
 

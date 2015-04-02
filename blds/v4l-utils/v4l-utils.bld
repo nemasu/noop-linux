@@ -32,7 +32,7 @@ function BuildAndInstall
 {
   
   ./configure --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin
-  make -j3
+  make -j${BLDR_CORES}
 
   MAKEFLAGS=-j1 make install DESTDIR=/root/bldr-inst
   rm /root/bldr-inst/usr/bin/ivtv-ctl

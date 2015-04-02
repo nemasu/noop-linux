@@ -37,7 +37,7 @@ function BuildAndInstall
         --libexecdir=/usr/lib/mate-notification-daemon \
         --with-gtk=2.0 \
         --disable-static
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

@@ -35,7 +35,7 @@ function BuildAndInstall
       --libexecdir=/usr/lib/vte \
       --localstatedir=/var --disable-static \
       --enable-introspection --enable-gnome-pty-helper
-	  make -j3
+	  make -j${BLDR_CORES}
 	  make DESTDIR=/root/bldr-inst install
 }
 

@@ -61,7 +61,7 @@ function BuildAndInstall
 			  --with-dbmliborder=gdbm:ndbm \
 			  --without-ensurepip
 
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst altinstall maninstall
 
 	rm /root/bldr-inst/usr/share/man/man1/python.1

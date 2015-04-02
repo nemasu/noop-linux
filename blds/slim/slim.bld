@@ -38,7 +38,7 @@ function BuildAndInstall
 		-DCMAKE_SKIP_RPATH=ON \
 		-DUSE_PAM=yes \
 		-DUSE_CONSOLEKIT=no
-	make -j3
+	make -j${BLDR_CORES}
 
 	make DESTDIR=/root/bldr-inst install
 

@@ -2,7 +2,7 @@
 NAME=subversion
 
 #package version
-VERSION=1.8.10
+VERSION=1.8.13
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -52,7 +52,7 @@ function BuildAndInstall
 			--with-swig \
 			--with-serf=/usr ${EXCONF}
 
-		make -j3 LT_LDFLAGS="-L/root/bldr-inst/usr/lib"
+		make -j${BLDR_CORES} LT_LDFLAGS="-L/root/bldr-inst/usr/lib"
 		make swig_pydir=/usr/lib/python2.7/site-packages/libsvn swig_pydir_extra=/usr/lib/python2.7/site-packages/svn swig-py swig-pl
 		export LD_LIBRARY_PATH=/root/bldr-inst/usr/lib:${LD_LIBRARY_PATH}
    		make DESTDIR=/root/bldr-inst INSTALLDIRS=vendor swig_pydir=/usr/lib/python2.7/site-packages/libsvn swig_pydir_extra=/usr/lib/python2.7/site-packages/svn install install-swig-py install-swig-pl

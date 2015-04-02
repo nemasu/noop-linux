@@ -23,7 +23,7 @@ function BuildAndInstall
 
 	autoreconf -fi
 	./configure --prefix=/usr --libdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var --without-python
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}

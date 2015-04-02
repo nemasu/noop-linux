@@ -2,13 +2,14 @@
 NAME=xf86-video-savage
 
 #package version
-VERSION=2.3.7
+VERSION=2.3.7-1
+DVERSION=2.3.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-savage-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-savage-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -49,7 +50,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

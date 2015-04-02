@@ -33,7 +33,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	./configure --prefix=/usr
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 	rm -f /root/bldr-inst/usr/share/icons/matefaenza/icon-theme.cache
 }

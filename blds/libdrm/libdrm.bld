@@ -2,7 +2,7 @@
 NAME=libdrm
 
 #package version
-VERSION=2.4.56
+VERSION=2.4.60
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -38,7 +38,7 @@ function BuildAndInstall
 		--enable-omap-experimental-api \
 		--enable-exynos-experimental-api \
 		--enable-intel --enable-libkms --enable-radeon --enable-nouveau
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

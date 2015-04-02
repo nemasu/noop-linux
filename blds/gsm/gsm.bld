@@ -32,7 +32,7 @@ function BuildAndInstall
 {
 	# flags for shared lib
 	CFLAGS="${CFLAGS} -fPIC"
-	make -j3 CCFLAGS="-c ${CFLAGS}"
+	make -j${BLDR_CORES} CCFLAGS="-c ${CFLAGS}"
 
 	 # Prepare directories
 	install -m755 -d /root/bldr-inst/usr/{bin,lib,include/gsm,share/man/man{1,3}}

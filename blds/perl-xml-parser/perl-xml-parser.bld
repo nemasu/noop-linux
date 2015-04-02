@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	perl Makefile.PL PREFIX=/usr
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

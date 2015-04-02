@@ -54,7 +54,7 @@ function BuildAndInstall
                --enable-dns-for-realm \
                --with-ldap \
                --without-system-verto
-	make -j3
+	make -j${BLDR_CORES}
 
 	make DESTDIR=/root/bldr-inst EXAMPLEDIR=/usr/share/doc/krb5/examples install
 	install -m 644 plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} /root/bldr-inst/usr/share/doc/krb5/examples

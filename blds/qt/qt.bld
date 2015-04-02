@@ -66,7 +66,7 @@ function BuildAndInstall
     -system-harfbuzz \
     -journald \
     -reduce-relocations ${CONF}
-  make -j3
+  make -j${BLDR_CORES}
   # Fix paths
   find ${QTDIR} -name Makefile -exec sed -i s|/usr/lib/qt/bin/qdoc|${QTDIR}/qtbase/bin/qdoc|g {} +
   find ${QTDIR} -name Makefile.qmake-docs -exec sed -i s|/usr/lib/qt/bin/qdoc|${QTDIR}/qtbase/bin/qdoc|g {} +

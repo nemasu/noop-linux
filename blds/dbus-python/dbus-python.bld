@@ -35,12 +35,12 @@ function BuildAndInstall
 
 	cd build-python2
 	PYTHON=python2 ../configure --prefix=/usr
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 	cd ../build-python3
 	PYTHON=python3 ../configure --prefix=/usr
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

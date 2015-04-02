@@ -2,13 +2,14 @@
 NAME=xf86-video-sunffb
 
 #package version
-VERSION=1.2.2
+VERSION=1.2.2-1
+DVERSION=1.2.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-sunffb-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-sunffb-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -49,7 +50,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

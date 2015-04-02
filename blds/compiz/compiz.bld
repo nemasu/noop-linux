@@ -52,7 +52,7 @@ function BuildAndInstall
 		-DCOMPIZ_WERROR=Off \
 		-DCOMPIZ_DEFAULT_PLUGINS="composite,opengl,decor,resize,place,move,ccp"
 
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 	rm -rf /root/bldr-inst/usr/share/gconf

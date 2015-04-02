@@ -35,7 +35,7 @@ function BuildAndInstall
       -DCMAKE_INSTALL_PREFIX:PATH=/usr \
       -DBUILD_SHARED_LIBS:BOOL=ON \
       -DBUILD_STATIC_LIBS:BOOL=OFF
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
 

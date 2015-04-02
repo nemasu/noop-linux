@@ -2,16 +2,17 @@
 NAME=xf86-input-vmmouse
 
 #package version
-VERSION=13.0.0
+VERSION=13.0.0-1
+DVERSION=13.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-input-vmmouse-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-input-vmmouse-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--with-udev-rules-dir=/usr/lib/udev/rules.d"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
@@ -49,7 +50,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

@@ -39,7 +39,7 @@ function BuildAndInstall
 	cd build
 
 	cmake .. -DCMAKE_INSTALL_PREFIX=/usr
-	make -j3
+	make -j${BLDR_CORES}
 
 	make DESTDIR=/root/bldr-inst install
 

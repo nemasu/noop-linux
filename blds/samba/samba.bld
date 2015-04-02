@@ -2,7 +2,7 @@
 NAME=samba
 
 #package version
-VERSION=4.1.11
+VERSION=4.2.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -55,7 +55,7 @@ _samba4_auth_modules=auth_unix,auth_wbc,auth_server,auth_netlogond,auth_script,a
               --with-shared-modules=${_samba4_idmap_modules},${_samba4_pdb_modules},${_samba4_auth_modules} \
               --disable-rpath-install
 
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 
   install -m755 source3/script/smbtar /root/bldr-inst/usr/bin/

@@ -32,7 +32,7 @@ function BuildAndInstall
 {
 	sed -i -e 's/SHARED=no/SHARED=yes/g' Makefile
 	sed -i -e 's/PREFIX=\/usr\/local/PREFIX=\/usr/g' Makefile
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install install-lib
 
 }

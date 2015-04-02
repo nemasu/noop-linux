@@ -33,7 +33,7 @@ function BuildAndInstall
   sed -i -e '/AC_PATH_XTRA/d' configure.in
   autoreconf --force --install
   ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc
-  make -j3
+  make -j${BLDR_CORES}
   
   make DESTDIR=/root/bldr-inst install
 }

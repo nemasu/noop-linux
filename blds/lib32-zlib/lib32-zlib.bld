@@ -21,7 +21,7 @@ function BuildAndInstall
 	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
 	./configure --prefix=/usr --libdir=/usr/lib32 --sharedlibdir=/usr/lib32 --includedir=/usr/include
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 	cd /root/bldr-inst

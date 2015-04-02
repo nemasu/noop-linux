@@ -2,13 +2,14 @@
 NAME=xf86-video-mach64
 
 #package version
-VERSION=6.9.4
+VERSION=6.9.4-1
+DVERSION=6.9.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-mach64-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-mach64-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -49,7 +50,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

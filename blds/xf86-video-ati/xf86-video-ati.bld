@@ -2,7 +2,7 @@
 NAME=xf86-video-ati
 
 #package version
-VERSION=7.4.0
+VERSION=7.5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

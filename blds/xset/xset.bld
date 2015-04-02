@@ -2,7 +2,7 @@
 NAME=xset
 
 #package version
-VERSION=1.2.2
+VERSION=1.2.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

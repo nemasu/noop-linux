@@ -33,7 +33,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	PYTHON=/usr/bin/python2 ./configure --prefix=/usr
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

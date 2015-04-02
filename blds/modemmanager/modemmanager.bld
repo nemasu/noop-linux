@@ -2,7 +2,7 @@
 NAME=modemmanager
 
 #package version
-VERSION=1.4.0
+VERSION=1.4.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -37,9 +37,11 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 #Default HTTP curl new version detection
 function Detect
 {
+	NAME=ModemManager
 	LISTURL=http://www.freedesktop.org/software/ModemManager/
 	FILELIST=`GetFileList`
 	LATEST=0
+	NAME=modemmanager
 
 	for i in ${FILELIST[@]};
 	do

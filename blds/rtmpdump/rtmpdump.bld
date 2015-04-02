@@ -31,7 +31,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make -j3
+	make -j${BLDR_CORES}
 	mkdir -p /root/bldr-inst/usr/lib
 	make prefix=/usr mandir=/usr/share/man DESTDIR=/root/bldr-inst install
 }

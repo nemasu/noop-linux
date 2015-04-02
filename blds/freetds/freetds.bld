@@ -33,7 +33,7 @@ function BuildAndInstall
   
   ./configure --prefix=/usr --sysconfdir=/etc/freetds --enable-msdblib \
     --with-tdsver=7.0 --with-unixodbc=/usr --with-openssl
-  make -j3
+  make -j${BLDR_CORES}
   
   make DESTDIR=/root/bldr-inst install
 }

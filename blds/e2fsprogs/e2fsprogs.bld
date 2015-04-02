@@ -37,7 +37,7 @@ function BuildAndInstall
       --enable-elf-shlibs --disable-fsck --disable-uuidd \
       --disable-libuuid --disable-libblkid
 
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install install-libs
 
   sed -i -e 's/^AWK=.*/AWK=awk/' /root/bldr-inst/usr/bin/compile_et

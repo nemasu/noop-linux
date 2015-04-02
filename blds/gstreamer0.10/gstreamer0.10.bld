@@ -34,7 +34,7 @@ function BuildAndInstall
 	NOCONFIGURE=1 ./autogen.sh
 	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --libexecdir=/usr/lib --disable-gtk-doc --disable-static
   	
-	make -j3
+	make -j${BLDR_CORES}
 	
 	make DESTDIR=/root/bldr-inst install
 

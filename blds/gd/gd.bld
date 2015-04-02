@@ -36,7 +36,7 @@ function BuildAndInstall
     --disable-rpath \
     --with-vpx=/usr \
     --with-tiff=/usr
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
 

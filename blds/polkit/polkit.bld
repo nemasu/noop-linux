@@ -2,7 +2,7 @@
 NAME=polkit
 
 #package version
-VERSION=0.112-1
+VERSION=0.112-2
 DVERSION=0.112
 
 #directory locations, 99.99% of the time this is 1
@@ -38,7 +38,7 @@ function BuildAndInstall
 		--with-systemdsystemunitdir=/usr/lib/systemd/system \
 		--disable-static --disable-gtk-doc --enable-libsystemd-login=yes \
 		--with-authfw=pam --with-pam-module-dir=/usr/lib/security
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

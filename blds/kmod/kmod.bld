@@ -35,7 +35,7 @@ function BuildAndInstall
 		--with-zlib \
 		--with-xz
 
-	make -j3
+	make -j${BLDR_CORES}
 
 	make DESTDIR=/root/bldr-inst install
 	install -dm755 /root/bldr-inst/{etc,usr/lib}/{depmod,modprobe}.d

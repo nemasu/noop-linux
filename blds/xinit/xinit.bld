@@ -34,7 +34,7 @@ function BuildAndInstall
   sed -i -e 's/XSLASHGLOB.sh/XSLASHGLOB/' xinitrc.cpp
   autoreconf -fi
   ./configure --prefix=/usr --with-xinitdir=/etc/X11/xinit
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
 

@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	sed -e 's/all: static/all: shared/' -e '/libcdb.a/d' -i Makefile
-	make -j3 CFLAGS=${CFLAGS} LDFLAGS=${LDFLAGS}
+	make -j${BLDR_CORES} CFLAGS=${CFLAGS} LDFLAGS=${LDFLAGS}
 	
 	make DESTDIR=/root/bldr-inst prefix=/usr mandir=/usr/share/man \
 		INSTALLPROG=cdb-shared install-{all,sharedlib}

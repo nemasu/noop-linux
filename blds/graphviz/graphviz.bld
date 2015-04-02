@@ -34,7 +34,7 @@ function BuildAndInstall
 	export PYTHON=python2
 
 	./configure --prefix=/usr --enable-sharp=no --enable-swig=no --enable-java=no --enable-lua=no --enable-php=no --enable-ruby=no --enable-python=no
-	make -j3
+	make -j${BLDR_CORES}
 
 	make DESTDIR=/root/bldr-inst install
 }

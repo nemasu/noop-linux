@@ -2,7 +2,7 @@
 NAME=xinput
 
 #package version
-VERSION=1.6.0
+VERSION=1.6.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

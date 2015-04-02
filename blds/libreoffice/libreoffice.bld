@@ -2,7 +2,7 @@
 NAME=libreoffice
 
 #package version
-VERSION=4.2.6.3
+VERSION=4.4.1.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -24,7 +24,7 @@ DEPS=('atk' 'cairo' 'cups' 'curl' 'dbus' 'dbus-glib' 'expat' 'fontconfig' 'freet
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('perl-archive-zip' 'glm' 'zip' 'unzip' 'bluez')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=1
@@ -42,7 +42,7 @@ function BuildAndInstall
 		--enable-mergelibs --with-system-cairo --without-system-boost \
 		--with-system-headers --with-alloc=system --enable-split-app-modules \
 		--without-system-mdds --without-system-vigra --without-system-sane \
-		--enable-release-build=yes --with-system-nss --with-parallelism=3 \
+		--enable-release-build=yes --with-system-nss --with-parallelism=${BLDR_CORES} \
 		--with-system-neon
 
 	make build

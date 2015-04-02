@@ -37,7 +37,7 @@ function BuildAndInstall
         --enable-all-themes \
         --enable-test-themes \
         --disable-placeholders
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

@@ -2,7 +2,7 @@
 NAME=tevent
 
 #package version
-VERSION=0.9.21
+VERSION=0.9.24
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -34,7 +34,7 @@ function BuildAndInstall
 	./configure --prefix=/usr \
 	   --localstatedir=/var \
 	   --sysconfdir=/etc/samba
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

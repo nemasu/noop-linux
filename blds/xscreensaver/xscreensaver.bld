@@ -35,7 +35,7 @@ function BuildAndInstall
     --libexecdir=/usr/lib --with-x-app-defaults=/usr/share/X11/app-defaults \
 	--with-pam --with-login-manager --with-gtk --with-gl \
     --without-gle --with-pixbuf --with-jpeg
-  make -j3
+  make -j${BLDR_CORES}
   make install_prefix=/root/bldr-inst install
 }
 

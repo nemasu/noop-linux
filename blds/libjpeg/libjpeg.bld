@@ -34,7 +34,7 @@ function BuildAndInstall
 	[[ `uname -m` == armv6l ]] && CONF="--without-simd"
 
 	./configure $STDUSRCONF --with-jpeg8 $CONF
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst docdir="/usr/share/doc/libjpeg" exampledir="/usr/share/doc/libjpeg" install
 
 	install -m644 jpegint.h /root/bldr-inst/usr/include/

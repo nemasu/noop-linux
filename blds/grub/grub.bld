@@ -44,7 +44,7 @@ function BuildAndInstall
 
 		autoreconf -vfi
 		./configure --enable-device-mapper --enable-cache-stats --enable-grub-mkfont --prefix=/usr --sysconfdir=/etc --with-bootdir=/boot --with-grubdir="grub" --with-platform="efi"
-		make -j3
+		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
 	fi
 
@@ -55,7 +55,7 @@ function BuildAndInstall
 
 	autoreconf -vfi
 	./configure --enable-device-mapper --enable-cache-stats --enable-grub-mkfont --prefix=/usr --sysconfdir=/etc --with-bootdir=/boot --with-grubdir="grub" --with-platform="pc"
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 	grub-mkfont -o /root/bldr-inst/usr/share/grub/unicode.pf2 /usr/share/fonts/misc/unifont.bdf

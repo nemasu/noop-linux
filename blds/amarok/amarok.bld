@@ -2,13 +2,14 @@
 NAME=amarok
 
 #package version
-VERSION=2.8.0
+VERSION=2.8.0-1
+DVERSION=2.8.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://download.kde.org/stable/amarok/${VERSION}/src/amarok-${VERSION}.tar.bz2"
+SRC="http://download.kde.org/stable/amarok/${DVERSION}/src/amarok-${DVERSION}.tar.bz2"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -39,7 +40,7 @@ function BuildAndInstall
 		-DWITH_NepomukCore=OFF \
 		-DWITH_Soprano=OFF \
 		-DCMAKE_CXX_FLAGS="-Wno-deprecated -D__STDC_CONSTANT_MACROS"
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }
@@ -49,7 +50,7 @@ function Detect
 {
 	LATEST=`curl -R -s http://download.kde.org/stable/amarok/  | grep -E "href=\"[0-9\.]*\/\"" | sed 's/.*href=\"\([0-9\.]*\)\/\".*/\1/g' | tail -n1`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

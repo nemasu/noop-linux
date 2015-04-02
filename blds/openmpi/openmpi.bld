@@ -49,7 +49,7 @@ function BuildAndInstall
                FC=/usr/bin/gfortran \
                LDFLAGS="$LDFLAGS -Wl,-z,noexecstack"
 
-   make -j3
+   make -j${BLDR_CORES}
    make DESTDIR=/root/bldr-inst install
 }
 

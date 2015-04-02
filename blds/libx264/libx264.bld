@@ -39,7 +39,7 @@ function BuildAndInstall
 
 #	./configure --enable-shared --enable-pic --bit-depth=10
 	
-#	make -j3 DESTDIR=/root/bldr-inst \
+#	make -j${BLDR_CORES} DESTDIR=/root/bldr-inst \
 #     bindir=/usr/bin \
 #     libdir=/usr/lib \
 #     includedir=/usr/include \
@@ -51,7 +51,7 @@ function BuildAndInstall
 
 	./configure --enable-shared --enable-pic
 	
-	make -j3 DESTDIR=/root/bldr-inst \
+	make -j${BLDR_CORES} DESTDIR=/root/bldr-inst \
       bindir=/usr/bin \
       libdir=/usr/lib \
       includedir=/usr/include \

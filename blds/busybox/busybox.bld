@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	mv $BLDRTMPDIR/config ./.config
-	make -j3
+	make -j${BLDR_CORES}
 	make CONFIG_PREFIX=/root/bldr-inst/usr install
 }
 

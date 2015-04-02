@@ -19,6 +19,7 @@ groff
 diffutils
 libtool
 cmake
+automoc4
 linux-headers
 docbook-xml
 docbook-xsl

@@ -33,7 +33,7 @@ function BuildAndInstall
 {
   [ "`uname -m`" == "armv6l" ] && EXTRACONF="--enable-lightweight"
   ./configure --prefix=/usr --enable-cli --enable-daemon --enable-utp $EXTRACONF
-  make -j3
+  make -j${BLDR_CORES}
   pushd qt
   qmake-qt4 qtr.pro
   make CXX="g++ -std=c++11" -j3

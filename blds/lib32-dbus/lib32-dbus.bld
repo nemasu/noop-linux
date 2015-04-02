@@ -42,7 +42,7 @@ function BuildAndInstall
         --disable-tests --disable-asserts --disable-systemd \
 		--with-console-auth-dir=/run/console/
 	
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin,lib}
 	rm -rf /root/bldr-inst/{etc,var}

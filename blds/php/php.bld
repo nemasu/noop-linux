@@ -115,7 +115,7 @@ function BuildAndInstall
 		--with-pear
 #--enable-embed=shared \
 
-	make -j3
+	make -j${BLDR_CORES}
 
 	#Alters httpd.conf, so lets give it a fake one
 	mkdir -p /root/bldr-inst/etc/httpd/conf/

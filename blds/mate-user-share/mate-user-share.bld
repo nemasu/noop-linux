@@ -39,7 +39,7 @@ function BuildAndInstall
         --disable-static \
         --disable-scrollkeeper \
         --disable-bluetooth
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 	rm -f /root/bldr-inst/usr/share/mate-user-share/dav_user_2.0.conf
 }

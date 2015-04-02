@@ -46,11 +46,11 @@ function BuildAndInstall
 		  --disable-bdb --disable-hdb --libdir=/usr/lib32
 
 	cd include
-	make -j3
+	make -j${BLDR_CORES}
 
 	cd ../libraries
 	make depend
-	make -j3
+	make -j${BLDR_CORES}
 
 	cd ../include
 	make DESTDIR=/root/bldr-inst install

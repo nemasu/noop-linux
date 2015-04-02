@@ -2,7 +2,7 @@
 NAME=gnome-keyring
 
 #package version
-VERSION=3.14.0
+VERSION=3.14.0-1
 DVERSION=3.14.0
 
 #directory locations, 99.99% of the time this is 1
@@ -38,7 +38,7 @@ function BuildAndInstall
       --with-pam-dir=/usr/lib/security --with-root-certs=/etc/ssl/certs \
       --disable-schemas-compile
 
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

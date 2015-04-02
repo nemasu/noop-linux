@@ -32,7 +32,7 @@ function BuildAndInstall
 {
   export PYTHON=/usr/bin/python2
   ./configure --prefix=/usr --disable-zeitgeist
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 
 }

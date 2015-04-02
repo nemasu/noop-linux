@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	./configure --prefix=/usr --enable-xft --enable-xinerama --enable-imlib2 --enable-nls
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 	sed -i 's/@EXEEXT@//g' /root/bldr-inst/usr/{bin/fluxbox-generate_menu,share/fluxbox/menu}

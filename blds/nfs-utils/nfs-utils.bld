@@ -2,7 +2,7 @@
 NAME=nfs-utils
 
 #package version
-VERSION=1.3.0
+VERSION=1.3.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -38,7 +38,7 @@ function BuildAndInstall
               --with-gssglue \
               --enable-mountconfig --with-start-statd=/usr/bin/start-statd
 
-	make -j3
+	make -j${BLDR_CORES}
 	mkdir /root/bldr-inst/sbin
 	make DESTDIR=/root/bldr-inst install
 

@@ -35,7 +35,7 @@ function BuildAndInstall
     --with-python=/usr/bin/python2 \
     --with-system-gdbinit=/etc/gdb/gdbinit \
     --without-guile
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
   
   rm /root/bldr-inst/usr/include/{ansidecl,bfd,bfdlink,dis-asm,symcat}.h

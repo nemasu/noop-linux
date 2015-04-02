@@ -36,7 +36,7 @@ function BuildAndInstall
 		--prefix=/usr \
 		--libexecdir=/usr/lib/mate-sensors-applet \
 		--disable-static
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

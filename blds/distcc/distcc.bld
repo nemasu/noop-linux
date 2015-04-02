@@ -37,7 +37,7 @@ function BuildAndInstall
 	--mandir=/usr/share/man \
 	--without-avahi 
 
-	make -j3 WERROR_CFLAGS= INCLUDESERVER_PYTHON=/usr/bin/python2
+	make -j${BLDR_CORES} WERROR_CFLAGS= INCLUDESERVER_PYTHON=/usr/bin/python2
 	make DESTDIR=/root/bldr-inst/ INCLUDESERVER_PYTHON=/usr/bin/python2 install
 
 	install -d /root/bldr-inst/usr/lib/distcc/bin

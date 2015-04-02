@@ -2,7 +2,7 @@
 NAME=xorg-server
 
 #package version
-VERSION=1.16.0.901
+VERSION=1.17.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,10 +33,40 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
 	[[ `uname -m` == "armv6l" ]] && CONFIG="--disable-glx --disable-dri --disable-dri2"
-	[[ `uname -m` == "x86_64" ]] && CONFIG="--enable-glamor --enable-dri --enable-dmx --enable-xvfb --enable-dri2"
+	[[ `uname -m` == "x86_64" ]] && CONFIG="--enable-ipv6 \
+											  --enable-dri \
+											  --enable-dri2 \
+											  --enable-dmx \
+											  --enable-xvfb \
+											  --enable-xnest \
+											  --enable-composite \
+											  --enable-xcsecurity \
+											  --enable-libunwind \
+											  --enable-xorg \
+											  --enable-xephyr \
+											  --enable-glamor \
+											  --enable-glx-tls \
+											  --enable-kdrive \
+											  --enable-kdrive-evdev \
+											  --enable-kdrive-kbd \
+											  --enable-kdrive-mouse \
+											  --enable-config-udev \
+											  --enable-systemd-logind \
+											  --enable-suid-wrapper \
+											  --disable-install-setuid \
+											  --enable-record \
+											  --disable-xfbdev \
+											  --disable-xfake \
+											  --disable-static \
+											  --libexecdir=/usr/lib/xorg-server \
+											  --sysconfdir=/etc \
+											  --localstatedir=/var \
+											  --with-fontrootdir=/usr/share/fonts \
+											  --with-sha1=libgcrypt"
+	#--enable-xwayland \
 
 	./configure $STDUSRCONF $CONFIG
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

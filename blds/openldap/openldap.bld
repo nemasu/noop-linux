@@ -45,7 +45,7 @@ function BuildAndInstall
 		--without-fetch \
 		--enable-spasswd --with-cyrus-sasl \
 		--enable-overlays=mod --enable-modules=yes --enable-monitor
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

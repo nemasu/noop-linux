@@ -35,13 +35,13 @@ function BuildAndInstall
 
   cd build-py2
   ../autogen.sh --prefix=/usr --with-python=/usr/bin/python2
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 
   cd ../build-py3
   sed -i '/Werror=format/d' ../configure # gcc 4.8
   ../configure --prefix=/usr
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
 

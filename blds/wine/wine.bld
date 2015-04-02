@@ -48,7 +48,7 @@ function BuildAndInstall
                   --with-x \
                   --enable-win64
 
-                make -j3
+                make -j${BLDR_CORES}
                 make prefix=/root/bldr-inst/usr \
                 libdir=/root/bldr-inst/usr/lib \
                 dlldir=/root/bldr-inst/usr/lib/wine install
@@ -70,7 +70,7 @@ function BuildAndInstall
         "${_wine32opts[@]}"
 
         # These additional CFLAGS solve FS#27560 and FS#23277
-        make -j3 CFLAGS+="-mstackrealign -mincoming-stack-boundary=2" CXXFLAGS+="-mstackrealign -mincoming-stack-boundary=2"
+        make -j${BLDR_CORES} CFLAGS+="-mstackrealign -mincoming-stack-boundary=2" CXXFLAGS+="-mstackrealign -mincoming-stack-boundary=2"
 
         if [[ "`uname -m`" == "i686" ]]; then
         make prefix=/root/bldr-inst/usr install

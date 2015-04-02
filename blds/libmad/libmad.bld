@@ -33,7 +33,7 @@ function BuildAndInstall
 	CFLAGS="$CFLAGS -ftree-vectorize -ftree-vectorizer-verbose=1"
 	autoconf
 	./configure --prefix=/usr
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

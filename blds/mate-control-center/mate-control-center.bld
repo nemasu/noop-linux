@@ -40,7 +40,7 @@ function BuildAndInstall
         --with-gtk=2.0 \
         --disable-static \
         --disable-update-mimedb
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 	rm -f /root/bldr-inst/usr/share/applications/mimeinfo.cache
 }

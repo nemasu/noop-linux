@@ -62,7 +62,7 @@ function BuildAndInstall
       --with-apr-util=/usr/bin/apu-1-config \
       --with-pcre=/usr
 
-  make -j3
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 
   sed -e 's#/usr/lib/httpd/modules/#modules/#' \

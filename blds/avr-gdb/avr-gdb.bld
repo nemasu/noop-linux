@@ -48,7 +48,7 @@ function BuildAndInstall
     --target=avr \
     --with-python=/usr/bin/python2 \
     --with-system-readline
-  make -j3
+  make -j${BLDR_CORES}
   
   make DESTDIR=/root/bldr-inst install
   rm -f /root/bldr-inst/usr/lib/libiberty.a

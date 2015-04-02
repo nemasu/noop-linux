@@ -42,7 +42,7 @@ function BuildAndInstall
 		--disable-static \
 		--enable-network-manager
 #--with-in-process-applets=all \
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

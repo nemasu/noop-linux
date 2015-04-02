@@ -34,7 +34,7 @@ function BuildAndInstall
 	mkdir build-dir
 	cd build-dir
 	../glibc-$VERSION/configure --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/bin --prefix=/
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=`pwd`/../../bldr-inst install
 
 	mkdir -p /root/bldr-inst/usr/include/{rpc,rpcsvc}

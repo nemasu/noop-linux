@@ -43,7 +43,7 @@ function BuildAndInstall
 		--enable-nm \
 		--with-python=/usr/bin/python2 \
 		--with-system-ssl-certs=/etc/ssl/certs
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

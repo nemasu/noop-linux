@@ -32,7 +32,7 @@ function BuildAndInstall
 {
 	
 	qmake-qt4 PREFIX='/usr' 'CONFIG-=debug' -r
-	make -j3
+	make -j${BLDR_CORES}
 	make INSTALL_ROOT=/root/bldr-inst install
 }
 

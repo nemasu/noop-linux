@@ -51,7 +51,7 @@ function BuildAndInstall
 #--with-python PYTHON=/usr/bin/python2 \
 
 	#Missing libcom_err for some reason	
-	make -j3 LDFLAGS_EX=/usr/lib/libcom_err.so.2 world
+	make -j${BLDR_CORES} LDFLAGS_EX=/usr/lib/libcom_err.so.2 world
 	make DESTDIR=/root/bldr-inst install
 
 

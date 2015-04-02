@@ -2,8 +2,8 @@
 NAME=tdb
 
 #package version
-VERSION=1.3.0-1
-DVERSION=1.3.0
+VERSION=1.3.4
+DVERSION=1.3.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,7 +35,7 @@ function BuildAndInstall
 	./configure --prefix=/usr \
 	   --localstatedir=/var \
 	   --sysconfdir=/etc/samba
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

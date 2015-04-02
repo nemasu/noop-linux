@@ -36,7 +36,7 @@ function BuildAndInstall
 			-DCMAKE_INSTALL_PREFIX=/usr \
 			-DINSTALL_QSQLITE_IN_QT_PREFIX=TRUE \
 			..
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 }

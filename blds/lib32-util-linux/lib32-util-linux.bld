@@ -37,7 +37,7 @@ function BuildAndInstall
       --libdir=/usr/lib32 \
 	  --prefix=/usr
 
-  make -j3 lib{uuid,blkid,mount,smartcols}.la
+  make -j${BLDR_CORES} lib{uuid,blkid,mount,smartcols}.la
   make DESTDIR=/root/bldr-inst install-usrlib_execLTLIBRARIES install-pkgconfigDATA
 
   rm -rf /root/bldr-inst/usr/{bin,sbin,share}

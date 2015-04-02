@@ -2,14 +2,14 @@
 NAME=llvm
 
 #package version
-VERSION=3.4.2
-DVERSION=3.4.2
+VERSION=3.6.0
+DVERSION=3.6.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://llvm.org/releases/${DVERSION}/llvm-${DVERSION}.src.tar.gz
+SRC=http://llvm.org/releases/${DVERSION}/llvm-${DVERSION}.src.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -32,24 +32,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	wget http://llvm.org/releases/${DVERSION}/cfe-${DVERSION}.src.tar.gz
-	tar xf cfe-${DVERSION}.src.tar.gz
+	wget http://llvm.org/releases/${DVERSION}/cfe-${DVERSION}.src.tar.xz
+	tar xf cfe-${DVERSION}.src.tar.xz
 	mv cfe-${DVERSION}.src tools/clang
 
-	wget http://llvm.org/releases/3.4/compiler-rt-3.4.src.tar.gz
-	tar xf compiler-rt-3.4.src.tar.gz
-	mv compiler-rt-3.4 projects/compiler-rt
+	wget http://llvm.org/releases/${DVERSION}/compiler-rt-${DVERSION}.src.tar.xz
+	tar xf compiler-rt-${DVERSION}.src.tar.xz
+	mv compiler-rt-${DVERSION}.src projects/compiler-rt
 
-	wget http://llvm.org/releases/3.4/clang-tools-extra-3.4.src.tar.gz
-	tar xf clang-tools-extra-3.4.src.tar.gz
-	mv clang-tools-extra-3.4 tools/clang/tools/extra
+	wget http://llvm.org/releases/${DVERSION}/clang-tools-extra-${DVERSION}.src.tar.xz
+	tar xf clang-tools-extra-${DVERSION}.src.tar.xz
+	mv clang-tools-extra-${DVERSION}.src tools/clang/tools/extra
 
-	mv $BLDRTMPDIR/*.p .
+#mv $BLDRTMPDIR/*.p .
 
-	mv clang-3.3-use-gold-linker.p tools/clang
+#mv clang-3.3-use-gold-linker.p tools/clang
 
-	patch -d tools/clang -Np1 -i clang-3.3-use-gold-linker.p
-	patch -Np0 -i llvm-3.4-provide-cmake-modules.p
+#patch -d tools/clang -Np1 -i clang-3.3-use-gold-linker.p
+#patch -Np0 -i llvm-3.4-provide-cmake-modules.p
 
 	./configure \
 		--prefix=/usr \
@@ -73,21 +73,9 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://llvm.org/releases/download.html
-        FILELIST=`GetFileList`
-        LATEST=0
+        LATEST=`curl -L -s http://llvm.org/releases/download.html | egrep "llvm-[0-9\.]*src" | head -n1 | sed 's/.*llvm-\([0-9\.]*\)\.src\.tar\.xz.*/\1/g'`
 
-        for i in ${FILELIST[@]};
-        do
-                        CURVER=`echo $i | sed -ne '/llvm-[0-9][0-9]*/p;' | sed -ne '/src/p' | sed -e 's/.*llvm/llvm/g; s/.src.tar.[gz|bz2].*//g;'`
-                        vercomp $LATEST $CURVER
-                        if [ $? -eq 2 ];
-                        then
-                                        LATEST=$CURVER
-                        fi
-        done
-
-        vercomp $VERSION $LATEST
+		vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

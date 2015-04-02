@@ -1,5 +1,7 @@
 desktop-file-utils
 fontconfig
+dri3proto
+presentproto
 bigreqsproto
 compositeproto
 damageproto
@@ -119,7 +121,6 @@ xf86-input-vmmouse
 xf86-input-void
 xf86-video-ast
 xf86-video-ati
-xf86-video-cirrus
 xf86-video-dummy
 xf86-video-fbdev
 xf86-video-intel
@@ -127,12 +128,10 @@ xf86-video-mach64
 xf86-video-nv
 xf86-video-nouveau
 xf86-video-openchrome
-xf86-video-r128
 xf86-video-savage
 xf86-video-siliconmotion
 xf86-video-suncg6
 xf86-video-sunffb
-xf86-video-v4l
 xf86-video-vesa
 xf86-video-voodoo
 xscreensaver

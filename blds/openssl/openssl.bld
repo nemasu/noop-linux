@@ -45,7 +45,7 @@ function BuildAndInstall
 			"${openssltarget}"
 
 	make depend
-	make -j3 || true #Returns 2 for some reason
+	make -j${BLDR_CORES} || true #Returns 2 for some reason
 	make INSTALL_PREFIX=/root/bldr-inst MANDIR=/usr/share/man install
 
 }

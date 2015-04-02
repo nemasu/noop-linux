@@ -34,7 +34,7 @@ function BuildAndInstall
 	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
       --enable-ldap --enable-hkp \
       --disable-schemas-compile  
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

@@ -2,8 +2,8 @@
 NAME=xf86-input-evdev
 
 #package version
-VERSION=2.9.0-1
-DVERSION=2.9.0
+VERSION=2.9.2
+DVERSION=2.9.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

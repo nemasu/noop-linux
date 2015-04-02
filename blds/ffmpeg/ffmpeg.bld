@@ -69,7 +69,7 @@ function BuildAndInstall
 		--enable-version3 \
 		--enable-x11grab
 
-	make -j3
+	make -j${BLDR_CORES}
 	make tools/qt-faststart
 	make doc/ff{mpeg,play,server}.1
 	make DESTDIR=/root/bldr-inst install install-man

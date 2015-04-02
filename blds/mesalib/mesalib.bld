@@ -2,15 +2,15 @@
 NAME=mesalib
 
 #package version
-VERSION=10.3.0-3
-DVERSION=10.3.0-rc3
+VERSION=10.5.2
+DVERSION=10.5.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 #SRC=ftp://ftp.freedesktop.org/pub/mesa/${VERSION}/MesaLib-${VERSION}.tar.bz2
-SRC=ftp://ftp.freedesktop.org/pub/mesa/10.3/MesaLib-${DVERSION}.tar.bz2
+SRC=ftp://ftp.freedesktop.org/pub/mesa/${DVERSION}/mesa-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -25,7 +25,7 @@ DEPS=('expat' 'gcc-libs' 'glibc' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libX
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('libclc')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -75,7 +75,7 @@ function BuildAndInstall
 		# fix a build break with new llvm
 		sed -i "s:-Werror=implicit-function-declaration::" src/gallium/drivers/r600/Makefile
 	
-		make -j3
+		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
 
 }

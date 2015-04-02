@@ -161,7 +161,7 @@ EOF
 		pushd out/linux.amd64/release/bin/src
 	fi
 
-	make -j3
+	make -j${BLDR_CORES}
 
 	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed 's/VER://g'`
 	mkdir -p /root/mod-inst/lib/modules/${KERVER}/misc
@@ -182,7 +182,7 @@ EOF
 	pushd /root/mod-bld
 	tar xf guest_mods.tar.gz
 	rm guest_mods.tar.gz
-	make -j3
+	make -j${BLDR_CORES}
 	mv *.ko /root/mod-inst/lib/modules/${KERVER}/misc
 	popd
 

@@ -62,7 +62,7 @@ function BuildAndInstall
 		
 		#-plugin-sql-{psql,mysql,sqlite,odbc} \
 		
-		make -j3
+		make -j${BLDR_CORES}
 		make INSTALL_ROOT=/root/bldr-inst install
 
 

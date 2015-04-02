@@ -36,7 +36,7 @@ function BuildAndInstall
                --static --python=/usr/bin/python2 --disable-werror \
               --disable-docs --disable-gtk --disable-vnc --disable-kvm --disable-libssh2 \
               --enable-user --disable-system --disable-fdt
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst libexecdir=/usr/lib/qemu install
 	
 	# remove conflicting /var/run directory

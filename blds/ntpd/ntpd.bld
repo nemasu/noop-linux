@@ -36,7 +36,7 @@ function BuildAndInstall
 		--enable-linuxcaps \
 		--enable-ntp-signd
 
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 	mkdir -p /root/bldr-inst/var/lib/ntp/

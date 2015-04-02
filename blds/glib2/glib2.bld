@@ -2,7 +2,7 @@
 NAME=glib2
 
 #package version
-VERSION=2.42.0
+VERSION=2.44.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -36,7 +36,7 @@ function BuildAndInstall
       --sysconfdir=/etc \
       --with-pcre=system \
       --disable-fam
-   make -j3
+   make -j${BLDR_CORES}
    make completiondir=/usr/share/bash-completion/completions DESTDIR=/root/bldr-inst install
 
 }

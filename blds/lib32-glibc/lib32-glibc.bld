@@ -26,7 +26,7 @@ function BuildAndInstall
 	echo "slibdir=/lib32" >> configparms
 	
 	../glibc-$VERSION/configure --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var --libdir=/lib32 --datarootdir=/usr/share --datadir=/usr/share --bindir=/bin --prefix=/ --enable-multilib --enable-multi-arch i686-unknown-linux-gnu
-	make -j3
+	make -j${BLDR_CORES}
 	make install_root=/root/bldr-inst install
 
 	rm -rf /root/bldr-inst/{bin,etc,sbin,usr/{bin,sbin,share},var}

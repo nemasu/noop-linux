@@ -64,7 +64,7 @@ function BuildAndInstall
 		-reduce-relocations \
 		-dbus-linked \
 		-no-openvg $EXTRACONF
-		make -j3
+		make -j${BLDR_CORES}
 		make INSTALL_ROOT=/root/bldr-inst install
 
 	# install missing icons and desktop files

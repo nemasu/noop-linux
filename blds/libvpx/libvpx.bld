@@ -38,7 +38,7 @@ function BuildAndInstall
 		--disable-install-docs \
 		--disable-install-srcs
 
-	make -j3
+	make -j${BLDR_CORES}
 	make DIST_DIR=/root/bldr-inst/usr install
 
 }

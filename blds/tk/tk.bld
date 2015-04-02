@@ -32,7 +32,7 @@ function BuildAndInstall
 {
 	cd unix
 	./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --disable-rpath --enable-64bit
-	make -j3
+	make -j${BLDR_CORES}
 	make INSTALL_ROOT=/root/bldr-inst install install-private-headers
 	ln -sf wish${VERSION%.*} /root/bldr-inst/usr/bin/wish
 	ln -sf libtk${VERSION%.*}.so /root/bldr-inst/usr/lib/libtk.so

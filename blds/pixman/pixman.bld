@@ -36,7 +36,7 @@ function BuildAndInstall
 	[[ $CARCH = "armv7l" ]] && CONFIG="--disable-arm-neon --disable-arm-iwmmxt"
 
 	./configure $STDUSRCONF $CONFIG
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

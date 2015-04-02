@@ -42,7 +42,7 @@ function BuildAndInstall
       --includedir=/usr/include/nspr \
       --enable-optimize \
       --disable-debug ${_confflags}
-  make -j3
+  make -j${BLDR_CORES}
   
   make DESTDIR=/root/bldr-inst install
   ln -s nspr.pc /root/bldr-inst/usr/lib/pkgconfig/mozilla-nspr.pc

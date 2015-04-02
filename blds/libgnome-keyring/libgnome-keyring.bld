@@ -2,7 +2,7 @@
 NAME=libgnome-keyring
 
 #package version
-VERSION=3.12.0
+VERSION=3.12.0-1
 DVERSION=3.12.0
 
 #directory locations, 99.99% of the time this is 1
@@ -35,7 +35,7 @@ function BuildAndInstall
 	./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var --disable-static \
       --libexecdir=/usr/lib/gnome-keyring
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

@@ -2,7 +2,7 @@
 NAME=mate-system-tools
 
 #package version
-VERSION=1.8.1
+VERSION=1.8.1-1
 DVERSION=1.8.1
 
 #directory locations, 99.99% of the time this is 1
@@ -25,7 +25,7 @@ DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'expat' 'fontconfig' 'freetype2' 'gdk-pix
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('system-tools-backends')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -40,7 +40,7 @@ function BuildAndInstall
         --disable-services \
         --disable-shares \
         --disable-time
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

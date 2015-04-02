@@ -59,7 +59,7 @@ function BuildAndInstall
                --enable-dns-for-realm \
                --with-ldap \
                --without-system-verto
-	make -j3
+	make -j${BLDR_CORES}
 
 	make DESTDIR=/root/bldr-inst install
 	rm -rf /root/bldr-inst/usr/{include,share,bin,sbin}

@@ -35,7 +35,7 @@ function BuildAndInstall
 
 	./configure $STDUSRCONF --with-systemd=/usr/lib/systemd/system --without-perl --without-php --enable-avahi --enable-threads --enable-raw-printing --with-dbusdir=/etc/dbus-1 --enable-ssl=yes --enable-gnutls --enable-pam=yes --with-logdir=/var/log/cups --with-cups-user=lp --with-cups-group=lpadmin --with-system_groups="sys root" --with-optim="$CFLAGS"
 
-	make -j3
+	make -j${BLDR_CORES}
 	make BUILDROOT=/root/bldr-inst install
 	rm -rf /root/bldr-inst/etc/rc.d
 	rm -rf /root/bldr-inst/etc/init.d

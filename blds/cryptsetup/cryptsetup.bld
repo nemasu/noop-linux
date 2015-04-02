@@ -37,7 +37,7 @@ function BuildAndInstall
   
   #Weird shared lib found instead of static lib for udev, so we'll just fix it and only install static build
   sed -i -e 's|-ludev|/lib/libudev.a|g' src/Makefile
-  make -j3
+  make -j${BLDR_CORES}
 
   mkdir -p /root/bldr-inst/usr/bin
   cp src/veritysetup.static /root/bldr-inst/usr/bin/veritysetup

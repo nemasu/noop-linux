@@ -34,7 +34,7 @@ function BuildAndInstall
 	sed -i 's#python#python2#' gtksourceview/language-specs/convert.py
     ./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var --disable-static  
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

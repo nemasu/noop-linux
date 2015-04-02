@@ -60,6 +60,7 @@ function Detect
 	LISTURL=http://xorg.freedesktop.org/releases/individual/font/
 	FILELIST=`GetFileList`
 	LATEST=0
+	NAME=xorg-fonts-cyrillic
 
 	for i in ${FILELIST[@]};
 	do

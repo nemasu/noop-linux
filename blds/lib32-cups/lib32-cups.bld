@@ -43,7 +43,7 @@ function BuildAndInstall
 	 --disable-avahi --disable-dnssd \
      --with-optim="$CFLAGS" --libdir=/usr/lib32
   
-  make -j3 libs
+  make -j${BLDR_CORES} libs
   make BUILDROOT=/root/bldr-inst install-libs
 }
 

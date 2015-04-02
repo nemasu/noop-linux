@@ -39,7 +39,7 @@ function BuildAndInstall
         -DCMAKE_INSTALL_PREFIX=/usr \
         ..
     make depend
-    make -j3
+    make -j${BLDR_CORES}
     make DESTDIR=/root/bldr-inst install
 
 }

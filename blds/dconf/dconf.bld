@@ -32,7 +32,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
   ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/dconf
-  make -j3
+  make -j${BLDR_CORES}
   make completiondir=/usr/share/bash-completion/completions DESTDIR=/root/bldr-inst install
 }
 

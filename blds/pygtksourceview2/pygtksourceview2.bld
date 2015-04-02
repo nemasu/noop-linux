@@ -34,7 +34,7 @@ function BuildAndInstall
 	#NOTE: There was some weirdness, had to:  ln -s /usr/lib/python2.7/site-packages/gtk-2.0/codegen/codegen.py /usr/share/pygobject/2.0/codegen/codegen.py
 	PYTHON=python2 ./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var --disable-static --disable-docs
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

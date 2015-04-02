@@ -80,7 +80,7 @@ function BuildAndInstall
                 --with-plugin-ld=ld.gold \
                 --with-system-zlib
 
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
     # Strip debug symbols from libraries; without this, the package size balloons to ~500MB.

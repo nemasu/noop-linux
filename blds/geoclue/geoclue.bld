@@ -33,7 +33,7 @@ function BuildAndInstall
 {
 	./configure $STDUSRCONF
 	find . -name Makefile | xargs sed -i -e 's/-Werror=missing-prototypes -Werror=implicit-function-declaration -Werror=pointer-arith -Werror=init-self -Werror=format=2 -Werror=missing-include-dirs//g;'
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

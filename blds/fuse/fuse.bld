@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	./configure $STDUSRCONF --enable-lib --enable-util
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
 	rm -rf /root/bldr-inst/etc/udev 

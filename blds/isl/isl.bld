@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	./configure $STDUSRCONF
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 	mkdir -p /root/bldr-inst/usr/share/gdb/auto-load/usr/lib/
 	mv /root/bldr-inst/usr/lib/libisl.so.*-gdb.py /root/bldr-inst/usr/share/gdb/auto-load/usr/lib/

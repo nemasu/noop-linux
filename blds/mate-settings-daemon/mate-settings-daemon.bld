@@ -2,8 +2,8 @@
 NAME=mate-settings-daemon
 
 #package version
-VERSION=1.8.2-1
-DVERSION=1.8.2
+VERSION=1.8.3
+DVERSION=1.8.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -41,7 +41,7 @@ function BuildAndInstall
         --disable-static \
 		--enable-pulse \
 		--disable-gstreamer
-    make -j3
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 

@@ -59,7 +59,7 @@ function BuildAndInstall
 		  --sysconfdir=/etc \
 		  --with-devrandom=/dev/urandom
 
-      make -j3
+      make -j${BLDR_CORES}
       make DESTDIR=/root/bldr-inst install
 
 }

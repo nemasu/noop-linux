@@ -37,7 +37,7 @@ function BuildAndInstall
 		./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --disable-64bit
 	fi
 
-	make -j3
+	make -j${BLDR_CORES}
 
 	make INSTALL_ROOT=/root/bldr-inst install install-private-headers
 	mkdir -p /root/bldr-inst/usr/bin/

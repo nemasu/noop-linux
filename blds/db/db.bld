@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	./dist/configure --prefix=/usr --enable-sql --enable-cxx --enable-compat185  --enable-shared --enable-static --enable-cxx --enable-dbm
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 	
 	#Waaay too many docs
