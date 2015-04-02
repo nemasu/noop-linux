@@ -2,13 +2,14 @@
 NAME=subversion
 
 #package version
-VERSION=1.8.13
+VERSION=1.8.13-1
+DVERSION=1.8.13
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://apache.org/dist/subversion/subversion-$VERSION.tar.bz2
+SRC=http://apache.org/dist/subversion/subversion-$DVERSION.tar.bz2
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
@@ -30,12 +31,12 @@ function BuildAndInstall
 
 	if [ "`uname -m`" == "x86_64" ]; then
 	
-		if [ ! -e /var/noop/installed/apache ] || [ ! -e /var/noop/installed/kdelibs ];
+		if [ ! -e /var/noop/installed/apache ]; 
 		then
-			echo "You need apache and kdelibs to build subversion on x86_64";
+			echo "You need apache to build subversion on x86_64";
 			exit 1
 		fi
-		EXCONF="--with-kwallet --with-apxs"
+		EXCONF="--with-apxs"
 	fi
 
 	
@@ -75,7 +76,7 @@ function Detect
 		fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 		echo "$NAME: New Version Available! - $LATEST"

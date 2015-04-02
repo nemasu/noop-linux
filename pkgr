@@ -795,7 +795,8 @@ if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 
 	$echo
 	$echo -n "Meta packages ... "
-	for i in xorg-meta xfce4-meta dev-meta mate-meta enlightenment-meta kde-core-meta kde-all-meta;
+	$rm -rf $METADIR/*
+	for i in xorg-meta xfce4-meta dev-meta mate-meta enlightenment-meta;
 	do
 		$echo -n "$i " 
 		curl -s -L https://github.com/nemasu/noop-linux/raw/master/meta/$i > $METADIR/$i.new
