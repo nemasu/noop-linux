@@ -11,7 +11,7 @@ ISUSR=1
 SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-bz2 --with-png --with-harfbuzz --enable-biarch-config"
+EXTRACONF="--with-bzip2 --with-png --with-harfbuzz --enable-biarch-config"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
