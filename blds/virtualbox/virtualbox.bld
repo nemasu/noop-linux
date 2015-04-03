@@ -1,20 +1,25 @@
 NAME=virtualbox
+VERSION=4.3.26-1
 DVERSION=4.3.26
-VERSION=4.3.26
 ISUSR=1
 SRC=http://download.virtualbox.org/virtualbox/${DVERSION}/VirtualBox-${DVERSION}.tar.bz2
 EXTRACONF=
 ISSPECIAL=1
 DEPS=('curl' 'gcc-libs' 'glibc' 'libX11' 'libXcursor' 'libXext' 'libXinerama' 'libXmu' 'libXt' 'libpng' 'libvpx' 'libxml2' 'mesalib' 'openssl' 'python2' 'qt4' 'sdl' 'zlib')
 #Note! You need to have the correct kernel in /usr/src/linux and at least started to bulid it (for autoconf.h)
+PKGDEPS=('iasl' 'cdrkit' 'libidl')
 RESTORELIBDB=1
 
 function BuildAndInstall
 {
 	sed -i 's/^check_gcc$/#check_gcc/' configure
 
-	ln -s /bin/echo makeself
-    export PATH="$CWD:$PATH"
+	if [ ! -e makeself ];
+	then
+		ln -s /bin/echo makeself
+	fi
+    
+	export PATH="$CWD:$PATH"
 
 	mv -v $BLDRTMPDIR/LocalConfig.kmk .
 
@@ -109,7 +114,7 @@ function BuildAndInstall
         /root/guest-inst/usr/bin/VBoxClient-all
     install -m755 -D ../../../../..//src/VBox/Additions/x11/Installer/vboxclient.desktop \
         /root/guest-inst/etc/xdg/autostart/vboxclient.desktop
-    install -D vboxvideo_drv_116.so \
+    install -D vboxvideo_drv_117.so \
         /root/guest-inst/usr/lib/xorg/modules/drivers/vboxvideo.so
     install -d /root/guest-inst/usr/lib/xorg/modules/dri
     install -m755 VBoxOGL*.so /root/guest-inst/usr/lib
