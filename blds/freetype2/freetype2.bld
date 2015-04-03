@@ -11,10 +11,10 @@ ISUSR=1
 SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--with-bz2 --with-png --with-harfbuzz --enable-biarch-config"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=('glibc' 'zlib')
@@ -28,9 +28,15 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./configure $STDUSRCONF $EXTRACONF
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+	#No idea why this is happening, but fix manually for now
+	sed -i -e 's/libs="-lfreetype"/libs="-lfreetype -lz -lbz2"/g' /root/bldr-inst/usr/bin/freetype-config
+}
 
 #Default HTTP curl new version detection
 function Detect
