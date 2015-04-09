@@ -2,13 +2,13 @@
 NAME=sqlite
 
 #package version
-VERSION=3080600
+VERSION=3080803
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.sqlite.org/2014/sqlite-autoconf-${VERSION}.tar.gz
+SRC=http://www.sqlite.org/2015/sqlite-autoconf-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

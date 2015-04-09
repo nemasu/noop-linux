@@ -2,13 +2,13 @@
 NAME=icu4c
 
 #package version
-VERSION=53.1
+VERSION=55.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.icu-project.org/files/icu4c/53.1/icu4c-53_1-src.tgz
+SRC=http://download.icu-project.org/files/icu4c/${VERSION}/icu4c-55_1-src.tgz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -47,5 +47,12 @@ function BuildAndInstall
 
 function Detect
 {
-	echo $NAME: Tricky Versioning
+        LATEST=`curl -L -s http://icu-project.org/apiref/icu4c/ | egrep "ICU [0-9\.]* Documentation" | sed -e 's/.*ICU \([0-9\.]*\) Documentation.*/\1/g'`
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
+

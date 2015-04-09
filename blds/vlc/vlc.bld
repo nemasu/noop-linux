@@ -2,13 +2,14 @@
 NAME=vlc
 
 #package version
-VERSION=2.2.0
+VERSION=2.2.0-1
+DVERSION=2.2.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.videolan.org/vlc/${VERSION}/vlc-${VERSION}.tar.xz
+SRC=http://download.videolan.org/vlc/${DVERSION}/vlc-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('a52dec' 'alsa-lib' 'atk' 'avahi' 'cairo' 'dbus' 'enca' 'expat' 'faad2' 'ffmpeg' 'flac' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'gdbm' 'gdk-pixbuf' 'glib2' 'glibc' 'gmp' 'gnutls' 'gst-plugins-base' 'gstreamer' 'gtk+2' 'harfbuzz' 'json-c' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXpm' 'libXrender' 'libXtst' 'libXxf86vm' 'libass' 'libbluray' 'libcap2' 'libcddb' 'libcdio' 'libcroco' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libidn' 'libjpeg' 'libmad' 'libmodplug' 'libmpcdec' 'libmpeg2' 'libmtp' 'libnotify' 'libogg' 'libpng' 'libpng15' 'librsvg' 'libsamplerate' 'libsndfile' 'libssh2' 'libtasn1' 'libtheora' 'libupnp' 'libusb' 'libva' 'libvncserver' 'libvorbis' 'libvpx' 'libx264' 'libxcb' 'libxml2' 'libxshmfence' 'lua' 'mesalib' 'ncurses' 'nettle' 'openssl' 'opus' 'orc' 'pango' 'pcre' 'pixman' 'pulseaudio' 'qt4' 'samba' 'schroedinger' 'sdl' 'speex' 'systemd' 'util-linux' 'vcdimager' 'x265' 'xcb-util-keysyms' 'xz' 'zlib')
+DEPS=('a52dec' 'alsa-lib' 'atk' 'avahi' 'cairo' 'dbus' 'enca' 'expat' 'faad2' 'ffmpeg' 'flac' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'gdbm' 'gdk-pixbuf' 'glib2' 'glibc' 'gmp' 'gnutls' 'gst-plugins-base' 'gstreamer' 'harfbuzz' 'json-c' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXpm' 'libXrender' 'libXtst' 'libXxf86vm' 'libass' 'libbluray' 'libcap2' 'libcddb' 'libcdio' 'libcroco' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libidn' 'libjpeg' 'libmad' 'libmodplug' 'libmpcdec' 'libmpeg2' 'libmtp' 'libnotify' 'libogg' 'libpng' 'libpng15' 'librsvg' 'libsamplerate' 'libsndfile' 'libssh2' 'libtasn1' 'libtheora' 'libupnp' 'libusb' 'libva' 'libvncserver' 'libvorbis' 'libvpx' 'libx264' 'libxcb' 'libxml2' 'libxshmfence' 'lua' 'mesalib' 'ncurses' 'nettle' 'openssl' 'opus' 'orc' 'pango' 'pcre' 'pixman' 'pulseaudio' 'qt' 'samba' 'schroedinger' 'sdl' 'speex' 'systemd' 'util-linux' 'vcdimager' 'x265' 'xcb-util-keysyms' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -78,7 +79,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

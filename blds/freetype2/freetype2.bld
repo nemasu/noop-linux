@@ -17,7 +17,7 @@ EXTRACONF="--with-bzip2 --with-png --with-harfbuzz --enable-biarch-config"
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc' 'zlib')
+DEPS=('glib2' 'glibc' 'harfbuzz' 'libpng' 'pcre' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

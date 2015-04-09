@@ -2,13 +2,14 @@
 NAME=efl
 
 #package version
-VERSION=1.13.1
+VERSION=1.13.1-1
+DVERSION=1.13.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.enlightenment.org/rel/libs/efl/efl-${VERSION}.tar.xz
+SRC=http://download.enlightenment.org/rel/libs/efl/efl-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-systemd"
@@ -17,7 +18,7 @@ EXTRACONF="--enable-systemd"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('printproto' 'bullet' 'dbus' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'gdbm' 'giflib' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'ibus' 'json-c' 'lib32-glibc' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXp' 'libXrandr' 'libXrender' 'libXtst' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libsndfile' 'libxcb' 'libxshmfence' 'luajit' 'mesalib' 'openjpeg' 'openssl' 'orc' 'pcre' 'pulseaudio' 'systemd' 'tiff' 'util-linux' 'xz' 'zlib')
+DEPS=('printproto' 'bullet' 'dbus' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'gdbm' 'giflib' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'harfbuzz' 'ibus' 'json-c' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXp' 'libXrandr' 'libXrender' 'libXtst' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libsndfile' 'libxcb' 'libxshmfence' 'luajit' 'mesalib' 'openjpeg' 'openssl' 'orc' 'pcre' 'pulseaudio' 'systemd' 'tiff' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -51,7 +52,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

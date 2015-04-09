@@ -2,7 +2,7 @@
 NAME=openldap
 
 #package version
-VERSION=2.4.33-1
+VERSION=2.4.33-2
 DVERSION=2.4.33
 
 #directory locations, 99.99% of the time this is 1

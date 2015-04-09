@@ -1,10 +1,11 @@
 NAME=firefox
-VERSION=34.0.5
+VERSION=37.0.1
+DVERSION=37.0.1
 ISUSR=1
-SRC=https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${VERSION}/source/${NAME}-${VERSION}.source.tar.bz2
+SRC=https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${DVERSION}/source/${NAME}-${DVERSION}.source.tar.bz2
 EXTRACONF=
 ISSPECIAL=1
-DEPS=('alsa-lib' 'atk' 'cairo' 'dbus' 'dbus-glib' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'hunspell' 'icu4c' 'lib32-glibc' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXrender' 'libXt' 'libevent' 'libffi' 'libjpeg' 'libpng' 'libvpx' 'nspr' 'nss' 'pango' 'pixman' 'sqlite' 'startup-notification' 'zlib')
+DEPS=('alsa-lib' 'atk' 'cairo' 'dbus' 'dbus-glib' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'hunspell' 'icu4c' 'lib32-glibc' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXrender' 'libXt' 'libevent' 'libffi' 'libjpeg' 'libpng' 'libvpx' 'nspr' 'nss' 'pango' 'pixman' 'sqlite' 'startup-notification' 'zlib')
 
 #Firefox and thunderbird produce same libraries, no need to have them in libdb anyways.
 RESTORELIBDB=1
@@ -53,11 +54,11 @@ function BuildAndInstall
     /root/bldr-inst/usr/share/icons/hicolor/384x384/apps/firefox.png
 
   # Use system-provided dictionaries
-  rm -rf /root/bldr-inst/usr/lib/firefox-${VERSION}/{dictionaries,hyphenation}
-  ln -s /usr/share/hunspell /root/bldr-inst/usr/lib/firefox-${VERSION}/dictionaries
-  ln -s /usr/share/hyphen /root/bldr-inst/usr/lib/firefox-${VERSION}/hyphenation
+  rm -rf /root/bldr-inst/usr/lib/firefox-${DVERSION}/{dictionaries,hyphenation}
+  ln -s /usr/share/hunspell /root/bldr-inst/usr/lib/firefox-${DVERSION}/dictionaries
+  ln -s /usr/share/hyphen /root/bldr-inst/usr/lib/firefox-${DVERSION}/hyphenation
 
-  ln -sf firefox /root/bldr-inst/usr/lib/firefox-${VERSION}/firefox-bin
+  ln -sf firefox /root/bldr-inst/usr/lib/firefox-${DVERSION}/firefox-bin
 
 
 }
@@ -65,21 +66,9 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest/source/
-	FILELIST=`GetFileList`
-	LATEST=0
+	LATEST=`curl -L -s ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest/source/  | grep "firefox-[0-9\.]*\.source\.tar\.bz2" | sed -e 's/.*firefox-\([0-9\.]*\)\.source\.tar\.bz2.*/\1/g'`
 
-	for i in ${FILELIST[@]};
-	do
-					CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-					vercomp $LATEST $CURVER
-					if [ $? -eq 2 ];
-					then
-									LATEST=$CURVER
-					fi
-	done
-
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 					echo "$NAME: New Version Available! - $LATEST"

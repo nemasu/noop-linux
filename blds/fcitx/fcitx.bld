@@ -2,13 +2,14 @@
 NAME=fcitx
 
 #package version
-VERSION=4.2.8.4
+VERSION=4.2.8.4-1
+DVERSION=4.2.8.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.fcitx-im.org/fcitx/fcitx-${VERSION}_dict.tar.xz
+SRC=http://download.fcitx-im.org/fcitx/fcitx-${DVERSION}_dict.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('cairo' 'dbus' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'gtk+' 'gtk+2' 'icu4c' 'libICE' 'libSM' 'libX11' 'libXext' 'libXfixes' 'libXinerama' 'libXrender' 'libxkbfile' 'libxml2' 'pango' 'qt4')
+DEPS=('cairo' 'dbus' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'icu4c' 'libICE' 'libSM' 'libX11' 'libXext' 'libXfixes' 'libXinerama' 'libXrender' 'libxkbfile' 'libxml2' 'pango' 'qt4')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -66,7 +67,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

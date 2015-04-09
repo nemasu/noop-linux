@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('freeglut' 'giflib' 'glibc' 'libjpeg' 'libpng' 'mesalib' 'tiff')
+DEPS=('freeglut' 'giflib' 'glibc' 'libjpeg' 'libpng15' 'mesalib' 'tiff')
 
 # 'no' to skip calls to strip
 STRIP=

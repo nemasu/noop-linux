@@ -2,13 +2,13 @@
 NAME=cmake
 
 #package version
-VERSION=3.0.0
+VERSION=3.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://cmake.org/files/v3.0/cmake-${VERSION}.tar.gz
+SRC=http://cmake.org/files/v3.2/cmake-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'libidn' 'ncurses')
+DEPS=('curl' 'expat' 'gcc-libs' 'glibc' 'jsoncpp' 'libarchive' 'ncurses' 'qt' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

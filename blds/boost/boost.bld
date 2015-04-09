@@ -2,13 +2,14 @@
 NAME=boost
 
 #package version
-VERSION=1.56.0
+VERSION=1.57.0
+DVERSION=1.57.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $VERSION | sed -e 's/\./_/g;'`
+MM=`echo $DVERSION | sed -e 's/\./_/g;'`
 SRC=http://downloads.sourceforge.net/boost/boost_${MM}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
@@ -51,7 +52,7 @@ function BuildAndInstall
       install
 
 	  mkdir -p /root/bldr-inst/usr
-	  cp -r /root/bldr-tmp/stagedir/{include,lib,share} /root/bldr-inst/usr
+	  cp -r /root/bldr-tmp/stagedir/{include,lib} /root/bldr-inst/usr
 }
 
 
@@ -60,7 +61,7 @@ function Detect
 {
 	LATEST=`curl -s -L http://www.boost.org | grep -E "version_[0-9_]*\.html" | head -n1 | sed -e 's/.*version_\([0-9_]*\)\.html.*/\1/g;' | sed -e 's/_/\./g;'`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

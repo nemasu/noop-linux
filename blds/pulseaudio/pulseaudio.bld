@@ -2,13 +2,14 @@
 NAME=pulseaudio
 
 #package version
-VERSION=5.0
+VERSION=5.0-1
+DVERSION=5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://freedesktop.org/software/pulseaudio/releases/pulseaudio-${VERSION}.tar.xz
+SRC=http://freedesktop.org/software/pulseaudio/releases/pulseaudio-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-udev --with-udev-rules-dir=/usr/lib/udev/rules.d --enable-systemd --disable-default-build-tests --with-database=gdbm --disable-tcpwrap --disable-bluez4 --disable-rpath"
@@ -17,7 +18,7 @@ EXTRACONF="--enable-udev --with-udev-rules-dir=/usr/lib/udev/rules.d --enable-sy
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('alsa-lib' 'avahi' 'dbus' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libICE' 'libSM' 'libX11' 'libXtst' 'libcap2' 'libsamplerate' 'libsndfile' 'libtool' 'libxcb' 'openssl' 'speex' 'systemd')
+DEPS=('alsa-lib' 'avahi' 'dbus' 'fftw' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libICE' 'libSM' 'libX11' 'libXtst' 'libcap2' 'libsamplerate' 'libsndfile' 'libtool' 'libxcb' 'openssl' 'orc' 'speex' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -51,7 +52,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

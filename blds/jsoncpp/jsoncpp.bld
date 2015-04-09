@@ -1,14 +1,14 @@
 #package name
-NAME=dbus-python
+NAME=jsoncpp
 
 #package version
-VERSION=1.2.0
+VERSION=1.6.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://dbus.freedesktop.org/releases/dbus-python/dbus-python-${VERSION}.tar.gz
+SRC=https://github.com/open-source-parsers/jsoncpp/archive/${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc')
+DEPS=('gcc-libs' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -30,37 +30,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir build-python2
-	mkdir build-python3
-
-	cd build-python2
-	PYTHON=python2 ../configure --prefix=/usr
-	make -j${BLDR_CORES}
+	cmake . \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DJSONCPP_LIB_BUILD_SHARED=ON \
+		-DJSONCPP_WITH_TESTS=OFF
+    make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
-
-	cd ../build-python3
-	PYTHON=python3 ../configure --prefix=/usr
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-
+  
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://dbus.freedesktop.org/releases/dbus-python/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -s -L https://github.com/open-source-parsers/jsoncpp/tags | egrep "/1[0-9\.]*\.tar\.gz" | sed 's/.*\/\(1[0-9\.]*\)\.tar\.gz.*/\1/g' | head -n1`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

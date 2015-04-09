@@ -2,7 +2,7 @@
 NAME=raptor
 
 #package version
-VERSION=2.0.8-1
+VERSION=2.0.8-2
 DVERSION=2.0.8
 
 #directory locations, 99.99% of the time this is 1
