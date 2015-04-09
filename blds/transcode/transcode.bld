@@ -1,0 +1,74 @@
+#package name
+NAME=transcode
+
+#package version
+VERSION=1.1.7-1
+DVERSION=1.1.7
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+#SRC=https://bitbucket.org/france/transcode-tcforge/downloads/transcode-${DVERSION}.tar.bz2
+SRC=http://www.nooplinux.org/dist/transcode-${DVERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('a52dec' 'alsa-lib' 'ffmpeg' 'freetype2' 'glibc' 'imagemagick' 'lame' 'libICE' 'libSM' 'libX11' 'libXaw' 'libXext' 'libXpm' 'libXt' 'libXv' 'libdv' 'libdvdread' 'libjpeg' 'libmpeg2' 'libogg' 'libpng' 'libtheora' 'libvorbis' 'libxml2' 'lzo2' 'mjpegtools' 'sdl' 'zlib')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  wget http://downloads.sourceforge.net/sourceforge/subtitleripper/subtitleripper-0.3-4.tgz
+  tar xf subtitleripper-0.3-4.tgz
+
+  mv $BLDRTMPDIR/*.patch2 .
+  patch -Np1 -i  subtitleripper-0.3.4-linkingorder.patch2 && rm subtitleripper-0.3.4-linkingorder.patch2
+  patch -Np1 -i  subtitleripper-0.3.4-respect-ldflags.patch2 && rm subtitleripper-0.3.4-respect-ldflags.patch2
+	
+  sed -i "s:av_close_input_file:avformat_close_input:g" \
+	  import/probe_ffmpeg.c
+
+  ./configure --prefix=/usr \
+    --disable-sse --disable-sse2 --disable-altivec --enable-mmx \
+    --enable-lame --enable-ogg --enable-vorbis --enable-theora \
+    --enable-libdv --enable-libxml2 --enable-v4l \
+    --enable-imagemagick --enable-libjpeg --enable-lzo --enable-mjpegtools \
+    --enable-sdl --enable-freetype2 --enable-a52 --enable-libpostproc \
+    --enable-xvid --enable-x264 --enable-alsa --enable-libmpeg2 --enable-libmpeg2convert
+  make
+  
+  make DESTDIR=/root/bldr-inst install
+
+
+  cd subtitleripper
+  sed -e 's|^\(.*lppm.*\)$|#\1|' \
+      -e 's|^\(.*D_HAVE_LIB_PPM.*\)$|#\1|' \
+      -e 's/DEFINES :=/DEFINES = -DHAVE_GETLINE/' \
+      -i Makefile
+  make
+  
+  install -m 755 pgm2txt /root/bldr-inst/usr/bin/
+  install -m 755 srttool /root/bldr-inst/usr/bin/
+  install -m 755 subtitle2pgm /root/bldr-inst/usr/bin/
+  install -m 755 subtitle2vobsub /root/bldr-inst/usr/bin/
+  install -m 755 vobsub2pgm /root/bldr-inst/usr/bin/
+}
+
+function Detect
+{
+	echo "${NAME}: Too old"
+}

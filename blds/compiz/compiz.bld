@@ -2,7 +2,7 @@
 NAME=compiz
 
 #package version
-VERSION=0.9.12.0
+VERSION=0.9.12.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -34,6 +34,9 @@ function BuildAndInstall
 	find -type f \( -name 'CMakeLists.txt' -or -name '*.cmake' \) -exec sed -e 's/COMMAND python/COMMAND python2/g' -i {} \;
 	find compizconfig/ccsm -type f -exec sed -e 's|^#!.*python|#!/usr/bin/env python2|g' -i {} \;
 	export PYTHON="/usr/bin/python2"
+
+	# Fix Python build directory with CMake 3.2
+	sed -i 's/${PY_BUILD_DIR}/lib/g' compizconfig/ccsm/CMakeLists.txt
 
 	mkdir build; cd build
 

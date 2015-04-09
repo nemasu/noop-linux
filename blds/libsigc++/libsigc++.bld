@@ -1,0 +1,46 @@
+#package name
+NAME=libsigc++
+
+#package version
+VERSION=2.4.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="http://ftp.gnome.org/pub/GNOME/sources/libsigc++/${VERSION:0:3}/libsigc++-${VERSION}.tar.xz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=0
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	MAJOR=`curl -L -s http://ftp.gnome.org/pub/GNOME/sources/libsigc++/ | egrep "\"[0-9\.]*/" | tail -n1 | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g'`
+	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libsigc++/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
