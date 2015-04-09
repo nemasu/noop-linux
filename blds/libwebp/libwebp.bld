@@ -2,7 +2,7 @@
 NAME=libwebp
 
 #package version
-VERSION=0.4.1
+VERSION=0.4.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
