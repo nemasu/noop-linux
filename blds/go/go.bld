@@ -1,0 +1,111 @@
+#package name
+NAME=go
+
+#package version
+VERSION=1.4.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://storage.googleapis.com/golang/go${VERSION}.src.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	export GOROOT=`pwd`
+	export GOBIN="$GOROOT/bin"
+	export GOROOT_FINAL=/usr/lib/go
+	export GOOS=linux
+	export GARCH=amd64
+	export GOPATH=/root/bldr-tmp
+
+	cd src
+	./make.bash
+	../bin/go get -d golang.org/x/tools/cmd/godoc
+	../bin/go build -o /root/bldr-tmp/godoc golang.org/x/tools/cmd/godoc
+	for tool in vet cover callgraph; do
+		../bin/go get -d golang.org/x/tools/cmd/${tool}
+		../bin/go build -o $GOROOT/pkg/tool/${GOOS}_${GOARCH}/${tool} golang.org/x/tools/cmd/${tool}
+	done
+	cd ..
+
+	install -Dm755 /root/bldr-tmp/godoc /root/bldr-inst/usr/bin/godoc
+
+	mkdir -p \
+		/root/bldr-inst/{etc/profile.d,usr/{share/go,lib/go,lib/go/src,lib/go/site/src}}
+
+	cp -r doc misc -t /root/bldr-inst/usr/share/go
+	ln -s /usr/share/go/doc /root/bldr-inst/usr/lib/go/doc
+	cp -a bin /root/bldr-inst/usr
+	cp -a pkg /root/bldr-inst/usr/lib/go
+	cp -a $GOROOT/src /root/bldr-inst/usr/lib/go/
+	cp -a $GOROOT/src/cmd /root/bldr-inst/usr/lib/go/src/cmd
+	cp -a $GOROOT/src/lib9 /root/bldr-inst/usr/lib/go/src/
+	cp -a $GOROOT/lib /root/bldr-inst/usr/lib/go/
+	cp -a $GOROOT/include /root/bldr-inst/usr/lib/go/
+
+	install -Dm644 src/Make.* /root/bldr-inst/usr/lib/go/src
+
+    # Remove object files from target src dir
+	find /root/bldr-inst/usr/lib/go/src/ -type f -name '*.[ao]' -delete
+
+    # Headers for C modules
+	install -Dm644 src/runtime/runtime.h \
+		/root/bldr-inst/usr/lib/go/src/runtime/runtime.h
+	install -Dm644 src/runtime/cgocall.h \
+		/root/bldr-inst/usr/lib/go/src/runtime/cgocall.h
+
+    # This is to make go get code.google.com/p/go-tour/gotour and
+    # then running the gotour executable work out of the box.
+	ln -sf /usr/bin /root/bldr-inst/usr/lib/go/bin
+
+    # For FS#42660 / FS#42661 / gox
+	install -Dm755 src/make.bash /root/bldr-inst/usr/lib/go/src/make.bash
+	install -Dm755 src/run.bash /root/bldr-inst/usr/lib/go/src/run.bash
+	cp -r misc/ /root/bldr-inst/usr/lib/go/
+
+    # For godoc
+	install -Dm644 favicon.ico /root/bldr-inst/usr/lib/go/favicon.ico
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=https://golang.org/dl/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

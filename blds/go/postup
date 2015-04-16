@@ -1,0 +1,1 @@
+go install std 2> /dev/null || return 0
