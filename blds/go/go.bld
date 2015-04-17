@@ -84,6 +84,9 @@ function BuildAndInstall
 
     # For godoc
 	install -Dm644 favicon.ico /root/bldr-inst/usr/lib/go/favicon.ico
+
+	#Timestamps of libs must match go binary
+	find /root/bldr-inst/usr/lib/go -name "*.a" -exec touch -r /root/bldr-inst/usr/bin/go {} \;
 }
 
 #Default HTTP curl new version detection

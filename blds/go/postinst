@@ -1,1 +1,0 @@
-find /usr/lib/go -name "*.a" -exec touch -r `which go` {} \;
