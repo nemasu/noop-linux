@@ -2329,9 +2329,16 @@ imlib2,zlib.so
 iptables,libip4tc.so
 iptables,libip4tc.so.0
 iptables,libip4tc.so.0.1.0
+iptables,libip6t_DNAT.so
+iptables,libip6t_DNPT.so
 iptables,libip6t_HL.so
 iptables,libip6t_LOG.so
+iptables,libip6t_MASQUERADE.so
+iptables,libip6t_NETMAP.so
+iptables,libip6t_REDIRECT.so
 iptables,libip6t_REJECT.so
+iptables,libip6t_SNAT.so
+iptables,libip6t_SNPT.so
 iptables,libip6t_ah.so
 iptables,libip6t_dst.so
 iptables,libip6t_eui64.so
@@ -2373,6 +2380,7 @@ iptables,libxt_CONNMARK.so
 iptables,libxt_CONNSECMARK.so
 iptables,libxt_CT.so
 iptables,libxt_DSCP.so
+iptables,libxt_HMARK.so
 iptables,libxt_IDLETIMER.so
 iptables,libxt_LED.so
 iptables,libxt_MARK.so
@@ -2382,6 +2390,7 @@ iptables,libxt_NOTRACK.so
 iptables,libxt_RATEEST.so
 iptables,libxt_SECMARK.so
 iptables,libxt_SET.so
+iptables,libxt_SYNPROXY.so
 iptables,libxt_TCPMSS.so
 iptables,libxt_TCPOPTSTRIP.so
 iptables,libxt_TEE.so
@@ -2389,6 +2398,7 @@ iptables,libxt_TOS.so
 iptables,libxt_TPROXY.so
 iptables,libxt_TRACE.so
 iptables,libxt_addrtype.so
+iptables,libxt_bpf.so
 iptables,libxt_cluster.so
 iptables,libxt_comment.so
 iptables,libxt_connbytes.so
@@ -2434,8 +2444,8 @@ iptables,libxt_tos.so
 iptables,libxt_u32.so
 iptables,libxt_udp.so
 iptables,libxtables.so
-iptables,libxtables.so.7
-iptables,libxtables.so.7.0.0
+iptables,libxtables.so.10
+iptables,libxtables.so.10.0.0
 irssi,Irc.so
 irssi,Irssi.so
 irssi,TextUI.so
