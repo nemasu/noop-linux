@@ -168,7 +168,7 @@ EOF
 
 	make -j${BLDR_CORES}
 
-	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed 's/VER://g'`
+	KERVER=`uname -r`
 	mkdir -p /root/mod-inst/lib/modules/${KERVER}/misc
 
 	#install host mods
