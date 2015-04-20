@@ -1,6 +1,6 @@
 NAME=nvidia
-VERSION=346.47-1
-DVERSION=346.47
+VERSION=346.59
+DVERSION=346.59
 ISUSR=1
 
 if [ "`uname -m`" == "x86_64" ];
@@ -84,3 +84,16 @@ function BuildAndInstall
 
 
 }
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s ftp://download.nvidia.com/XFree86/Linux-x86_64/latest.txt | awk '{print $1;}'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+		echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

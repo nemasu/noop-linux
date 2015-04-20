@@ -1,5 +1,5 @@
 NAME=virtualbox
-VERSION=4.3.26-1
+VERSION=4.3.26-2
 DVERSION=4.3.26
 ISUSR=1
 SRC=http://download.virtualbox.org/virtualbox/${DVERSION}/VirtualBox-${DVERSION}.tar.bz2
