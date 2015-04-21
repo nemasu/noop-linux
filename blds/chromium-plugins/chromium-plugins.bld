@@ -2,7 +2,7 @@
 NAME=chromium-plugins
 
 #package version
-VERSION=41.0.2272.89
+VERSION=42.0.2311.90
 #UPDATE post stuff
 
 #directory locations, 99.99% of the time this is 1
@@ -36,7 +36,7 @@ function BuildAndInstall
 	rm $BLDRTMPDIR/rpm2cpio
 
 	mkdir -p /root/bldr-inst/usr/lib/chromium
-	install -m644 opt/google/chrome/libpdf.so /root/bldr-inst/usr/lib/chromium
+#install -m644 opt/google/chrome/libpdf.so /root/bldr-inst/usr/lib/chromium
 	mkdir -p /root/bldr-inst/usr/lib/PepperFlash
 	install -m644 opt/google/chrome/PepperFlash/* /root/bldr-inst/usr/lib/PepperFlash
 	

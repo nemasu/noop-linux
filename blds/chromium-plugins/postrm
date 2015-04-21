@@ -2,7 +2,7 @@
 [ -f /etc/chromium-dev/default ] && _default='/etc/chromium-dev/default'
 [ -f /etc/chromium/default ] && _default='/etc/chromium/default'
 
-flashver=41.0.2272.89
+flashver=42.0.2311.90
 if [ -f "$_default" ]; then
 	sed -i 's| --ppapi-flash-path=/usr/lib/PepperFlash/libpepflashplayer.so --ppapi-flash-version=1.*[0-999]||' "$_default"
 else

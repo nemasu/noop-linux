@@ -8,8 +8,8 @@
 # ISSPECIAL
 
 NAME=chromium
-DVERSION=41.0.2272.89
-VERSION=41.0.2272.89
+DVERSION=42.0.2311.90
+VERSION=42.0.2311.90
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -162,7 +162,7 @@ function BuildAndInstall
     /root/bldr-inst/usr/lib/chromium/chrome-sandbox
 
 
-  cp out/Release/{*.pak,libffmpegsumo.so,libpdf.so} /root/bldr-inst/usr/lib/chromium/
+  cp out/Release/{*.pak,*.bin,libffmpegsumo.so} /root/bldr-inst/usr/lib/chromium/
   
   if [ "`uname -m`" != "armv6l" ];
   then
@@ -175,8 +175,7 @@ function BuildAndInstall
 	strip /root/bldr-inst/usr/lib/chromium/chromedriver \
     	/root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap}
 
-  	strip --strip-all /root/bldr-inst/usr/lib/chromium/libffmpegsumo.so \
-    	/root/bldr-inst/usr/lib/chromium/libpdf.so
+  	strip --strip-all /root/bldr-inst/usr/lib/chromium/libffmpegsumo.so
   fi
 
   strip --strip-debug /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
