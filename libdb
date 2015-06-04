@@ -410,7 +410,6 @@ cdparanoia,libcdda_paranoia.so
 cdparanoia,libcdda_paranoia.so.0
 cdparanoia,libcdda_paranoia.so.0.10.2
 chromium,libffmpegsumo.so
-chromium-plugins,libpdf.so
 chromium-plugins,libpepflashplayer.so
 colord,libcolord_sensor_dummy.so
 colord,libcolord.so
