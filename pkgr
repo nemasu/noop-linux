@@ -1274,8 +1274,7 @@ function InstallPkg
 	
 	if [  -e $INSTALLEDDIR/$PKG ] ; then
 		if [ $FORCE == 0 ] ; then
-				$echo "ERROR: The package $PKG is already installed."
-				$echo  "Do \"pkgr --install --force $PKG\" if you wish to reinstall"
+				$echo "Warning: $PKG is already installed, use 'pkgr -i --force ${PKG}' to force."
 				exit 0
 		fi
 	fi
