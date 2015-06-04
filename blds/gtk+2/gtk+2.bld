@@ -2,8 +2,8 @@
 NAME=gtk+2
 
 #package version
-VERSION=2.24.25
-DVERSION=2.24.25
+VERSION=2.24.28
+DVERSION=2.24.28
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
