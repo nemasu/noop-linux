@@ -204,7 +204,7 @@ function bininst_install() {
 	wget "${DOWNLOAD_TAR}" -O${BININST_DLFILE}
 	mkdir -p /opt && pushd /opt &> /dev/null
 	NEW_DIR=`tar tf "${BININST_DLFILE}" | head -n1 | sed -e 's/\/.*//'`
-	tar xf "${BININST_DLFILE}"
+	tar xof "${BININST_DLFILE}"
 	rm -rf ${BININST_NAME}
 	ln -s ${NEW_DIR} ${BININST_NAME}
 	popd &> /dev/null
