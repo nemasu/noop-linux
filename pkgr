@@ -93,7 +93,8 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	$echo -e "\t-s,\t--sync                        Sync packgage database"
 	$echo -e "\t-d,\t--download pkg                Only download"
 	$echo -e "\t-i,\t--install pkg                 Install"
-	$echo -e "\t-i,\t--instbin jdk8                Install latest JDK8 to opt"
+	$echo -e "\t-i,\t--instbin name                Install latest pre-build, non-noop binary to /opt and update profile."
+	$echo -e "\t-i,\t--instbin -l                  List available bin installs."
 	$echo -e "\t-f,\t--install-file foo.pkg        Install from .pkg file"
 	$echo -e "\t-u,\t--upgrade pkg                 Upgrade"
 	$echo -e "\t-U,\t--upgrade-all                 Upgrade system"
@@ -189,7 +190,67 @@ function ShowProgress
 #tput cnorm
 }
 
+function bininst_install() {
+	BININST_DLFILE=/tmp/noop-${BININST_NAME}
+	IS_ENV_SET=`cat /etc/profile | grep "${BININST_ENV_HOME}" | wc -l`
+	if [ $IS_ENV_SET -gt 0 ]; then
+		echo "Environment variables seem to be set, skipping..."
+	else
+		echo >> /etc/profile
+		echo "export ${BININST_ENV_HOME}=/opt/${BININST_NAME}" >> /etc/profile
+		echo 'export PATH=${'"${BININST_ENV_HOME}"'}'"${BININST_ENV_BINDIR}"':${PATH}' >> /etc/profile
+	fi
+
+	wget "${DOWNLOAD_TAR}" -O${BININST_DLFILE}
+	mkdir -p /opt && pushd /opt &> /dev/null
+	NEW_DIR=`tar tf "${BININST_DLFILE}" | head -n1 | sed -e 's/\/.*//'`
+	tar xf "${BININST_DLFILE}"
+	rm -rf ${BININST_NAME}
+	ln -s ${NEW_DIR} ${BININST_NAME}
+	popd &> /dev/null
+	rm "${BININST_DLFILE}"
+
+	echo
+	echo "Done, source /etc/profile or re-login to gain environment variables."
+	exit
+
+}
+
 if [ $1 == "-instbin" ]; then
+	if [ $2 == "-l" ]; then
+		echo "jdk8";
+		echo "ant";
+		echo "maven";
+		echo "tuxguitar";
+		exit;
+	fi
+	if [ $2 == "maven" ]; then
+		BININST_NAME=maven
+		BININST_ENV_HOME=MAVEN_HOME
+		BININST_ENV_BINDIR=/bin
+		DOWNLOAD_TAR=`curl -s -L http://maven.apache.org/download.cgi | grep "apache-maven-[0-9\.]*-bin.tar.gz" | head -n1 | sed -e 's/.*a href="\(.*\)">apache-maven.*/\1/g'`
+
+		bininst_install		
+		
+	fi
+	if [ $2 == "ant" ]; then
+		BININST_NAME=ant
+		BININST_ENV_HOME=ANT_HOME
+		BININST_ENV_BINDIR=/bin
+		DOWNLOAD_TAR=`curl -s -L http://ant.apache.org/bindownload.cgi | grep "apache-ant-[0-9\.]*-bin.tar.gz" | head -n1 | sed -e 's/.*a href="\(.*\)">apache-ant.*/\1/g'`
+
+		bininst_install		
+		
+	fi
+	if [ $2 == "tuxguitar" ]; then
+		BININST_NAME=tuxguitar
+		BININST_ENV_HOME=TUXGUITAR_HOME
+		BININST_ENV_BINDIR=
+		DOWNLOAD_TAR=`curl -s -L http://tuxguitar.herac.com.ar/download.html | grep "tuxguitar-[0-9\.]*-linux-x86_64.tar.gz" | sed -e 's/.* href="\(.*\)">GNU.*/\1/g'`
+		
+		bininst_install
+
+	fi
 	if [ $2 == "jdk8" ]; then
 		IS_ENV_SET=`cat /etc/profile | grep "JAVA_HOME" | wc -l`
 		if [ $IS_ENV_SET -gt 0 ]; then
