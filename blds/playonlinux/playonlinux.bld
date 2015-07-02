@@ -1,0 +1,53 @@
+#package name
+NAME=playonlinux
+
+#package version
+VERSION=4.2.8
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.playonlinux.com/script_files/PlayOnLinux/${VERSION/.0/}/PlayOnLinux_${VERSION/.0/}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=('wine' 'imagemagick' 'xterm' 'wxpython' 'cabextract' 'unzip' 'mesa-demos' 'gnupg')
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cd ..
+	install -d /root/bldr-inst/usr/share/playonlinux
+	install -d /root/bldr-inst/usr/bin 
+	cp -r playonlinux /root/bldr-inst/usr/share/
+
+	install -D -m644 playonlinux/etc/PlayOnLinux.desktop /root/bldr-inst/usr/share/applications/playonlinux.desktop
+	sed -i "s/ %F//g" /root/bldr-inst/usr/share/applications/playonlinux.desktop
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s https://www.playonlinux.com/en/download.html | egrep "PlayOnLinux_[0-9\.]*\.tar\.gz" | sed -e 's/.*PlayOnLinux_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+
