@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'python2' 'wxgtk')
 
 # 'no' to skip calls to strip
 STRIP=

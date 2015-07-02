@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('dbus' 'glibc' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXinerama' 'libXrandr' 'libXrender' 'libconfig' 'mesalib' 'pcre')
 
 # 'no' to skip calls to strip
 STRIP=

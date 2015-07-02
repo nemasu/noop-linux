@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('expat' 'flac' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'libX11' 'libXext' 'libXi' 'libXrandr' 'libXrender' 'libidn' 'libogg' 'libvorbis' 'qt4')
+DEPS=('expat' 'flac' 'gcc-libs' 'glibc' 'libidn' 'libvorbis' 'qt4')
 
 # 'no' to skip calls to strip
 STRIP=

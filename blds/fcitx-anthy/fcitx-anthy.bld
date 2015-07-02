@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('anthy' 'gcc-libs' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=

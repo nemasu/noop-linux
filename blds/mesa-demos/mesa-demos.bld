@@ -17,7 +17,7 @@ EXTRACONF="--with-system-data-files=/usr/share/mesa-demos"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glew' 'freeglut')
+DEPS=('expat' 'freeglut' 'gcc-libs' 'glew' 'glibc' 'libdrm' 'libglu' 'libX11' 'libXau' 'libxcb' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libxshmfence' 'libXxf86vm' 'mesalib')
 
 # 'no' to skip calls to strip
 STRIP=

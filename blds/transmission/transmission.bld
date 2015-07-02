@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('curl' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libevent' 'libffi' 'libidn' 'libpng' 'libxcb' 'openssl' 'pcre' 'qt' 'util-linux' 'zlib')
+DEPS=('curl' 'fontconfig' 'gcc-libs' 'glibc' 'libevent' 'openssl' 'qt4' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

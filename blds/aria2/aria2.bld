@@ -17,7 +17,7 @@ EXTRACONF="--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'gmp' 'gnutls' 'libtasn1' 'libuv' 'libxml2' 'nettle' 'sqlite' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

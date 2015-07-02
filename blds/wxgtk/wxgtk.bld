@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'gtk+2' 'libglu' 'libjpeg' 'libnotify' 'libpng' 'libSM' 'libsoup' 'libX11' 'libxml2' 'libXxf86vm' 'mesalib' 'pango' 'tiff' 'webkitgtk2' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

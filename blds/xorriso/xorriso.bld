@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('acl' 'attr' 'glibc' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
