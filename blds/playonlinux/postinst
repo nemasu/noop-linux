@@ -1,1 +1,2 @@
 chmod +x /usr/share/playonlinux/playon*
+chmod +x /usr/share/playonlinux/bash/*
