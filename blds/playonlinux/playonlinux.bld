@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('icoutils' 'gnupg' 'mesa-demos' 'unzip' 'cabextract' 'wxpython' 'xterm' 'imagemagick' 'wine')
 
 # 'no' to skip calls to strip
 STRIP=
