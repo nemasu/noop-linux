@@ -2,13 +2,16 @@
 NAME=wine
 
 #package version
-VERSION=1.7.33
+VERSION=1.7.46
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://prdownloads.sourceforge.net/wine/wine-${VERSION}.tar.bz2
+MAJVER=`echo $VERSION | sed 's/\.[0-9]*$//g'`
+SRC=http://ftp.winehq.org/pub/wine/source/${MAJVER}/wine-${VERSION}.tar.bz2
+
+#xD
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -19,7 +22,7 @@ ISSPECIAL=1
 # 'no' to skip calls to strip
 STRIP=
 
-DEPS=('alsa-lib' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'lcms2' 'lib32-alsa-lib' 'lib32-glib2' 'lib32-glibc' 'lib32-gst-plugins-base0.10' 'lib32-gstreamer0.10' 'lib32-libX11' 'lib32-libXext' 'lib32-libxml2' 'lib32-openldap' 'lib32-zlib' 'libX11' 'libXext' 'libexif' 'libglu' 'libgphoto2' 'libpcap' 'libxml2' 'mesalib' 'openal' 'openldap' 'zlib')
+DEPS=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
 PKGDEPS=
@@ -30,10 +33,20 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-        cd ..
+		cd ..
         mv `ls` wine
         mkdir -p {wine32-build,wine64-build}
 
+		#Let's try staging!
+		STG_URL=https://github.com/wine-compholio/wine-staging/archive/v${VERSION}.tar.gz
+		wget ${STG_URL}
+		tar xf *.gz
+		rm *.gz
+		cd wine-staging-*
+		cd patches
+		./patchinstall.sh DESTDIR=../../wine --all
+		cd ../../
+        
         export CFLAGS="${CFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"
         export CXXFLAGS="${CXXFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"
 
