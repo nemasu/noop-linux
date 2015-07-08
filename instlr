@@ -93,14 +93,21 @@ else
 	for i in `ls /var/noop/installed`
 	do
 		echo "Copying package $i"
-		for j in `sed -n -e '/FILES:/,$p' /var/noop/installed/$i | sed '/FILES:/d'`
-		do  
-			dest_dir=`echo $j  |  sed -e 's/\(.*\/\).*/\1/g'`
-			if [ ! -d "$PREFIX/$dest_dir/" ]; then
-				mkdir -p "$PREFIX/$dest_dir/"
+		
+		#Dirs
+		for j in `sed -n -e '/FILES:/,$p' /var/noop/installed/$i | sed '/FILES:/d' | sed 's/^\(.*\/\).*/\1/g' | sort | uniq`;
+		do
+			if [ ! -d "$PREFIX/$j/" ]; then
+				mkdir -p "$PREFIX/$j/"
 			fi
-			cp -pr "$j" "$PREFIX/$dest_dir/" &> /dev/null
 
+		done
+		
+		#Files
+		for j in `sed -n -e '/FILES:/,$p' /var/noop/installed/$i | sed '/FILES:/d'`;
+		do  
+			dest_dir=`echo $j |  sed -e 's/\(.*\/\).*/\1/g'`
+			cp -pr "$j" "$PREFIX/$dest_dir/" 
 		done
 	done
 
@@ -127,6 +134,7 @@ else
 	echo "done.";
 
 fi
+
 $MOUNT --bind /dev $PREFIX/dev
 $MOUNT --bind /proc $PREFIX/proc
 $MOUNT --bind /sys $PREFIX/sys
