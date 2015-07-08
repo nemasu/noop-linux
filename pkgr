@@ -2067,7 +2067,7 @@ if [ $1 = "-init" ]; then
 	$echo Configure /etc/fstab
 	#$echo Configure /etc/systemd/system/network.service and run \"systemctl enable network.service\"
 	$echo ""
-	$echo Install grub to MBR:
+	$echo "Edit /boot/grub/grub.cfg if needed and install grub:"
 	KERVER=`$grep -m1 VER: $INSTALLEDDIR/linux-kernel | $sed -e 's/VER://g'`
 	$sed -i -e 's/VERSION/'"$KERVER"'/' /boot/grub/grub.cfg
 	$echo grub-install /dev/sda - \(probably\)
