@@ -2,7 +2,7 @@
 NAME=avr-gcc
 
 #package version
-VERSION=4.9.1
+VERSION=5.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -83,7 +83,7 @@ function BuildAndInstall
     make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
-    # Strip debug symbols from libraries; without this, the package size balloons to ~500MB.
+    # Strip debug symbols from libraries
     find /root/bldr-inst/usr/lib -type f -name "*.a" \
         -exec /usr/bin/avr-strip --strip-debug '{}' \;
 

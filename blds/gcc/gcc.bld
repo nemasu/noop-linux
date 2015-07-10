@@ -9,7 +9,7 @@
 
 ARCH=`uname -m`
 NAME=gcc
-VERSION=4.9.1
+VERSION=5.1.0
 ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-$VERSION.tar.bz2
 EXTRACONF=

@@ -2,8 +2,8 @@
 NAME=marco
 
 #package version
-VERSION=1.8.2
-DVERSION=1.8.2
+VERSION=1.10.1
+DVERSION=1.10.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

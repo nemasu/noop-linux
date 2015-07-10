@@ -1,16 +1,14 @@
 #package name
-NAME=mate-icon-theme-faenza
+NAME=zenity
 
 #package version
-VERSION=1.10.0
-DVERSION=1.10.0
+VERSION=3.16.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-SRC=http://pub.mate-desktop.org/releases/${MM}/${NAME}-${DVERSION}.tar.xz
+SRC=http://ftp.gnome.org/pub/GNOME/sources/zenity/${VERSION:0:4}/zenity-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -30,32 +28,15 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	./configure --prefix=/usr
-    make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	rm -f /root/bldr-inst/usr/share/icons/matefaenza/icon-theme.cache
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	#Limit to same series
-	MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-	LISTURL=http://pub.mate-desktop.org/releases/${MM}/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/${NAME}/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/${NAME}/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
@@ -63,3 +44,4 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+

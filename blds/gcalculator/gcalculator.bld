@@ -1,25 +1,23 @@
 #package name
-NAME=mate-calc
+NAME=gcalculator
 
 #package version
-VERSION=1.8.0
-DVERSION=1.8.0
+VERSION=2.1.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-SRC=http://pub.mate-desktop.org/releases/${MM}/${NAME}-${DVERSION}.tar.xz
+SRC=http://sourceforge.net/projects/galculator/files/galculator/${VERSION}/galculator-${VERSION}.tar.bz2/download
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libxml2' 'pango')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -30,23 +28,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	./configure \
-        --prefix=/usr \
-        --sysconfdir=/etc \
-        --libexecdir=/usr/lib/mate-calc \
-        --disable-static
-    make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	#Limit to same series
-	MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-	LISTURL=http://pub.mate-desktop.org/releases/${MM}/
+	LISTURL=http://galculator.sourceforge.net/downloads.html
 	FILELIST=`GetFileList`
 	LATEST=0
 

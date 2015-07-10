@@ -1,6 +1,6 @@
 #!/bin/bash
 
-AUFS_BRANCH=aufs4.0
+AUFS_BRANCH=aufs4.1
 
 set -e
 if [ -z "$1" ];

@@ -1,6 +1,6 @@
 NAME=virtualbox
-VERSION=4.3.26-2
-DVERSION=4.3.26
+VERSION=4.3.28
+DVERSION=4.3.28
 ISUSR=1
 SRC=http://download.virtualbox.org/virtualbox/${DVERSION}/VirtualBox-${DVERSION}.tar.bz2
 EXTRACONF=
@@ -28,7 +28,7 @@ function BuildAndInstall
 
 	kmk all
 
-    pushd src/VBox/RDP/client >/dev/null
+    pushd src/VBox/RDP/client* >/dev/null
     kmk
     popd >/dev/null
 
@@ -61,7 +61,7 @@ function BuildAndInstall
 	install -m 0755 components/* -t /root/bldr-inst/usr/lib/virtualbox/components
 
 	install -m 0755 *.so /root/bldr-inst/usr/lib/virtualbox
-    install -m 0644 *.gc *.r0  VBoxEFI*.fd /root/bldr-inst/usr/lib/virtualbox
+    install -m 0644 *.rc *.r0  VBoxEFI*.fd /root/bldr-inst/usr/lib/virtualbox
 
 	#binaries
 	install -m 4755 VBoxSDL VirtualBox VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl -t /root/bldr-inst/usr/lib/virtualbox
