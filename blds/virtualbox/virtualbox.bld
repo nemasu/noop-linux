@@ -5,7 +5,7 @@ ISUSR=1
 SRC=http://download.virtualbox.org/virtualbox/${DVERSION}/VirtualBox-${DVERSION}.tar.bz2
 EXTRACONF=
 ISSPECIAL=1
-DEPS=('libidl' 'cdrkit' 'iasl' 'curl' 'gcc-libs' 'glibc' 'libX11' 'libXcursor' 'libXext' 'libXinerama' 'libXmu' 'libXt' 'libpng' 'libvpx' 'libxml2' 'mesalib' 'openssl' 'python2' 'qt4' 'sdl' 'zlib')
+DEPS=('libidl' 'cdrkit' 'iasl' 'curl' 'gcc-libs' 'glibc' 'libpng' 'libvpx' 'libX11' 'libXcursor' 'libXext' 'libXinerama' 'libxml2' 'libXmu' 'libXt' 'mesalib' 'openssl' 'python2' 'qt4' 'sdl' 'zlib')
 #Note! You need to have the correct kernel in /usr/src/linux and at least started to bulid it (for autoconf.h)
 PKGDEPS=('iasl' 'cdrkit' 'libidl')
 RESTORELIBDB=1

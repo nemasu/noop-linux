@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libnotify' 'libX11' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=

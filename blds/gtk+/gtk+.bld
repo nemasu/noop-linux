@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'colord' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libffi' 'libpng15' 'libxcb' 'pango' 'pcre' 'pixman' 'zlib')
+DEPS=('atk' 'at-spi2-atk' 'at-spi2-core' 'cairo' 'colord' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libcanberra' 'libepoxy' 'libffi' 'libogg' 'libpng' 'libpng15' 'libtool' 'libvorbis' 'libX11' 'libXau' 'libxcb' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'pango' 'pcre' 'pixman' 'tdb' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

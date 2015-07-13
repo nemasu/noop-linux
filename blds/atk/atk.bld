@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glib2' 'glibc' 'libffi' 'pcre')
+DEPS=('glib2' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=

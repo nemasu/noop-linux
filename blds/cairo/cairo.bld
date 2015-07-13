@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('expat' 'fontconfig' 'freetype2' 'glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libffi' 'libpng15' 'libxcb' 'lzo2' 'pcre' 'pixman' 'zlib')
+DEPS=('expat' 'fontconfig' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libffi' 'libpng' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXrender' 'lzo2' 'pcre' 'pixman' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
