@@ -117,9 +117,14 @@ else
 
 	echo -n "Resetting base file system...";
 	pushd $PREFIX &> /dev/null
-	
-	wget nooplinux.org/noop/packages/x86_64/file-base.tar.bz2
-	tar xf file-base.tar.bz2 && rm file-base.tar.bz2
+
+	if [ -e /var/noop/file-base.tar.bz2 ]; then
+		tar xf /var/noop/file-base.tar.bz2
+	else
+		wget nooplinux.org/noop/packages/x86_64/file-base.tar.bz2
+		tar xf file-base.tar.bz2 && rm file-base.tar.bz2
+	fi
+
 	if [ `$UNAME -m` == "x86_64" ]; then
 		$LN -s lib lib64
 		cd usr
