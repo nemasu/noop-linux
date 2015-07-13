@@ -2,8 +2,8 @@
 NAME=gdk-pixbuf
 
 #package version
-VERSION=2.31.0
-DVERSION=2.31.0
+VERSION=2.31.4
+DVERSION=2.31.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

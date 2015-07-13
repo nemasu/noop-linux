@@ -17,6 +17,7 @@ mate-notification-daemon
 mate-control-center
 mate-screensaver
 engrampa
+libmatemixer
 mate-media
 mate-power-manager
 mate-system-monitor

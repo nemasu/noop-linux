@@ -389,10 +389,12 @@ if [ $1 == "--depcheck-package" ] || [ $1 == "-Cp" ]; then
     $rm -f /tmp/missinglibs && touch /tmp/missinglibs
     $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
 
-	for i in `sed -ne '/DEPS:/,/SIZE:/p' /var/noop/installed/$2 | sed '/DEPS:/d;/SIZE:/d'`
-	do
-		sed -ne '/FILES:/,$p' /var/noop/installed/$i | grep -E "/usr/bin|/usr/lib|/bin|/lib" >> /tmp/filelist
-	done
+	sed -ne '/FILES:/,$p' /var/noop/installed/$2 | grep -E "/usr/bin|/usr/lib|/bin|/lib" > /tmp/filelist
+	
+#for i in `sed -ne '/DEPS:/,/SIZE:/p' /var/noop/installed/$2 | sed '/DEPS:/d;/SIZE:/d'`
+#do
+#sed -ne '/FILES:/,$p' /var/noop/installed/$i | grep -E "/usr/bin|/usr/lib|/bin|/lib" >> /tmp/filelist
+#done
 
 	#TODO Factorize out these two depcheck functions
 	total_lines=`cat /tmp/filelist | wc -l`
