@@ -61,7 +61,10 @@ function BuildAndInstall
 	install -m 0755 components/* -t /root/bldr-inst/usr/lib/virtualbox/components
 
 	install -m 0755 *.so /root/bldr-inst/usr/lib/virtualbox
-    install -m 0644 *.rc *.r0  VBoxEFI*.fd /root/bldr-inst/usr/lib/virtualbox
+    install -m 0644 *.gc *.r0  VBoxEFI*.fd /root/bldr-inst/usr/lib/virtualbox
+
+#vb 5	
+#install -m 0644 *.rc *.r0  VBoxEFI*.fd /root/bldr-inst/usr/lib/virtualbox
 
 	#binaries
 	install -m 4755 VBoxSDL VirtualBox VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl -t /root/bldr-inst/usr/lib/virtualbox
