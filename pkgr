@@ -2060,25 +2060,79 @@ if [ $1 = "-init" ]; then
 	$chmod +s /bin/su
 	$sed -i 's/yes/no/' /etc/default/useradd
 	$mkdir -p /etc/pango
-	$echo "Enter root password"
-	passwd
-	$echo ""
-	$echo ""
-	$echo "-------------------------------------------"
-	$echo Your \'todo\' list:
-	$echo Configure /etc/fstab
-	#$echo Configure /etc/systemd/system/network.service and run \"systemctl enable network.service\"
-	$echo ""
-	$echo "Edit /boot/grub/grub.cfg if needed and install grub:"
 	KERVER=`$grep -m1 VER: $INSTALLEDDIR/linux-kernel | $sed -e 's/VER://g'`
 	$sed -i -e 's/VERSION/'"$KERVER"'/' /boot/grub/grub.cfg
-	$echo grub-install /dev/sda - \(probably\)
-	$echo Choices:
-	for i in a b c d e f g h i j k l m n o p q r s t u v w x y z;
-	do
-		$ls /dev/*d$i 2> /dev/null;
-	done
-	$echo ""
-	/bin/bash --login 
-fi
 
+	if [ -z "$NOOP_ISO_CREATE" ];
+	then
+		$echo "Enter root password"
+		passwd
+		$echo ""
+		$echo ""
+		$echo "-------------------------------------------"
+		$echo "Your \'todo\' list:"
+		$echo "Configure /etc/fstab"
+		$echo ""
+		$echo "Edit /boot/grub/grub.cfg if needed and install grub:"
+		$echo "grub-install /dev/sda - \(probably\)"
+		$echo "Choices:"
+		for i in a b c d e f g h i j k l m n o p q r s t u v w x y z;
+		do
+			$ls /dev/*d$i 2> /dev/null;
+		done
+		$echo ""
+		/bin/bash --login 
+
+	else
+
+		echo "root:noop" | chpasswd
+		echo noop-live > /etc/hostname
+		
+		for i in e2fsprogs btrfs-progs aufs3-utils pciutils parted ipw2200-fw dosfstools efibootmgr screen openssh;
+		do
+			pkgr -i $i;
+		done
+
+		systemctl enable sshd
+
+		echo "" > /etc/fstab
+
+		sed -i -e 's/agetty --noclear/agetty -a root --noclear/g' /usr/lib/systemd/system/getty@.service
+
+		cd / && ln -s / ro
+		mkdir /cdrom && touch /cdrom/root.sqsh
+
+		cd /var/noop/
+		wget nooplinux.org/noop/packages/x86_64/file-base.tar.bz2
+		cd /root
+		curl -s -L http://www.nooplinux.org/instlr > instlr && chmod +x instlr
+
+		if [ "mate" == "$NOOP_ISO_CREATE" ];
+		then
+			for i in xorg-meta mate-meta gvfs chromium chromium-plugins firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
+			do
+				pkgr -i $i;
+			done
+
+			adduser --disabled-password --gecos "" livecd -g users -G tty,audio,video,lp,wheel,adm
+			echo "livecd:noop" | chpasswd
+
+			sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/mate-session/g' /etc/lxdm/lxdm.conf
+
+			systemctl enable lxdm.service
+
+			rm /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache;
+			gdk-pixbuf-query-loaders --update-cache;
+
+			pushd /usr/share/icons
+			for i in `ls -alh | egrep "^d" | awk '{print $9;}' | sed '/[\.][\.]*/d'`;
+			do
+				gtk-update-icon-cache -q -t -f /usr/share/icons/$i;
+			done
+
+			popd
+		fi
+
+		exit
+	fi
+fi

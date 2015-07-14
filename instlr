@@ -48,11 +48,15 @@ if [ ! -d "$PREFIX" ]; then
 	exit 1;
 fi
 
-echo "Get packages from the internet, or use booted media? (internet/media): "; read internetormedia;
+if [ -z "$NOOP_ISO_CREATE" ];
+then
+	echo "Get packages from the internet, or use booted media? (internet/media): "; read internetormedia;
+else
+	internetormedia=internet
+fi
 
 if [ "$internetormedia" == "internet" ];
 then
-
 
 	cd $PREFIX
 	$WGET $PKGHOST/file-base.tar.bz2 -O$PREFIX/file-base.tar.bz2
