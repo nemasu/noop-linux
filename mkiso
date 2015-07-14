@@ -6,6 +6,10 @@ export NOOP_ISO_CREATE=$1
 #Yes this is bad, but ISO creation is done in a VM anyways.
 cd /root
 
+if [ -e iso-fs ];
+then
+	umount iso-fs/dev iso-fs/sys iso-fs/proc;
+fi
 rm -rf iso iso-fs && mkdir -p iso iso-fs
 
 #Initramfs
