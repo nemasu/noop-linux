@@ -2054,6 +2054,7 @@ if [ $1 = "-init" ]; then
 	chmod 4755 /usr/bin/pkexec
 	chmod 4775 /usr/lib/polkit-1/polkit-agent-helper-1
 	chmod +s /usr/lib/dbus-daemon-launch-helper
+	mkdir -p /etc/ssl/certs
 	/usr/bin/update-ca-certificates --fresh &> /dev/null
 	$echo "Enabling Network Manager"
 	systemctl enable NetworkManager.service
