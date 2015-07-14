@@ -2070,11 +2070,11 @@ if [ $1 = "-init" ]; then
 		$echo ""
 		$echo ""
 		$echo "-------------------------------------------"
-		$echo "Your \'todo\' list:"
+		$echo "Your 'todo' list:"
 		$echo "Configure /etc/fstab"
 		$echo ""
 		$echo "Edit /boot/grub/grub.cfg if needed and install grub:"
-		$echo "grub-install /dev/sda - \(probably\)"
+		$echo "grub-install /dev/sda - (probably)"
 		$echo "Choices:"
 		for i in a b c d e f g h i j k l m n o p q r s t u v w x y z;
 		do
