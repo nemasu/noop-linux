@@ -2114,7 +2114,7 @@ if [ $1 = "-init" ]; then
 				pkgr -i $i;
 			done
 
-			adduser --disabled-password --gecos "" livecd -g users -G tty,audio,video,lp,wheel,adm
+			useradd -m -g users -G tty,audio,video,lp,wheel,adm livecd
 			echo "livecd:noop" | chpasswd
 
 			sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/mate-session/g' /etc/lxdm/lxdm.conf
