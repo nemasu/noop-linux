@@ -24,7 +24,7 @@ mv noop-initramfs-live.igz /root/iso/boot
 
 
 wget https://github.com/nemasu/noop-linux/raw/master/etc/iso-grub.cfg -O/root/iso/boot/grub/grub.cfg
-KERVER=`$grep -m1 VER: /root/iso-fs/var/noop/installed/linux-kernel | $sed -e 's/VER://g'`
+KERVER=`grep -m1 VER: /root/iso-fs/var/noop/installed/linux-kernel | sed -e 's/VER://g'`
 sed -i -e 's/VERSION/'"$KERVER"'/' /root/iso/boot/grub/grub.cfg
 
 mkdir -p /root/iso/EFI/boot/
