@@ -16,10 +16,12 @@ mate-common
 mate-desktop
 libmatekbd
 libmateweather
+libmatemixer
 mate-icon-theme
 mate-dialogs
 caja
 mate-polkit
+zenity
 marco
 mate-settings-daemon
 mate-session-manager
@@ -44,10 +46,10 @@ mate-indicator-applet
 mate-netbook
 mate-netspeed
 mate-sensors-applet
-mate-system-tools
 mate-terminal
 mate-user-share
 mate-utils
 mozo
 pluma
 python-caja
+gcalculator
