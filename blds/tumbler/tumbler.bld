@@ -2,7 +2,7 @@
 NAME=tumbler
 
 #package version
-VERSION=0.1.30
+VERSION=0.1.31
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -2,7 +2,7 @@
 NAME=xfce4-session
 
 #package version
-VERSION=4.10.1
+VERSION=4.12.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

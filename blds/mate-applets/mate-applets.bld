@@ -2,7 +2,7 @@
 NAME=mate-applets
 
 #package version
-VERSION=1.10.1
+VERSION=1.10.1-1
 DVERSION=1.10.1
 
 #directory locations, 99.99% of the time this is 1

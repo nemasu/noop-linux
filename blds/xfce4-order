@@ -5,10 +5,15 @@ garcon
 exo
 xfce4-panel
 thunar
+thunar-volman
 xfce4-settings
 xfce4-session
 xfdesktop
 xfwm4
 xfce4-appfinder
-xfce-terminal
+xfce4-terminal
 tumbler
+xfce4-power-manager
+xfce4-icon-theme
+xfwm4-themes
+xfce4-mixer

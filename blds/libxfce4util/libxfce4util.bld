@@ -2,13 +2,13 @@
 NAME=libxfce4util
 
 #package version
-VERSION=4.10.1
+VERSION=4.12.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://archive.xfce.org/src/xfce/libxfce4util/4.10/libxfce4util-${VERSION}.tar.bz2
+SRC=http://archive.xfce.org/src/xfce/${NAME}/${VERSION:0:4}/${NAME}-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://archive.xfce.org/src/xfce/libxfce4util/4.10/
+	LISTURL=http://archive.xfce.org/src/xfce/libxfce4util/${VERSION:0:4}/
 	FILELIST=`GetFileList`
 	LATEST=0
 

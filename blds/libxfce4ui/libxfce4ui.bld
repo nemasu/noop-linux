@@ -2,14 +2,13 @@
 NAME=libxfce4ui
 
 #package version
-VERSION=4.10.0-1
-DVERSION=4.10.0
+VERSION=4.12.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://archive.xfce.org/src/xfce/libxfce4ui/4.10/libxfce4ui-${DVERSION}.tar.bz2
+SRC=http://archive.xfce.org/src/xfce/${NAME}/${VERSION:0:4}/${NAME}-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

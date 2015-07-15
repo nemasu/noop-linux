@@ -2,13 +2,13 @@
 NAME=garcon
 
 #package version
-VERSION=0.3.0
+VERSION=0.5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://archive.xfce.org/src/xfce/garcon/0.3/garcon-${VERSION}.tar.bz2
+SRC=http://archive.xfce.org/src/xfce/${NAME}/${VERSION:0:3}/${NAME}-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
