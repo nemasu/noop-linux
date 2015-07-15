@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Current options: core
+#Current options: core, mate, xfce4, enlightenment
 export NOOP_ISO_CREATE=$1
 
 #Yes this is bad, but ISO creation is done in a VM anyways.

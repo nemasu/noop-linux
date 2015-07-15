@@ -2108,9 +2108,9 @@ if [ $1 = "-init" ]; then
 		cd /root
 		curl -s -L http://www.nooplinux.org/instlr > instlr && chmod +x instlr
 
-		if [ "mate" == "$NOOP_ISO_CREATE" ];
+		if [ "core" != "$NOOP_ISO_CREATE" ];
 		then
-			for i in xorg-meta mate-meta gvfs chromium chromium-plugins firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
+			for i in xorg-meta ${NOOP_ISO_CREATE}-meta gvfs chromium chromium-plugins firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
 			do
 				pkgr -i $i;
 			done
@@ -2118,7 +2118,20 @@ if [ $1 = "-init" ]; then
 			useradd -m -g users -G tty,audio,video,lp,wheel,adm livecd
 			echo "livecd:noop" | chpasswd
 
-			sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/mate-session/g' /etc/lxdm/lxdm.conf
+			
+			if [ "$NOOP_ISO_CREATE" == "mate" ];
+			then
+				sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/mate-session/g' /etc/lxdm/lxdm.conf
+			fi
+			if [ "$NOOP_ISO_CREATE" == "xfce4" ];
+			then
+				sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startxfce4/g' /etc/lxdm/lxdm.conf
+			fi
+			if [ "$NOOP_ISO_CREATE" == "enlightenment" ];
+			then
+				sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/enlightenment_start/g' /etc/lxdm/lxdm.conf
+			fi
+
 
 			systemctl enable lxdm.service
 
