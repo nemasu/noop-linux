@@ -93,8 +93,8 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	$echo -e "\t-s,\t--sync                        Sync packgage database"
 	$echo -e "\t-d,\t--download pkg                Only download"
 	$echo -e "\t-i,\t--install pkg                 Install"
-	$echo -e "\t-i,\t--instbin name                Install latest pre-build, non-noop binary to /opt and update profile."
-	$echo -e "\t-i,\t--instbin -l                  List available bin installs."
+	$echo -e "\t   \t--instbin name                Install latest pre-built, non-noop binary to /opt and update profile."
+	$echo -e "\t   \t--instbin -l                  List available bin installs."
 	$echo -e "\t-f,\t--install-file foo.pkg        Install from .pkg file"
 	$echo -e "\t-u,\t--upgrade pkg                 Upgrade"
 	$echo -e "\t-U,\t--upgrade-all                 Upgrade system"
@@ -216,7 +216,7 @@ function bininst_install() {
 
 }
 
-if [ $1 == "-instbin" ]; then
+if [ $1 == "--instbin" ]; then
 	if [ $2 == "-l" ]; then
 		echo "jdk8";
 		echo "ant";
