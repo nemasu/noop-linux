@@ -1,6 +1,6 @@
 NAME=lib32-qt4
-VERSION=4.8.6
-DVERSION=4.8.6
+VERSION=4.8.7
+DVERSION=4.8.7
 ISUSR=1
 MMVER=`echo $DVERSION | sed -e 's/\([0-9]*\.[0-9]*\).*/\1/g'`
 SRC=http://download.qt-project.org/official_releases/qt/$MMVER/$DVERSION/qt-everywhere-opensource-src-${DVERSION}.tar.gz
@@ -19,6 +19,9 @@ DEPS=('gcc-libs' 'lib32-alsa-lib' 'lib32-dbus' 'lib32-fontconfig' 'lib32-freetyp
 
 function BuildAndInstall
 {
+	#Build with clang for skype fix...
+	export CC='clang'
+	export CXX='clang++'
 
 	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
