@@ -2,6 +2,7 @@
 NAME=ppp
 
 #package version
+#Note: NetworkManager needs to be rebuilt if this changes.
 VERSION=2.4.7
 
 #directory locations, 99.99% of the time this is 1

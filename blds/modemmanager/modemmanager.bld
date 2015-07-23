@@ -2,7 +2,7 @@
 NAME=modemmanager
 
 #package version
-VERSION=1.4.6
+VERSION=1.4.10
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
