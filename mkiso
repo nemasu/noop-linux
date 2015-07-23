@@ -36,9 +36,19 @@ cd /root/iso
 grub-mkstandalone  --directory="/usr/lib/grub/x86_64-efi/" --format="x86_64-efi" --compress="xz" --output=EFI/boot/bootx64.efi boot/grub/grub.cfg
 cd ..
 
+if [ "$NOOP_ISO_CREATE" == "enlightenment" ];
+then
+	pushd /root/iso-fs/home/livecd
+	wget http://www.nooplinux.org/dist/enlightenemnt-livecd-home.tar.xz
+	tar xf enlightenemnt-livecd-home.tar.xz && rm enlightenemnt-livecd-home.tar.xz
+	popd
+
+fi
+
 cd /root/iso-fs
 mksquashfs * ../iso/root.sqsh
 cd .. 
+
 
 NAME_DATE=`date +%Y%m%d`
 grub-mkrescue -o noop-${NOOP_ISO_CREATE}-${NAME_DATE}.iso iso
