@@ -1,0 +1,6 @@
+function postinst() {
+    fc-cache -f 
+    mkfontscale /usr/share/fonts/75dpi
+    mkfontdir /usr/share/fonts/75dpi
+    chmod 644 /usr/share/fonts/75dpi/fonts.*
+}

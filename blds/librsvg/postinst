@@ -1,4 +1,0 @@
-if [ -e /usr/bin/gdk-pixbuf-query-loaders ];
-then
-	gdk-pixbuf-query-loaders --update-cache
-fi

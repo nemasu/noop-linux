@@ -1,4 +1,0 @@
-fc-cache -f 
-mkfontscale /usr/share/fonts/Type1
-mkfontdir /usr/share/fonts/Type1
-chmod 644 /usr/share/fonts/Type1/fonts.*

@@ -1,0 +1,6 @@
+function postinst() {
+    update-desktop-database -q
+}
+function postrm() {
+    update-desktop-database -q
+}

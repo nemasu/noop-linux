@@ -1,0 +1,18 @@
+function postinst() {
+    glib-compile-schemas /usr/share/glib-2.0/schemas/
+    update-mime-database /usr/share/mime/ > /dev/null
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor
+    update-desktop-database -q
+}
+function postup() {
+    glib-compile-schemas /usr/share/glib-2.0/schemas/
+    update-mime-database /usr/share/mime/ > /dev/null
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor
+    update-desktop-database -q
+}
+function postrm() {
+    glib-compile-schemas /usr/share/glib-2.0/schemas/
+    update-mime-database /usr/share/mime/ > /dev/null
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor
+    update-desktop-database -q
+}

@@ -1,0 +1,6 @@
+function postinst() {
+    fc-cache -f
+    mkfontscale /usr/share/fonts/cyrillic
+    mkfontdir /usr/share/fonts/cyrillic
+    chmod 644 /usr/share/fonts/cyrillic/fonts.*
+}

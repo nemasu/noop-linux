@@ -1,4 +1,0 @@
-echo "Saving network.service"
-cp -v /etc/systemd/system/network.service /tmp
-echo "Removing some systemd conf files"
-for i in `grep -e "conf$" "/var/noop/installed/systemd" | sed -e '/etc\/systemd\//d;/etc\/udev\//d;/etc\/vconsole/d;/coredump\.conf/d;'`; do rm -v $i; done

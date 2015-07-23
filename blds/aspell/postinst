@@ -1,9 +1,0 @@
-infodir=/usr/share/info
-filelist=(aspell.info aspell-dev.info)
-echo "==> aspell comes with no default dictionary"
-[ -x /usr/bin/install-info ] || exit 0
-for file in ${filelist[@]};
-do
-	install-info $infodir/$file $infodir/dir 2> /dev/null
-done
-

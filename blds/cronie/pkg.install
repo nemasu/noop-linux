@@ -1,0 +1,3 @@
+function postinst() {
+    chmod u+s /usr/bin/crontab
+}

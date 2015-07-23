@@ -1,8 +1,0 @@
-useradd -M sshd
-if [ ! -e /etc/ssh_host_rsa_key ]; then
-	ssh-keygen -t rsa1 -f /etc/ssh_host_rsa_key -N ""
-fi
-if [ ! -e /etc/ssh_host_dsa_key ]; then
-	ssh-keygen -t dsa -f /etc/ssh_host_dsa_key -N ""
-fi
-

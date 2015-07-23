@@ -1,0 +1,8 @@
+function postinst() {
+    chown root:utmp /usr/lib/utempter/utempter
+    chmod 2755 /usr/lib/utempter/utempter
+}
+function postup() {
+    chown root:utmp /usr/lib/utempter/utempter
+    chmod 2755 /usr/lib/utempter/utempter
+}

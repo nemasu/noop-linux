@@ -1,0 +1,12 @@
+function postinst() {
+    update-desktop-database -q
+    gtk-update-icon-cache -f -q -t /usr/share/icons/hicolor
+}
+function postup() {
+    update-desktop-database -q
+    gtk-update-icon-cache -f -q -t /usr/share/icons/hicolor
+}
+function postrm() {
+    update-desktop-database -q
+    gtk-update-icon-cache -f -q -t /usr/share/icons/hicolor
+}

@@ -1,0 +1,13 @@
+function postinst() {
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor
+    update-mime-database /usr/share/mime &>/dev/null
+    update-desktop-database -q
+    ln -s /usr/lib/libwxflatnotebook.so /usr/lib/libwxflatnotebook.so.0
+    ln -s /usr/lib/libwxchartctrl.so  /usr/lib/libwxchartctrl.so.0
+    ln -s /usr/lib/libwxcustombutton.so /usr/lib/libwxcustombutton.so.0
+}
+function prerm() {
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor
+    update-mime-database /usr/share/mime &>/dev/null
+    update-desktop-database -q
+}

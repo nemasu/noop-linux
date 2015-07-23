@@ -1,0 +1,18 @@
+function postinst() {
+    chmod 644 /usr/share/fonts/TTF/*
+    fc-cache -fs
+    mkfontscale /usr/share/fonts/TTF
+    mkfontdir /usr/share/fonts/TTF
+}
+function postup() {
+    chmod 644 /usr/share/fonts/TTF/*
+    fc-cache -fs
+    mkfontscale /usr/share/fonts/TTF
+    mkfontdir /usr/share/fonts/TTF
+}
+function postrm() {
+    chmod 644 /usr/share/fonts/TTF/*
+    fc-cache -fs
+    mkfontscale /usr/share/fonts/TTF
+    mkfontdir /usr/share/fonts/TTF
+}

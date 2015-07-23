@@ -1,1 +1,0 @@
-getent passwd lxdm > /dev/null 2>&1 && userdel lxdm

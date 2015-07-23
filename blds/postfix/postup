@@ -1,2 +1,0 @@
-/usr/lib/postfix/post-install daemon_directory=/usr/lib/postfix command_directory=/usr/bin upgrade-package
-chown postfix /var/lib/postfix

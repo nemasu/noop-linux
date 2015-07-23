@@ -1,2 +1,0 @@
-# remove the cert file if it is empty
-[[ -s /etc/ssl/certs/ca-certificates.crt ]] || rm -f /etc/ssl/certs/ca-certificates.crt

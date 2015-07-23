@@ -610,68 +610,18 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 
 	function PushScripts
 	{
-		if [ -e /tmp/bldr/postup ];
+		if [ -e /tmp/bldr/pkg.install ];
 		then
-			mv /tmp/bldr/postup /tmp/bldr/postup.p
-		fi
-
-		if [ -e /tmp/bldr/preup ];
-		then
-			mv /tmp/bldr/preup /tmp/bldr/preup.p
-		fi
-
-		if [ -e /tmp/bldr/postinst ];
-		then
-			mv /tmp/bldr/postinst /tmp/bldr/postinst.p
-		fi
-
-		if [ -e /tmp/bldr/preinst ];
-		then
-			mv /tmp/bldr/preinst /tmp/bldr/preinst.p
-		fi
-
-		if [ -e /tmp/bldr/postrm ];
-		then
-			mv /tmp/bldr/postrm /tmp/bldr/postrm.p
-		fi
-
-		if [ -e /tmp/bldr/prerm ];
-		then
-			mv /tmp/bldr/prerm /tmp/bldr/prerm.p
+			mv /tmp/bldr/pkg.install /tmp/bldr/pkg.install.p
 		fi
 	}
 
 
 	function PopScripts
 	{
-		if [ -e /tmp/bldr/postup.p ];
+		if [ -e /tmp/bldr/pkg.install.p ];
 		then
-			mv /tmp/bldr/postup.p /tmp/bldr/postup
-		fi
-
-		if [ -e /tmp/bldr/preup.p ];
-		then
-			mv /tmp/bldr/preup.p /tmp/bldr/preup
-		fi
-
-		if [ -e /tmp/bldr/postinst.p ];
-		then
-			mv /tmp/bldr/postinst.p /tmp/bldr/postinst
-		fi
-
-		if [ -e /tmp/bldr/preinst.p ];
-		then
-			mv /tmp/bldr/preinst.p /tmp/bldr/preinst
-		fi
-
-		if [ -e /tmp/bldr/postrm.p ];
-		then
-			mv /tmp/bldr/postrm.p /tmp/bldr/postrm
-		fi
-
-		if [ -e /tmp/bldr/prerm.p ];
-		then
-			mv /tmp/bldr/prerm.p /tmp/bldr/prerm
+			mv /tmp/bldr/pkg.install.p /tmp/bldr/pkg.install
 		fi
 	}
 
@@ -755,7 +705,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	if [ $XTRA != 1 ]; then
 		cp -vr $BLDRTMPDIR/* .
 	fi
-	rm -rf postinst preinst postrm prerm preup postup
+	rm -rf pkg.install
 	echo Ridding any /run, /var/run, or /tmp directories
 	if [ -e ./run ]; then
 		rm -rf run
@@ -1668,53 +1618,12 @@ if [ $1 = "-genmeta" ]; then
 
 	$echo SIZE:`du | tail -n 1 | $sed -e 's/.\.//g'` >> $TMPFILE
 
-	$echo PREINST:  >> $TMPFILE
-	$echo "#!/bin/bash" >> $TMPFILE
-	if [ -e $BLDRTMPDIR/preinst ]; then
-		$cat $BLDRTMPDIR/preinst >> $TMPFILE
-		$rm $BLDRTMPDIR/preinst
+	$echo PKGINSTALL:  >> $TMPFILE
+	if [ -e $BLDRTMPDIR/pkg.install ]; then
+		$cat $BLDRTMPDIR/pkg.install >> $TMPFILE
+		$rm $BLDRTMPDIR/pkg.install
 	fi
-	$echo "#PREINSTEOF" >> $TMPFILE
-
-	$echo POSTINST: >> $TMPFILE
-	$echo "#!/bin/bash" >> $TMPFILE
-	if [ -e $BLDRTMPDIR/postinst ]; then
-        $cat $BLDRTMPDIR/postinst >> $TMPFILE
-		$rm $BLDRTMPDIR/postinst
-    fi
-	$echo "#POSTINSTEOF" >> $TMPFILE
-
-	$echo PRERM: >> $TMPFILE
-	$echo "#!/bin/bash" >> $TMPFILE
-	if [ -e $BLDRTMPDIR/prerm ]; then
-        $cat $BLDRTMPDIR/prerm >> $TMPFILE
-		$rm $BLDRTMPDIR/prerm
-    fi
-	$echo "#PRERMEOF" >> $TMPFILE
-
-	$echo POSTRM: >> $TMPFILE
-	$echo "#!/bin/bash" >> $TMPFILE
-	if [ -e $BLDRTMPDIR/postrm ]; then
-        $cat $BLDRTMPDIR/postrm >> $TMPFILE
-		$rm $BLDRTMPDIR/postrm
-    fi
-	$echo "#POSTRMEOF" >> $TMPFILE
-	
-	$echo POSTUP: >> $TMPFILE
-	$echo "#!/bin/bash" >> $TMPFILE
-	if [ -e $BLDRTMPDIR/postup ]; then
-        $cat $BLDRTMPDIR/postup >> $TMPFILE
-		$rm $BLDRTMPDIR/postup
-    fi
-	$echo "#POSTUPEOF" >> $TMPFILE
-
-	$echo PREUP: >> $TMPFILE
-	$echo "#!/bin/bash" >> $TMPFILE
-	if [ -e $BLDRTMPDIR/preup ]; then
-        $cat $BLDRTMPDIR/preup >> $TMPFILE
-		$rm $BLDRTMPDIR/preup
-    fi
-	$echo "#PREUPEOF" >> $TMPFILE
+	$echo "#PKGINSTALLEOF" >> $TMPFILE
 
 	$cat $TMPFILE
 	$echo Meta file is at $TMPFILE
@@ -1745,42 +1654,20 @@ if [ $1 = "-genpkg" ] ; then
 	$mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_${ARCH}.pkg"
 fi
 
-#NOTE: This function is no longer used by pkgr.
-if [ $1 = "-getscripts" ] ; then
+function fn_exists() {
+    type $1 2>/dev/null | $grep -q 'is a function' &> /dev/null
+}
 
-	METAFILE=$TMPFILE
-	
-	if [ -e $INSTALLEDDIR/$2 ]; then
-		METAFILE=$INSTALLEDDIR/$2
-	else
-		pkgr -readmeta $2 > $TMPFILE
-	fi
-
-	$cat $METAFILE | $sed -e '/PREINST:/,/#PREINSTEOF/ !d' | $sed -e '/PREINST/d' > $TMPDIR/run/preinst.sh
-	$cat $METAFILE | $sed -e '/POSTINST:/,/#POSTINSTEOF/ !d' | $sed -e '/POSTINST/d' > $TMPDIR/run/postinst.sh
-	$cat $METAFILE | $sed -e '/PRERM:/,/#PRERMEOF/ !d' | $sed -e '/PRERM/d' > $TMPDIR/run/prerm.sh
-	$cat $METAFILE | $sed -e '/POSTRM:/,/#POSTRMEOF/ !d' | $sed -e '/POSTRM/d' > $TMPDIR/run/postrm.sh
-
-	let isUp=`grep "POSTUPEOF" $METAFILE | wc -l`
-	if [ $isUp -ne 0 ];
+function get_pkg_install() {
+	is_pkg_file=`echo $1 | sed -e 's/.*\.\(pkg\)$/\1/g'`
+	if [ "$is_pkg_file" == "pkg" ];
 	then
-		$cat $METAFILE | $sed -e '/PREUP:/,/#PREUPEOF/ !d' | $sed -e '/PREUP/d' > $TMPDIR/run/preup.sh
-        $cat $METAFILE | $sed -e '/POSTUP:/,/#POSTUPEOF/ !d' | $sed -e '/POSTUP/d' > $TMPDIR/run/postup.sh
-		$chmod a+x $TMPDIR/run/postup.sh
-		$chmod a+x $TMPDIR/run/preup.sh
+		pkgr -readmeta $1 | $sed -e '/PKGINSTALL:/,/#PKGINSTALLEOF/ !d' | $sed -e '/PKGINSTALL/d' > $TMPDIR/run/pkg.install
+	else
+		$cat $INSTALLEDDIR/$1 | $sed -e '/PKGINSTALL:/,/#PKGINSTALLEOF/ !d' | $sed -e '/PKGINSTALL/d' > $TMPDIR/run/pkg.install
 	fi
-
-	$chmod a+x $TMPDIR/run/preinst.sh
-	$chmod a+x $TMPDIR/run/postinst.sh
-	$chmod a+x $TMPDIR/run/postrm.sh
-	$chmod a+x $TMPDIR/run/prerm.sh
 	
-	$echo "Scripts are located in $TMPDIR/run/"
-	
-	$rm -f $TMPFILE
-
-fi
-
+}
 
 #Expecting a package name.
 if [ $1 = "-runpostinst" ]; then
@@ -1791,16 +1678,19 @@ if [ $1 = "-runpostinst" ]; then
 		exit 1;
 	fi
 
-	$cat $INSTALLEDDIR/$2 | $sed -e '/POSTINST:/,/#POSTINSTEOF/ !d' | $sed -e '/POSTINST/d' > $TMPDIR/run/postinst.sh
-	$chmod a+x $TMPDIR/run/postinst.sh
+	get_pkg_install $2
+	source $TMPDIR/run/pkg.install
 
-	if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
+	fn_exists postinst
+	if [ $? -eq 0 ];
 	then
-		$TMPDIR/run/postinst.sh &> /dev/null
-	else
-		$TMPDIR/run/postinst.sh
+		if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
+		then
+			postinst &> /dev/null
+		else
+			postinst
+		fi
 	fi
-
 fi
 
 #Expecting a .pkg
@@ -1812,16 +1702,19 @@ if [ $1 = "-runpreinst" ]; then
         exit 1;
     fi
 
-	pkgr -readmeta $2 | $sed -e '/PREINST:/,/#PREINSTEOF/ !d' | $sed -e '/PREINST/d' > $TMPDIR/run/preinst.sh
-    $chmod a+x $TMPDIR/run/preinst.sh
+	get_pkg_install $2
+    source $TMPDIR/run/pkg.install
 
-    if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-    then
-	    $TMPDIR/run/preinst.sh &> /dev/null
-	else
-		$TMPDIR/run/preinst.sh
+	fn_exists preinst
+	if [ $? -eq 0 ];
+	then
+		if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
+		then
+			preinst &> /dev/null
+		else
+			preinst
+		fi
 	fi
-
 fi
 
 #Expecting a package name
@@ -1833,14 +1726,19 @@ if [ $1 = "-runpostup" ]; then
         exit 1;
     fi
 
-    $cat $INSTALLEDDIR/$2 | $sed -e '/POSTUP:/,/#POSTUPEOF/ !d' | $sed -e '/POSTUP/d' > $TMPDIR/run/postup.sh
-    $chmod a+x $TMPDIR/run/postup.sh
 
-    if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-    then
-	    $TMPDIR/run/postup.sh &> /dev/null
-	else
-		$TMPDIR/run/postup.sh
+	get_pkg_install $2
+    source $TMPDIR/run/pkg.install
+
+	fn_exists postup
+	if [ $? -eq 0 ];
+	then
+		if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
+		then
+			postup &> /dev/null
+		else
+			postup
+		fi
 	fi
 fi
 
@@ -1853,15 +1751,18 @@ if [ $1 = "-runpreup" ]; then
         exit 1;
     fi
 
-    pkgr -readmeta $2 | $sed -e '/PREUP:/,/#PREUPEOF/ !d' | $sed -e '/PREUP/d' > $TMPDIR/run/preup.sh
-    $chmod a+x $TMPDIR/run/preup.sh
+	get_pkg_install $2
+    source $TMPDIR/run/pkg.install
 
-
-	if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-    then
-   		$TMPDIR/run/preup.sh &> /dev/null
-	else
-		$TMPDIR/run/preup.sh
+	fn_exists preup
+	if [ $? -eq 0 ];
+	then
+		if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
+		then
+			preup &> /dev/null
+		else
+			preup
+		fi
 	fi
 fi
 
@@ -1874,14 +1775,19 @@ if [ $1 = "-runpostrm" ]; then
         exit 1;
     fi
 
-    $cat $INSTALLEDDIR/$2 | $sed -e '/POSTRM:/,/#POSTRMEOF/ !d' | $sed -e '/POSTRM/d' > $TMPDIR/run/postrm.sh
-    $chmod a+x $TMPDIR/run/postrm.sh
+	
+	get_pkg_install $2
+	source $TMPDIR/run/pkg.install
 
-	if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-    then
-	    $TMPDIR/run/postrm.sh &> /dev/null
-	else
-		$TMPDIR/run/postrm.sh
+	fn_exists postrm
+	if [ $? -eq 0 ];
+	then
+		if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
+		then
+			postrm &> /dev/null
+		else
+			postrm
+		fi
 	fi
 fi
 
@@ -1894,14 +1800,18 @@ if [ $1 = "-runprerm" ]; then
         exit 1;
     fi
 
-    $cat $INSTALLEDDIR/$2 | $sed -e '/PRERM:/,/#PRERMEOF/ !d' | $sed -e '/PRERM/d' > $TMPDIR/run/prerm.sh
-    $chmod a+x $TMPDIR/run/prerm.sh
+	get_pkg_install $2
+	source $TMPDIR/run/pkg.install
 
-	if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-    then
-   		$TMPDIR/run/prerm.sh &> /dev/null
-	else
-		$TMPDIR/run/prerm.sh
+	fn_exists prerm
+	if [ $? -eq 0 ];
+	then
+		if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
+		then
+			prerm &> /dev/null
+		else
+			prerm
+		fi
 	fi
 fi
 

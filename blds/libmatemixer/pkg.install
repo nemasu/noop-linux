@@ -1,0 +1,9 @@
+function postinst() {
+    glib-compile-schemas /usr/share/glib-2.0/schemas/
+}
+function postup() {
+    glib-compile-schemas /usr/share/glib-2.0/schemas/
+}
+function postrm() {
+    glib-compile-schemas /usr/share/glib-2.0/schemas/
+}

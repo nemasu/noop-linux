@@ -1,0 +1,14 @@
+function postinst() {
+    echo -n "Updating font cache... "
+    fc-cache -sf > /dev/null
+    mkfontscale /usr/share/fonts/Type1
+    mkfontdir /usr/share/fonts/Type1
+    echo "done."
+}
+function postrm() {
+    echo -n "Updating font cache... "
+    fc-cache -sf > /dev/null
+    mkfontscale /usr/share/fonts/Type1
+    mkfontdir /usr/share/fonts/Type1
+    echo "done."
+}

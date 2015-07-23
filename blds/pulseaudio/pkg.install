@@ -1,0 +1,4 @@
+function postinst() {
+    useradd -M pulse
+    groupadd pulse-access
+}

@@ -1,0 +1,6 @@
+function postinst() {
+    gtk-query-immodules-2.0-32 --update-cache
+}
+function postup() {
+    gtk-query-immodules-2.0-32 --update-cache
+}

@@ -1,0 +1,6 @@
+function postinst() {
+    chmod +s /usr/bin/ping
+}
+function postup() {
+    chmod +s /usr/bin/ping
+}

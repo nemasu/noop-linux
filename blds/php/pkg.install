@@ -1,0 +1,4 @@
+function postinst() {
+    echo "To enable php with apache: add 'LoadModule php5_module modules/libphp5.so'"
+    echo "and 'Include conf/extra/php5_module.conf' to your httpd.conf"
+}

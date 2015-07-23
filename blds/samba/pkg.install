@@ -1,0 +1,5 @@
+function postinst() {
+    systemd-tmpfiles --create /usr/lib/tmpfiles.d/samba.conf
+    mkdir -p /var/spool/samba
+    mkdir -p /var/lib/samba/private/tls
+}

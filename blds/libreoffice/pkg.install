@@ -1,0 +1,10 @@
+function postinst() {
+    xdg-icon-resource forceupdate --theme hicolor
+    update-desktop-database -q
+    update-mime-database /usr/share/mime > /dev/null 2>&1
+}
+function postrm() {
+    xdg-icon-resource forceupdate --theme hicolor
+    update-desktop-database -q
+    update-mime-database /usr/share/mime > /dev/null 2>&1
+}

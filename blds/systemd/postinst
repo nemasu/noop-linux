@@ -1,3 +1,0 @@
-/usr/bin/systemd-machine-id-setup
-
-find /usr/lib/systemd/system/ | xargs chmod -x

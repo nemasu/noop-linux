@@ -1,0 +1,6 @@
+function postinst() {
+    chmod 755 /usr/bin/xscreensaver
+}
+function postup() {
+    chmod 755 /usr/bin/xscreensaver
+}

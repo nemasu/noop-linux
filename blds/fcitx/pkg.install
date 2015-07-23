@@ -1,0 +1,6 @@
+function postinst() {
+    chmod +x /usr/share/cmake/fcitx/*.sh
+}
+function postup() {
+    chmod +x /usr/share/cmake/fcitx/*.sh
+}

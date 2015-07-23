@@ -1,4 +1,0 @@
-systemd-tmpfiles --create apache.conf
-getent group http &>/dev/null || groupadd -g 33 http >/dev/null
-getent passwd http &>/dev/null || useradd -u 33 -c "Apache Server" -g http -d /var/www -s /bin/false http >/dev/null
-chmod +x /usr/share/httpd/build/instdso.sh

@@ -1,0 +1,16 @@
+function postinst() {
+    getent group postdrop &>/dev/null || groupadd -g 75 postdrop >/dev/null
+    getent group postfix  &>/dev/null || groupadd -g 73 postfix  >/dev/null
+    getent passwd postfix &>/dev/null || useradd -u 73 -d /var/spool/postfix -g postfix -s /bin/false postfix >/dev/null
+    /usr/lib/postfix/post-install daemon_directory=/usr/lib/postfix command_directory=/usr/bin upgrade-package
+    chown postfix /var/lib/postfix
+}
+function postup() {
+    /usr/lib/postfix/post-install daemon_directory=/usr/lib/postfix command_directory=/usr/bin upgrade-package
+    chown postfix /var/lib/postfix
+}
+function prerm() {
+    getent passwd postfix &>/dev/null && userdel  postfix  >/dev/null
+    getent group postfix  &>/dev/null && groupdel postfix  >/dev/null
+    getent group postdrop &>/dev/null && groupdel postdrop >/dev/null
+}

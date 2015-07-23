@@ -1,0 +1,8 @@
+function postinst() {
+    getent group ntp &>/dev/null || groupadd -g 87 ntp >/dev/null
+    getent passwd ntp &>/dev/null || useradd -u 87 -g ntp -d /var/lib/ntp -c 'Network Time Protocol' -s /bin/false ntp >/dev/null
+}
+function postrm() {
+    getent passwd ntp &>/dev/null && userdel ntp >/dev/null
+    getent group ntp &>/dev/null && groupdel ntp >/dev/null
+}

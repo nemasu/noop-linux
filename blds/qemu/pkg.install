@@ -1,0 +1,6 @@
+function postinst() {
+    chmod u+s /usr/lib/qemu/qemu-bridge-helper
+}
+function postup() {
+    chmod u+s /usr/lib/qemu/qemu-bridge-helper
+}

@@ -1,0 +1,7 @@
+function postinst() {
+    useradd -M mysql
+    install -omysql -gmysql -d /run/mysql
+    install -omysql -gmysql -d /var/lib/mysql
+    chmod a+r+x /usr/sbin/mysqld
+    mysql_install_db --force --basedir=/usr --datadir=/var/lib/mysql --user=mysql &> /dev/null
+}

@@ -1,0 +1,6 @@
+function postinst() {
+    chmod +s /usr/bin/unix_chkpwd
+}
+function postup() {
+    chmod +s /usr/bin/unix_chkpwd
+}

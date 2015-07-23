@@ -1,0 +1,9 @@
+function postinst() {
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor
+}
+function postup() {
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor
+}
+function postrm() {
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor
+}

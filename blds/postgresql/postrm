@@ -1,8 +1,0 @@
-if getent passwd postgres >/dev/null;
-then
-	userdel postgres
-fi
-if getent group postgres >/dev/null;
-then
-	groupdel postgres
-fi

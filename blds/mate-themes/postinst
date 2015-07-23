@@ -1,4 +1,0 @@
-for i in ContrastHighLargePrint ContrastHighLargePrintInverse ContrastHigh-SVG Fog mate Quid;
-do
-	gtk-update-icon-cache -q -t -f /usr/share/icons/$i
-done

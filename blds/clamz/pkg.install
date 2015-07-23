@@ -1,0 +1,12 @@
+function postinst() {
+    update-mime-database /usr/share/mime 
+    update-desktop-database -q
+}
+function postup() {
+    update-mime-database /usr/share/mime 
+    update-desktop-database -q
+}
+function postrm() {
+    update-mime-database /usr/share/mime 
+    update-desktop-database -q
+}

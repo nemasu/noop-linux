@@ -1,7 +1,0 @@
-if [ -e /tmp/network.service ];
-then
-        echo "Restoring old network configuration"
-        cp -v /tmp/network.service /etc/systemd/system/
-fi
-
-find /usr/lib/systemd/system/ | xargs chmod -x

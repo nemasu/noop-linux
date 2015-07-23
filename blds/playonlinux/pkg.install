@@ -1,0 +1,8 @@
+function postinst() {
+    chmod +x /usr/share/playonlinux/playon*
+    chmod +x /usr/share/playonlinux/bash/*
+}
+function postup() {
+    chmod +x /usr/share/playonlinux/playon*
+    chmod +x /usr/share/playonlinux/bash/*
+}

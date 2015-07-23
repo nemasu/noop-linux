@@ -1,0 +1,8 @@
+function postinst() {
+    getent group avahi &>/dev/null || groupadd -r -g 84 avahi >/dev/null
+    getent passwd avahi &>/dev/null || useradd -r -u 84 -g avahi -d / -s /bin/false -c avahi avahi >/dev/null
+}
+function postrm() {
+    getent passwd avahi &>/dev/null && userdel avahi >/dev/null
+    getent group avahi &>/dev/null && groupdel avahi >/dev/null
+}

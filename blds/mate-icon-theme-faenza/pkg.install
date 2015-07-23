@@ -1,0 +1,15 @@
+function postinst() {
+    gtk-update-icon-cache -q -t -f /usr/share/icons/matefaenza
+    gtk-update-icon-cache -q -t -f /usr/share/icons/matefaenzadark
+    gtk-update-icon-cache -q -t -f /usr/share/icons/matefaenzagray
+}
+function postup() {
+    gtk-update-icon-cache -q -t -f /usr/share/icons/matefaenza
+    gtk-update-icon-cache -q -t -f /usr/share/icons/matefaenzadark
+    gtk-update-icon-cache -q -t -f /usr/share/icons/matefaenzagray
+}
+function postrm() {
+    gtk-update-icon-cache -q -t -f /usr/share/icons/matefaenza
+    gtk-update-icon-cache -q -t -f /usr/share/icons/matefaenzadark
+    gtk-update-icon-cache -q -t -f /usr/share/icons/matefaenzagray
+}

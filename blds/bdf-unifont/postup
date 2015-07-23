@@ -1,3 +1,0 @@
-fc-cache -s > /dev/null
-mkfontscale /usr/share/fonts/misc
-mkfontdir /usr/share/fonts/misc

@@ -1,0 +1,6 @@
+function postinst() {
+    chmod +s /usr/lib/dbus-daemon-launch-helper
+}
+function postup() {
+    chmod +s /usr/lib/dbus-daemon-launch-helper
+}
