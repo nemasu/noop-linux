@@ -1945,10 +1945,17 @@ if [ $1 = "-libdiff" ]; then
 fi
 
 if [ $1 = "-init" ]; then
+	if [ -z "$2" ];
+	then
+		SET_LOCALE="en_US"
+	else
+		SET_LOCALE="$2"
+	fi
 	$cp -r /etc/skel/* ~/ &> /dev/null
 	$cp /etc/skel/.* ~/ &> /dev/null
 	$mkdir -p /lib/locale
-	localedef -i en_US -f UTF-8 en_US.UTF-8
+	localedef -i ${SET_LOCALE} -f UTF-8 "${SET_LOCALE}.UTF-8"
+	localectl set-locale "LANG=${SET_LOCALE}.UTF-8"
 	/usr/bin/systemd-machine-id-setup
 	useradd -M messagebus &> /dev/null
 	groupadd lock &> /dev/null

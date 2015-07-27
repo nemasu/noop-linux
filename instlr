@@ -147,4 +147,4 @@ $MOUNT --bind /dev $PREFIX/dev
 $MOUNT --bind /proc $PREFIX/proc
 $MOUNT --bind /sys $PREFIX/sys
 $CHROOT $PREFIX ldconfig
-$CHROOT $PREFIX /bin/bash --login pkgr -init
+$CHROOT $PREFIX /bin/bash --login pkgr -init $2
