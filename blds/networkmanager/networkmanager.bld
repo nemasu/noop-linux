@@ -2,14 +2,15 @@
 NAME=networkmanager
 
 #package version
-VERSION=1.0.4
+VERSION=1.0.4-1
+DVERSION=1.0.4
 _pppver=2.4.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://download.gnome.org/sources/NetworkManager/${VERSION:0:3}/NetworkManager-${VERSION}.tar.xz
+SRC=https://download.gnome.org/sources/NetworkManager/${DVERSION:0:3}/NetworkManager-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -24,7 +25,7 @@ DEPS=('ppp' 'dbus' 'dbus-glib' 'expat' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgc
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('ppp')
+PKGDEPS=('ppp' 'dhcp')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -42,7 +43,7 @@ function BuildAndInstall
 		--libexecdir=/usr/lib/networkmanager \
 		--with-crypto=nss \
 		--with-dhclient=/usr/bin/dhclient \
-		--with-dhcpcd=/usr/bin/dhcpcd \
+		--without-dhcpcd \
 		--with-dnsmasq=/usr/bin/dnsmasq \
 		--with-iptables=/usr/bin/iptables \
 		--with-systemdsystemunitdir=/usr/lib/systemd/system \
@@ -72,7 +73,7 @@ function Detect
 	MAJOR=`curl -s https://download.gnome.org/sources/NetworkManager/ | grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
 	LATEST=`curl -s https://download.gnome.org/sources/NetworkManager/1.0/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

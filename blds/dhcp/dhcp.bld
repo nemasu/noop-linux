@@ -1,0 +1,69 @@
+#package name
+NAME=dhcp
+
+#package version
+VERSION=4.3.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://ftp.isc.org/isc/dhcp/${VERSION}/dhcp-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	# Define _GNU_SOURCE to fix IPV6.
+	sed '/^CFLAGS="$CFLAGS/ s/INGS"/INGS -D_GNU_SOURCE"/' -i configure
+
+	./configure --prefix=/usr --sbindir=/usr/bin --sysconfdir=/etc \
+		--with-srv-lease-file=/var/lib/dhcp/dhcpd.leases \
+		--with-srv6-lease-file=/var/lib/dhcp/dhcpd6.leases \
+		--with-cli-lease-file=/var/lib/dhclient/dhclient.leases \
+		--with-cli6-lease-file=/var/lib/dhclient/dhclient6.leases
+
+	make -j${BLDR_CORES}
+
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=ftp://ftp.isc.org/isc/dhcp/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
