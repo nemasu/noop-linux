@@ -2032,7 +2032,16 @@ if [ $1 = "-init" ]; then
 				pkgr -i $i;
 			done
 			
-			echo "ibus-fbterm-launch" >> /root/.bashrc
+			sed -i -e '/PROMPT_COMMAND=/d' /etc/profile
+			sed -i -e 's/TERM=xterm/TERM=fbterm/g;' /etc/profile
+			echo "export LANG=ja_JP.UTF-8" >> /etc/profile
+			echo "ibus-fbterm-launch &> /dev/null" >> /root/.bashrc
+			pushd /usr/bin
+			ln -s python2 python
+			popd
+			gpasswd -a root video
+
+			dconf load /desktop/ibus/ < curl -s -L https://github.com/nemasu/noop-linux/raw/master/etc/ja_JP-ibus.default
 		fi
 
 		if [ "core" != "$NOOP_ISO_CREATE" ];
