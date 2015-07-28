@@ -1955,7 +1955,7 @@ if [ $1 = "-init" ]; then
 	$cp /etc/skel/.* ~/ &> /dev/null
 	$mkdir -p /lib/locale
 	localedef -i ${SET_LOCALE} -f UTF-8 "${SET_LOCALE}.UTF-8"
-	localectl set-locale "LANG=${SET_LOCALE}.UTF-8"
+	echo "LANG=${SET_LOCALE}.UTF-8" > /etc/locale.conf
 	/usr/bin/systemd-machine-id-setup
 	useradd -M messagebus &> /dev/null
 	groupadd lock &> /dev/null

@@ -51,6 +51,6 @@ cd ..
 
 
 NAME_DATE=`date +%Y%m%d`
-grub-mkrescue -o noop-${NOOP_ISO_CREATE}-${NAME_DATE}.iso iso
+grub-mkrescue -o noop-${NOOP_ISO_CREATE}-${NAME_DATE}${2}.iso iso
 
 rm mkinitramfs instlr
