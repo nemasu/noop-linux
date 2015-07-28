@@ -2025,6 +2025,16 @@ if [ $1 = "-init" ]; then
 		cd /root
 		curl -s -L http://www.nooplinux.org/instlr > instlr && chmod +x instlr
 
+		if [ "${SET_LOCALE}" == "ja_JP" ];
+		then
+			for i in ibus fbterm ibus-fbterm ibus-anthy;
+			do
+				pkgr -i $i;
+			done
+			
+			echo "ibus-fbterm-launch" >> /root/.bashrc
+		fi
+
 		if [ "core" != "$NOOP_ISO_CREATE" ];
 		then
 			for i in xorg-meta ${NOOP_ISO_CREATE}-meta gvfs chromium chromium-plugins firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
