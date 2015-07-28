@@ -2041,7 +2041,7 @@ if [ $1 = "-init" ]; then
 			popd
 			gpasswd -a root video
 
-			dconf load /desktop/ibus/ < curl -s -L https://github.com/nemasu/noop-linux/raw/master/etc/ja_JP-ibus.default
+			curl -s -L https://github.com/nemasu/noop-linux/raw/master/etc/ja_JP-ibus.default | dconf load /desktop/ibus/
 		fi
 
 		if [ "core" != "$NOOP_ISO_CREATE" ];
