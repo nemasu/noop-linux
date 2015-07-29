@@ -2043,6 +2043,7 @@ if [ $1 = "-init" ]; then
 			echo "echo \"日本語入力について、\"nihonGo\"を実行して、入力変化するのは<Ctrl>+Spaceを使ってください。\"" >> /usr/bin/welcome 
 			echo "/usr/bin/bash --login" >> /usr/bin/welcome 
 			echo "ibus engine &> /dev/null" >> /usr/bin/nihonGo
+			echo "sleep 4 &> /dev/null" >> /usr/bin/nihonGo
 			echo "ibus engine anthy &> /dev/null" >> /usr/bin/nihonGo
 			chmod +x /usr/bin/nihonGo /usr/bin/welcome
 		fi
