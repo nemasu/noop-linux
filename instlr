@@ -44,13 +44,24 @@ fi
 PREFIX=$1
 
 if [ ! -d "$PREFIX" ]; then
-	echo "Error: Please provide a valid directory";
+	
+	if [ "$LANG" == "ja_JP.UTF-8" ]; then
+		echo "エラー：有効なディレクトリを提供してください。";
+	else
+		echo "Error: Please provide a valid directory";
+	fi
+	
 	exit 1;
 fi
 
 if [ -z "$NOOP_ISO_CREATE" ];
 then
-	echo "Get packages from the internet, or use booted media? (internet/media): "; read internetormedia;
+	if [ "$LANG" == "ja_JP.UTF-8" ]; then
+		echo "インタネットやメディアからインストールしますか？ (internet/media)：";
+	else
+		echo "Get packages from the internet, or use booted media? (internet/media): "; 
+	fi
+	read internetormedia;
 else
 	internetormedia=internet
 fi
@@ -90,13 +101,22 @@ then
 else
 
 	if [ ! -d /var/noop/installed ]; then
-		echo "Error: Not booted from valid noop Linux media, use internet instalation method.";
+	
+		if [ "$LANG" == "ja_JP.UTF-8" ]; then
+			echo "エラー：noopメディアから起動しませんでした。";
+		else
+			echo "Error: Not booted from valid noop Linux media, use internet instalation method.";
+		fi
 		exit 1;
 	fi
 
 	for i in `ls /var/noop/installed`
 	do
-		echo "Copying package $i"
+		if [ "$LANG" == "ja_JP.UTF-8" ]; then
+			echo "パッケージをコピーしませ　$i";
+		else
+			echo "Copying package $i"
+		fi
 		
 		#Dirs
 		for j in `sed -n -e '/FILES:/,$p' /var/noop/installed/$i | sed '/FILES:/d' | sed 's/^\(.*\/\).*/\1/g' | sort | uniq`;
@@ -115,11 +135,19 @@ else
 		done
 	done
 
-	echo -n "Copying metadata...";
+	if [ "$LANG" == "ja_JP.UTF-8" ]; then
+		echo -n "メタデータをコピーしています。。。";
+	else
+		echo -n "Copying metadata...";
+	fi
 	cp -r /var/noop $PREFIX/var/
 	echo "done.";
 
-	echo -n "Resetting base file system...";
+	if [ "$LANG" == "ja_JP.UTF-8" ]; then
+		echo -n "ベースファイルシステムをリセットしています。。。";
+	else
+		echo -n "Resetting base file system...";
+	fi
 	pushd $PREFIX &> /dev/null
 
 	if [ -e /var/noop/file-base.tar.bz2 ]; then
