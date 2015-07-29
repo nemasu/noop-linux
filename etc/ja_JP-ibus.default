@@ -1,8 +1,0 @@
-[general]
-engines-order=['anthy', 'xkb:us::eng']
-preload-engines=['xkb:us::eng', 'anthy']
-version='1.5.5'
-
-[general/hotkey]
-triggers=['<Control><Alt>space']
-

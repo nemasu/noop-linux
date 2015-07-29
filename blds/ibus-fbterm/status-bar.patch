@@ -1,0 +1,38 @@
+From 57cf3d645fdf33155d1446f7bb8c7ac6fb8d7c4c Mon Sep 17 00:00:00 2001
+From: fujiwarat <takao.fujiwara1@gmail.com>
+Date: Tue, 30 Jun 2015 19:22:46 +0900
+Subject: [PATCH] Enable status bar
+
+---
+ src/display.c     | 2 +-
+ src/ibus-fbterm.c | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/display.c b/src/display.c
+index 4789a44..8b5f193 100644
+--- a/src/display.c
++++ b/src/display.c
+@@ -226,7 +226,7 @@ static void calculate_status_win()
+ 	}
+ 
+ 	status_bar_win.x = cursor_x;
+-	status_bar_win.y = get_cursor_y() + 2 * WIN_INTERVAL + GAP;
++	status_bar_win.y = get_cursor_y() + 3 * WIN_INTERVAL + GAP;
+ 	status_bar_win.w = FW(w + property_list->properties->len) + 2 * MARGIN;
+ 	status_bar_win.h = WIN_HEIGHT;
+ 
+diff --git a/src/ibus-fbterm.c b/src/ibus-fbterm.c
+index 3719594..556ed2a 100644
+--- a/src/ibus-fbterm.c
++++ b/src/ibus-fbterm.c
+@@ -134,6 +134,10 @@ static void slot_register_properties(IBusInputContext *ctx, IBusPropList *props,
+ 		g_object_unref(property_list);
+ 		property_list = 0;
+ 	}
++
++	property_list = g_object_ref(props);
++	calculate_status_win();
++	draw_status_bar();
+ }
+ 
+ static void slot_update_property(IBusInputContext *ctx, IBusProperty *prop, gpointer data)

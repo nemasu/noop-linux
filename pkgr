@@ -2027,7 +2027,7 @@ if [ $1 = "-init" ]; then
 
 		if [ "${SET_LOCALE}" == "ja_JP" ];
 		then
-			for i in ibus fbterm ibus-fbterm ibus-anthy;
+			for i in ibus fbterm ibus-fbterm ibus-anthy setxkbmap;
 			do
 				pkgr -i $i;
 			done
@@ -2035,13 +2035,16 @@ if [ $1 = "-init" ]; then
 			sed -i -e '/PROMPT_COMMAND=/d' /etc/profile
 			sed -i -e 's/TERM=xterm/TERM=fbterm/g;' /etc/profile
 			echo "export LANG=ja_JP.UTF-8" >> /etc/profile
-			echo "ibus-fbterm-launch &> /dev/null" >> /root/.bashrc
+			echo "ibus-fbterm-launch -- /usr/bin/welcome &> /dev/null" >> /root/.bashrc
 			pushd /usr/bin
 			ln -s python2 python
 			popd
-			gpasswd -a root video
 
-			curl -s -L https://github.com/nemasu/noop-linux/raw/master/etc/ja_JP-ibus.default | dconf load /desktop/ibus/
+			echo "echo \"日本語入力について、\"nihonGo\"を実行して、入力変化するのは<Ctrl>+Spaceを使ってください。\"" >> /usr/bin/welcome 
+			echo "/usr/bin/bash --login" >> /usr/bin/welcome 
+			echo "ibus engine &> /dev/null" >> /usr/bin/nihonGo
+			echo "ibus engine anthy &> /dev/null" >> /usr/bin/nihonGo
+			chmod +x /usr/bin/nihonGo /usr/bin/welcome
 		fi
 
 		if [ "core" != "$NOOP_ISO_CREATE" ];

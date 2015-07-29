@@ -9,6 +9,7 @@ ISUSR=1
 
 #source location (used by wget)
 SRC=https://ibus-fbterm.googlecode.com/files/ibus-fbterm-${VERSION}.tar.gz
+#SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -28,9 +29,15 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	git clone https://github.com/fujiwarat/ibus-fbterm.git
+	cd ibus-fbterm
+	autoconf
+	./configure $STDUSRCONF
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect

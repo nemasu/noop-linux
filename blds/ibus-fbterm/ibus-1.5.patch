@@ -1,0 +1,86 @@
+From 82688194f899c5915aa1b388c533561cd59bc998 Mon Sep 17 00:00:00 2001
+From: fujiwarat <takao.fujiwara1@gmail.com>
+Date: Fri, 26 Jun 2015 14:05:38 +0900
+Subject: [PATCH] Update for ibus 1.5
+
+---
+ src/display.c     | 14 +++++++++++++-
+ src/ibus-fbterm.c |  8 ++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/src/display.c b/src/display.c
+index 97ed42c..d9d90af 100644
+--- a/src/display.c
++++ b/src/display.c
+@@ -3,7 +3,7 @@ enum { AuxiliaryTextWin = 0, LookupTableWin, StatusBarWin };
+ static unsigned short cursor_x, cursor_y;
+ static Rectangle auxiliary_text_win, lookup_table_win, status_bar_win;
+ 
+-static const Info info;
++static Info info;
+ 
+ #define FW(x) ((x) * info.fontWidth)
+ #define FH(y) ((y) * info.fontHeight)
+@@ -212,7 +212,11 @@ static void calculate_status_win()
+ 		IBusProperty *prop = ibus_prop_list_get(property_list, i);
+ 		if (!prop) break;
+ 
++#if IBUS_CHECK_VERSION (1, 4, 0)
++		w += text_width(ibus_property_get_label(prop)->text);
++#else
+ 		w += text_width(prop->label->text);
++#endif
+ 	}
+ 
+ 	status_bar_win.x = cursor_x;
+@@ -238,8 +242,16 @@ static void draw_status_bar()
+ 		IBusProperty *prop = ibus_prop_list_get(property_list, i);
+ 		if (!prop) break;
+ 
++#if IBUS_CHECK_VERSION (1, 4, 0)
++		IBusText *text = ibus_property_get_label(prop);
++		draw_text(x, y, COLOR_FG, COLOR_BG,
++		          text->text,
++		          strlen(text->text));
++		x += FW(text_width(text->text));
++#else
+ 		draw_text(x, y, COLOR_FG, COLOR_BG, prop->label->text, strlen(prop->label->text));
+ 		x += FW(text_width(prop->label->text));
++#endif
+ 
+ 		char space = ' ';
+ 		draw_text(x, y, COLOR_FG, COLOR_BG, &space, 1);
+diff --git a/src/ibus-fbterm.c b/src/ibus-fbterm.c
+index ffb7401..7b6b604 100644
+--- a/src/ibus-fbterm.c
++++ b/src/ibus-fbterm.c
+@@ -119,13 +119,17 @@ static void im_active()
+ 	debug("im active\n");
+ 	modifier_state = 0;
+ 	init_keycode_state();
++#if ! IBUS_CHECK_VERSION (1, 4, 99)
+ 	ibus_input_context_enable(ibus_ctx);
++#endif
+ }
+ 
+ static void im_deactive()
+ {
+ 	debug("im deactive\n");
++#if ! IBUS_CHECK_VERSION (1, 4, 99)
+ 	ibus_input_context_disable(ibus_ctx);
++#endif
+ 
+ 	auxiliary_text_win.w = 0;
+ 	lookup_table_win.w = 0;
+@@ -240,7 +244,11 @@ int main()
+ 					 "signal::register-properties", slot_register_properties, NULL,
+ 					 "signal::update-property", slot_update_property, NULL,
+ 					 NULL);
++#if IBUS_CHECK_VERSION (1, 4, 99)
++	ibus_input_context_set_capabilities(ibus_ctx, IBUS_CAP_AUXILIARY_TEXT | IBUS_CAP_LOOKUP_TABLE | IBUS_CAP_PROPERTY | IBUS_CAP_FOCUS);
++#else
+ 	ibus_input_context_set_capabilities(ibus_ctx, IBUS_CAP_AUXILIARY_TEXT | IBUS_CAP_LOOKUP_TABLE | IBUS_CAP_PROPERTY);
++#endif
+ 
+ 	register_im_callbacks(cbs);
+ 	connect_fbterm(1);
