@@ -2069,7 +2069,7 @@ if [ $1 = "-init" ]; then
 
 		if [ "${SET_LOCALE}" == "ja_JP" ];
 		then
-			for i in ibus fbterm ibus-fbterm ibus-anthy setxkbmap;
+			for i in ibus fbterm ibus-fbterm ibus-anthy;
 			do
 				pkgr -i $i;
 			done
@@ -2082,12 +2082,11 @@ if [ $1 = "-init" ]; then
 			ln -s python2 python
 			popd
 
-			echo "echo \"日本語入力について、\"nihonGo\"を実行して、入力変化するのは<Ctrl>+Spaceを使ってください。\"" >> /usr/bin/welcome 
+			echo "echo \"日本語入力について、\"ibus engine anthy\"を実行して、入力変化するのは<Ctrl>+Spaceを使ってください。\"" >> /usr/bin/welcome 
+			echo "ibus engine &> /dev/null" >> /usr/bin/welcome 
 			echo "/usr/bin/bash --login" >> /usr/bin/welcome 
-			echo "ibus engine &> /dev/null" >> /usr/bin/nihonGo
-			echo "sleep 4 &> /dev/null" >> /usr/bin/nihonGo
-			echo "ibus engine anthy &> /dev/null" >> /usr/bin/nihonGo
-			chmod +x /usr/bin/nihonGo /usr/bin/welcome
+			echo "#!/bin/bash" >> /usr/bin/setxkbmap
+			chmod +x /usr/bin/welcome /usr/bin/setxkbmap
 		fi
 
 		if [ "core" != "$NOOP_ISO_CREATE" ];
