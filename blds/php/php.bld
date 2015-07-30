@@ -2,8 +2,8 @@
 NAME=php
 
 #package version
-VERSION=5.6.7
-DVERSION=5.6.7
+VERSION=5.6.11
+DVERSION=5.6.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -45,6 +45,7 @@ function BuildAndInstall
 		--with-config-file-scan-dir=/etc/php/conf.d \
 		--disable-rpath \
 		--mandir=/usr/share/man \
+		--enable-maintainer-zts \
 		--enable-bcmath=shared \
 		--enable-calendar=shared \
 		--enable-dba=shared \

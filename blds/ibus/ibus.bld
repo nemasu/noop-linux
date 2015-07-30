@@ -2,13 +2,13 @@
 NAME=ibus
 
 #package version
-VERSION=1.5.5
+VERSION=1.5.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://ibus.googlecode.com/files/ibus-${VERSION}.tar.gz
+SRC=https://github.com/ibus/ibus/releases/download/${VERSION}/ibus-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -30,15 +30,17 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+
 	./autogen.sh \
-    --prefix=/usr \
-    --libexecdir=/usr/lib/ibus \
-    --sysconfdir=/etc \
-    --disable-gconf \
-    --enable-dconf \
-    --disable-memconf \
-    --enable-ui \
-    --enable-python-library
+		--prefix=/usr \
+		--libexecdir=/usr/lib/ibus \
+		--sysconfdir=/etc \
+		--disable-gconf \
+		--enable-dconf \
+		--disable-memconf \
+		--enable-ui \
+		--enable-python-library \
+		--with-python=python3
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
@@ -46,7 +48,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://code.google.com/p/ibus/downloads/list
+	LISTURL=https://github.com/ibus/ibus/releases
 	FILELIST=`GetFileList`
 	LATEST=0
 

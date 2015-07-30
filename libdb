@@ -2197,11 +2197,11 @@ hwloc,libhwloc.so.5
 hwloc,libhwloc.so.5.5.0
 ibus-anthy,libanthygobject-1.0.so
 ibus-anthy,libanthygobject-1.0.so.5
-ibus-anthy,libanthygobject-1.0.so.5.0.506
+ibus-anthy,libanthygobject-1.0.so.5.0.507
 ibus,im-ibus.so
 ibus,libibus-1.0.so
 ibus,libibus-1.0.so.5
-ibus,libibus-1.0.so.5.0.505
+ibus,libibus-1.0.so.5.0.511
 ibus-qt,libibus-qt.so
 ibus-qt,libibus-qt.so.1
 ibus-qt,libibus-qt.so.1.3.0
@@ -6668,7 +6668,7 @@ samba,libutil-setid-samba4.so
 samba,libutil-tdb-samba4.so
 samba,libwbclient.so
 samba,libwbclient.so.0
-samba,libwbclient.so.0.11
+samba,libwbclient.so.0.12
 samba,libwinbind-client-samba4.so
 samba,libwind-samba4.so.0
 samba,libwind-samba4.so.0.0.0
@@ -7064,12 +7064,12 @@ taglib,libtag.so.1
 taglib,libtag.so.1.12.0
 talloc,libpytalloc-util.so
 talloc,libpytalloc-util.so.2
-talloc,libpytalloc-util.so.2.1.1
-talloc,libtalloc-compat1-2.1.1.so
+talloc,libpytalloc-util.so.2.1.3
+talloc,libtalloc-compat1-2.1.3.so
 talloc,libtalloc.so
 talloc,libtalloc.so.1
 talloc,libtalloc.so.2
-talloc,libtalloc.so.2.1.1
+talloc,libtalloc.so.2.1.3
 talloc,talloc.so
 tcl,libitcl4.0.0.so
 tcl,libsqlite3.8.0.so
@@ -7082,7 +7082,7 @@ tcl,libtdbcpostgres1.0.0.so
 tcl,libthread2.7.0.so
 tdb,libtdb.so
 tdb,libtdb.so.1
-tdb,libtdb.so.1.3.4
+tdb,libtdb.so.1.3.7
 tdb,tdb.so
 telepathy-glib,libtelepathy-glib.so
 telepathy-glib,libtelepathy-glib.so.0
@@ -7092,7 +7092,7 @@ telepathy-logger,libtelepathy-logger.so.2
 telepathy-logger,libtelepathy-logger.so.2.2.1
 tevent,libtevent.so
 tevent,libtevent.so.0
-tevent,libtevent.so.0.9.24
+tevent,libtevent.so.0.9.25
 tevent,_tevent.so
 thunar,libthunar-tpa.so
 thunar,libthunarx-2.so

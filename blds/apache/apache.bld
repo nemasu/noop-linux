@@ -2,7 +2,7 @@
 NAME=apache
 
 #package version
-VERSION=2.4.10
+VERSION=2.4.16
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -88,19 +88,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.apache.org/dist/httpd/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -L -s http://www.apache.org/dist/httpd/ | grep "CURRENT-IS-" | sed 's/.*CURRENT-IS-\([0-9\.]*\).*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

@@ -2,8 +2,8 @@
 NAME=gvfs
 
 #package version
-VERSION=1.24.0
-DVERSION=1.24.0
+VERSION=1.24.1
+DVERSION=1.24.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -37,8 +37,7 @@ function BuildAndInstall
   ./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var --disable-static \
       --libexecdir=/usr/lib/gvfs \
-      --with-bash-completion-dir=/usr/share/bash-completion/completions \
-      --disable-obexftp 
+      --with-bash-completion-dir=/usr/share/bash-completion/completions
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
