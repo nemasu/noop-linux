@@ -113,7 +113,7 @@ else
 	for i in `ls /var/noop/installed`
 	do
 		if [ "$LANG" == "ja_JP.UTF-8" ]; then
-			echo "パッケージをコピーしませ　$i";
+			echo "パッケージをコピーします　$i";
 		else
 			echo "Copying package $i"
 		fi
