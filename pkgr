@@ -1350,7 +1350,6 @@ function InstallPkg
 	if [  -e $INSTALLEDDIR/$PKG ] ; then
 		if [ $FORCE == 0 ] ; then
 				$echo "Warning: $PKG is already installed, use 'pkgr -i --force ${PKG}' to force."
-				exit 0
 		fi
 	fi
 		
