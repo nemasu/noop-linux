@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Prereqs
+pkgr -i cpio squashfs-tools xorriso mtools &> /dev/null
+
 #Current options: core, mate, xfce4, enlightenment
 export NOOP_ISO_CREATE=$1
 
