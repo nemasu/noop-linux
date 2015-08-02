@@ -52,7 +52,7 @@ function BuildAndInstall
 		--with-pppd=/usr/bin/pppd \
 		--with-pppd-plugin-dir=/usr/lib/pppd/$_pppver \
 		--with-pppoe=/usr/bin/pppoe \
-		--with-kernel-firmware-dir=/usr/lib/firmware \
+		--with-kernel-firmware-dir=/lib/firmware \
 		--with-session-tracking=systemd \
 		--with-modem-manager-1 \
 		--disable-static \
