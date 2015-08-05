@@ -1,0 +1,60 @@
+#package name
+NAME=ovmf
+
+#package version
+VERSION=20150805
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	git clone https://github.com/tianocore/edk2
+	cd edk2
+	make -C BaseTools
+	export EDK_TOOLS_PATH=`pwd`/BaseTools
+	source ./edksetup.sh
+
+# Set RELEASE target, number of build threads
+	sed 's|^TARGET[ ]*=.*|TARGET = RELEASE|;s|TOOL_CHAIN_TAG[ ]*=.*|TOOL_CHAIN_TAG = GCC49|; s|MAX_CONCURRENT_THREAD_NUMBER[ ]*=.*|MAX_CONCURRENT_THREAD_NUMBER = '"${BLDR_CORES}"'|;' -i Conf/target.txt
+
+# Build OVMF for ia32
+	sed "s|^TARGET_ARCH[ ]*=.*|TARGET_ARCH = IA32|; s|^ACTIVE_PLATFORM[ ]*=.*|ACTIVE_PLATFORM = OvmfPkg/OvmfPkgIa32.dsc|;" -i Conf/target.txt
+	./BaseTools/BinWrappers/PosixLike/build
+
+# Build OVMF for x64
+	sed "s|^TARGET_ARCH[ ]*=.*|TARGET_ARCH = X64|; s|^ACTIVE_PLATFORM[ ]*=.*|ACTIVE_PLATFORM = OvmfPkg/OvmfPkgX64.dsc|;" -i Conf/target.txt
+	./BaseTools/BinWrappers/PosixLike/build
+
+	install -D -m644 Build/OvmfIa32/RELEASE_GCC49/FV/OVMF.fd /root/bldr-inst/usr/share/ovmf/ovmf_ia32.bin
+	install -D -m644 Build/OvmfX64/RELEASE_GCC49/FV/OVMF.fd /root/bldr-inst/usr/share/ovmf/ovmf_x64.bin
+	install -D -m644 OvmfPkg/License.txt /root/bldr-inst/usr/share/licenses/ovmf/License.txt
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "${NAME}: Git based"
+}
+
