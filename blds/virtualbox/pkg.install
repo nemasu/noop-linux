@@ -1,16 +1,13 @@
 function postinst() {
-    cd /usr/lib/virtualbox
-    for i in VirtualBox VBoxHeadless VBoxSDL VBoxNetDHCP VBoxNetAdpCtl; do
-      chown root.root $i
-      chmod 4511 $i
-    done
-    depmod
+	systemd-sysusers virtualbox.conf
+	pushd /usr/lib/virtualbox &> /dev/null
+	for i in VBoxSDL VirtualBox VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl VBoxNetNAT;
+	do
+		chmod 4755 $i;
+	done
+
+	chmod +x /usr/share/virtualbox/*.sh
 }
 function postup() {
-    cd /usr/lib/virtualbox
-    for i in VirtualBox VBoxHeadless VBoxSDL VBoxNetDHCP VBoxNetAdpCtl; do
-      chown root.root $i
-      chmod 4511 $i
-    done
-    depmod
+	postinst
 }
