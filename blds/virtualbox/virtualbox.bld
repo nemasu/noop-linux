@@ -54,11 +54,17 @@ function BuildAndInstall
 	mv *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
 	echo "function postinst() {" > /tmp/bldr/pkg.install
 	echo "depmod"                >>/tmp/bldr/pkg.install
+	echo "modprobe vboxdrv" >>/tmp/bldr/pkg.install
+	echo "modprobe vboxnetadp" >>/tmp/bldr/pkg.install
+	echo "modprobe vboxnetflt" >>/tmp/bldr/pkg.install
+	echo "modprobe vboxpci" >>/tmp/bldr/pkg.install
 	echo "}"                     >>/tmp/bldr/pkg.install
 	echo "function postup() {"   >>/tmp/bldr/pkg.install
-	echo "depmod"                >>/tmp/bldr/pkg.install
+	echo "postinst"                >>/tmp/bldr/pkg.install
 	echo "}"                     >>/tmp/bldr/pkg.install
 	pushd /root/bldr-inst 
+	mkdir -p etc/modules-load.d/
+	mv $BLDRTMPDIR/virtualbox-host-modules.conf etc/modules-load.d/
 	pkgr -genmeta virtualbox-modules ${VERSION}
 	pkgr -genpkg
 	mv *.pkg /root/bldr-done/

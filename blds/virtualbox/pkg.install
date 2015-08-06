@@ -5,8 +5,8 @@ function postinst() {
 	do
 		chmod 4755 $i;
 	done
-
 	chmod +x /usr/share/virtualbox/*.sh
+	systemctl restart systemd-modules-load
 }
 function postup() {
 	postinst
