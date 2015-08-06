@@ -2,15 +2,15 @@
 NAME=grub
 
 #package version
-VERSION=2.02-2
-DVERSION=2.02
+VERSION=20150806
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 #SRC=ftp://ftp.gnu.org/gnu/grub/grub-${DVERSION}.tar.xz
-SRC=https://launchpad.net/grub/grub2/${DVERSION}/+download/grub-${DVERSION}~beta2.tar.gz
+#SRC=https://launchpad.net/grub/grub2/${DVERSION}/+download/grub-${DVERSION}~beta2.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('bdf-unifont' 'freetype2' 'fuse' 'glibc' 'lvm2' 'xz' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -32,6 +32,11 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+	git clone git://git.savannah.gnu.org/grub.git
+	cd grub
+	sed 's|/usr/share/fonts/unifont|/usr/share/fonts/unifont /usr/share/fonts/misc|g' -i configure.ac
+	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i configure.ac
+	./autogen.sh
 	cd ..
 	dir1=`ls`
 	cp -r $dir1 ${dir1}_64
@@ -39,22 +44,43 @@ function BuildAndInstall
 	if [ "`uname -m`" == "x86_64" ];
 	then
 		cd ${dir1}_64
-		sed 's|/usr/share/fonts/unifont|/usr/share/fonts/unifont /usr/share/fonts/misc|g' -i configure.ac
-		sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i configure.ac
+		
+		./configure \
+			--enable-device-mapper \
+			--enable-cache-stats \
+			--enable-grub-mkfont \
+			--prefix=/usr \
+			--sysconfdir=/etc \
+			--with-bootdir=/boot \
+			--with-grubdir="grub" \
+			--with-platform="efi" \
+			--disable-efiemu \
+			--enable-mm-debug \
+			--enable-nls \
+			--enable-grub-mount \
+			--enable-boot-time
 
-		autoreconf -vfi
-		./configure --enable-device-mapper --enable-cache-stats --enable-grub-mkfont --prefix=/usr --sysconfdir=/etc --with-bootdir=/boot --with-grubdir="grub" --with-platform="efi"
 		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
 	fi
 
 	cd ../$dir1
 
-	sed 's|/usr/share/fonts/unifont|/usr/share/fonts/unifont /usr/share/fonts/misc|g' -i configure.ac
-	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i configure.ac
-
-	autoreconf -vfi
-	./configure --enable-device-mapper --enable-cache-stats --enable-grub-mkfont --prefix=/usr --sysconfdir=/etc --with-bootdir=/boot --with-grubdir="grub" --with-platform="pc"
+	./configure \
+		--enable-device-mapper \
+		--enable-cache-stats \
+		--enable-grub-mkfont \
+		--enable-boot-time \
+		--enable-grub-mount \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--with-bootdir=/boot \
+		--with-grubdir="grub" \
+		--with-platform="pc" \
+		--enable-efiemu \
+		--enable-mm-debug \
+		--enable-nls 
+		
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
