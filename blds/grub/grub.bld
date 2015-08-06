@@ -2,7 +2,7 @@
 NAME=grub
 
 #package version
-VERSION=20150806
+VERSION=2.02-20150806
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
