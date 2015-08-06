@@ -24,10 +24,10 @@ DEPS=
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('virtualbox-modules')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
-RESTORELIBDB=
+RESTORELIBDB=1
 
 function BuildAndInstall
 {
@@ -70,16 +70,15 @@ function BuildAndInstall
 	mv *.pkg /root/bldr-done/
 	popd
 	popd
-	rm /tmp/bldr/pkg.install
 	rm -rf /root/bldr-inst/*
 
 	#Guest additions
 	pushd out/linux.amd64/release/bin/additions
     install -d /root/bldr-inst/usr/bin
     install -m755 VBoxClient VBoxControl VBoxService mount.vboxsf /root/bldr-inst/usr/bin
-    install -m755 -D $srcdir/VirtualBox-$pkgver/src/VBox/Additions/x11/Installer/98vboxadd-xclient \
+    install -m755 -D ../../../../../src/VBox/Additions/x11/Installer/98vboxadd-xclient \
         /root/bldr-inst/usr/bin/VBoxClient-all
-    install -m755 -D $srcdir/VirtualBox-$pkgver/src/VBox/Additions/x11/Installer/vboxclient.desktop \
+    install -m755 -D ../../../../../src/VBox/Additions/x11/Installer/vboxclient.desktop \
         /root/bldr-inst/etc/xdg/autostart/vboxclient.desktop
     install -D vboxvideo_drv_system.so \
         /root/bldr-inst/usr/lib/xorg/modules/drivers/vboxvideo.so
@@ -87,7 +86,10 @@ function BuildAndInstall
     install -m755 VBoxOGL*.so /root/bldr-inst/usr/lib
     ln -s /usr/lib/VBoxOGL.so /root/bldr-inst/usr/lib/xorg/modules/dri/vboxvideo_dri.so
     install -m755 -D pam_vbox.so /root/bldr-inst/usr/lib/security/pam_vbox.so
-    mv $BLDRTMPDIR/60-vboxguest.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxguest.rules
+    mkdir -p /root/bldr-inst/usr/lib/udev/rules.d/
+	mkdir -p /root/bldr-inst/usr/lib/systemd/system/
+	mkdir -p /root/bldr-inst/usr/lib/sysusers.d/
+	mv $BLDRTMPDIR/60-vboxguest.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxguest.rules
     mv $BLDRTMPDIR/vboxservice.service /root/bldr-inst/usr/lib/systemd/system/vboxservice.service
     mv $BLDRTMPDIR/virtualbox-guest-utils.sysusers /root/bldr-inst/usr/lib/sysusers.d/virtualbox-guest-utils.conf
 	pushd /root/bldr-inst
@@ -102,7 +104,6 @@ function BuildAndInstall
 	mv *.pkg /root/bldr-done/
 	popd
 	popd
-	rm /tmp/bldr/pkg.install
 	rm -rf /root/bldr-inst/*
 
 
@@ -123,7 +124,9 @@ function BuildAndInstall
     install -dm755 /root/bldr-inst/usr/lib/virtualbox
     install -m755 *.so /root/bldr-inst/usr/lib/virtualbox
     install -m644 *.rc *.r0 VBoxEFI*.fd /root/bldr-inst/usr/lib/virtualbox
-    ## other binaries
+	#suid stuff
+	install -m4755 VBoxSDL VirtualBox VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl VBoxNetNAT -t /root/bldr-inst/usr/lib/virtualbox
+	# other binaries
     install -m755 VBoxManage VBoxSVC VBoxExtPackHelperApp VBoxXPCOMIPCD VBoxTestOGL VBoxBalloonCtrl vboxwebsrv webtest -t /root/bldr-inst/usr/lib/virtualbox
 
     # components
@@ -134,6 +137,7 @@ function BuildAndInstall
 	#TODO ?
     install -dm755 /root/bldr-inst/usr/lib/virtualbox/ExtensionPacks
 
+	mkdir -p /root/bldr-inst/usr/share/virtualbox/extensions/
 	cp ../packages/VNC-*.vbox-extpack /root/bldr-inst/usr/share/virtualbox/extensions/
 
     # languages
@@ -166,7 +170,10 @@ function BuildAndInstall
     echo 'INSTALL_DIR=/usr/lib/virtualbox' > /root/bldr-inst/etc/vbox/vbox.cfg
 
     #systemd
-    mv $BLDRTMPDIR/60-vboxdrv.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxdrv.rules
+    mkdir -p /root/bldr-inst/usr/lib/udev/rules.d/
+	mkdir -p /root/bldr-inst/usr/lib/systemd/system/
+	mkdir -p /root/bldr-inst/usr/lib/sysusers.d/
+	mv $BLDRTMPDIR/60-vboxdrv.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxdrv.rules
     mv $BLDRTMPDIR/vboxweb.service /root/bldr-inst/usr/lib/systemd/system/vboxweb.service
     mv $BLDRTMPDIR/virtualbox.sysusers /root/bldr-inst/usr/lib/sysusers.d/virtualbox.conf
 	
