@@ -962,20 +962,23 @@ if [ $1 == "--remove" ] || [ $1 == "-r" ]; then
 	if [ -e $INSTALLEDDIR/$2 ]; then
 		
 		pkgr -runprerm $2	
-		
+	
+		$sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$2 | $sed 's/^/\//g' > /tmp/noop/pkgr-remove-file-list
+
 		#remove cfg files from file list
 		for p in {"cnf","config","conf","cfg","ini"};
 		do
-			$sed -i -e '/\.'"$p"'/d' $INSTALLEDDIR/$2
+			$sed -i -e '/\.'"$p"'/d' /tmp/noop/pkgr-remove-file-list
 		done
 
-		for i in `$sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$2 | $sed 's/^/\//g'`;
+		for i in `$cat /tmp/noop/pkgr-remove-file-list`;
 		do
 			if [ $i != "/usr/lib64" ] && [ $i != "/lib64" ] && [ $i != "//usr/lib64" ] && [ $i != "//lib64" ]; then 
 				$rm -v $PREFIX/$i 2>&1 | $sed -e '/directory/d'
 			fi
 			
 		done
+		$rm /tmp/noop/pkgr-remove-file-list
 		
 		pkgr -runpostrm $2
 		$rm $INSTALLEDDIR/$2
@@ -1168,10 +1171,12 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 	
 	pkgr -runpreup $TMPDIR/$PKGNAME
 
+	$sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$NAME | $sed 's/^/\//g' > /tmp/noop/pkgr-remove-file-list
+
 	#remove cfg files from old file list
 	for p in {"cnf","config","conf","cfg"};
 	do
-		$sed -i -e '/\.'"$p"'/d' $INSTALLEDDIR/$NAME
+		$sed -i -e '/\.'"$p"'/d' /tmp/noop/pkgr-remove-file-list
 	done
 
 	#Skip file removal if upgrading bash
@@ -1180,11 +1185,13 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 
 		#remove files
 		$echo Removing old package
-		for i in `$sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$NAME | $sed 's/^/\//g'`;
+		for i in `$cat /tmp/noop/pkgr-remove-file-list`;
 		do
 			$rm -v $i 2>&1 | $sed -e '/directory/d'
 		done
 	fi
+
+	$rm /tmp/noop/pkgr-remove-file-list 
 	
 	#get new pkg, extract, rename cfg files
 	pkgr -getfiles $TMPDIR/$PKGNAME $TMPDIR/pkgtar.tar.bz2
