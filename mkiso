@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 #Prereqs
 pkgr -i cpio squashfs-tools xorriso mtools &> /dev/null
 
@@ -11,9 +13,9 @@ cd /root
 
 if [ -e iso-fs ];
 then
-	umount iso-fs/dev iso-fs/sys iso-fs/proc;
+	umount iso-fs/dev iso-fs/sys iso-fs/proc || true
 fi
-rm -rf iso iso-fs && mkdir -p iso iso-fs
+rm -rf iso iso-fs efs && mkdir -p iso iso-fs efs
 
 #Initramfs
 wget https://github.com/nemasu/noop-linux/raw/master/initramfs/mkinitramfs-live -Omkinitramfs 
@@ -26,19 +28,55 @@ chmod +x instlr
 ./instlr /root/iso-fs $2
 
 umount iso-fs/dev iso-fs/sys iso-fs/proc;
-cp -r /root/iso-fs/boot /root/iso
-mv noop-initramfs-live.igz /root/iso/boot
 
+#Install grub to iso
+grub-install \
+	--boot-directory=/root/iso/boot \
+	--no-bootsector \
+	--no-rs-codes \
+	--target=i386-pc \
+	--skip-fs-probe \
+	--no-nvram \
+	/dev/zero
 
-wget https://github.com/nemasu/noop-linux/raw/master/etc/iso-grub.cfg -O/root/iso/boot/grub/grub.cfg
+#Create fat partition image
+dd if=/dev/zero of=/root/iso/boot/efs.img bs=1024 count=20480
+mkfs.vfat /root/iso/boot/efs.img
+mount /root/iso/boot/efs.img /root/efs
+
+#Set kernel version in grub.cfg
 KERVER=`grep -m1 VER: /root/iso-fs/var/noop/installed/linux-kernel | sed -e 's/VER://g'`
+wget https://github.com/nemasu/noop-linux/raw/master/etc/iso-grub.cfg -O/root/iso/boot/grub/grub.cfg
 sed -i -e 's/VERSION/'"$KERVER"'/' /root/iso/boot/grub/grub.cfg
 
-mkdir -p /root/iso/EFI/boot/
-cd /root/iso
-grub-mkstandalone  --directory="/usr/lib/grub/x86_64-efi/" --format="x86_64-efi" --compress="xz" --output=EFI/boot/bootx64.efi boot/grub/grub.cfg
-cd ..
+#Copy initrd
+cp noop-initramfs-live.igz /root/iso/boot
+mv noop-initramfs-live.igz /root/efs/
 
+#Copy kernel
+cp -r /root/iso-fs/boot/vmlinuz-$KERVER /root/iso/boot/vmlinuz-$KERVER
+cp -r /root/iso-fs/boot/vmlinuz-$KERVER /root/efs/vmlinuz-$KERVER.efi
+
+#Copy systemd-boot (gummiboot)
+mkdir -p /root/efs/EFI/boot/
+cp /usr/lib/systemd/boot/efi/systemd-bootx64.efi /root/efs/EFI/boot/bootx64.efi
+
+#Create initial grub config
+rm -rf init.grub.config
+for i in part_acorn part_amiga part_apple part_bsd part_dfly part_dvh part_gpt part_msdos part_plan part_sun part_sunpc;
+do
+	echo "insmod $i" >> init.grub.config
+done
+
+#Create loader for systemd-boot
+mkdir -p /root/efs/loader/entries
+echo "timeout 3" >> /root/efs/loader/loader.conf
+echo "default noop-live*" >> /root/efs/loader/loader.conf
+echo "title      noop live" >> /root/efs/loader/entries/noop-live.conf
+echo "linux      /vmlinuz-${KERVER}.efi" >> /root/efs/loader/entries/noop-live.conf
+echo "initrd     /noop-initramfs-live.igz" >> /root/efs/loader/entries/noop-live.conf
+
+umount /root/efs
 if [ "$NOOP_ISO_CREATE" == "enlightenment" ];
 then
 	pushd /root/iso-fs/home/livecd
@@ -49,11 +87,39 @@ then
 fi
 
 cd /root/iso-fs
+rm -rf tmp/*
 mksquashfs * ../iso/root.sqsh
 cd .. 
 
 
-NAME_DATE=`date +%Y%m%d`
-grub-mkrescue -o noop-${NOOP_ISO_CREATE}-${NAME_DATE}${2}.iso iso
+grub-mkimage \
+	--directory '/usr/lib/grub/i386-pc' \
+	--prefix '/boot/grub' \
+	--output '/root/iso/boot/grub/i386-pc/eltorito.img' \
+	--format 'i386-pc-eltorito' \
+	--compression 'auto'  \
+	--config '/root/init.grub.config' 'biosdisk' 'iso9660'
 
-rm mkinitramfs instlr
+NAME_DATE=`date +%Y%m%d`
+
+xorriso -as mkisofs \
+	-graft-points \
+	-b boot/grub/i386-pc/eltorito.img \
+	-no-emul-boot \
+	-boot-load-size 4 \
+	-boot-info-table \
+	--grub2-boot-info \
+	--grub2-mbr /usr/lib/grub/i386-pc/boot_hybrid.img \
+	-apm-block-size 2048 \
+	--efi-boot boot/efs.img \
+	-efi-boot-part \
+	--efi-boot-image \
+	--protective-msdos-label \
+	-o "noop-${1}-${NAME_DATE}${2}.iso" \
+	-rational-rock \
+	--sort-weight 0 / --sort-weight 1 /boot \
+	iso
+
+
+rm mkinitramfs instlr init.grub.config
+rm -r efs
