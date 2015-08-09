@@ -2,8 +2,8 @@
 NAME=libreoffice
 
 #package version
-VERSION=4.4.2.2
-DVERSION=4.4.2.2
+VERSION=5.0.0.5
+DVERSION=5.0.0.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
