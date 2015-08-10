@@ -2054,7 +2054,7 @@ if [ $1 = "-init" ]; then
 		echo "root:noop" | chpasswd
 		echo noop-live > /etc/hostname
 		
-		for i in e2fsprogs btrfs-progs aufs3-utils pciutils parted ipw2200-fw dosfstools efibootmgr screen openssh alsa-firmware alsa-lib alsa-utils alsa-plugins;
+		for i in e2fsprogs btrfs-progs aufs3-utils pciutils gptfdisk parted ipw2200-fw dosfstools efibootmgr screen openssh alsa-firmware alsa-lib alsa-utils alsa-plugins;
 		do
 			pkgr -i $i;
 		done
