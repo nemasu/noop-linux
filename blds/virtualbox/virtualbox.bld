@@ -62,6 +62,9 @@ function BuildAndInstall
 	echo "function postup() {"   >>/tmp/bldr/pkg.install
 	echo "postinst"                >>/tmp/bldr/pkg.install
 	echo "}"                     >>/tmp/bldr/pkg.install
+	echo "function postrm() {"   >>/tmp/bldr/pkg.install
+	echo "rm -rf /etc/modules-load.d/virtualbox-host-modules.conf" >>/tmp/bldr/pkg.install
+	echo "}"                     >>/tmp/bldr/pkg.install
 	pushd /root/bldr-inst 
 	mkdir -p etc/modules-load.d/
 	mv $BLDRTMPDIR/virtualbox-host-modules.conf etc/modules-load.d/
