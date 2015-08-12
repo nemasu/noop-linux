@@ -266,6 +266,9 @@ babl,libbabl-0.1.so.0
 babl,libbabl-0.1.so.0.109.1
 babl,naive-CMYK.so
 babl,sse-fixups.so
+bamf,libbamf3.so
+bamf,libbamf3.so.2
+bamf,libbamf3.so.2.0.0
 bluez,libasound_module_ctl_bluetooth.so
 bluez,libasound_module_pcm_bluetooth.so
 bluez,libbluetooth.so
@@ -3913,6 +3916,9 @@ libgdiplus,libgdiplus.so.0.0.0
 libgee0.6,libgee.so
 libgee0.6,libgee.so.2
 libgee0.6,libgee.so.2.0.0
+libgee,libgee-0.8.so
+libgee,libgee-0.8.so.2
+libgee,libgee-0.8.so.2.5.1
 libglade,libglade-2.0.so
 libglade,libglade-2.0.so.0
 libglade,libglade-2.0.so.0.0.7
@@ -4020,6 +4026,9 @@ libgssglue,libgssglue.so.1.0.0
 libgtop2,libgtop-2.0.so
 libgtop2,libgtop-2.0.so.7
 libgtop2,libgtop-2.0.so.7.2.0
+libgtop,libgtop-2.0.so
+libgtop,libgtop-2.0.so.10
+libgtop,libgtop-2.0.so.10.0.0
 libgudev,libgudev-1.0.so
 libgudev,libgudev-1.0.so.0
 libgudev,libgudev-1.0.so.0.2.0
@@ -4376,6 +4385,9 @@ libwmf,libwmf.so
 libwnck2,libwnck-1.so
 libwnck2,libwnck-1.so.22
 libwnck2,libwnck-1.so.22.4.0
+libwnck,libwnck-3.so
+libwnck,libwnck-3.so.0
+libwnck,libwnck-3.so.0.2.2
 libX11,libX11.so
 libX11,libX11.so.6
 libX11,libX11.so.6.3.0
@@ -4559,6 +4571,7 @@ libxshmfence,libxshmfence.so.1.0.0
 libxslt,libexslt.so
 libxslt,libexslt.so.0
 libxslt,libexslt.so.0.8.17
+libxslt,libxsltmod.so
 libxslt,libxslt.so
 libxslt,libxslt.so.1
 libxslt,libxslt.so.1.1.28
@@ -5599,6 +5612,9 @@ pidgin,xmppdisco.so
 pixman,libpixman-1.so
 pixman,libpixman-1.so.0
 pixman,libpixman-1.so.0.32.6
+plank,libplank.so
+plank,libplank.so.0
+plank,libplank.so.0.0.0
 pluma,libchangecase.so
 pluma,libcloader.so
 pluma,libdocinfo.so
@@ -5952,6 +5968,10 @@ python,libpython3.3m.so
 python,libpython3.3m.so.1.0
 python,libpython3.so
 python,_lsprof.cpython-33m.so
+python-lxml,etree.cpython-33m.so
+python-lxml,etree.so
+python-lxml,objectify.cpython-33m.so
+python-lxml,objectify.so
 python,_lzma.cpython-33m.so
 python,math.cpython-33m.so
 python,_md5.cpython-33m.so

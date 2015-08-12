@@ -1,0 +1,55 @@
+#package name
+NAME=python-lxml
+
+#package version
+VERSION=3.4.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://pypi.python.org/packages/source/l/lxml/lxml-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cd ..
+	DIR=`ls`
+	cp -r $DIR ${DIR}-python2
+
+	cd $DIR
+	python3 setup.py install --root=/root/bldr-inst/ --optimize=1
+
+	cd ../${DIR}-python2
+	python2 setup.py install --root=/root/bldr-inst/ --optimize=1
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s https://pypi.python.org/pypi/lxml | grep -e "lxml&nbsp;" | sed 's/.*\/\([0-9\.][0-9\.]*\)\".*/\1/g' | head -n1`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
