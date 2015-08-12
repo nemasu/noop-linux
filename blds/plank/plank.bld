@@ -17,7 +17,7 @@ EXTRACONF="--disable-apport"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'bamf' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libffi' 'libgee' 'libpng' 'libwnck' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXrender' 'libXres' 'pango' 'pcre' 'pixman' 'startup-notification' 'xcb-util' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

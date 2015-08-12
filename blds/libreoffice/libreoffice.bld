@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('bluez' 'unzip' 'glm' 'perl-archive-zip' 'atk' 'cairo' 'cups' 'curl' 'dbus' 'dbus-glib' 'e2fsprogs' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'icu4c' 'krb5' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libXinerama' 'libXrandr' 'libXrender' 'libXt' 'libfbclient' 'libgcrypt' 'libglu' 'libgpg-error' 'libjpeg' 'libpng' 'libxml2' 'libxslt' 'mesalib' 'neon' 'nspr' 'nss' 'openssl' 'pango' 'python' 'rtmpdump' 'zlib')
+DEPS=('bluez' 'unzip' 'glm' 'perl-archive-zip' 'atk' 'cairo' 'cups' 'curl' 'dbus' 'dbus-glib' 'e2fsprogs' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'gtk+2' 'icu4c' 'krb5' 'lcms2' 'libfbclient' 'libgcrypt' 'libgpg-error' 'libICE' 'libjpeg' 'libpng' 'libSM' 'libX11' 'libXext' 'libXinerama' 'libxml2' 'libXrandr' 'libXrender' 'libxslt' 'libXt' 'mesalib' 'neon' 'nspr' 'nss' 'openssl' 'pango' 'python' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

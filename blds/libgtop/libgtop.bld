@@ -17,7 +17,7 @@ EXTRACONF="--with-libgtop-smp"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('glib2' 'glibc' 'libffi' 'libXau' 'pcre')
 
 # 'no' to skip calls to strip
 STRIP=

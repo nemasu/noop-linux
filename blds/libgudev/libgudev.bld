@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('elfutils' 'glib2' 'glibc' 'libcap2' 'libffi' 'pcre' 'systemd' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'libxml2' 'libxslt' 'python' 'python2' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

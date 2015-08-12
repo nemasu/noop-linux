@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('acl' 'atk' 'attr' 'avahi' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'fuse' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libarchive' 'libbluray' 'libcap2' 'libcdio' 'libexif' 'libffi' 'libgcrypt' 'libgpg-error' 'libgphoto2' 'libimobiledevice' 'libmtp' 'libplist' 'libpng15' 'libsecret' 'libsoup' 'libtool' 'libusb' 'libxcb' 'libxml2' 'nettle' 'openssl' 'pango' 'pcre' 'pixman' 'samba' 'sqlite' 'systemd' 'udisks' 'usbmuxd' 'xz' 'zlib')
+DEPS=('acl' 'atk' 'attr' 'avahi' 'cairo' 'dbus' 'elfutils' 'expat' 'fontconfig' 'freetype2' 'fuse' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libarchive' 'libbluray' 'libcap2' 'libcdio' 'libexif' 'libffi' 'libgcrypt' 'libgpg-error' 'libgphoto2' 'libgudev' 'libimobiledevice' 'libmtp' 'libplist' 'libpng' 'libsecret' 'libsoup' 'libtool' 'libusb' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libxml2' 'libXrender' 'nettle' 'openssl' 'pango' 'pcre' 'pixman' 'samba' 'sqlite' 'systemd' 'udisks' 'usbmuxd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('exo' 'glib2' 'glibc' 'gtk+2' 'libgudev' 'libnotify' 'libxfce4ui' 'libxfce4util' 'pango' 'xfconf')
 
 # 'no' to skip calls to strip
 STRIP=

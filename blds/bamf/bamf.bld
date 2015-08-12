@@ -17,7 +17,7 @@ EXTRACONF="--disable-webapps"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libffi' 'libgtop' 'libwnck' 'libX11' 'pango' 'pcre' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

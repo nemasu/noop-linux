@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc' 'libgcrypt' 'libgpg-error' 'libxml2' 'xz' 'zlib')
+DEPS=('glibc' 'libgcrypt' 'libgpg-error' 'libxml2' 'python2' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

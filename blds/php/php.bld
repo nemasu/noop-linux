@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('aspell' 'curl' 'db' 'enchant' 'freetds' 'freetype2' 'gcc-libs' 'gd' 'gdbm' 'glibc' 'gmp' 'icu4c' 'libX11' 'libXpm' 'libjpeg' 'libmcrypt' 'libpng' 'libtool' 'libvpx' 'libxml2' 'libxslt' 'libzip' 'linux-pam' 'ncurses' 'net-snmp' 'openldap' 'openssl' 'pcre' 'postgresql-libs' 'readline' 'sasl' 'sqlite' 'tidy' 'unixodbc' 'xz' 'zlib')
+DEPS=('imap' 'aspell' 'curl' 'db' 'enchant' 'freetds' 'freetype2' 'gcc-libs' 'gd' 'gdbm' 'glibc' 'gmp' 'icu4c' 'libjpeg' 'libmcrypt' 'libpng' 'libtool' 'libvpx' 'libX11' 'libxml2' 'libXpm' 'libxslt' 'libzip' 'linux-pam' 'ncurses' 'net-snmp' 'openldap' 'openssl' 'pcre' 'postgresql-libs' 'readline' 'sasl' 'sqlite' 'tidy' 'unixodbc' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
