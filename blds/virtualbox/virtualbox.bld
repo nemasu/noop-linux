@@ -52,22 +52,35 @@ function BuildAndInstall
 	make
 	mkdir -p /root/bldr-inst/lib/modules/`uname -r`/misc/
 	mv *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
+	popd
+	pushd src/VBox/Additions/linux
+	mkdir build_dir
+	./export_modules mod_src.tar.gz
+	cd build_dir
+	tar xf ../mod_src.tar.gz
+	sed -i -e '/# error/d' vboxguest/include/VBox/version.h
+	make
+	mv *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
+	popd
 	echo "function postinst() {" > /tmp/bldr/pkg.install
 	echo "depmod"                >>/tmp/bldr/pkg.install
 	echo "modprobe vboxdrv" >>/tmp/bldr/pkg.install
 	echo "modprobe vboxnetadp" >>/tmp/bldr/pkg.install
 	echo "modprobe vboxnetflt" >>/tmp/bldr/pkg.install
 	echo "modprobe vboxpci" >>/tmp/bldr/pkg.install
+	echo "modprobe vboxguest" >>/tmp/bldr/pkg.install
+	echo "modprobe vboxvideo" >>/tmp/bldr/pkg.install
+	echo "modprobe vboxsf" >>/tmp/bldr/pkg.install
 	echo "}"                     >>/tmp/bldr/pkg.install
 	echo "function postup() {"   >>/tmp/bldr/pkg.install
 	echo "postinst"                >>/tmp/bldr/pkg.install
 	echo "}"                     >>/tmp/bldr/pkg.install
 	echo "function postrm() {"   >>/tmp/bldr/pkg.install
-	echo "rm -rf /etc/modules-load.d/virtualbox-host-modules.conf" >>/tmp/bldr/pkg.install
+	echo "rm -rf /etc/modules-load.d/virtualbox.conf" >>/tmp/bldr/pkg.install
 	echo "}"                     >>/tmp/bldr/pkg.install
 	pushd /root/bldr-inst 
 	mkdir -p etc/modules-load.d/
-	mv $BLDRTMPDIR/virtualbox-host-modules.conf etc/modules-load.d/
+	mv $BLDRTMPDIR/virtualbox.conf etc/modules-load.d/
 	pkgr -genmeta virtualbox-modules ${VERSION}
 	pkgr -genpkg
 	mv *.pkg /root/bldr-done/
