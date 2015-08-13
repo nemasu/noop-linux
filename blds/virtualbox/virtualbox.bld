@@ -85,7 +85,6 @@ function BuildAndInstall
 	pkgr -genpkg
 	mv *.pkg /root/bldr-done/
 	popd
-	popd
 	rm -rf /root/bldr-inst/*
 
 	#Guest additions
