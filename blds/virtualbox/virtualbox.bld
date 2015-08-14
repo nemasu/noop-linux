@@ -106,6 +106,10 @@ function BuildAndInstall
     mv $BLDRTMPDIR/vboxservice.service /root/bldr-inst/usr/lib/systemd/system/vboxservice.service
     mv $BLDRTMPDIR/virtualbox-guest-utils.sysusers /root/bldr-inst/usr/lib/sysusers.d/virtualbox-guest-utils.conf
 	pushd /root/bldr-inst
+	mkdir -p sbin
+	cd sbin
+	ln -s /usr/bin/mount.vboxsf
+	cd ..
 	echo "function postinst() {" > /tmp/bldr/pkg.install
 	echo "systemd-sysusers virtualbox-guest-utils.conf"  >>/tmp/bldr/pkg.install
 	echo "}"                     >>/tmp/bldr/pkg.install
