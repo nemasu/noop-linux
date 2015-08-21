@@ -9,6 +9,8 @@ function preinst() {
     mv /usr/lib/xorg/modules/extensions/libglx.so /usr/lib/xorg/modules/extensions/libglx.so.xorg
 }
 function postinst() {
+    getent group persistenced &>/dev/null || groupadd -g 143 persistenced
+    getent passwd persistenced &>/dev/null || useradd -c 'NVIDIA Persistence Daemon' -u 143 -g persistenced -d '/' -s /sbin/nologin persistenced
     depmod
     echo "nvidia: Please reboot"
 }

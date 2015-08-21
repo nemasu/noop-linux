@@ -16,7 +16,6 @@ SRC=
 EXTRACONF=
 ISSPECIAL=1
 DEPS=
-
 STRIP="no"
 RESTORELIBDB=1
 
@@ -30,58 +29,69 @@ function BuildAndInstall
 	rm out
 	cd `ls`
 
+	mv $BLDRTMPDIR/*.p .
+	for i in `ls *.p`;
+	do
+		patch -Np1 -i "$i"
+		rm "$i"
+	done
+
+
 	#Module
 	pushd kernel
 	make SYSSRC=/lib/modules/`uname -r`/build module
-	install -D -m644 nvidia.ko ~/bldr-inst/lib/modules/`uname -r`/misc/nvidia.ko
+	install -D -m644 nvidia.ko /root/bldr-inst/bldr-inst/lib/modules/`uname -r`/misc/nvidia.ko
 	popd
 
-	#The rest
-	install -D -m644 libGL.so.${DVERSION} ~/bldr-inst/usr/lib/libGL.so.${DVERSION}
-	ln -s libGL.so.${DVERSION} ~/bldr-inst/usr/lib/libGL.so.1
-	ln -s libGL.so.${DVERSION} ~/bldr-inst/usr/lib/libGL.so
+	#libs
+	mkdir -p /root/bldr-inst/usr/lib
+	rm *.la
+	mv lib* /root/bldr-inst/usr/lib/
+	mv tls/lib* /root/bldr-inst/usr/lib/
 
-	install -D -m755 nvidia_drv.so ~/bldr-inst/usr/lib/xorg/modules/drivers/nvidia_drv.so
-	install -D -m755 libglx.so.${DVERSION} ~/bldr-inst/usr/lib/xorg/modules/extensions/libglx.so
-	install -D -m755 libnvidia-glcore.so.${DVERSION} ~/bldr-inst/usr/lib/libnvidia-glcore.so
-	install -D -m755 libvdpau_nvidia.so.${DVERSION} ~/bldr-inst/usr/lib/vdpau/libvdpau_nvidia.so
-	install -D -m755 tls/libnvidia-tls.so.${DVERSION} ~/bldr-inst/usr/lib/libnvidia-tls.so.${DVERSION}
-	install -D -m755 libnvidia-cfg.so.${DVERSION} ~/bldr-inst/usr/lib/libnvidia-cfg.so.${DVERSION}
-	install -D -m755 libnvidia-ml.so.${DVERSION} ~/bldr-inst/usr/lib/libnvidia-ml.so.${DVERSION}
-	install -D -m755 libcuda.so.${DVERSION} ~/bldr-inst/usr/lib/libcuda.so.${DVERSION}
-	install -D -m755 libnvcuvid.so.${DVERSION} ~/bldr-inst/usr/lib/libnvcuvid.so.${DVERSION}
-	install -D -m755 nvidia-cuda-mps-control ~/bldr-inst/usr/bin/nvidia-cuda-mps-control
-	install -D -m644 nvidia-cuda-mps-control.1.gz ~/bldr-inst/usr/share/man/man1/nvidia-cuda-mps-control.1.gz
-	install -D -m755 nvidia-cuda-mps-server ~/bldr-inst/usr/bin/nvidia-cuda-mps-server
-	install -D -m755 nvidia-debugdump ~/bldr-inst/usr/bin/nvidia-debugdump
-	install -D -m755 nvidia-xconfig ~/bldr-inst/usr/bin/nvidia-xconfig
-	install -D -m644 nvidia-xconfig.1.gz ~/bldr-inst/usr/share/man/man1/nvidia-xconfig.1.gz
-	install -D -m755 nvidia-settings ~/bldr-inst/usr/bin/nvidia-settings
-	install -D -m644 nvidia-settings.1.gz ~/bldr-inst/usr/share/man/man1/nvidia-settings.1.gz
-	install -D -m644 nvidia-settings.desktop ~/bldr-inst/usr/share/applications/nvidia-settings.desktop
-	install -D -m644 nvidia-settings.png ~/bldr-inst/usr/share/pixmaps/nvidia-settings.png
-	sed -e 's:__UTILS_PATH__:/usr/bin:' -e 's:__PIXMAP_PATH__:/usr/share/pixmaps:' -i ~/bldr-inst/usr/share/applications/nvidia-settings.desktop
-	install -D -m755 nvidia-bug-report.sh ~/bldr-inst/usr/bin/nvidia-bug-report.sh
-	install -D -m755 nvidia-smi ~/bldr-inst/usr/bin/nvidia-smi
-	install -D -m644 nvidia-smi.1.gz ~/bldr-inst/usr/share/man/man1/nvidia-smi.1.gz
-	
-	if [ "`uname -m`" == "x86_64" ];
-	then
-		#lib32
-		install -D -m755 32/libGL.so.${DVERSION} ~/bldr-inst/usr/lib32/libGL.so.${DVERSION}
-		ln -s libGL.so.${DVERSION} ~/bldr-inst/usr/lib32/libGL.so.1
-	    ln -s libGL.so.${DVERSION} ~/bldr-inst/usr/lib32/libGL.so
 
-		install -D -m755 32/libnvidia-glcore.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvidia-glcore.so
-		install -D -m755 32/libvdpau_nvidia.so.${DVERSION} ~/bldr-inst/usr/lib32/vdpau/libvdpau_nvidia.so
-		install -D -m755 32/libcuda.so.${DVERSION} ~/bldr-inst/usr/lib32/libcuda.so
-		install -D -m755 32/libnvcuvid.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvcuvid.so
-		install -D -m755 32/tls/libnvidia-tls.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvidia-tls.so
-		install -D -m755 32/libnvidia-compiler.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvidia-compiler.so
-		install -D -m755 32/libOpenCL.so.1.0.0 ~/bldr-inst/usr/lib32/libOpenCL.so.1.0.0
-		install -D -m755 32/libnvidia-ml.so.${DVERSION} ~/bldr-inst/usr/lib32/libnvidia-ml.so
-	fi
+	#X driver
+	mkdir -p /root/bldr-inst/usr/lib/xorg/modules/drivers/
+	mv nvidia_drv.so /root/bldr-inst/usr/lib/xorg/modules/drivers/
 
+	#Application profiles
+	mkdir -p /root/bldr-inst/usr/share/nvidia/
+	mv nvidia-application-profiles* /root/bldr-inst/usr/share/nvidia/
+
+ 	#Binaries
+	mkdir -p /root/bldr-inst/usr/bin/ 
+	mv nvidia-cuda-mps-control nvidia-cuda-mps-server nvidia-debugdump nvidia-modprobe nvidia-persistenced nvidia-settings nvidia-smi nvidia-xconfig nvidia-bug-report.sh /root/bldr-inst/usr/bin/
+
+	#OpenCL icd
+	mkdir -p /root/bldr-inst/etc/OpenCL/vendors/
+	mv *.icd /root/bldr-inst/etc/OpenCL/vendors/
+
+	#Desktop files
+	mkdir -p /root/bldr-inst/usr/share/applications/
+	mkdir -p /root/bldr-inst/usr/share/pixmaps/
+	sed -e 's:__UTILS_PATH__:/usr/bin:' -e 's:__PIXMAP_PATH__:/usr/share/pixmaps:' -i *.desktop
+	mv *.desktop /root/bldr-inst/usr/share/applications/
+	mv *.png /root/bldr-inst/usr/share/pixmaps/
+
+	#persistenced systemd
+	tar xf nvidia-persistenced-init.tar.bz2
+	mkdir -p /root/bldr-inst/usr/lib/systemd/system/
+	mv nvidia-persistenced-init/systemd/nvidia-persistenced.service.template /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
+	sed -i -e 's/__USER__/persistenced/g' /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
+
+	#32-bit libs
+	mkdir -p /root/bldr-inst/usr/lib32
+	cd 32
+    rm *.la
+    mv lib* /root/bldr-inst/usr/lib32/
+    mv tls/lib* /root/bldr-inst/usr/lib32/
+	cd ..
+
+	#Symlinks
+	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so.1
+	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so
+	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so.1
+	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so
 
 }
 
