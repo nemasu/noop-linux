@@ -1,0 +1,62 @@
+#package name
+NAME=bumblebee
+
+#package version
+VERSION=3.2.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/Bumblebee-Project/Bumblebee/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=('virtualgl' 'lib32-virtualgl' 'bbswitch' 'primus' 'lib32-primus')
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	autoreconf -fi
+	./configure \
+        CONF_DRIVER_MODULE_NVIDIA=nvidia \
+        CONF_LDPATH_NVIDIA=/usr/lib/nvidia:/usr/lib32/nvidia \
+        CONF_MODPATH_NVIDIA=/usr/lib/nvidia/xorg/,/usr/lib/xorg/modules \
+        --prefix=/usr \
+        --sbindir=/usr/bin \
+        --with-udev-rules=/usr/lib/udev/rules.d/ \
+        --sysconfdir=/etc \
+        --without-pidfile
+
+    make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+	install -D -m644 scripts/systemd/bumblebeed.service /root/bldr-inst/usr/lib/systemd/system/bumblebeed.service
+    sed -i 's/sbin/bin/' /root/bldr-inst/usr/lib/systemd/system/bumblebeed.service
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s https://github.com/Bumblebee-Project/Bumblebee/releases | grep ".tar.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

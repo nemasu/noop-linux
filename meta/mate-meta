@@ -12,6 +12,7 @@ gtk-engines
 murrine
 aurora
 gvfs
+gnome-keyring
 mate-common
 mate-desktop
 libmatekbd

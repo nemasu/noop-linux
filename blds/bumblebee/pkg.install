@@ -1,0 +1,8 @@
+function postinst() {
+    getent group "bumblebee" &>/dev/null || groupadd -g 56 bumblebee
+    echo "You will need to add yourself to 'bumblebee' group to use Bumblebee"
+}
+
+function postup() {
+    postinst
+}

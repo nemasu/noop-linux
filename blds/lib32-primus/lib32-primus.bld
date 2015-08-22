@@ -1,23 +1,23 @@
 #package name
-NAME=libjpeg
+NAME=lib32-primus
 
 #package version
-VERSION=1.4.1
+VERSION=20150822
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://sourceforge.net/projects/libjpeg-turbo/files/${VERSION}/libjpeg-turbo-${VERSION}.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=""
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -30,20 +30,33 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+	git clone git://github.com/amonakov/primus.git
+	cd `ls`
 
-	[[ `uname -m` == armv6l ]] && CONF="--without-simd"
+	export CC="g++ -m32"
+	export CXX="g++ -m32"
 
-	./configure $STDUSRCONF --with-jpeg8 $CONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst docdir="/usr/share/doc/libjpeg" exampledir="/usr/share/doc/libjpeg" install
+	LIBDIR=lib32 make
+	install -D lib32/libGL.so.1 /root/bldr-inst/usr/lib32/primus/libGL.so.1
 
-	install -m644 jpegint.h /root/bldr-inst/usr/include/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://sourceforge.net/projects/libjpeg-turbo/files/ | grep -E "files\/[0-9\.][0-9\.]*\/\"" | sed -e 's/.*files\/\([0-9\.][0-9\.]*\)\/\".*/\1/g' | head -n1`
+	LISTURL=
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

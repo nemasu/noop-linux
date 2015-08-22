@@ -1,0 +1,91 @@
+#package name
+NAME=lib32-virtualgl
+
+#package version
+VERSION=2.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="http://downloads.sourceforge.net/project/virtualgl/${VERSION}/VirtualGL-${VERSION}.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+
+  export CC="gcc -m32"
+  export CXX="g++ -m32"
+  export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+  mkdir -p build &&  cd build
+
+  cmake .. \
+      -DCMAKE_INSTALL_PREFIX=/usr/share \
+      -DTJPEG_INCLUDE_DIR=/usr/include \
+      -DTJPEG_LIBRARY=/usr/lib32/libturbojpeg.so \
+      -DVGL_LIBDIR=/usr/lib32 \
+      -DVGL_BINDIR=/usr/bin \
+      -DX11_X11_LIB=/usr/lib32/libX11.so \
+      -DX11_Xext_LIB=/usr/lib32/libXext.so \
+      -DOPENGL_gl_LIBRARY=/usr/lib32/libGL.so \
+      -DVGL_FAKELIBDIR=/usr/share/fakelib32
+
+  make -j${BLDR_CORES}
+  
+  make DESTDIR=/root/bldr-inst install
+ 
+  mv /root/bldr-inst/usr/bin/glxinfo /root/bldr-inst/usr/bin/vglxinfo
+
+  cd /root/bldr-inst/usr
+  mv bin/glxspheres glxspheres32
+  rm -rf bin
+  mkdir -p bin
+  mv glxspheres32 bin/
+ 
+  rm -rf /root/bldr-inst/usr/share/{doc,include}
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	NAME=VirtualGL
+	LISTURL=http://sourceforge.net/projects/virtualgl/files/
+	FILELIST=`GetFileList`
+	LATEST=0
+	NAME=virtualgl
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

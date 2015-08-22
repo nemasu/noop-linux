@@ -1,23 +1,23 @@
 #package name
-NAME=libjpeg
+NAME=bbswitch
 
 #package version
-VERSION=1.4.1
+VERSION=0.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://sourceforge.net/projects/libjpeg-turbo/files/${VERSION}/libjpeg-turbo-${VERSION}.tar.gz
+SRC="https://github.com/Bumblebee-Project/bbswitch/archive/v${VERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=""
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -30,24 +30,19 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-
-	[[ `uname -m` == armv6l ]] && CONF="--without-simd"
-
-	./configure $STDUSRCONF --with-jpeg8 $CONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst docdir="/usr/share/doc/libjpeg" exampledir="/usr/share/doc/libjpeg" install
-
-	install -m644 jpegint.h /root/bldr-inst/usr/include/
+  make KDIR=/lib/modules/`uname -r`/build
+  install -Dm644 bbswitch.ko /root/bldr-inst/lib/modules/`uname -r`/bbswitch.ko
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://sourceforge.net/projects/libjpeg-turbo/files/ | grep -E "files\/[0-9\.][0-9\.]*\/\"" | sed -e 's/.*files\/\([0-9\.][0-9\.]*\)\/\".*/\1/g' | head -n1`
-
+	LATEST=`curl -L -s https://github.com/Bumblebee-Project/bbswitch/releases | grep ".tar.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+	
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+
