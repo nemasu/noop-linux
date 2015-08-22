@@ -23,7 +23,7 @@ DEPS=('ibus-qt' 'pygtk' 'iso-codes' 'pygobject2' 'python-notify' 'python-xdg' 'd
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('pygobject' 'py2cairo' 'dbus-python' 'python-xdg' 'python-notify' 'pygobject2' 'iso-codes' 'pygtk' 'ibus-qt')
+PKGDEPS=('pygobject' 'py2cairo' 'dbus-python' 'python-xdg' 'python-notify' 'pygobject2' 'iso-codes' 'pygtk' 'ibus-qt' 'python')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -43,6 +43,8 @@ function BuildAndInstall
 		--with-python=python3
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
+  sed -i -e 's/python/python2/g' /root/bldr-inst/usr/lib/ibus/ibus-setup-anthy
+  sed -i -e 's/python/python2/g' /root/bldr-inst/usr/lib/ibus/ibus-engine-anthy
 }
 
 #Default HTTP curl new version detection

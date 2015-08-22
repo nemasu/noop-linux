@@ -1,14 +1,14 @@
 #package name
-NAME=ibus-anthy
+NAME=dracut
 
 #package version
-VERSION=1.5.7
+VERSION=043
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/ibus/ibus-anthy/releases/download/${VERSION}/ibus-anthy-${VERSION}.tar.gz
+SRC=https://www.kernel.org/pub/linux/utils/boot/dracut/dracut-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('anthy' 'glib2' 'glibc' 'libffi' 'pcre')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -30,16 +30,15 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  ./autogen.sh --prefix=/usr --libexecdir=/usr/lib/ibus
-  make -j${BLDR_CORES}
-  make DESTDIR=/root/bldr-inst install
-  sed -i -e 's/python/python2/g' /root/bldr-inst/usr/lib/ibus/ibus-engine-anthy
+	./configure
+	make sysconfdir=/etc
+	make sysconfdir=/etc DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://github.com/ibus/ibus-anthy/releases
+	LISTURL=https://www.kernel.org/pub/linux/utils/boot/dracut/
 	FILELIST=`GetFileList`
 	LATEST=0
 
