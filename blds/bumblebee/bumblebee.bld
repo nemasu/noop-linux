@@ -33,8 +33,8 @@ function BuildAndInstall
 	autoreconf -fi
 	./configure \
         CONF_DRIVER_MODULE_NVIDIA=nvidia \
-        CONF_LDPATH_NVIDIA=/usr/lib/nvidia:/usr/lib32/nvidia \
-        CONF_MODPATH_NVIDIA=/usr/lib/nvidia/xorg/,/usr/lib/xorg/modules \
+        CONF_LDPATH_NVIDIA=/usr/lib:/usr/lib32 \
+        CONF_MODPATH_NVIDIA=/usr/lib/xorg/modules/drivers \
         --prefix=/usr \
         --sbindir=/usr/bin \
         --with-udev-rules=/usr/lib/udev/rules.d/ \

@@ -40,7 +40,7 @@ function BuildAndInstall
 	#Module
 	pushd kernel
 	make SYSSRC=/lib/modules/`uname -r`/build module
-	install -D -m644 nvidia.ko /root/bldr-inst/bldr-inst/lib/modules/`uname -r`/misc/nvidia.ko
+	install -D -m644 nvidia.ko /root/bldr-inst/lib/modules/`uname -r`/misc/nvidia.ko
 	popd
 
 	#libs
