@@ -5718,7 +5718,9 @@ ppp,winbind.so
 prison,libprison.so
 prison,libprison.so.0
 prison,libprison.so.0.0.0
-procps,libproc-3.2.8.so
+procps,libprocps.so
+procps,libprocps.so.5
+procps,libprocps.so.5.0.0
 protobuf,libprotobuf-lite.so
 protobuf,libprotobuf-lite.so.9
 protobuf,libprotobuf-lite.so.9.0.1

@@ -2,22 +2,22 @@
 NAME=procps
 
 #package version
-VERSION=3.2.8
+VERSION=3.3.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://procps.sourceforge.net/procps-${VERSION}.tar.gz
+SRC=http://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--enable-watch8bit --with-systemd"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc' 'ncurses')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,18 +28,22 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+
 function BuildAndInstall
 {
-	sed -i -e 's@\*/module.mk@proc/module.mk ps/module.mk@' Makefile
+	sed 's:<ncursesw/:<:g' -i watch.c
+	./configure $STDUSRCONF $EXTRACONF
 	make -j${BLDR_CORES}
-	make DESTDIR=`pwd`/../../bldr-inst install
+	make DESTDIR=/root/bldr-inst install
+	rm /root/bldr-inst/usr/bin/kill
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://procps.sourceforge.net/
+	LISTURL=http://sourceforge.net/projects/procps-ng/
 	FILELIST=`GetFileList`
 	LATEST=0
 
