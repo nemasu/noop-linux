@@ -1,6 +1,23 @@
 function postinst() {
     getent group "bumblebee" &>/dev/null || groupadd -g 56 bumblebee
+	pushd /usr/lib &> /dev/null
+#Restore mesalib libGL
+	rm libGL.so.1
+	rm libGL.so
+	mesa_ver=`cat /var/noop/installed/mesalib | egrep "libGL.so.[0-9]*\." | sed -e 's/^.*\///g'`
+	ln -s ${mes_ver} libGL.so.1
+	ln -s ${mes_ver} libGL.so
+	popd
     echo "You will need to add yourself to 'bumblebee' group to use Bumblebee"
+}
+
+function postrm() {
+#If nvidia is still installed, point libGL to nvidias
+	if [ -e /var/noop/installed/nvidia ]; then
+		nvidia_ver=` cat /var/noop/installed/nvidia | egrep "libGL.so\.[0-9]\.[0-9]*"``
+		ln -s ${nvidia_ver} /usr/lib/libGL.so.1
+		ln -s ${nvidia_ver} /usr/lib/libGL.so
+	fi
 }
 
 function postup() {

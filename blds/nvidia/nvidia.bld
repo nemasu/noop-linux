@@ -51,7 +51,6 @@ function BuildAndInstall
 	mv /root/bldr-inst/usr/lib/libG* /root/bldr-inst/usr/lib/nvidia/
 	mv /root/bldr-inst/usr/lib/libE* /root/bldr-inst/usr/lib/nvidia/
 
-
 	#X driver
 	mkdir -p /root/bldr-inst/usr/lib/xorg/modules/drivers/
 	mv nvidia_drv.so /root/bldr-inst/usr/lib/xorg/modules/drivers/
@@ -98,11 +97,12 @@ function BuildAndInstall
 	#Symlinks
 	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so.1
 	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so
+	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/libGL.so.1
+	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/libGL.so
 	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so.1
 	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so
 	ln -s libglx.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions/libglx.so.1
 	ln -s libglx.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions/libglx.so
-
 }
 
 #Default HTTP curl new version detection
