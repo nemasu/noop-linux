@@ -121,7 +121,7 @@ mount -t aufs -o br=/rw:/ro none /newroot
 if [[ -x "/newroot/${init}" ]] ; then
     #Unmount all other mounts so that the ram used by
     #the initramfs can be cleared after switch_root
-    umount /sys /proc /dev /lib/firmware
+    umount /sys /proc /dev
 
     #Switch to the new root and execute init
     exec /usr/bin/busybox switch_root /newroot "${init}"
