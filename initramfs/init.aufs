@@ -43,14 +43,10 @@ done
 #/usr/bin/busybox mdev -s
 mkdir -p /newroot /ro /rw /cdrom
 
-#Bind firmware directory
-mkdir -p /lib/firmware
-/usr/bin/busybox mount --bind /cdrom/lib/firmware /lib/firmware
-
 #Load modules
-for i in `ls /cdrom/mods/`;
+for i in `ls /mods/`;
 do
-	/usr/bin/busybox insmod /cdrom/mods/$i
+	/usr/bin/busybox insmod /mods/$i
 done
 
 
