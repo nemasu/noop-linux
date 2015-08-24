@@ -1,22 +1,32 @@
 function postinst() {
     getent group "bumblebee" &>/dev/null || groupadd -g 56 bumblebee
-	pushd /usr/lib &> /dev/null
 #Restore mesalib libGL
+	pushd /usr/lib &> /dev/null
 	rm libGL.so.1
 	rm libGL.so
 	mesa_ver=`cat /var/noop/installed/mesalib | egrep "libGL.so.[0-9]*\." | sed -e 's/^.*\///g'`
-	ln -s ${mes_ver} libGL.so.1
-	ln -s ${mes_ver} libGL.so
-	popd
+	ln -s ${mesa_ver} libGL.so.1
+	ln -s ${mesa_ver} libGL.so
+	popd &> /dev/null
+	pushd /usr/lib32 &> /dev/null
+	rm libGL.so.1
+	rm libGL.so
+	mesa32_ver=`cat /var/noop/installed/lib32-mesalib | egrep "libGL.so.[0-9]*\." | sed -e 's/^.*\///g'`
+	ln -s ${mesa32_ver} libGL.so.1
+	ln -s ${mesa32_ver} libGL.so
+	popd &> /dev/null
     echo "You will need to add yourself to 'bumblebee' group to use Bumblebee"
 }
 
 function postrm() {
 #If nvidia is still installed, point libGL to nvidias
 	if [ -e /var/noop/installed/nvidia ]; then
-		nvidia_ver=`cat /var/noop/installed/nvidia | egrep "libGL.so\.[0-9]\.[0-9]*"`
+		nvidia_ver=`cat /var/noop/installed/nvidia | egrep "lib\/nvidia\/libGL.so\.[0-9]*\.[0-9]*"`
 		ln -s ${nvidia_ver} /usr/lib/libGL.so.1
 		ln -s ${nvidia_ver} /usr/lib/libGL.so
+		nvidia32_ver=`cat /var/noop/installed/nvidia | egrep "lib32\/nvidia\/libGL.so\.[0-9]*\.[0-9]*"`
+		ln -s ${nvidia_ver} /usr/lib32/libGL.so.1
+		ln -s ${nvidia_ver} /usr/lib32/libGL.so
 	fi
 }
 
