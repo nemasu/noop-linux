@@ -46,7 +46,7 @@ mkdir -p /newroot /ro /rw /cdrom
 #Load modules
 for i in `ls /mods/`;
 do
-	/usr/bin/busybox insmod /mods/$i
+	/usr/bin/busybox modprobe $i
 done
 
 
