@@ -95,7 +95,7 @@ function copy_module() {
 for i in iwldvm snd_hda_intel snd_hda_codec_hdmi snd_hda_codec_realtek;
 do
 	copy_module "$i"
-	touch $PREFIX/mods/
+	touch $PREFIX/mods/$i
 done
 find $PREFIX/lib/modules -name "*.xz" -exec unxz {} \;
 cp /lib/modules/4.1.6/modules* $PREFIX//lib/modules/4.1.6/
