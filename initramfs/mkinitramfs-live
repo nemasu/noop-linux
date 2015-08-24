@@ -84,7 +84,7 @@ function copy_module() {
 			done
 
 			cp -v $MOD_PATH $PREFIX/mods/${mod_count}-$name
-			let mod_count=$mod_count-1
+			let mod_count=$(($mod_count-1))
 
 			for i in `modinfo $1 | grep -e "^firmware:" | awk '{print $2;}'`;
 			do
