@@ -2014,8 +2014,11 @@ if [ $1 = "-init" ]; then
 
 	if [ -z "$NOOP_ISO_CREATE" ];
 	then
-		
 	
+		echo -n "Generating initramfs..."
+		dracut -q -H initramfs.img &> /dev/null
+		echo "done."
+
 		if [ "$LANG" == "ja_JP.UTF-8" ]; then
 			$echo "rootパスワードを入力してください";
 			passwd

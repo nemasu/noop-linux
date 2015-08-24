@@ -43,6 +43,17 @@ done
 #/usr/bin/busybox mdev -s
 mkdir -p /newroot /ro /rw /cdrom
 
+#Load modules
+for i in `ls /cdrom/mods/`;
+do
+	/usr/bin/busybox insmod /cdrom/mods/$i
+done
+
+#Bind firmware directory
+mkdir -p /lib/firmware
+/usr/bin/busybox mount --bind /cdrom/lib/firmware /lib/firmware
+
+
 #figure out where to boot from...is there a better way?
 mkdir /mnttest
 
@@ -105,8 +116,6 @@ then
 	done
 fi
 
-#SquashFs support is now built in
-#/usr/bin/busybox insmod /cdrom/squashfs.ko
 mount /cdrom/root.sqsh /ro
 mount -t tmpfs tmpfs /rw
 mount -t aufs -o br=/rw:/ro none /newroot
@@ -115,7 +124,7 @@ mount -t aufs -o br=/rw:/ro none /newroot
 if [[ -x "/newroot/${init}" ]] ; then
     #Unmount all other mounts so that the ram used by
     #the initramfs can be cleared after switch_root
-    umount /sys /proc /dev
+    umount /sys /proc /dev /lib/firmware
 
     #Switch to the new root and execute init
     exec /usr/bin/busybox switch_root /newroot "${init}"

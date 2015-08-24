@@ -58,6 +58,18 @@ if [ `$UNAME -m` == "x86_64" ]; then
 	$LN -s lib lib64
 fi
 
+#Modules that need to be in initramfs for some reason, add add needed.
+mkdir -p $PREFIX/mods/
+mkdir -p $PREFIX/lib/firmware
+for i in iwldvm snd_hda_intel snd_hda_codec_hdmi and snd_hda_codec_realtek;
+do
+	find /lib/modules/`uname -r` -name "${i}.ko*" -exec cp -v {} $PREFIX/mods/ \;
+	for j in `modinfo iwlwifi | grep -e "^firmware:" | awk '{print $2;}'`;
+	do
+		find /lib/firmware -name "${i}" -exec cp -v {} $PREFIX/lib/firmware \;
+	done
+done
+
 cp -v `which mount.aufs` $PREFIX/sbin
 
 $CURL -L -s https://github.com/nemasu/noop-linux/raw/master/pkgr > $PREFIX/usr/sbin/pkgr

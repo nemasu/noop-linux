@@ -91,7 +91,7 @@ then
 
 	if [ "`$UNAME -m`" != "armv6l" ];
 	then
-		EXTRA="grub cryptsetup"
+		EXTRA="grub cryptsetup dracut"
 	fi
 
 	for i in trunc busybox glibc which bc tzdata systemd shadow coreutils bash wget grep sed perl findutils curl gawk procps tar bzip2 gzip dhcp dhcpcd inetutils iproute2 wpa_supplicant wireless_tools kbd vim run-parts ca-certificates openresolv networkmanager linux-kernel linux-firmware $EXTRA;
