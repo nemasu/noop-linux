@@ -59,7 +59,7 @@ if [ `$UNAME -m` == "x86_64" ]; then
 fi
 
 #Modules that need to be in initramfs for some reason, add add needed.
-mkdir -p $PREFIX/mods/
+mkdir -p $PREFIX/lib/modules/`uname -r`/
 mkdir -p $PREFIX/lib/firmware
 #Build list (need deps)
 for i in 
@@ -68,23 +68,20 @@ do
 	MOD_LIST+=" "
 done
 
-let mod_count=1000
-
 function copy_module() {
 
 	if [ -n "$1" ];
 	then
 		MOD_PATH=`modinfo $1 | grep -e "^filename:" | awk '{print $2;}'`
 		name=`echo $MOD_PATH | sed -e 's/^.*\///g'`
-		if [ ! -e $PREFIX/mods/$name ];
+		if [ ! -e "${PREFIX}${MOD_PATH}" ];
 		then
+			install -D -v $MOD_PATH ${PREFIX}${MOD_PATH}
+			
 			for i in `modinfo $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
 			do
 				copy_module "$i"
 			done
-
-			cp -v $MOD_PATH $PREFIX/mods/${mod_count}-$name
-			let mod_count=$(($mod_count-1))
 
 			for i in `modinfo $1 | grep -e "^firmware:" | awk '{print $2;}'`;
 			do
@@ -98,7 +95,9 @@ for i in iwldvm snd_hda_intel snd_hda_codec_hdmi snd_hda_codec_realtek;
 do
 	copy_module "$i"
 done
-unxz $PREFIX/mods/*.xz
+find $PREFIX/lib/modules -name "*.xz" -exec unxz {} \;
+cp /lib/modules/4.1.6/modules* $PREFIX//lib/modules/4.1.6/
+depmod -a -b $PREFIX
 
 cp -v `which mount.aufs` $PREFIX/sbin
 
