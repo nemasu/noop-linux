@@ -61,13 +61,38 @@ fi
 #Modules that need to be in initramfs for some reason, add add needed.
 mkdir -p $PREFIX/mods/
 mkdir -p $PREFIX/lib/firmware
-for i in iwldvm snd_hda_intel snd_hda_codec_hdmi and snd_hda_codec_realtek;
+#Build list (need deps)
+for i in 
 do
-	find /lib/modules/`uname -r` -name "${i}.ko*" -exec cp -v {} $PREFIX/mods/ \;
-	for j in `modinfo $i | grep -e "^firmware:" | awk '{print $2;}'`;
-	do
-		find /lib/firmware -name "${j}" -exec cp -v {} $PREFIX/lib/firmware \;
-	done
+	MOD_LIST+=`modinfo $i |  grep -e "^depends:" | awk '{print $2;}'`
+	MOD_LIST+=" "
+done
+
+function copy_module() {
+
+	if [ -n "$1" ];
+	then
+		MOD_PATH=`modinfo $1 | grep -e "^filename:" | awk '{print $2;}'`
+		if [ ! -e $PREFIX/mods/`echo $MOD_PATH | sed -e 's/^.*\///g'` ];
+		then
+			cp -v $MOD_PATH $PREFIX/mods/
+			for i in `modinfo $1 | grep -e "^firmware:" | awk '{print $2;}'`;
+			do
+				find /lib/firmware -name "${i}" -exec cp -v {} $PREFIX/lib/firmware/ \;
+			done
+
+			for i in `modinfo $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
+			do
+				copy_module "$i"
+			done
+		fi
+	fi
+	
+}
+
+for i in iwldvm snd_hda_intel snd_hda_codec_hdmi snd_hda_codec_realtek;
+do
+	copy_module "$i"
 done
 
 cp -v `which mount.aufs` $PREFIX/sbin
