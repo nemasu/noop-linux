@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-glibc' 'lib32-libglu' 'lib32-libjpeg' 'lib32-libX11' 'lib32-libXext' 'lib32-libXv' 'lib32-mesalib')
 
 # 'no' to skip calls to strip
 STRIP=

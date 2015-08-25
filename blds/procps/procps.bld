@@ -17,7 +17,7 @@ EXTRACONF="--enable-watch8bit --with-systemd"
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'ncurses' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

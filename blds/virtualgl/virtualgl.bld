@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'libglu' 'libjpeg' 'libX11' 'libxcb' 'libXext' 'libXv' 'mesalib' 'xcb-util-keysyms')
 
 # 'no' to skip calls to strip
 STRIP=
