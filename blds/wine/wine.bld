@@ -2,7 +2,7 @@
 NAME=wine
 
 #package version
-VERSION=1.7.46
+VERSION=1.7.50
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

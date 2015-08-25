@@ -1,0 +1,15 @@
+--- wine-1.7.0-orig/dlls/dinput/joystick.c	2013-08-18 10:56:10 +0900
++++ wine-1.7.0/dlls/dinput/joystick.c	2013-08-18 10:56:12 +0900
+@@ -471,9 +471,10 @@
+     res = IDirectInputDevice2WImpl_GetObjectInfo(iface, pdidoi, dwObj, dwHow);
+     if (res != DI_OK) return res;
+ 
+-    if      (pdidoi->dwType & DIDFT_AXIS)
++    if      (pdidoi->dwType & DIDFT_AXIS) {
+         sprintfW(pdidoi->tszName, axisW, DIDFT_GETINSTANCE(pdidoi->dwType));
+-    else if (pdidoi->dwType & DIDFT_POV)
++        pdidoi->dwFlags = DIDOI_ASPECTPOSITION;
++    } else if (pdidoi->dwType & DIDFT_POV)
+         sprintfW(pdidoi->tszName, povW, DIDFT_GETINSTANCE(pdidoi->dwType));
+     else if (pdidoi->dwType & DIDFT_BUTTON)
+         sprintfW(pdidoi->tszName, buttonW, DIDFT_GETINSTANCE(pdidoi->dwType));

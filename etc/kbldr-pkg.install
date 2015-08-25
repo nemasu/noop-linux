@@ -2,7 +2,7 @@ function postup() {
 	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
 	if [ -e /boot/initramfs.img]; then
 		mv /boot/initramfs.img /boot/initramfs.img.old
-		dracut -q initramfs.img ${KERVER}
+		dracut -q /boot/initramfs.img ${KERVER}
 	fi
 	echo "Note: Bootloader config has NOT been modified."
 }
