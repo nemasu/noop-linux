@@ -2,7 +2,7 @@
 NAME=libdrm
 
 #package version
-VERSION=2.4.60
+VERSION=2.4.64
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

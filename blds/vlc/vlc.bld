@@ -2,8 +2,8 @@
 NAME=vlc
 
 #package version
-VERSION=2.2.0-1
-DVERSION=2.2.0
+VERSION=2.2.1
+DVERSION=2.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -24,10 +24,12 @@ DEPS=('a52dec' 'alsa-lib' 'atk' 'avahi' 'cairo' 'dbus' 'enca' 'expat' 'faad2' 'f
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('ttf-dejavu' 'ttf-freefont')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/usr/pkgconfig:/lib/pkgconfig
 
 function BuildAndInstall
 {

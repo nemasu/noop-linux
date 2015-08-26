@@ -2,7 +2,7 @@
 NAME=fribidi
 
 #package version
-VERSION=0.19.6
+VERSION=0.19.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

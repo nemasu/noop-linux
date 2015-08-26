@@ -2,7 +2,7 @@
 NAME=x265
 
 #package version
-VERSION=1.4
+VERSION=1.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

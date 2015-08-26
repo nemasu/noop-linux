@@ -2,13 +2,13 @@
 NAME=libdvdread
 
 #package version
-VERSION=4.9.9
+VERSION=5.0.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://dvdnav.mplayerhq.hu/releases/libdvdread-${VERSION}.tar.xz
+SRC=http://download.videolan.org/pub/videolan/libdvdread/${VERSION}/libdvdread-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://dvdnav.mplayerhq.hu/releases/
+	LISTURL=http://dvdnav.mplayerhq.hu
 	FILELIST=`GetFileList`
 	LATEST=0
 

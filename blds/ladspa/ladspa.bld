@@ -1,0 +1,48 @@
+#package name
+NAME=ladspa
+
+#package version
+VERSION=1.13
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://pkgs.fedoraproject.org/repo/pkgs/ladspa/ladspa_sdk_1.13.tgz/671be3e1021d0722cadc7fb27054628e/ladspa_sdk_1.13.tgz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cd src
+	sed \
+		-e 's/mkdirhier/mkdir -p/' \
+		-e "s#-O3#${CFLAGS} ${LDFLAGS/,--as-needed/}#" \
+		-i makefile
+	make -j3 targets
+	make INSTALL_PLUGINS_DIR=/root/bldr-inst/usr/lib/ladspa/ \
+       INSTALL_INCLUDE_DIR=/root/bldr-inst/usr/include/ \
+       INSTALL_BINARY_DIR=/root/bldr-inst/usr/bin/ install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "${NAME}: Too old"
+}

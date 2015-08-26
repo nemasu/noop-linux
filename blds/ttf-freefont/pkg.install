@@ -1,0 +1,13 @@
+function postinst() {	
+	fc-cache -s > /dev/null
+	mkfontscale /usr/share/fonts/TTF
+	mkfontdir /usr/share/fonts/TTF
+}
+
+function postup() {
+	postinst
+}
+
+function postrm() {
+	postinst
+}

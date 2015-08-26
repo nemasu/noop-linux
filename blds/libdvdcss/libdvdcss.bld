@@ -2,7 +2,7 @@
 NAME=libdvdcss
 
 #package version
-VERSION=1.2.13
+VERSION=1.3.99
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
