@@ -7584,6 +7584,7 @@ vlc,libmarq_plugin.so
 vlc,libmediadirs_plugin.so
 vlc,libmirror_plugin.so
 vlc,libmjpeg_plugin.so
+vlc,libmkv_plugin.so
 vlc,libmod_plugin.so
 vlc,libmono_plugin.so
 vlc,libmosaic_plugin.so
