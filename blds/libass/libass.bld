@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('enca' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'glib2' 'glibc' 'harfbuzz' 'libpng' 'pcre' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

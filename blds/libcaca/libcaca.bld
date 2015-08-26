@@ -17,7 +17,7 @@ EXTRACONF="--enable-shared --disable-static --disable-doc --disable-cxx --disabl
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('freeglut' 'ftgl' 'glibc' 'imlib2' 'libglu' 'libX11' 'mesalib' 'ncurses' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

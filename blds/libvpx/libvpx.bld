@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=('gcc-libs' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=

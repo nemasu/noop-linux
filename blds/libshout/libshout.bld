@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('libvorbis' 'libtheora' 'speex')
+DEPS=('glibc' 'libogg' 'libtheora' 'libvorbis' 'speex')
 
 # 'no' to skip calls to strip
 STRIP=

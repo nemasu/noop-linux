@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'dbus' 'glib2' 'glibc' 'libsndfile' 'ncurses' 'pulseaudio' 'readline')
 
 # 'no' to skip calls to strip
 STRIP=

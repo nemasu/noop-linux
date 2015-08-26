@@ -2,7 +2,7 @@
 NAME=fontconfig
 
 #package version
-VERSION=2.11.1
+VERSION=2.11.94
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('expat' 'freetype2' 'glibc' 'zlib')
+DEPS=('expat' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libpng' 'pcre' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

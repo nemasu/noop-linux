@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('freetype2' 'ftgl' 'gcc-libs' 'glew' 'glibc' 'libglu' 'libvisual' 'mesalib' 'pulseaudio' 'qt4' 'sdl')
 
 # 'no' to skip calls to strip
 STRIP=

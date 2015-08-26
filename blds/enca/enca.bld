@@ -17,7 +17,7 @@ EXTRACONF="--with-librecode=/usr --enable-external"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('recode')
+DEPS=('glibc' 'recode')
 
 # 'no' to skip calls to strip
 STRIP=

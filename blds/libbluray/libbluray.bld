@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('freetype2' 'glibc' 'libxml2')
+DEPS=('fontconfig' 'freetype2' 'glibc' 'libxml2')
 
 # 'no' to skip calls to strip
 STRIP=

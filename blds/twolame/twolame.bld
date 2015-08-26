@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('libsndfile')
+DEPS=('glibc' 'libsndfile')
 
 # 'no' to skip calls to strip
 STRIP=
