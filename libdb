@@ -1002,7 +1002,7 @@ folks,libfolks-telepathy.so.25.7.1
 folks,telepathy.so
 fontconfig,libfontconfig.so
 fontconfig,libfontconfig.so.1
-fontconfig,libfontconfig.so.1.6.1
+fontconfig,libfontconfig.so.1.9.0
 freeglut,libglut.so
 freeglut,libglut.so.3
 freeglut,libglut.so.3.9.0
@@ -3872,6 +3872,9 @@ libdvdread,libdvdread.so.4.2.0
 libdv,libdv.so
 libdv,libdv.so.4
 libdv,libdv.so.4.0.3
+libebml,libebml.so
+libebml,libebml.so.4
+libebml,libebml.so.4.0.0
 libelf,libelf.so
 libelf,libelf.so.0
 libelf,libelf.so.0.8.13
@@ -4134,6 +4137,9 @@ libmatemixer,libmatemixer.so.0.0.0
 libmateweather,libmateweather.so
 libmateweather,libmateweather.so.1
 libmateweather,libmateweather.so.1.6.9
+libmatroska,libmatroska.so
+libmatroska,libmatroska.so.6
+libmatroska,libmatroska.so.6.0.0
 libmcrypt,libmcrypt.so
 libmcrypt,libmcrypt.so.4
 libmcrypt,libmcrypt.so.4.4.8
@@ -7442,6 +7448,7 @@ vlc,libaccess_output_dummy_plugin.so
 vlc,libaccess_output_file_plugin.so
 vlc,libaccess_output_http_plugin.so
 vlc,libaccess_output_livehttp_plugin.so
+vlc,libaccess_output_shout_plugin.so
 vlc,libaccess_output_udp_plugin.so
 vlc,libaccess_realrtsp_plugin.so
 vlc,libaddonsfsstorage_plugin.so
@@ -7475,6 +7482,7 @@ vlc,libblendbench_plugin.so
 vlc,libblend_plugin.so
 vlc,libbluescreen_plugin.so
 vlc,libbonjour_plugin.so
+vlc,libcaca_plugin.so
 vlc,libcaf_plugin.so
 vlc,libcanvas_plugin.so
 vlc,libcc_plugin.so
@@ -7503,6 +7511,7 @@ vlc,libdtstospdif_plugin.so
 vlc,libdtv_plugin.so
 vlc,libdummy_plugin.so
 vlc,libdvbsub_plugin.so
+vlc,libdvdread_plugin.so
 vlc,libdynamicoverlay_plugin.so
 vlc,libedummy_plugin.so
 vlc,libegl_x11_plugin.so
@@ -7518,6 +7527,7 @@ vlc,libfingerprinter_plugin.so
 vlc,libflac_plugin.so
 vlc,libflacsys_plugin.so
 vlc,libfloat_mixer_plugin.so
+vlc,libfluidsynth_plugin.so
 vlc,libfolder_plugin.so
 vlc,libfreetype_plugin.so
 vlc,libfreeze_plugin.so
@@ -7560,6 +7570,7 @@ vlc,libinteger_mixer_plugin.so
 vlc,libinvert_plugin.so
 vlc,libjpeg_plugin.so
 vlc,libkaraoke_plugin.so
+vlc,libkate_plugin.so
 vlc,liblibass_plugin.so
 vlc,liblibbluray_plugin.so
 vlc,liblibmpeg2_plugin.so
@@ -7603,6 +7614,8 @@ vlc,libnuv_plugin.so
 vlc,libogg_plugin.so
 vlc,liboldmovie_plugin.so
 vlc,liboldrc_plugin.so
+vlc,libopencv_example_plugin.so
+vlc,libopencv_wrapper_plugin.so
 vlc,libopus_plugin.so
 vlc,libpacketizer_avparser_plugin.so
 vlc,libpacketizer_copy_plugin.so
@@ -7622,6 +7635,7 @@ vlc,libpng_plugin.so
 vlc,libpodcast_plugin.so
 vlc,libposterize_plugin.so
 vlc,libpostproc_plugin.so
+vlc,libprojectm_plugin.so
 vlc,libps_plugin.so
 vlc,libpsychedelic_plugin.so
 vlc,libpulselist_plugin.so
@@ -7670,6 +7684,7 @@ vlc,libstereo_widen_plugin.so
 vlc,libstl_plugin.so
 vlc,libstream_out_autodel_plugin.so
 vlc,libstream_out_bridge_plugin.so
+vlc,libstream_out_chromaprint_plugin.so
 vlc,libstream_out_delay_plugin.so
 vlc,libstream_out_description_plugin.so
 vlc,libstream_out_display_plugin.so
@@ -7693,9 +7708,11 @@ vlc,libsubstx3g_plugin.so
 vlc,libsubsusf_plugin.so
 vlc,libsubtitle_plugin.so
 vlc,libsvcdsub_plugin.so
+vlc,libsvgdec_plugin.so
 vlc,libsvg_plugin.so
 vlc,libswscale_plugin.so
 vlc,libt140_plugin.so
+vlc,libtaglib_plugin.so
 vlc,libtcp_plugin.so
 vlc,libtdummy_plugin.so
 vlc,libtelx_plugin.so
@@ -7704,7 +7721,9 @@ vlc,libtimecode_plugin.so
 vlc,libtransform_plugin.so
 vlc,libtrivial_channel_mixer_plugin.so
 vlc,libtta_plugin.so
+vlc,libtwolame_plugin.so
 vlc,libty_plugin.so
+vlc,libudev_plugin.so
 vlc,libudp_plugin.so
 vlc,libugly_resampler_plugin.so
 vlc,libuleaddvaudio_plugin.so
