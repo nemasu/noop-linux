@@ -7112,6 +7112,9 @@ subversion,libsvn_fs_fs-1.so.0.0.0
 subversion,libsvn_fs_util-1.so
 subversion,libsvn_fs_util-1.so.0
 subversion,libsvn_fs_util-1.so.0.0.0
+subversion,libsvn_fs_x-1.so
+subversion,libsvn_fs_x-1.so.0
+subversion,libsvn_fs_x-1.so.0.0.0
 subversion,libsvn_ra-1.so
 subversion,libsvn_ra-1.so.0
 subversion,libsvn_ra-1.so.0.0.0

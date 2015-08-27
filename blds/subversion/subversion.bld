@@ -2,8 +2,8 @@
 NAME=subversion
 
 #package version
-VERSION=1.8.13-1
-DVERSION=1.8.13
+VERSION=1.9.0
+DVERSION=1.9.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

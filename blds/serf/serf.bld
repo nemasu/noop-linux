@@ -2,13 +2,13 @@
 NAME=serf
 
 #package version
-VERSION=1.3.2
+VERSION=1.3.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://serf.googlecode.com/files/serf-${VERSION}.tar.bz2
+SRC=http://serf.googlecode.com/svn/src_releases/serf-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://serf.googlecode.com/files/
+	LISTURL=http://serf.apache.org/
 	FILELIST=`GetFileList`
 	LATEST=0
 
