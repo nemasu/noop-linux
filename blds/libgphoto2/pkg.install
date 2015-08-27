@@ -1,0 +1,11 @@
+function postinst() {
+	udevadm hwdb --update
+}
+
+function postrm() {
+	postinst
+}
+
+function postup() {
+	postinst
+}

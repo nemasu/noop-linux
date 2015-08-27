@@ -2,7 +2,7 @@
 NAME=nspr
 
 #package version
-VERSION=4.10.8
+VERSION=4.10.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

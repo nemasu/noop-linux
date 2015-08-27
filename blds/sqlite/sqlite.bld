@@ -2,7 +2,7 @@
 NAME=sqlite
 
 #package version
-VERSION=3080803
+VERSION=3081101
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

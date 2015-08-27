@@ -1,17 +1,17 @@
 #package name
-NAME=gd
+NAME=libgphoto2
 
 #package version
-VERSION=2.1.1
+VERSION=2.5.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/libgd/libgd/archive/gd-${VERSION}.tar.gz
+SRC=http://downloads.sourceforge.net/gphoto/libgphoto2-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--disable-rpath --with-vpx=/usr --with-tiff=/usr"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=1
@@ -30,16 +30,37 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./bootstrap.sh
-	./configure $STDUSRCONF $EXTRACONF
+	./configure \
+		--prefix=/usr \
+		--disable-rpath
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
+
+# Remove unused udev helper
+	rm -rf /root/bldr-inst/usr/lib/udev
+
+	install -m755 -d /root/bldr-inst/usr/lib/udev/hwdb.d
+	install -m755 -d /root/bldr-inst/usr/lib/udev/rules.d
+
+	LD_LIBRARY_PATH="/root/bldr-inst/usr/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" \
+		CAMLIBS="/root/bldr-inst/usr/lib/libgphoto2/${VERSION}" \
+		/root/bldr-inst/usr/lib/libgphoto2/print-camera-list hwdb > \
+		/root/bldr-inst/usr/lib/udev/hwdb.d/20-gphoto.hwdb
+
+	LD_LIBRARY_PATH="/root/bldr-inst/usr/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" \
+		CAMLIBS="/root/bldr-inst/usr/lib/libgphoto2/${VERSION}" \
+		/root/bldr-inst/usr/lib/libgphoto2/print-camera-list udev-rules version 201 > \
+		/root/bldr-inst/usr/lib/udev/rules.d/40-gphoto.rules
+
+# Remove recursive symlink
+	rm -fv /root/bldr-inst/usr/include/gphoto2/gphoto2
+
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://github.com/libgd/libgd/releases
+	LISTURL=http://sourceforge.net/projects/gphoto/files/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -59,4 +80,3 @@ function Detect
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
-

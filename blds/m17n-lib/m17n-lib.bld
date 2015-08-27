@@ -2,13 +2,14 @@
 NAME=m17n-lib
 
 #package version
-VERSION=1.6.4
+VERSION=1.7.0
+DVERSION=1.7.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.savannah.gnu.org/releases/m17n/m17n-lib-${VERSION}.tar.gz
+SRC=http://download.savannah.gnu.org/releases/m17n/m17n-lib-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('anthy' 'fontconfig' 'freetype2' 'fribidi' 'gd2' 'glibc' 'libICE' 'libSM' 'libX11' 'libXaw' 'libXft' 'libXmu' 'libXt' 'libotf' 'libxml2' 'zlib')
+DEPS=('anthy' 'fontconfig' 'freetype2' 'fribidi' 'glibc' 'libICE' 'libSM' 'libX11' 'libXaw' 'libXft' 'libXmu' 'libXt' 'libotf' 'libxml2' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -30,7 +31,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr
+	./configure --prefix=/usr --with-gd
 	make
 	make DESTDIR=/root/bldr-inst install
 }

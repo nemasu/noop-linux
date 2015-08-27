@@ -2,7 +2,7 @@
 NAME=glibc
 
 #package version
-VERSION=2.20
+VERSION=2.22
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,9 +33,31 @@ function BuildAndInstall
 	cd ..
 	mkdir build-dir
 	cd build-dir
-	../glibc-$VERSION/configure --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/bin --prefix=/
+	../glibc-$VERSION/configure \
+		--includedir=/usr/include \
+		--mandir=/usr/man \
+		--sbindir=/sbin \
+		--libexecdir=/usr/lib \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--libdir=/lib \
+		--datarootdir=/usr/share  \
+		--datadir=/usr/share \
+		--bindir=/bin \
+		--prefix=/ \
+		--with-headers=/usr/include \
+		--enable-add-ons \
+		--enable-obsolete-rpc \
+		--enable-kernel=2.6.32 \
+		--enable-bind-now --disable-profile \
+		--enable-stackguard-randomization \
+		--enable-lock-elision \
+		--enable-multi-arch \
+		--disable-werror
+
+
 	make -j${BLDR_CORES}
-	make DESTDIR=`pwd`/../../bldr-inst install
+	make DESTDIR=/root/bldr-inst install
 
 	mkdir -p /root/bldr-inst/usr/include/{rpc,rpcsvc}
 	cp -r ../glibc-$VERSION/sunrpc/rpc/*.h /root/bldr-inst/usr/include/rpc

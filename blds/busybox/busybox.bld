@@ -2,7 +2,7 @@
 NAME=busybox
 
 #package version
-VERSION=1.20.2
+VERSION=1.23.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

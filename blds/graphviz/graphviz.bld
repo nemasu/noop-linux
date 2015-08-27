@@ -2,7 +2,7 @@
 NAME=graphviz
 
 #package version
-VERSION=2.36.0
+VERSION=2.38.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gd2' 'gdk-pixbuf' 'ghostscript' 'glib2' 'glibc' 'gtk+2' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXau' 'libXaw' 'libXdmcp' 'libXext' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libcroco' 'libffi' 'libjpeg' 'libpng15' 'librsvg' 'libtool' 'libxcb' 'libxml2' 'openjpeg' 'pango' 'pcre' 'pixman' 'poppler' 'qt4' 'tiff' 'util-linux' 'xz' 'zlib')
+DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gd' 'gdk-pixbuf' 'ghostscript' 'glib2' 'glibc' 'gtk+2' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXau' 'libXaw' 'libXdmcp' 'libXext' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libcroco' 'libffi' 'libjpeg' 'libpng15' 'librsvg' 'libtool' 'libxcb' 'libxml2' 'openjpeg' 'pango' 'pcre' 'pixman' 'poppler' 'qt4' 'tiff' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

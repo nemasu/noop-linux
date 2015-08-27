@@ -355,7 +355,7 @@ if [ $1 == "--new-config" ] || [ $1 == "-n" ]; then
 				for i in `cat $NEWCONF`; do
 					if [ -e "$i" ]; then
 						OLD=`echo "$i" | sed 's/\.new$//g'`
-						mv -v $i $OLD
+						mv $i $OLD
 					else
 						echo "$i not found, skipping.."
 					fi
@@ -715,7 +715,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 			patch -Np1 -i $i
 		fi
 		
-		rm -v $i
+		rm $i
 	done
 	if [ $ISSPECIAL == 0 ]; then
 		./configure $CONF $EXTRACNF $EXTRACONF
@@ -728,7 +728,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	cd ~/bldr-inst
 	let XTRA=`find $BLDRTMPDIR | wc -l`
 	if [ $XTRA != 1 ]; then
-		cp -vr $BLDRTMPDIR/* .
+		cp -r $BLDRTMPDIR/* .
 	fi
 	rm -rf pkg.install
 	echo Ridding any /run, /var/run, or /tmp directories
@@ -745,13 +745,13 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	echo Moving any lib64 contents to lib
 	if [ -e ./lib64 ]; then
 		mkdir -p ./lib
-		cp -vr ./lib64/* ./lib/
+		cp -r ./lib64/* ./lib/
 		rm -rf ./lib64
 	fi
 
 	if [ -e ./usr/lib64 ]; then
 		mkdir -p ./usr/lib
-		cp -vr ./usr/lib64/* ./usr/lib/
+		cp -r ./usr/lib64/* ./usr/lib/
 		rm -rf ./usr/lib64
 	fi
 	if [ "no" != "$STRIP" ];
@@ -789,7 +789,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 
 	pkgr -genpkg 
 	name=`ls *.pkg`
-	mv -v *.pkg ~/bldr-done
+	mv *.pkg ~/bldr-done
 	rm -rf *
 	cd ~/bldr-done
 	pkgr -f $name
@@ -974,7 +974,7 @@ if [ $1 == "--remove" ] || [ $1 == "-r" ]; then
 		for i in `$cat /tmp/noop/pkgr-remove-file-list`;
 		do
 			if [ $i != "/usr/lib64" ] && [ $i != "/lib64" ] && [ $i != "//usr/lib64" ] && [ $i != "//lib64" ]; then 
-				$rm -v $PREFIX/$i 2>&1 | $sed -e '/directory/d'
+				$rm $PREFIX/$i 2>&1 | $sed -e '/directory/d'
 			fi
 			
 		done
@@ -1083,7 +1083,7 @@ function DownloadAndInstallPkg
 
 	SetPerms
 
-	$cp -vpr * $PREFIX/
+	$cp -pr * $PREFIX/
 	$rm -rf $TMPDIR/pkgfs
 
 	ldconfig &> /dev/null # so anything in postinst will not fail
@@ -1179,15 +1179,15 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 		$sed -i -e '/\.'"$p"'/d' /tmp/noop/pkgr-remove-file-list
 	done
 
-	#Skip file removal if upgrading bash
-	if [ "$NAME" != "bash" ];
+	#Skip file removal if upgrading bash or busybox
+	if [ "$NAME" != "bash" ] && [ "$NAME" != "busybox" ];
 	then
 
 		#remove files
 		$echo Removing old package
 		for i in `$cat /tmp/noop/pkgr-remove-file-list`;
 		do
-			$rm -v $i 2>&1 | $sed -e '/directory/d'
+			$rm $i 2>&1 | $sed -e '/directory/d'
 		done
 	fi
 
@@ -1208,7 +1208,7 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 	SetPerms
 
 	#install
-    $cp -vpr * $PREFIX/
+    $cp -pr * $PREFIX/
 	
 	ldconfig &> /dev/null
 
@@ -1311,7 +1311,7 @@ if [ $1 = "--install-file" ] || [ $1 == "-f" ]; then
 	
 	SetPerms
 
-	$cp -vpr * $PREFIX/
+	$cp -pr * $PREFIX/
     
 	ldconfig &> /dev/null 
 
@@ -1340,7 +1340,7 @@ if [ $1 = "--download" ] || [ $1 == "-d" ]; then
         	exit 1
 	    fi
 		if [ ! -z $3 ]; then
-			$mv -v $TMPDIR/$PKGNAME $3
+			$mv $TMPDIR/$PKGNAME $3
 			$echo Location: $3
 		else
 			$echo Location: $TMPDIR/$PKGNAME
@@ -1690,7 +1690,7 @@ function fn_exists() {
 }
 
 function get_pkg_install() {
-	is_pkg_file=`echo $1 | sed -e 's/.*\.\(pkg\)$/\1/g'`
+	is_pkg_file=`echo $1 | $sed -e 's/.*\.\(pkg\)$/\1/g'`
 	if [ "$is_pkg_file" == "pkg" ];
 	then
 		pkgr -readmeta $1 | $sed -e '/PKGINSTALL:/,/#PKGINSTALLEOF/ !d' | $sed -e '/PKGINSTALL/d' > $TMPDIR/run/pkg.install
