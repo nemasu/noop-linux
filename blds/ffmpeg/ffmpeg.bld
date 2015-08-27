@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('alsa-lib' 'fontconfig' 'freetype2' 'fribidi' 'glibc' 'gnutls' 'gsm' 'lame' 'libass' 'libbluray' 'libmodplug' 'libtheora' 'libva' 'libvdpau' 'libvorbis' 'libvpx' 'libX11' 'libx264' 'libxcb' 'libXext' 'libXv' 'opencore-amr' 'openjpeg' 'opus' 'pulseaudio' 'rtmpdump' 'schroedinger' 'sdl' 'speex' 'v4l-utils' 'x265' 'xvidcore' 'xz' 'zlib')
+DEPS=('alsa-lib' 'fontconfig' 'freetype2' 'fribidi' 'glibc' 'gnutls' 'gsm' 'lame' 'libX11' 'libXext' 'libXv' 'libass' 'libbluray' 'libmodplug' 'libtheora' 'libva' 'libvdpau' 'libvorbis' 'libvpx' 'libx264' 'libxcb' 'opencore-amr' 'openjpeg' 'opus' 'pulseaudio' 'rtmpdump' 'schroedinger' 'sdl' 'speex' 'v4l-utils' 'x265' 'xvidcore' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
