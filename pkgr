@@ -382,7 +382,7 @@ if [ $1 == "--version-check" ] || [ $1 == "-V" ]; then
 		
 		if ! [[ $2 =~ .*\.bldj ]];
 		then
-			svn checkout http://github.com/nemasu/noop-linux/trunk/blds/$2 || exit 1
+			svn checkout https://github.com/nemasu/noop-linux/trunk/blds/$2 || exit 1
 			cd `ls`
 		else
 			BLDJFILE=`readlink -f $2`
