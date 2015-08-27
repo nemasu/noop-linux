@@ -2,7 +2,7 @@
 NAME=steam
 
 #package version
-VERSION=1.0.0.49
+VERSION=1.0.0.50
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('lib32-libX11' 'lib32-gcc-libs' 'lib32-mesalib')
+DEPS=('lib32-libX11' 'lib32-mesalib')
 
 # 'no' to skip calls to strip
 STRIP=
