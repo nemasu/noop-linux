@@ -117,7 +117,7 @@ function Detect
 
         for i in ${FILELIST[@]};
         do
-                CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g;`
+                CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g;'`
                 vercomp $LATEST $CURVER
                 if [ $? -eq 2 ];
                 then
