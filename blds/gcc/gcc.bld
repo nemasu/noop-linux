@@ -9,7 +9,7 @@
 
 ARCH=`uname -m`
 NAME=gcc
-VERSION=5.1.0
+VERSION=5.2.0
 ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-$VERSION.tar.bz2
 EXTRACONF=
@@ -111,19 +111,7 @@ function BuildAndInstall
 
 function Detect
 {
-        LISTURL=ftp://ftp.gnu.org/gnu/gcc/
-        FILELIST=`GetFileList`
-        LATEST=0
-
-        for i in ${FILELIST[@]};
-        do
-                CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g;'`
-                vercomp $LATEST $CURVER
-                if [ $? -eq 2 ];
-                then
-                        LATEST=$CURVER
-                fi
-        done
+        LATEST=`curl -L -s ftp://ftp.gnu.org/gnu/gcc/ | awk '{print $9;}' | egrep "gcc-[0-9\.][0-9\.]*" | tail -n1`
 
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];

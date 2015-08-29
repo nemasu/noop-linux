@@ -1,15 +1,14 @@
 #package name
-NAME=busybox
+NAME=yelp-xsl
 
 #package version
-VERSION=1.23.2-1
-DVERSION=1.23.2
+VERSION=3.16.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.busybox.net/downloads/busybox-${DVERSION}.tar.bz2
+SRC=http://ftp.gnome.org/pub/gnome/sources/yelp-xsl/${VERSION:0:4}/yelp-xsl-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -31,15 +30,16 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mv $BLDRTMPDIR/config ./.config
-	make -j${BLDR_CORES}
-	make CONFIG_PREFIX=/root/bldr-inst/usr install
+  rm xslt/common/domains/yelp-xsl.xml
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+  make -j${BLDR_CORES}
+  make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.busybox.net/downloads/
+	LISTURL=http://ftp.gnome.org/pub/gnome/sources/yelp-xsl/${VERSION:0:4}/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -53,9 +53,10 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+
