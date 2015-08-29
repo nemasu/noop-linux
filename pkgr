@@ -607,7 +607,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	if [ "$ISFILE" == "0" ]; then
 		echo "Retrieving bldj from github..."
 		rm -rf /tmp/svn-noop-tmp && mkdir -p /tmp/svn-noop-tmp && cd /tmp/svn-noop-tmp
-		svn checkout http://github.com/nemasu/noop-linux/trunk/blds/$2 || exit 1
+		svn checkout https://github.com/nemasu/noop-linux/trunk/blds/$2 || exit 1
 		cd `ls`
 		tar cjf /tmp/file.bldj *
 		cd ../..
