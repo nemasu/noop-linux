@@ -2,8 +2,8 @@
 NAME=tigervnc
 
 #package version
-VERSION=1.4.3
-XORGVERSION=1.17.1
+VERSION=1.5.0
+XORGVERSION=1.17.2
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 

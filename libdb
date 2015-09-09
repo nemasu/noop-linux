@@ -4708,7 +4708,7 @@ linux-pam,pam_xauth.so
 llvm,BugpointPasses.so
 llvm,LLVMHello.so
 llvm,LLVMgold.so
-llvm,libLLVM-3.6.0.so
+llvm,libLLVM-3.6.2.so
 llvm,libLLVM-3.6.so
 llvm,libLTO.so
 llvm,libclang.so
@@ -4830,6 +4830,9 @@ mate-utils,libmatedict.so
 mate-utils,libmatedict.so.6
 mate-utils,libmatedict.so.6.0.7
 media-player-info,transcend_t.sonic-520.mpi
+mesalib,d3dadapter9.so
+mesalib,d3dadapter9.so.1
+mesalib,d3dadapter9.so.1.0.0
 mesalib,gallium_drv_video.so
 mesalib,i915_dri.so
 mesalib,i965_dri.so

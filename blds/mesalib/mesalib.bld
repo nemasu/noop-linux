@@ -2,8 +2,8 @@
 NAME=mesalib
 
 #package version
-VERSION=10.5.2
-DVERSION=10.5.2
+VERSION=10.6.6
+DVERSION=10.6.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -40,21 +40,17 @@ function BuildAndInstall
 		GALLIUM_DRIVERS=swrast
 		DRI_DRIVERS=swrast
 	else
-		GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,svga,swrast"
+		GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,svga,swrast" 
 		DRI_DRIVERS="i915,i965,r200,radeon,nouveau,swrast"
 		ARCHCONF="--enable-opencl --enable-opencl-icd --enable-xa"
 	fi
 
-
-	 autoreconf -vfi
     ./configure \
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		--with-clang-libdir=/usr/lib \
 		--with-gallium-drivers=${GALLIUM_DRIVERS} \
 		--with-dri-drivers=${DRI_DRIVERS} \
-		--disable-gallium-egl \
-		--disable-gallium-gbm \
 		--enable-gallium-llvm \
 		--enable-llvm-shared-libs \
 		--enable-egl \
@@ -62,6 +58,10 @@ function BuildAndInstall
 		--enable-shared-glapi \
 		--enable-gbm \
 		--enable-glx-tls \
+		--enable-xa \
+		--enable-nine \
+		--enable-opencl \
+		--enable-opencl-icd \
 		--enable-dri \
 		--enable-glx \
 		--enable-osmesa \
@@ -72,9 +72,6 @@ function BuildAndInstall
 		--enable-omx \
 		--enable-vdpau ${ARCHCONF}
 
-		# fix a build break with new llvm
-		sed -i "s:-Werror=implicit-function-declaration::" src/gallium/drivers/r600/Makefile
-	
 		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
 

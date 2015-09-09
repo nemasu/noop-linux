@@ -2,8 +2,8 @@
 NAME=llvm
 
 #package version
-VERSION=3.6.0
-DVERSION=3.6.0
+VERSION=3.6.2
+DVERSION=3.6.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
