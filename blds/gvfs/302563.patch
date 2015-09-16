@@ -1,0 +1,53 @@
+From f6702f04ea329c2f6c7fc1e3c857d883ae817bab Mon Sep 17 00:00:00 2001
+From: Ondrej Holy <oholy@redhat.com>
+Date: Wed, 29 Apr 2015 14:35:39 +0200
+Subject: [PATCH] client: Do not create GDaemonFile for unknown schemes
+
+g_file_new_for_uri() creates new GDaemonFile also for unknow schemes.
+GDaemonFile is based on GMountSpec which is created from the uri.
+g_file_get_uri() returns uri constructed from the mountspec. This
+workflow fails for uris like "mailto:address", because "mailto:///address"
+is returned instead of original uri. We should create GDummyFile instead for
+unknown schemes to avoid uri corruption...
+
+https://bugzilla.gnome.org/show_bug.cgi?id=738690
+---
+ client/gdaemonvfs.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/client/gdaemonvfs.c b/client/gdaemonvfs.c
+index 6b9612f..669e2ce 100644
+--- a/client/gdaemonvfs.c
++++ b/client/gdaemonvfs.c
+@@ -202,20 +202,21 @@ get_mountspec_from_uri (GDaemonVfs *vfs,
+     {
+       GDecodedUri *decoded;
+       MountableInfo *mountable;
+-      char *type;
+       int l;
+ 
+       decoded = g_vfs_decode_uri (uri);
+       if (decoded)
+ 	{	
+ 	  mountable = get_mountable_info_for_scheme (vfs, decoded->scheme);
+-      
+-	  if (mountable)
+-	    type = mountable->type;
+-	  else
+-	    type = decoded->scheme;
++
++	  if (!mountable)
++	  {
++	    g_vfs_decoded_uri_free (decoded);
++	    g_free (scheme);
++	    return FALSE;
++	  }
+ 	  
+-	  spec = g_mount_spec_new (type);
++	  spec = g_mount_spec_new (mountable->type);
+ 	  
+ 	  if (decoded->host && *decoded->host)
+ 	    {
+-- 
+2.3.5
+
