@@ -50,7 +50,6 @@ do
 done
 
 
-
 #figure out where to boot from...is there a better way?
 mkdir /mnttest
 

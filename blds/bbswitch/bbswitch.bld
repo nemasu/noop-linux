@@ -2,13 +2,14 @@
 NAME=bbswitch
 
 #package version
-VERSION=0.8
+VERSION=0.8-1
+DVERSION=0.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="https://github.com/Bumblebee-Project/bbswitch/archive/v${VERSION}.tar.gz"
+SRC="https://github.com/Bumblebee-Project/bbswitch/archive/v${DVERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -39,7 +40,7 @@ function Detect
 {
 	LATEST=`curl -L -s https://github.com/Bumblebee-Project/bbswitch/releases | grep ".tar.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 	
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

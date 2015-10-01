@@ -110,6 +110,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		$echo -e "\t-m,\t--make-bldj foo.bldj or name  パッケージをビルドします（bldjファイルそれと、レポからダウンロードします）"
 		$echo -e "\t-V,\t--version-check name          ビルドのため、新ソースをチェックみて。"
 		$echo -e "\t-n,\t--new-config                  新コンフィグファイルを処理します"
+		$echo -e "\t   \t--mkinitramfs                 Create initramfs"
 
 	else
 		$echo -e "\npkgr -- noop Linux package manager"
@@ -133,6 +134,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		$echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a package (bldj file or grab it from repo)"
 		$echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building"
 		$echo -e "\t-n,\t--new-config                  Process new config files"
+		$echo -e "\t   \t--mkinitramfs                 Create initramfs"
 		#$echo -e "\t"
 		#$echo -e "\t-libdiff"
 		#$echo -e "\t-genmeta package-name version"
@@ -1973,6 +1975,99 @@ if [ $1 = "-libdiff" ]; then
 	curl -s -L https://github.com/nemasu/noop-linux/raw/master/libdb > /tmp/libdb.server
 	diff /var/noop/libdb /tmp/libdb.server
 	rm /tmp/libdb.server
+fi
+
+function copy_module() {
+
+    if [ -n "$1" ];
+    then
+        MOD_PATH=`modinfo $1 | grep -e "^filename:" | awk '{print $2;}'`
+        name=`echo $MOD_PATH | sed -e 's/^.*\///g'`
+        if [ ! -e "${PREFIX}${MOD_PATH}" ];
+        then
+            install -D -v $MOD_PATH ${PREFIX}${MOD_PATH}
+                
+            for j in `modinfo $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
+            do  
+                copy_module "$j"
+            done
+
+            for k in `modinfo $1 | grep -e "^firmware:" | awk '{print $2;}'`;
+            do  
+                find /lib/firmware -name "${k}" -exec cp -v {} $PREFIX/lib/firmware/ \;
+            done
+        fi  
+    fi  
+}
+
+if [ $1 = "--mkinitramfs" ]; then
+
+	#Requirements	
+	for i in cpio aufs3-utils lvm2 cryptsetup;
+	do
+		pkgr -i $i &> /dev/null
+	done
+
+	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
+	INITRAMFS_WORKDIR=/tmp/initramfs-gen
+	rm -rf $INITRAMFS_WORKDIR && mkdir $INITRAMFS_WORKDIR
+
+	pushd $INITRAMFS_WORKDIR &> /dev/null
+	wget $PKGHOST/file-base.tar.bz2
+	tar xf file-base.tar.bz2 && rm file-base.tar.bz2
+	ln -s lib lib64
+    cd usr
+	ln -s lib lib64
+	cd ..
+
+	#Modules that need to be in initramfs for some reason, add add needed.
+	mkdir -p $INITRAMFS_WORKDIR/mods
+	mkdir -p $INITRAMFS_WORKDIR/lib/modules/$KERVER/
+	mkdir -p $INITRAMFS_WORKDIR/lib/firmware
+	#Build list (need deps)
+	source /etc/noop/initramfs
+
+	for i in ${MODULES[@]}
+	do
+		touch $INITRAMFS_WORKDIR/mods/$i
+		copy_module "$i"
+	done
+
+	cp -v `which mount.aufs` $INITRAMFS_WORKDIR/sbin
+	cp -v `which lvm.static` $INITRAMFS_WORKDIR/sbin/lvm
+	cp -v `which dmsetup.static` $INITRAMFS_WORKDIR/sbin/dmsetup
+	cp -v `which veritysetup` $INITRAMFS_WORKDIR/bin/
+	cp -v `which cryptsetup-reencrypt` $INITRAMFS_WORKDIR/bin/
+	cp -v `which cryptsetup` $INITRAMFS_WORKDIR/bin/
+	cp -v `which pkgr`  $INITRAMFS_WORKDIR/sbin/
+
+	export PATH=$PREFIX/usr/sbin:$PATH
+
+	PREFIX=$INITRAMFS_WORKDIR pkgr -s
+	export PKGR_SUPPRESS_P_OUTPUT=1
+
+	for i in busybox bash;
+	do
+		PREFIX=$INITRAMFS_WORKDIR pkgr -i $i
+	done
+
+	rm -rf $INITRAMFS_WORKDIR/tmp/*
+	rm -rf $INITRAMFS_WORKDIR/etc/*
+	rm -rf $INITRAMFS_WORKDIR/usr/sbin/pkgr
+	rm -rf $INITRAMFS_WORKDIR/var/noop
+
+	touch $INITRAMFS_WORKDIR/etc/mtab
+
+	wget https://github.com/nemasu/noop-linux/raw/master/initramfs/init.noop -O$INITRAMFS_WORKDIR/init && $CHMOD +x $INITRAMFS_WORKDIR/init
+
+	cd $INITRAMFS_WORKDIR
+	find . | cpio -H newc -o > /boot/noop-initramfs.cpio
+	pushd /boot &> /dev/null
+	cat noop-initramfs.cpio | gzip > noop-initramfs.img
+	rm noop-initramfs.cpio
+	popd &> /dev/null
+
+	popd &> /dev/null && rm -rf $INITRAMFS_WORKDIR
 fi
 
 if [ $1 = "-init" ]; then

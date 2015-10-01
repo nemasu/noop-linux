@@ -1,7 +1,15 @@
 function postup() {
 	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
+	
+	#If using dracut
 	if [ -e /boot/dracut-initramfs.img ]; then
 		mv /boot/dracut-initramfs.img /boot/dracut-initramfs.img.old
 		dracut -q /boot/dracut-initramfs.img ${KERVER}
+	fi
+
+	#if using pkgr's
+	if [ -e /boot/noop-initramfs.img ]; then
+		mv /boot/noop-initramfs.img /boot/noop-initramfs.img.old
+		pkgr --mkinitramfs
 	fi
 }

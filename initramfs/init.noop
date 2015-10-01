@@ -6,6 +6,7 @@
 #Mount things needed by this script
 mount -t proc proc /proc
 mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
 
 #Disable kernel messages from popping onto the screen
 echo 0 > /proc/sys/kernel/printk
@@ -41,8 +42,14 @@ done
 #Give time for things to be detected
 /usr/bin/busybox usleep 5000000
 #Mount the root device
-/usr/bin/busybox mdev -s
+#/usr/bin/busybox mdev -s
 mkdir -p /newroot
+
+#Load modules
+for i in `ls /mods/`;
+do
+    /usr/bin/busybox modprobe $i
+done
 
 #LVM2
 lvm vgscan --mknodes
@@ -61,7 +68,7 @@ mount ${root} /newroot
 if [[ -x "/newroot/${init}" ]] ; then
     #Unmount all other mounts so that the ram used by
     #the initramfs can be cleared after switch_root
-    umount /sys /proc
+    umount /sys /proc /dev
 
     #Switch to the new root and execute init
     exec /usr/bin/busybox switch_root /newroot "${init}"

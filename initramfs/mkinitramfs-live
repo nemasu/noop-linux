@@ -62,12 +62,6 @@ fi
 mkdir -p $PREFIX/mods
 mkdir -p $PREFIX/lib/modules/`uname -r`/
 mkdir -p $PREFIX/lib/firmware
-#Build list (need deps)
-for i in 
-do
-	MOD_LIST+=`modinfo $i |  grep -e "^depends:" | awk '{print $2;}'`
-	MOD_LIST+=" "
-done
 
 function copy_module() {
 

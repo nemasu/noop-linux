@@ -1,6 +1,6 @@
 NAME=nvidia
-VERSION=352.30-2
-DVERSION=352.30
+VERSION=352.41
+DVERSION=352.41
 ISUSR=1
 
 if [ "`uname -m`" == "x86_64" ];
