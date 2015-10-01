@@ -2044,9 +2044,6 @@ if [ $1 = "--mkinitramfs" ]; then
 	cp -v `which cryptsetup-reencrypt` $INITRAMFS_WORKDIR/bin/
 	cp -v `which cryptsetup` $INITRAMFS_WORKDIR/bin/
 
-	PREFIX=$INITRAMFS_WORKDIR pkgr -s
-	export PKGR_SUPPRESS_P_OUTPUT=1
-
 	for i in busybox bash;
 	do
 		PREFIX=$INITRAMFS_WORKDIR pkgr -i $i
