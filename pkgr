@@ -2039,7 +2039,7 @@ if [ $1 = "--mkinitramfs" ]; then
 
 		find $INITRAMFS_WORKDIR/lib/modules -name "*.xz" -exec unxz {} \;
 		cp /lib/modules/$KERVER/modules* $INITRAMFS_WORKDIR/lib/modules/$KERVER/
-		depmod -a -b $INITRAMFS_WORKDIR
+		depmod -a -b $INITRAMFS_WORKDIR $KERVER
 
 	fi
 
