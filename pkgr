@@ -1977,30 +1977,31 @@ if [ $1 = "-libdiff" ]; then
 	rm /tmp/libdb.server
 fi
 
-function copy_module() {
-
-    if [ -n "$1" ];
-    then
-        MOD_PATH=`modinfo $1 | grep -e "^filename:" | awk '{print $2;}'`
-        name=`echo $MOD_PATH | sed -e 's/^.*\///g'`
-        if [ ! -e "${PREFIX}${MOD_PATH}" ];
-        then
-            install -D -v $MOD_PATH ${PREFIX}${MOD_PATH}
-                
-            for j in `modinfo $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
-            do  
-                copy_module "$j"
-            done
-
-            for k in `modinfo $1 | grep -e "^firmware:" | awk '{print $2;}'`;
-            do  
-                find /lib/firmware -name "${k}" -exec cp -v {} $PREFIX/lib/firmware/ \;
-            done
-        fi  
-    fi  
-}
 
 if [ $1 = "--mkinitramfs" ]; then
+	function copy_module() {
+
+		if [ -n "$1" ];
+		then
+			MOD_PATH=`modinfo $1 | grep -e "^filename:" | awk '{print $2;}'`
+			name=`echo $MOD_PATH | sed -e 's/^.*\///g'`
+			if [ ! -e "${INITRAMFS_WORKDIR}${MOD_PATH}" ];
+			then
+				install -D -v $MOD_PATH ${INITRAMFS_WORKDIR}${MOD_PATH}
+					
+				for j in `modinfo $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
+				do  
+					copy_module "$j"
+				done
+
+				for k in `modinfo $1 | grep -e "^firmware:" | awk '{print $2;}'`;
+				do  
+					find /lib/firmware -name "${k}" -exec cp -v {} $INITRAMFS_WORKDIR/lib/firmware/ \;
+				done
+			fi  
+		fi  
+	}
+
 
 	#Requirements	
 	for i in cpio aufs3-utils lvm2 cryptsetup;
@@ -2043,12 +2044,9 @@ if [ $1 = "--mkinitramfs" ]; then
 	cp -v `which veritysetup` $INITRAMFS_WORKDIR/bin/
 	cp -v `which cryptsetup-reencrypt` $INITRAMFS_WORKDIR/bin/
 	cp -v `which cryptsetup` $INITRAMFS_WORKDIR/bin/
-
-	for i in busybox bash;
-	do
-		PREFIX=$INITRAMFS_WORKDIR pkgr -i $i
-	done
-
+	cp -v `which busybox` $INITRAMFS_WORKDIR/bin/
+	cp -v `which bash` $INITRAMFS_WORKDIR/bin/
+	
 	rm -rf $INITRAMFS_WORKDIR/tmp/*
 	rm -rf $INITRAMFS_WORKDIR/etc/*
 	rm -rf $INITRAMFS_WORKDIR/var/noop
