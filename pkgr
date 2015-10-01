@@ -2043,7 +2043,6 @@ if [ $1 = "--mkinitramfs" ]; then
 	cp -v `which veritysetup` $INITRAMFS_WORKDIR/bin/
 	cp -v `which cryptsetup-reencrypt` $INITRAMFS_WORKDIR/bin/
 	cp -v `which cryptsetup` $INITRAMFS_WORKDIR/bin/
-	cp -v `which pkgr`  $INITRAMFS_WORKDIR/sbin/
 
 	PREFIX=$INITRAMFS_WORKDIR pkgr -s
 	export PKGR_SUPPRESS_P_OUTPUT=1
@@ -2055,7 +2054,6 @@ if [ $1 = "--mkinitramfs" ]; then
 
 	rm -rf $INITRAMFS_WORKDIR/tmp/*
 	rm -rf $INITRAMFS_WORKDIR/etc/*
-	rm -rf $INITRAMFS_WORKDIR/usr/sbin/pkgr
 	rm -rf $INITRAMFS_WORKDIR/var/noop
 
 	touch $INITRAMFS_WORKDIR/etc/mtab
