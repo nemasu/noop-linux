@@ -2038,6 +2038,9 @@ if [ $1 = "--mkinitramfs" ]; then
 		done
 	fi
 
+	find $INITRAMFS_WORKDIR/lib/modules -name "*.xz" -exec unxz {} \;
+	cp /lib/modules/$KERVER/modules* $INITRAMFS_WORKDIR/lib/modules/$KERVER/
+	depmod -a -b $INITRAMFS_WORKDIR
 
 	cp -v `which busybox` $INITRAMFS_WORKDIR/usr/bin/
 	cp -v `which bash` $INITRAMFS_WORKDIR/usr/bin/

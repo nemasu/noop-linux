@@ -2,6 +2,7 @@
 
 set -e
 
+KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
 HOST=http://www.nooplinux.org/noop
 PKGHOST=$HOST/packages/`uname -m`
 
@@ -92,7 +93,7 @@ do
 	copy_module "$i"
 done
 find $PREFIX/lib/modules -name "*.xz" -exec unxz {} \;
-cp /lib/modules/4.1.6/modules* $PREFIX//lib/modules/4.1.6/
+cp /lib/modules/$KERVER/modules* $PREFIX/lib/modules/$KERVER/
 depmod -a -b $PREFIX
 
 cp -v `which mount.aufs` $PREFIX/sbin
