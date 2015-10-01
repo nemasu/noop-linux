@@ -2038,14 +2038,15 @@ if [ $1 = "--mkinitramfs" ]; then
 		done
 	fi
 
-	cp -v `which mount.aufs` $INITRAMFS_WORKDIR/sbin
+
+	cp -v `which busybox` $INITRAMFS_WORKDIR/usr/bin/
+	cp -v `which bash` $INITRAMFS_WORKDIR/usr/bin/
+	cp -v `which mount.aufs` $INITRAMFS_WORKDIR/sbin/
 	cp -v `which lvm.static` $INITRAMFS_WORKDIR/sbin/lvm
 	cp -v `which dmsetup.static` $INITRAMFS_WORKDIR/sbin/dmsetup
 	cp -v `which veritysetup` $INITRAMFS_WORKDIR/bin/
 	cp -v `which cryptsetup-reencrypt` $INITRAMFS_WORKDIR/bin/
 	cp -v `which cryptsetup` $INITRAMFS_WORKDIR/bin/
-	cp -v `which busybox` $INITRAMFS_WORKDIR/bin/
-	cp -v `which bash` $INITRAMFS_WORKDIR/bin/
 	
 	rm -rf $INITRAMFS_WORKDIR/tmp/*
 	rm -rf $INITRAMFS_WORKDIR/etc/*
