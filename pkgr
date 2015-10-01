@@ -2036,12 +2036,14 @@ if [ $1 = "--mkinitramfs" ]; then
 			touch $INITRAMFS_WORKDIR/mods/$i
 			copy_module "$i"
 		done
+
+		find $INITRAMFS_WORKDIR/lib/modules -name "*.xz" -exec unxz {} \;
+		cp /lib/modules/$KERVER/modules* $INITRAMFS_WORKDIR/lib/modules/$KERVER/
+		depmod -a -b $INITRAMFS_WORKDIR
+
 	fi
 
-	find $INITRAMFS_WORKDIR/lib/modules -name "*.xz" -exec unxz {} \;
-	cp /lib/modules/$KERVER/modules* $INITRAMFS_WORKDIR/lib/modules/$KERVER/
-	depmod -a -b $INITRAMFS_WORKDIR
-
+	
 	cp -v `which busybox` $INITRAMFS_WORKDIR/usr/bin/
 	cp -v `which bash` $INITRAMFS_WORKDIR/usr/bin/
 	cp -v `which mount.aufs` $INITRAMFS_WORKDIR/sbin/
