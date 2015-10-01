@@ -2045,8 +2045,6 @@ if [ $1 = "--mkinitramfs" ]; then
 	cp -v `which cryptsetup` $INITRAMFS_WORKDIR/bin/
 	cp -v `which pkgr`  $INITRAMFS_WORKDIR/sbin/
 
-	export PATH=$PREFIX/usr/sbin:$PATH
-
 	PREFIX=$INITRAMFS_WORKDIR pkgr -s
 	export PKGR_SUPPRESS_P_OUTPUT=1
 
