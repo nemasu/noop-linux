@@ -1979,22 +1979,23 @@ fi
 
 
 if [ $1 = "--mkinitramfs" ]; then
+	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
 	function copy_module() {
 
 		if [ -n "$1" ];
 		then
-			MOD_PATH=`modinfo $1 | grep -e "^filename:" | awk '{print $2;}'`
+			MOD_PATH=`modinfo -k $KERVER $1 | grep -e "^filename:" | awk '{print $2;}'`
 			name=`echo $MOD_PATH | sed -e 's/^.*\///g'`
 			if [ ! -e "${INITRAMFS_WORKDIR}${MOD_PATH}" ];
 			then
 				install -D -v $MOD_PATH ${INITRAMFS_WORKDIR}${MOD_PATH}
 					
-				for j in `modinfo $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
+				for j in `modinfo -k $KERVER $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
 				do  
 					copy_module "$j"
 				done
 
-				for k in `modinfo $1 | grep -e "^firmware:" | awk '{print $2;}'`;
+				for k in `modinfo -k $KERVER $1 | grep -e "^firmware:" | awk '{print $2;}'`;
 				do  
 					find /lib/firmware -name "${k}" -exec cp -v {} $INITRAMFS_WORKDIR/lib/firmware/ \;
 				done
@@ -2009,7 +2010,6 @@ if [ $1 = "--mkinitramfs" ]; then
 		pkgr -i $i &> /dev/null
 	done
 
-	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
 	INITRAMFS_WORKDIR=/tmp/initramfs-gen
 	rm -rf $INITRAMFS_WORKDIR && mkdir $INITRAMFS_WORKDIR
 
