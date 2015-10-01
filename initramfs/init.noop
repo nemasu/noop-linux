@@ -39,8 +39,8 @@ for i in $(cat /proc/cmdline); do
     esac
 done
 
-#Give time for things to be detected
-/usr/bin/busybox usleep 5000000
+#Give time for things to be detected, 3 seconds for now
+/usr/bin/busybox usleep 3000000
 #Mount the root device
 #/usr/bin/busybox mdev -s
 mkdir -p /newroot
