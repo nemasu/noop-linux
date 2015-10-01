@@ -2025,13 +2025,17 @@ if [ $1 = "--mkinitramfs" ]; then
 	mkdir -p $INITRAMFS_WORKDIR/lib/modules/$KERVER/
 	mkdir -p $INITRAMFS_WORKDIR/lib/firmware
 	#Build list (need deps)
-	source /etc/noop/initramfs
 
-	for i in ${MODULES[@]}
-	do
-		touch $INITRAMFS_WORKDIR/mods/$i
-		copy_module "$i"
-	done
+	if [ -e /etc/noop/initramfs ];
+	then
+		source /etc/noop/initramfs
+
+		for i in ${MODULES[@]}
+		do
+			touch $INITRAMFS_WORKDIR/mods/$i
+			copy_module "$i"
+		done
+	fi
 
 	cp -v `which mount.aufs` $INITRAMFS_WORKDIR/sbin
 	cp -v `which lvm.static` $INITRAMFS_WORKDIR/sbin/lvm
