@@ -2060,7 +2060,7 @@ if [ $1 = "--mkinitramfs" ]; then
 
 	touch $INITRAMFS_WORKDIR/etc/mtab
 
-	wget https://github.com/nemasu/noop-linux/raw/master/initramfs/init.noop -O$INITRAMFS_WORKDIR/init && $CHMOD +x $INITRAMFS_WORKDIR/init
+	wget https://github.com/nemasu/noop-linux/raw/master/initramfs/init.noop -O$INITRAMFS_WORKDIR/init && chmod +x $INITRAMFS_WORKDIR/init
 
 	cd $INITRAMFS_WORKDIR
 	find . | cpio -H newc -o > /boot/noop-initramfs.cpio
