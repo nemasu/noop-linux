@@ -2,8 +2,8 @@
 NAME=virtualbox
 
 #package version
-VERSION=5.0.0-5
-DVERSION=5.0.0
+VERSION=5.0.4
+DVERSION=5.0.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -200,23 +200,9 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=VirtualBox
-	LISTURL=https://www.virtualbox.org/wiki/Downloads
-	FILELIST=`GetFileList`
-	NAME=virtualbox
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
-
-	vercomp $VERSION $LATEST
+	LATEST=`curl -L -s https://www.virtualbox.org/wiki/Downloads | egrep "Source code" | sed -e 's/.*VirtualBox-\([0-9\.]*\)\.tar\.bz2.*/\1/g;'`
+	
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
