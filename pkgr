@@ -2063,11 +2063,7 @@ if [ $1 = "--mkinitramfs" ]; then
 	wget https://github.com/nemasu/noop-linux/raw/master/initramfs/init.noop -O$INITRAMFS_WORKDIR/init && chmod +x $INITRAMFS_WORKDIR/init
 
 	cd $INITRAMFS_WORKDIR
-	find . | cpio -H newc -o > /boot/noop-initramfs.cpio
-	pushd /boot &> /dev/null
-	cat noop-initramfs.cpio | gzip > noop-initramfs.img
-	rm noop-initramfs.cpio
-	popd &> /dev/null
+	find . | cpio -H newc -o | gzip > /boot/noop-initramfs.img
 
 	popd &> /dev/null && rm -rf $INITRAMFS_WORKDIR
 fi
