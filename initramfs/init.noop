@@ -48,7 +48,9 @@ mkdir -p /newroot
 #Load modules
 for i in `ls /mods/`;
 do
+	echo -n "Loading module ${i} ... "
     /usr/bin/busybox modprobe $i
+	echo "done."
 done
 
 #LVM2
