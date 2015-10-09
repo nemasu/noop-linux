@@ -2,8 +2,8 @@
 NAME=llvm
 
 #package version
-VERSION=3.6.2
-DVERSION=3.6.2
+VERSION=3.7.0
+DVERSION=3.7.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -44,14 +44,9 @@ function BuildAndInstall
 	tar xf clang-tools-extra-${DVERSION}.src.tar.xz
 	mv clang-tools-extra-${DVERSION}.src tools/clang/tools/extra
 
-#mv $BLDRTMPDIR/*.p .
+	mkdir -p build && cd build
 
-#mv clang-3.3-use-gold-linker.p tools/clang
-
-#patch -d tools/clang -Np1 -i clang-3.3-use-gold-linker.p
-#patch -Np0 -i llvm-3.4-provide-cmake-modules.p
-
-	./configure \
+	../configure \
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		--enable-shared \
@@ -68,6 +63,20 @@ function BuildAndInstall
 	cd tools/clang
 	make DESTDIR=/root/bldr-inst install
 
+	#llvm-libs package
+	PushScripts
+	rm -rf /root/llvm-lib-install && mkdir -p /root/llvm-lib-install/usr/lib/
+	pushd /root/llvm-lib-install
+    
+	find /root/bldr-inst/usr/lib/ -name "*.so" -exec mv -v {} /root/llvm-lib-install/usr/lib/ \;
+	
+	pkgr -genmeta llvm-libs $VERSION
+	pkgr -genpkg
+	mv *.pkg /root/bldr-done/
+
+	popd
+	rm -rf /root/llvm-lib-install
+	PopScripts
 }
 
 #Default HTTP curl new version detection
