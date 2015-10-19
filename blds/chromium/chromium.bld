@@ -8,8 +8,8 @@
 # ISSPECIAL
 
 NAME=chromium
-DVERSION=43.0.2357.134
-VERSION=43.0.2357.134
+DVERSION=46.0.2490.71
+VERSION=46.0.2490.71
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -99,6 +99,8 @@ function BuildAndInstall
     -Dffmpeg_branding=Chrome 
     -Duse_system_ffmpeg=0 
     -Duse_system_libevent=1 
+	-Denable_hangout_services_extension=1
+	-Duse_system_libvpx=0
     -Duse_system_libjpeg=1 
     -Duse_system_libpng=1 
     -Duse_system_libxml=1 
@@ -143,6 +145,9 @@ function BuildAndInstall
 	popd
   fi
 
+  # https://groups.google.com/a/chromium.org/d/topic/chromium-packagers/9JX1N2nf4PU/discussion
+  touch chrome/test/data/webui/i18n_process_css_test.html
+
   build/linux/unbundle/replace_gyp_files.py "${options[@]}"
   build/gyp_chromium --depth . "${options[@]}"
 
@@ -162,7 +167,7 @@ function BuildAndInstall
     /root/bldr-inst/usr/lib/chromium/chrome-sandbox
 
 
-  cp out/Release/{*.pak,*.bin,libffmpegsumo.so} /root/bldr-inst/usr/lib/chromium/
+  cp out/Release/{*.pak,*.bin} /root/bldr-inst/usr/lib/chromium/
   
   if [ "`uname -m`" != "armv6l" ];
   then
@@ -175,7 +180,6 @@ function BuildAndInstall
 	strip /root/bldr-inst/usr/lib/chromium/chromedriver \
     	/root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap}
 
-  	strip --strip-all /root/bldr-inst/usr/lib/chromium/libffmpegsumo.so
   fi
 
   strip --strip-debug /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
