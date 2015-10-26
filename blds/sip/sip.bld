@@ -1,0 +1,60 @@
+#package name
+NAME=sip
+
+#package version
+VERSION=4.16.9
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="http://sourceforge.net/projects/pyqt/files/sip/sip-${VERSION}/sip-${VERSION}.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cd ..
+	srcdir=`ls`
+	mv ${srcdir} py2
+	cp -r py2 py3
+
+	cd py3
+	python3 configure.py CFLAGS=${CFLAGS} LFLAGS=${LDFLAGS}
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+
+	cd ../py2
+	python2 configure.py CFLAGS=${CFLAGS} LFLAGS=${LDFLAGS}
+	make -j3
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s http://sourceforge.net/projects/pyqt/files/sip/ | egrep "/sip-[0-9\.]+/\"" | sed -e 's|.*/sip-\([0-9\.]*\)/.*|\1|g' | head -n1`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

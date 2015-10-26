@@ -55,6 +55,13 @@ function BuildAndInstall
     -DCMAKE_INSTALL_LIBDIR=lib
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
+
+  # Install headers into the Qt4 dir
+  install -d /root/bldr-inst/usr/include/qt4
+  mv /root/bldr-inst/usr/include/{phonon,KDE} /root/bldr-inst/usr/include/qt4/
+
+  sed -i 's#includedir=/usr/include#includedir=/usr/include/qt4#' \
+    /root/bldr-inst/usr/lib/pkgconfig/phonon.pc
 }
 
 #Default HTTP curl new version detection
