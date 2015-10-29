@@ -2,8 +2,8 @@
 NAME=thunderbird
 
 #package version
-VERSION=31.6.0
-DVERSION=31.6.0
+VERSION=38.3.0
+DVERSION=38.3.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
