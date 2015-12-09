@@ -269,6 +269,10 @@ babl,sse-fixups.so
 bamf,libbamf3.so
 bamf,libbamf3.so.2
 bamf,libbamf3.so.2.0.0
+binutils,libbfd-2.25.1.so
+binutils,libbfd.so
+binutils,libopcodes-2.25.1.so
+binutils,libopcodes.so
 bluez,libasound_module_ctl_bluetooth.so
 bluez,libasound_module_pcm_bluetooth.so
 bluez,libbluetooth.so

@@ -2,8 +2,8 @@
 NAME=binutils
 
 #package version
-VERSION=2.24-1
-DVERSION=2.24
+VERSION=2.25.1
+DVERSION=2.25.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -24,7 +24,7 @@ DEPS=('glibc' 'zlib')
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('bison' 'flex')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=

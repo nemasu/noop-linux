@@ -1,0 +1,71 @@
+#package name
+NAME=lib32-gtk+
+
+#package version
+VERSION=3.16.5
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+MM=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://ftp.gnome.org/pub/gnome/sources/gtk+/$MM/gtk+-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=('atk' 'at-spi2-atk' 'at-spi2-core' 'cairo' 'colord' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libcanberra' 'libepoxy' 'libffi' 'libogg' 'libpng' 'libpng15' 'libtool' 'libvorbis' 'libX11' 'libXau' 'libxcb' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'pango' 'pcre' 'pixman' 'tdb' 'zlib')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+	CXX=/bin/false ./configure --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+		--libexecdir=/usr/lib32 \
+		--libdir=/usr/lib32 \
+		--disable-static \
+        --enable-gtk2-dependency \
+        --disable-schemas-compile \
+        --enable-x11-backend \
+		--enable-introspection
+
+	#https://bugzilla.gnome.org/show_bug.cgi?id=655517
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
+    make -j${BLDR_CORES}
+
+	make DESTDIR=/root/bldr-inst install
+
+	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+
+	 MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gtk+/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gtk+/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
