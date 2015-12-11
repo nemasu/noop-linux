@@ -1,8 +1,8 @@
 NAME=firefox
-VERSION=40.0.2
-DVERSION=40.0.2
+VERSION=42.0
+DVERSION=42.0
 ISUSR=1
-SRC=https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${DVERSION}/source/${NAME}-${DVERSION}.source.tar.bz2
+SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
 ISSPECIAL=1
 DEPS=('alsa-lib' 'atk' 'cairo' 'dbus' 'dbus-glib' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'hunspell' 'icu4c' 'lib32-glibc' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXrender' 'libXt' 'libevent' 'libffi' 'libjpeg' 'libpng' 'libvpx' 'nspr' 'nss' 'pango' 'pixman' 'sqlite' 'startup-notification' 'zlib')
@@ -66,7 +66,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest/source/  | grep "firefox-[0-9\.]*\.source\.tar\.bz2" | sed -e 's/.*firefox-\([0-9\.]*\)\.source\.tar\.bz2.*/\1/g'`
+	LATEST=`curl -s "https://download.mozilla.org/?product=firefox-latest&os=linux&lang=en-US" | grep "firefox" | sed 's/.*firefox-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
 	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];

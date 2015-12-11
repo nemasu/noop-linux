@@ -5155,6 +5155,7 @@ nspr,libnspr4.so
 nspr,libplc4.so
 nspr,libplds4.so
 nss,libfreebl3.so
+nss,libgtest1.so
 nss,libnss3.so
 nss,libnssckbi.so
 nss,libnssdbm3.so
@@ -7044,7 +7045,7 @@ speex,libspeexdsp.so.1.5.0
 speex,libspeex.so
 speex,libspeex.so.1
 speex,libspeex.so.1.5.0
-sqlite,libsqlite3.8.11.1.so
+sqlite,libsqlite3.9.2.so
 sqlite,libsqlite3.so
 sqlite,libsqlite3.so.0
 sqlite,libsqlite3.so.0.8.6

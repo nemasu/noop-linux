@@ -2,7 +2,7 @@
 NAME=nss
 
 #package version
-VERSION=3.20
+VERSION=3.21
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -92,12 +92,22 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-    LATEST=`curl -L -s "http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/?C=N;O=A" | grep NSS | tail -n1 | sed -e 's/.*NSS_\([0-9_]*\)_RTM.*/\1/g;s/_/\./g'`
+	FILELIST=`curl -L -s http://ftp.mozilla.org/pub/security/nss/releases/ | grep "NSS_[0-9_]*_RTM" | sed 's/.*NSS_\([0-9_]*\)_RTM.*/\1/g' | sed 's/_/./g'`
+	LATEST=0
 
-    vercomp $VERSION $LATEST
-    if [ $? -eq 2 ];
-    then
-            echo "$NAME: New Version Available! - $LATEST"
-    fi
+	for i in ${FILELIST[@]};
+	do
+					CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+					vercomp $LATEST $CURVER
+					if [ $? -eq 2 ];
+					then
+									LATEST=$CURVER
+					fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+					echo "$NAME: New Version Available! - $LATEST"
+	fi
 }
-
