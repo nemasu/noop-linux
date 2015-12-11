@@ -1,23 +1,23 @@
 #package name
-NAME=cairo
+NAME=imagemagick
 
 #package version
-VERSION=1.14.6
+VERSION=6.9.2-8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://cairographics.org/releases/cairo-${VERSION}.tar.xz
+SRC=http://www.imagemagick.org/download/ImageMagick-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('expat' 'fontconfig' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libffi' 'libpng' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXrender' 'lzo2' 'pcre' 'pixman' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,18 +28,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	autoreconf -vfi
-	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --disable-lto
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://cairographics.org/releases/
+	LISTURL=http://www.imagemagick.org/download/
 	FILELIST=`GetFileList`
 	LATEST=0
 

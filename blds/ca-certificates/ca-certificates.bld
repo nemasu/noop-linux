@@ -8,9 +8,9 @@
 # ISSPECIAL
 
 NAME=ca-certificates
-VERSION=20140325
+VERSION=20150426
 ISUSR=1
-SRC=http://ftp.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_20140325.tar.xz
+SRC=http://ftp.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_${VERSION}.tar.xz
 EXTRACONF=
 ISSPECIAL=1
 
