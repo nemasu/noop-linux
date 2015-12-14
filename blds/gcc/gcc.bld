@@ -62,19 +62,26 @@ function BuildAndInstall
 
 	if [ $ARCH == "armv6l" ]; then
 		ARCHMACH="armv6l-unknown"
-		mkdir -p `pwd`/../../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION
+		mkdir -p /root/gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION
 		cd /root/bldr-inst
 		mv -v usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/
 		mv -v usr/lib/*.so* `pwd`/../gcc-libs-inst/usr/lib/
 	elif [ $ARCH == "x86_64" ]; then
 		ARCHMACH="x86_64-unknown"
-		mkdir -p `pwd`/../../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION
+		mkdir -p /root/gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION
 		cd /root/bldr-inst
 		mv -v usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnu/$VERSION/
 		mkdir -p `pwd`/../gcc-libs-inst/usr/lib
         mkdir -p `pwd`/../gcc-libs-inst/usr/lib32
         mv -v usr/lib/*.so* `pwd`/../gcc-libs-inst/usr/lib/
         mv -v usr/lib32/*.so* `pwd`/../gcc-libs-inst/usr/lib32/
+	elif [ $ARCH == "armv7l" ]; then
+		ARCHMACH="armv7l-unknown"
+		mkdir -p /root/gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION
+		cd /root/bldr-inst
+		mv -v usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/
+		mv -v usr/lib/*.so* `pwd`/../gcc-libs-inst/usr/lib/
+
 
 	fi
 
