@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc' 'nspr' 'sqlite' 'zlib')
+DEPS=('gcc-libs' 'glibc' 'nspr' 'sqlite' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

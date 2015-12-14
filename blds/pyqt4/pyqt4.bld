@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('dbus' 'gcc-libs' 'glibc' 'mesalib' 'phonon' 'python2' 'qt4')
 
 # 'no' to skip calls to strip
 STRIP=
