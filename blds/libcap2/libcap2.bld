@@ -32,8 +32,9 @@ function BuildAndInstall
 {
 	make -j${BLDR_CORES}
 	make RAISE_SETFCAP=no DESTDIR=/root/bldr-inst install
-	mv /root/bldr-inst/sbin /root/bldr-inst/usr/
-	mv /root/bldr-inst/lib /root/bldr-inst/usr/
+	cp -r /root/bldr-inst/sbin /root/bldr-inst/usr/
+	cp -r /root/bldr-inst/lib /root/bldr-inst/usr/
+	rm -rf /root/bldr-inst/{lib,sbin}
 }
 
 #Default HTTP curl new version detection
