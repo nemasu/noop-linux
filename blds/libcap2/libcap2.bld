@@ -33,6 +33,11 @@ function BuildAndInstall
 	make -j${BLDR_CORES}
 	make RAISE_SETFCAP=no DESTDIR=/root/bldr-inst install
 	cp -r /root/bldr-inst/sbin /root/bldr-inst/usr/
+
+	if [ -e /root/bldr-inst/lib64 ];
+	then
+		mv /root/bldr-inst/lib64 /root/bldr-inst/lib
+	fi
 	cp -r /root/bldr-inst/lib /root/bldr-inst/usr/
 	rm -rf /root/bldr-inst/lib
 	rm -rf /root/bldr-inst/sbin
