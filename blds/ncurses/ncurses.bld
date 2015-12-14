@@ -2,13 +2,13 @@
 NAME=ncurses
 
 #package version
-VERSION=5.9
+VERSION=6.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnu.org/pub/gnu/ncurses/ncurses-5.9.tar.gz
+SRC=http://ftp.gnu.org/pub/gnu/ncurses/ncurses-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-widec --with-shared --with-normal --without-debug --without-ada --with-cxx-binding --with-cxx-shared --enable-pc-files"
