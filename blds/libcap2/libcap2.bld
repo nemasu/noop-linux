@@ -8,7 +8,7 @@ VERSION=2.24
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.de.debian.org/debian/pool/main/libc/libcap2/libcap2_${VERSION}.orig.tar.gz
+SRC=http://ftp.de.debian.org/debian/pool/main/libc/libcap2/libcap2_${VERSION}.orig.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
