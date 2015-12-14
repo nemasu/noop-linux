@@ -30,7 +30,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make -j{BLDR_CORES}
+	make -j${BLDR_CORES}
 	make RAISE_SETFCAP=no DESTDIR=/root/bldr-inst install
 }
 
