@@ -1,14 +1,14 @@
 #package name
-NAME=freetype2
+NAME=gimp
 
 #package version
-VERSION=2.6.2
+VERSION=2.8.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.bz2
+SRC=https://download.gimp.org/mirror/pub/gimp/v${VERSION:0:3}/gimp-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glib2' 'glibc' 'harfbuzz' 'libpng' 'pcre' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,11 +35,9 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=freetype
-	LISTURL=http://download.savannah.gnu.org/releases/freetype/
+	LISTURL=https://www.gimp.org/downloads/
 	FILELIST=`GetFileList`
 	LATEST=0
-	NAME=freetype2
 
 	for i in ${FILELIST[@]};
 	do
