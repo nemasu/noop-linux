@@ -2,13 +2,13 @@
 NAME=linux-pam
 
 #package version
-VERSION=1.1.8
+VERSION=1.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://fedorahosted.org/releases/l/i/linux-pam/Linux-PAM-${VERSION}.tar.bz2
+SRC=http://linux-pam.org/library/Linux-PAM-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -34,7 +34,7 @@ function BuildAndInstall
 {
 	./configure --libdir=/usr/lib --disable-db --sbindir=/usr/bin
 	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+	make DESTDIR=/root/bldr-inst SCONFIGDIR=/etc/security install
 
 	cd ..
 	wget http://sourceforge.net/projects/kaosx/files/sources/pam/pam_unix2-${pam_unix2_version}.tar.bz2
