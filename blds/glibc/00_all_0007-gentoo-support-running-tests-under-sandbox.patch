@@ -1,0 +1,67 @@
+From 016376847a12b35e43cd82d6964451b3d391b8ed Mon Sep 17 00:00:00 2001
+From: "Stephanie J. Lockwood-Childs" <wormo@gentoo.org>
+Date: Fri, 16 Aug 2013 15:03:41 -0400
+Subject: [PATCH] gentoo: support running tests under sandbox
+
+when glibc runs its tests, it does so by invoking the local library loader.
+in Gentoo, we build/run inside of our "sandbox" which itself is linked against
+libdl (so that it can load libraries and pull out symbols).  the trouble
+is that when you upgrade from an older glibc to the new one, often times
+internal symbols change name or abi.  this is normally OK as you cannot use
+libc.so from say version 2.3.6 but libpthread.so from say version 2.5, so
+we always say "keep all of the glibc libraries from the same build".  but
+when glibc runs its tests, it uses dynamic paths to point to its new local
+copies of libraries.  if the test doesnt use libdl, then glibc doesnt add
+its path, and when sandbox triggers the loading of libdl, glibc does so
+from the host system system.  this gets us into the case of all libraries
+are from the locally compiled version of glibc except for libdl.so.
+
+http://bugs.gentoo.org/56898
+---
+ Makeconfig                  | 2 +-
+ iconvdata/run-iconv-test.sh | 2 +-
+ nptl/tst-tls6.sh            | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makeconfig b/Makeconfig
+index f136b88..0dbcafd 100644
+--- a/Makeconfig
++++ b/Makeconfig
+@@ -648,7 +648,7 @@ comma = ,
+ sysdep-library-path = \
+ $(subst $(empty) ,:,$(strip $(patsubst -Wl$(comma)-rpath-link=%, %,\
+ 				       $(filter -Wl$(comma)-rpath-link=%,\
+-						$(sysdep-LDFLAGS)))))
++						$(sysdep-LDFLAGS)))) $(common-objpfx)/dlfcn)
+ # $(run-via-rtld-prefix) is a command that, when prepended to the name
+ # of a program built with the newly built library, produces a command
+ # that, executed on the host for which the library is built, runs that
+diff --git a/iconvdata/run-iconv-test.sh b/iconvdata/run-iconv-test.sh
+index 557db6b..23c2c35 100755
+--- a/iconvdata/run-iconv-test.sh
++++ b/iconvdata/run-iconv-test.sh
+@@ -31,7 +31,7 @@ temp2=$codir/iconvdata/iconv-test.yyy
+ trap "rm -f $temp1 $temp2" 1 2 3 15
+ 
+ # We have to have some directories in the library path.
+-LIBPATH=$codir:$codir/iconvdata
++LIBPATH=$codir:$codir/iconvdata:$codir/dlfcn
+ 
+ # How the start the iconv(1) program.
+ ICONV='$codir/elf/ld.so --library-path $LIBPATH --inhibit-rpath ${from}.so \
+diff --git a/nptl/tst-tls6.sh b/nptl/tst-tls6.sh
+index 3533474..e58f3f6 100755
+--- a/nptl/tst-tls6.sh
++++ b/nptl/tst-tls6.sh
+@@ -26,7 +26,7 @@ run_program_env=$1; shift
+ logfile=$common_objpfx/nptl/tst-tls6.out
+ 
+ # We have to find libc and nptl
+-library_path=${common_objpfx}:${common_objpfx}nptl
++library_path=${common_objpfx}:${common_objpfx}nptl:${common_objpfx}/dlfcn
+ tst_tls5="${test_via_rtld_prefix} ${common_objpfx}/nptl/tst-tls5"
+ 
+ > $logfile
+-- 
+2.4.4
+

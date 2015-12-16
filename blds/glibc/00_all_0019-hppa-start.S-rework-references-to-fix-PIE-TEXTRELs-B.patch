@@ -1,0 +1,59 @@
+From 9ab172e7f88096d12a8a089ff2ef857d9a6cab38 Mon Sep 17 00:00:00 2001
+From: Alan Modra <amodra@gmail.com>
+Date: Fri, 14 Aug 2015 22:15:49 -0400
+Subject: [PATCH] hppa: start.S: rework references to fix PIE TEXTRELs [BZ
+ #18421]
+
+The startup code was not using PIC friendly references leading to TEXTRELs
+in every PIE ELF.
+---
+ sysdeps/hppa/start.S | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/sysdeps/hppa/start.S b/sysdeps/hppa/start.S
+index 64d8c3e..cc4f243 100644
+--- a/sysdeps/hppa/start.S
++++ b/sysdeps/hppa/start.S
+@@ -42,7 +42,11 @@
+ 	/* Have the linker create plabel words so we get PLABEL32
+ 	   relocs and not 21/14.  The use of 21/14 relocs is only
+ 	   supported in the latest dynamic linker.  */
+-	.section	.rodata
++#ifdef SHARED
++	.section	.data.rel.ro,"aw",@progbits
++#else
++	.section	.rodata,"a",@progbits
++#endif
+ 	.align 4
+ .Lpmain:
+ 	.word P%main
+@@ -52,6 +56,10 @@
+ 	.word P%__libc_csu_fini
+ .Lp__libc_csu_init:
+ 	.word P%__libc_csu_init
++#ifdef SHARED
++.Lp__global:
++	.word $global$
++#endif
+ 
+ 	.text
+ 	.align 4
+@@ -122,10 +130,14 @@ _start:
+ 	/* void *stack_end (7th argument) */
+ 	stw	%sp, -60(%sp)
+ 
++#ifdef SHARED
++	addil	LT'.Lp__global, %r19
++	ldw	RT'.Lp__global(%r1), %dp
++#else
+ 	/* load global */
+ 	ldil	L%$global$, %dp
+ 	ldo	R%$global$(%dp), %dp
+-
++#endif
+ 	bl	__libc_start_main,%r2
+ 	nop
+ 	/* die horribly if it returned (it shouldn't) */
+-- 
+2.4.4
+

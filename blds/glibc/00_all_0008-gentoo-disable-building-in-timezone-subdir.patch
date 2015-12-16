@@ -1,0 +1,26 @@
+From ca167a22d2be6653898bfd168c9909387381e0f1 Mon Sep 17 00:00:00 2001
+From: Mike Frysinger <vapier@gentoo.org>
+Date: Fri, 16 Aug 2013 15:05:26 -0400
+Subject: [PATCH] gentoo: disable building in timezone subdir
+
+We've split this out into the package sys-libs/timezone-data
+---
+ Makeconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makeconfig b/Makeconfig
+index 0dbcafd..a1166d5 100644
+--- a/Makeconfig
++++ b/Makeconfig
+@@ -1096,7 +1096,7 @@ all-subdirs = csu assert ctype locale intl catgets math setjmp signal	    \
+ 	      stdlib stdio-common libio malloc string wcsmbs time dirent    \
+ 	      grp pwd posix io termios resource misc socket sysvipc gmon    \
+ 	      gnulib iconv iconvdata wctype manual shadow gshadow po argp   \
+-	      crypt localedata timezone rt conform debug mathvec	    \
++	      crypt localedata rt conform debug mathvec	    \
+ 	      $(add-on-subdirs) dlfcn elf
+ 
+ ifndef avoid-generated
+-- 
+2.4.4
+

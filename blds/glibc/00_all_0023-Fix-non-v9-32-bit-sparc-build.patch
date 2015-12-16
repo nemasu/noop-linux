@@ -1,0 +1,28 @@
+From 6ff3aac23c2caa5c669e74da5f6c5a7264f51e39 Mon Sep 17 00:00:00 2001
+From: Brett Neumeier <brett@neumeier.us>
+Date: Mon, 31 Aug 2015 15:27:21 -0700
+Subject: [PATCH] Fix non-v9 32-bit sparc build.
+
+	[BZ #18870]
+	* sysdeps/sparc/sparc32/sem_open.c: Add missing #include
+
+(cherry picked from commit 36c6e27a26b0afe0187f8790990cf880abdbf244)
+---
+ sysdeps/sparc/sparc32/sem_open.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/sysdeps/sparc/sparc32/sem_open.c b/sysdeps/sparc/sparc32/sem_open.c
+index 16cb9ad..59df2d7 100644
+--- a/sysdeps/sparc/sparc32/sem_open.c
++++ b/sysdeps/sparc/sparc32/sem_open.c
+@@ -29,6 +29,7 @@
+ #include <sys/mman.h>
+ #include <sys/stat.h>
+ #include "semaphoreP.h"
++#include <futex-internal.h>
+ #include <shm-directory.h>
+ 
+ 
+-- 
+2.5.2
+

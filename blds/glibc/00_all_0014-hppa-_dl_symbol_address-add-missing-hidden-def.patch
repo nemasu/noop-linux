@@ -1,0 +1,27 @@
+From 0a1a932b01a639e4083f88e0c3e4c3f8d733cd4f Mon Sep 17 00:00:00 2001
+From: Mike Frysinger <vapier@gentoo.org>
+Date: Fri, 7 Aug 2015 01:43:08 -0400
+Subject: [PATCH] hppa: _dl_symbol_address: add missing hidden def
+
+Commit 2a6ad8142d14c998e6c5eb51418aac1f598b621e updated the headers and
+the common dl-symaddr.c, but missed that hppa has its own dedicated source
+file for this func.  Update that too to fix build errors due to missing
+exports of the symbol.
+
+(cherry picked from commit be144ba68c918a5d7bc964be06fbeb51a0df84fc)
+---
+ sysdeps/hppa/dl-symaddr.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/sysdeps/hppa/dl-symaddr.c b/sysdeps/hppa/dl-symaddr.c
+index b707c19..89d8baf 100644
+--- a/sysdeps/hppa/dl-symaddr.c
++++ b/sysdeps/hppa/dl-symaddr.c
+@@ -33,3 +33,4 @@ _dl_symbol_address (struct link_map *map, const ElfW(Sym) *ref)
+   else
+     return (void *) value;
+ }
++rtld_hidden_def (_dl_symbol_address)
+-- 
+2.4.4
+

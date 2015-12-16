@@ -1,0 +1,49 @@
+From 8175e9150a768a1eb135347bdb40b8161cb872dc Mon Sep 17 00:00:00 2001
+From: John David Anglin <dave.anglin@bell.net>
+Date: Sun, 10 Aug 2014 09:54:53 -0400
+Subject: [PATCH] hppa: fix pthread spinlock
+
+---
+ sysdeps/hppa/nptl/pthread_spin_init.c   | 8 ++++----
+ sysdeps/hppa/nptl/pthread_spin_unlock.c | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/sysdeps/hppa/nptl/pthread_spin_init.c b/sysdeps/hppa/nptl/pthread_spin_init.c
+index 865ef2b..a49a846 100644
+--- a/sysdeps/hppa/nptl/pthread_spin_init.c
++++ b/sysdeps/hppa/nptl/pthread_spin_init.c
+@@ -20,9 +20,9 @@
+ int
+ pthread_spin_init (pthread_spinlock_t *lock, int pshared)
+ {
+-  int tmp = 0;
+-  /* This should be a memory barrier to newer compilers */
+-  __asm__ __volatile__ ("stw,ma %1,0(%0)"
+-                        : : "r" (lock), "r" (tmp) : "memory");
++  /* The LWS-CAS operation on hppa is a synthetic atomic operation
++     that doesn't provide the type of coherency that we need. Therefore
++     we force that coherency by using LWS-CAS again.  */
++  atomic_exchange_rel (lock, 0);
+   return 0;
+ }
+diff --git a/sysdeps/hppa/nptl/pthread_spin_unlock.c b/sysdeps/hppa/nptl/pthread_spin_unlock.c
+index a183fed..b576649 100644
+--- a/sysdeps/hppa/nptl/pthread_spin_unlock.c
++++ b/sysdeps/hppa/nptl/pthread_spin_unlock.c
+@@ -20,9 +20,9 @@
+ int
+ pthread_spin_unlock (pthread_spinlock_t *lock)
+ {
+-  int tmp = 0;
+-  /* This should be a memory barrier to newer compilers */
+-  __asm__ __volatile__ ("stw,ma %1,0(%0)"
+-                        : : "r" (lock), "r" (tmp) : "memory");
++  /* The LWS-CAS operation on hppa is a synthetic atomic operation
++     that doesn't provide the type of coherency that we need. Therefore
++     we force that coherency by using LWS-CAS again.  */
++  atomic_exchange_rel (lock, 0);
+   return 0;
+ }
+-- 
+2.4.4
+

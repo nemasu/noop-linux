@@ -1,0 +1,50 @@
+From 98b9c13e1abcf8d941d7934eed1a33527d6fd39b Mon Sep 17 00:00:00 2001
+From: David Lamparter <equinox-gentoo@diac24.net>
+Date: Fri, 16 Aug 2013 15:06:34 -0400
+Subject: [PATCH] arm: fix PIC vs SHARED typos
+
+the logic in setjmp/__longjmp incorrectly tie to "PIC" to figure out
+whether the code is going into a shared library when it should be using
+"SHARED".  otherwise, building static PIC code goes wrong.
+
+https://bugs.gentoo.org/336914
+http://sourceware.org/ml/libc-ports/2011-09/msg00018.html
+
+2011-09-19  David Lamparter  <equinox-gentoo@diac24.net>
+
+	* sysdeps/arm/setjmp.S: Change PIC to SHARED.
+	* sysdeps/arm/__longjmp.S: Likewise
+---
+ sysdeps/arm/__longjmp.S | 2 +-
+ sysdeps/arm/setjmp.S    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sysdeps/arm/__longjmp.S b/sysdeps/arm/__longjmp.S
+index fc60a5d..1033e13 100644
+--- a/sysdeps/arm/__longjmp.S
++++ b/sysdeps/arm/__longjmp.S
+@@ -81,7 +81,7 @@ ENTRY (__longjmp)
+ 		    C_SYMBOL_NAME(_rtld_local_ro) \
+ 		    + RTLD_GLOBAL_RO_DL_HWCAP_OFFSET)
+ # else
+-#  ifdef PIC
++#  ifdef SHARED
+ 	LDR_GLOBAL (a4, a3, C_SYMBOL_NAME(_rtld_global_ro), \
+ 		    RTLD_GLOBAL_RO_DL_HWCAP_OFFSET)
+ #  else
+diff --git a/sysdeps/arm/setjmp.S b/sysdeps/arm/setjmp.S
+index e44beb4..be0a4ec 100644
+--- a/sysdeps/arm/setjmp.S
++++ b/sysdeps/arm/setjmp.S
+@@ -62,7 +62,7 @@ ENTRY (__sigsetjmp)
+ 		    C_SYMBOL_NAME(_rtld_local_ro) \
+ 		    + RTLD_GLOBAL_RO_DL_HWCAP_OFFSET)
+ # else
+-#  ifdef PIC
++#  ifdef SHARED
+ 	LDR_GLOBAL (a3, a4, C_SYMBOL_NAME(_rtld_global_ro), \
+ 		    RTLD_GLOBAL_RO_DL_HWCAP_OFFSET)
+ #  else
+-- 
+2.4.4
+

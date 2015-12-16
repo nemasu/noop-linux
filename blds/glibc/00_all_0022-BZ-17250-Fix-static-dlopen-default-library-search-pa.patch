@@ -1,0 +1,33 @@
+From adf228f91c11a1bcdf7563d104a2a370d054e482 Mon Sep 17 00:00:00 2001
+From: "Maciej W. Rozycki" <macro@imgtec.com>
+Date: Fri, 25 Sep 2015 09:37:12 +0100
+Subject: [PATCH] [BZ #17250] Fix static dlopen default library search path
+
+Fix a regression introduced with commit 0d23a5c1 [Static dlopen
+correction fallout fixes] that caused the default library search path to
+be ignored for modules loaded with dlopen from static executables.
+
+	[BZ #17250]
+	* elf/dl-support.c (_dl_main_map): Don't initialize l_flags_1
+	member.
+
+(cherry picked from commit 93bad7c97c7047ecaf7664859e2b49c0fe995443)
+---
+ elf/dl-support.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/elf/dl-support.c b/elf/dl-support.c
+index 4d036f1..835dcb3 100644
+--- a/elf/dl-support.c
++++ b/elf/dl-support.c
+@@ -91,7 +91,6 @@ static struct link_map _dl_main_map =
+     .l_scope = _dl_main_map.l_scope_mem,
+     .l_local_scope = { &_dl_main_map.l_searchlist },
+     .l_used = 1,
+-    .l_flags_1 = DF_1_NODEFLIB,
+     .l_tls_offset = NO_TLS_OFFSET,
+     .l_serial = 1,
+   };
+-- 
+2.5.2
+

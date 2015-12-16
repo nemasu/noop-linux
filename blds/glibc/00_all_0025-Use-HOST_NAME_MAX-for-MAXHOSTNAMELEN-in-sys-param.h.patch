@@ -1,0 +1,28 @@
+From 5c4ac5014823e2bc93f74d4a8ac5502f01a9753f Mon Sep 17 00:00:00 2001
+From: Roland McGrath <roland@hack.frob.com>
+Date: Tue, 15 Sep 2015 15:27:58 -0700
+Subject: [PATCH] Use HOST_NAME_MAX for MAXHOSTNAMELEN in <sys/param.h>.
+
+(cherry picked from commit 51f24be7ba5d15313ae94f8fb4500ce07cb98c84)
+(cherry picked from commit 666bb4dc55f5a93538d020024c34abad641f50ae)
+---
+ misc/sys/param.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/misc/sys/param.h b/misc/sys/param.h
+index 62b7ed2..1908b93 100644
+--- a/misc/sys/param.h
++++ b/misc/sys/param.h
+@@ -50,6 +50,9 @@
+ #if !defined NOFILE && defined OPEN_MAX
+ # define NOFILE		OPEN_MAX
+ #endif
++#if !defined MAXHOSTNAMELEN && defined HOST_NAME_MAX
++# define MAXHOSTNAMELEN	HOST_NAME_MAX
++#endif
+ #ifndef NCARGS
+ # ifdef ARG_MAX
+ #  define NCARGS	ARG_MAX
+-- 
+2.5.2
+

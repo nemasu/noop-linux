@@ -1,0 +1,39 @@
+From 0acbb93ebb8cf2a646cc2b685cd13b22d52f1e27 Mon Sep 17 00:00:00 2001
+From: Mike Frysinger <vapier@gentoo.org>
+Date: Wed, 22 Feb 2006 21:12:28 -0500
+Subject: [PATCH] manual: skip build when perl is unavailable
+
+Do not try to generate the manual when perl is unavailable.  This
+matches the behavior when makeinfo is unavailable.  Otherwise the
+install step fails when trying to generate the libm section since
+it runs a perl script.
+
+(cherry picked from commit 1695cdae065fa3693e7b18169a100f53444eac69)
+---
+ manual/Makefile | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/manual/Makefile b/manual/Makefile
+index 5382208..cdb6763 100644
+--- a/manual/Makefile
++++ b/manual/Makefile
+@@ -172,6 +172,8 @@ include ../Rules
+ 
+ .PHONY: install subdir_install install-data
+ install-data subdir_install: install
++# libm-err.texi generation requires perl.
++ifneq ($(PERL),no)
+ ifneq ($(strip $(MAKEINFO)),:)
+ install: $(inst_infodir)/libc.info
+ 	@if $(SHELL) -c '$(INSTALL_INFO) --version' >/dev/null 2>&1; then \
+@@ -179,6 +181,7 @@ install: $(inst_infodir)/libc.info
+ 	 $(INSTALL_INFO) --info-dir=$(inst_infodir) $(inst_infodir)/libc.info;\
+ 	else : ; fi
+ endif
++endif
+ # Catchall implicit rule for other installation targets from the parent.
+ install-%: ;
+ 
+-- 
+2.4.4
+

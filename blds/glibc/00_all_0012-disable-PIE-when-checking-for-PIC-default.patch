@@ -1,0 +1,50 @@
+From ebe01981adb3d4baf60da2623b031db97498eb18 Mon Sep 17 00:00:00 2001
+From: "Kevin F. Quinn" <kevquinn@gentoo.org>
+Date: Tue, 9 Sep 2014 17:41:57 -0400
+Subject: [PATCH] disable PIE when checking for PIC default
+
+When the compiler builds PIEs by default, the configure PIC check is
+confused into thinking PIC code is default.  The end result is that
+we end up with only PIC being produced.
+
+Run the configure check with -fno-PIE so that we produce PIC & non-PIC
+(PIE) objects like normal.
+
+2014-09-09  Kevin F. Quinn  <kevquinn@gentoo.org>
+
+	* configure.ac (libc_cv_pic_default): Pass -fno-PIE.
+	* configure: Regenerated.
+---
+ configure    | 2 +-
+ configure.ac | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 45cc7cb..f714fce 100755
+--- a/configure
++++ b/configure
+@@ -7309,7 +7309,7 @@ cat > conftest.c <<EOF
+ # error PIC is default.
+ #endif
+ EOF
+-if eval "${CC-cc} -S conftest.c 2>&5 1>&5"; then
++if eval "${CC-cc} -fno-PIE -S conftest.c 2>&5 1>&5"; then
+   libc_cv_pic_default=no
+ fi
+ rm -f conftest.*
+diff --git a/configure.ac b/configure.ac
+index 7e9383a..ab3920b 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2069,7 +2069,7 @@ cat > conftest.c <<EOF
+ # error PIC is default.
+ #endif
+ EOF
+-if eval "${CC-cc} -S conftest.c 2>&AS_MESSAGE_LOG_FD 1>&AS_MESSAGE_LOG_FD"; then
++if eval "${CC-cc} -fno-PIE -S conftest.c 2>&AS_MESSAGE_LOG_FD 1>&AS_MESSAGE_LOG_FD"; then
+   libc_cv_pic_default=no
+ fi
+ rm -f conftest.*])
+-- 
+2.4.4
+
