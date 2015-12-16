@@ -2,7 +2,8 @@
 NAME=libcaca
 
 #package version
-VERSION=0.99-19
+VERSION=0.99-19-1
+DVERSION=0.99-19
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -49,7 +50,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

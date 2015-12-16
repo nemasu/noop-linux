@@ -2,13 +2,14 @@
 NAME=fluidsynth
 
 #package version
-VERSION=1.1.6
+VERSION=1.1.6-1
+DVERSION=1.1.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://downloads.sourceforge.net/fluidsynth/fluidsynth-${VERSION}.tar.gz"
+SRC="http://downloads.sourceforge.net/fluidsynth/fluidsynth-${DVERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -61,7 +62,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

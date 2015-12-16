@@ -2,13 +2,14 @@
 NAME=procps
 
 #package version
-VERSION=3.3.11
+VERSION=3.3.11-1
+DVERSION=3.3.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${VERSION}.tar.xz
+SRC=http://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-watch8bit --with-systemd"
@@ -43,9 +44,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
+	NAME=procps-ng
 	LISTURL=http://sourceforge.net/projects/procps-ng/
 	FILELIST=`GetFileList`
 	LATEST=0
+	NAME=procps
 
 	for i in ${FILELIST[@]};
 	do
@@ -57,7 +60,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

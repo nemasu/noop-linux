@@ -2,13 +2,14 @@
 NAME=lame
 
 #package version
-VERSION=3.99.5
+VERSION=3.99.5-1
+DVERSION=3.99.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://downloads.sourceforge.net/lame/lame-${VERSION}.tar.gz"
+SRC="http://downloads.sourceforge.net/lame/lame-${DVERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-nasm --enable-shared"
@@ -49,7 +50,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

@@ -2,8 +2,8 @@
 NAME=emacs
 
 #package version
-VERSION=24.3-1
-DVERSION=24.3
+VERSION=24.5
+DVERSION=24.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -2,13 +2,14 @@
 NAME=postgresql
 
 #package version
-VERSION=9.3.5
+VERSION=9.4.5
+DVERSION=9.4.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.postgresql.org/pub/source/v${VERSION}/postgresql-${VERSION}.tar.bz2
+SRC=http://ftp.postgresql.org/pub/source/v${DVERSION}/postgresql-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -69,7 +70,7 @@ function BuildAndInstall
 
 	pushd /root/noop-bldr-postgresql-libs/
 	PushScripts
-	pkgr -genmeta postgresql-libs ${VERSION}
+	pkgr -genmeta postgresql-libs ${DVERSION}
 	pkgr -genpkg
 	PopScripts
 	mv *.pkg /root/bldr-done/
@@ -94,7 +95,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

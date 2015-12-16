@@ -2,13 +2,14 @@
 NAME=lynx
 
 #package version
-VERSION=2.8.8
+VERSION=2.8.8-2
+DVERSION=2.8.8rel.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://lynx.isc.org/lynx${VERSION}/lynx${VERSION}.tar.bz2
+SRC=http://invisible-mirror.net/archives/lynx/tarballs/lynx${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -37,7 +38,7 @@ function Detect
 {
 	LATEST=`curl -s http://lynx.isc.org/release/ | grep -E "lynx[0-9\.]*\.tar\.bz2" | sed -e 's/.*lynx\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

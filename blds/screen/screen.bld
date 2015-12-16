@@ -2,13 +2,13 @@
 NAME=screen
 
 #package version
-VERSION=4.0.3
+VERSION=4.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnu.org/gnu/screen/screen-4.0.3.tar.gz
+SRC=ftp://ftp.gnu.org/gnu/screen/screen-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

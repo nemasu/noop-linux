@@ -2,13 +2,14 @@
 NAME=pycairo
 
 #package version
-VERSION=1.10.0
+VERSION=1.10.0-1
+DVERSION=1.10.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://cairographics.org/releases/pycairo-${VERSION}.tar.bz2
+SRC=http://cairographics.org/releases/pycairo-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -30,12 +31,21 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i 's:bin/env python:bin/env python3:' waf
-	python3 ./waf --version
-	PYTHON=/usr/bin/python3 ./waf configure --prefix=/usr
-	PYTHON=/usr/bin/python3 ./waf build
-	PYTHON=/usr/bin/python3 DESTDIR=/root/bldr-inst ./waf install --destdir=/root/bldr-inst
+	_waf_version=1.7.15
 
+	#use newer waf
+	cd ..
+	curdir=`ls`
+	wget http://waf.googlecode.com/files/waf-${_waf_version}.tar.bz2
+	tar xf waf-${_waf_version}.tar.bz2
+	cd $curdir
+	
+	cp "../waf-$_waf_version/waf" ./
+	sed -e "s/ctx.\(tool_options\|check_tool\)(/ctx.load(/" -i wscript
+	python3 ./waf --version
+	./waf configure --prefix=/usr
+	./waf build
+	./waf install --destdir=/root/bldr-inst
 }
 
 #Default HTTP curl new version detection
@@ -55,7 +65,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

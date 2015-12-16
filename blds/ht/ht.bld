@@ -2,7 +2,7 @@
 NAME=ht
 
 #package version
-VERSION=2.0.22
+VERSION=2.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://hte.sourceforge.net/downloads.html
+	LISTURL=http://sourceforge.net/projects/hte/files/ht-source/
 	FILELIST=`GetFileList`
 	LATEST=0
 

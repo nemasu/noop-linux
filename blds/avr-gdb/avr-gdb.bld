@@ -2,7 +2,7 @@
 NAME=avr-gdb
 
 #package version
-VERSION=7.8
+VERSION=7.10.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -23,7 +23,7 @@ DEPS=('expat' 'glibc' 'ncurses' 'python2' 'readline' 'xz' 'zlib')
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('texinfo')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=

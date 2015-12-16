@@ -2,14 +2,15 @@
 NAME=pygobject
 
 #package version
-VERSION=3.13.91
+VERSION=3.13.91-1
+DVERSION=3.13.91
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/pygobject/$MAJOR/pygobject-${VERSION}.tar.xz
+MAJOR=`echo $DVERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://ftp.gnome.org/pub/GNOME/sources/pygobject/$MAJOR/pygobject-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -52,7 +53,7 @@ function Detect
 	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/pygojbect/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
 	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/pygobject/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

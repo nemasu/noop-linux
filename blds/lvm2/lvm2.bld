@@ -2,7 +2,7 @@
 NAME=lvm2
 
 #package version
-VERSION=2.2.02.116
+VERSION=2.2.02.138
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -39,8 +39,7 @@ function BuildAndInstall
       --with-default-pid-dir=/run --with-default-dm-run-dir=/run --with-default-run-dir=/run/lvm \
       --enable-pkgconfig --enable-readline --enable-dmeventd --enable-cmdlib --enable-applib \
       --enable-udev_sync --enable-udev_rules --with-default-locking-dir=/run/lock/lvm \
-      --enable-lvmetad --with-thin=internal --with-cache=internal --enable-udev-systemd-background-jobs  \
-	  --enable-static_link --with-staticdir=/usr/sbin
+      --enable-lvmetad --with-thin=internal --with-cache=internal --enable-udev-systemd-background-jobs
 
 
 	CFLAGS="-pthread" make -j${BLDR_CORES}
@@ -51,11 +50,23 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s ftp://sources.redhat.com/pub/lvm2/ | grep -E "LVM[0-9\.]*\.tgz$" | tail -n1 | sed -e 's/.*LVM\([0-9\.]*\)*\.tgz$/\1/g'`
+	FILELIST=`curl -s -L ftp://sources.redhat.com/pub/lvm2/ | sed '/asc/d' | egrep "LVM[0-9\.]*\.tgz" | awk '{print $9;}' | sed 's/LVM//g;s/\.tgz//g'`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+		CURVER=$i
+		vercomp $LATEST $CURVER
+		if [ $? -eq 2 ];
+		then
+			LATEST=$CURVER
+		fi
+	done
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
-			echo "$NAME: New Version Available! - $LATEST"
+		echo "$NAME: New Version Available! - $LATEST"
 	fi
 }
+

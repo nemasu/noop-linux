@@ -2,13 +2,14 @@
 NAME=sqlite
 
 #package version
-VERSION=3090200
+VERSION=3090200-1
+DVERSION=3090200
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.sqlite.org/2015/sqlite-autoconf-${VERSION}.tar.gz
+SRC=http://www.sqlite.org/2015/sqlite-autoconf-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -47,7 +48,7 @@ function Detect
 {
 	LATEST=`curl -s http://www.sqlite.org/download.html | grep -E 'sqlite-autoconf-[0-9]*\.tar\.gz' | sed -e 's/.*sqlite-autoconf-\([0-9]*\)\.tar\.gz.*/\1/g' | sort | uniq`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

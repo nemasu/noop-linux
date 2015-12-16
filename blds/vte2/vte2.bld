@@ -2,14 +2,15 @@
 NAME=vte2
 
 #package version
-VERSION=0.28.2
+VERSION=0.28.2-1
+DVERSION=0.28.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/vte/$MAJOR/vte-${VERSION}.tar.xz
+MAJOR=`echo $DVERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
+SRC=http://ftp.gnome.org/pub/GNOME/sources/vte/$MAJOR/vte-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -37,10 +38,10 @@ function BuildAndInstall
   PYTHON=/usr/bin/python2 ./configure --prefix=/usr --sysconfdir=/etc \
       --libexecdir=/usr/lib/vte \
       --localstatedir=/var --disable-static \
-      --enable-introspection --with-gtk=2.0
+      --enable-introspection --with-gtk=2.0 \
+	  --disable-gnome-pty-helper
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
-  rm /root/bldr-inst/usr/lib/vte/gnome-pty-helper
 }
 
 #Default HTTP curl new version detection

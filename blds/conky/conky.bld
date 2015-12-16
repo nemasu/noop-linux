@@ -1,0 +1,62 @@
+#package name
+NAME=conky
+
+#package version
+VERSION=1.10.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/brndnmtthws/conky/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=('perl-xml-namespacesupport')
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cmake \
+		-D CMAKE_BUILD_TYPE=Release \
+		-D MAINTAINER_MODE=ON \
+		-D BUILD_CURL=ON \
+		-D BUILD_XDBE=ON \
+		-D BUILD_IMLIB2=ON \
+		-D BUILD_RSS=ON \
+		-D BUILD_WEATHER_METAR=ON \
+		-D BUILD_WEATHER_XOAP=ON \
+		-D BUILD_WLAN=ON \
+		-D CMAKE_INSTALL_PREFIX=/usr \
+		.
+		
+
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+	install -Dm644 extras/vim/syntax/conkyrc.vim /root/bldr-inst/usr/share/vim/vimfiles/syntax/conkyrc.vim
+	install -Dm644 extras/vim/ftdetect/conkyrc.vim /root/bldr-inst/usr/share/vim/vimfiles/ftdetect/conkyrc.vim
+}
+
+function Detect
+{
+	LATEST=` curl -s -L https://github.com/brndnmtthws/conky/releases | egrep "v[0-9\.]*\.tar\.gz" | head -n1 | sed 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

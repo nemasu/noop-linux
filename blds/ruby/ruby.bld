@@ -2,7 +2,7 @@
 NAME=ruby
 
 #package version
-VERSION=2.1.5
+VERSION=2.2.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

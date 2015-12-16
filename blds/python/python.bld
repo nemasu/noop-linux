@@ -1,0 +1,75 @@
+#package name
+NAME=python
+
+#package version
+VERSION=3.5.1
+_pybasever=${VERSION:0:3}
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://www.python.org/ftp/python/${VERSION}/Python-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	sed -i -e "s|^#.* /usr/local/bin/python|#!/usr/bin/python|" Lib/cgi.py
+	./configure --prefix=/usr \
+              --enable-shared \
+              --with-threads \
+              --with-computed-gotos \
+              --enable-ipv6 \
+              --with-system-expat \
+              --with-dbmliborder=gdbm:ndbm \
+              --with-system-ffi \
+              --with-system-libmpdec \
+              --enable-loadable-sqlite-extensions \
+              --without-ensurepip
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install maninstall
+
+	ln -s python3               /root/bldr-inst/usr/bin/python
+	ln -s python3-config        /root/bldr-inst/usr/bin/python-config
+	ln -s idle3                 /root/bldr-inst/usr/bin/idle
+	ln -s pydoc3                /root/bldr-inst/usr/bin/pydoc
+	ln -s python${_pybasever}.1 /root/bldr-inst/usr/share/man/man1/python.1
+
+	ln -sf ../../libpython${_pybasever}m.so "/root/bldr-inst/usr/lib/python${_pybasever}/config-${_pybasever}m/libpython${_pybasever}m.so"
+
+	install -dm755 /root/bldr-inst/usr/lib/python${_pybasever}/Tools/{i18n,scripts}
+	install -m755 Tools/i18n/{msgfmt,pygettext}.py /root/bldr-inst/usr/lib/python${_pybasever}/Tools/i18n/
+	install -m755 Tools/scripts/{README,*py} /root/bldr-inst/usr/lib/python${_pybasever}/Tools/scripts/
+
+	sed -i "s|/root/bldr-tmp/Python-${VERSION}:||" "/root/bldr-inst/usr/lib/python${_pybasever}/config-${_pybasever}m/Makefile"
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s -L https://www.python.org/ | grep "Latest:" | sed 's|.*Python \(3[\.0-9]*\).*|\1|g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

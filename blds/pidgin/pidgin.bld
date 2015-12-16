@@ -2,13 +2,14 @@
 NAME=pidgin
 
 #package version
-VERSION=2.10.11
+VERSION=2.10.11-1
+DVERSION=2.10.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://downloads.sourceforge.net/project/pidgin/Pidgin/${VERSION}/pidgin-${VERSION}.tar.bz2
+SRC=http://downloads.sourceforge.net/project/pidgin/Pidgin/${DVERSION}/pidgin-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -52,7 +53,7 @@ function Detect
 {
 	LATEST=`curl -L -s http://sourceforge.net/projects/pidgin/files/Pidgin/ | grep -E "Pidgin\/[0-9\.]*\/\"" | head -n1 | sed -e 's/.*Pidgin\/\([0-9\.]*\)\/\".*/\1/g'`
 	
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

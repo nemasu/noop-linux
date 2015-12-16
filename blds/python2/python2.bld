@@ -2,7 +2,7 @@
 NAME=python2
 
 #package version
-VERSION=2.7.9
+VERSION=2.7.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -105,17 +105,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s https://www.python.org/downloads/source/ | grep "Latest Python 2 Release" | sed -e 's/.*Python \([0-9\.]*\).*/\1/g'`
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -s -L https://www.python.org/ | grep "Latest:" | sed 's|.*Python \(2[\.0-9]*\).*|\1|g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

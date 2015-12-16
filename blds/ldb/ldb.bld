@@ -2,7 +2,7 @@
 NAME=ldb
 
 #package version
-VERSION=1.1.20
+VERSION=1.1.23
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -36,6 +36,8 @@ function BuildAndInstall
 	   --sysconfdir=/etc/samba
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
+	cd /root/bldr-inst/usr/lib
+	ln -s /usr/lib/libpyldb-util.cpython-35m-x86-64-linux-gnu.so.${VERSION} libpyldb-util.so
 
 }
 

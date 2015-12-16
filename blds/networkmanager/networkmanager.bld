@@ -2,7 +2,7 @@
 NAME=networkmanager
 
 #package version
-VERSION=1.0.4-1
+VERSION=1.0.4-2
 DVERSION=1.0.4
 _pppver=2.4.7
 

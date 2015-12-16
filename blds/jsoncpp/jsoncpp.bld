@@ -2,7 +2,7 @@
 NAME=jsoncpp
 
 #package version
-VERSION=1.6.1
+VERSION=1.6.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -2,14 +2,15 @@
 NAME=bc
 
 #package version
-VERSION=1.06.95
+VERSION=1.06.95-1
+DVERSION=1.06.95
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-#SRC=ftp://ftp.gnu.org/gnu/bc/bc-${VERSION}.tar.gz
-SRC=ftp://alpha.gnu.org/gnu/bc/bc-${VERSION}.tar.bz2
+#SRC=ftp://ftp.gnu.org/gnu/bc/bc-${DVERSION}.tar.gz
+SRC=ftp://alpha.gnu.org/gnu/bc/bc-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--with-readline"
@@ -51,7 +52,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

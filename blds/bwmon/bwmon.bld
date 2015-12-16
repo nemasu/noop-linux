@@ -2,13 +2,14 @@
 NAME=bwmon
 
 #package version
-VERSION=1.3
+VERSION=1.3-1
+DVERSION=1.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://prdownloads.sourceforge.net/bwmon/bwmon-${VERSION}.tar.gz?download
+SRC=http://prdownloads.sourceforge.net/bwmon/bwmon-${DVERSION}.tar.gz?download
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +39,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
+	LISTURL=http://sourceforge.net/projects/bwmon/files/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -52,7 +53,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

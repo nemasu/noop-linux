@@ -2,13 +2,15 @@
 NAME=js17
 
 #package version
-VERSION=17.0.0
+VERSION=17.0.0-1
+DVERSION=17.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.mozilla.org/pub/mozilla.org/js/mozjs${VERSION}.tar.gz
+#SRC=http://ftp.mozilla.org/pub/js/mozjs17.0.0.tar.gz
+SRC=http://shoutium.com/m17.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -43,24 +45,6 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
-
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+	echo "$NAME: No new packages"
 }
 

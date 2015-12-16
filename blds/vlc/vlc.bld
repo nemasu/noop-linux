@@ -2,7 +2,7 @@
 NAME=vlc
 
 #package version
-VERSION=2.2.1
+VERSION=2.2.1-1
 DVERSION=2.2.1
 
 #directory locations, 99.99% of the time this is 1
@@ -54,6 +54,9 @@ function BuildAndInstall
 			--enable-sftp \
 			LUAC=/usr/bin/luac  LUA_LIBS="`pkg-config --libs lua`" \
 			RCC=/usr/bin/rcc-qt4
+
+	#Prevent build from failing
+	find . -name Makefile | xargs sed -i -e 's/-Werror-implicit-function-declaration//g'
 
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install

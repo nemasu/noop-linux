@@ -2,8 +2,8 @@
 NAME=util-linux
 
 #package version
-VERSION=2.25.2
-DVERSION=2.25.2
+VERSION=2.27.1
+DVERSION=2.27.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -29,6 +29,8 @@ PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
 
 function BuildAndInstall
 {

@@ -2,13 +2,14 @@
 NAME=freetds
 
 #package version
-VERSION=0.91
+VERSION=0.91-1
+DVERSION=0.91
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="ftp://ftp.freetds.org/pub/freetds/stable/freetds-${VERSION}.tar.bz2"
+SRC="ftp://ftp.freetds.org/pub/freetds/stable/freetds-${DVERSION}.tar.bz2"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -55,7 +56,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

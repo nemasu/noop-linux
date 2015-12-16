@@ -2,13 +2,13 @@
 NAME=mysql
 
 #package version
-VERSION=5.6.21
+VERSION=5.7.10
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://mysql.llarian.net/pub/mysql/Downloads/MySQL-5.6/mysql-${VERSION}.tar.gz
+SRC=http://dev.mysql.com/get/Downloads/MySQL-${VERSION:0:3}/mysql-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -69,6 +69,9 @@ function BuildAndInstall
 	   -DWITH_MYSQLD_LDFLAGS="${LDFLAGS}"
 	#-DWITH_LIBEVENT=system \
 
+	#Prevent build from failing
+	find . -name flags.make | xargs sed -i 's/-fno-rtti//g'
+
 	make -j${BLDR_CORES}
 
 	export SEGMENTS="Client Server IniFiles ManPages Embedded Development Documentation Info Readme"
@@ -103,7 +106,7 @@ unset SEGMENTS
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://mysql.llarian.net/pub/mysql/Downloads/MySQL-5.6/
+	LISTURL=http://dev.mysql.com/get/Downloads/MySQL-5.7/
 	FILELIST=`GetFileList`
 	LATEST=0
 

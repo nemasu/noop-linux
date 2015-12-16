@@ -1,0 +1,46 @@
+#package name
+NAME=proftpd
+
+#package version
+VERSION=1.3.5
+DVERSION=1.3.5a
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://ftp.proftpd.org/distrib/source/proftpd-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=0
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s -L http://www.proftpd.org/ | grep Maintenance | sed 's|.*<strong>\([0-9\.a-z]*\)</strong>.*|\1|g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
