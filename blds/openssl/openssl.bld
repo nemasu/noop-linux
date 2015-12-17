@@ -30,10 +30,10 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	if [ "`uname -m`" == "x86_64" ]; then
+	if [ "${ARCH}" == "x86_64" ]; then
 			openssltarget='linux-x86_64'
 			optflags='enable-ec_nistp_64_gcc_128'
-	elif [ "`uname -m`" == "armv6l" ]; then
+	elif [ "${ARCH}" == "armv6l" ] || [ "${ARCH}" == "armv7l" ]; then
 			openssltarget='linux-armv4'
 			optflags=''
 	fi
