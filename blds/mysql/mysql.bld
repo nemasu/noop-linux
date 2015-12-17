@@ -81,10 +81,14 @@ function BuildAndInstall
 	unset SEGMENTS
 
 	export SEGMENTS="SharedLibraries"
-for segment in $SEGMENTS; do
-	DESTDIR=/root/mysql-libs-inst cmake -DCMAKE_INSTALL_COMPONENT=$segment -P cmake_install.cmake
-done
-unset SEGMENTS
+	for segment in $SEGMENTS; do
+		DESTDIR=/root/mysql-libs-inst cmake -DCMAKE_INSTALL_COMPONENT=$segment -P cmake_install.cmake
+	done
+	unset SEGMENTS
+
+    #Missing header
+	cp libbinlogevents/export/binary_log_funcs.h /root/bldr-inst/usr/include/mysql/
+	cp libbinlogevents/export/binary_log_types.h /root/bldr-inst/usr/include/mysql/
 
 	cd /root/mysql-libs-inst
 

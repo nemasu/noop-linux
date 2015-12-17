@@ -2,13 +2,14 @@
 NAME=clementine
 
 #package version
-VERSION=1.2.3
+VERSION=1.2.3-1
+DVERSION=1.2.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="https://github.com/clementine-player/Clementine/archive/${VERSION}.tar.gz"
+SRC="https://github.com/clementine-player/Clementine/archive/${DVERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,7 +36,7 @@ function BuildAndInstall
 	echo "You need sparsehash to build $NAME";
     exit 1
   fi
-  mkdir build && cd build
+  mkdir -p build && cd build
   cmake .. \
   	-DCMAKE_INSTALL_PREFIX='/usr' \
 	-DCMAKE_BUILD_TYPE='Release'
@@ -60,7 +61,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

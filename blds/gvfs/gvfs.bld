@@ -2,8 +2,8 @@
 NAME=gvfs
 
 #package version
-VERSION=1.24.2
-DVERSION=1.24.2
+VERSION=1.27.3
+DVERSION=1.27.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

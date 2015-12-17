@@ -2,13 +2,14 @@
 NAME=apr-util
 
 #package version
-VERSION=1.5.4
+VERSION=1.5.4-1
+DVERSION=1.5.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.apache.org/dist/apr/apr-util-${VERSION}.tar.bz2
+SRC=http://www.apache.org/dist/apr/apr-util-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -57,7 +58,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

@@ -2,7 +2,7 @@
 NAME=dovecot
 
 #package version
-VERSION=2.2.19
+VERSION=2.2.21
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

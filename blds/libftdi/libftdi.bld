@@ -2,13 +2,14 @@
 NAME=libftdi
 
 #package version
-VERSION=1.1
+VERSION=1.1-1
+DVERSION=1.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.intra2net.com/en/developer/libftdi/download/libftdi1-${VERSION}.tar.bz2
+SRC=http://www.intra2net.com/en/developer/libftdi/download/libftdi1-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -55,7 +56,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
