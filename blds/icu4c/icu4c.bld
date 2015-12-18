@@ -2,13 +2,13 @@
 NAME=icu4c
 
 #package version
-VERSION=55.1
+VERSION=56.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.icu-project.org/files/icu4c/${VERSION}/icu4c-55_1-src.tgz
+SRC=http://download.icu-project.org/files/icu4c/${VERSION}/icu4c-`echo $VERSION | sed 's/\./_/g'`-src.tgz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -34,8 +34,8 @@ function BuildAndInstall
 
 	./configure $STDUSRCONF
 	
-	#Raspberry Pi Fix
-	if [ "`uname -m`" = "armv6l" ];
+	#arm
+	if [ "${ARCH}" == "armv6l" ] || [ "${ARCH}" == "armv7l" ];
 	then
 		sed -i -e '/LDFLAGSICUDT/d' config/mh-linux
 	fi

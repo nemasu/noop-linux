@@ -2,8 +2,8 @@
 NAME=tzdata
 
 #package version
-VERSION=20144
-DVERSION=2014e
+VERSION=2015-7
+DVERSION=2015g
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -31,6 +31,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+	wget http://www.iana.org/time-zones/repository/releases/tzcode${DVERSION}.tar.gz -Otzcode && tar xf tzcode && rm tzcode
+	make -j${BLDR_CORES}
+	mkdir -p /root/bldr-inst/usr/sbin
+	mkdir -p /root/bldr-inst/usr/lib
+	cp -v tzselect /root/bldr-inst/usr/sbin
+	cp -v zdump /root/bldr-inst/usr/sbin
+	cp -v zic /root/bldr-inst/usr/sbin
+	cp -v libtz.a /root/bldr-inst/usr/lib
 
 	timezones=('africa' 'antarctica' 'asia' 'australasia'
            'europe' 'northamerica' 'southamerica'
@@ -38,10 +46,10 @@ function BuildAndInstall
            'systemv' 'factory')
 
 	chmod +x yearistype.sh
-	zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo ${timezones[@]}
-	zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/posix ${timezones[@]}
-	zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/right -L leapseconds ${timezones[@]}
-	zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo -p America/New_York
+	./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo ${timezones[@]}
+	./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/posix ${timezones[@]}
+	./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/right -L leapseconds ${timezones[@]}
+	./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo -p America/New_York
 	install -m444 -t /root/bldr-inst/usr/share/zoneinfo iso3166.tab zone.tab
 }
 

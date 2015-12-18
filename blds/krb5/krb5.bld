@@ -2,13 +2,13 @@
 NAME=krb5
 
 #package version
-VERSION=1.10.2
+VERSION=1.14
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://web.mit.edu/kerberos/dist/krb5/1.10/krb5-${VERSION}-signed.tar
+SRC=http://web.mit.edu/kerberos/dist/krb5/${VERSION:0:4}/krb5-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -23,25 +23,14 @@ DEPS=('glibc' 'openssl')
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('e2fsprogs')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
 function BuildAndInstall
 {
-	rm -rf *.asc
-	tar xf *.gz
-	rm *.gz
-	cd `ls`/src
-
-	sed -i "/KRB5ROOT=/s/\/local//" util/ac_check_krb5.m4
-
-	patch -Np1 -i $BLDRTMPDIR/*.p && rm $BLDRTMPDIR/*.p
-
-	export CFLAGS+=" -fPIC -fno-strict-aliasing -fstack-protector-all"
-    export CPPFLAGS+=" -I/usr/include/et"
-
+	cd src
 	./configure --prefix=/usr \
                --sbindir=/usr/bin \
                --sysconfdir=/etc \
@@ -71,7 +60,7 @@ function BuildAndInstall
 
 function Detect
 {
-	LATEST=`curl -s "http://web.mit.edu/kerberos/dist/" | grep -E "krb5-[0-9\.]*-signed.tar" | sed 's/.*krb5-\([0-9\.]*\)-signed.tar.*/\1/g' | sort | uniq | tail -n1`
+	LATEST=`curl -s "http://web.mit.edu/kerberos/dist/" | grep -E "krb5-[0-9\.]*.tar" | sed 's/.*krb5-\([0-9\.]*\).tar.*/\1/g' | sort | uniq | tail -n1`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
