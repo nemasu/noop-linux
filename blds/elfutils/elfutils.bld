@@ -1,14 +1,14 @@
 #package name
-NAME=libgpg-error
+NAME=elfutils
 
 #package version
-VERSION=1.20
+VERSION=0.164
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-${VERSION}.tar.bz2
+SRC=https://fedorahosted.org/releases/e/l/elfutils/${VERSION}/elfutils-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,19 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnupg.org/gcrypt/libgpg-error/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -L -s https://kojipkgs.fedoraproject.org/packages/elfutils/ | grep href | tail -n1 | sed 's/.*href="\([0-9\.]*\)\/">.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

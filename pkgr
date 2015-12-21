@@ -667,14 +667,17 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	source $BLDRTMPDIR/*.bld
 	rm $BLDRTMPDIR/*.bld
 
-	for i in ${DEPS[@]};
-	do
-		if [ ! -e $INSTALLEDDIR/$i ];
-		then
-			echo "Installing dependency ${i}..."
-			pkgr -i $i
-		fi
-	done
+	if [ -z "${SKIP_DEP_CHECK}" ];
+	then
+		for i in ${DEPS[@]};
+		do
+			if [ ! -e $INSTALLEDDIR/$i ];
+			then
+				echo "Installing dependency ${i}..."
+				pkgr -i $i
+			fi
+		done
+	fi
 
 	STDUSRCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datadir=/usr/share --bindir=/usr/bin --prefix=/usr"
 	STDSYSCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datadir=/usr/share --bindir=/bin --prefix=/"

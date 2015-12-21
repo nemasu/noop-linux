@@ -33,6 +33,12 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
 function BuildAndInstall
 {
 	./autogen.sh
+
+	if [ "${ARCH}" == "x86_64" ];
+	then
+		extra_opts="--enable-gnuefi"
+	fi
+	
 	./configure \
 		   --includedir=/usr/include \
 		   --mandir=/usr/man \
@@ -49,8 +55,7 @@ function BuildAndInstall
 		   --enable-compat-libs \
 		   --with-sysvinit-path= \
 		   --with-sysvrcnd-path= \
-		   --with-ntp-servers="0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org" \
-		   --enable-gnuefi
+		   --with-ntp-servers="0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org" ${extra_opts}
 
 	sed -i -e 's/\"\/bin\/loadkeys/\"\/usr\/bin\/loadkeys/g' Makefile Makefile.am Makefile.in
 	sed -i -e 's/\"\/bin\/setfont/\"\/usr\/bin\/setfont/g' Makefile Makefile.am Makefile.in
