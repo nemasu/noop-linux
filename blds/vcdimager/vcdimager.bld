@@ -1,23 +1,24 @@
 #package name
-NAME=python-lxml
+NAME=vcdimager
 
 #package version
-VERSION=3.5.0
+VERSION=0.7.24-1
+DVERSION=0.7.24
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://pypi.python.org/packages/source/l/lxml/lxml-${VERSION}.tar.gz
+SRC=ftp://ftp.gnu.org/gnu/vcdimager/vcdimager-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc' 'libxml2' 'libxslt' 'python' 'python2' 'zlib')
+DEPS=('libcdio' 'libxml2' 'popt')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -28,26 +29,27 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	cd ..
-	DIR=`ls`
-	cp -r $DIR ${DIR}-python2
-
-	cd $DIR
-	python3 setup.py install --root=/root/bldr-inst/ --optimize=1
-
-	cd ../${DIR}-python2
-	python2 setup.py install --root=/root/bldr-inst/ --optimize=1
-
-}
-
+#function BuildAndInstall
+#{
+#}
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://pypi.python.org/pypi/lxml | grep -e "lxml&nbsp;" | sed 's/.*\/\([0-9\.][0-9\.]*\)\".*/\1/g' | head -n1`
+	LISTURL=
+	FILELIST=`GetFileList`
+	LATEST=0
 
-	vercomp $VERSION $LATEST
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

@@ -1,5 +1,5 @@
 NAME=qt4
-VERSION=4.8.7
+VERSION=4.8.7-1
 DVERSION=4.8.7
 ISUSR=1
 MMVER=`echo $DVERSION | sed -e 's/\([0-9]*\.[0-9]*\).*/\1/g'`

@@ -2,7 +2,7 @@
 NAME=wireshark
 
 #package version
-VERSION=1.12.4
+VERSION=2.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -30,8 +30,6 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i 's/$(AM_V_RCC)rcc/&-qt4/p' ui/qt/Makefile.am
-	 ./autogen.sh
 	 ./configure \
 		  --prefix=/usr \
 		  --with-qt \

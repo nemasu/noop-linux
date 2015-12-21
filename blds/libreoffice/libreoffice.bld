@@ -32,6 +32,14 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
+	#Make sure tests dont fail
+	# Start virtual X 
+	# Needs to be 24 bit, otherwise emf tests fail 
+	Xvfb :3 -screen 0 1280x1024x24 & 
+	X_PID=$! 
+	OLD_DISPLAY=$DISPLAY
+	export DISPLAY=:3 
+
 	export PYTHON=python2
 	export PTHREAD_LIBS="-pthread"
 	./autogen.sh --prefix=/usr \
@@ -48,6 +56,10 @@ function BuildAndInstall
 
 	make build
 	make DESTDIR=/root/bldr-inst distro-pack-install
+
+	kill $X_PID
+	export DISPLAY=$OLD_DISPLAY
+
 }
 
 #Default HTTP curl new version detection

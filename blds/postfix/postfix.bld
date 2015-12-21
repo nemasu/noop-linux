@@ -2,13 +2,14 @@
 NAME=postfix
 
 #package version
-VERSION=3.0.3
+VERSION=3.0.3-1
+DVERSION=3.0.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="ftp://ftp.porcupine.org/mirrors/postfix-release/official/postfix-${VERSION}.tar.gz"
+SRC="ftp://ftp.porcupine.org/mirrors/postfix-release/official/postfix-${DVERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -83,7 +84,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

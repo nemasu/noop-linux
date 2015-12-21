@@ -2,7 +2,7 @@
 NAME=qt
 
 #package version
-VERSION=5.4.1
+VERSION=5.5.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -44,6 +44,12 @@ function BuildAndInstall
 	else
 		CONF=
 	fi
+
+  if [ "`readlink /usr/bin/python`" != "python2" ];
+  then
+	echo "Python2 must be linked to /usr/bin/python";
+     exit 1
+  fi
 
   PYTHON=/usr/bin/python2 ./configure -confirm-license -opensource \
 		-prefix /usr \
