@@ -26,7 +26,8 @@ STRIP=
 PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
-RESTORELIBDB=
+#ghc has its own version of libffi, may need to include ghc libs later
+RESTORELIBDB=1
 
 #function BuildAndInstall
 #{
