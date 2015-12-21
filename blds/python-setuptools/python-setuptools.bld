@@ -1,15 +1,14 @@
 #package name
-NAME=python-cssselect
+NAME=python-setuptools
 
 #package version
-VERSION=0.9.1-1
-DVERSION=0.9.1
+VERSION=19.1.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://pypi.python.org/packages/source/c/cssselect/cssselect-${DVERSION}.tar.gz
+SRC=https://pypi.python.org/packages/source/s/setuptools/setuptools-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -32,25 +31,32 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	cd ..
-	DIR=`ls`
-	cp -r $DIR ${DIR}-python2
+	py2_build=`ls`
+	py3_build=${py2_build}-py3
+	cp -r $py2_build $py3_build
 
-	cd $DIR
-	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' cssselect/tests.py
-	python3 setup.py install --root=/root/bldr-inst/ --optimize=1
+	cd $py2_build
+	sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python2|" setuptools/command/easy_install.py
+	python2 setup.py build
+	python2 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
+	rm /root/bldr-inst/usr/bin/easy_install
 
-	cd ../${DIR}-python2
-	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python2|' cssselect/tests.py
-	python2 setup.py install --root=/root/bldr-inst/ --optimize=1
 
-}
+	cd ../$py3_build
+	sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python3|" setuptools/command/easy_install.py
+	python3 setup.py build
+	python3 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
+
+	}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://pypi.python.org/pypi/cssselect
+	NAME=setuptools
+	LISTURL=https://pypi.python.org/packages/source/s/setuptools/
 	FILELIST=`GetFileList`
 	LATEST=0
+	NAME=python-setuptools
 
 	for i in ${FILELIST[@]};
 	do
@@ -62,7 +68,7 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

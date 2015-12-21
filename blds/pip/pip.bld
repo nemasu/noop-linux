@@ -1,15 +1,14 @@
 #package name
-NAME=python-cssselect
+NAME=pip
 
 #package version
-VERSION=0.9.1-1
-DVERSION=0.9.1
+VERSION=7.1.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://pypi.python.org/packages/source/c/cssselect/cssselect-${DVERSION}.tar.gz
+SRC=http://pypi.python.org/packages/source/p/pip/pip-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -32,23 +31,25 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	cd ..
-	DIR=`ls`
-	cp -r $DIR ${DIR}-python2
+	py2_dir=`ls`
+	py3_dir=${py2_dir}-py3
+	cp -r $py2_dir $py3_dir
 
-	cd $DIR
-	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' cssselect/tests.py
-	python3 setup.py install --root=/root/bldr-inst/ --optimize=1
+	cd $py2_dir
+	python2 setup.py build
+    python2 setup.py install --prefix=/usr --root=/root/bldr-inst
+	sed -i "s|#!/usr/bin/env python$|#!/usr/bin/env python2|" /root/bldr-inst/usr/lib/python2.7/site-packages/pip/__init__.py
+    python2 -m compileall /root/bldr-inst/usr/lib/python2.7/site-packages/pip/__init__.py
 
-	cd ../${DIR}-python2
-	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python2|' cssselect/tests.py
-	python2 setup.py install --root=/root/bldr-inst/ --optimize=1
-
+	cd ../$py3_dir
+	python3 setup.py build
+    python3 setup.py install --prefix=/usr --root=/root/bldr-inst
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://pypi.python.org/pypi/cssselect
+	LISTURL=http://pypi.python.org/packages/source/p/pip/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -62,7 +63,7 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

@@ -2,13 +2,14 @@
 NAME=pyqt4
 
 #package version
-VERSION=4.11.4
+VERSION=4.11.4-1
+DVERSION=4.11.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/pyqt/PyQt-x11-gpl-${VERSION}.tar.gz
+SRC=http://downloads.sourceforge.net/pyqt/PyQt-x11-gpl-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -66,7 +67,7 @@ function Detect
 {
 	LATEST=`curl -L -s http://sourceforge.net/projects/pyqt/files/PyQt4/ | egrep "/PyQt-[0-9\.]+/\"" | sed -e 's|.*/PyQt-\([0-9\.]*\)/.*|\1|g' | head -n1`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
