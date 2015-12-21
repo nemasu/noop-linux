@@ -23,7 +23,7 @@ DEPS=('gperf' 'acl' 'attr' 'curl' 'elfutils' 'glibc' 'iptables' 'kmod' 'libcap2'
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('gperf' 'gnu-efi')
+PKGDEPS=('gperf' 'gnu-efi' 'libxslt')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
