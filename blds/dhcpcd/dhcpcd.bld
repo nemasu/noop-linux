@@ -2,13 +2,13 @@
 NAME=dhcpcd
 
 #package version
-VERSION=6.4.3
+VERSION=6.9.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://roy.marples.name/downloads/dhcpcd/dhcpcd-${VERSION}.tar.bz2
+SRC=http://roy.marples.name/downloads/dhcpcd/dhcpcd-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
