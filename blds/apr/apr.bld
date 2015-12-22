@@ -2,7 +2,7 @@
 NAME=apr
 
 #package version
-VERSION=1.5.1
+VERSION=1.5.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
