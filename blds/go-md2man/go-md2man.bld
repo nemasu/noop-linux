@@ -1,0 +1,55 @@
+#package name
+NAME=go-md2man
+
+#package version
+VERSION=1.0.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/cpuguy83/go-md2man/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cd ..
+	export GOPATH=`pwd`
+	repo_dir=src/github.com/cpuguy83
+	mkdir -p "${repo_dir}"
+	ln -sf "../../../go-md2man-${VERSION}" "${repo_dir}/go-md2man"
+	cd "${repo_dir}/go-md2man"
+	go get -v ./...
+	/root/bldr-tmp/bin/go-md2man -in=go-md2man.1.md -out=go-md2man.1
+	install -Dm755 /root/bldr-tmp/bin/go-md2man /root/bldr-inst/usr/bin/go-md2man
+	install -Dm755 /root/bldr-tmp/go-md2man-${VERSION}/go-md2man.1 /root/bldr-instusr/share/man/man1/go-md2man.1
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s https://github.com/cpuguy83/go-md2man/releases | egrep "v[0-9\.]*\.tar\.gz" | head -n1 | sed 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+	
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

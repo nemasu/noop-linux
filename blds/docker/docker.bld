@@ -1,0 +1,84 @@
+#package name
+NAME=docker
+
+#package version
+VERSION=1.9.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP='no'
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=('go-md2man')
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=1
+
+function BuildAndInstall
+{
+	if [ ! -e docker ];
+	then
+		git clone https://github.com/docker/docker.git
+		cd docker
+		git checkout tags/v${VERSION}
+
+		for i in `find $BLDRTMPDIR/*.git_patch`;
+		do
+			patch -Np1 -i "$i"
+		done
+	else
+		cd docker
+	fi
+	
+	for i in `find $BLDRTMPDIR/*.git_patch`;
+	do
+		rm -v "$i"
+	done
+	
+	export AUTO_GOPATH=1
+	hack/make.sh dynbinary
+	# man pages
+	man/md2man-all.sh
+
+	install -Dm755 "bundles/${VERSION}/dynbinary/docker-${VERSION}" /root/bldr-inst/usr/bin/docker
+	install -Dm755 "bundles/${VERSION}/dynbinary/dockerinit-${VERSION}" /root/bldr-inst/usr/lib/docker/dockerinit
+	# completion
+	install -Dm644 contrib/completion/bash/docker /root/bldr-inst/usr/share/bash-completion/completions/docker
+	install -Dm644 contrib/completion/zsh/_docker /root/bldr-inst/usr/share/zsh/site-functions/_docker
+	install -Dm644 contrib/completion/fish/docker.fish /root/bldr-inst/usr/share/fish/vendor_completions.d/docker.fish
+	# systemd
+	install -Dm644 contrib/init/systemd/docker.service /root/bldr-inst/usr/lib/systemd/system/docker.service
+	install -Dm644 contrib/init/systemd/docker.socket /root/bldr-inst/usr/lib/systemd/system/docker.socket
+	# vim syntax
+	install -Dm644 contrib/syntax/vim/syntax/dockerfile.vim /root/bldr-inst/usr/share/vim/vimfiles/syntax/dockerfile.vim
+	install -Dm644 contrib/syntax/vim/ftdetect/dockerfile.vim /root/bldr-inst/usr/share/vim/vimfiles/ftdetect/dockerfile.vim
+	# man
+	install -dm755 /root/bldr-inst/usr/share/man
+	mv man/man* /root/bldr-inst/usr/share/man
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s https://github.com/docker/docker/releases | egrep "v[0-9\.]*\.tar\.gz" | head -n1 | sed 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

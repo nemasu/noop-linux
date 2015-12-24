@@ -1,0 +1,49 @@
+#package name
+NAME=btrfs-progs
+
+#package version
+VERSION=4.3.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/kdave/btrfs-progs/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=('asciidoc' 'xmlto')
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./autogen.sh
+	./configure --prefix=/usr
+	make -j${BLDR_CORES}
+	make prefix=/root/bldr-inst/usr install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s https://github.com/kdave/btrfs-progs/releases | egrep "v[0-9\.]*\.tar\.gz" | head -n1 | sed 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

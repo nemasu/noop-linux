@@ -1,0 +1,3 @@
+function postinst() {
+	systemd-sysusers docker.conf
+}
