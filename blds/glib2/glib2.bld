@@ -33,7 +33,8 @@ function BuildAndInstall
 {
   
   PYTHON=/usr/bin/python2 ./configure --prefix=/usr --libdir=/usr/lib \
-      --sysconfdir=/etc \
+	  --enable-static \
+	  --sysconfdir=/etc \
       --with-pcre=system \
       --disable-fam
    make -j${BLDR_CORES}

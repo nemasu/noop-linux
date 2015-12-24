@@ -1,7 +1,0 @@
-NAME=trunc
-VERSION=0.1
-ISUSR=1
-SRC=http://www.nooplinux.org/dist/trunc-0.1.tar.bz2
-EXTRACONF=
-ISSPECIAL=0
-DEPS=

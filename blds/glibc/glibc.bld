@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('expat' 'fontconfig' 'freetype2' 'gd2' 'libjpeg' 'libpng' 'zlib')
+DEPS=('expat' 'fontconfig' 'freetype2' 'libjpeg' 'libpng' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -53,7 +53,8 @@ function BuildAndInstall
 		--enable-stackguard-randomization \
 		--enable-lock-elision \
 		--enable-multi-arch \
-		--disable-werror
+		--disable-werror \
+		--enable-static-nss
 
 
 	make -j${BLDR_CORES}

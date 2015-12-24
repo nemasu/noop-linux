@@ -1002,9 +1002,8 @@ function SetPerms
 {
 	$find . -type f 2> /dev/null | $xargs $chmod 644 &> /dev/null
     $find . -type d 2> /dev/null | $xargs $chmod 755 &> /dev/null
-	#Use system find due to busybox bug TODO check if bug still exists.
-	find {bin,lib,sbin,lib32} -type f 2> /dev/null | $xargs $chmod 755 &> /dev/null
-    find {usr/bin,usr/lib,usr/sbin,usr/lib32} -type f 2> /dev/null | $xargs $chmod 755 &> /dev/null
+	$find {bin,lib,sbin,lib32} -type f 2> /dev/null | $xargs $chmod 755 &> /dev/null
+    $find {usr/bin,usr/lib,usr/sbin,usr/lib32} -type f 2> /dev/null | $xargs $chmod 755 &> /dev/null
 }
 
 function RenameConfigFiles
@@ -1870,9 +1869,9 @@ if [ $1 = "-getfiles" ] ; then
 	newfile=`$echo $2 | $sed -e 's/\.pkg/.tar.bz2/g'`
 	$cp $2 $newfile
 	
-	if [ -e $PREFIX/usr/bin/trunc ];
+	if [ -e $PREFIX/usr/bin/busybox ];
 	then
-		$PREFIX/usr/bin/trunc $newfile $newoff
+		$PREFIX/usr/bin/busybox truncate -s $newoff $newfile
 	else
 		$dd if=$2 skip=0 of=$newfile bs=1 count=$newoff &> /dev/null
 	fi
