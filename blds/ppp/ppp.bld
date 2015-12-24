@@ -9,7 +9,7 @@ VERSION=2.4.7
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.samba.org/pub/ppp/ppp-${VERSION}.tar.gz
+SRC=http://ftp.samba.org/pub/ppp/ppp-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

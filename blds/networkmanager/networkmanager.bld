@@ -34,6 +34,7 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
+	sed -i -e '/gtkdocize/d' autogen.sh
 	NOCONFIGURE=1 ./autogen.sh
 
 	 ./configure --prefix=/usr \

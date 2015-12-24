@@ -32,8 +32,10 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  unset CPPFLAGS
   cd js/src  
+  # Fix incompatibility with Perl 5.22
+  sed -i 's/(defined\((@TEMPLATE_FILE)\))/\1/' config/milestone.pl
+  unset CPPFLAGS
   sed -i -e 's/\-lreadline/\-lreadline \-lncurses/g' configure
   ./configure --prefix=/usr --with-system-nspr --with-system-ffi \
      --enable-readline --enable-threadsafe
