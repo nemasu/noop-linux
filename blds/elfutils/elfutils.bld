@@ -14,7 +14,7 @@ SRC=https://fedorahosted.org/releases/e/l/elfutils/${VERSION}/elfutils-${VERSION
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=
@@ -28,9 +28,15 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./configure $STDUSRCONF
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+	
+	#Remove some duplicate binaries
+	rm /root/bldr-inst/usr/bin/{addr2line,ld,strings,ranlib,nm,objdump,readelf,ar,strip,size}
+}
 
 #Default HTTP curl new version detection
 function Detect
