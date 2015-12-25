@@ -2,7 +2,8 @@
 NAME=vim
 
 #package version
-VERSION=7.4.972
+VERSION=7.4.979
+
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

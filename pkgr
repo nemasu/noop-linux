@@ -2037,7 +2037,7 @@ if [ $1 = "--mkinitramfs" ]; then
 
 
 	#Requirements	
-	for i in cpio aufs3-utils lvm2 cryptsetup;
+	for i in cpio aufs-utils lvm2 cryptsetup;
 	do
 		pkgr -i $i &> /dev/null
 	done
@@ -2188,7 +2188,7 @@ if [ $1 = "-init" ]; then
 		echo "root:noop" | chpasswd
 		echo noop-live > /etc/hostname
 		
-		for i in e2fsprogs btrfs-progs aufs3-utils pciutils gptfdisk parted ipw2200-fw dosfstools efibootmgr screen openssh alsa-firmware alsa-lib alsa-utils alsa-plugins;
+		for i in e2fsprogs btrfs-progs aufs-utils pciutils gptfdisk parted ipw2200-fw dosfstools efibootmgr screen openssh alsa-firmware alsa-lib alsa-utils alsa-plugins;
 		do
 			pkgr -i $i;
 		done

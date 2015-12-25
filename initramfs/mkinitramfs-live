@@ -41,7 +41,7 @@ LN=`$WHICH ln`
 CURL=`$WHICH curl`
 
 #prereqs
-pkgr -i aufs3-utils &> /dev/null
+pkgr -i aufs-utils &> /dev/null
 pkgr -i cpio &> /dev/null
 
 PREFIX=/root/initramfs

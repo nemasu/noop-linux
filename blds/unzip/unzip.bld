@@ -30,6 +30,10 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+  mkdir ccpath
+  ln -s /usr/bin/gcc ccpath/cc
+  PATH=`pwd`/ccpath:$PATH
+
   # set CFLAGS -- from Debian
   export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64 -DACORN_FTYPE_NFS \
 	  -DWILD_STOP_AT_DIR -DLARGE_FILE_SUPPORT -DUNICODE_SUPPORT \

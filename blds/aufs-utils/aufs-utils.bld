@@ -1,8 +1,8 @@
 #package name
-NAME=aufs3-utils
+NAME=aufs-utils
 
 #package version
-VERSION=3.0.20131128
+VERSION=4.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -14,7 +14,7 @@ SRC=
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=('glibc')
@@ -30,10 +30,10 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        git clone -b aufs${VERSION} git://aufs.git.sourceforge.net/gitroot/aufs/aufs-util.git
-        cd `ls`
-        make
-        make DESTDIR=~/bldr-inst install
+	git clone -b aufs${VERSION} git://aufs.git.sourceforge.net/gitroot/aufs/aufs-util.git
+	cd aufs-util
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
