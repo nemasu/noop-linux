@@ -2,15 +2,14 @@
 NAME=wine
 
 #package version
-VERSION=1.7.50-1
-DVERSION=1.7.50
+VERSION=1.8
+DVERSION=1.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJVER=`echo $DVERSION | sed 's/\.[0-9]*$//g'`
-SRC=http://ftp.winehq.org/pub/wine/source/${MAJVER}/wine-${DVERSION}.tar.bz2
+SRC=http://ftp.winehq.org/pub/wine/source/${DVERSION:0:3}/wine-${DVERSION}.tar.bz2
 
 #xD
 
