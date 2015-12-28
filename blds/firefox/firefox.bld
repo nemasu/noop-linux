@@ -60,6 +60,9 @@ function BuildAndInstall
 
   ln -sf firefox /root/bldr-inst/usr/lib/firefox-${DVERSION}/firefox-bin
 
+   #Prevent pkgr from pulling in lib32 deps
+   chmod +x /root/bldr-inst/usr/lib/firefox-devel-${DVERSION}/sdk/bin/xpcshell
+
 
 }
 
