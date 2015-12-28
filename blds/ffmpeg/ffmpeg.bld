@@ -2,13 +2,14 @@
 NAME=ffmpeg
 
 #package version
-VERSION=2.7.2
+VERSION=2.8.4
+DVERSION=2.8.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ffmpeg.org/releases/ffmpeg-$VERSION.tar.bz2
+SRC=http://ffmpeg.org/releases/ffmpeg-$DVERSION.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -93,7 +94,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

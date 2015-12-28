@@ -1,0 +1,73 @@
+#!/bin/bash
+
+#Runs on rpi qemu user mode chroot, or armv6l hardware.
+set -e
+pkgr -i git &> /dev/null
+pkgr -i bc &> /dev/null
+
+BLDRTMPDIR=/tmp/bldr
+mkdir -p $BLDRTMPDIR
+cd /usr/src
+rm -rf linux
+git clone --depth=1 https://github.com/raspberrypi/linux
+pushd linux
+VERSION=`make kernelversion`
+popd
+
+mv linux linux-$VERSION
+cd linux-$VERSION
+
+rm -rf /root/noopkern
+mkdir -p /root/noopkern/boot
+mkdir -p /root/noophead/usr
+mkdir -p /root/noopfirm
+
+KERNEL=kernel7
+make bcm2709_defconfig
+make -j3
+cp -v arch/arm/boot/Image /root/noopkern/boot/kernel.img
+
+make INSTALL_MOD_PATH=/root/noopkern modules_install
+
+make INSTALL_HDR_PATH=/root/noophead/usr headers_install
+
+cd /root/noopkern
+
+depmod -F /usr/src/linux-${VERSION}/System.map -a -b /root/noopkern -E /usr/src/linux-${VERSION}/Module.symvers ${VERSION}
+
+pkgr -genmeta linux-kernel ${VERSION}
+pkgr -genpkg
+
+mv *.pkg /root/bldr-done
+
+cd /root/noophead
+
+pkgr -genmeta linux-headers ${VERSION}
+pkgr -genpkg
+
+mv *.pkg /root/bldr-done
+
+cd /root/noopfirm
+wget https://github.com/raspberrypi/firmware/archive/master.tar.gz
+tar xf master.tar.gz && rm master.tar.gz
+mkdir boot
+cp -v firmware-master/boot/*.elf ./boot/
+cp -v firmware-master/boot/*.bin ./boot/
+cp -v firmware-master/boot/*.dat ./boot/
+
+cp -r -v firmware-master/hardfp/opt .
+
+rm -rf firmware-master
+
+cd boot
+wget https://github.com/nemasu/noop-linux/raw/master/etc/rpi/cmdline.txt
+wget https://github.com/nemasu/noop-linux/raw/master/etc/rpi/config.txt
+cd ..
+
+pkgr -genmeta linux-firmware ${VERSION}
+pkgr -genpkg
+mv *.pkg /root/bldr-done
+
+cd /root
+rm -rf noopkern/ noophead/ noopfirm/
+echo Done!

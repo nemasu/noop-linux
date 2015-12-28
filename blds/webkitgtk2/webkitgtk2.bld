@@ -2,8 +2,8 @@
 NAME=webkitgtk2
 
 #package version
-VERSION=2.4.8
-DVERSION=2.4.8
+VERSION=2.4.9
+DVERSION=2.4.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -31,7 +31,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	autoreconf -fi
+	#autoreconf -fi
 	./configure --prefix=/usr \
 	    --libexecdir=/usr/lib/webkitgtk2 --with-gtk=2.0 \
 		--disable-gtk-doc \

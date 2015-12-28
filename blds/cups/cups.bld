@@ -2,13 +2,14 @@
 NAME=cups
 
 #package version
-VERSION=2.0.0
+VERSION=2.0.0-1
+DVERSION=2.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.cups.org/software/$VERSION/cups-$VERSION-source.tar.bz2
+SRC=http://www.cups.org/software/$DVERSION/cups-$DVERSION-source.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -59,7 +60,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

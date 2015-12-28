@@ -2,7 +2,7 @@
 NAME=thunderbird
 
 #package version
-VERSION=38.3.0
+VERSION=38.3.0-1
 DVERSION=38.3.0
 
 #directory locations, 99.99% of the time this is 1

@@ -2,13 +2,13 @@
 NAME=babl
 
 #package version
-VERSION=0.1.10
+VERSION=0.1.14
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gimp.org/pub/babl/0.1/babl-${VERSION}.tar.bz2
+SRC=https://download.gimp.org/pub/babl/0.1/babl-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

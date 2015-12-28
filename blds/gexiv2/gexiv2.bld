@@ -1,24 +1,23 @@
 #package name
-NAME=raptor
+NAME=gexiv2
 
 #package version
-VERSION=2.0.8-1
-DVERSION=2.0.8
+VERSION=0.10.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://librdf.org/dist/source/raptor2-${DVERSION}.tar.gz
+SRC=http://ftp.gnome.org/pub/gnome/sources/gexiv2/${VERSION%.*}/gexiv2-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-yajl=no --with-icu-config=/usr/bin/icu-config"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('curl' 'glibc' 'icu4c' 'libxml2' 'libxslt' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -36,8 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=raptor2
-	LISTURL=http://librdf.org/dist/source/
+	LISTURL=http://ftp.gnome.org/pub/gnome/sources/gexiv2/${VERSION%.*}/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -51,7 +49,7 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

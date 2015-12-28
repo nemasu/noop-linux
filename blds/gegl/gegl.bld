@@ -2,15 +2,15 @@
 NAME=gegl
 
 #package version
-VERSION=0.2.0-1
-DVERSION=0.2.0
+VERSION=0.3.4
+DVERSION=0.3.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 #SRC=ftp://ftp.gimp.org/pub/gegl/0.2/gegl-${VERSION}.tar.bz2
-SRC=http://ftp.gtk.org/pub/gegl/0.2/gegl-${DVERSION}.tar.bz2
+SRC=https://download.gimp.org/pub/gegl/${DVERSION:0:3}/gegl-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--prefix=/usr  --with-sdl --with-openexr --with-librsvg --with-libavformat --with-jasper --disable-docs"
@@ -37,7 +37,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gimp.org/pub/gegl/0.2/
+	LISTURL=https://download.gimp.org/pub/gegl/0.3/
 	FILELIST=`GetFileList`
 	LATEST=0
 

@@ -2,7 +2,7 @@
 NAME=boost
 
 #package version
-VERSION=1.59.0
+VERSION=1.59.0-1
 DVERSION=1.59.0
 
 #directory locations, 99.99% of the time this is 1

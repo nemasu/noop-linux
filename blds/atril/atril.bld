@@ -2,7 +2,7 @@
 NAME=atril
 
 #package version
-VERSION=1.10.0
+VERSION=1.10.0-1
 DVERSION=1.10.0
 
 #directory locations, 99.99% of the time this is 1

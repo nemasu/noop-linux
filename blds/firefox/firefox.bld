@@ -1,6 +1,6 @@
 NAME=firefox
-VERSION=42.0
-DVERSION=42.0
+VERSION=43.0.2
+DVERSION=43.0.2
 ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
