@@ -2,8 +2,8 @@
 NAME=gimp
 
 #package version
-VERSION=2.9.2
-DVERSION=2.9.2
+VERSION=2.8.16
+DVERSION=2.8.16
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
