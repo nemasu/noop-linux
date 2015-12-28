@@ -1,0 +1,68 @@
+#package name
+NAME=lib32-libgcrypt
+
+#package version
+VERSION=1.6.3
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+	
+	# Use 32-bit assembler
+	sed 's:path="amd64":path="i586 i386":' -i mpi/config.links
+
+	./configure --prefix=/usr --libexecdir=/usr/lib32 --libdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var --disable-static
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=ftp://ftp.gnupg.org/gcrypt/libgcrypt/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
