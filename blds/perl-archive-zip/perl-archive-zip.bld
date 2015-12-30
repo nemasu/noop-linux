@@ -1,0 +1,41 @@
+NAME=perl-archive-zip
+VERSION=1.56
+ISUSR=1
+SRC=http://search.cpan.org/CPAN/authors/id/A/AD/ADAMK/Archive-Zip-1.30.tar.gz
+EXTRACONF=
+ISSPECIAL=1
+DEPS=('perl')
+
+function BuildAndInstall
+{
+	perl Makefile.PL PREFIX=/usr
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	NAME=Archive-Zip
+	LISTURL=http://www.cpan.org/authors/id/P/PH/PHRED/
+	FILELIST=`GetFileList`
+	LATEST=0
+	NAME=perl-archive-zip
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+
