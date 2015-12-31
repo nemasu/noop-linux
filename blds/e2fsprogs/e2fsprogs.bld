@@ -2,13 +2,14 @@
 NAME=e2fsprogs
 
 #package version
-VERSION=1.42.6
+VERSION=1.42.13
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 SRC=http://downloads.sourceforge.net/sourceforge/e2fsprogs/e2fsprogs-${VERSION}.tar.gz
+#SRC=http://www.nooplinux.org/dist/e2fsprogs-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
