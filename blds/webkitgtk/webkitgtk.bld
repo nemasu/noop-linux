@@ -2,8 +2,8 @@
 NAME=webkitgtk
 
 #package version
-VERSION=2.4.8
-DVERSION=2.4.8
+VERSION=2.10.4
+DVERSION=2.10.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -31,18 +31,17 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	autoreconf -fi
-	./configure --prefix=/usr \
-	    --libexecdir=/usr/lib/webkitgtk --with-gtk=3.0 \
-		--disable-gtk-doc \
-		--enable-introspection
-  
-# https://bugzilla.gnome.org/show_bug.cgi?id=655517
-  sed -i 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+  mkdir -p build
+  cd build
 
-#-j3 no good
-  make all
+  cmake .. \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DSYSCONFDIR=/etc \
+	-DPORT=GTK
+  make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
+
 
 }
 

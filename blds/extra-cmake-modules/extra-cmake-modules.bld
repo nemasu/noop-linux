@@ -1,15 +1,14 @@
 #package name
-NAME=cups-filters
+NAME=extra-cmake-modules
 
 #package version
-VERSION=1.5.0
-DVERSION=1.5.0
+VERSION=5.17.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.openprinting.org/download/cups-filters/cups-filters-${DVERSION}.tar.gz
+SRC=http://download.kde.org/stable/frameworks/${VERSION:0:4}/extra-cmake-modules-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -18,40 +17,33 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('avahi' 'cups' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'ghostscript' 'glib2' 'glibc' 'krb5' 'lcms2' 'libjpeg' 'libpng' 'poppler' 'qpdf' 'tiff' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('bc')
+PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr \
-		--sysconfdir=/etc \
-		--sbindir=/usr/bin \
-		--localstatedir=/var \
-		--with-rcdir=no \
-		--enable-avahi \
-		--with-browseremoteprotocols=DNSSD,CUPS \
-		--with-test-font-path=/usr/share/fonts/TTF/DejaVuSans.ttf
-
+	mkdir -p build && cd build
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_HTML_DOCS=OFF \
+		-DBUILD_TESTING=OFF
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
-
-	install -Dm644 utils/cups-browsed.service /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
-	sed -i "s|/usr/sbin/cups-browsed|/usr/bin/cups-browsed|" /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
-	chgrp -R lp /root/bldr-inst/etc/cups
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.openprinting.org/download/cups-filters/
+	LISTURL=http://download.kde.org/stable/frameworks/${VERSION:0:4}/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -65,7 +57,7 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

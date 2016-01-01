@@ -2,13 +2,14 @@
 NAME=dovecot
 
 #package version
-VERSION=2.2.21
+VERSION=2.2.21-1
+DVERSION=2.2.21
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://dovecot.org/releases/2.2/dovecot-${VERSION}.tar.gz
+SRC=http://dovecot.org/releases/2.2/dovecot-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -72,7 +73,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://dovecot.org/releases/2.2/
+	LISTURL=http://www.dovecot.org/download.html
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -86,7 +87,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

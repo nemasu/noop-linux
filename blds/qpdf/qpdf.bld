@@ -1,24 +1,23 @@
 #package name
-NAME=fcitx
+NAME=qpdf
 
 #package version
-VERSION=4.2.9
-DVERSION=4.2.9
+VERSION=6.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.fcitx-im.org/fcitx/fcitx-${DVERSION}_dict.tar.xz
+SRC=http://downloads.sourceforge.net/qpdf/qpdf-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('cairo' 'dbus' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'icu4c' 'libICE' 'libSM' 'libX11' 'libXext' 'libXfixes' 'libXinerama' 'libXrender' 'libxkbfile' 'libxml2' 'pango' 'qt4')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -29,31 +28,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  mkdir -p build
-  cd build
-
-  cmake .. \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DSYSCONFDIR=/etc \
-    -DFORCE_OPENCC=ON \
-    -DFORCE_PRESAGE=ON \
-    -DFORCE_ENCHANT=ON \
-    -DENABLE_TEST=ON \
-    -DENABLE_GTK2_IM_MODULE=ON \
-    -DENABLE_GTK3_IM_MODULE=ON \
-    -DENABLE_QT_IM_MODULE=ON \
-    -DQT_QMAKE_EXECUTABLE=qmake-qt4
-  make -j${BLDR_CORES}
-  make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.fcitx-im.org/fcitx/
+	LISTURL=http://sourceforge.net/projects/qpdf/files/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -67,7 +49,7 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

@@ -1,15 +1,14 @@
 #package name
-NAME=cups-filters
+NAME=net-snmp
 
 #package version
-VERSION=1.5.0
-DVERSION=1.5.0
+VERSION=5.7.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.openprinting.org/download/cups-filters/cups-filters-${DVERSION}.tar.gz
+SRC=http://downloads.sourceforge.net/net-snmp/net-snmp-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -18,40 +17,39 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('avahi' 'cups' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'ghostscript' 'glib2' 'glibc' 'krb5' 'lcms2' 'libjpeg' 'libpng' 'poppler' 'qpdf' 'tiff' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('bc')
+PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr \
-		--sysconfdir=/etc \
-		--sbindir=/usr/bin \
-		--localstatedir=/var \
-		--with-rcdir=no \
-		--enable-avahi \
-		--with-browseremoteprotocols=DNSSD,CUPS \
-		--with-test-font-path=/usr/share/fonts/TTF/DejaVuSans.ttf
-
-	make -j${BLDR_CORES}
+	PYTHONPROG=/usr/bin/python2 ./configure --prefix=/usr \
+		--sysconfdir=/etc --sbindir=/usr/bin \
+		--mandir=/usr/share/man \
+		--enable-ucd-snmp-compatibility \
+		--enable-ipv6 \
+		--with-python-modules \
+		--with-default-snmp-version="3" \
+		--with-sys-contact="root@localhost" \
+		--with-sys-location="Unknown" \
+		--with-logfile="/var/log/snmpd.log" \
+		--with-mib-modules="host misc/ipfwacc ucd-snmp/diskio tunnel ucd-snmp/dlmod" \
+		--with-persistent-directory="/var/net-snmp"
+	make -j${BLDR_CORES} NETSNMP_DONT_CHECK_VERSION=1
 	make DESTDIR=/root/bldr-inst install
-
-	install -Dm644 utils/cups-browsed.service /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
-	sed -i "s|/usr/sbin/cups-browsed|/usr/bin/cups-browsed|" /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
-	chgrp -R lp /root/bldr-inst/etc/cups
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.openprinting.org/download/cups-filters/
+	LISTURL=
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -65,7 +63,7 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
