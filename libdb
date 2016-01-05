@@ -1040,7 +1040,7 @@ ftgl,libftgl.so.2
 ftgl,libftgl.so.2.1.3
 fuse,libfuse.so
 fuse,libfuse.so.2
-fuse,libfuse.so.2.9.1
+fuse,libfuse.so.2.9.4
 fuse,libulockmgr.so
 fuse,libulockmgr.so.1
 fuse,libulockmgr.so.1.0.1

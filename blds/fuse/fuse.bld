@@ -2,13 +2,13 @@
 NAME=fuse
 
 #package version
-VERSION=2.9.3
+VERSION=2.9.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/fuse/fuse-${VERSION}.tar.gz
+SRC=https://github.com/libfuse/libfuse/releases/download/fuse_${VERSION//\./_}/fuse-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -36,13 +36,13 @@ function BuildAndInstall
 
 	rm -rf /root/bldr-inst/etc/udev 
 	rm -rf /root/bldr-inst/dev
-
+	rm -rf /root/bldr-inst/etc/init.d
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://sourceforge.net/projects/fuse/files/
+	LISTURL=https://github.com/libfuse/libfuse/releases
 	FILELIST=`GetFileList`
 	LATEST=0
 
