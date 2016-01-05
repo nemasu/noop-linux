@@ -1680,14 +1680,14 @@ if [ $1 = "-genpkg" ] ; then
 		
 	PKGNAME=`$grep -m1 "NAME:" $MPATH | $sed -e 's/NAME://g'`
 	VER=`$grep -m1 "VER:" $MPATH | $sed -e 's/VER://g'`
-
+	PKGARCH=`$grep -m1 "ARCH:" $MPATH | $sed -e 's/ARCH://g'`
 
 	$tar -cjf /tmp/$PKGNAME *
 	$echo MSIZ:`$ls -al $MPATH | $awk '{printf("%.10d", $5+15);}'` >> $MPATH
 	$cat $MPATH >> /tmp/$PKGNAME
 	$cat $MPATH
 
-	$mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_${ARCH}.pkg"
+	$mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_${PKGARCH}.pkg"
 fi
 
 function fn_exists() {
