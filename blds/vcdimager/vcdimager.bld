@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('libcdio' 'libxml2' 'popt')
+DEPS=('glibc' 'libcdio' 'libxml2' 'popt' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

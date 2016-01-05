@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc' 'ncurses')
+DEPS=('elfutils' 'glibc' 'libutempter' 'ncurses')
 
 # 'no' to skip calls to strip
 STRIP=

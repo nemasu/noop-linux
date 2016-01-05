@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('attr' 'glibc' 'python2')
+DEPS=('attr' 'glibc' 'ldb' 'python')
 
 # 'no' to skip calls to strip
 STRIP=

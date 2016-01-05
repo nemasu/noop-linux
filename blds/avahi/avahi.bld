@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdbm' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXau' 'libXdmcp' 'libXrender' 'libcap2' 'libdaemon' 'libffi' 'libpng15' 'libxcb' 'pango' 'pcre' 'pixman' 'qt4' 'zlib')
+DEPS=('dbus-python' 'pygtk' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdbm' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'libcap2' 'libdaemon' 'libffi' 'libpng' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXrender' 'pango' 'pcre' 'pixman' 'qt4' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

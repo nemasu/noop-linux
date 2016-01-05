@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('elfutils' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgudev' 'libnl' 'networkmanager' 'nspr' 'nss' 'openssl' 'pciutils' 'pcre' 'perl' 'systemd' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

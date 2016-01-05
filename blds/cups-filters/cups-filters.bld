@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('avahi' 'cups' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'ghostscript' 'glib2' 'glibc' 'krb5' 'lcms2' 'libjpeg' 'libpng' 'poppler' 'qpdf' 'tiff' 'zlib')
+DEPS=('avahi' 'cups' 'dbus' 'e2fsprogs' 'fontconfig' 'freetype2' 'gcc-libs' 'ghostscript' 'glib2' 'glibc' 'krb5' 'lcms2' 'libjpeg' 'libpng' 'openldap' 'poppler' 'qpdf' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

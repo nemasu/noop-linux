@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('cairo' 'dbus' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'icu4c' 'libICE' 'libSM' 'libX11' 'libXext' 'libXfixes' 'libXinerama' 'libXrender' 'libxkbfile' 'libxml2' 'pango' 'qt4')
+DEPS=('cairo' 'dbus' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'gtk+' 'gtk+2' 'libICE' 'libSM' 'libX11' 'libXext' 'libXfixes' 'libXinerama' 'libxkbcommon' 'libxkbfile' 'libxml2' 'libXrender' 'pango' 'qt4')
 
 # 'no' to skip calls to strip
 STRIP=

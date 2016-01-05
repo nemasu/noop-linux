@@ -17,7 +17,7 @@ EXTRACONF="--with-python=/usr/bin/python2 --with-history --with-threads"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc' 'python2' 'xz' 'zlib')
+DEPS=('glibc' 'ncurses' 'python2' 'readline' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

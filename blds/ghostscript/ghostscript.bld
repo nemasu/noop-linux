@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'cups' 'e2fsprogs' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'krb5' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libXt' 'libidn' 'libjpeg' 'libpng' 'pango' 'tiff' 'zlib')
+DEPS=('atk' 'cairo' 'cups' 'e2fsprogs' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'krb5' 'lcms2' 'libICE' 'libidn' 'libjpeg' 'libpng' 'libSM' 'libX11' 'libXext' 'libXt' 'pango' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

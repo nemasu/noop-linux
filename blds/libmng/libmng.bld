@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('glibc' 'libjpeg' 'zlib')
+DEPS=('glibc' 'lcms2' 'libjpeg' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

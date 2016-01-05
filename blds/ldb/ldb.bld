@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('attr' 'glibc' 'openldap' 'popt' 'python2' 'talloc' 'tdb' 'tevent')
+DEPS=('attr' 'glibc' 'openldap' 'popt' 'python' 'talloc' 'tdb' 'tevent')
 
 # 'no' to skip calls to strip
 STRIP=

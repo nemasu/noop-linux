@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('go-md2man' 'glibc' 'lvm2')
 
 # 'no' to skip calls to strip
 STRIP='no'

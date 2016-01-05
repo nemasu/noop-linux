@@ -18,7 +18,7 @@ EXTRACONF="--disable-gtk3 --enable-gtk2"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('alsa-lib' 'atk' 'cairo' 'curl' 'dbus' 'ffmpeg' 'flac' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'imlib2' 'libX11' 'libcddb' 'libcdio' 'libmad' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'libzip' 'pango' 'pulseaudio' 'zlib')
+DEPS=('alsa-lib' 'atk' 'cairo' 'curl' 'dbus' 'faad2' 'ffmpeg' 'flac' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'imlib2' 'libcddb' 'libcdio' 'libmad' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'libX11' 'libzip' 'pango' 'pulseaudio' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

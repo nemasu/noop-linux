@@ -17,7 +17,7 @@ EXTRACONF="--enable-ipv6 --with-proxy --with-perl-lib=vendor"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('glib2' 'glibc' 'ncurses' 'openssl' 'pcre' 'perl')
 
 # 'no' to skip calls to strip
 STRIP=

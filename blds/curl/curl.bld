@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc' 'krb5' 'openssl' 'rtmpdump' 'zlib')
+DEPS=('e2fsprogs' 'glibc' 'krb5' 'libssh2' 'openldap' 'openssl' 'rtmpdump' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

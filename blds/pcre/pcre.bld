@@ -17,7 +17,7 @@ EXTRACONF="--enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'ncurses' 'readline' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

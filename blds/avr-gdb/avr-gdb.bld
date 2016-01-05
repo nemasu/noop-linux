@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('expat' 'glibc' 'ncurses' 'python2' 'readline' 'xz' 'zlib')
+DEPS=('texinfo' 'expat' 'glibc' 'ncurses' 'python2' 'readline' 'xz')
 
 # 'no' to skip calls to strip
 STRIP=

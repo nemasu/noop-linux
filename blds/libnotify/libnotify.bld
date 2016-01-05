@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('gdk-pixbuf' 'glib2' 'glibc' 'libffi' 'libpng15' 'zlib')
+DEPS=('gdk-pixbuf' 'glib2' 'glibc' 'libffi' 'libpng' 'pcre' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

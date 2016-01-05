@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('perl-xml-namespacesupport' 'curl' 'gcc-libs' 'glibc' 'imlib2' 'libICE' 'libSM' 'libX11' 'libXdamage' 'libXext' 'libXfixes' 'libXft' 'libxml2' 'lua' 'ncurses' 'wireless_tools')
 
 # 'no' to skip calls to strip
 STRIP=

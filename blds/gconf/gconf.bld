@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libxml2' 'pango' 'polkit')
+DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libxml2' 'openldap' 'openssl' 'pcre' 'polkit' 'sasl' 'systemd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

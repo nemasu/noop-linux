@@ -17,7 +17,7 @@ EXTRACONF="--with-ncursesw --with-shared --with-versioned-syms --enable-nls"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'ncurses')
 
 # 'no' to skip calls to strip
 STRIP=

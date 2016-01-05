@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'lvm2' 'ncurses' 'readline' 'util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

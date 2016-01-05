@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'libcap2' 'linux-pam' 'ncurses')
 
 # 'no' to skip calls to strip
 STRIP=

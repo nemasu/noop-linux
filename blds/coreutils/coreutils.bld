@@ -5,7 +5,7 @@ ISUSR=1
 SRC=http://ftp.gnu.org/gnu/coreutils/coreutils-${VERSION}.tar.xz
 EXTRACONF=
 ISSPECIAL=1
-DEPS=
+DEPS=('acl' 'attr' 'glibc' 'gmp' 'libcap2')
 export FORCE_UNSAFE_CONFIGURE=1
 
 function BuildAndInstall
