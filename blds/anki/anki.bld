@@ -46,6 +46,8 @@ function BuildAndInstall
     mv anki.xpm anki.png ${DESTDIR}${PREFIX}/share/pixmaps/
     mv anki.desktop ${DESTDIR}${PREFIX}/share/applications/
     mv anki.1 ${DESTDIR}${PREFIX}/share/man/man1/
+
+	sed -i -e 's/python/python2/g' /root/bldr-inst/usr/bin/anki
     
 }
 
