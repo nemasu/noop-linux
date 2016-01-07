@@ -871,6 +871,9 @@ faad2,libfaad.so.2.0.0
 faad2,libmp4ff.so
 faad2,libmp4ff.so.0
 faad2,libmp4ff.so.0.0.0
+fakechroot,libfakechroot.so
+fakeroot,libfakeroot-0.so
+fakeroot,libfakeroot.so
 farstream,farstream.so
 farstream,libfarstream-0.1.so
 farstream,libfarstream-0.1.so.0
