@@ -1611,12 +1611,12 @@ if [ $1 = "-genmeta" ]; then
 	#determine if each file is 32-bit or 64-bit
 	for i in `cat $TMPFILE.list`;
 	do
-		for j in `readelf -d $i | grep NEEDED | awk '{print $5;}' | sed -e 's/\[//g;s/\]//g;' | sed -e '/ld-linux-x86-64.so.2/d; /ld-linux-armhf.so.3/d;'`
+		for j in `readelf -d $i | grep NEEDED | awk '{print $5;}' | sed -e 's/\[//g;s/\]//g;' | sed -e '/ld-linux-x86-64.so.2/d; /ld-linux-armhf.so.3/d; /ld-linux-aarch64.so.1/d;'`
         do
             let is64bit=`ldd $i | $grep "linux-vdso.so.1" | wc -l`
             $cp $LIBDB $LIBDB.tmp
 
-            if [ $is64bit -gt 0 ] || [ "$ARCH" == "i686" ] || [ "$ARCH" == "armv6l" ] || [ "$ARCH" == "armv7l" ];
+            if [ $is64bit -gt 0 ] || [ "$ARCH" == "i686" ] || [ "$ARCH" == "armv6l" ] || [ "$ARCH" == "armv7l" ] || [ "$ARCH" == "aarch64" ];
             then
                 $sed -i '/^lib32-.*/ d;' $LIBDB.tmp;
             else
@@ -1680,7 +1680,7 @@ if [ $1 = "-genpkg" ] ; then
 		
 	PKGNAME=`$grep -m1 "NAME:" $MPATH | $sed -e 's/NAME://g'`
 	VER=`$grep -m1 "VER:" $MPATH | $sed -e 's/VER://g'`
-	PKGARCH=`$grep -m1 "ARCH:" $MPATH | $sed -e 's/ARCH://g'`
+	PKGARCH=`$grep -m1 "ARCH:" $MPATH  | $sed -e 's/ARCH://g'`
 
 	$tar -cjf /tmp/$PKGNAME *
 	$echo MSIZ:`$ls -al $MPATH | $awk '{printf("%.10d", $5+15);}'` >> $MPATH
@@ -1928,7 +1928,7 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
 		$sed -i '/^lib32-.*/ !d;' $LIBDB.tmp;
 	fi
 
-    for j in `ldd $2 | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d; /ld-linux-armhf.so.3/d; /libgcc/d; /libstdc++/d;' | $awk '{print $1;}' | sort | uniq`;
+    for j in `ldd $2 | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d; /ld-linux-armhf.so.3/d; /ld-linux-aarch64.so.1/d; /libgcc/d; /libstdc++/d;' | $awk '{print $1;}' | sort | uniq`;
     do
 
 		let isFound=`$grep -e ",$j$" $LIBDB.tmp | $sed -e 's/,.*//g' | uniq | wc -l`

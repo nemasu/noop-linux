@@ -35,6 +35,10 @@ function BuildAndInstall
 	[[ "$ARCH" == "armv7l" ]] && EXTRACONFIGFLAGS="--disable-multilib --host=armv7l-unknown-linux-gnueabihf --build=armv7l-unknown-linux-gnueabihf --with-arch=armv7-a --with-float=hard --with-fpu=neon-vfpv4"
 	[[ "$ARCH" == "armv7l" ]] && ENABLED_LANGS="c,c++,fortran,go,lto,objc,obj-c++"
 
+	[[ "$ARCH" == "aarch64" ]] && EXTRACONFIGFLAGS="--disable-multilib --host=aarch64-unknown-linux-gnu --build=aarch64-unknown-linux-gnu --with-arch=armv8-a"
+	[[ "$ARCH" == "aarch64" ]] && ENABLED_LANGS="c,c++,fortran,go,lto,objc,obj-c++"
+
+
 	[[ "$ARCH" == "x86_64" ]] && EXTRACONFIGFLAGS="--enable-multilib"
 	[[ "$ARCH" == "x86_64" ]] && ENABLED_LANGS="c,c++,fortran,go,lto,objc,obj-c++,ada"
 
