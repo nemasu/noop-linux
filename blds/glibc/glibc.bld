@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('expat' 'fontconfig' 'freetype2' 'libjpeg' 'libpng' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
