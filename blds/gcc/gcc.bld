@@ -85,7 +85,16 @@ function BuildAndInstall
 		cd /root/bldr-inst
 		mv -v usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/
 		mv -v usr/lib/*.so* `pwd`/../gcc-libs-inst/usr/lib/
+	elif [ $ARCH == "aarch64" ]; then
+		ARCHMACH="aarch64-unknown"
+		mkdir -p /root/gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION
+		cd /root/bldr-inst
+		mv -v usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/
+		mv -v usr/lib/*.so* `pwd`/../gcc-libs-inst/usr/lib/
+		mv -v usr/lib64/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/
+		mv -v usr/lib64/*.so* `pwd`/../gcc-libs-inst/usr/lib/
 
+	fi
 
 	fi
 
