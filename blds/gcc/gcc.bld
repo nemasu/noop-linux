@@ -93,9 +93,6 @@ function BuildAndInstall
 		mv -v usr/lib/*.so* `pwd`/../gcc-libs-inst/usr/lib/
 		mv -v usr/lib64/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/*.so* `pwd`/../gcc-libs-inst/usr/lib/gcc/$ARCHMACH-linux-gnueabihf/$VERSION/
 		mv -v usr/lib64/*.so* `pwd`/../gcc-libs-inst/usr/lib/
-
-	fi
-
 	fi
 
 	cd `pwd`/../gcc-libs-inst/
