@@ -74,13 +74,6 @@ then
 	$TAR xf file-base.tar.bz2
 	$RM file-base.tar.bz2
 
-	if [ `$UNAME -m` == "x86_64" ]; then
-		$LN -s lib lib64
-		cd usr
-		$LN -s lib lib64
-	fi
-
-
 	$CURL -L -s https://github.com/nemasu/noop-linux/raw/master/pkgr > $PREFIX/usr/sbin/pkgr
 
 	$CHMOD a+x $PREFIX/usr/sbin/pkgr
@@ -153,15 +146,10 @@ else
 	if [ -e /var/noop/file-base.tar.bz2 ]; then
 		tar xf /var/noop/file-base.tar.bz2
 	else
-		wget nooplinux.org/noop/packages/x86_64/file-base.tar.bz2
+		wget $PKGHOST/file-base.tar.bz2
 		tar xf file-base.tar.bz2 && rm file-base.tar.bz2
 	fi
 
-	if [ `$UNAME -m` == "x86_64" ]; then
-		$LN -s lib lib64
-		cd usr
-		$LN -s lib lib64
-	fi
 	popd &> /dev/null
 	
 	cp `which pkgr` $PREFIX/usr/sbin/pkgr
