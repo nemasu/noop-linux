@@ -2,13 +2,13 @@
 NAME=openssl
 
 #package version
-VERSION=1.0.1-4
+VERSION=1.0.2-5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.openssl.org/source/openssl-1.0.1g.tar.gz
+SRC=http://www.openssl.org/source/openssl-1.0.2e.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -31,11 +31,14 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	if [ "${ARCH}" == "x86_64" ]; then
-			openssltarget='linux-x86_64'
-			optflags='enable-ec_nistp_64_gcc_128'
-	elif [ "${ARCH}" == "armv6l" ] || [ "${ARCH}" == "armv7l" ] || [ "${ARCH}" == "aarch64" ]; then
-			openssltarget='linux-armv4'
-			optflags=''
+		openssltarget='linux-x86_64'
+		optflags='enable-ec_nistp_64_gcc_128'
+	elif [ "${ARCH}" == "armv6l" ] || [ "${ARCH}" == "armv7l" ]; then
+		openssltarget='linux-armv4'
+		optflags=''
+	elif [ "${ARCH}" == "aarch64" ]; then
+		openssltarget='linux-aarch64'
+		optflags=''
 	fi
 
 	./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib \
