@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('db' 'expat' 'gdbm' 'ghc' 'glibc' 'libffi' 'libX11' 'ncurses' 'openssl' 'readline' 'sqlite' 'tcl' 'tk' 'zlib')
+DEPS=('db' 'expat' 'gdbm' 'glibc' 'libffi' 'libX11' 'ncurses' 'openssl' 'readline' 'sqlite' 'tcl' 'tk' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -60,6 +60,9 @@ function BuildAndInstall
 			  --with-system-ffi \
 			  --with-dbmliborder=gdbm:ndbm \
 			  --without-ensurepip
+
+	#Workaround for error 127
+	touch  ./Python/opcode_targets.h
 
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst altinstall maninstall
