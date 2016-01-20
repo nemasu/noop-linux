@@ -30,6 +30,12 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+	rm -rf path && mkdir path
+	pushd path
+	ln -s /usr/bin/gcc cc
+	PATH=`pwd`:$PATH
+	popd
+
 	cd wpa_supplicant
 	mv $BLDRTMPDIR/config .config
 	sed -i -e 's|/usr/local|/usr|g' Makefile
