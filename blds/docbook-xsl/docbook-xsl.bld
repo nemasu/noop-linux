@@ -2,7 +2,7 @@
 NAME=docbook-xsl
 
 #package version
-VERSION=1.78.1
+VERSION=1.79.1
 #POSTINST needs version update too
 
 #directory locations, 99.99% of the time this is 1
@@ -24,7 +24,7 @@ DEPS=
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('docbook-xml' 'libxslt' 'libxml2')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=

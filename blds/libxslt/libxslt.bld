@@ -2,7 +2,7 @@
 NAME=libxslt
 
 #package version
-VERSION=1.1.28-1
+VERSION=1.1.28-2
 DVERSION=1.1.28
 
 #directory locations, 99.99% of the time this is 1
@@ -15,7 +15,7 @@ SRC=http://xmlsoft.org/sources/libxslt-${DVERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=('glibc' 'libgcrypt' 'libgpg-error' 'libxml2' 'xz' 'zlib')
@@ -29,9 +29,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	sed -e 's|/usr/bin/python -u|/usr/bin/python2 -u|g' -e 's|/usr/bin/python$|/usr/bin/python2|g' -i python/tests/*.py
+	./configure --prefix=/usr --with-python=/usr/bin/python2
+	sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' -e 's/    if test "$export_dynamic" = yes && test -n "$export_dynamic_flag_spec"; then/      func_append compile_command " -Wl,-O1,--as-needed"\n      func_append finalize_command " -Wl,-O1,--as-needed"\n\0/' libtool
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
