@@ -31,6 +31,13 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+	mkdir -p path
+	pushd path
+	ln -s /usr/bin/gcc cc
+	popd
+
+	PATH=`pwd`/path:$PATH
+
 	wget http://www.iana.org/time-zones/repository/releases/tzcode${DVERSION}.tar.gz -Otzcode && tar xf tzcode && rm tzcode
 	make -j${BLDR_CORES}
 	mkdir -p /root/bldr-inst/usr/sbin
