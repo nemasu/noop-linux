@@ -32,8 +32,8 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
-	[[ `uname -m` == "armv6l" ]] && CONFIG="--disable-glx --disable-dri --disable-dri2"
-	[[ `uname -m` == "x86_64" ]] && CONFIG="--enable-ipv6 \
+	[[ "${ARCH}" == "armv6l" ]] || [[ "${ARCH}" == "armv7l" ]] || [[ "${ARCH}" == "aarch64" ]] && CONFIG="--disable-glx --disable-dri --disable-dri2"
+	[[ "${ARCH}" == "x86_64" ]] && CONFIG="--enable-ipv6 \
 											  --enable-dri \
 											  --enable-dri2 \
 											  --enable-dmx \

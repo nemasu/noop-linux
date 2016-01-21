@@ -41,7 +41,7 @@ function BuildAndInstall
 	dir1=`ls`
 	cp -r $dir1 ${dir1}_64
 	
-	if [ "`uname -m`" == "x86_64" ];
+	if [ "${ARCH}" == "x86_64" ];
 	then
 		cd ${dir1}_64
 		

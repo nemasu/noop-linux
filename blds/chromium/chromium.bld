@@ -27,7 +27,7 @@ function BuildAndInstall
   
   for i in `ls $BLDRTMPDIR/*.arm_patch`;
   do
-	if [ "`uname -m`" == "armv6l" ]; then
+	if [ "${ARCH}" == "armv6l" ]; then
     	patch -Np0 -i $i 
 	fi
 	rm $i;
@@ -38,7 +38,7 @@ function BuildAndInstall
   # CFLAGS are passed through release_extra_cflags below
   export -n CFLAGS CXXFLAGS
 
-  if [ "`uname -m`" == "armv6l" ]; then
+  if [ "${ARCH}" == "armv6l" ]; then
 
   find . -name "*.gyp" -type f | xargs sed -i -e '/mtune=cortex/d;/march=armv7/d;s/-mfpu=neon//g' 2>/dev/null | true
   sed -i -e '/mthumb/d' ./third_party/ffmpeg/ffmpeg.gyp
@@ -63,7 +63,7 @@ function BuildAndInstall
 		-Ddisable_nacl=1"
   fi
 
-  if [ "`uname -m`" == "x86_64" ]; then
+  if [ "${ARCH}" == "x86_64" ]; then
 	 arch_specific_flags="
 		-Dclang=1 \
 		-Dclang_use_chrome_plugins=0 \
@@ -120,7 +120,7 @@ function BuildAndInstall
   fi
   ln -s /usr/bin/python2 /usr/bin/python
 
-  if [ "`uname -m`" != "armv6l" ];
+  if [ "${ARCH}" != "armv6l" ];
   then
 	# Prepare NaCL toolchain - this is way easier
 	python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator sync
@@ -136,7 +136,7 @@ function BuildAndInstall
 	sed -i '/-Wno-absolute-value/d' build/common.gypi
   fi
 
-  if [ "`uname -m`" == "armv6l" ];
+  if [ "${ARCH}" == "armv6l" ];
   then
 	# Re-configure bundled ffmpeg.
 	pushd third_party/ffmpeg
@@ -154,7 +154,7 @@ function BuildAndInstall
   #Bug? Opus has -Wno-#pragma-messages, i think the # is commenting the pragma-messages part out
   sed -i -e '/-Wno-/d' third_party/opus/opus.gyp
   
-  if [ "`uname -m`" == "armv6l" ];
+  if [ "${ARCH}" == "armv6l" ];
   then
   	ninja -C out/Release chrome chrome_sandbox
   else
@@ -169,7 +169,7 @@ function BuildAndInstall
 
   cp out/Release/{*.pak,*.bin} /root/bldr-inst/usr/lib/chromium/
   
-  if [ "`uname -m`" != "armv6l" ];
+  if [ "${ARCH}" != "armv6l" ];
   then
   	install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
 
@@ -209,7 +209,7 @@ function BuildAndInstall
   done
 
   mkdir -p /root/bldr-inst/usr/bin/
-  if [ "`uname -m`" != "armv6l" ];
+  if [ "${ARCH}" != "armv6l" ];
   then
   	ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
   fi

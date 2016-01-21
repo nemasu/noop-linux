@@ -15,7 +15,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/libsoup/$MAJOR/libsoup-${VERSION}.tar
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+ISSPECIAL=1
 
 # build/package dependancies
 DEPS=('glib2' 'glibc' 'libffi' 'libxml2' 'pcre' 'sqlite' 'xz' 'zlib')
@@ -29,9 +29,19 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	rm -rf path && mkdir path
+	pushd path
+	ln -s /usr/bin/python2 python
+	PATH=`pwd`:$PATH
+	popd
+	
+	./configure $STDUSRCONF
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+	
+}
 
 #Default HTTP curl new version detection
 function Detect

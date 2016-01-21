@@ -35,7 +35,7 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
 
-	if [ "`uname -m`" == "armv6l" ];
+	if [ "${ARCH}" == "armv6l" ];
 	then
 		GALLIUM_DRIVERS=swrast
 		DRI_DRIVERS=swrast

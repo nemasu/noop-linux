@@ -7,7 +7,7 @@ SRC=http://download.qt-project.org/official_releases/qt/$MMVER/$DVERSION/qt-ever
 EXTRACONF=
 ISSPECIAL=1
 
-if [ "`uname -m`" == "x86_64" ];
+if [ "${ARCH}" == "x86_64" ];
 then
 
 	EXDEP=('libfbclient' 'mesalib')
@@ -30,7 +30,7 @@ function BuildAndInstall
 	export QT4DIR=`pwd`
 	export LD_LIBRARY_PATH=${QT4DIR}/lib:${LD_LIBRARY_PATH}
 
-	if [ "`uname -m`" == "armv6l" ];
+	if [ "${ARCH}" == "armv6l" ];
 	then
 		EXTRACONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon -lpthread"
 	else

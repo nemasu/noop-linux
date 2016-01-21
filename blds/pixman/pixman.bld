@@ -31,9 +31,8 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	#Autodetection fails
-	CARCH=`uname -m`
-	[[ $CARCH = "armv6l" ]] && CONFIG="--disable-arm-simd --disable-arm-neon --disable-arm-iwmmxt"
-	[[ $CARCH = "armv7l" ]] && CONFIG="--disable-arm-neon --disable-arm-iwmmxt"
+	[[ "${ARCH}" == "armv6l" ]] && CONFIG="--disable-arm-simd --disable-arm-neon --disable-arm-iwmmxt"
+	[[ "${ARCH}" == "armv7l" ]] && CONFIG="--disable-arm-neon --disable-arm-iwmmxt"
 
 	./configure $STDUSRCONF $CONFIG
 	make -j${BLDR_CORES}

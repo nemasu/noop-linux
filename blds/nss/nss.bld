@@ -32,6 +32,12 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 
+  rm -rf path && mkdir -p path
+  pushd path
+  ln -s /usr/bin/gcc cc
+  PATH=`pwd`:$PATH
+  popd
+
   mv -v $BLDRTMPDIR/nss-config.in .
   mv -v $BLDRTMPDIR/nss.pc.in .
 
@@ -42,7 +48,7 @@ function BuildAndInstall
   export NSPR_INCLUDE_DIR=`nspr-config --includedir`
   export NSPR_LIB_DIR=`nspr-config --libdir`
   export XCFLAGS=${CFLAGS}
-  [ "`uname -m`" = "x86_64" ] && export USE_64=1
+  [ "${ARCH}" == "x86_64" ] || [ "${ARCH}" == "aarch64" ] && export USE_64=1
   make -C coreconf
   make -C lib/dbm
   make

@@ -47,7 +47,7 @@ function BuildAndInstall
   make DESTDIR=/root/bldr-inst install
   
   CONFIG="--enable-dri2 --enable-glx"
-  [[ `uname -m` == "armv6l" ]] && CONFIG="--disable-glx --disable-dri2"
+  [[ ${ARCH} == "armv6l" ]] && CONFIG="--disable-glx --disable-dri2"
 
 	cd unix/xserver
 	autoreconf -fiv

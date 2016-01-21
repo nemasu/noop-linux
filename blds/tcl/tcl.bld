@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	cd unix
-	if [ "`uname -m`" == "x86_64" ] || [ "`uname -m`" == "aarch64" ]; then
+	if [ "${ARCH}" == "x86_64" ] || [ "${ARCH}" == "aarch64" ]; then
 		./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --enable-64bit
 	else
 		./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --disable-64bit

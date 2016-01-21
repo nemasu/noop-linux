@@ -35,7 +35,7 @@ function BuildAndInstall
 	sed -i -e 's/_CYGWIN/_LINUX/g' -e 's/-Werror//g' Makefile.config
 	sed -i -e 's/_CYGWIN/_LINUX/g' -e 's/-Werror//g' iasl/Makefile
 
-	if [ `uname -m` == "i686" ]; then
+	if [ ${ARCH} == "i686" ]; then
 		make BITS=32
 	else
 		make BITS=64

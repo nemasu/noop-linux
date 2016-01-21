@@ -50,7 +50,7 @@ function BuildAndInstall
         export CFLAGS="${CFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"
         export CXXFLAGS="${CXXFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"
 
-        if [[ "`uname -m`" == "x86_64" ]];
+        if [[ "${ARCH}" == "x86_64" ]];
         then
 
                 cd wine64-build
@@ -85,7 +85,7 @@ function BuildAndInstall
         # These additional CFLAGS solve FS#27560 and FS#23277
         make -j${BLDR_CORES} CFLAGS+="-mstackrealign -mincoming-stack-boundary=2" CXXFLAGS+="-mstackrealign -mincoming-stack-boundary=2"
 
-        if [[ "`uname -m`" == "i686" ]]; then
+        if [[ "${ARCH}" == "i686" ]]; then
         make prefix=/root/bldr-inst/usr install
         else
         make prefix=/root/bldr-inst/usr \

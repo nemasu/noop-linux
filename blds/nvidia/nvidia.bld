@@ -3,7 +3,7 @@ VERSION=352.63
 DVERSION=352.63
 ISUSR=1
 
-if [ "`uname -m`" == "x86_64" ];
+if [ "${ARCH}" == "x86_64" ];
 then
 	SSRC=ftp://download.nvidia.com/XFree86/Linux-x86_64/${DVERSION}/NVIDIA-Linux-x86_64-${DVERSION}.run
 	PKGDEPS=('mesalib' 'lib32-mesalib' 'xorg-server')

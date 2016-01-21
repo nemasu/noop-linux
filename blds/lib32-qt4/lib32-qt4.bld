@@ -7,7 +7,7 @@ SRC=http://download.qt-project.org/official_releases/qt/$MMVER/$DVERSION/qt-ever
 EXTRACONF=
 ISSPECIAL=1
 
-if [ "`uname -m`" == "x86_64" ];
+if [ "${ARCH}" == "x86_64" ];
 then
 
 	EXDEP=('libfbclient' 'mesalib')

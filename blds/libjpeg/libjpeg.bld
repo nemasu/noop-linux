@@ -31,7 +31,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 
-	[[ `uname -m` == armv6l ]] && CONF="--without-simd"
+	[[ ${ARCH} == armv6l ]] && CONF="--without-simd"
 
 	./configure $STDUSRCONF --with-jpeg8 $CONF
 	make -j${BLDR_CORES}
