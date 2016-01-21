@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('db' 'gdbm' 'ghc' 'glibc' 'gmp' 'libffi' 'libX11' 'ncurses' 'openssl' 'readline' 'tcl' 'tk' 'zlib')
+DEPS=('db' 'gdbm' 'glibc' 'gmp' 'libffi' 'libX11' 'ncurses' 'openssl' 'readline' 'tcl' 'tk' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

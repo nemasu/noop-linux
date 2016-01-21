@@ -19,7 +19,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('dhcp' 'ppp' 'dbus' 'dbus-glib' 'elfutils' 'expat' 'ghc' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libgudev' 'libndp' 'libnl' 'libsoup' 'libxml2' 'modemmanager' 'ncurses' 'nspr' 'nss' 'pcre' 'polkit' 'readline' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
+DEPS=('dhcp' 'ppp' 'dbus' 'dbus-glib' 'elfutils' 'expat' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libgudev' 'libndp' 'libnl' 'libsoup' 'libxml2' 'modemmanager' 'ncurses' 'nspr' 'nss' 'pcre' 'polkit' 'readline' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
