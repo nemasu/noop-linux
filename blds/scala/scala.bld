@@ -1,0 +1,63 @@
+#package name
+NAME=scala
+
+#package version
+VERSION=2.11.7
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/scala/scala/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	chmod 0755 tools/*
+	echo -e "#!/bin/bash\necho ${_distdate}" >tools/get-scala-commit-date
+	echo -e "#!/bin/bash\necho ${_distsha}" >tools/get-scala-commit-sha
+	export ANT_OPTS="-Xms2500M -Xmx2500M -Xss8M -XX:MaxPermSize=1024M -XX:+UseParallelGC"
+	export M2_OPTS="-Dmaven.repo.local=/tmp"
+	ant build-opt pack.doc osgi.done -Dbuild.release=true -Duser.home=/tmp
+    
+	cd build/pack
+	install -d /root/bldr-inst/usr/{bin,share} /root/bldr-inst/usr/share/man/man1 /root/bldr-inst/usr/share/scala/{bin,lib}
+	cp -r lib /root/bldr-inst/usr/share/scala/
+	cp -r man /root/bldr-inst/usr/share/
+	install -m 755 bin/{fsc,scala,scalac,scalap,scaladoc} /root/bldr-inst/usr/share/scala/bin
+
+	ln -s ../share/scala/bin/fsc /root/bldr-inst/usr/bin/fsc
+	ln -s ../share/scala/bin/scala /root/bldr-inst/usr/bin/scala
+	ln -s ../share/scala/bin/scalac /root/bldr-inst/usr/bin/scalac
+	ln -s ../share/scala/bin/scalap /root/bldr-inst/usr/bin/scalap
+	ln -s ../share/scala/bin/scaladoc /root/bldr-inst/usr/bin/scaladoc
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s -L http://www.scala-lang.org/download/ | egrep "scala-[0-9\.]*\.tgz" | head -n1  | sed -e 's/.*scala-\([0-9\.]*\)\.tgz.*/\1/g'`
+	
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
