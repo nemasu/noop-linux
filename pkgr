@@ -230,10 +230,25 @@ function bininst_install() {
 
 	wget "${DOWNLOAD_TAR}" -O${BININST_DLFILE}
 	mkdir -p /opt && pushd /opt &> /dev/null
-	NEW_DIR=`tar tf "${BININST_DLFILE}" | head -n1 | sed -e 's/\/.*//'`
-	tar xof "${BININST_DLFILE}"
-	rm -rf ${BININST_NAME}
-	ln -s ${NEW_DIR} ${BININST_NAME}
+	
+		
+	if [ "$1" == "deb" ]; then
+		bsdtar -xf "${BININST_DLFILE}"
+		rm control.tar.gz debian-binary
+		tar xf data.tar.gz && rm data.tar.gz
+		NEW_DIR=`ls opt`
+		mv ./opt/* . && rm -r ./opt
+		popd
+	else
+		NEW_DIR=`tar tf "${BININST_DLFILE}" | head -n1 | sed -e 's/\/.*//'`
+		tar xof "${BININST_DLFILE}"
+	fi
+
+	if [ "${BININST_NAME}" != "${NEW_DIR}" ];
+	then
+		rm -rf ${BININST_NAME}
+		ln -s ${NEW_DIR} ${BININST_NAME}
+	fi
 	popd &> /dev/null
 	rm "${BININST_DLFILE}"
 
@@ -244,13 +259,25 @@ function bininst_install() {
 }
 
 if [ $1 == "--instbin" ]; then
-	if [ $2 == "-l" ]; then
+	if [ "$2" == "-l" ] || [ -z "$2" ]; then
 		echo "jdk8";
 		echo "ant";
 		echo "maven";
 		echo "tuxguitar";
+		echo "chefdk";
 		exit;
 	fi
+
+	if [ $2 == "chefdk" ]; then
+		BININST_NAME=chefdk
+		BININST_ENV_HOME=CHEFDK_HOME
+		BININST_ENV_BINDIR=/bin
+		VERSION=`curl -L -s "https://downloads.chef.io/chef-dk/ubuntu/" | tr 'url' '\n' | egrep "chefdk_[0-9\.]*-1_amd64\.deb" | sed -e 's/.*chefdk_\([0-9\.]*\)-1_amd64\.deb.*/\1/g' | sort -n | uniq | head -n1`
+		DOWNLOAD_TAR="https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_${VERSION}-1_amd64.deb"
+
+		bininst_install deb
+	fi
+
 	if [ $2 == "maven" ]; then
 		BININST_NAME=maven
 		BININST_ENV_HOME=MAVEN_HOME
