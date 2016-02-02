@@ -33,7 +33,11 @@ function BuildAndInstall
 	sed -i -e 's#python#python2#g' buildtools/bin/waf
 	./configure --prefix=/usr \
 	   --localstatedir=/var \
-	   --sysconfdir=/etc/samba
+	   --sysconfdir=/etc/samba \
+		--bundled-libraries=NONE \
+		--builtin-libraries=replace \
+		--with-modulesdir=/usr/lib/ldb/modules \
+		--with-privatelibdir=/usr/lib/ldb
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 	cd /root/bldr-inst/usr/lib
