@@ -1,0 +1,15 @@
+function postinst() {
+	mkdir -p /var/lib/mongodb
+	mkdir -p /var/log/mongodb
+	useradd -r -g daemon -d /var/lib/mongodb -s /bin/bash mongodb
+	chown -R mongodb:daemon /var/lib/mongodb
+	chown -R mongodb:daemon /var/log/mongodb
+}
+
+function postup() {
+	postinst
+}
+
+function prerm() {
+	userdel mongodb
+}
