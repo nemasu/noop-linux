@@ -1,0 +1,53 @@
+#package name
+NAME=mongo-tools
+
+
+#package version
+VERSION=3.3.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/mongodb/mongo-tools/archive/r3.3.1.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	. ./set_gopath.sh
+	mkdir -p bin
+	for i in bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop mongooplog; do
+		go build -o bin/$i -tags "ssl sasl" -gccgoflags "$(pkg-config --libs openssl) $CFLAGS $LDFLAGS" $i/main/$i.go
+		install -Dm755 bin/$i "/root/bldr-inst/usr/bin/$i"
+	done
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s -L https://github.com/mongodb/mongo-tools/releases | egrep "r[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*r\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
