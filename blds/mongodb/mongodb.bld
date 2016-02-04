@@ -30,18 +30,11 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	scons core tools  \
-		--use-system-boost \
-		--use-system-pcre \
-		--use-system-snappy \
-		--use-system-yaml \
-		--use-system-zlib \
-		--use-sasl-client \
-		--ssl \
-		--disable-warnings-as-errors \
-		--use-system-wiredtiger
+	args=(--use-system-boost --use-system-pcre --use-system-snappy --use-system-yaml --use-system-zlib --use-sasl-client --ssl --disable-warnings-as-errors --use-system-wiredtiger)
 
-	scons install --prefix=/root/bldr-inst/usr --nostrip
+	scons core tools "${args[@]}" -j${BLDR_CORES}
+
+	scons install --prefix=/root/bldr-inst/usr --nostrip "${args[@]}"
 }
 
 #Default HTTP curl new version detection
