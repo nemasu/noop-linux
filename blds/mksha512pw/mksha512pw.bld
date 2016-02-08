@@ -1,0 +1,44 @@
+#package name
+NAME=mksha512pw
+
+#package version
+VERSION=20160208
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	git clone https://github.com/nemasu/mksha512pw.git
+	cd mksha512pw
+	make -j${BLDR_CORES}
+	mkdir -p /root/bldr-inst/usr/bin/
+	cp mksha512pw /root/bldr-inst/usr/bin/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "${NAME}: Git Based"
+}
