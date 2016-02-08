@@ -8,8 +8,8 @@
 # ISSPECIAL
 
 NAME=chromium
-DVERSION=47.0.2526.80
-VERSION=47.0.2526.80
+DVERSION=48.0.2564.103
+VERSION=48.0.2564.103
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz

@@ -1,4 +1,4 @@
-flashver=47.0.2526.80
+flashver=48.0.2564.103
 function postinst() {
     [ -f /etc/chromium-browser/default ] && _default='/etc/chromium-browser/default'
     [ -f /etc/chromium-dev/default ] && _default='/etc/chromium-dev/default'
