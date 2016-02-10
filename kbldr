@@ -1,6 +1,6 @@
 #!/bin/bash
 
-AUFS_BRANCH=aufs4.3
+AUFS_BRANCH="aufs`echo $1 | sed 's/.*linux-\([0-9]\.[0-9]\).*/\1/g'`"
 
 set -e
 if [ -z "$1" ];
