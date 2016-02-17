@@ -1,0 +1,75 @@
+#package name
+NAME=openvpn
+
+#package version
+VERSION=2.3.10
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://swupdate.openvpn.org/community/releases/openvpn-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
+
+function BuildAndInstall
+{
+
+	CFLAGS="$CFLAGS -DPLUGIN_LIBDIR=\\\"/usr/lib/openvpn\\\"" ./configure \
+		--prefix=/usr \
+		--sbindir=/usr/bin \
+		--enable-password-save \
+		--mandir=/usr/share/man \
+		--enable-iproute2 \
+		--enable-systemd
+	make -j${BLDR_CORES}
+
+	make DESTDIR=/root/bldr-inst install
+
+	mkdir -p /root/bldr-inst/usr/share/openvpn/contrib
+	cp -r sample/sample-config-files /root/bldr-inst/usr/share/openvpn/examples
+	cp -r contrib /root/bldr-inst/usr/share/openvpn
+}
+PKG_CONFIG_PATH=
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=https://openvpn.net/index.php/open-source/downloads.html
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

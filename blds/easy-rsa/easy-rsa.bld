@@ -1,0 +1,48 @@
+#package name
+NAME=easy-rsa
+
+#package version
+VERSION=3.0.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/OpenVPN/easy-rsa/archive/${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	mkdir -p /root/bldr-inst/usr/{share,bin}
+	mv ./easyrsa3/easyrsa /root/bldr-inst/usr/bin/easy-rsa
+	cp -r ./easyrsa3 /root/bldr-inst/usr/share/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=` curl -s -L https://github.com/OpenVPN/easy-rsa/releases | egrep "EasyRSA-[0-9\.]*\.tgz" | head -n1 | sed 's/.*EasyRSA-\([0-9\.]*\)\.tgz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

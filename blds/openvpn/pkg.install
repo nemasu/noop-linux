@@ -1,0 +1,3 @@
+function postinst() {
+	mkdir -p /etc/openvpn
+}
