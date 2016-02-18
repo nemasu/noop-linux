@@ -219,6 +219,12 @@ attr,libattr.so.1.1.0
 aufs-utils,libau.so
 aufs-utils,libau.so.2
 aufs-utils,libau.so.2.7
+augeas,libaugeas.so
+augeas,libaugeas.so.0
+augeas,libaugeas.so.0.20.0
+augeas,libfa.so
+augeas,libfa.so.1
+augeas,libfa.so.1.4.1
 aurora,libaurora.so
 avahi,avahi-daemon.socket
 avahi,libavahi-client.so
