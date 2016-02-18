@@ -2,7 +2,7 @@
 NAME=pip
 
 #package version
-VERSION=7.1.2
+VERSION=8.0.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -30,6 +30,12 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+
+	if [ ! -e /var/noop/installed/python-setuptools ];
+	then
+		pkgr -i python-setuptools
+	fi
+
 	cd ..
 	py2_dir=`ls`
 	py3_dir=${py2_dir}-py3
