@@ -2,7 +2,7 @@
 NAME=transcode
 
 #package version
-VERSION=1.1.7-2
+VERSION=1.1.7-3
 DVERSION=1.1.7
 
 #directory locations, 99.99% of the time this is 1

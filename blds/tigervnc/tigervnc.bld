@@ -2,8 +2,8 @@
 NAME=tigervnc
 
 #package version
-VERSION=1.5.0
-XORGVERSION=1.17.2
+VERSION=1.6.0
+XORGVERSION=1.18.1
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
@@ -36,10 +36,14 @@ function BuildAndInstall
   tar xf xorg-server-${XORGVERSION}.tar.bz2
   cd $CURDIR
   cp -r ../xorg-server-$XORGVERSION/* unix/xserver
-  
+ 
+  #xver=`echo $XORGVERSION | sed -e 's/\([0-9]\.[0-9]*\)\..*/\1/g;s/\.//'`
+  xver=117
+
+  patch -Np1 -i $BLDRTMPDIR/xorg118.xorg_patch && rm $BLDRTMPDIR/xorg118.xorg_patch
   pushd unix/xserver
-  wget https://github.com/TigerVNC/tigervnc/raw/master/unix/xserver117.patch
-  patch -Np1 -i xserver117.patch && rm xserver117.patch
+#wget https://github.com/TigerVNC/tigervnc/raw/master/unix/xserver${xver}.patch
+  patch -Np1 -i ../xserver${xver}.patch
   popd
 
   cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr
@@ -57,9 +61,8 @@ function BuildAndInstall
 		--disable-xwin --disable-xephyr --disable-kdrive --disable-xwayland \
 		--disable-config-hal --disable-config-udev --with-pic \
 		--disable-unit-tests --disable-devel-docs --disable-selective-werror \
-		--disable-dri --enable-dri3 --enable-glx-tls ${CONFIG}
+		--disable-dri --enable-dri3 ${CONFIG}
 	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
 	cd hw/vnc
 	make DESTDIR=/root/bldr-inst install
 	

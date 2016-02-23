@@ -2,7 +2,7 @@
 NAME=libtasn1
 
 #package version
-VERSION=2.13
+VERSION=4.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

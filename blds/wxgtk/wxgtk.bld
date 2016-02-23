@@ -2,13 +2,14 @@
 NAME=wxgtk
 
 #package version
-VERSION=3.0.2
+VERSION=3.0.2-1
+DVERSION=3.0.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/wxwindows/wxWidgets-${VERSION}.tar.bz2
+SRC=http://downloads.sourceforge.net/wxwindows/wxWidgets-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -30,7 +31,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  ./configure --prefix=/usr --libdir=/usr/lib --with-gtk=2 --with-opengl --enable-unicode \
+  ./configure --prefix=/usr --libdir=/usr/lib --with-gtk=3 --with-opengl --enable-unicode \
     --enable-graphics_ctx --enable-mediactrl --enable-webview --with-regex=builtin \
     --with-libpng=sys --with-libxpm=sys --with-libjpeg=sys --with-libtiff=sys \
     --disable-precomp-headers
@@ -45,7 +46,7 @@ function Detect
 {
 	LATEST=`curl -s -L https://www.wxwidgets.org/downloads/ | egrep "wxWidgets-[0-9\.]*\.tar\.bz2" |  sed -e 's/.*wxWidgets-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

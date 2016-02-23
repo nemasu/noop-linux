@@ -2,7 +2,7 @@
 NAME=gegl
 
 #package version
-VERSION=0.3.4
+VERSION=0.3.4-1
 DVERSION=0.3.4
 
 #directory locations, 99.99% of the time this is 1

@@ -2,7 +2,7 @@
 NAME=gtk+
 
 #package version
-VERSION=3.16.5
+VERSION=3.18.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

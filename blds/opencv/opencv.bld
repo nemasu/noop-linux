@@ -2,7 +2,7 @@
 NAME=opencv
 
 #package version
-VERSION=3.0.0
+VERSION=3.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,6 +35,8 @@ function BuildAndInstall
 	cmake .. \
 		-DWITH_OPENCL=ON \
 		-DWITH_OPENGL=ON \
+		-DBUILD_SHARED_LIBS=ON \
+		-DWITH_IPP=ON \
 		-DWITH_TBB=ON \
 		-DWITH_XINE=ON \
 		-DWITH_GSTREAMER=OFF \

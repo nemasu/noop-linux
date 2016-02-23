@@ -2,7 +2,7 @@
 NAME=glib-networking
 
 #package version
-VERSION=2.32.3
+VERSION=2.47.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -2,7 +2,7 @@
 NAME=tevent
 
 #package version
-VERSION=0.9.26
+VERSION=0.9.28
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -2,8 +2,8 @@
 NAME=deadbeef
 
 #package version
-VERSION=0.6.2-2
-DVERSION=0.6.2
+VERSION=0.7.0
+DVERSION=0.7.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

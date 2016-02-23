@@ -2,7 +2,7 @@
 NAME=cmake
 
 #package version
-VERSION=3.4.1
+VERSION=3.4.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

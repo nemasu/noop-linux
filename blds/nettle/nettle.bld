@@ -2,7 +2,7 @@
 NAME=nettle
 
 #package version
-VERSION=2.4
+VERSION=3.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

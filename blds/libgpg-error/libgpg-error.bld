@@ -2,7 +2,7 @@
 NAME=libgpg-error
 
 #package version
-VERSION=1.20
+VERSION=1.21
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

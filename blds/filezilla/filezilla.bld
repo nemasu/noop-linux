@@ -1,17 +1,17 @@
 #package name
-NAME=randrproto
+NAME=filezilla
 
 #package version
-VERSION=1.5.0
+VERSION=3.15.0.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/proto/randrproto-${VERSION}.tar.bz2
+SRC=http://downloads.sourceforge.net/project/filezilla/FileZilla_Client/${VERSION}/FileZilla_${VERSION}_src.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--disable-manualupdatecheck --disable-autoupdatecheck --with-pugixml=builtin"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
@@ -35,19 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/proto/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -L -s "https://filezilla-project.org/download.php?show_all=1" | egrep "FileZilla_[0-9\.]*_src\.tar\.bz2" | head -n1 | sed -e 's/.*FileZilla_\([0-9\.]*\)_src\.tar\.bz2.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

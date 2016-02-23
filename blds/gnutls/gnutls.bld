@@ -2,13 +2,13 @@
 NAME=gnutls
 
 #package version
-VERSION=3.0.20
+VERSION=3.4.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnu.org/gnu/gnutls/gnutls-${VERSION}.tar.xz
+SRC=ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/gnutls-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnu.org/gnu/gnutls/
+	LISTURL=ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/
 	FILELIST=`GetFileList`
 	LATEST=0
 

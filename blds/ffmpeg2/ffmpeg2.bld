@@ -1,9 +1,9 @@
 #package name
-NAME=ffmpeg
+NAME=ffmpeg2
 
 #package version
-VERSION=3.0
-DVERSION=3.0
+VERSION=2.8.6
+DVERSION=2.8.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -27,12 +27,15 @@ STRIP=
 PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
-RESTORELIBDB=
+RESTORELIBDB=1
 
 function BuildAndInstall
 {
 	./configure \
-		--prefix=/usr \
+		--prefix='/usr' \
+		--incdir='/usr/include/ffmpeg2' \
+		--libdir='/usr/lib/ffmpeg2' \
+		--shlibdir='/usr/lib/ffmpeg2' \
 		--disable-debug \
 		--disable-static \
 		--disable-stripping \
@@ -69,34 +72,14 @@ function BuildAndInstall
 		--enable-vdpau \
 		--enable-version3 \
 		--enable-x11grab
+  make -j${BLDR_CORES}
 
-	make -j${BLDR_CORES}
-	make tools/qt-faststart
-	make doc/ff{mpeg,play,server}.1
-	make DESTDIR=/root/bldr-inst install install-man
-	cp tools/qt-faststart /root/bldr-inst/usr/bin/qt-faststart
+  make DESTDIR=/root/bldr-inst install
+  rm -rf /root/bldr-inst/usr/{bin,share}
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ffmpeg.org/releases/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
-
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+	echo "$NAME: Old Version"
 }

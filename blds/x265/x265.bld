@@ -2,7 +2,7 @@
 NAME=x265
 
 #package version
-VERSION=1.7
+VERSION=1.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -41,7 +41,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -R https://bitbucket.org/multicoreware/x265/downloads | grep -E "[0-9\.]\.tar.gz" | head -n1 | sed -e 's/.*get\/\([0-9\.]*\)\.tar.gz.*/\1/g'`
+	LATEST=`curl -s -L https://bitbucket.org/multicoreware/x265/downloads | egrep "x265_[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*x265_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
