@@ -2,13 +2,14 @@
 NAME=wxpython
 
 #package version
-VERSION=3.0.2.0
+VERSION=3.0.2.0-1
+DVERSION=3.0.2.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/wxpython/wxPython-src-${VERSION}.tar.bz2
+SRC=http://downloads.sourceforge.net/wxpython/wxPython-src-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -31,12 +32,12 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 	find . -type f -exec sed -i 's/env python/env python2/' {} \;
-	./configure --prefix=/usr --libdir=/usr/lib --with-gtk=2 --with-opengl --enable-unicode \
+	./configure --prefix=/usr --libdir=/usr/lib --with-gtk=3 --with-opengl --enable-unicode \
 		--enable-graphics_ctx --enable-mediactrl --disable-precomp-headers \
 		--with-regex=sys --with-libpng=sys --with-libxpm=sys --with-libjpeg=sys --with-libtiff=sys
 	cd wxPython
-	python2 setup.py WXPORT=gtk2 UNICODE=1 build
-	python2 setup.py WXPORT=gtk2 UNICODE=1 install --root=/root/bldr-inst
+	python2 setup.py WXPORT=gtk3 UNICODE=1 build
+	python2 setup.py WXPORT=gtk3 UNICODE=1 install --root=/root/bldr-inst
 
 }
 
@@ -45,7 +46,7 @@ function Detect
 {
 	LATEST=`curl -s -L http://www.wxpython.org/download.php | egrep "wxPython-src" | sed -e 's/.*wxPython-src-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
