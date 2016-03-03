@@ -46,6 +46,7 @@ function BuildAndInstall
 			shared zlib enable-md2 ${optflags} \
 			-Wa,--noexecstack "${CFLAGS}" "${LDFLAGS}" \
 			-DOPENSSL_NO_TLS1_2_CLIENT \
+			enable-ssl2 \
 			"${openssltarget}"
 
 	make depend
