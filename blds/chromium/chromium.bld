@@ -8,8 +8,8 @@
 # ISSPECIAL
 
 NAME=chromium
-DVERSION=48.0.2564.103
-VERSION=48.0.2564.103
+DVERSION=49.0.2623.75
+VERSION=49.0.2623.75
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -81,6 +81,7 @@ function BuildAndInstall
     
      options=(
 	-Dwerror=
+	-Duse_sysroot=0
 	-Dlinux_use_bundled_gold=0
     -Dlinux_use_bundled_binutils=0
 	-Dlinux_use_gold_flags=0
@@ -182,7 +183,7 @@ function BuildAndInstall
 
   fi
 
-  strip --strip-debug /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
+  strip /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
 	
   cp -a out/Release/locales out/Release/icudtl.dat /root/bldr-inst/usr/lib/chromium/
  
