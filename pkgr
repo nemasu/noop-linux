@@ -54,11 +54,9 @@ fi
 ARCH=`$uname -m`
 BLDRTMPDIR=$PREFIX/tmp/bldr
 LIBDB=$PREFIX/var/noop/libdb
-MIRRORS=$PREFIX/var/noop/mirrors
 USER_MIRRORS=$PREFIX/etc/noop/mirrors
 USER_OVERRIDES=$PREFIX/etc/noop/overrides
 METADIR=$PREFIX/var/noop/meta
-DNTDS=$PREFIX/var/noop/dntds
 NEWCONF=$PREFIX/var/noop/new_config
 INSTALLEDDIR=$PREFIX/var/noop/installed
 TMPLIBDB=$PREFIX/var/noop/libdb.tmp
@@ -143,7 +141,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		#$echo -e "\t-readmeta pkg-file"
 		#$echo -e "\t-update-bldjs"
 		$echo
-		$echo -e "Mirrors:\n\tcopy /var/noop/mirrors to /etc/noop/mirrors and uncomment desired mirror."
+		$echo -e "Mirrors:\n\tcopy /var/noop/etc/mirrors to /etc/noop/mirrors and uncomment desired mirror."
 	fi
 	$echo -e "\n"
 	exit 0;
@@ -404,16 +402,15 @@ if [ $1 == "--new-config" ] || [ $1 == "-n" ]; then
 fi
 
 if [ $1 == "--version-check" ] || [ $1 == "-V" ]; then
-		
-		rm -rf /tmp/noop/verchecktmp
-		mkdir -p /tmp/noop/verchecktmp
-		pushd /tmp/noop/verchecktmp
+
 		
 		if ! [[ $2 =~ .*\.bldj ]];
 		then
-			svn checkout https://github.com/nemasu/noop-linux/trunk/blds/$2 || exit 1
-			cd `ls`
+			pushd $PREFIX/var/noop/blds/$2 &> /dev/null
 		else
+			rm -rf /tmp/noop/verchecktmp
+			mkdir -p /tmp/noop/verchecktmp
+			pushd /tmp/noop/verchecktmp &> /dev/null
 			BLDJFILE=`readlink -f $2`
 			tar xf $BLDJFILE
 		fi
@@ -421,7 +418,7 @@ if [ $1 == "--version-check" ] || [ $1 == "-V" ]; then
 		BLDFILE=`ls *.bld`
 		source ./$BLDFILE
 		Detect
-		popd
+		popd &> /dev/null
 		rm -rf /tmp/noop/verchecktmp
 fi
 
@@ -634,19 +631,12 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	fi
 
 	if [ "$ISFILE" == "0" ]; then
-		echo "Retrieving bldj from github..."
-		rm -rf /tmp/svn-noop-tmp && mkdir -p /tmp/svn-noop-tmp && cd /tmp/svn-noop-tmp
-		svn checkout https://github.com/nemasu/noop-linux/trunk/blds/$2 || exit 1
-		cd `ls`
+		cd "$PREFIX/var/noop/blds/$2"
 		tar cjf /tmp/file.bldj *
-		cd ../..
-		rm -rf /tmp/svn-noop-tmp
-
-		FILE="/tmp/file.bldj"
 	else
 		cp `readlink -f $2` /tmp/file.bldj
-		FILE="/tmp/file.bldj"
 	fi
+	FILE="/tmp/file.bldj"
 
 	#Called inside of BuildAndInstall
 	#It will grab another source tar and cd into it
@@ -749,6 +739,12 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 		
 		rm $i
 	done
+
+	if [ -z "$BLDR_DIST" ]; then
+		export CFLAGS="$CFLAGS -march=native"
+		export CXXFLAGS="$CXXFLAGS -march=native"
+	fi
+
 	if [ $ISSPECIAL == 0 ]; then
 		./configure $CONF $EXTRACNF $EXTRACONF
 		make -j${BLDR_CORES}
@@ -857,96 +853,19 @@ fi
 if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 	$mkdir -p $PREFIX/var/noop
 	$echo "Syncing ..."
-
-	$echo
-	$echo -n "Library Database ... "
-	curl -s -L https://github.com/nemasu/noop-linux/raw/master/libdb > $LIBDB.new
-	if [ $? == 0 ]; then
-		$mv $LIBDB.new $LIBDB
-		$echo "done"
-	else
-		$echo $wget encountered an error.
-		if [ -e $LIBDB.new ]; then
-			$rm $LIBDB.new
-			exit 1
-		fi
-	fi
-
-	$echo
-	$echo -n "Dependencies ... "
-	curl -L -s $PKGHOST/Deps > $DEPDB.new
-	if [ $? == 0 ]; then
-        $mv $DEPDB.new $DEPDB
-		$echo "done"
-    else
-        $echo $wget encountered an error.
-        if [ -e $DEPDB.new ]; then
-			$rm $DEPDB.new
-            exit 1
-        fi
-    fi
-
-	$echo
-	$echo -n "Package List ... "
-	curl -L -s $PKGHOST/Packages > $PACKAGEDB.new
-	if [ $? == 0 ]; then
-        $mv $PACKAGEDB.new $PACKAGEDB
-		$echo "done"
-    else
-        $echo $wget encountered an error.
-        if [ -e $PACKAGEDB.new ]; then
-			$rm $PACKAGEDB.new
-            exit 1
-        fi
-    fi
-
-	$echo
-	$echo -n "Meta packages ... "
-	$rm -rf $METADIR/*
-	for i in xorg-meta xfce4-meta dev-meta mate-meta enlightenment-meta;
-	do
-		$echo -n "$i " 
-		curl -s -L https://github.com/nemasu/noop-linux/raw/master/meta/$i > $METADIR/$i.new
-		if [ $? == 0 ]; then
-			$mv $METADIR/$i.new $METADIR/$i
-		else
-			$echo $wget encountered an error.
-			if [ -e $PKGHOST/$i.new ]; then
-				$rm $METADIR/$i.new
-				exit 1
-			fi
-		fi
-	done
-	$echo "done"
-	$echo
-	$echo -n "Mirrors ... "
-	curl -s -L https://github.com/nemasu/noop-linux/raw/master/etc/mirrors > $PREFIX/var/noop/mirrors.new
-	if [ $? == 0 ]; then
-	    $mv $PREFIX/var/noop/mirrors.new $PREFIX/var/noop/mirrors
-		$echo "done"
-    else
-		$echo $wget encountered an error.
-		if [ -e $PREFIX/var/noop/mirrors.new ]; then
-			$rm $PREFIX/var/noop/mirrors.new
-            exit 1
-		fi
-    fi
-	$echo
-	$echo -n "Pkgr ... "
-	curl -s -L https://github.com/nemasu/noop-linux/raw/master/pkgr > $PREFIX/usr/sbin/pkgr.new
-	if [ $? == 0 ]; then
-	    $mv $PREFIX/usr/sbin/pkgr.new $PREFIX/usr/sbin/pkgr
-		$chmod a+x $PREFIX/usr/sbin/pkgr
-		$echo "done"
-    else
-		$echo $wget encountered an error.
-		if [ -e $PREFIX/usr/sbin/pkgr.new ]; then
-			$rm $PREFIX/usr/sbin/pkgr.new
-            exit 1
-		fi
-    fi
+	pushd $PREFIX/var/noop &> /dev/null
+	git pull
 	$echo
 	$echo "Sync successful"
+	$echo
+	$echo -n "Generating packages list..."
+	curl -s -L $HOST/packages/x86_64/ | $grep href | $awk '{print $2;}' | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
+	$echo "done."
+	$echo
+	$echo -n "Generating deps list..."
+	rm -rf deps; for i in `cat packages | sed 's/,/ /' | awk '{print $1;}'`; do for j in `grep -m1 "DEPS=" blds/$i/*.bld 2>/dev/null | sed "s/DEPS=//g;s/(//g;s/)//;s/'//g;"`; do echo ${i}:${j} >> deps; done done
+	$echo "done."
+	popd &> /dev/null
 	exit 0
 fi
 
