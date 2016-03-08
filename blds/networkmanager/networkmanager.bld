@@ -2,8 +2,8 @@
 NAME=networkmanager
 
 #package version
-VERSION=1.0.4-2
-DVERSION=1.0.4
+VERSION=1.0.10
+DVERSION=1.0.10
 _pppver=2.4.7
 
 #directory locations, 99.99% of the time this is 1

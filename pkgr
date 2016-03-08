@@ -2157,7 +2157,7 @@ if [ $1 = "-init" ]; then
 		cd /var/noop/
 		wget nooplinux.org/noop/packages/x86_64/file-base.tar.bz2
 		cd /root
-		curl -s -L http://www.nooplinux.org/instlr > instlr && chmod +x instlr
+		ln -s /var/noop/instlr
 
 		if [ "${SET_LOCALE}" == "ja_JP" ];
 		then
