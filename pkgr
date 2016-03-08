@@ -2054,7 +2054,7 @@ if [ $1 = "--mkinitramfs" ]; then
 	touch $INITRAMFS_WORKDIR/etc/mtab
     ldconfig -r $INITRAMFS_WORKDIR /usr/lib /lib
 
-	wget https://github.com/nemasu/noop-linux/raw/master/initramfs/init.noop -O$INITRAMFS_WORKDIR/init && chmod +x $INITRAMFS_WORKDIR/init
+	cp /var/noop/initramfs/init.noop $INITRAMFS_WORKDIR/init && chmod +x $INITRAMFS_WORKDIR/init
 
 	cd $INITRAMFS_WORKDIR
 	find . | cpio -H newc -o | gzip > /boot/noop-initramfs.img
