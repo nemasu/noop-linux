@@ -3,6 +3,7 @@
 set -e
 
 #Prereqs
+pkgr -s
 pkgr -i cpio squashfs-tools xorriso mtools &> /dev/null
 
 #Current options: core, mate, xfce4, enlightenment
@@ -25,14 +26,10 @@ mkdir -p iso iso-fs efs
 
 
 #Initramfs
-wget https://github.com/nemasu/noop-linux/raw/master/initramfs/mkinitramfs-live -Omkinitramfs 
-chmod +x mkinitramfs 
-./mkinitramfs
+/var/noop/initramfs/mkinitramfs-live
 
 #Grab latest installer
-wget https://github.com/nemasu/noop-linux/raw/master/instlr -Oinstlr
-chmod +x instlr
-./instlr /root/iso-fs $2
+/var/noop/instlr /root/iso-fs $2
 
 umount iso-fs/dev iso-fs/sys iso-fs/proc;
 

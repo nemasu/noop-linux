@@ -74,11 +74,6 @@ then
 	$TAR xf file-base.tar.bz2
 	$RM file-base.tar.bz2
 
-	$CURL -L -s https://github.com/nemasu/noop-linux/raw/master/pkgr > $PREFIX/usr/sbin/pkgr
-
-	$CHMOD a+x $PREFIX/usr/sbin/pkgr
-	export PATH=$PREFIX/usr/sbin:$PATH
-
 	PREFIX=$PREFIX pkgr -s
 	export PKGR_SUPPRESS_P_OUTPUT=1
 
