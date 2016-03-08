@@ -2083,23 +2083,15 @@ if [ $1 = "-init" ]; then
 	groupadd lock &> /dev/null
 	groupadd adm &> /dev/null
 	groupadd systemd-journal &> /dev/null
-	find /usr/lib/systemd/system/ | xargs chmod -x
-	groupadd -g 102 polkitd
-	useradd -c 'Policy Kit Daemon' -u 102 -g polkitd -d '/' -s /bin/false polkitd
-	passwd -l polkitd &>/dev/null
-	chown 102 /etc/polkit-1/rules.d
-	chown 102 /usr/share/polkit-1/rules.d
-	chmod 700 /etc/polkit-1/rules.d
-	chmod 4755 /usr/bin/pkexec
-	chmod 4775 /usr/lib/polkit-1/polkit-agent-helper-1
-	chmod +s /usr/lib/dbus-daemon-launch-helper
-	mkdir -p /etc/ssl/certs
-	/usr/bin/update-ca-certificates --fresh &> /dev/null
+	
+	for i in `ls $PREFIX/var/noop/installed`; do
+		pkgr -runpostinst $i;
+	done
+	
 	$echo "Enabling Network Manager"
 	systemctl enable NetworkManager.service
 	$chmod +s /bin/su
 	$sed -i 's/yes/no/' /etc/default/useradd
-	$mkdir -p /etc/pango
 	KERVER=`$grep -m1 VER: $INSTALLEDDIR/linux-kernel | $sed -e 's/VER://g'`
 	$sed -i -e 's/VERSION/'"$KERVER"'/' /boot/grub/grub.cfg
 
