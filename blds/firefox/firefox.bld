@@ -5,7 +5,7 @@ ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
 ISSPECIAL=1
-DEPS=('alsa-lib' 'atk' 'cairo' 'dbus' 'dbus-glib' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'hunspell' 'icu4c' 'lib32-atk' 'lib32-cairo' 'lib32-fontconfig' 'lib32-freetype2' 'lib32-gdk-pixbuf' 'lib32-glib2' 'lib32-glibc' 'lib32-pango' 'libevent' 'libffi' 'libjpeg' 'libpng' 'libvpx' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXrender' 'libXt' 'nspr' 'nss' 'pango' 'pixman' 'sqlite' 'startup-notification' 'zlib')
+DEPS=('alsa-lib' 'atk' 'cairo' 'dbus' 'dbus-glib' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'hunspell' 'icu4c' 'libevent' 'libffi' 'libjpeg' 'libpng' 'libvpx' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXrender' 'libXt' 'nspr' 'nss' 'pango' 'pixman' 'sqlite' 'startup-notification' 'zlib')
 
 #Firefox and thunderbird produce same libraries, no need to have them in libdb anyways.
 RESTORELIBDB=1

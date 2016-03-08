@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('glibc' 'gmp' 'gnutls' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXfixes' 'libdrm' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libtasn1' 'libva' 'libxcb' 'nettle' 'openssl' 'zlib')
+DEPS=('glibc' 'gmp' 'gnutls' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libidn' 'libjpeg' 'libpng' 'libtasn1' 'libva' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXfixes' 'nettle' 'openssl' 'p11-kit' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

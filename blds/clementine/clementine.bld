@@ -18,7 +18,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('chromaprint' 'fftw' 'gcc-libs' 'gdk-pixbuf' 'glew' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'libcdio' 'libglu' 'libgpod' 'libimobiledevice' 'liblastfm' 'libmtp' 'libmygpo-qt' 'libplist' 'libusb' 'libX11' 'libxml2' 'mesalib' 'openssl' 'protobuf' 'qca' 'qjson' 'qt4' 'taglib' 'usbmuxd' 'zlib')
+DEPS=('chromaprint' 'fftw' 'gcc-libs' 'gdk-pixbuf' 'glew' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'libX11' 'libcdio' 'libglu' 'libgpod' 'libimobiledevice' 'liblastfm' 'libmtp' 'libmygpo-qt' 'libplist' 'libusb' 'libxml2' 'mesalib' 'openssl' 'protobuf' 'qca' 'qjson' 'qt4' 'taglib' 'usbmuxd' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

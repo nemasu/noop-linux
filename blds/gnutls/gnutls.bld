@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'gmp' 'libidn' 'libtasn1' 'nettle' 'zlib')
+DEPS=('gcc-libs' 'glibc' 'gmp' 'libffi' 'libidn' 'libtasn1' 'nettle' 'p11-kit' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
