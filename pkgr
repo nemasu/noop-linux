@@ -855,18 +855,20 @@ if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 	
 	if [ ! -e $PREFIX/var/noop/.git ];
 	then
-		echo "New install detected, cloning git repo."
+		echo "New install detected, initializing repo."
 		cd $PREFIX/var/
 		mv noop noop.bak
 		git clone $GITHOST noop
 		cp -r noop.bak/* noop/ && rm -rf noop.bak
+		pushd $PREFIX/var/noop $> /dev/null
+		$echo
+	else
+		$echo "Syncing ..."
+		pushd $PREFIX/var/noop &> /dev/null
+		git pull
+		$echo
+		$echo "Sync successful"
 	fi
-	
-	$echo "Syncing ..."
-	pushd $PREFIX/var/noop &> /dev/null
-	git pull
-	$echo
-	$echo "Sync successful"
 	$echo
 	$echo -n "Generating packages list..."
 	curl -s -L $HOST/packages/x86_64/ | $grep href | $awk '{print $2;}' | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
