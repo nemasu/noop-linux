@@ -853,11 +853,13 @@ fi
 
 if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 	
-	if [ ! -e $PREFIX/var/noop ];
+	if [ ! -e $PREFIX/var/noop/.git ];
 	then
-		echo "New install, cloning git repository."
+		echo "New install detected, cloning git repo."
 		cd $PREFIX/var/
+		mv noop noop.bak
 		git clone $GITHOST noop
+		cp -r noop.bak/* noop/ && rm -rf noop.bak
 	fi
 	
 	$echo "Syncing ..."

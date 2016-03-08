@@ -3,7 +3,6 @@
 set -e
 
 #Prereqs
-pkgr -s
 pkgr -i cpio squashfs-tools xorriso mtools &> /dev/null
 
 #Current options: core, mate, xfce4, enlightenment
@@ -49,7 +48,7 @@ mkfs.vfat /root/iso/boot/efs.img
 mount /root/iso/boot/efs.img /root/efs
 
 #Get grub config
-wget https://github.com/nemasu/noop-linux/raw/master/etc/iso-grub.cfg -O/root/iso/boot/grub/grub.cfg
+cp /var/noop/etc/iso-grub.cfg -O/root/iso/boot/grub/grub.cfg
 
 #Copy initrd
 cp noop-initramfs-live.igz /root/iso/boot
@@ -123,5 +122,5 @@ xorriso -as mkisofs \
 	iso
 
 
-rm mkinitramfs instlr init.grub.config
+rm init.grub.config
 rm -r efs
