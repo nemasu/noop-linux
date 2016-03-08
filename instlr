@@ -129,6 +129,7 @@ else
 		echo -n "Copying metadata...";
 	fi
 	cp -r /var/noop $PREFIX/var/
+	ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
 	echo "done.";
 
 	if [ "$LANG" == "ja_JP.UTF-8" ]; then
