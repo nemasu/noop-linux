@@ -48,7 +48,7 @@ mkfs.vfat /root/iso/boot/efs.img
 mount /root/iso/boot/efs.img /root/efs
 
 #Get grub config
-cp /var/noop/etc/iso-grub.cfg -O/root/iso/boot/grub/grub.cfg
+cp /var/noop/etc/iso-grub.cfg /root/iso/boot/grub/grub.cfg
 
 #Copy initrd
 cp noop-initramfs-live.igz /root/iso/boot
