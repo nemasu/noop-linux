@@ -17,6 +17,7 @@ then
 	cat="$PREFIX/usr/bin/busybox cat"
 	mkdir="$PREFIX/usr/bin/busybox mkdir"
 	grep="$PREFIX/usr/bin/busybox grep"
+	egrep="$PREFIX/usr/bin/busybox egrep"
 	ls="$PREFIX/usr/bin/busybox ls"
 	wc="$PREFIX/usr/bin/busybox wc"
 	rm="$PREFIX/usr/bin/busybox rm"
@@ -41,6 +42,7 @@ else
 	cat="cat"
 	mkdir="mkdir"
 	grep="grep"
+	grep="egrep"
 	ls="ls"
 	wc="wc"
 	rm="rm"
@@ -147,6 +149,25 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 	$echo -e "\n"
 	exit 0;
 fi
+
+Black='\033[0;30m'
+Red='\033[0;31m'
+Green='\033[0;32m'
+BrownOrange='\033[0;33m'
+Blue='\033[0;34m'
+Purple='\033[0;35m'
+Cyan='\033[0;36m'
+LightGray='\033[0;37m'
+DarkGray='\033[1;30m'
+LightRed='\033[1;31m'
+LightGreen='\033[1;32m'
+Yellow='\033[1;33m'
+LightBlue='\033[1;34m'
+LightPurple='\033[1;35m'
+LightCyan='\033[1;36m'
+White='\033[1;37m'
+NoColor='\033[0m'
+
 
 function vercomp ()
 {
@@ -255,6 +276,17 @@ function bininst_install() {
 	echo "Done, source /etc/profile or re-login to gain environment variables."
 	exit
 
+}
+
+#1 name
+function get_packagedb_version() {
+	 ARCHPOST="_$ARCH"
+	 $echo "`$egrep "^${1}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`"
+}
+
+#1 name
+function get_installed_version() {
+	$echo `$grep -m1 "VER:" "$INSTALLEDDIR/$1" | $sed -e 's/VER://'`
 }
 
 if [ $1 == "--instbin" ]; then
@@ -441,13 +473,8 @@ if [ $1 == "--depcheck-package" ] || [ $1 == "-Cp" ]; then
     $rm -f /tmp/missinglibs && touch /tmp/missinglibs
     $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
 
-	sed -ne '/FILES:/,$p' /var/noop/installed/$2 | grep -E "/usr/bin|/usr/lib|/bin|/lib" > /tmp/filelist
+	sed -ne '/FILES:/,$p' "$INSTALLEDDIR/$2" | grep -E "/usr/bin|/usr/lib|/bin|/lib" > /tmp/filelist
 	
-#for i in `sed -ne '/DEPS:/,/SIZE:/p' /var/noop/installed/$2 | sed '/DEPS:/d;/SIZE:/d'`
-#do
-#sed -ne '/FILES:/,$p' /var/noop/installed/$i | grep -E "/usr/bin|/usr/lib|/bin|/lib" >> /tmp/filelist
-#done
-
 	#TODO Factorize out these two depcheck functions
 	total_lines=`cat /tmp/filelist | wc -l`
     let count=0
@@ -504,7 +531,7 @@ if [ $1 == "--depcheck-revdep" ] || [ $1 == "-Cr" ]; then
     $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
 	for i in `pkgr -D $2`;
 	do
-		sed -ne '/FILES:/,$p' /var/noop/installed/$i | grep -E "/usr/bin|/usr/lib|/bin|/lib" >> /tmp/filelist
+		sed -ne '/FILES:/,$p' $INSTALLEDDIR/$i | grep -E "/usr/bin|/usr/lib|/bin|/lib" >> /tmp/filelist
 	done
 
 	#TODO Factorize out these two depcheck functions
@@ -885,16 +912,16 @@ fi
 
 
 if [ $1 == "--list" ] || [ $1 == "-l" ]; then
-	for i in `$cat $PACKAGEDB | $sed -e 's/,.*//g'`;
+	for i in `$sed -e 's/,.*//g' $PACKAGEDB`;
 	do
-		echo -n "$i"
+		echo -n "$i "
 		if [ -e $INSTALLEDDIR/$i ];
 		then
-			VER=`grep -m1 "VER:" $INSTALLEDDIR/$i | sed 's/VER://g'`
-			echo "-$VER - (installed)";
+			$echo -e "${Green}`get_installed_version $i` ${Yellow}[installed]${NoColor}";
 		else
-			echo ""
+			$echo -e "${Red}`get_packagedb_version $i`"
 		fi
+		$echo -ne ${NoColor}
 	done
 
 fi
@@ -1078,7 +1105,7 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 			exit 0
 		fi
 	
-    	OLD=`$grep -m1 VER: $INSTALLEDDIR/$NAME | $sed -e 's/VER://g' | $sed -e 's/'"$ARCH"'//g'`
+		OLD=`get_installed_version $NAME`
 	else
 		if [ ! -e $INSTALLEDDIR/$2  ]; then
 			$echo $2 is not installed.
@@ -1086,7 +1113,7 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 		fi
 		ISFILE=0
 		NAME=`$grep NAME: $INSTALLEDDIR/$2 | $sed -e 's/NAME://g'`
-    	OLD=`$grep -m1 VER: $INSTALLEDDIR/$2 | $sed -e 's/VER://g' | $sed -e 's/'"$ARCH"'//g'`
+		OLD=`get_installed_version $NAME`
 	fi
 
 	
@@ -1095,9 +1122,9 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
     
 	if [ $ISFILE -eq 1 ];
 	then
-		NEW=`pkgr -readmeta $2 | $grep -m1 VER: | $sed -e 's/VER://g' | $sed -e 's/'"$ARCHPOST"'//g'`
+		NEW=`pkgr -readmeta "$2" | $grep -m1 "VER:" | $sed -e 's/VER://g' | $sed -e 's/'"$ARCHPOST"'//g'`
 	else
-		NEW=`$grep -e '^'"$NAME"',' $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g'| $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`
+		NEW=`get_packagedb_version $NAME`
 	fi
 
     
@@ -1188,9 +1215,8 @@ if [ $1 == "--upgrade-all" ] || [ $1 == "-U" ]; then
 	for i in `$find $INSTALLEDDIR/*` ; 
 	do
 		NAME=`$grep NAME: $i | $sed -e 's/NAME://g'`
-		ARCHPOST="_$ARCH"
-		OLD=`$grep -m1 VER: $i | $sed -e 's/VER://g' | $sed -e 's/'"$ARCHPOST"'//g'`
-		NEW=`$grep -e '^'"$NAME"',' $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`
+		OLD=`get_installed_version $NAME`
+		NEW=`get_packagedb_version $NAME`
 		vercomp $OLD $NEW
 		if [ $? == 2 ]; then
 			if [ ${#array[@]} -eq 0 ]; then
@@ -1942,7 +1968,7 @@ fi
 
 
 if [ $1 = "--mkinitramfs" ]; then
-	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
+	KERVER=`grep -m1 VER: $INSTALLEDDIR/linux-kernel | sed -e 's/VER://g'`
 	function copy_module() {
 
 		if [ -n "$1" ];
