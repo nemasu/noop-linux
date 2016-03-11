@@ -2,7 +2,7 @@
 NAME=go
 
 #package version
-VERSION=1.5.2
+VERSION=1.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -30,7 +30,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export GOROOT_BOOTSTRAP=/usr
+	export GOROOT_BOOTSTRAP=/usr/lib/go
 	export GOROOT=`pwd`
 	export GOBIN="$GOROOT/bin"
 	export GOROOT_FINAL=/usr/lib/go
