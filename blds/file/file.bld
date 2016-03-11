@@ -2,7 +2,7 @@
 NAME=file
 
 #package version
-VERSION=5.11
+VERSION=5.25
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
