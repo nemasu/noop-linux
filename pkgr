@@ -912,14 +912,23 @@ fi
 
 
 if [ $1 == "--list" ] || [ $1 == "-l" ]; then
+	$echo -e "Package List. Legend: ${Green}Installed ${Red}Available ${Yellow}Update Available${NoColor}"
 	for i in `$sed -e 's/,.*//g' $PACKAGEDB`;
 	do
 		echo -n "$i "
+		pkgdb_ver=`get_packagedb_version $i`
 		if [ -e $INSTALLEDDIR/$i ];
 		then
-			$echo -e "${Green}`get_installed_version $i` ${Yellow}[installed]${NoColor}";
+			inst_ver=`get_installed_version $i`
+			vercomp $pkgdb_ver $inst_ver
+			if [ $? -eq 1 ];
+			then
+				$echo -e "${Green}${inst_ver} ${Yellow}${pkgdb_ver}${NoColor}";
+			else
+				$echo -e "${Green}${inst_ver}${NoColor}";
+			fi
 		else
-			$echo -e "${Red}`get_packagedb_version $i`"
+			$echo -e "${Red}${pkgdb_ver}"
 		fi
 		$echo -ne ${NoColor}
 	done
