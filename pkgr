@@ -892,18 +892,18 @@ if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 		pushd $PREFIX/var/noop $> /dev/null
 		$echo
 	else
-		$echo -e "${LightCyan}Syncing ...${LightBlue}"
+		$echo -e "${Cyan}Syncing ...${LightBlue}"
 		pushd $PREFIX/var/noop &> /dev/null
 		git pull
 		$echo
 		$echo -e "${Green}done.${NoColor}"
 	fi
 	$echo
-	$echo -ne "${LightCyan}Generating packages list..."
+	$echo -ne "${Cyan}Generating packages list..."
 	curl -s -L $HOST/packages/x86_64/ | $grep href | $awk '{print $2;}' | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
 	$echo -e "${Green}done."
 	$echo
-	$echo -en "${LightCyan}Generating deps list..."
+	$echo -en "${Cyan}Generating deps list..."
 	rm -rf deps; for i in `cat packages | sed 's/,/ /' | awk '{print $1;}'`; do for j in `grep -m1 "DEPS=" blds/$i/*.bld 2>/dev/null | sed "s/DEPS=//g;s/(//g;s/)//;s/'//g;"`; do echo ${i}:${j} >> deps; done done
 	$echo -e "${Green}done.${NoColor}"
 	popd &> /dev/null
