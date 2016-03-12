@@ -2,8 +2,8 @@
 NAME=virtualbox
 
 #package version
-VERSION=5.0.14-1
-DVERSION=5.0.14
+VERSION=5.0.16
+DVERSION=5.0.16
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -24,7 +24,7 @@ DEPS=('virtualbox-modules' 'curl' 'gcc-libs' 'glibc' 'libpng' 'libvpx' 'libX11' 
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('virtualbox-modules')
+PKGDEPS=('virtualbox-modules' 'cdrkit' 'iasl' 'libidl' 'gsoap' 'libvncserver')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=1
@@ -200,7 +200,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://www.virtualbox.org/wiki/Downloads | egrep "Source code" | sed -e 's/.*VirtualBox-\([0-9\.]*\)\.tar\.bz2.*/\1/g;'`
+	LATEST=`curl -L -s https://www.virtualbox.org/wiki/Downloads | egrep "VirtualBox-[0-9\.]*\.tar\.bz2" | sed -e 's/.*VirtualBox-\([0-9\.]*\)\.tar\.bz2.*/\1/g;'`
 	
 	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
