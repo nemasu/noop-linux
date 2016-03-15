@@ -900,7 +900,7 @@ if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 	fi
 	$echo
 	$echo -ne "${Cyan}Generating packages list..."
-	curl -s -L $HOST/packages/x86_64/ | $grep href | $awk '{print $2;}' | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
+	curl -s -L $HOST/packages/${ARCH}/ | $grep href | $awk '{print $2;}' | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
 	$echo -e "${Green}done."
 	$echo
 	$echo -en "${Cyan}Generating deps list..."
