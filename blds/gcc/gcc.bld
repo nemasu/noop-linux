@@ -28,7 +28,7 @@ function BuildAndInstall
     mkdir -p build-dir
     cd build-dir
     
-	[[ "$ARCH" == "armv6l" ]] && EXTRACONFIGFLAGS="--disable-multilib --host=armv6l-unknown-linux-gnueabihf --build=armv6l-unknown-linux-gnueabihf --with-arch=armv6 --with-float=hard --with-fpu=vfp"
+	[[ "$ARCH" == "armv6l" ]] && EXTRACONFIGFLAGS="--disable-multilib --host=armv6l-unknown-linux-gnueabihf --build=armv6l-unknown-linux-gnueabihf --with-arch=armv6 --with-float=hard --with-fpu=vfp --with-cpu=arm1176jzf-s"
 	[[ "$ARCH" == "armv6l" ]] && ENABLED_LANGS="c,c++,fortran,go,lto,objc,obj-c++"
 
 	[[ "$ARCH" == "armv7l" ]] && EXTRACONFIGFLAGS="--disable-multilib --host=armv7l-unknown-linux-gnueabihf --build=armv7l-unknown-linux-gnueabihf --with-arch=armv7-a --with-float=hard --with-fpu=neon-vfpv4"

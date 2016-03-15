@@ -1975,6 +1975,65 @@ if [ $1 = "-libdiff" ]; then
 	rm /tmp/libdb.server
 fi
 
+if [ "$1" == "--jsonmeta" ];
+then
+
+	if [ -z "$2" ] || [ ! -e "$INSTALLEDDIR/$2" ]; then
+		exit 1
+	fi
+
+	IFS=$'\n'
+	i=/var/noop/installed/$2
+
+	if [ ! -e "$i" ];
+	then
+		echo "$i is not a valid path"
+		exit -1
+	fi
+
+	name=`grep -m1 "^NAME:" $i | sed -e 's/NAME://g;'`
+	echo "{"
+	echo "\"name\":\"${name}\","
+
+	version=`grep -m1 "^VER:" $i | sed -e 's/VER://g;'`
+	echo "\"version\":\"${version}\","
+
+	echo "\"deps\":["
+	let lines=`sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d' | wc -l`
+	let line=1
+	for dep in `sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d'`;
+	do
+			if [ $lines -eq $line ];
+			then
+					echo "\"$dep\""
+			else
+					echo "\"$dep\","
+			fi
+			let line=$line+1
+	done
+	echo "],"
+
+
+	size=`grep -m1 "^SIZE:" $i | sed -e 's/SIZE://g;'`
+	echo "\"size\":${size},"
+
+	echo "\"files\":["
+	let lines=`sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;' | wc -l`
+	let line=1
+	for file in `sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;'`;
+	do
+			if [ $lines -eq $line ];
+		then
+					echo "\"$file\""
+			else
+					echo "\"$file\","
+			fi
+			let line=$line+1
+	done
+
+	echo "]}"
+
+fi
 
 if [ $1 = "--mkinitramfs" ]; then
 	KERVER=`grep -m1 VER: $INSTALLEDDIR/linux-kernel | sed -e 's/VER://g'`
