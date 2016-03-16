@@ -1563,7 +1563,10 @@ if [ $1 = "-genpkg" ] ; then
 fi
 
 function fn_exists() {
-    type $1 2>/dev/null | $grep -q 'is a function' &> /dev/null
+    if [ "`type -t $1`" == "function" ]; then
+		return 0;
+	fi
+	return 1;
 }
 
 function get_pkg_install() {
@@ -1981,7 +1984,7 @@ if [ $1 = "--mkinitramfs" ]; then
 	rm -rf $INITRAMFS_WORKDIR && mkdir $INITRAMFS_WORKDIR
 
 	pushd $INITRAMFS_WORKDIR &> /dev/null
-	wget $PKGHOST/file-base.tar.bz2
+	$wget $PKGHOST/file-base.tar.bz2
 	tar xf file-base.tar.bz2 && rm file-base.tar.bz2
 	ln -s lib lib64
     cd usr
@@ -2013,6 +2016,11 @@ if [ $1 = "--mkinitramfs" ]; then
 			copy_binary "$i" "${INITRAMFS_WORKDIR}/${i}"
 		done
 
+		fn_exists InitramfsCustom
+		if [ $? -eq 0 ]; then
+			mkdir -p $INITRAMFS_WORKDIR/etc/noop/
+			cp -v /etc/noop/initramfs $INITRAMFS_WORKDIR/etc/noop/
+		fi
 	fi
 
     copy_binary `which busybox` $INITRAMFS_WORKDIR/usr/bin/busybox

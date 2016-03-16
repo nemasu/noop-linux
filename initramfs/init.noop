@@ -64,6 +64,13 @@ then
 	cryptsetup open `echo $cryptdevice | sed -e 's/:/ /g'`
 fi
 
+#Custom
+if [ -e /etc/noop/initramfs ];
+then
+	source /etc/noop/initramfs
+	InitramfsCustom
+fi
+
 mount ${root} /newroot
 
 #Check if $init exists and is executable
