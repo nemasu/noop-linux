@@ -1,6 +1,9 @@
 #package name
 NAME=libtheora
 
+#Description
+DESC="An open video codec developed by the Xiph.org"
+
 #package version
 VERSION=1.1.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=recode
 
+#Description
+DESC="Converts files between various character sets and usages"
+
 #package version
 VERSION=3.6
 

@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-suncg6
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.1.2-1
 DVERSION=1.1.2

@@ -1,6 +1,9 @@
 #package name
 NAME=dropbear
 
+#Description
+DESC="Lightweight replacement for sshd"
+
 #package version
 VERSION=2015.71
 

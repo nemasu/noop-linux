@@ -1,6 +1,9 @@
 #package name
 NAME=gnugo
 
+#Description
+DESC="Program that plays the game of Go"
+
 #package version
 VERSION=3.8
 

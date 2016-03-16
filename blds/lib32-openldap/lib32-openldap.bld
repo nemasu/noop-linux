@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-openldap
 
+#Description
+DESC="Open Source Computer Vision Library"
+
 #package version
 VERSION=2.4.33-1
 DVERSION=2.4.33

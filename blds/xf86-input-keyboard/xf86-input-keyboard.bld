@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-input-keyboard
 
+#Description
+DESC="X.Org keyboard input driver"
+
 #package version
 VERSION=1.8.0-1
 DVERSION=1.8.0

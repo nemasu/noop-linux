@@ -1,6 +1,9 @@
 #package name
 NAME=feh
 
+#Description
+DESC="Fast and light imlib2-based image viewer"
+
 #package version
 VERSION=2.12
 

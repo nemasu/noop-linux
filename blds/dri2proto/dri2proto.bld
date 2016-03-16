@@ -1,6 +1,9 @@
 #package name
 NAME=dri2proto
 
+#Description
+DESC="X11 DRI protocol"
+
 #package version
 VERSION=2.8
 

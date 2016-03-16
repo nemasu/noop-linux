@@ -1,6 +1,9 @@
 #package name
 NAME=cairo
 
+#Description
+DESC="Cairo vector graphics library"
+
 #package version
 VERSION=1.14.6
 

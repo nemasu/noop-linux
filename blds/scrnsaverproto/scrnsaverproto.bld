@@ -1,6 +1,9 @@
 #package name
 NAME=scrnsaverproto
 
+#Description
+DESC="X11 Screen Saver extension wire protocol"
+
 #package version
 VERSION=1.2.2
 

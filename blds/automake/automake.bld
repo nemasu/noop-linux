@@ -1,6 +1,9 @@
 #package name
 NAME=automake
 
+#Description
+DESC="A GNU tool for automatically creating Makefiles"
+
 #package version
 VERSION=1.15
 

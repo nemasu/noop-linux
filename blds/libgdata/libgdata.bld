@@ -1,6 +1,9 @@
 #package name
 NAME=libgdata
 
+#Description
+DESC="GLib-based library for accessing online service APIs using the GData protocol"
+
 #package version
 VERSION=0.12.0-1
 DVERSION=0.12.0

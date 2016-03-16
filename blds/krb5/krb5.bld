@@ -1,6 +1,9 @@
 #package name
 NAME=krb5
 
+#Description
+DESC="The Kerberos network authentication system"
+
 #package version
 VERSION=1.14
 

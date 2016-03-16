@@ -1,6 +1,9 @@
 #package name
 NAME=x11perf
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.5.4
 

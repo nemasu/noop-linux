@@ -1,6 +1,9 @@
 #package name
 NAME=lxdm
 
+#Description
+DESC="Lightweight X11 Display Manager"
+
 #package version
 VERSION=0.5.0
 

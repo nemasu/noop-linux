@@ -1,6 +1,9 @@
 #package name
 NAME=nasm
 
+#Description
+DESC="An 80x86 assembler designed for portability and modularity"
+
 #package version
 VERSION=2.10.01
 

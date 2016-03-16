@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-libXau
 
+#Description
+DESC="X11 authorisation library (32-bit)"
+
 #package version
 VERSION=1.0.8
 

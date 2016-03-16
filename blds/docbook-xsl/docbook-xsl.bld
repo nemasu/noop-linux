@@ -1,6 +1,9 @@
 #package name
 NAME=docbook-xsl
 
+#Description
+DESC="XML stylesheets for Docbook-xml transformations"
+
 #package version
 VERSION=1.79.1
 #POSTINST needs version update too

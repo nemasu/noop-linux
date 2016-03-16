@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-krb5
 
+#Description
+DESC="The Kerberos network authentication system (32-bit)"
+
 #package version
 VERSION=1.10.2
 

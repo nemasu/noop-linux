@@ -1,6 +1,9 @@
 #package name
 NAME=marco
 
+#Description
+DESC="A window manager for MATE (GTK2 version)"
+
 #package version
 VERSION=1.10.1
 DVERSION=1.10.1

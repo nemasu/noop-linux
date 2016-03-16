@@ -1,6 +1,9 @@
 #package name
 NAME=dconf
 
+#Description
+DESC="A low-level configuration system."
+
 #package version
 VERSION=0.21.0
 

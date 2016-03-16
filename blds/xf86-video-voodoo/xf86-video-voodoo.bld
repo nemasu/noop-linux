@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-voodoo
 
+#Description
+DESC="X.org 3dfx Voodoo1/Voodoo2 2D video driver"
+
 #package version
 VERSION=1.2.5-1
 DVERSION=1.2.5

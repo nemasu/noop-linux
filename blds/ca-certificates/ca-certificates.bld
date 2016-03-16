@@ -8,6 +8,9 @@
 # ISSPECIAL
 
 NAME=ca-certificates
+
+#Description
+DESC="Common CA certificates"
 #Version changes, old tars are removed.
 VERSION=`curl -s -L "http://ftp.debian.org/debian/pool/main/c/ca-certificates/?C=M;O=A" | egrep "ca-certificates_[0-9]*\.tar\.xz" | tail -n1 | sed 's/.*ca-certificates_\([0-9]*\)\.tar\.xz.*/\1/g'`
 ISUSR=1

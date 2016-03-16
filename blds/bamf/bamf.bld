@@ -1,6 +1,9 @@
 #package name
 NAME=bamf
 
+#Description
+DESC="Application matching framework"
+
 #package version
 VERSION=0.5.1
 

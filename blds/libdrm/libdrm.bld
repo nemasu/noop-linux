@@ -1,6 +1,9 @@
 #package name
 NAME=libdrm
 
+#Description
+DESC="Userspace interface to kernel DRM services"
+
 #package version
 VERSION=2.4.64
 

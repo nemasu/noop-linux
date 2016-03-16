@@ -1,6 +1,9 @@
 #package name
 NAME=check
 
+#Description
+DESC="A unit testing framework for C"
+
 #package version
 VERSION=0.9.13
 

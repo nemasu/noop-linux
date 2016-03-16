@@ -1,6 +1,9 @@
 #package name
 NAME=babl
 
+#Description
+DESC="Dynamic, any to any, pixel format conversion library"
+
 #package version
 VERSION=0.1.14
 

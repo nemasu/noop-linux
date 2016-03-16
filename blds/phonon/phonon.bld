@@ -1,6 +1,9 @@
 #package name
 NAME=phonon
 
+#Description
+DESC="Simple XML parser for perl"
+
 #package version
 VERSION=4.8.3
 

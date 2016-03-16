@@ -1,6 +1,9 @@
 #package name
 NAME=mate-utils
 
+#Description
+DESC="Common MATE utilities for viewing disk usage, logs and fonts, taking screenshots, managing dictionaries and searching files (GTK2 version)"
+
 #package version
 VERSION=1.10.1
 DVERSION=1.10.1

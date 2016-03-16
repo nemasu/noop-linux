@@ -1,6 +1,9 @@
 #package name
 NAME=schroedinger
 
+#Description
+DESC="An implemenation of the Dirac video codec in ANSI C code"
+
 #package version
 VERSION=1.0.11
 

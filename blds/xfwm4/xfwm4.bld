@@ -1,6 +1,9 @@
 #package name
 NAME=xfwm4
 
+#Description
+DESC="Xfce window manager"
+
 #package version
 VERSION=4.12.3
 

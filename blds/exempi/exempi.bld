@@ -1,6 +1,9 @@
 #package name
 NAME=exempi
 
+#Description
+DESC="A library to parse XMP metadata"
+
 #package version
 VERSION=2.2.1
 

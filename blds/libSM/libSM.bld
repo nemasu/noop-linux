@@ -1,6 +1,9 @@
 #package name
 NAME=libSM
 
+#Description
+DESC="X11 Session Management library"
+
 #package version
 VERSION=1.2.2
 

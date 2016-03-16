@@ -1,6 +1,9 @@
 #package name
 NAME=xtrans
 
+#Description
+DESC="X transport library"
+
 #package version
 VERSION=1.3.5
 

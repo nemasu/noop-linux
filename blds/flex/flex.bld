@@ -1,6 +1,9 @@
 #package name
 NAME=flex
 
+#Description
+DESC="A tool for generating text-scanning programs"
+
 #package version
 VERSION=2.5.39
 

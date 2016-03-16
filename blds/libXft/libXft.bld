@@ -1,6 +1,9 @@
 #package name
 NAME=libXft
 
+#Description
+DESC="FreeType-based font drawing library for X (32-bit)"
+
 #package version
 VERSION=2.3.2
 

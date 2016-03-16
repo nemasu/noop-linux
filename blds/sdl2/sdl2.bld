@@ -1,6 +1,9 @@
 #package name
 NAME=sdl2
 
+#Description
+DESC="A library for portable low-level access to a video framebuffer, audio output, mouse, and keyboard (Version 2)"
+
 #package version
 VERSION=2.0.3
 

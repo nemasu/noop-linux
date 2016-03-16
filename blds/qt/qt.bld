@@ -1,6 +1,9 @@
 #package name
 NAME=qt
 
+#Description
+DESC="A cross-platform application and UI framework"
+
 #package version
 VERSION=5.5.1-1
 DVERSION=5.5.1

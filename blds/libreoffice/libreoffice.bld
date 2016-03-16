@@ -1,6 +1,9 @@
 #package name
 NAME=libreoffice
 
+#Description
+DESC=""
+
 #package version
 VERSION=5.0.4.2
 DVERSION=5.0.4.2

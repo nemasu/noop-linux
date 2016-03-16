@@ -1,6 +1,9 @@
 #package name
 NAME=deadbeef
 
+#Description
+DESC="A GTK+ audio player for GNU/Linux."
+
 #package version
 VERSION=0.7.0
 DVERSION=0.7.0

@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-libxcb
 
+#Description
+DESC="X11 client-side library (32-bit)"
+
 #package version
 VERSION=1.11
 

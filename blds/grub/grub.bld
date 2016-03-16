@@ -1,6 +1,9 @@
 #package name
 NAME=grub
 
+#Description
+DESC="GNU GRand Unified Bootloader (2)"
+
 #package version
 VERSION=2.02-20150806
 

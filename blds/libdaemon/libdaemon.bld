@@ -1,6 +1,9 @@
 #package name
 NAME=libdaemon
 
+#Description
+DESC="Lightweight C library that eases the writing of UNIX daemons"
+
 #package version
 VERSION=0.14
 

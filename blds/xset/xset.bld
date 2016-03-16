@@ -1,6 +1,9 @@
 #package name
 NAME=xset
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.2.3
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libidl
 
+#Description
+DESC=""
+
 #package version
 VERSION=0.8.14
 

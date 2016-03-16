@@ -1,6 +1,9 @@
 #package name
 NAME=npth
 
+#Description
+DESC="New portable threads library"
+
 #package version
 VERSION=1.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libseccomp
 
+#Description
+DESC="Enhanced seccomp library"
+
 #package version
 VERSION=2.1.1
 

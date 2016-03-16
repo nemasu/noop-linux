@@ -1,6 +1,9 @@
 #package name
 NAME=xfce4-terminal
 
+#Description
+DESC="A modern terminal emulator primarly for the Xfce desktop environment"
+
 #package version
 VERSION=0.6.3
 

@@ -1,6 +1,9 @@
 #package name
 NAME=upower
 
+#Description
+DESC="Abstraction for enumerating power devices, listening to device events and querying history and statistics"
+
 #package version
 VERSION=0.99.3
 

@@ -1,6 +1,9 @@
 #package name
 NAME=kbd
 
+#Description
+DESC="Keytable files and keyboard utilities"
+
 #package version
 VERSION=2.0.1
 

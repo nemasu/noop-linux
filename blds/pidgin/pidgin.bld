@@ -1,6 +1,9 @@
 #package name
 NAME=pidgin
 
+#Description
+DESC="Simple XML parser for perl"
+
 #package version
 VERSION=2.10.11-1
 DVERSION=2.10.11

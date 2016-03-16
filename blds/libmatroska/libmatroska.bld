@@ -1,6 +1,9 @@
 #package name
 NAME=libmatroska
 
+#Description
+DESC="Matroska library"
+
 #package version
 VERSION=1.4.2
 

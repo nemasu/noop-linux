@@ -1,6 +1,9 @@
 #package name
 NAME=less
 
+#Description
+DESC="A terminal based program for viewing text files"
+
 #package version
 VERSION=481
 

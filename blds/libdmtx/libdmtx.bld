@@ -1,6 +1,9 @@
 #package name
 NAME=libdmtx
 
+#Description
+DESC="A software for reading and writing Data Matrix 2D barcodes"
+
 #package version
 VERSION=0.7.4
 

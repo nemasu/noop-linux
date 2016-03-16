@@ -1,6 +1,9 @@
 #package name
 NAME=xfdesktop
 
+#Description
+DESC="A desktop manager for Xfce"
+
 #package version
 VERSION=4.12.2
 

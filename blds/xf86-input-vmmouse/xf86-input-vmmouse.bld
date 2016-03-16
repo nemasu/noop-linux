@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-input-vmmouse
 
+#Description
+DESC="X.org VMWare Mouse input driver"
+
 #package version
 VERSION=13.0.0-1
 DVERSION=13.0.0

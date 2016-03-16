@@ -1,6 +1,9 @@
 #package name
 NAME=avrdude
 
+#Description
+DESC="Download/upload/manipulate the ROM and EEPROM contents of AVR microcontrollers"
+
 #package version
 VERSION=6.2
 

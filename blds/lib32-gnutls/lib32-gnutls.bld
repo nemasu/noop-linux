@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-gnutls
 
+#Description
+DESC="A library which provides a secure layer over a reliable transport layer (32-bit)"
+
 #package version
 VERSION=3.0.20
 

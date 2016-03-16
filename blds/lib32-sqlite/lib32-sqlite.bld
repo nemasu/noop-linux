@@ -8,6 +8,9 @@
 # ISSPECIAL
 
 NAME=lib32-sqlite
+
+#Description
+DESC="A C library that implements an SQL database engine (32-bit)"
 VERSION=3071300
 ISUSR=1
 SRC=http://www.sqlite.org/sqlite-autoconf-3071300.tar.gz

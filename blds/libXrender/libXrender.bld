@@ -1,6 +1,9 @@
 #package name
 NAME=libXrender
 
+#Description
+DESC="X Rendering Extension client library"
+
 #package version
 VERSION=0.9.8
 

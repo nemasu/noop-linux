@@ -1,6 +1,9 @@
 #package name
 NAME=clamz
 
+#Description
+DESC="Command-line program to download MP3 files from Amazon.com's music store."
+
 #package version
 VERSION=0.5-1
 DVERSION=0.5

@@ -1,6 +1,9 @@
 #package name
 NAME=tiff
 
+#Description
+DESC=""
+
 #package version
 VERSION=4.0.2
 

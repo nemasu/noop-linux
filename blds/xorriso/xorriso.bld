@@ -1,6 +1,9 @@
 #package name
 NAME=xorriso
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.4.1
 

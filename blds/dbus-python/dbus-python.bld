@@ -1,6 +1,9 @@
 #package name
 NAME=dbus-python
 
+#Description
+DESC="Python bindings for DBUS"
+
 #package version
 VERSION=1.2.0-1
 DVERSION=1.2.0

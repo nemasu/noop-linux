@@ -1,6 +1,9 @@
 #package name
 NAME=libICE
 
+#Description
+DESC="X11 Inter-Client Exchange library"
+
 #package version
 VERSION=1.0.9
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libxkbcommon
 
+#Description
+DESC="Keyboard handling library using XKB data"
+
 #package version
 VERSION=0.5.0
 

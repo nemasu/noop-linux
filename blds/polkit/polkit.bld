@@ -1,6 +1,9 @@
 #package name
 NAME=polkit
 
+#Description
+DESC="Application development toolkit for controlling system-wide privileges"
+
 #package version
 VERSION=0.112-2
 DVERSION=0.112

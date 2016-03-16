@@ -1,6 +1,9 @@
 #package name
 NAME=talloc
 
+#Description
+DESC="Hierarchical pool based memory allocator with destructors"
+
 #package version
 VERSION=2.1.5
 

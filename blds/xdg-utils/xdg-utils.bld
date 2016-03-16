@@ -1,6 +1,9 @@
 #package name
 NAME=xdg-utils
 
+#Description
+DESC="Command line tools that assist applications with a variety of desktop integration tasks"
+
 #package version
 VERSION=20150413
 

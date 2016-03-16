@@ -1,6 +1,9 @@
 #package name
 NAME=cmake
 
+#Description
+DESC="A cross-platform open-source make system"
+
 #package version
 VERSION=3.4.3
 

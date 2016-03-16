@@ -1,6 +1,9 @@
 #package name
 NAME=python
 
+#Description
+DESC="Next generation of the python high-level scripting language"
+
 #package version
 VERSION=3.5.1
 _pybasever=${VERSION:0:3}

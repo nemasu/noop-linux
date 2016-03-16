@@ -1,6 +1,9 @@
 #package name
 NAME=eject
 
+#Description
+DESC="Eject removable media"
+
 #package version
 VERSION=2.1.5
 

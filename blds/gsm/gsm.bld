@@ -1,6 +1,9 @@
 #package name
 NAME=gsm
 
+#Description
+DESC="Shared libraries for GSM 06.10 lossy speech compression"
+
 #package version
 VERSION=1.0.14
 

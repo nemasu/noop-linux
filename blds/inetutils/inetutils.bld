@@ -1,6 +1,9 @@
 #package name
 NAME=inetutils
 
+#Description
+DESC="A collection of common network programs"
+
 #package version
 VERSION=1.9.4
 DVERSION=1.9.4

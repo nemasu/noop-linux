@@ -1,6 +1,9 @@
 #package name
 NAME=pygobject2
 
+#Description
+DESC="A terminal-based tool for monitoring the progress of data through a pipeline."
+
 #package version
 VERSION=2.28.6-2
 

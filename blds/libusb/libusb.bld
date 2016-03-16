@@ -1,6 +1,9 @@
 #package name
 NAME=libusb
 
+#Description
+DESC="Library that provides generic access to USB devices"
+
 #package version
 VERSION=1.0.15
 

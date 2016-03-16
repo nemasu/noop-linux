@@ -1,6 +1,9 @@
 #package name
 NAME=python-lxml
 
+#Description
+DESC="A high-level scripting language"
+
 #package version
 VERSION=3.5.0
 

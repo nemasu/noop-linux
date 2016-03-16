@@ -1,6 +1,9 @@
 #package name
 NAME=xorg-fonts-cyrillic
 
+#Description
+DESC="X.org cyrillic fonts"
+
 #package version
 VERSION=1.0.1
 

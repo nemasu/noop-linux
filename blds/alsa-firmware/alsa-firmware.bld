@@ -1,6 +1,9 @@
 #package name
 NAME=alsa-firmware
 
+#Description
+DESC="ALSA firmware package"
+
 #package version
 VERSION=1.0.29
 DVERSION=1.0.29

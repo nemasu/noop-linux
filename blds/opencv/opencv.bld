@@ -1,6 +1,9 @@
 #package name
 NAME=opencv
 
+#Description
+DESC="Open Source Computer Vision Library"
+
 #package version
 VERSION=3.1.0
 

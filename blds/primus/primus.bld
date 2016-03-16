@@ -1,6 +1,9 @@
 #package name
 NAME=primus
 
+#Description
+DESC="Faster OpenGL offloading for Bumblebee"
+
 #package version
 VERSION=20150822
 

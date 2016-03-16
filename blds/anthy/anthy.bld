@@ -1,6 +1,9 @@
 #package name
 NAME=anthy
 
+#Description
+DESC="Hiragana text to Kana Kanji mixed text Japanese input method"
+
 #package version
 VERSION=9100-1
 DVERSION=9100h

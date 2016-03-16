@@ -1,6 +1,9 @@
 #package name
 NAME=fribidi
 
+#Description
+DESC="A Free Implementation of the Unicode Bidirectional Algorithm"
+
 #package version
 VERSION=0.19.7
 

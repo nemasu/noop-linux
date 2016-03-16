@@ -1,6 +1,9 @@
 #package name
 NAME=lzip
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.17
 

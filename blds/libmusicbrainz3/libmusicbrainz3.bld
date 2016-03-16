@@ -1,6 +1,9 @@
 #package name
 NAME=libmusicbrainz3
 
+#Description
+DESC="Library That Provides Access to the MusicBrainz Server  "
+
 #package version
 VERSION=3.0.3
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libkate
 
+#Description
+DESC="A karaoke and text codec for embedding in ogg"
+
 #package version
 VERSION=0.4.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=expat
 
+#Description
+DESC="An XML parser library"
+
 #package version
 VERSION=2.1.0
 

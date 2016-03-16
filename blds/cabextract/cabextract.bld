@@ -1,6 +1,9 @@
 #package name
 NAME=cabextract
 
+#Description
+DESC="A program to extract Microsoft cabinet (.CAB) files"
+
 #package version
 VERSION=1.4
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libart-lgpl
 
+#Description
+DESC="A library for high-performance 2D graphics"
+
 #package version
 VERSION=2.3.21
 

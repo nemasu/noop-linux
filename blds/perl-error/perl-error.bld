@@ -1,6 +1,9 @@
 #package name
 NAME=perl-error
 
+#Description
+DESC="Perl/CPAN Error module - Error/exception handling in an OO-ish way"
+
 #package version
 VERSION=0.17022
 

@@ -1,6 +1,9 @@
 #package name
 NAME=python2
 
+#Description
+DESC="A high-level scripting language"
+
 #package version
 VERSION=2.7.11
 

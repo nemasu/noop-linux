@@ -1,6 +1,9 @@
 #package name
 NAME=gtkmm2
 
+#Description
+DESC="C++ Interfaces for GTK+ and GNOME (version 2)"
+
 #package version
 VERSION=2.24.4
 

@@ -1,6 +1,9 @@
 #package name
 NAME=make
 
+#Description
+DESC="GNU make utility to maintain groups of programs"
+
 #package version
 VERSION=3.82
 

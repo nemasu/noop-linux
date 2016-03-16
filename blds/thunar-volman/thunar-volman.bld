@@ -1,6 +1,9 @@
 #package name
 NAME=thunar-volman
 
+#Description
+DESC="Automatic management of removeable devices in Thunar"
+
 #package version
 VERSION=0.8.1
 

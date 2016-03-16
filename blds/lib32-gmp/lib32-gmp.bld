@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-gmp
 
+#Description
+DESC="A free library for arbitrary precision arithmetic (32-bit)"
+
 #package version
 VERSION=6.0.0
 DVERSION=6.0.0a

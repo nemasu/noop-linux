@@ -1,6 +1,9 @@
 #package name
 NAME=gstreamer0.10
 
+#Description
+DESC="GStreamer Multimedia Framework"
+
 #package version
 VERSION=0.10.36
 

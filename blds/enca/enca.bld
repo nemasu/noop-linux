@@ -1,6 +1,9 @@
 #package name
 NAME=enca
 
+#Description
+DESC="Charset analyser and converter"
+
 #package version
 VERSION=1.16
 

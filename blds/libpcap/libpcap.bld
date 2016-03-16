@@ -1,6 +1,9 @@
 #package name
 NAME=libpcap
 
+#Description
+DESC="A system-independent interface for user-level packet capture"
+
 #package version
 VERSION=1.7.2
 

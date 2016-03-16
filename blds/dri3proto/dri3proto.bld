@@ -1,6 +1,9 @@
 #package name
 NAME=dri3proto
 
+#Description
+DESC="X11 DRI3 protocol"
+
 #package version
 VERSION=1.0
 

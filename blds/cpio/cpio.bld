@@ -1,6 +1,9 @@
 #package name
 NAME=cpio
 
+#Description
+DESC="A tool to copy files into or out of a cpio or tar archive"
+
 #package version
 VERSION=2.11
 

@@ -1,6 +1,9 @@
 #package name
 NAME=gperf
 
+#Description
+DESC="Perfect hash function generator"
+
 #package version
 VERSION=3.0.4
 

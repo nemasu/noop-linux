@@ -1,6 +1,9 @@
 #package name
 NAME=unixodbc
 
+#Description
+DESC="ODBC is an open specification for providing application developers with a predictable API with which to access Data Sources"
+
 #package version
 VERSION=2.3.1
 

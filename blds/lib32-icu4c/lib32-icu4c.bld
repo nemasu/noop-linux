@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-icu4c
 
+#Description
+DESC="International Components for Unicode library"
+
 #package version
 VERSION=53.1
 

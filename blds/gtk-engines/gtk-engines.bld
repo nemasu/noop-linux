@@ -1,6 +1,9 @@
 #package name
 NAME=gtk-engines
 
+#Description
+DESC="Theme engines for GTK+ 2"
+
 #package version
 VERSION=2.21.0
 

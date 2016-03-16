@@ -1,6 +1,9 @@
 #package name
 NAME=gsoap
 
+#Description
+DESC="Offers an XML language binding to ease the development of SOAP/XML Web services in C and C/C++"
+
 #package version
 VERSION=2.8.22
 

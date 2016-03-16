@@ -1,6 +1,9 @@
 #package name
 NAME=alsa-plugins
 
+#Description
+DESC="Extra alsa plugins"
+
 #package version
 VERSION=1.1.0-1
 DVERSION=1.1.0

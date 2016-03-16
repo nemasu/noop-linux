@@ -1,6 +1,9 @@
 #package name
 NAME=libftdi
 
+#Description
+DESC="A library to talk to FTDI chips, optional python bindings."
+
 #package version
 VERSION=1.1-1
 DVERSION=1.1

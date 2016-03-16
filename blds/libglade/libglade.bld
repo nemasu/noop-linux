@@ -1,6 +1,9 @@
 #package name
 NAME=libglade
 
+#Description
+DESC="Allows you to load glade interface files in a program at runtime"
+
 #package version
 VERSION=2.6.4
 

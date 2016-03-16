@@ -1,6 +1,9 @@
 #package name
 NAME=mime-types
 
+#Description
+DESC="Provides /etc/mime.types"
+
 #package version
 VERSION=9
 

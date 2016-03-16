@@ -1,6 +1,9 @@
 #package name
 NAME=systemd
 
+#Description
+DESC="A Modern Concurrent Version Control System"
+
 #package version
 VERSION=228
 

@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-openchrome
 
+#Description
+DESC="X.Org Openchrome drivers"
+
 #package version
 VERSION=0.3.3-1
 DVERSION=0.3.3

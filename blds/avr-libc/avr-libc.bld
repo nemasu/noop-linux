@@ -1,6 +1,9 @@
 #package name
 NAME=avr-libc
 
+#Description
+DESC="The C runtime library for the AVR family of microcontrollers"
+
 #package version
 VERSION=1.8.1
 

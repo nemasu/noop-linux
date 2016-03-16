@@ -1,6 +1,9 @@
 #package name
 NAME=glibmm
 
+#Description
+DESC="GNU C Library"
+
 #package version
 VERSION=2.44.0
 

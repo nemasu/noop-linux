@@ -1,6 +1,9 @@
 #package name
 NAME=cryptsetup
 
+#Description
+DESC="Userspace setup tool for transparent encryption of block devices using dm-crypt"
+
 #package version
 VERSION=1.6.6
 

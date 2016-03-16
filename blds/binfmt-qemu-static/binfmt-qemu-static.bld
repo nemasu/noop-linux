@@ -1,6 +1,9 @@
 #package name
 NAME=binfmt-qemu-static
 
+#Description
+DESC="Config for user space emulation with qemu"
+
 #package version
 VERSION=1
 

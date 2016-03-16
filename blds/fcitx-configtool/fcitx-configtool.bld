@@ -1,6 +1,9 @@
 #package name
 NAME=fcitx-configtool
 
+#Description
+DESC="GTK based config tool for Fcitx"
+
 #package version
 VERSION=0.4.8
 

@@ -1,6 +1,9 @@
 #package name
 NAME=scala
 
+#Description
+DESC="A Java-interoperable language with object-oriented and functional features"
+
 #package version
 VERSION=2.11.7
 

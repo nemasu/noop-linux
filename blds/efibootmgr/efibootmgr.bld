@@ -1,6 +1,9 @@
 #package name
 NAME=efibootmgr
 
+#Description
+DESC="Tool to modify UEFI Firmware Boot Manager Variables"
+
 #package version
 VERSION=0.7.0
 

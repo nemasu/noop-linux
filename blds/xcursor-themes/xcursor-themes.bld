@@ -1,6 +1,9 @@
 #package name
 NAME=xcursor-themes
 
+#Description
+DESC="X.org Cursor themes"
+
 #package version
 VERSION=1.0.4
 

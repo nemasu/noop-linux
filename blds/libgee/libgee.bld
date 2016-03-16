@@ -1,6 +1,9 @@
 #package name
 NAME=libgee
 
+#Description
+DESC="GObject collection library"
+
 #package version
 VERSION=0.18.0
 

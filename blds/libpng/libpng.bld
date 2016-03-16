@@ -1,6 +1,9 @@
 #package name
 NAME=libpng
 
+#Description
+DESC="A collection of routines used to create PNG format graphics files"
+
 #package version
 VERSION=1.6.18
 

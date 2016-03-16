@@ -1,6 +1,9 @@
 #package name
 NAME=mate-netspeed
 
+#Description
+DESC="A MATE applet that shows how much traffic occurs on a specified network device. (GTK2 version)"
+
 #package version
 VERSION=1.10.1
 DVERSION=1.10.1

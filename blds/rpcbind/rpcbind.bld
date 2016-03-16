@@ -1,6 +1,9 @@
 #package name
 NAME=rpcbind
 
+#Description
+DESC="portmap replacement which supports RPC over various protocols"
+
 #package version
 VERSION=0.2.0
 

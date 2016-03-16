@@ -1,6 +1,9 @@
 #package name
 NAME=jq
 
+#Description
+DESC="Command-line JSON processor"
+
 #package version
 VERSION=1.4
 

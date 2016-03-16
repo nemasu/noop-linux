@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-nouveau
 
+#Description
+DESC="Open Source 2D acceleration driver for nVidia cards"
+
 #package version
 VERSION=1.0.11-1
 DVERSION=1.0.11

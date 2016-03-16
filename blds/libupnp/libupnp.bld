@@ -1,6 +1,9 @@
 #package name
 NAME=libupnp
 
+#Description
+DESC="Portable Open Source UPnP Development Kit"
+
 #package version
 VERSION=1.6.18
 

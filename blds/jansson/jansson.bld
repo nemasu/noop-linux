@@ -1,6 +1,9 @@
 #package name
 NAME=jansson
 
+#Description
+DESC="C library for encoding, decoding and manipulating JSON data"
+
 #package version
 VERSION=2.7
 

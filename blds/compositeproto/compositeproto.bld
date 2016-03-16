@@ -1,6 +1,9 @@
 #package name
 NAME=compositeproto
 
+#Description
+DESC="X11 Composite extension wire protocol"
+
 #package version
 VERSION=0.4.2
 

@@ -1,6 +1,9 @@
 #package name
 NAME=exo
 
+#Description
+DESC="Extensions to Xfce by os-cillation"
+
 #package version
 VERSION=0.10.6
 

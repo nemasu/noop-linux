@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-ati
 
+#Description
+DESC="X.org ati video driver"
+
 #package version
 VERSION=7.5.0
 

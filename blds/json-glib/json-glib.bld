@@ -1,6 +1,9 @@
 #package name
 NAME=json-glib
 
+#Description
+DESC="JSON library built on GLib"
+
 #package version
 VERSION=1.0.2
 

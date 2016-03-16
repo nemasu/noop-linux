@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-nettle
 
+#Description
+DESC="A low-level cryptographic library (32-bit)"
+
 #package version
 VERSION=2.4
 

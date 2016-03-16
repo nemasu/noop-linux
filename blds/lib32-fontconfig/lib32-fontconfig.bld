@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-fontconfig
 
+#Description
+DESC="A library for configuring and customizing font access (32-bit)"
+
 #package version
 VERSION=2.11.1
 

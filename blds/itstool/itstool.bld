@@ -1,6 +1,9 @@
 #package name
 NAME=itstool
 
+#Description
+DESC="XML to PO and back again"
+
 #package version
 VERSION=2.0.2
 

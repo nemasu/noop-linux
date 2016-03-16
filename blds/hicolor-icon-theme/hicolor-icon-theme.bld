@@ -1,6 +1,9 @@
 #package name
 NAME=hicolor-icon-theme
 
+#Description
+DESC="Freedesktop.org Hicolor icon theme"
+
 #package version
 VERSION=0.13
 

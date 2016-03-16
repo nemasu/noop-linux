@@ -1,6 +1,9 @@
 #package name
 NAME=lame
 
+#Description
+DESC="A high quality MPEG Audio Layer III (MP3) encoder"
+
 #package version
 VERSION=3.99.5-1
 DVERSION=3.99.5

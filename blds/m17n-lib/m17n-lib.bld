@@ -1,6 +1,9 @@
 #package name
 NAME=m17n-lib
 
+#Description
+DESC="Multilingual text processing library (runtimes)"
+
 #package version
 VERSION=1.7.0
 DVERSION=1.7.0

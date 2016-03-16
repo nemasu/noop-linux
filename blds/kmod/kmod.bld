@@ -1,6 +1,9 @@
 #package name
 NAME=kmod
 
+#Description
+DESC="Linux kernel module management tools and library"
+
 #package version
 VERSION=19
 

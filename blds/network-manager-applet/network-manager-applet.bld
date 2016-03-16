@@ -1,6 +1,9 @@
 #package name
 NAME=network-manager-applet
 
+#Description
+DESC="Applet for managing network connections"
+
 #package version
 VERSION=1.0.10
 

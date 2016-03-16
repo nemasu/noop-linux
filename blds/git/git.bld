@@ -1,6 +1,9 @@
 #package name
 NAME=git
 
+#Description
+DESC="the fast distributed version control system"
+
 #package version
 VERSION=2.3.3
 

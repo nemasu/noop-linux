@@ -1,6 +1,9 @@
 #package name
 NAME=linux-pam
 
+#Description
+DESC="PAM (Pluggable Authentication Modules) library"
+
 #package version
 VERSION=1.2.1
 

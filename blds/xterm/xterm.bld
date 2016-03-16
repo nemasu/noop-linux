@@ -1,6 +1,9 @@
 #package name
 NAME=xterm
 
+#Description
+DESC="X Terminal Emulator"
+
 #package version
 VERSION=320
 

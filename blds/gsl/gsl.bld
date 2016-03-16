@@ -1,6 +1,9 @@
 #package name
 NAME=gsl
 
+#Description
+DESC="The GNU Scientific Library (GSL) is a modern numerical library for C and C++ programmers"
+
 #package version
 VERSION=1.16
 

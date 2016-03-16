@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-sunffb
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.2.2-1
 DVERSION=1.2.2

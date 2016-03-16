@@ -1,6 +1,9 @@
 #package name
 NAME=libmng
 
+#Description
+DESC="A collection of routines used to create and manipulate MNG format graphics files"
+
 #package version
 VERSION=2.0.2
 

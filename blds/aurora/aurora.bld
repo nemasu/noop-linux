@@ -1,6 +1,9 @@
 #package name
 NAME=aurora
 
+#Description
+DESC="Aurora Gtk Engine"
+
 #package version
 VERSION=1.5.1
 

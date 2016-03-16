@@ -1,6 +1,9 @@
 #package name
 NAME=libXtst
 
+#Description
+DESC="X11 Testing -- Resource extension library"
+
 #package version
 VERSION=1.2.2
 

@@ -1,6 +1,9 @@
 #package name
 NAME=wiredtiger
 
+#Description
+DESC="High performance, scalable, production quality, NoSQL, Open Source extensible platform for data management"
+
 #package version
 VERSION=2.7.0
 

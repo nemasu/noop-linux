@@ -1,6 +1,9 @@
 #package name
 NAME=qrencode
 
+#Description
+DESC="C library for encoding data in a QR Code symbol."
+
 #package version
 VERSION=3.4.1-1
 DVERSION=3.4.1

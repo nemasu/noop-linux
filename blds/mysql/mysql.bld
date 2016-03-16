@@ -1,6 +1,9 @@
 #package name
 NAME=mysql
 
+#Description
+DESC=""
+
 #package version
 VERSION=5.7.10
 

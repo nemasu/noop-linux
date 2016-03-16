@@ -1,6 +1,9 @@
 #package name
 NAME=iproute2
 
+#Description
+DESC="IP Routing Utilities"
+
 #package version
 VERSION=3.15.0
 

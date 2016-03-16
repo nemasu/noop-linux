@@ -1,6 +1,9 @@
 #package name
 NAME=dhcpcd
 
+#Description
+DESC="RFC2131 compliant DHCP client daemon"
+
 #package version
 VERSION=6.9.4
 

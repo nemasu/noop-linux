@@ -1,6 +1,9 @@
 #package name
 NAME=pinentry
 
+#Description
+DESC="Collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol"
+
 #package version
 VERSION=0.9.7
 

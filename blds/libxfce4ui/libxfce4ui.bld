@@ -1,6 +1,9 @@
 #package name
 NAME=libxfce4ui
 
+#Description
+DESC="Commonly used Xfce widgets among Xfce applications"
+
 #package version
 VERSION=4.12.1
 

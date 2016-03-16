@@ -1,6 +1,9 @@
 #package name
 NAME=tdb
 
+#Description
+DESC="A Trivial Database similar to GDBM but allows simultaneous commits"
+
 #package version
 VERSION=1.3.8
 DVERSION=1.3.8

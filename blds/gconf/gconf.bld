@@ -1,6 +1,9 @@
 #package name
 NAME=gconf
 
+#Description
+DESC="A configuration database system"
+
 #package version
 VERSION=3.2.6
 

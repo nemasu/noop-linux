@@ -1,6 +1,9 @@
 #package name
 NAME=evas_generic_loaders
 
+#Description
+DESC="Additional generic loaders for Evas"
+
 #package version
 VERSION=1.13.0
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libmateweather
 
+#Description
+DESC="Provides access to weather information from the Internet."
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

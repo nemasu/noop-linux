@@ -1,6 +1,9 @@
 #package name
 NAME=m4
 
+#Description
+DESC="The GNU macro processor"
+
 #package version
 VERSION=1.4.17
 

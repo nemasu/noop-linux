@@ -1,6 +1,9 @@
 #package name
 NAME=libnl
 
+#Description
+DESC="Library for applications dealing with netlink sockets"
+
 #package version
 VERSION=3.2.11
 

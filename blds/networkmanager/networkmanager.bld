@@ -1,6 +1,9 @@
 #package name
 NAME=networkmanager
 
+#Description
+DESC="Network Management daemon"
+
 #package version
 VERSION=1.0.10
 DVERSION=1.0.10

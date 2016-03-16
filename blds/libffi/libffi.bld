@@ -1,6 +1,9 @@
 #package name
 NAME=libffi
 
+#Description
+DESC="Portable foreign function interface library"
+
 #package version
 VERSION=3.1
 

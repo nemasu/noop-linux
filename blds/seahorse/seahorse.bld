@@ -1,6 +1,9 @@
 #package name
 NAME=seahorse
 
+#Description
+DESC="GNOME application for managing PGP keys."
+
 #package version
 VERSION=3.14.0
 

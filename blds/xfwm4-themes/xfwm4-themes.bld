@@ -1,6 +1,9 @@
 #package name
 NAME=xfwm4-themes
 
+#Description
+DESC="A set of additional themes for the Xfce window manager"
+
 #package version
 VERSION=4.10.0
 

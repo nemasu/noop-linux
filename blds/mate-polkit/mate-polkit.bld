@@ -1,6 +1,9 @@
 #package name
 NAME=mate-polkit
 
+#Description
+DESC="PolicyKit integration for the MATE desktop"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

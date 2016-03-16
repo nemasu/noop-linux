@@ -1,6 +1,9 @@
 #package name
 NAME=p11-kit
 
+#Description
+DESC="Library to work with PKCS#11 modules"
+
 #package version
 VERSION=0.23.2
 

@@ -1,6 +1,9 @@
 #package name
 NAME=xkbevd
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.1.3
 

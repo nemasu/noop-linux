@@ -1,6 +1,9 @@
 #package name
 NAME=stfl
 
+#Description
+DESC="Library implementing a curses-based widget set for text terminals"
+
 #package version
 VERSION=0.23
 

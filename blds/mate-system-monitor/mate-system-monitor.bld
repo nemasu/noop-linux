@@ -1,6 +1,9 @@
 #package name
 NAME=mate-system-monitor
 
+#Description
+DESC="A system monitor for MATE"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

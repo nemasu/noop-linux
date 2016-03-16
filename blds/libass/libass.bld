@@ -1,6 +1,9 @@
 #package name
 NAME=libass
 
+#Description
+DESC="A portable library for SSA/ASS subtitles rendering"
+
 #package version
 VERSION=0.12.3
 

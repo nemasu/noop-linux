@@ -1,6 +1,9 @@
 #package name
 NAME=xorg-fonts75dpi
 
+#Description
+DESC="Xorg fonts 75dpi"
+
 #package version
 VERSION=1.0.1
 

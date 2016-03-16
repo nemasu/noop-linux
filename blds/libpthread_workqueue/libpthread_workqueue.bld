@@ -1,6 +1,9 @@
 #package name
 NAME=libpthread_workqueue
 
+#Description
+DESC=""
+
 #package version
 VERSION=0.9
 

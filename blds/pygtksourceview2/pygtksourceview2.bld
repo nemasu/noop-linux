@@ -1,6 +1,9 @@
 #package name
 NAME=pygtksourceview2
 
+#Description
+DESC="Python bindings for gtksourceview2"
+
 #package version
 VERSION=2.10.1
 

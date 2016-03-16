@@ -1,6 +1,9 @@
 #package name
 NAME=chromium-plugins
 
+#Description
+DESC="Pepper flash plugin for Chromium"
+
 #package version
 VERSION=49.0.2623.75
 #UPDATE post stuff

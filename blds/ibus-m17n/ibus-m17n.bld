@@ -1,6 +1,9 @@
 #package name
 NAME=ibus-m17n
 
+#Description
+DESC="M17N engine for IBus"
+
 #package version
 VERSION=1.3.4
 

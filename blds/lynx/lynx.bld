@@ -1,6 +1,9 @@
 #package name
 NAME=lynx
 
+#Description
+DESC="A text browser for the World Wide Web"
+
 #package version
 VERSION=2.8.8-2
 DVERSION=2.8.8rel.2

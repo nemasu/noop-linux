@@ -1,6 +1,9 @@
 #package name
 NAME=modemmanager
 
+#Description
+DESC="Mobile broadband modem management service"
+
 #package version
 VERSION=1.4.10
 

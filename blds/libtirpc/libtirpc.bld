@@ -1,6 +1,9 @@
 #package name
 NAME=libtirpc
 
+#Description
+DESC="Transport Independent RPC library (SunRPC replacement)"
+
 #package version
 VERSION=0.2.2
 

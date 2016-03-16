@@ -1,6 +1,9 @@
 #package name
 NAME=transcode
 
+#Description
+DESC="A video/DVD ripper and encoder for the terminal/console"
+
 #package version
 VERSION=1.1.7-3
 DVERSION=1.1.7

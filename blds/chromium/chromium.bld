@@ -8,6 +8,9 @@
 # ISSPECIAL
 
 NAME=chromium
+
+#Description
+DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
 DVERSION=49.0.2623.75
 VERSION=49.0.2623.75
 ISUSR=1

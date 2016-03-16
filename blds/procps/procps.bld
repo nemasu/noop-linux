@@ -1,6 +1,9 @@
 #package name
 NAME=procps
 
+#Description
+DESC=""
+
 #package version
 VERSION=3.3.11-1
 DVERSION=3.3.11

@@ -1,6 +1,9 @@
 #package name
 NAME=icoutils
 
+#Description
+DESC="Extracts and converts images in MS Windows(R) icon and cursor files."
+
 #package version
 VERSION=0.31.0
 

@@ -1,6 +1,9 @@
 #package name
 NAME=mesalib
 
+#Description
+DESC=""
+
 #package version
 VERSION=11.0.2
 DVERSION=11.0.2

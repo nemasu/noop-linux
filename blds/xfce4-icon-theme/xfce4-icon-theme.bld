@@ -1,6 +1,9 @@
 #package name
 NAME=xfce4-icon-theme
 
+#Description
+DESC=""
+
 #package version
 VERSION=4.4.3
 

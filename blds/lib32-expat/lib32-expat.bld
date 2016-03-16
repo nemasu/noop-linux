@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-expat
 
+#Description
+DESC="An XML Parser library written in C (32 bit)"
+
 #package version
 VERSION=2.1.0
 

@@ -1,6 +1,9 @@
 #package name
 NAME=rsync
 
+#Description
+DESC="A file transfer program to keep remote files in sync"
+
 #package version
 VERSION=3.1.1
 

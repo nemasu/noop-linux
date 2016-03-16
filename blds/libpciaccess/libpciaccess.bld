@@ -1,6 +1,9 @@
 #package name
 NAME=libpciaccess
 
+#Description
+DESC="X11 PCI access library"
+
 #package version
 VERSION=0.13.3
 

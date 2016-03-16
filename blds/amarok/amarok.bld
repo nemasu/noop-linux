@@ -1,6 +1,9 @@
 #package name
 NAME=amarok
 
+#Description
+DESC="The powerful music player for KDE"
+
 #package version
 VERSION=2.8.0-1
 DVERSION=2.8.0

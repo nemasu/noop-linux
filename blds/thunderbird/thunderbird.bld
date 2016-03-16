@@ -1,6 +1,9 @@
 #package name
 NAME=thunderbird
 
+#Description
+DESC="Standalone Mail/News reader"
+
 #package version
 VERSION=38.3.0-1
 DVERSION=38.3.0

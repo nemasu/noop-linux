@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-input-mouse
 
+#Description
+DESC="X.org mouse input driver"
+
 #package version
 VERSION=1.9.1-1
 DVERSION=1.9.1

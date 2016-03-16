@@ -1,6 +1,9 @@
 #package name
 NAME=busybox
 
+#Description
+DESC="Utilities for rescue and embedded systems"
+
 #package version
 VERSION=1.24.1
 DVERSION=1.24.1

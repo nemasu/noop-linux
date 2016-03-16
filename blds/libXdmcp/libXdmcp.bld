@@ -1,6 +1,9 @@
 #package name
 NAME=libXdmcp
 
+#Description
+DESC="X11 Display Manager Control Protocol library"
+
 #package version
 VERSION=1.1.2
 

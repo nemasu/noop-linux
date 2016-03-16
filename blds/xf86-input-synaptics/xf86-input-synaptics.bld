@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-input-synaptics
 
+#Description
+DESC="Synaptics driver for notebook touchpads"
+
 #package version
 VERSION=1.8.2
 

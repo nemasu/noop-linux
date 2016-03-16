@@ -1,6 +1,9 @@
 #package name
 NAME=elfutils
 
+#Description
+DESC="Utilities to handle ELF object files and DWARF debugging information"
+
 #package version
 VERSION=0.164
 

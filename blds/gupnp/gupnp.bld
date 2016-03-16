@@ -1,6 +1,9 @@
 #package name
 NAME=gupnp
 
+#Description
+DESC="An object-oriented UPNP framework"
+
 #package version
 VERSION=0.20.12
 

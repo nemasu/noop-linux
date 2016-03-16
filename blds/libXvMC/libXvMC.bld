@@ -1,6 +1,9 @@
 #package name
 NAME=libXvMC
 
+#Description
+DESC="X11 Video Motion Compensation extension library"
+
 #package version
 VERSION=1.0.9
 

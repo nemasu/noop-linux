@@ -1,6 +1,9 @@
 #package name
 NAME=libwnck2
 
+#Description
+DESC=""
+
 #package version
 VERSION=2.31.0
 

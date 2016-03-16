@@ -1,6 +1,9 @@
 #package name
 NAME=libva
 
+#Description
+DESC="Video Acceleration (VA) API for Linux"
+
 #package version
 VERSION=1.6.0
 

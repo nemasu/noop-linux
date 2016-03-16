@@ -1,6 +1,9 @@
 #package name
 NAME=json-c
 
+#Description
+DESC="A JSON implementation in C"
+
 #package version
 VERSION=0.12
 

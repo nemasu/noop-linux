@@ -1,6 +1,9 @@
 #package name
 NAME=bin86
 
+#Description
+DESC="A complete 8086 assembler and loader"
+
 #package version
 VERSION=0.16.21
 

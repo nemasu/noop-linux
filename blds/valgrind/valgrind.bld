@@ -1,6 +1,9 @@
 #package name
 NAME=valgrind
 
+#Description
+DESC="A tool to help find memory-management problems in programs"
+
 #package version
 VERSION=3.10.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=imagemagick
 
+#Description
+DESC="Provides functionalities about Internationalized Domain Name processing"
+
 #package version
 VERSION=6.9.2-8
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libXxf86vm
 
+#Description
+DESC="X11 XFree86 video mode extension library"
+
 #package version
 VERSION=1.1.4
 

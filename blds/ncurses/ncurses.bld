@@ -1,6 +1,9 @@
 #package name
 NAME=ncurses
 
+#Description
+DESC="System V Release 4.0 curses emulation library"
+
 #package version
 VERSION=6.0
 

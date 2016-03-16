@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-ast
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.0.1-1
 DVERSION=1.0.1

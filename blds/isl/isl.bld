@@ -1,6 +1,9 @@
 #package name
 NAME=isl
 
+#Description
+DESC="Library for manipulating sets and relations of integer points bounded by linear constraints"
+
 #package version
 VERSION=0.12.2
 

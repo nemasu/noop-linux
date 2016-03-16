@@ -1,6 +1,9 @@
 #package name
 NAME=avr-gdb
 
+#Description
+DESC="The GNU Debugger for AVR"
+
 #package version
 VERSION=7.10.1
 

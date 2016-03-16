@@ -1,6 +1,9 @@
 #package name
 NAME=lua
 
+#Description
+DESC="Powerful lightweight programming language designed for extending applications"
+
 #package version
 VERSION=5.3.2
 MAJOR=${VERSION:0:3}

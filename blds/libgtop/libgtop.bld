@@ -1,6 +1,9 @@
 #package name
 NAME=libgtop
 
+#Description
+DESC="A library that reads information about processes and the running system"
+
 #package version
 VERSION=2.31.4
 

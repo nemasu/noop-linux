@@ -1,6 +1,9 @@
 #package name
 NAME=xcmiscproto
 
+#Description
+DESC="X11 XC-Miscellaneous extension wire protocol"
+
 #package version
 VERSION=1.2.2
 

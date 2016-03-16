@@ -1,6 +1,9 @@
 #package name
 NAME=sasl
 
+#Description
+DESC=""
+
 #package version
 VERSION=2.1.26-1
 DVERSION=2.1.26

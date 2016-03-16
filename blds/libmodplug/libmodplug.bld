@@ -1,6 +1,9 @@
 #package name
 NAME=libmodplug
 
+#Description
+DESC="A MOD playing library"
+
 #package version
 VERSION=0.8.8.5
 

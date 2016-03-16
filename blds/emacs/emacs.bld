@@ -1,6 +1,9 @@
 #package name
 NAME=emacs
 
+#Description
+DESC="The extensible, customizable, self-documenting real-time display editor"
+
 #package version
 VERSION=24.5-1
 DVERSION=24.5

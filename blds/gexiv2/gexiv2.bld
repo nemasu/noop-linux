@@ -1,6 +1,9 @@
 #package name
 NAME=gexiv2
 
+#Description
+DESC="GObject wrapper around the Exiv2 photo metadata library"
+
 #package version
 VERSION=0.10.3
 

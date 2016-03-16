@@ -1,6 +1,9 @@
 #package name
 NAME=dovecot
 
+#Description
+DESC="An IMAP and POP3 server written with security primarily in mind"
+
 #package version
 VERSION=2.2.21-1
 DVERSION=2.2.21

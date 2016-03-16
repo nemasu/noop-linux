@@ -1,6 +1,9 @@
 #package name
 NAME=subversion
 
+#Description
+DESC="A Modern Concurrent Version Control System"
+
 #package version
 VERSION=1.9.3
 DVERSION=1.9.3

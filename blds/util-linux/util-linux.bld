@@ -1,6 +1,9 @@
 #package name
 NAME=util-linux
 
+#Description
+DESC="Miscellaneous system utilities for Linux"
+
 #package version
 VERSION=2.27.1
 DVERSION=2.27.1

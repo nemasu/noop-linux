@@ -1,6 +1,9 @@
 #package name
 NAME=at-spi2-core
 
+#Description
+DESC="Protocol definitions and daemon for D-Bus at-spi"
+
 #package version
 VERSION=2.12.0
 

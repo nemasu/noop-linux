@@ -1,6 +1,9 @@
 #package name
 NAME=mpc
 
+#Description
+DESC="Minimalist command line interface to MPD"
+
 #package version
 VERSION=1.0.3
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libomxil-bellagio
 
+#Description
+DESC="An opensource implementation of the OpenMAX Integration Layer API"
+
 #package version
 VERSION=0.9.3
 

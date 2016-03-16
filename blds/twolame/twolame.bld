@@ -1,6 +1,9 @@
 #package name
 NAME=twolame
 
+#Description
+DESC="An optimized MPEG Audio Layer 2 (MP2) encoder"
+
 #package version
 VERSION=0.3.13
 

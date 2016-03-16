@@ -1,6 +1,9 @@
 #package name
 NAME=wxgtk
 
+#Description
+DESC="GTK+ implementation of wxWidgets API for GUI"
+
 #package version
 VERSION=3.0.2-1
 DVERSION=3.0.2

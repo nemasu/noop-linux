@@ -1,6 +1,9 @@
 #package name
 NAME=pciutils
 
+#Description
+DESC="PCI bus configuration space access library and tools"
+
 #package version
 VERSION=3.1.9
 

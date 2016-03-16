@@ -1,6 +1,9 @@
 #package name
 NAME=libmcrypt
 
+#Description
+DESC="A library which provides a uniform interface to several symmetric encryption algorithms"
+
 #package version
 VERSION=2.5.8
 

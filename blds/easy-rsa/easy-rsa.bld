@@ -1,6 +1,9 @@
 #package name
 NAME=easy-rsa
 
+#Description
+DESC="Simple shell based CA utility"
+
 #package version
 VERSION=3.0.1
 

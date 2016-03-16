@@ -1,6 +1,9 @@
 #package name
 NAME=net-tools
 
+#Description
+DESC="Configuration tools for Linux networking"
+
 #package version
 VERSION=1.60
 

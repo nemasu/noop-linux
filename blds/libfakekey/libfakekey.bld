@@ -1,6 +1,9 @@
 #package name
 NAME=libfakekey
 
+#Description
+DESC="X virtual keyboard library."
+
 #package version
 VERSION=0.1
 

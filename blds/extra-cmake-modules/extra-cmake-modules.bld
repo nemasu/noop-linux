@@ -1,6 +1,9 @@
 #package name
 NAME=extra-cmake-modules
 
+#Description
+DESC="Extra modules and scripts for CMake"
+
 #package version
 VERSION=5.17.0
 

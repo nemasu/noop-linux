@@ -1,6 +1,9 @@
 #package name
 NAME=libXaw
 
+#Description
+DESC="X11 Athena Widget library"
+
 #package version
 VERSION=1.0.12
 

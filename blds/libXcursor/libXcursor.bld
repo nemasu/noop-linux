@@ -1,6 +1,9 @@
 #package name
 NAME=libXcursor
 
+#Description
+DESC="X cursor management library"
+
 #package version
 VERSION=1.1.14
 

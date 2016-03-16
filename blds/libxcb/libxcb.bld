@@ -1,6 +1,9 @@
 #package name
 NAME=libxcb
 
+#Description
+DESC="X11 client-side library"
+
 #package version
 VERSION=1.11
 

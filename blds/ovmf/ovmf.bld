@@ -1,6 +1,9 @@
 #package name
 NAME=ovmf
 
+#Description
+DESC="Tianocore UEFI firmware for qemu."
+
 #package version
 VERSION=20150805
 

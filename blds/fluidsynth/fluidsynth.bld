@@ -1,6 +1,9 @@
 #package name
 NAME=fluidsynth
 
+#Description
+DESC="A real-time software synthesizer based on the SoundFont 2 specifications"
+
 #package version
 VERSION=1.1.6-1
 DVERSION=1.1.6

@@ -1,6 +1,9 @@
 #package name
 NAME=dmidecode
 
+#Description
+DESC="Desktop Management Interface table related utilities"
+
 #package version
 VERSION=2.12
 

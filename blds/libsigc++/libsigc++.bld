@@ -1,6 +1,9 @@
 #package name
 NAME=libsigc++
 
+#Description
+DESC="Library for accessing a shoutcast/icecast server"
+
 #package version
 VERSION=2.6.2
 

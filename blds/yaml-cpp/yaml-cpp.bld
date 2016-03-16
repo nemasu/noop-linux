@@ -1,6 +1,9 @@
 #package name
 NAME=yaml-cpp
 
+#Description
+DESC="YAML parser and emitter in C++, written around the YAML 1.2 spec"
+
 #package version
 VERSION=0.5.3
 

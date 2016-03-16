@@ -1,6 +1,9 @@
 #package name
 NAME=wine
 
+#Description
+DESC="A compatibility layer for running Windows programs"
+
 #package version
 VERSION=1.8
 DVERSION=1.8

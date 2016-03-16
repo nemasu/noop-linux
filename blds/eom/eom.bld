@@ -1,6 +1,9 @@
 #package name
 NAME=eom
 
+#Description
+DESC="An image viewing and cataloging program for MATE (GTK2 version)"
+
 #package version
 VERSION=1.10.2
 DVERSION=1.10.2

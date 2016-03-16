@@ -1,6 +1,9 @@
 #package name
 NAME=opus
 
+#Description
+DESC="Codec designed for interactive speech and audio transmission over the Internet"
+
 #package version
 VERSION=1.1
 

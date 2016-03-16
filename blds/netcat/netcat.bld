@@ -1,6 +1,9 @@
 #package name
 NAME=netcat
 
+#Description
+DESC=""
+
 #package version
 VERSION=0.7.1
 

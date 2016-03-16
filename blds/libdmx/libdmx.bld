@@ -1,6 +1,9 @@
 #package name
 NAME=libdmx
 
+#Description
+DESC="X11 Distributed Multihead extension library"
+
 #package version
 VERSION=1.1.3
 

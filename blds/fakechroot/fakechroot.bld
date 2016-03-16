@@ -1,6 +1,9 @@
 #package name
 NAME=fakechroot
 
+#Description
+DESC="Gives a fake chroot environment"
+
 #package version
 VERSION=2.18
 

@@ -1,6 +1,9 @@
 #package name
 NAME=fontconfig
 
+#Description
+DESC="A library for configuring and customizing font access"
+
 #package version
 VERSION=2.11.94
 

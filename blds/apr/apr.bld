@@ -1,6 +1,9 @@
 #package name
 NAME=apr
 
+#Description
+DESC="The Apache Portable Runtime"
+
 #package version
 VERSION=1.5.2
 

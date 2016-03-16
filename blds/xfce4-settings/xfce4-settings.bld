@@ -1,6 +1,9 @@
 #package name
 NAME=xfce4-settings
 
+#Description
+DESC="Settings manager for xfce"
+
 #package version
 VERSION=4.12.0
 

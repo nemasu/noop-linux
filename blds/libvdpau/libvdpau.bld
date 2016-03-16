@@ -1,6 +1,9 @@
 #package name
 NAME=libvdpau
 
+#Description
+DESC="Nvidia VDPAU library"
+
 #package version
 VERSION=1.1
 

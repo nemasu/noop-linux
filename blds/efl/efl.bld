@@ -1,6 +1,9 @@
 #package name
 NAME=efl
 
+#Description
+DESC="Enlightenment Foundation Libraries"
+
 #package version
 VERSION=1.13.1-1
 DVERSION=1.13.1

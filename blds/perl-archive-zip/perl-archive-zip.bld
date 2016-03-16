@@ -1,4 +1,7 @@
 NAME=perl-archive-zip
+
+#Description
+DESC="Provide a perl interface to ZIP archive files"
 VERSION=1.56
 ISUSR=1
 SRC=http://search.cpan.org/CPAN/authors/id/A/AD/ADAMK/Archive-Zip-1.30.tar.gz

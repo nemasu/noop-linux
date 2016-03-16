@@ -1,6 +1,9 @@
 #package name
 NAME=xproto
 
+#Description
+DESC="X11 core wire protocol and auxiliary headers"
+
 #package version
 VERSION=7.0.28
 

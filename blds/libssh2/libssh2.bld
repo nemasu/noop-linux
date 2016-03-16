@@ -1,6 +1,9 @@
 #package name
 NAME=libssh2
 
+#Description
+DESC="A library implementing the SSH2 protocol as defined by Internet Drafts"
+
 #package version
 VERSION=1.4.3
 

@@ -1,6 +1,9 @@
 #package name
 NAME=mate-icon-theme
 
+#Description
+DESC="MATE icon theme"
+
 #package version
 VERSION=1.10.1
 DVERSION=1.10.1

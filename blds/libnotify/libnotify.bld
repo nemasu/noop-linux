@@ -1,6 +1,9 @@
 #package name
 NAME=libnotify
 
+#Description
+DESC="Library for sending desktop notifications"
+
 #package version
 VERSION=0.7.5-1
 DVERSION=0.7.5

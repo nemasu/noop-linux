@@ -1,6 +1,9 @@
 #package name
 NAME=mesa-demos
 
+#Description
+DESC="Mesa demos and tools"
+
 #package version
 VERSION=8.2.0
 

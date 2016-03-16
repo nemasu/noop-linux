@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-e2fsprogs
 
+#Description
+DESC="Ext2 filesystem libraries (32-bit)"
+
 #package version
 VERSION=1.42.6
 

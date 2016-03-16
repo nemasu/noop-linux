@@ -1,6 +1,9 @@
 #package name
 NAME=terminology
 
+#Description
+DESC="EFL based terminal emulator"
+
 #package version
 VERSION=0.8.0
 

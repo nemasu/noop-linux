@@ -1,6 +1,9 @@
 #package name
 NAME=libarchive
 
+#Description
+DESC="library that can create and read several streaming archive formats"
+
 #package version
 VERSION=3.1.2
 

@@ -1,6 +1,9 @@
 #package name
 NAME=cronie
 
+#Description
+DESC="Daemon that runs specified programs at scheduled times and related tools"
+
 #package version
 VERSION=1.4.11
 

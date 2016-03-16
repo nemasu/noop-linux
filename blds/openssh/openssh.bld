@@ -1,6 +1,9 @@
 #package name
 NAME=openssh
 
+#Description
+DESC="Free version of the SSH connectivity tools"
+
 #package version
 VERSION=6.6-1
 

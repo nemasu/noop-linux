@@ -1,6 +1,9 @@
 #package name
 NAME=unzip
 
+#Description
+DESC="For extracting and viewing files in .zip archives"
+
 #package version
 VERSION=6.0
 

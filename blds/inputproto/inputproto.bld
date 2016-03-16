@@ -1,6 +1,9 @@
 #package name
 NAME=inputproto
 
+#Description
+DESC="X11 Input extension wire protocol"
+
 #package version
 VERSION=2.3.1
 

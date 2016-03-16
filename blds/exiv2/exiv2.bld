@@ -1,6 +1,9 @@
 #package name
 NAME=exiv2
 
+#Description
+DESC="Exif, Iptc and XMP metadata manipulation library and tools"
+
 #package version
 VERSION=0.25
 

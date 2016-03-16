@@ -1,6 +1,9 @@
 #package name
 NAME=orc
 
+#Description
+DESC="The Oil Runtime Compiler"
+
 #package version
 VERSION=0.4.23
 

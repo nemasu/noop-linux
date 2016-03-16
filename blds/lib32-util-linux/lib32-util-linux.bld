@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-util-linux
 
+#Description
+DESC="Miscellaneous system utilities for Linux (32-bit)"
+
 #package version
 VERSION=2.25
 DVERSION=2.25

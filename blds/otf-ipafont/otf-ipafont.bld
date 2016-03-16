@@ -1,6 +1,9 @@
 #package name
 NAME=otf-ipafont
 
+#Description
+DESC="Japanese outline fonts by Information-technology Promotion Agency, Japan (IPA)"
+
 #package version
 VERSION=00303
 

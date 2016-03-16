@@ -1,6 +1,9 @@
 #package name
 NAME=glproto
 
+#Description
+DESC="X11 OpenGL extension wire protocol"
+
 #package version
 VERSION=1.4.17
 

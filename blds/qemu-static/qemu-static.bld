@@ -1,6 +1,9 @@
 #package name
 NAME=qemu-static
 
+#Description
+DESC=""
+
 #package version
 VERSION=2.4.1
 

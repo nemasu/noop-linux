@@ -1,6 +1,9 @@
 #package name
 NAME=ttf-freefont
 
+#Description
+DESC="Set of free outline fonts covering the Unicode character set"
+
 #package version
 VERSION=20120503
 

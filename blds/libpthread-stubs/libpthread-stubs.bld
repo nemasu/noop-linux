@@ -1,6 +1,9 @@
 #package name
 NAME=libpthread-stubs
 
+#Description
+DESC=""
+
 #package version
 VERSION=0.1
 

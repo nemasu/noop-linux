@@ -1,6 +1,9 @@
 #package name
 NAME=nfs-utils
 
+#Description
+DESC="Support programs for Network File Systems"
+
 #package version
 VERSION=1.3.2
 

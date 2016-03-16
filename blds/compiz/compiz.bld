@@ -1,6 +1,9 @@
 #package name
 NAME=compiz
 
+#Description
+DESC="Compositing window manager for X Windows"
+
 #package version
 VERSION=0.9.12.1
 

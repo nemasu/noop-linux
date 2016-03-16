@@ -1,6 +1,9 @@
 #package name
 NAME=libutempter
 
+#Description
+DESC="Interface for terminal emulators such as screen and xterm to record user sessions to utmp and wtmp files"
+
 #package version
 VERSION=1.1.6
 

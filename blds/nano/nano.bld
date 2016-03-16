@@ -1,6 +1,9 @@
 #package name
 NAME=nano
 
+#Description
+DESC="Pico editor clone with enhancements"
+
 #package version
 VERSION=2.5.0
 

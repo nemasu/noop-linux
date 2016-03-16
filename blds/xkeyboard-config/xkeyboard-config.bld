@@ -1,6 +1,9 @@
 #package name
 NAME=xkeyboard-config
 
+#Description
+DESC="X keyboard configuration files"
+
 #package version
 VERSION=2.14
 

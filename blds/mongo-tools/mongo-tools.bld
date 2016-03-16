@@ -1,6 +1,9 @@
 #package name
 NAME=mongo-tools
 
+#Description
+DESC=""
+
 
 #package version
 VERSION=3.3.1

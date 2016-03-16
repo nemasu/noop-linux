@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-input-void
 
+#Description
+DESC="X.org void input driver"
+
 #package version
 VERSION=1.4.0-2
 DVERSION=1.4.0

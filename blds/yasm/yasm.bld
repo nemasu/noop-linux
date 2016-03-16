@@ -1,6 +1,9 @@
 #package name
 NAME=yasm
 
+#Description
+DESC="A rewrite of NASM to allow for multiple syntax supported (NASM, TASM, GAS, etc.)"
+
 #package version
 VERSION=1.3.0
 

@@ -1,6 +1,9 @@
 #package name
 NAME=webkitgtk
 
+#Description
+DESC="GTK+ Web content engine library"
+
 #package version
 VERSION=2.10.4
 DVERSION=2.10.4

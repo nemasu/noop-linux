@@ -1,6 +1,9 @@
 #package name
 NAME=libwnck
 
+#Description
+DESC="Window Navigator Construction Kit"
+
 #package version
 VERSION=3.14.0
 

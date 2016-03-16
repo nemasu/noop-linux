@@ -1,6 +1,9 @@
 #package name
 NAME=startup-notification
 
+#Description
+DESC="Monitor and display application startup"
+
 #package version
 VERSION=0.12
 

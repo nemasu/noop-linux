@@ -1,6 +1,9 @@
 #package name
 NAME=qpdf
 
+#Description
+DESC="QPDF: A Content-Preserving PDF Transformation System"
+
 #package version
 VERSION=6.0.0
 

@@ -1,6 +1,9 @@
 #package name
 NAME=samba
 
+#Description
+DESC="Systems programming language focused on safety, speed and concurrency"
+
 #package version
 VERSION=4.3.4
 DVERSION=4.3.4

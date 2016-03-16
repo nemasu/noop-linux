@@ -1,6 +1,9 @@
 #package name
 NAME=readline
 
+#Description
+DESC="GNU readline library"
+
 #package version
 VERSION=6.3
 

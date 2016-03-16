@@ -1,6 +1,9 @@
 #package name
 NAME=imlib2
 
+#Description
+DESC="Library that does image file loading and saving as well as rendering, manipulation, arbitrary polygon support"
+
 #package version
 VERSION=1.4.5
 

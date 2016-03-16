@@ -1,6 +1,9 @@
 #package name
 NAME=yelp-tools
 
+#Description
+DESC="Tools for creating Yelp documentation"
+
 #package version
 VERSION=3.16.1
 

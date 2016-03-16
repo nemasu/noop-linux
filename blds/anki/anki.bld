@@ -1,6 +1,9 @@
 #package name
 NAME=anki
 
+#Description
+DESC="Helps you remember facts (like words/phrases in a foreign language) efficiently"
+
 #package version
 VERSION=2.0.33
 

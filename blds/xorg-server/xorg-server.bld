@@ -1,6 +1,9 @@
 #package name
 NAME=xorg-server
 
+#Description
+DESC="X.Org font utilities"
+
 #package version
 VERSION=1.17.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libshout
 
+#Description
+DESC="Library for accessing a shoutcast/icecast server"
+
 #package version
 VERSION=2.3.1
 

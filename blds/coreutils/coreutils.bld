@@ -1,5 +1,8 @@
 #!/bin/bash
 NAME=coreutils
+
+#Description
+DESC="The basic file, shell and text manipulation utilities of the GNU operating system"
 VERSION=8.24
 ISUSR=1
 SRC=http://ftp.gnu.org/gnu/coreutils/coreutils-${VERSION}.tar.xz

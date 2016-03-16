@@ -1,6 +1,9 @@
 #package name
 NAME=bash
 
+#Description
+DESC="The GNU Bourne Again shell"
+
 #package version
 VERSION=4.3-42
 DVERSION=4.3

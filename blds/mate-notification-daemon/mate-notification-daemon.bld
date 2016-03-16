@@ -1,6 +1,9 @@
 #package name
 NAME=mate-notification-daemon
 
+#Description
+DESC="Notification daemon for MATE"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

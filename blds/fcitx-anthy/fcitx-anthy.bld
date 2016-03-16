@@ -1,6 +1,9 @@
 #package name
 NAME=fcitx-anthy
 
+#Description
+DESC="Fcitx Wrapper for anthy."
+
 #package version
 VERSION=0.2.1
 

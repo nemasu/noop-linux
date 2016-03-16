@@ -1,6 +1,9 @@
 #package name
 NAME=groff
 
+#Description
+DESC="GNU troff text-formatting system"
+
 #package version
 VERSION=1.22.3
 

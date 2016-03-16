@@ -1,6 +1,9 @@
 #package name
 NAME=aria2
 
+#Description
+DESC="Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink"
+
 #package version
 VERSION=1.19.0
 

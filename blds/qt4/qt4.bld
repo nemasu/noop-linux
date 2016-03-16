@@ -1,4 +1,7 @@
 NAME=qt4
+
+#Description
+DESC="A cross-platform application and UI framework (version 4)"
 VERSION=4.8.7-2
 DVERSION=4.8.7
 ISUSR=1

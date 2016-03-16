@@ -1,6 +1,9 @@
 #package name
 NAME=mate-sensors-applet
 
+#Description
+DESC="A MATE Panel applet to display readings from hardware sensors, including CPU temperature, fan speeds and voltage readings. (GTK2 version)"
+
 #package version
 VERSION=1.10.2
 DVERSION=1.10.2

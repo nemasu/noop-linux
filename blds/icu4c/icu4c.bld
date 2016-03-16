@@ -1,6 +1,9 @@
 #package name
 NAME=icu4c
 
+#Description
+DESC="International Components for Unicode library"
+
 #package version
 VERSION=56.1
 

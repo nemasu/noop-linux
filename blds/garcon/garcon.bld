@@ -1,6 +1,9 @@
 #package name
 NAME=garcon
 
+#Description
+DESC="Implementation of the freedesktop.org menu specification"
+
 #package version
 VERSION=0.5.0
 

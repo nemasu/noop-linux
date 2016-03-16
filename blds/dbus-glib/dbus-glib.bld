@@ -1,6 +1,9 @@
 #package name
 NAME=dbus-glib
 
+#Description
+DESC="GLib bindings for DBUS"
+
 #package version
 VERSION=0.100
 

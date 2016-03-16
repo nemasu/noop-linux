@@ -1,6 +1,9 @@
 #package name
 NAME=xorg-docs
 
+#Description
+DESC="X.org documentations"
+
 #package version
 VERSION=1.7
 

@@ -8,6 +8,9 @@
 # ISSPECIAL
 
 NAME=lib32-zlib
+
+#Description
+DESC="Compression library implementing the deflate compression method found in gzip and PKZIP (32-bit)"
 VERSION=1.2.7
 ISUSR=1
 SRC=http://zlib.net/zlib-${VERSION}.tar.bz2

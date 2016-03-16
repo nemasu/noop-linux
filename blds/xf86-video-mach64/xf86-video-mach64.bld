@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-mach64
 
+#Description
+DESC="X.org mach64 video driver"
+
 #package version
 VERSION=6.9.4-1
 DVERSION=6.9.4

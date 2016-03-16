@@ -1,6 +1,9 @@
 #package name
 NAME=bumblebee
 
+#Description
+DESC="NVIDIA Optimus support for Linux through VirtualGL"
+
 #package version
 VERSION=3.2.1
 

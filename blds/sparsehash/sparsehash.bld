@@ -1,6 +1,9 @@
 #package name
 NAME=sparsehash
 
+#Description
+DESC="Library that contains several hash-map implementations, including implementations that optimize for space or speed."
+
 #package version
 VERSION=2.0.2
 

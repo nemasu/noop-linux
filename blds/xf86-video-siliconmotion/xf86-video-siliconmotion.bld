@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-siliconmotion
 
+#Description
+DESC="X.org siliconmotion video driver"
+
 #package version
 VERSION=1.7.7-1
 DVERSION=1.7.7

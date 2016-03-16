@@ -1,6 +1,9 @@
 #package name
 NAME=randrproto
 
+#Description
+DESC="X11 RandR extension wire protocol"
+
 #package version
 VERSION=1.5.0
 

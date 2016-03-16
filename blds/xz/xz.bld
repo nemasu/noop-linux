@@ -1,6 +1,9 @@
 #package name
 NAME=xz
 
+#Description
+DESC="Library and command line tools for XZ and LZMA compressed files"
+
 #package version
 VERSION=5.0.3
 

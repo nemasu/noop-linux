@@ -1,6 +1,9 @@
 #package name
 NAME=openal
 
+#Description
+DESC="Cross-platform 3D audio library, software implementation"
+
 #package version
 VERSION=1.16.0
 

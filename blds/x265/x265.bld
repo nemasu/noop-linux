@@ -1,6 +1,9 @@
 #package name
 NAME=x265
 
+#Description
+DESC="Open Source H265/HEVC video encoder"
+
 #package version
 VERSION=1.9
 

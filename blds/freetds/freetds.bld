@@ -1,6 +1,9 @@
 #package name
 NAME=freetds
 
+#Description
+DESC="Library for accessing Sybase and MS SQL Server databases"
+
 #package version
 VERSION=0.91-1
 DVERSION=0.91

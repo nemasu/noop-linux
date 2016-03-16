@@ -1,6 +1,9 @@
 #package name
 NAME=steam
 
+#Description
+DESC="Digital distribution client bootstrap package"
+
 #package version
 VERSION=1.0.0.50
 

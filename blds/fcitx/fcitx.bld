@@ -1,6 +1,9 @@
 #package name
 NAME=fcitx
 
+#Description
+DESC="A fast terminal emulator for linux with frame buffer device or VESA video card"
+
 #package version
 VERSION=4.2.9
 DVERSION=4.2.9

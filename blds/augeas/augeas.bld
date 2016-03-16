@@ -1,6 +1,9 @@
 #package name
 NAME=augeas
 
+#Description
+DESC="A configuration editing tool that parses config files and transforms them into a tree"
+
 #package version
 VERSION=1.4.0
 

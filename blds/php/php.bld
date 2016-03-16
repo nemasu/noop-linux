@@ -1,6 +1,9 @@
 #package name
 NAME=php
 
+#Description
+DESC="Simple XML parser for perl"
+
 #package version
 VERSION=7.0.1
 DVERSION=7.0.1

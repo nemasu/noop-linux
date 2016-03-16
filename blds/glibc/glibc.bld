@@ -1,6 +1,9 @@
 #package name
 NAME=glibc
 
+#Description
+DESC="GNU C Library"
+
 #package version
 VERSION=2.23
 

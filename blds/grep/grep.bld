@@ -8,6 +8,9 @@
 # ISSPECIAL
 
 NAME=grep
+
+#Description
+DESC="A string search utility"
 VERSION=2.22
 ISUSR=1
 #SRC=ftp://ftp.gnu.org/gnu/grep/grep-${VERSION}.tar.bz2

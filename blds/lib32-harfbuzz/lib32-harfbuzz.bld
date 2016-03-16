@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-harfbuzz
 
+#Description
+DESC="OpenType text shaping engine. (32-bit)"
+
 #package version
 VERSION=0.9.32
 

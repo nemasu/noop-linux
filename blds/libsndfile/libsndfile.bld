@@ -1,6 +1,9 @@
 #package name
 NAME=libsndfile
 
+#Description
+DESC="A C library for reading and writing files containing sampled sound"
+
 #package version
 VERSION=1.0.25
 

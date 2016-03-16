@@ -1,6 +1,9 @@
 #package name
 NAME=eigen2
 
+#Description
+DESC="A lightweight C++ template library for vector and matrix math, a.k.a. linear algebra"
+
 #package version
 VERSION=2.0.17
 

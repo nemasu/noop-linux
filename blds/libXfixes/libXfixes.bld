@@ -1,6 +1,9 @@
 #package name
 NAME=libXfixes
 
+#Description
+DESC="X11 miscellaneous 'fixes' extension library"
+
 #package version
 VERSION=5.0.1
 

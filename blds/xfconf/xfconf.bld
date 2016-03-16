@@ -1,6 +1,9 @@
 #package name
 NAME=xfconf
 
+#Description
+DESC="A simple client-server configuration storage and query system"
+
 #package version
 VERSION=4.12.0
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libgpg-error
 
+#Description
+DESC="Support library for libgcrypt"
+
 #package version
 VERSION=1.21
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libxfce4util
 
+#Description
+DESC="Basic utility non-GUI functions for Xfce"
+
 #package version
 VERSION=4.12.1
 

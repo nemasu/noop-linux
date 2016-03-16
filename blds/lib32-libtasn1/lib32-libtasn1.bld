@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-libtasn1
 
+#Description
+DESC="The ASN.1 library used in GNUTLS (32 bit)"
+
 #package version
 VERSION=2.13
 

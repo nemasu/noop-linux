@@ -1,6 +1,9 @@
 #package name
 NAME=gvfs
 
+#Description
+DESC="Virtual filesystem implementation for GIO"
+
 #package version
 VERSION=1.27.4
 DVERSION=1.27.4

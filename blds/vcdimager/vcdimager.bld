@@ -1,6 +1,9 @@
 #package name
 NAME=vcdimager
 
+#Description
+DESC="A full-featured mastering suite for authoring disassembling and analyzing Video CD's and Super Video CD's"
+
 #package version
 VERSION=0.7.24-1
 DVERSION=0.7.24

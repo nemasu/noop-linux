@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-gnome-keyring
 
+#Description
+DESC="GNOME Password Management daemon"
+
 #package version
 VERSION=3.14.0-1
 DVERSION=3.14.0

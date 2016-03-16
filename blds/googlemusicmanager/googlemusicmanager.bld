@@ -1,6 +1,9 @@
 #package name
 NAME=googlemusicmanager
 
+#Description
+DESC="Google Music Manager"
+
 #package version
 VERSION=20150327
 

@@ -1,6 +1,9 @@
 #package name
 NAME=js17
 
+#Description
+DESC="JavaScript interpreter and libraries (legacy)"
+
 #package version
 VERSION=17.0.0-1
 DVERSION=17.0.0

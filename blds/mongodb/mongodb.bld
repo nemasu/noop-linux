@@ -1,6 +1,9 @@
 #package name
 NAME=mongodb
 
+#Description
+DESC="A high-performance, open source, schema-free document-oriented database"
+
 #package version
 VERSION=3.2.1
 

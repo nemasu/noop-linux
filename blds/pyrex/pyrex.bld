@@ -1,6 +1,9 @@
 #package name
 NAME=pyrex
 
+#Description
+DESC="Language for writing Python extension modules"
+
 #package version
 VERSION=0.9.9
 

@@ -1,6 +1,9 @@
 #package name
 NAME=skype
 
+#Description
+DESC="P2P software for high-quality voice communication"
+
 #package version
 VERSION=4.3.0.37
 

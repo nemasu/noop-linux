@@ -1,6 +1,9 @@
 #package name
 NAME=xineramaproto
 
+#Description
+DESC="X11 Xinerama extension wire protocol"
+
 #package version
 VERSION=1.2.1
 

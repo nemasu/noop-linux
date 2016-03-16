@@ -1,6 +1,9 @@
 #package name
 NAME=gtksourceview
 
+#Description
+DESC="A text widget adding syntax highlighting and more to GNOME"
+
 #package version
 VERSION=3.12.3
 

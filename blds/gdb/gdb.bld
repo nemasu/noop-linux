@@ -1,6 +1,9 @@
 #package name
 NAME=gdb
 
+#Description
+DESC="The GNU Debugger"
+
 #package version
 VERSION=7.10.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=diffutils
 
+#Description
+DESC="Utility programs used for creating patch files"
+
 #package version
 VERSION=3.3
 

@@ -1,6 +1,9 @@
 #package name
 NAME=terminator
 
+#Description
+DESC="Terminal emulator that supports tabs and grids"
+
 #package version
 VERSION=0.97
 

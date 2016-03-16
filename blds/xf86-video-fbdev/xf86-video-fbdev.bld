@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-fbdev
 
+#Description
+DESC="X.org framebuffer video driver"
+
 #package version
 VERSION=0.4.4-1
 DVERSION=0.4.4

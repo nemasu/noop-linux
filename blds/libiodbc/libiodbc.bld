@@ -1,6 +1,9 @@
 #package name
 NAME=libiodbc
 
+#Description
+DESC="Independent Open DataBase Connectivity for Linux"
+
 #package version
 VERSION=3.52.8
 

@@ -1,6 +1,9 @@
 #package name
 NAME=yelp-xsl
 
+#Description
+DESC="Stylesheets for Yelp"
+
 #package version
 VERSION=3.16.1
 

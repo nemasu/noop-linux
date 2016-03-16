@@ -1,6 +1,9 @@
 #package name
 NAME=zenity
 
+#Description
+DESC="Display graphical dialog boxes from shell scripts"
+
 #package version
 VERSION=3.16.3
 

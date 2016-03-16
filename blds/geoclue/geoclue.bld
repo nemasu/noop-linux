@@ -1,6 +1,9 @@
 #package name
 NAME=geoclue
 
+#Description
+DESC="Modular geoinformation service built on the D-Bus messaging system."
+
 #package version
 VERSION=2.1.8
 

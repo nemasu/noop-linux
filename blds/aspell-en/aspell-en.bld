@@ -1,6 +1,9 @@
 #package name
 NAME=aspell-en
 
+#Description
+DESC="English dictionary for aspell"
+
 #package version
 VERSION=7.1-0
 

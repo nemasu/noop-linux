@@ -1,6 +1,9 @@
 #package name
 NAME=ttf-noto
 
+#Description
+DESC=""
+
 #package version
 VERSION=20140716
 

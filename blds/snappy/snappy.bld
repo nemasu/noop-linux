@@ -1,6 +1,9 @@
 #package name
 NAME=snappy
 
+#Description
+DESC="A fast compressor/decompressor library"
+
 #package version
 VERSION=1.1.3
 

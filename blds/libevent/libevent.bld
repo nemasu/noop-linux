@@ -1,6 +1,9 @@
 #package name
 NAME=libevent
 
+#Description
+DESC="An event notification library"
+
 #package version
 VERSION=2.0.21
 

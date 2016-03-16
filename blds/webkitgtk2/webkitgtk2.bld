@@ -1,6 +1,9 @@
 #package name
 NAME=webkitgtk2
 
+#Description
+DESC=""
+
 #package version
 VERSION=2.4.9
 DVERSION=2.4.9

@@ -1,6 +1,9 @@
 #package name
 NAME=mate-menus
 
+#Description
+DESC="MATE menu specifications"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

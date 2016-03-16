@@ -1,6 +1,9 @@
 #package name
 NAME=efivar
 
+#Description
+DESC="Tools and library to manipulate EFI variables"
+
 #package version
 VERSION=0.11
 

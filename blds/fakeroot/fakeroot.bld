@@ -1,6 +1,9 @@
 #package name
 NAME=fakeroot
 
+#Description
+DESC="Tool for simulating superuser privileges"
+
 #package version
 VERSION=1.20.2
 

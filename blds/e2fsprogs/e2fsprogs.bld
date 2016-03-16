@@ -1,6 +1,9 @@
 #package name
 NAME=e2fsprogs
 
+#Description
+DESC="Ext2/3/4 filesystem utilities"
+
 #package version
 VERSION=1.42.13
 

@@ -1,6 +1,9 @@
 #package name
 NAME=harfbuzz
 
+#Description
+DESC="OpenType text shaping engine"
+
 #package version
 VERSION=1.1.2
 DVERSION=1.1.2

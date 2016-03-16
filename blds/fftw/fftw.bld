@@ -1,6 +1,9 @@
 #package name
 NAME=fftw
 
+#Description
+DESC="A library for computing the discrete Fourier transform (DFT)"
+
 #package version
 VERSION=3.3.4
 

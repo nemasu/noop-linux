@@ -1,6 +1,9 @@
 #package name
 NAME=ttf-sazanami
 
+#Description
+DESC="Japanese fonts"
+
 #package version
 VERSION=20040629
 

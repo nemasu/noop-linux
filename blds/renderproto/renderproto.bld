@@ -1,6 +1,9 @@
 #package name
 NAME=renderproto
 
+#Description
+DESC="X11 Render extension wire protocol"
+
 #package version
 VERSION=0.11.1
 

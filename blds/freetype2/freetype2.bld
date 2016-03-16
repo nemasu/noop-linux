@@ -1,6 +1,9 @@
 #package name
 NAME=freetype2
 
+#Description
+DESC="TrueType font rendering library"
+
 #package version
 VERSION=2.6.2
 

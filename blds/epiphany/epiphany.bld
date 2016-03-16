@@ -1,6 +1,9 @@
 #package name
 NAME=epiphany
 
+#Description
+DESC="A GNOME web browser based on the WebKit rendering engine."
+
 #package version
 VERSION=3.12.1
 

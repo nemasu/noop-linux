@@ -1,6 +1,9 @@
 #package name
 NAME=conky
 
+#Description
+DESC="Lightweight system monitor for X"
+
 #package version
 VERSION=1.10.1
 

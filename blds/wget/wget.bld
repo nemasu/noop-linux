@@ -1,6 +1,9 @@
 #package name
 NAME=wget
 
+#Description
+DESC="A network utility to retrieve files from the Web"
+
 #package version
 VERSION=1.17.1
 

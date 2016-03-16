@@ -1,6 +1,9 @@
 #package name
 NAME=ghostscript-fonts
 
+#Description
+DESC="Fonts and font metrics customarily distributed with Ghostscript"
+
 #package version
 VERSION=8.11
 

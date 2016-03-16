@@ -1,6 +1,9 @@
 #package name
 NAME=libgcrypt
 
+#Description
+DESC="General purpose cryptographic library based on the code from GnuPG"
+
 #package version
 VERSION=1.6.5
 

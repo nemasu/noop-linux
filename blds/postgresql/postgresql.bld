@@ -1,6 +1,9 @@
 #package name
 NAME=postgresql
 
+#Description
+DESC="Fast, easy to administer, secure mail server"
+
 #package version
 VERSION=9.4.5
 DVERSION=9.4.5

@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-libgpg-error
 
+#Description
+DESC="Support library for libgcrypt (32-bit)"
+
 #package version
 VERSION=1.20
 

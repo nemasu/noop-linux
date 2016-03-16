@@ -1,6 +1,9 @@
 #package name
 NAME=iasl
 
+#Description
+DESC="Intel ACPI Source Language compiler"
+
 #package version
 VERSION=20140627
 

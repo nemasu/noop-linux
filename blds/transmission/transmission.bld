@@ -1,6 +1,9 @@
 #package name
 NAME=transmission
 
+#Description
+DESC="A video/DVD ripper and encoder for the terminal/console"
+
 #package version
 VERSION=2.84
 

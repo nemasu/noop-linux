@@ -1,6 +1,9 @@
 #package name
 NAME=a52dec
 
+#Description
+DESC="A free library for decoding ATSC A/52 streams"
+
 #package version
 VERSION=0.7.4
 DVERSION=0.7.4

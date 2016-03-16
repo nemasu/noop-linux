@@ -1,6 +1,9 @@
 #package name
 NAME=codeblocks
 
+#Description
+DESC="Cross-platform C/C++ IDE"
+
 #package version
 VERSION=13.12
 

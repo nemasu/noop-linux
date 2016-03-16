@@ -1,6 +1,9 @@
 #package name
 NAME=cdparanoia
 
+#Description
+DESC="Compact Disc Digital Audio extraction tool"
+
 #package version
 VERSION=10.2
 

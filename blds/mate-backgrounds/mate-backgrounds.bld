@@ -1,6 +1,9 @@
 #package name
 NAME=mate-backgrounds
 
+#Description
+DESC="Background images and data for MATE"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

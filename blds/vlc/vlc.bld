@@ -1,6 +1,9 @@
 #package name
 NAME=vlc
 
+#Description
+DESC="A multi-platform MPEG, VCD/DVD, and DivX player"
+
 #package version
 VERSION=2.2.2
 DVERSION=2.2.2

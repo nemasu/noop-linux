@@ -1,6 +1,9 @@
 #package name
 NAME=xfce4-panel
 
+#Description
+DESC="Panel for the Xfce desktop environment"
+
 #package version
 VERSION=4.12.0
 

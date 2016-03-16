@@ -1,6 +1,9 @@
 #package name
 NAME=xkbcomp
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.3.0
 

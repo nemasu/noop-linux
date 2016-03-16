@@ -1,6 +1,9 @@
 #package name
 NAME=gst-plugins-base0.10
 
+#Description
+DESC="GStreamer Multimedia Framework Base Plugins (version 0.10)"
+
 #package version
 VERSION=0.10.36
 

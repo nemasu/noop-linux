@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-input-evdev
 
+#Description
+DESC="X.org evdev input driver"
+
 #package version
 VERSION=2.9.2
 DVERSION=2.9.2

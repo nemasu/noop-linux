@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-fcitx
 
+#Description
+DESC="A fast terminal emulator for linux with frame buffer device or VESA video card"
+
 #package version
 VERSION=4.2.8.4
 

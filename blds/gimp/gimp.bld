@@ -1,6 +1,9 @@
 #package name
 NAME=gimp
 
+#Description
+DESC="GNU Image Manipulation Program"
+
 #package version
 VERSION=2.9.2
 DVERSION=2.9.2

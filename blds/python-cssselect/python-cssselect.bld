@@ -1,6 +1,9 @@
 #package name
 NAME=python-cssselect
 
+#Description
+DESC="A high-level scripting language"
+
 #package version
 VERSION=0.9.1-1
 DVERSION=0.9.1

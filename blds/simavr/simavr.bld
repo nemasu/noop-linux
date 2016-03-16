@@ -1,6 +1,9 @@
 #package name
 NAME=simavr
 
+#Description
+DESC="A lean, mean and hackable AVR simulator"
+
 #package version
 VERSION=20141021
 

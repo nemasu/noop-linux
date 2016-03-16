@@ -1,6 +1,9 @@
 #package name
 NAME=mtdev
 
+#Description
+DESC="A stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol"
+
 #package version
 VERSION=1.1.2
 

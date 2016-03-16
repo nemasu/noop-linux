@@ -1,6 +1,9 @@
 #package name
 NAME=bison
 
+#Description
+DESC="The GNU general-purpose parser generator"
+
 #package version
 VERSION=3.0.2
 

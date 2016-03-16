@@ -1,6 +1,9 @@
 #package name
 NAME=system-tools-backends
 
+#Description
+DESC="Backends for Gnome/MATE System Tools."
+
 #package version
 VERSION=2.10.2
 

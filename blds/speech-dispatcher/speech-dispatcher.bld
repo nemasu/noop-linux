@@ -1,6 +1,9 @@
 #package name
 NAME=speech-dispatcher
 
+#Description
+DESC="High-level device independent layer for speech synthesis interface"
+
 #package version
 VERSION=0.7.1
 

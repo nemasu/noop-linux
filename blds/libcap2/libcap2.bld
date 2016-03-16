@@ -1,6 +1,9 @@
 #package name
 NAME=libcap2
 
+#Description
+DESC="POSIX 1003.1e capabilities"
+
 #package version
 VERSION=2.24
 

@@ -1,6 +1,9 @@
 #package name
 NAME=raptor
 
+#Description
+DESC="A C library that parses RDF/XML/N-Triples into RDF triples"
+
 #package version
 VERSION=2.0.8-2
 DVERSION=2.0.8

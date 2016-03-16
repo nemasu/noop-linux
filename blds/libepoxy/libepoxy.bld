@@ -1,6 +1,9 @@
 #package name
 NAME=libepoxy
 
+#Description
+DESC="A library for handling OpenGL function pointer management for you"
+
 #package version
 VERSION=1.2
 

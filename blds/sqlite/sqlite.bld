@@ -1,6 +1,9 @@
 #package name
 NAME=sqlite
 
+#Description
+DESC="A C library that implements an SQL database engine"
+
 #package version
 VERSION=3090200-1
 DVERSION=3090200

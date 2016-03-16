@@ -1,6 +1,9 @@
 #package name
 NAME=pv
 
+#Description
+DESC="A terminal-based tool for monitoring the progress of data through a pipeline."
+
 #package version
 VERSION=1.5.7
 

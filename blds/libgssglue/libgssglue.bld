@@ -1,6 +1,9 @@
 #package name
 NAME=libgssglue
 
+#Description
+DESC="Exports a gssapi interface which calls other random gssapi libraries"
+
 #package version
 VERSION=0.4
 

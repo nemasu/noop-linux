@@ -1,6 +1,9 @@
 #package name
 NAME=vte
 
+#Description
+DESC="Virtual Terminal Emulator widget for use with GTK2"
+
 #package version
 VERSION=0.37.90
 

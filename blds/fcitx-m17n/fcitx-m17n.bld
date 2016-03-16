@@ -1,6 +1,9 @@
 #package name
 NAME=fcitx-m17n
 
+#Description
+DESC="Fcitx Wrapper for m17n."
+
 #package version
 VERSION=0.2.3
 

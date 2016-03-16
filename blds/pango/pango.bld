@@ -1,6 +1,9 @@
 #package name
 NAME=pango
 
+#Description
+DESC="A library for layout and rendering of text"
+
 VERSION=1.39.0
 DVERSION=1.39.0
 

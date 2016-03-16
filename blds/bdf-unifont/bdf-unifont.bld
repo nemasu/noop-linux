@@ -1,6 +1,9 @@
 #package name
 NAME=bdf-unifont
 
+#Description
+DESC="GNU Unifont Glyphs"
+
 #package version
 VERSION=7.0.06
 

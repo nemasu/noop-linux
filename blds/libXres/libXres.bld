@@ -1,6 +1,9 @@
 #package name
 NAME=libXres
 
+#Description
+DESC="X11 Resource extension library"
+
 #package version
 VERSION=1.0.7
 

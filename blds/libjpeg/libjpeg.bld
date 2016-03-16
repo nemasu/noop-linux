@@ -1,6 +1,9 @@
 #package name
 NAME=libjpeg
 
+#Description
+DESC="JPEG image codec with accelerated baseline compression and decompression"
+
 #package version
 VERSION=1.4.1
 

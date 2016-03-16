@@ -1,6 +1,9 @@
 #package name
 NAME=libdvdread
 
+#Description
+DESC="Provides a simple foundation for reading DVD video disks"
+
 #package version
 VERSION=5.0.3
 

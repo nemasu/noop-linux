@@ -1,6 +1,9 @@
 #package name
 NAME=fixesproto
 
+#Description
+DESC="X11 Fixes extension wire protocol"
+
 #package version
 VERSION=5.0
 

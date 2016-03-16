@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-nv
 
+#Description
+DESC="X.org nv video driver"
+
 #package version
 VERSION=2.1.20-1
 DVERSION=2.1.20

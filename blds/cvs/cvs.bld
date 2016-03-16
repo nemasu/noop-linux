@@ -1,6 +1,9 @@
 #package name
 NAME=cvs
 
+#Description
+DESC="Concurrent Versions System - a source control system"
+
 #package version
 VERSION=1.11.23
 

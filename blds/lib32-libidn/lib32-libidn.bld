@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-libidn
 
+#Description
+DESC="Implementation of the Stringprep, Punycode and IDNA specifications (32 bit)"
+
 #package version
 VERSION=1.25
 

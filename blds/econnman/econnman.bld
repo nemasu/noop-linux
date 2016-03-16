@@ -1,6 +1,9 @@
 #package name
 NAME=econnman
 
+#Description
+DESC="Enlightenment ConnMan user interface"
+
 #package version
 VERSION=1.1
 

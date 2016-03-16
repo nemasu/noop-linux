@@ -1,6 +1,9 @@
 #package name
 NAME=ghc
 
+#Description
+DESC="The Glasgow Haskell Compiler"
+
 #package version
 VERSION=7.10.3
 

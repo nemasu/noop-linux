@@ -1,6 +1,9 @@
 #package name
 NAME=openssl
 
+#Description
+DESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
+
 #package version
 VERSION=1.0.2-7
 DVERSION=1.0.2g

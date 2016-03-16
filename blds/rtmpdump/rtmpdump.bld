@@ -1,6 +1,9 @@
 #package name
 NAME=rtmpdump
 
+#Description
+DESC="Tool to download rtmp streams"
+
 #package version
 VERSION=2.4-920131018
 DVERSION=2.4

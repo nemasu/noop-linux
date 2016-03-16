@@ -1,6 +1,9 @@
 #package name
 NAME=bc
 
+#Description
+DESC="An arbitrary precision calculator language"
+
 #package version
 VERSION=1.06.95-1
 DVERSION=1.06.95

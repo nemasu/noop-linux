@@ -1,6 +1,9 @@
 #package name
 NAME=boost
 
+#Description
+DESC="The GNU general-purpose parser generator"
+
 #package version
 VERSION=1.59.0-1
 DVERSION=1.59.0

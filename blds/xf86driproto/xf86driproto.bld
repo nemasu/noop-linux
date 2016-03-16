@@ -1,6 +1,9 @@
 #package name
 NAME=xf86driproto
 
+#Description
+DESC="X11 DRI extension wire protocol"
+
 #package version
 VERSION=2.1.1
 

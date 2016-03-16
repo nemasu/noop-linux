@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-virtualgl
 
+#Description
+DESC="32-bit serverside components for 64-bit VirtualGL servers"
+
 #package version
 VERSION=2.4
 

@@ -1,6 +1,9 @@
 #package name
 NAME=intltool
 
+#Description
+DESC="The internationalization tool collection"
+
 #package version
 VERSION=0.50.2
 

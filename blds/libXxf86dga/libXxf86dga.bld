@@ -1,6 +1,9 @@
 #package name
 NAME=libXxf86dga
 
+#Description
+DESC="X11 Direct Graphics Access extension library"
+
 #package version
 VERSION=1.1.4
 

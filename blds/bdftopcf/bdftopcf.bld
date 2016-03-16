@@ -1,6 +1,9 @@
 #package name
 NAME=bdftopcf
 
+#Description
+DESC="Font compiler for the X server and font server"
+
 #package version
 VERSION=1.0.5
 

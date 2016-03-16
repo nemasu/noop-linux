@@ -1,6 +1,9 @@
 #package name
 NAME=patch
 
+#Description
+DESC="A utility to apply patch files to original sources"
+
 #package version
 VERSION=2.6.1
 

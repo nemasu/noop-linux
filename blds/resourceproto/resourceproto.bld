@@ -1,6 +1,9 @@
 #package name
 NAME=resourceproto
 
+#Description
+DESC="X11 Resource extension wire protocol"
+
 #package version
 VERSION=1.2.0
 

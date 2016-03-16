@@ -1,6 +1,9 @@
 #package name
 NAME=libmtp
 
+#Description
+DESC="Library implementation of the Media Transfer Protocol"
+
 #package version
 VERSION=1.1.8
 

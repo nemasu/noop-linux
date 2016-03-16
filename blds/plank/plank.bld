@@ -1,6 +1,9 @@
 #package name
 NAME=plank
 
+#Description
+DESC="Elegant, simple, clean dock"
+
 #package version
 VERSION=0.9.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=thunar
 
+#Description
+DESC="Modern file manager for Xfce"
+
 #package version
 VERSION=1.6.10
 

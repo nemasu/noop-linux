@@ -1,6 +1,9 @@
 #package name
 NAME=v4l-utils
 
+#Description
+DESC="Userspace tools and conversion library for Video 4 Linux"
+
 #package version
 VERSION=1.6.0
 

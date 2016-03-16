@@ -1,6 +1,9 @@
 #package name
 NAME=perl-term-readkey
 
+#Description
+DESC="Provides simple control over terminal driver modes"
+
 #package version
 VERSION=2.32
 

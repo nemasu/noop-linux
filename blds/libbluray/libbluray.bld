@@ -1,6 +1,9 @@
 #package name
 NAME=libbluray
 
+#Description
+DESC="Library to access Blu-Ray disks for video playback"
+
 #package version
 VERSION=0.8.1
 

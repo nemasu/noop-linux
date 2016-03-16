@@ -1,6 +1,9 @@
 #package name
 NAME=gmp
 
+#Description
+DESC="A free library for arbitrary precision arithmetic"
+
 #package version
 VERSION=6.0.0
 DVERSION=6.0.0a

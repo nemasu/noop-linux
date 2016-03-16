@@ -1,4 +1,7 @@
 NAME=firefox
+
+#Description
+DESC="Standalone web browser from mozilla.org"
 VERSION=43.0.2
 DVERSION=43.0.2
 ISUSR=1

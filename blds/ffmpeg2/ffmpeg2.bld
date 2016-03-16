@@ -1,6 +1,9 @@
 #package name
 NAME=ffmpeg2
 
+#Description
+DESC="Complete solution to record, convert and stream audio and video (version 2)"
+
 #package version
 VERSION=2.8.6
 DVERSION=2.8.6

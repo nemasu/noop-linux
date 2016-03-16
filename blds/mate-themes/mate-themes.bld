@@ -1,6 +1,9 @@
 #package name
 NAME=mate-themes
 
+#Description
+DESC="Default themes for the MATE desktop"
+
 #package version
 VERSION=1.10.2
 DVERSION=1.10.2

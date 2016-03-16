@@ -1,6 +1,9 @@
 #package name
 NAME=ffmpeg
 
+#Description
+DESC="Complete solution to record, convert and stream audio and video"
+
 #package version
 VERSION=3.0
 DVERSION=3.0

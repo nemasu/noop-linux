@@ -1,6 +1,9 @@
 #package name
 NAME=libXt
 
+#Description
+DESC="X11 toolkit intrinsics library"
+
 #package version
 VERSION=1.1.4
 

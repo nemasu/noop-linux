@@ -1,6 +1,9 @@
 #package name
 NAME=alsa-lib
 
+#Description
+DESC="An alternative implementation of Linux sound support"
+
 #package version
 VERSION=1.1.0
 DVERSION=1.1.0

@@ -1,6 +1,9 @@
 #package name
 NAME=imap
 
+#Description
+DESC="X.Org imake program and related utilities"
+
 #package version
 VERSION=20076
 DVERSION=2007f

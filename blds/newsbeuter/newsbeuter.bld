@@ -1,6 +1,9 @@
 #package name
 NAME=newsbeuter
 
+#Description
+DESC="A RSS feed reader for the text console with special Podcast support"
+
 #package version
 VERSION=20160303
 

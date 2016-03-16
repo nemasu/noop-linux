@@ -1,6 +1,9 @@
 #package name
 NAME=gssdp
 
+#Description
+DESC="A GObject-based API for handling resource discovery and announcement over SSDP"
+
 #package version
 VERSION=0.14.10
 

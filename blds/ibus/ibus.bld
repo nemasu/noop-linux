@@ -1,6 +1,9 @@
 #package name
 NAME=ibus
 
+#Description
+DESC="Next Generation Input Bus for Linux"
+
 #package version
 VERSION=1.5.11-1
 DVERSION=1.5.11

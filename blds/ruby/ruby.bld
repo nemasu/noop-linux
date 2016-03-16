@@ -1,6 +1,9 @@
 #package name
 NAME=ruby
 
+#Description
+DESC="Tool to download rtmp streams"
+
 #package version
 VERSION=2.2.3
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libebml
 
+#Description
+DESC="Extensible Binary Meta Language library"
+
 #package version
 VERSION=1.3.1
 

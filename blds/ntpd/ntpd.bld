@@ -1,6 +1,9 @@
 #package name
 NAME=ntpd
 
+#Description
+DESC=""
+
 #package version
 VERSION=4.2.7-475
 

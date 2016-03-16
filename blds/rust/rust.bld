@@ -1,6 +1,9 @@
 #package name
 NAME=rust
 
+#Description
+DESC="Systems programming language focused on safety, speed and concurrency"
+
 #package version
 VERSION=1.6.0
 

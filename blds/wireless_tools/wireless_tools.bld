@@ -1,6 +1,9 @@
 #package name
 NAME=wireless_tools
 
+#Description
+DESC="Tools allowing to manipulate the Wireless Extensions"
+
 #package version
 VERSION=29
 

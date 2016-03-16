@@ -1,6 +1,9 @@
 #package name
 NAME=pkg-config
 
+#Description
+DESC="A system for managing library compile/link flags"
+
 #package version
 VERSION=0.26
 

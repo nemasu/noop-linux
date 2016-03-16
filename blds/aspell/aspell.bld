@@ -1,6 +1,9 @@
 #package name
 NAME=aspell
 
+#Description
+DESC="A spell checker designed to eventually replace Ispell"
+
 #package version
 VERSION=0.60.6.1-1
 DVERSION=0.60.6.1

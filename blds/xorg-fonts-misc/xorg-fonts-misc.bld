@@ -1,6 +1,9 @@
 #package name
 NAME=xorg-fonts-misc
 
+#Description
+DESC="X.org misc fonts"
+
 #package version
 VERSION=1.0.1
 

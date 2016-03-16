@@ -1,6 +1,9 @@
 #package name
 NAME=gettext
 
+#Description
+DESC="GNU internationalization library"
+
 #package version
 VERSION=0.19.6
 

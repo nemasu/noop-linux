@@ -1,6 +1,9 @@
 #package name
 NAME=lz4
 
+#Description
+DESC="Very fast lossless compression algorithm"
+
 #package version
 VERSION=131
 

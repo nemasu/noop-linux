@@ -1,6 +1,9 @@
 #package name
 NAME=libfbclient
 
+#Description
+DESC="Client library for Firebird."
+
 #package version
 VERSION=2.5.1.26351-3
 DVERSION=2.5.1.26351

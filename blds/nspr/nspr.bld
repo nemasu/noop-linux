@@ -1,6 +1,9 @@
 #package name
 NAME=nspr
 
+#Description
+DESC="Netscape Portable Runtime"
+
 #package version
 VERSION=4.11
 

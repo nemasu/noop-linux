@@ -1,6 +1,9 @@
 #package name
 NAME=cups
 
+#Description
+DESC="Userspace setup tool for transparent encryption of block devices using dm-crypt"
+
 #package version
 VERSION=2.1.3
 DVERSION=2.1.3

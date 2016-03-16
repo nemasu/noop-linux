@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-primus
 
+#Description
+DESC="Faster OpenGL offloading for Bumblebee (32-bit)"
+
 #package version
 VERSION=20150822
 

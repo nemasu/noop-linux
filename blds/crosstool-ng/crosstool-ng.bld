@@ -1,6 +1,9 @@
 #package name
 NAME=crosstool-ng
 
+#Description
+DESC="Builds toolchains"
+
 #package version
 VERSION=1.20.0-1
 DVERSION=1.20.0

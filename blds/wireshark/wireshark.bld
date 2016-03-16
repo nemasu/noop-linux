@@ -1,6 +1,9 @@
 #package name
 NAME=wireshark
 
+#Description
+DESC="Tools allowing to manipulate the Wireless Extensions"
+
 #package version
 VERSION=2.0.0
 

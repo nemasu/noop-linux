@@ -1,6 +1,9 @@
 #package name
 NAME=libXext
 
+#Description
+DESC="X11 miscellaneous extensions library"
+
 #package version
 VERSION=1.3.3
 

@@ -1,6 +1,9 @@
 #package name
 NAME=perl
 
+#Description
+DESC="A highly capable, feature-rich programming language"
+
 #package version
 VERSION=5.22.1
 

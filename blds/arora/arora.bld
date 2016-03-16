@@ -1,6 +1,9 @@
 #package name
 NAME=arora
 
+#Description
+DESC="Cross platform web browser"
+
 #package version
 VERSION=0.11.0
 

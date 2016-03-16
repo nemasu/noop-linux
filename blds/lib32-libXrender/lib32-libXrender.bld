@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-libXrender
 
+#Description
+DESC="X Rendering Extension client library (32-bit)"
+
 #package version
 VERSION=0.9.8
 

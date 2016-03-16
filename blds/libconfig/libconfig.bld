@@ -1,6 +1,9 @@
 #package name
 NAME=libconfig
 
+#Description
+DESC="C/C++ Configuration File Library"
+
 #package version
 VERSION=1.4.9
 

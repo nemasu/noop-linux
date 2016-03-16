@@ -1,6 +1,9 @@
 #package name
 NAME=apache
 
+#Description
+DESC="A high performance Unix-based HTTP server"
+
 #package version
 VERSION=2.4.18
 

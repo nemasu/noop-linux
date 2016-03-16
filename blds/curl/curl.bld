@@ -1,6 +1,9 @@
 #package name
 NAME=curl
 
+#Description
+DESC="An URL retrieval utility and library"
+
 #package version
 VERSION=7.37.1-1
 DVERSION=7.37.1

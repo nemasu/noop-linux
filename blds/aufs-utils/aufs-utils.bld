@@ -1,6 +1,9 @@
 #package name
 NAME=aufs-utils
 
+#Description
+DESC="Utilities for aufs"
+
 #package version
 VERSION=4.0
 

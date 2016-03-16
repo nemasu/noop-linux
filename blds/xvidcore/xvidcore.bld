@@ -1,6 +1,9 @@
 #package name
 NAME=xvidcore
 
+#Description
+DESC="XviD is an open source MPEG-4 video codec"
+
 #package version
 VERSION=1.3.4
 

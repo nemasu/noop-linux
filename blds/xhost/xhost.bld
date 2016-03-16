@@ -1,6 +1,9 @@
 #package name
 NAME=xhost
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.0.6
 

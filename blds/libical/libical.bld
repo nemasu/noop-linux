@@ -1,6 +1,9 @@
 #package name
 NAME=libical
 
+#Description
+DESC="An open source reference implementation of the icalendar data type and serialization format"
+
 #package version
 VERSION=0.48
 

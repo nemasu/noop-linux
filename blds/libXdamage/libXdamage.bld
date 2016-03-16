@@ -1,6 +1,9 @@
 #package name
 NAME=libXdamage
 
+#Description
+DESC="X11 damaged region extension library"
+
 #package version
 VERSION=1.1.4
 

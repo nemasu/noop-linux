@@ -1,6 +1,9 @@
 #package name
 NAME=zip
 
+#Description
+DESC="Compressor/archiver for creating and modifying zipfiles"
+
 #package version
 VERSION=3.0
 

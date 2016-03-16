@@ -1,6 +1,9 @@
 #package name
 NAME=
 
+#Description
+DESC=
+
 #package version
 VERSION=
 

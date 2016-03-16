@@ -1,6 +1,9 @@
 #package name
 NAME=enlightenment
 
+#Description
+DESC="Enlightenment window manager"
+
 #package version
 VERSION=0.19.4-1
 DVERSION=0.19.4

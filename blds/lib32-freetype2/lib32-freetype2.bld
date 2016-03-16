@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-freetype2
 
+#Description
+DESC="TrueType font rendering library (32-bit)"
+
 #package version
 VERSION=2.5.3
 

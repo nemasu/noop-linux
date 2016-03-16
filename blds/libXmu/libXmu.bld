@@ -1,6 +1,9 @@
 #package name
 NAME=libXmu
 
+#Description
+DESC="X11 miscellaneous micro-utility library"
+
 #package version
 VERSION=1.1.2
 

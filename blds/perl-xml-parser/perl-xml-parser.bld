@@ -1,6 +1,9 @@
 #package name
 NAME=perl-xml-parser
 
+#Description
+DESC="Expat-based XML parser module for perl"
+
 #package version
 VERSION=2.41
 

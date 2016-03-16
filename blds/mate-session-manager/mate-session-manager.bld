@@ -1,6 +1,9 @@
 #package name
 NAME=mate-session-manager
 
+#Description
+DESC="The MATE Session Handler (GTK2 version)"
+
 #package version
 VERSION=1.10.1-1
 DVERSION=1.10.1

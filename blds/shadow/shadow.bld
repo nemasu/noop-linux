@@ -1,6 +1,9 @@
 #package name
 NAME=shadow
 
+#Description
+DESC="Password and account management tool suite with support for shadow files and PAM"
+
 #package version
 VERSION=4.2.1
 

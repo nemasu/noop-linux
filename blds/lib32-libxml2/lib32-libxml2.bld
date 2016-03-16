@@ -8,6 +8,9 @@
 # ISSPECIAL
 
 NAME=lib32-libxml2
+
+#Description
+DESC="XML parsing library, version 2 (32-bit)"
 VERSION=2.8.0
 ISUSR=1
 SRC=ftp://xmlsoft.org/libxml2/libxml2-2.8.0.tar.gz

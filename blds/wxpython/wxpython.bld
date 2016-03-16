@@ -1,6 +1,9 @@
 #package name
 NAME=wxpython
 
+#Description
+DESC="A wxWidgets GUI toolkit for Python"
+
 #package version
 VERSION=3.0.2.0-1
 DVERSION=3.0.2.0

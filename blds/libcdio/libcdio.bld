@@ -1,6 +1,9 @@
 #package name
 NAME=libcdio
 
+#Description
+DESC="GNU Compact Disc Input and Control Library"
+
 #package version
 VERSION=0.93
 

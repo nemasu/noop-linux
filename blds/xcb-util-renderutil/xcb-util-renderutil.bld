@@ -1,6 +1,9 @@
 #package name
 NAME=xcb-util-renderutil
 
+#Description
+DESC="Utility libraries for XC Binding - Convenience functions for the Render extension"
+
 #package version
 VERSION=0.3.9
 

@@ -1,6 +1,9 @@
 #package name
 NAME=openresolv
 
+#Description
+DESC="resolv.conf management framework (resolvconf)"
+
 #package version
 VERSION=3.5.4
 

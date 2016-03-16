@@ -1,6 +1,9 @@
 #package name
 NAME=scons
 
+#Description
+DESC="Extensible Python-based build utility"
+
 #package version
 VERSION=2.3.0
 

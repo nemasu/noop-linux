@@ -1,6 +1,9 @@
 #package name
 NAME=binutils
 
+#Description
+DESC="A set of programs to assemble and manipulate binary and object files"
+
 #package version
 VERSION=2.25.1
 DVERSION=2.25.1

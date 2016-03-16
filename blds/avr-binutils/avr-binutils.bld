@@ -1,6 +1,9 @@
 #package name
 NAME=avr-binutils
 
+#Description
+DESC="A set of programs to assemble and manipulate binary and object files for the AVR architecture"
+
 #package version
 VERSION=2.24
 DVERSION=2.24

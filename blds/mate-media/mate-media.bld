@@ -1,6 +1,9 @@
 #package name
 NAME=mate-media
 
+#Description
+DESC="MATE Media Tools (GTK2 version)"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

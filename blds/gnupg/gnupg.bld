@@ -1,6 +1,9 @@
 #package name
 NAME=gnupg
 
+#Description
+DESC="Complete and free implementation of the OpenPGP standard"
+
 #package version
 VERSION=2.1.11
 

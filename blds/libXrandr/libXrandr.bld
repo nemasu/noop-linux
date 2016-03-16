@@ -1,6 +1,9 @@
 #package name
 NAME=libXrandr
 
+#Description
+DESC="X11 RandR extension library"
+
 #package version
 VERSION=1.4.2
 

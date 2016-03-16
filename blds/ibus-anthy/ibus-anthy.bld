@@ -1,6 +1,9 @@
 #package name
 NAME=ibus-anthy
 
+#Description
+DESC="Japanese input method Anthy IMEngine for IBus Framework"
+
 #package version
 VERSION=1.5.7
 

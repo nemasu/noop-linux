@@ -1,6 +1,9 @@
 #package name
 NAME=presentproto
 
+#Description
+DESC="X11 Present protocol specification"
+
 #package version
 VERSION=1.0
 

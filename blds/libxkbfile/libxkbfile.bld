@@ -1,6 +1,9 @@
 #package name
 NAME=libxkbfile
 
+#Description
+DESC="X11 keyboard file manipulation library"
+
 #package version
 VERSION=1.0.8
 

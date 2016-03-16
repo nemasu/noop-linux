@@ -1,6 +1,9 @@
 #package name
 NAME=librsvg
 
+#Description
+DESC="A SVG viewing library"
+
 #package version
 VERSION=2.36.3
 

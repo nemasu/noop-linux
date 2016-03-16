@@ -1,6 +1,9 @@
 #package name
 NAME=libxshmfence
 
+#Description
+DESC="a library that exposes a event API on top of Linux futexes"
+
 #package version
 VERSION=1.2
 

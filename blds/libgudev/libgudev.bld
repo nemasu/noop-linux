@@ -1,6 +1,9 @@
 #package name
 NAME=libgudev
 
+#Description
+DESC="GObject bindings for libudev"
+
 #package version
 VERSION=230
 

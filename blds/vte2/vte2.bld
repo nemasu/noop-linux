@@ -1,6 +1,9 @@
 #package name
 NAME=vte2
 
+#Description
+DESC=""
+
 #package version
 VERSION=0.28.2-1
 DVERSION=0.28.2

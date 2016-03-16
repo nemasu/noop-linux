@@ -1,6 +1,9 @@
 #package name
 NAME=glm
 
+#Description
+DESC="C++ mathematics library for 3D software based on the OpenGL Shading Language (GLSL) specification"
+
 #package version
 VERSION=0.9.5.4
 

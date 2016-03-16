@@ -1,6 +1,9 @@
 #package name
 NAME=cups-filters
 
+#Description
+DESC="OpenPrinting CUPS Filters"
+
 #package version
 VERSION=1.5.0
 DVERSION=1.5.0

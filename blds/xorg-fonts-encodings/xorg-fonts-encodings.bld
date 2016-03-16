@@ -1,6 +1,9 @@
 #package name
 NAME=xorg-fonts-encodings
 
+#Description
+DESC="X.org font encoding files"
+
 #package version
 VERSION=1.0.4
 

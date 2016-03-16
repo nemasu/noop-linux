@@ -1,6 +1,9 @@
 #package name
 NAME=apr-util
 
+#Description
+DESC="The Apache Portable Runtime"
+
 #package version
 VERSION=1.5.4-1
 DVERSION=1.5.4

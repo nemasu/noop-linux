@@ -1,6 +1,9 @@
 #package name
 NAME=ghostscript
 
+#Description
+DESC="An interpreter for the PostScript language"
+
 #package version
 VERSION=9.16-1
 DVERSION=9.16

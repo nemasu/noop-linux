@@ -1,6 +1,9 @@
 #package name
 NAME=libXi
 
+#Description
+DESC="X11 Input extension library"
+
 #package version
 VERSION=1.7.4
 

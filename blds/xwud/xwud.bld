@@ -1,6 +1,9 @@
 #package name
 NAME=xwud
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.0.4
 

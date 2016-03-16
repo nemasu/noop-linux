@@ -1,6 +1,9 @@
 #package name
 NAME=enventor
 
+#Description
+DESC="Dynamic EDC editor"
+
 #package version
 VERSION=0.5.0
 

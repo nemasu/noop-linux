@@ -1,6 +1,9 @@
 #package name
 NAME=gdk-pixbuf
 
+#Description
+DESC="Image loading and manipulation library"
+
 #package version
 VERSION=2.31.4
 DVERSION=2.31.4

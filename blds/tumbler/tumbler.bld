@@ -1,6 +1,9 @@
 #package name
 NAME=tumbler
 
+#Description
+DESC="D-Bus service for applications to request thumbnails"
+
 #package version
 VERSION=0.1.31
 

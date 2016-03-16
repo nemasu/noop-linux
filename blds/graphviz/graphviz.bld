@@ -1,6 +1,9 @@
 #package name
 NAME=graphviz
 
+#Description
+DESC="Graph visualization software"
+
 #package version
 VERSION=2.38.0
 

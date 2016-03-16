@@ -1,6 +1,9 @@
 #package name
 NAME=tcpdump
 
+#Description
+DESC="A tool for network monitoring and data acquisition"
+
 #package version
 VERSION=4.5.1
 

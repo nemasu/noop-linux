@@ -1,6 +1,9 @@
 #package name
 NAME=bullet
 
+#Description
+DESC="A 3D Collision Detection and Rigid Body Dynamics Library for games and animation"
+
 #package version
 VERSION=2.83
 

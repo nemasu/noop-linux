@@ -1,6 +1,9 @@
 #package name
 NAME=xorg-fonts-type1
 
+#Description
+DESC="X.org Type1 fonts"
+
 #package version
 VERSION=1.0.1
 

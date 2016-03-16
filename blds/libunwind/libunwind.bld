@@ -1,6 +1,9 @@
 #package name
 NAME=libunwind
 
+#Description
+DESC="Portable and efficient C programming interface (API) to determine the call-chain of a program"
+
 #package version
 VERSION=1.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=virtualbox
 
+#Description
+DESC="X11 Video extension wire protocol"
+
 #package version
 VERSION=5.0.16
 DVERSION=5.0.16

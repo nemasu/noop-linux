@@ -1,6 +1,9 @@
 #package name
 NAME=gtk+
 
+#Description
+DESC="GObject-based multi-platform GUI toolkit"
+
 #package version
 VERSION=3.18.7
 

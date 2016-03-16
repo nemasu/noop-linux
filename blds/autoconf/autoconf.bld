@@ -1,6 +1,9 @@
 #package name
 NAME=autoconf
 
+#Description
+DESC="A GNU tool for automatically configuring source code"
+
 #package version
 VERSION=2.69
 

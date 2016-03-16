@@ -1,6 +1,9 @@
 #package name
 NAME=faad2
 
+#Description
+DESC="ISO AAC audio decoder"
+
 #package version
 VERSION=2.7
 

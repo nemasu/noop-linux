@@ -1,6 +1,9 @@
 #package name
 NAME=libvorbis
 
+#Description
+DESC="Vorbis codec library"
+
 #package version
 VERSION=1.3.5
 

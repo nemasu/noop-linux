@@ -1,6 +1,9 @@
 #package name
 NAME=gnome-common
 
+#Description
+DESC="Common development macros for GNOME"
+
 #package version
 VERSION=3.12.0
 

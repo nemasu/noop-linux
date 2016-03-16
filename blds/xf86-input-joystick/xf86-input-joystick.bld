@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-input-joystick
 
+#Description
+DESC="X.Org Joystick input driver"
+
 #package version
 VERSION=1.6.2-1
 DVERSION=1.6.2

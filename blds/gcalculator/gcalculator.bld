@@ -1,6 +1,9 @@
 #package name
 NAME=gcalculator
 
+#Description
+DESC="GTK algebraic and RPN calculator"
+
 #package version
 VERSION=2.1.3
 

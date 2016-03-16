@@ -1,6 +1,9 @@
 #package name
 NAME=hwloc
 
+#Description
+DESC="Portable Hardware Locality is a portable abstraction of hierarchical architectures"
+
 #package version
 VERSION=1.9-1
 DVERSION=1.9

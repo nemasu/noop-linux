@@ -1,6 +1,9 @@
 #package name
 NAME=fltk
 
+#Description
+DESC="A tool for generating text-scanning programs"
+
 #package version
 VERSION=1.3.3
 

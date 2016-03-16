@@ -1,6 +1,9 @@
 #package name
 NAME=opencore-amr
 
+#Description
+DESC="Open source implementation of the Adaptive Multi Rate (AMR) speech codec"
+
 #package version
 VERSION=0.1.3
 

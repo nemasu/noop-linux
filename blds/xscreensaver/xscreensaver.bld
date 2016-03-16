@@ -1,6 +1,9 @@
 #package name
 NAME=xscreensaver
 
+#Description
+DESC="Screen saver and locker for the X Window System"
+
 #package version
 VERSION=5.33
 

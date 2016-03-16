@@ -1,4 +1,7 @@
 NAME=lib32-qt4
+
+#Description
+DESC="A cross-platform application and UI framework (32-bit)"
 VERSION=4.8.7
 DVERSION=4.8.7
 ISUSR=1

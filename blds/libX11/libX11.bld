@@ -1,6 +1,9 @@
 #package name
 NAME=libX11
 
+#Description
+DESC="X11 client-side library"
+
 #package version
 VERSION=1.6.3
 

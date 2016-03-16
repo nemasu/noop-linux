@@ -1,6 +1,9 @@
 #package name
 NAME=py2cairo
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.10.0
 

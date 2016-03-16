@@ -1,6 +1,9 @@
 #package name
 NAME=findutils
 
+#Description
+DESC="GNU utilities to locate files"
+
 #package version
 VERSION=4.4.2
 

@@ -1,6 +1,9 @@
 #package name
 NAME=mksha512pw
 
+#Description
+DESC=""
+
 #package version
 VERSION=20160208
 

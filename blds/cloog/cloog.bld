@@ -1,6 +1,9 @@
 #package name
 NAME=cloog
 
+#Description
+DESC="Library that generates loops for scanning polyhedra"
+
 #package version
 VERSION=0.18.1
 

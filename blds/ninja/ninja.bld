@@ -1,6 +1,9 @@
 #package name
 NAME=ninja
 
+#Description
+DESC="Small build system with a focus on speed"
+
 #package version
 VERSION=1.5.1
 

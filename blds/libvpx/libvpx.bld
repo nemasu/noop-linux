@@ -1,6 +1,9 @@
 #package name
 NAME=libvpx
 
+#Description
+DESC="VP8 and VP9 codec"
+
 #package version
 VERSION=1.4.0
 

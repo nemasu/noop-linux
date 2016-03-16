@@ -1,6 +1,9 @@
 #package name
 NAME=libclc
 
+#Description
+DESC="Library requirements of the OpenCL C programming language"
+
 #package version
 VERSION=20140908
 

@@ -1,6 +1,9 @@
 #package name
 NAME=nss
 
+#Description
+DESC="Mozilla Network Security Services"
+
 #package version
 VERSION=3.21
 

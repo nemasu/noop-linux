@@ -1,6 +1,9 @@
 #package name
 NAME=vim
 
+#Description
+DESC="X11 Video extension wire protocol"
+
 #package version
 VERSION=7.4.979
 

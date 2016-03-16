@@ -1,6 +1,9 @@
 #package name
 NAME=compton
 
+#Description
+DESC="Superb X compositor that may fix tearing issues"
+
 #package version
 VERSION=0.1-1
 

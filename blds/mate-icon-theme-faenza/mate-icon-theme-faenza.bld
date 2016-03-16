@@ -1,6 +1,9 @@
 #package name
 NAME=mate-icon-theme-faenza
 
+#Description
+DESC="Faenza icon theme for MATE"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

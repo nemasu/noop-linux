@@ -1,6 +1,9 @@
 #package name
 NAME=libnfsidmap
 
+#Description
+DESC=""
+
 #package version
 VERSION=0.25
 

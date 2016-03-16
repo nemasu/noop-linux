@@ -1,6 +1,9 @@
 #package name
 NAME=libXau
 
+#Description
+DESC="X11 authorisation library"
+
 #package version
 VERSION=1.0.8
 

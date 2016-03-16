@@ -1,6 +1,9 @@
 #package name
 NAME=dracut
 
+#Description
+DESC="Initramfs generator"
+
 #package version
 VERSION=043
 

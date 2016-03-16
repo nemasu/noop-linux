@@ -1,6 +1,9 @@
 #package name
 NAME=gnome-icon-theme
 
+#Description
+DESC="GNOME icon theme"
+
 #package version
 VERSION=3.12.0
 

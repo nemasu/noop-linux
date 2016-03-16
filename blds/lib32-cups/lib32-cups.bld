@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-cups
 
+#Description
+DESC="Userspace setup tool for transparent encryption of block devices using dm-crypt"
+
 #package version
 VERSION=1.7.5
 

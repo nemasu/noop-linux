@@ -1,6 +1,9 @@
 #package name
 NAME=libXv
 
+#Description
+DESC="X11 Video extension library"
+
 #package version
 VERSION=1.0.10
 

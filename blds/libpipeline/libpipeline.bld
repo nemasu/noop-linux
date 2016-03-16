@@ -1,6 +1,9 @@
 #package name
 NAME=libpipeline
 
+#Description
+DESC="a C library for manipulating pipelines of subprocesses in a flexible and convenient way"
+
 #package version
 VERSION=1.2.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=tzdata
 
+#Description
+DESC="Sources for time zone and daylight saving time data"
+
 #package version
 VERSION=2015-7
 DVERSION=2015g

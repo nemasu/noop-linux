@@ -1,6 +1,9 @@
 #package name
 NAME=openvpn
 
+#Description
+DESC="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
+
 #package version
 VERSION=2.3.10
 

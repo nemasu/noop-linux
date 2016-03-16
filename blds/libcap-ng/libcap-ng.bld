@@ -1,6 +1,9 @@
 #package name
 NAME=libcap-ng
 
+#Description
+DESC="A library making programming with POSIX capabilities easier than traditional libcap"
+
 #package version
 VERSION=0.7.4
 

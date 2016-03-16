@@ -1,6 +1,9 @@
 #package name
 NAME=mate-terminal
 
+#Description
+DESC="The MATE Terminal Emulator (GTK2 version)"
+
 #package version
 VERSION=1.10.2
 DVERSION=1.10.2

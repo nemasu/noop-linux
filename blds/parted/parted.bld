@@ -1,6 +1,9 @@
 #package name
 NAME=parted
 
+#Description
+DESC="A program for creating, destroying, resizing, checking and copying partitions"
+
 #package version
 VERSION=3.2
 

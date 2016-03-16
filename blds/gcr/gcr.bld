@@ -1,6 +1,9 @@
 #package name
 NAME=gcr
 
+#Description
+DESC="A library for bits of crypto UI and parsing"
+
 #package version
 VERSION=3.12.2-1
 DVERSION=3.12.2

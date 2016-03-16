@@ -1,6 +1,9 @@
 #package name
 NAME=sound-theme-freedesktop
 
+#Description
+DESC="Freedesktop sound theme"
+
 #package version
 VERSION=0.8
 

@@ -1,6 +1,9 @@
 #package name
 NAME=libndp
 
+#Description
+DESC="Library for Neighbor Discovery Protocol"
+
 #package version
 VERSION=1.3
 

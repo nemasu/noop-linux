@@ -1,6 +1,9 @@
 #package name
 NAME=iceauth
 
+#Description
+DESC="Edit and display the authorization information used in connecting with ICE"
+
 #package version
 VERSION=1.0.7
 

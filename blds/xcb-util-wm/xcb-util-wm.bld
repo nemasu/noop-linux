@@ -1,6 +1,9 @@
 #package name
 NAME=xcb-util-wm
 
+#Description
+DESC="Utility libraries for XC Binding - client and window-manager helpers for ICCCM"
+
 #package version
 VERSION=0.4.1
 

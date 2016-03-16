@@ -1,6 +1,9 @@
 #package name
 NAME=speex
 
+#Description
+DESC="A free codec for free speech"
+
 #package version
 VERSION=1.2-1
 DVERSION=1.2

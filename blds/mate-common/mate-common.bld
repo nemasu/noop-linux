@@ -1,6 +1,9 @@
 #package name
 NAME=mate-common
 
+#Description
+DESC="Common development macros for MATE"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

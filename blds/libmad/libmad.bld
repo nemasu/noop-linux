@@ -1,6 +1,9 @@
 #package name
 NAME=libmad
 
+#Description
+DESC="A high-quality MPEG audio decoder"
+
 #package version
 VERSION=0.15.1b
 

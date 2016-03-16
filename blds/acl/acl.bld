@@ -1,6 +1,9 @@
 #package name
 NAME=acl
 
+#Description
+DESC="Access control list utilities, libraries and headers"
+
 #package version
 VERSION=2.2.52
 

@@ -1,6 +1,9 @@
 #package name
 NAME=irssi
 
+#Description
+DESC="Modular text mode IRC client with Perl scripting"
+
 #package version
 VERSION=0.8.17
 

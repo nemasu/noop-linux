@@ -1,6 +1,9 @@
 #package name
 NAME=docker
 
+#Description
+DESC="Pack, ship and run any application as a lightweight container"
+
 #package version
 VERSION=1.9.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=gdbm
 
+#Description
+DESC="GNU database library"
+
 #package version
 VERSION=1.11
 

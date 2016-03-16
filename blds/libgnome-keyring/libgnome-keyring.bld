@@ -1,6 +1,9 @@
 #package name
 NAME=libgnome-keyring
 
+#Description
+DESC="GNOME keyring client library"
+
 #package version
 VERSION=3.12.0-1
 DVERSION=3.12.0

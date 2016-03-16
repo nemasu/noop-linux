@@ -1,6 +1,9 @@
 #package name
 NAME=dmxproto
 
+#Description
+DESC="X11 Distributed Multihead X extension wire protocol"
+
 #package version
 VERSION=2.3.1
 

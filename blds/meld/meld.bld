@@ -1,6 +1,9 @@
 #package name
 NAME=meld
 
+#Description
+DESC="Visual diff and merge tool"
+
 #package version
 VERSION=3.12.0
 

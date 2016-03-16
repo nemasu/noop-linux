@@ -1,6 +1,9 @@
 #package name
 NAME=memcached
 
+#Description
+DESC="A distributed memory object caching system"
+
 #package version
 VERSION=1.4.20
 

@@ -1,6 +1,9 @@
 #package name
 NAME=xf86dgaproto
 
+#Description
+DESC="X11 Direct Graphics Access extension wire protocol"
+
 #package version
 VERSION=2.1
 

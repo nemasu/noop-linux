@@ -1,6 +1,9 @@
 #package name
 NAME=tar
 
+#Description
+DESC="Utility used to store, backup, and transport files"
+
 #package version
 VERSION=1.27.1
 

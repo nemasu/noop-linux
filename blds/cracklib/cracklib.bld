@@ -1,6 +1,9 @@
 #package name
 NAME=cracklib
 
+#Description
+DESC="Password Checking Library"
+
 #package version
 VERSION=2.9.6
 

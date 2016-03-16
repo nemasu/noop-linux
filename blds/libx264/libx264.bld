@@ -1,6 +1,9 @@
 #package name
 NAME=libx264
 
+#Description
+DESC=""
+
 #package version
 VERSION=20160223
 

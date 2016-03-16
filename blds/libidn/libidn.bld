@@ -1,6 +1,9 @@
 #package name
 NAME=libidn
 
+#Description
+DESC="Implementation of the Stringprep, Punycode and IDNA specifications"
+
 #package version
 VERSION=1.25
 

@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-libglu
 
+#Description
+DESC=""
+
 #package version
 VERSION=9.0.0
 

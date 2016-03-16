@@ -1,6 +1,9 @@
 #package name
 NAME=parallel
 
+#Description
+DESC="A shell tool for executing jobs in parallel"
+
 #package version
 VERSION=20160222
 

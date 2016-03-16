@@ -1,6 +1,9 @@
 #package name
 NAME=mate-control-center
 
+#Description
+DESC="The Control Center for MATE (GTK2 version)"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

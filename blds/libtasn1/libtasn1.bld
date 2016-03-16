@@ -1,6 +1,9 @@
 #package name
 NAME=libtasn1
 
+#Description
+DESC="The ASN.1 library used in GNUTLS"
+
 #package version
 VERSION=4.7
 

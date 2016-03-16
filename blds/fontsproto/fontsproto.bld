@@ -1,6 +1,9 @@
 #package name
 NAME=fontsproto
 
+#Description
+DESC="X11 font extension wire protocol"
+
 #package version
 VERSION=2.1.3
 

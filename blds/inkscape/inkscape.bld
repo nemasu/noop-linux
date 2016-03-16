@@ -1,6 +1,9 @@
 #package name
 NAME=inkscape
 
+#Description
+DESC="Professional vector graphics editor"
+
 #package version
 VERSION=0.91
 

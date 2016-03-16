@@ -1,6 +1,9 @@
 #package name
 NAME=gd
 
+#Description
+DESC="Library for the dynamic creation of images by programmers"
+
 #package version
 VERSION=2.1.1
 

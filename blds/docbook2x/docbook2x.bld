@@ -1,6 +1,9 @@
 #package name
 NAME=docbook2x
 
+#Description
+DESC="A software package that converts DocBook documents into the traditional Unix man page format and the GNU Texinfo format."
+
 #package version
 VERSION=0.8.8
 

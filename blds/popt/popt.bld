@@ -1,6 +1,9 @@
 #package name
 NAME=popt
 
+#Description
+DESC="A commandline option parser"
+
 #package version
 VERSION=1.16
 

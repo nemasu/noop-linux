@@ -1,6 +1,9 @@
 #package name
 NAME=xbitmaps
 
+#Description
+DESC="X.org Bitmap files"
+
 #package version
 VERSION=1.1.0
 

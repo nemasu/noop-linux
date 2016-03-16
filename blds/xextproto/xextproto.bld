@@ -1,6 +1,9 @@
 #package name
 NAME=xextproto
 
+#Description
+DESC="X11 various extension wire protocol"
+
 #package version
 VERSION=7.3.0
 

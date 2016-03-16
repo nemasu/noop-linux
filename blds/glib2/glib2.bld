@@ -1,6 +1,9 @@
 #package name
 NAME=glib2
 
+#Description
+DESC="Common C routines used by GTK+ and other libs"
+
 #package version
 VERSION=2.46.2
 

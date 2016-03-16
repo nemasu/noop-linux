@@ -1,6 +1,9 @@
 #package name
 NAME=pygtk
 
+#Description
+DESC="Python bindings for the GTK widget set"
+
 #package version
 VERSION=2.24.0-2
 DVERSION=2.24.0

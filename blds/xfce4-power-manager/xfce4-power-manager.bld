@@ -1,6 +1,9 @@
 #package name
 NAME=xfce4-power-manager
 
+#Description
+DESC="Power manager for Xfce desktop"
+
 #package version
 VERSION=1.5.2
 

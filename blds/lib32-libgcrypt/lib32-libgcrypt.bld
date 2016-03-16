@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-libgcrypt
 
+#Description
+DESC="General purpose cryptographic library based on the code from GnuPG (32-bit)"
+
 #package version
 VERSION=1.6.3
 

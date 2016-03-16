@@ -1,6 +1,9 @@
 #package name
 NAME=libzip
 
+#Description
+DESC="A C library for reading, creating, and modifying zip archives"
+
 #package version
 VERSION=0.11.2
 

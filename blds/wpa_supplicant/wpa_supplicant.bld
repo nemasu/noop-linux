@@ -1,6 +1,9 @@
 #package name
 NAME=wpa_supplicant
 
+#Description
+DESC="A utility providing key negotiation for WPA wireless networks"
+
 #package version
 VERSION=2.5
 

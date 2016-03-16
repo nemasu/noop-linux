@@ -1,6 +1,9 @@
 #package name
 NAME=flatbedcursors
 
+#Description
+DESC="Flatbed Cursors collection"
+
 #package version
 VERSION=0.3
 

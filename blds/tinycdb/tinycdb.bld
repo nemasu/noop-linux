@@ -1,6 +1,9 @@
 #package name
 NAME=tinycdb
 
+#Description
+DESC="Very fast and simple package for creating and reading constant data bases"
+
 #package version
 VERSION=0.78
 

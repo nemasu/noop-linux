@@ -1,6 +1,9 @@
 #package name
 NAME=dotconf
 
+#Description
+DESC="A C library for parsing configuration files"
+
 #package version
 VERSION=1.3
 

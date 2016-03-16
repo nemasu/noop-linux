@@ -1,6 +1,9 @@
 #package name
 NAME=asciidoc
 
+#Description
+DESC="Text document format for short documents, articles, books and UNIX man pages."
+
 #package version
 VERSION=8.6.9
 

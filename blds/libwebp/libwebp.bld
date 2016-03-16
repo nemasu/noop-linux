@@ -1,6 +1,9 @@
 #package name
 NAME=libwebp
 
+#Description
+DESC="WebP library and conversion tools"
+
 #package version
 VERSION=0.4.3
 

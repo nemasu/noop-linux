@@ -1,6 +1,9 @@
 #package name
 NAME=dialog
 
+#Description
+DESC="A tool to display dialog boxes from shell scripts"
+
 #package version
 VERSION=1.2-20150920
 

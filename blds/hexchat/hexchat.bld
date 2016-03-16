@@ -1,6 +1,9 @@
 #package name
 NAME=hexchat
 
+#Description
+DESC="A popular and easy to use graphical IRC (chat) client"
+
 #package version
 VERSION=2.10.1
 

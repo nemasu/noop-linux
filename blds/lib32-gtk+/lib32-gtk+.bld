@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-gtk+
 
+#Description
+DESC="GObject-based multi-platform GUI toolkit"
+
 #package version
 VERSION=3.16.5
 

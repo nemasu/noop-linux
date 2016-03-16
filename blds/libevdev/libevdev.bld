@@ -1,6 +1,9 @@
 #package name
 NAME=libevdev
 
+#Description
+DESC="Wrapper library for evdev devices"
+
 #package version
 VERSION=1.3
 

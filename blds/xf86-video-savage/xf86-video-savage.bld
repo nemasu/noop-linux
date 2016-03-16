@@ -1,6 +1,9 @@
 #package name
 NAME=xf86-video-savage
 
+#Description
+DESC="X.org savage video driver"
+
 #package version
 VERSION=2.3.7-1
 DVERSION=2.3.7

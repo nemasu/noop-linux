@@ -1,6 +1,9 @@
 #package name
 NAME=tcl
 
+#Description
+DESC="The Tcl scripting language"
+
 #package version
 VERSION=8.6.1
 

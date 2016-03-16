@@ -1,6 +1,9 @@
 #package name
 NAME=btrfs-progs
 
+#Description
+DESC="Btrfs filesystem utilities"
+
 #package version
 VERSION=4.3.1
 

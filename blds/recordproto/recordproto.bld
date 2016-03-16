@@ -1,6 +1,9 @@
 #package name
 NAME=recordproto
 
+#Description
+DESC="X11 Record extension wire protocol"
+
 #package version
 VERSION=1.14.2
 

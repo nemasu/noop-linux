@@ -1,6 +1,9 @@
 #package name
 NAME=mate-desktop
 
+#Description
+DESC="Library with common API for various MATE modules"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

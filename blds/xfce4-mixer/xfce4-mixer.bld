@@ -1,6 +1,9 @@
 #package name
 NAME=xfce4-mixer
 
+#Description
+DESC="The volume control plugin for the Xfce panel"
+
 #package version
 VERSION=4.11.0
 

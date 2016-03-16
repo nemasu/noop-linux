@@ -1,6 +1,9 @@
 #package name
 NAME=perl-xml-simple
 
+#Description
+DESC="Simple XML parser for perl"
+
 #package version
 VERSION=2.20
 

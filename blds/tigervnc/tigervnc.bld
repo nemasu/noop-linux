@@ -1,6 +1,9 @@
 #package name
 NAME=tigervnc
 
+#Description
+DESC="Suite of VNC servers and clients. Based on the VNC 4 branch of TightVNC."
+
 #package version
 VERSION=1.6.0
 XORGVERSION=1.18.1

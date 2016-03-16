@@ -1,6 +1,9 @@
 #package name
 NAME=openldap
 
+#Description
+DESC="Open Source Computer Vision Library"
+
 #package version
 VERSION=2.4.43
 DVERSION=2.4.43

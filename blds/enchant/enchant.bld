@@ -1,6 +1,9 @@
 #package name
 NAME=enchant
 
+#Description
+DESC="A wrapper library for generic spell checking"
+
 #package version
 VERSION=1.6.0
 

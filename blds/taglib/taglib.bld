@@ -1,6 +1,9 @@
 #package name
 NAME=taglib
 
+#Description
+DESC="A Library for reading and editing the meta-data of several popular audio formats"
+
 #package version
 VERSION=1.9.1
 

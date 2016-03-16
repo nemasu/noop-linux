@@ -1,6 +1,9 @@
 #package name
 NAME=caja
 
+#Description
+DESC="File manager for the MATE desktop (GTK2 version)"
+
 #package version
 VERSION=1.10.1
 DVERSION=1.10.1

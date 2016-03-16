@@ -1,6 +1,9 @@
 #package name
 NAME=screen
 
+#Description
+DESC="Full-screen window manager that multiplexes a physical terminal"
+
 #package version
 VERSION=4.3.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-dbus
 
+#Description
+DESC="Freedesktop.org message bus system"
+
 #package version
 VERSION=1.6.8
 

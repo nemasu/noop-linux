@@ -1,6 +1,9 @@
 #package name
 NAME=ladspa
 
+#Description
+DESC="Linux Audio Developer's Simple Plugin API (LADSPA)"
+
 #package version
 VERSION=1.13
 

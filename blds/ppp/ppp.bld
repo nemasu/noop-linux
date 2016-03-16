@@ -1,6 +1,9 @@
 #package name
 NAME=ppp
 
+#Description
+DESC="A daemon which implements the Point-to-Point Protocol for dial-up networking"
+
 #package version
 #Note: NetworkManager needs to be rebuilt if this changes.
 VERSION=2.4.7

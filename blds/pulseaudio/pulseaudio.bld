@@ -1,6 +1,9 @@
 #package name
 NAME=pulseaudio
 
+#Description
+DESC="A featureful, general-purpose sound server"
+
 #package version
 VERSION=5.0-1
 DVERSION=5.0

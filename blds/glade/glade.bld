@@ -1,6 +1,9 @@
 #package name
 NAME=glade
 
+#Description
+DESC="User interface builder for GTK+ and GNOME."
+
 #package version
 VERSION=3.18.3
 

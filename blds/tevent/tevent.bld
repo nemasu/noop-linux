@@ -1,6 +1,9 @@
 #package name
 NAME=tevent
 
+#Description
+DESC="An event system based on the talloc memory management library"
+
 #package version
 VERSION=0.9.28
 

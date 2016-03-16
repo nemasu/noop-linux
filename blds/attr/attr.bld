@@ -1,6 +1,9 @@
 #package name
 NAME=attr
 
+#Description
+DESC="Extended attribute support library for ACL support"
+
 #package version
 VERSION=2.4.47
 

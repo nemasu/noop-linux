@@ -1,6 +1,9 @@
 #package name
 NAME=qemu
 
+#Description
+DESC="Easily download, build, install, upgrade, and uninstall Python packages"
+
 #package version
 VERSION=2.5.0
 

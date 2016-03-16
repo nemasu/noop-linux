@@ -1,6 +1,9 @@
 #package name
 NAME=xcb-proto
 
+#Description
+DESC="XML-XCB protocol descriptions"
+
 #package version
 VERSION=1.11
 

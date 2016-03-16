@@ -1,6 +1,9 @@
 #package name
 NAME=gnu-efi
 
+#Description
+DESC="Library for developing EFI applications"
+
 #package version
 VERSION=3.0.2
 

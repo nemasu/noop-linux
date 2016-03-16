@@ -1,6 +1,9 @@
 #package name
 NAME=pixman
 
+#Description
+DESC="The pixel-manipulation library for X and cairo"
+
 #package version
 VERSION=0.32.6
 

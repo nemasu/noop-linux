@@ -1,6 +1,9 @@
 #package name
 NAME=distcc
 
+#Description
+DESC="A distributed C, C++, Obj C compiler"
+
 #package version
 VERSION=3.2
 DVERSION=3.2rc1

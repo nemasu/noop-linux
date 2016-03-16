@@ -1,6 +1,9 @@
 #package name
 NAME=atk
 
+#Description
+DESC="A library providing a set of interfaces for accessibility"
+
 #package version
 VERSION=2.16.0
 

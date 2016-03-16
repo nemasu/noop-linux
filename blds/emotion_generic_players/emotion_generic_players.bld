@@ -1,6 +1,9 @@
 #package name
 NAME=emotion_generic_players
 
+#Description
+DESC="Enlightenment Foundation Libraries"
+
 #package version
 VERSION=1.13.0
 

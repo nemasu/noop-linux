@@ -1,6 +1,9 @@
 #package name
 NAME=lib32-p11-kit
 
+#Description
+DESC="Library to work with PKCS#11 modules (32-bit)"
+
 #package version
 VERSION=0.21.1
 

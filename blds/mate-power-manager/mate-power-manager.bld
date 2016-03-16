@@ -1,6 +1,9 @@
 #package name
 NAME=mate-power-manager
 
+#Description
+DESC="Power management tool for the MATE desktop (GTK2 version)"
+
 #package version
 VERSION=1.10.0-1
 DVERSION=1.10.0

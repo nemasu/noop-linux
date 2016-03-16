@@ -1,6 +1,9 @@
 #package name
 NAME=clementine
 
+#Description
+DESC="A modern music player and library organizer"
+
 #package version
 VERSION=1.2.3-2
 DVERSION=1.2.3

@@ -1,6 +1,9 @@
 #package name
 NAME=dhcp
 
+#Description
+DESC="A GTK+ audio player for GNU/Linux."
+
 #package version
 VERSION=4.3.2
 

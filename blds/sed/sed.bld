@@ -8,6 +8,9 @@
 # ISSPECIAL
 
 NAME=sed
+
+#Description
+DESC="GNU stream editor"
 VERSION=4.2
 ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/sed/sed-${VERSION}.tar.bz2

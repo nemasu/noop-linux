@@ -1,6 +1,9 @@
 #package name
 NAME=pygobject
 
+#Description
+DESC="A terminal-based tool for monitoring the progress of data through a pipeline."
+
 #package version
 VERSION=3.13.91-1
 DVERSION=3.13.91

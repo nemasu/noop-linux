@@ -1,6 +1,9 @@
 #package name
 NAME=libmatemixer
 
+#Description
+DESC="Mixer library for MATE Desktop"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

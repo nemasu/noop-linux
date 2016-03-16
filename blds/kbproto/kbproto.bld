@@ -1,6 +1,9 @@
 #package name
 NAME=kbproto
 
+#Description
+DESC="X11 XKB extension wire protocol"
+
 #package version
 VERSION=1.0.6
 

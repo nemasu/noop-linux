@@ -1,6 +1,9 @@
 #package name
 NAME=vala
 
+#Description
+DESC="Compiler for the GObject type system"
+
 #package version
 VERSION=0.25.2
 

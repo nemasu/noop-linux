@@ -1,6 +1,9 @@
 #package name
 NAME=mate-settings-daemon
 
+#Description
+DESC="The MATE Settings daemon (GTK2 version)"
+
 #package version
 VERSION=1.10.0
 DVERSION=1.10.0

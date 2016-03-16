@@ -1,6 +1,9 @@
 #package name
 NAME=iptables
 
+#Description
+DESC="Linux kernel packet control tool"
+
 #package version
 VERSION=1.4.21-1
 DVERSION=1.4.21

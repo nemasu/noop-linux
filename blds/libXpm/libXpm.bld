@@ -1,6 +1,9 @@
 #package name
 NAME=libXpm
 
+#Description
+DESC="X11 pixmap library"
+
 #package version
 VERSION=3.5.11
 

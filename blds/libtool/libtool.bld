@@ -1,6 +1,9 @@
 #package name
 NAME=libtool
 
+#Description
+DESC="A generic library support script"
+
 #package version
 VERSION=2.4.2
 

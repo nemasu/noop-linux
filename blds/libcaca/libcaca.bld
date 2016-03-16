@@ -1,6 +1,9 @@
 #package name
 NAME=libcaca
 
+#Description
+DESC="Color AsCii Art library"
+
 #package version
 VERSION=0.99-19-1
 DVERSION=0.99-19

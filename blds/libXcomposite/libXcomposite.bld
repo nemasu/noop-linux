@@ -1,6 +1,9 @@
 #package name
 NAME=libXcomposite
 
+#Description
+DESC="X11 Composite extension library"
+
 #package version
 VERSION=0.4.4
 

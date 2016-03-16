@@ -1,6 +1,9 @@
 #package name
 NAME=giflib
 
+#Description
+DESC="A library for reading and writing gif images"
+
 #package version
 VERSION=5.1.1
 

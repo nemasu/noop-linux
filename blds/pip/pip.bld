@@ -1,6 +1,9 @@
 #package name
 NAME=pip
 
+#Description
+DESC=""
+
 #package version
 VERSION=8.0.2
 

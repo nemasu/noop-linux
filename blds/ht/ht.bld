@@ -1,6 +1,9 @@
 #package name
 NAME=ht
 
+#Description
+DESC="A file editor/viewer/analyzer for executables"
+
 #package version
 VERSION=2.1.0
 

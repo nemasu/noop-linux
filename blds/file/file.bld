@@ -1,6 +1,9 @@
 #package name
 NAME=file
 
+#Description
+DESC="File type identification utility"
+
 #package version
 VERSION=5.25
 

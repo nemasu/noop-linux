@@ -1,6 +1,9 @@
 #package name
 NAME=libXinerama
 
+#Description
+DESC="X11 Xinerama extension library"
+
 #package version
 VERSION=1.1.3
 

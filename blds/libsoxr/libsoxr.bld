@@ -1,6 +1,9 @@
 #package name
 NAME=libsoxr
 
+#Description
+DESC="The SoX Resampler library that aims to give fast and high quality results for any constant resampling ratio"
+
 #package version
 VERSION=0.1.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=xdg-user-dirs
 
+#Description
+DESC="Manage user directories like ~/Desktop and ~/Music"
+
 #package version
 VERSION=0.15
 

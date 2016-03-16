@@ -1,6 +1,9 @@
 #package name
 NAME=jsoncpp
 
+#Description
+DESC="A C++ library for interacting with JSON"
+
 #package version
 VERSION=1.6.5
 

@@ -1,6 +1,9 @@
 #package name
 NAME=liboobs
 
+#Description
+DESC="GObject based interface to system-tools-backends - shared library"
+
 #package version
 VERSION=3.0.0
 

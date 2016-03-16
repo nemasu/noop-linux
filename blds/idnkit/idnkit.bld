@@ -1,6 +1,9 @@
 #package name
 NAME=idnkit
 
+#Description
+DESC="Provides functionalities about Internationalized Domain Name processing"
+
 #package version
 VERSION=1.0
 

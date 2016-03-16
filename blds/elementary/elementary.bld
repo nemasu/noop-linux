@@ -1,6 +1,9 @@
 #package name
 NAME=elementary
 
+#Description
+DESC="Enlightenment's widget set"
+
 #package version
 VERSION=1.13.1-1
 DVERSION=1.13.1

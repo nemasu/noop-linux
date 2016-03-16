@@ -1,6 +1,9 @@
 #package name
 NAME=libuv
 
+#Description
+DESC="Multi-platform support library with a focus on asynchronous I/O"
+
 #package version
 VERSION=0.11.25
 DVERSION=0.11.25

@@ -1,6 +1,9 @@
 #package name
 NAME=dnsmasq
 
+#Description
+DESC="Lightweight, easy to configure DNS forwarder and DHCP server"
+
 #package version
 VERSION=2.71
 

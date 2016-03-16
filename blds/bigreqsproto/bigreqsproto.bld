@@ -1,6 +1,9 @@
 #package name
 NAME=bigreqsproto
 
+#Description
+DESC="X11 Big Requests extension wire protocol"
+
 #package version
 VERSION=1.1.2
 

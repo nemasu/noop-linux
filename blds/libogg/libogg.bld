@@ -1,6 +1,9 @@
 #package name
 NAME=libogg
 
+#Description
+DESC="Ogg bitstream and framing library"
+
 #package version
 VERSION=1.3.2
 

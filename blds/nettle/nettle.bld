@@ -1,6 +1,9 @@
 #package name
 NAME=nettle
 
+#Description
+DESC="A low-level cryptographic library"
+
 #package version
 VERSION=3.2
 

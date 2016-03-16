@@ -1,6 +1,9 @@
 #package name
 NAME=gegl
 
+#Description
+DESC="Graph based image processing framework"
+
 #package version
 VERSION=0.3.4-1
 DVERSION=0.3.4

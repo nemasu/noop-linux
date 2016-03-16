@@ -1,6 +1,9 @@
 #package name
 NAME=libvncserver
 
+#Description
+DESC="A cross-platform C libraries that allow you to easily implement VNC server"
+
 #package version
 VERSION=0.9.10-1
 DVERSION=0.9.10

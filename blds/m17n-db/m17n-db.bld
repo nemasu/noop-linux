@@ -1,6 +1,9 @@
 #package name
 NAME=m17n-db
 
+#Description
+DESC="Multilingual text processing library (database)"
+
 #package version
 VERSION=1.7.0
 

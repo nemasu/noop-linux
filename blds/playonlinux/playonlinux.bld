@@ -1,6 +1,9 @@
 #package name
 NAME=playonlinux
 
+#Description
+DESC="GUI for managing Windows programs under linux"
+
 #package version
 VERSION=4.2.8
 

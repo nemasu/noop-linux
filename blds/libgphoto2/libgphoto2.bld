@@ -1,6 +1,9 @@
 #package name
 NAME=libgphoto2
 
+#Description
+DESC="The core library of gphoto2, designed to allow access to digital camera by external programs."
+
 #package version
 VERSION=2.5.8
 

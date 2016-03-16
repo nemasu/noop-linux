@@ -1,6 +1,9 @@
 #package name
 NAME=python-setuptools
 
+#Description
+DESC="Easily download, build, install, upgrade, and uninstall Python packages"
+
 #package version
 VERSION=19.1.1
 

@@ -1,6 +1,9 @@
 #package name
 NAME=avr-gcc
 
+#Description
+DESC="The GNU AVR Compiler Collection"
+
 #package version
 VERSION=4.9.2
 

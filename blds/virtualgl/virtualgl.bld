@@ -1,6 +1,9 @@
 #package name
 NAME=virtualgl
 
+#Description
+DESC="Redirects 3D commands from an OpenGL application onto a server-side 3D graphics card"
+
 #package version
 VERSION=2.4
 

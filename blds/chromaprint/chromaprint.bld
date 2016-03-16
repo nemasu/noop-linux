@@ -1,6 +1,9 @@
 #package name
 NAME=chromaprint
 
+#Description
+DESC="Library that implements a custom algorithm for extracting fingerprints from any audio source"
+
 #package version
 VERSION=1.3.1
 

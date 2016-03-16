@@ -1,6 +1,9 @@
 #package name
 NAME=gzip
 
+#Description
+DESC="GNU compression utility"
+
 #package version
 VERSION=1.6
 

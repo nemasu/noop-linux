@@ -1,6 +1,9 @@
 #package name
 NAME=xf86vidmodeproto
 
+#Description
+DESC="X11 Video Mode extension wire protocol"
+
 #package version
 VERSION=2.3.1
 

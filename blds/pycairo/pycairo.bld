@@ -1,6 +1,9 @@
 #package name
 NAME=pycairo
 
+#Description
+DESC=""
+
 #package version
 VERSION=1.10.0-1
 DVERSION=1.10.0

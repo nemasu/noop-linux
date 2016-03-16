@@ -1,6 +1,9 @@
 #package name
 NAME=ibus-fbterm
 
+#Description
+DESC="Fbterm input method for IBus Framework"
+
 #package version
 VERSION=0.9.1
 

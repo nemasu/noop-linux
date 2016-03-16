@@ -1,6 +1,9 @@
 #package name
 NAME=which
 
+#Description
+DESC="A utility to show the full path of commands"
+
 #package version
 VERSION=2.21
 

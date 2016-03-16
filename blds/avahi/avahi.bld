@@ -1,6 +1,9 @@
 #package name
 NAME=avahi
 
+#Description
+DESC="Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour"
+
 DVERSION=0.6.31
 
 #package version
