@@ -1879,6 +1879,9 @@ then
 	echo "{"
 	echo "\"name\":\"${name}\","
 
+	desc=`grep -m1 "^DESC=" /var/noop/blds/$2/${2}.bld | sed -e 's/DESC=//g;'`
+	echo "\"desc\":${desc},"
+
 	version=`grep -m1 "^VER:" $i | sed -e 's/VER://g;'`
 	echo "\"version\":\"${version}\","
 
