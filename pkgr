@@ -102,6 +102,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		$echo -e "\t-U,\t--upgrade-all                 システムアップグレード"
 		$echo -e "\t-r,\t--remove pkg                  削除します"
 		$echo -e "\t-l,\t--list                        リスト利用可能なパッケージ"
+		$echo -e "\t   \t--list-non-meta               List installed packages that don't belong to any meta package."
 		$echo -e "\t-b,\t--belongs file-path           パッケージのファイルをさがす"
 		$echo -e "\t-D,\t--show-revdeps pkg            パッケージの逆依存関係をリストします"
 		$echo -e "\t-c,\t--depcheck dynamic-binary     バイナリの依存関係をチェックします"
@@ -126,6 +127,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		$echo -e "\t-U,\t--upgrade-all                 Upgrade system"
 		$echo -e "\t-r,\t--remove pkg                  Remove"
 		$echo -e "\t-l,\t--list                        List available packages"
+		$echo -e "\t   \t--list-non-meta               List installed packages that don't belong to any meta package."
 		$echo -e "\t-b,\t--belongs file-path           List package file belongs to"
 		$echo -e "\t-D,\t--show-revdeps pkg            List reverse dependencies for a package"
 		$echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
@@ -1844,7 +1846,11 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
 	$rm -rf $TMPLIBFILE $TMPLIBFILE.out
 fi
 
-if [ $1 = "-libdiff" ]; then
+if [ "$1" == "--list-non-meta" ]; then
+	for i in `ls $INSTALLEDDIR`; do c=`pkgr -D $i | wc -l`; m=`grep $i $METADIR/* | wc -l`; if [ $c -eq 0 ] && [ $m -eq 0 ]; then echo -n "$i "; fi; done; echo;	
+fi
+
+if [ "$1" == "-libdiff" ]; then
 	curl -s -L https://github.com/nemasu/noop-linux/raw/master/libdb > /tmp/libdb.server
 	diff /var/noop/libdb /tmp/libdb.server
 	rm /tmp/libdb.server
