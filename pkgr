@@ -1991,6 +1991,8 @@ if [ $1 = "--mkinitramfs" ]; then
 	ln -s lib lib64
 	cd ..
 
+	rm -rf $INITRAMFS_WORKDIR/etc/*
+
 	#Modules that need to be in initramfs for some reason, add add needed.
 	mkdir -p $INITRAMFS_WORKDIR/mods
 	mkdir -p $INITRAMFS_WORKDIR/lib/modules/$KERVER/
@@ -2033,10 +2035,8 @@ if [ $1 = "--mkinitramfs" ]; then
     copy_binary `which cryptsetup` $INITRAMFS_WORKDIR/bin/cryptsetup
     cp /lib/ld-* $INITRAMFS_WORKDIR/lib/
    
-
-	rm -rf $INITRAMFS_WORKDIR/tmp/*
-	rm -rf $INITRAMFS_WORKDIR/etc/*
 	rm -rf $INITRAMFS_WORKDIR/var/noop
+	rm -rf $INITRAMFS_WORKDIR/tmp/*
 
 	touch $INITRAMFS_WORKDIR/etc/mtab
     ldconfig -r $INITRAMFS_WORKDIR /usr/lib /lib
