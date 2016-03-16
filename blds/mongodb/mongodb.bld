@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('boost' 'gcc-libs' 'glibc' 'libpcap' 'openssl' 'pcre' 'sasl' 'snappy' 'wiredtiger' 'yaml-cpp' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -17,7 +17,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('curl' 'gcc-libs' 'glibc' 'json-c' 'libxml2' 'ncurses' 'openssl' 'sqlite')
 
 # 'no' to skip calls to strip
 STRIP=
