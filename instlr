@@ -77,15 +77,13 @@ then
 	PREFIX=$PREFIX pkgr -s
 	export PKGR_SUPPRESS_P_OUTPUT=1
 
+	pkgr -i base-meta
+
 	if [ "`$UNAME -m`" == "x86_64" ];
 	then
-		EXTRA="grub cryptsetup dracut linux-kernel linux-firmware"
+		PREFIX=$PREFIX pkgr -i grub cryptsetup linux-kernel linux-firmware
 	fi
 
-	for i in busybox glibc which bc tzdata systemd shadow coreutils bash wget grep sed perl findutils curl gawk procps tar bzip2 gzip dhcp dhcpcd inetutils iproute2 wpa_supplicant wireless_tools kbd vim run-parts ca-certificates openresolv networkmanager $EXTRA git;
-	do
-		PREFIX=$PREFIX pkgr -i $i
-	done
 else
 
 	if [ ! -d /var/noop/installed ]; then

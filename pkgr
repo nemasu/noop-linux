@@ -1377,110 +1377,6 @@ function DoesPkgExist
 	return 0
 }
 
-function InstallKdeAllMeta
-{
-	if [ ! -e $METADIR/kde-all-meta ]; then
-        $echo Sync first.
-        exit 1
-    fi
-
-    for i in `$cat $METADIR/kde-all-meta`;
-    do
-        pkgr -i $i;
-    done
-
-}
-
-function InstallKdeCoreMeta
-{
-	if [ ! -e $METADIR/kde-core-meta ]; then
-        $echo Sync first.
-        exit 1
-    fi
-
-    for i in `$cat $METADIR/kde-core-meta`;
-    do
-        pkgr -i $i;
-    done
-
-}
-
-
-function InstallEnlightenmentMeta
-{
-	if [ ! -e $METADIR/enlightenment-meta ]; then
-        $echo Sync first.
-        exit 1
-    fi
-
-    for i in `$cat $METADIR/enlightenment-meta`;
-    do
-        pkgr -i $i;
-    done
-
-}
-
-function InstallMateMeta
-{
-	if [ ! -e $METADIR/mate-meta ]; then
-		$echo Sync first.
-		exit 1
-	fi
-
-	for i in `$cat $METADIR/mate-meta`;
-	do
-		pkgr -i $i;
-	done
-
-	#Bug - I don't know where ( which package ) to put this
-	rm /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache; gdk-pixbuf-query-loaders --update-cache; gtk-update-icon-cache -q -t -f /usr/share/icons/mate; gtk-update-icon-cache -q -t -f /usr/share/icons/gnome;
-}
-
-function InstallXorgMeta
-{
-	if [ ! -e $METADIR/xorg-meta ]; then
-		$echo Sync first.
-		exit 1
-	fi
-
-	for i in `$cat $METADIR/xorg-meta`;
-	do
-		pkgr -i $i;
-	done
-}
-
-function InstallXfce4Meta
-{
-	if [ ! -e $METADIR/xfce4-meta ]; then
-		$echo Sync first.
-		exit 1
-	fi
-
-	for i in `$cat $METADIR/xfce4-meta`;
-	do
-		pkgr -i $i;
-	done
-
-	#Bug - I don't know where ( which package ) to put this
-	rm /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache; gdk-pixbuf-query-loaders --update-cache; gtk-update-icon-cache -q -t -f /usr/share/icons/gnome
-
-}
-
-function InstallDevMeta
-{
-	if [ ! -e $METADIR/dev-meta ]; then
-        $echo Sync first.
-        exit 1
-    fi
-
-    for i in `$cat $METADIR/dev-meta`;
-    do
-        pkgr -i $i;
-    done
-
-
-}
-
 if [ $1 = "--install" ] || [ $1 == "-i" ]; then
 
 	if [ -z $2 ]; then
@@ -1488,41 +1384,20 @@ if [ $1 = "--install" ] || [ $1 == "-i" ]; then
         exit 1
     fi
 
-	if [ $2 == "xorg-meta" ]; then
-		InstallXorgMeta
+	if [[ $2 =~ -meta$ ]];
+	then
+		if [ -e $METADIR/$2 ];
+		then
+			for i in `cat $METADIR/$2`;
+			do
+				pkgr -i $i;
+			done
+		else
+			echo "Error: meta package $2 does not exist."
+			exit 1
+		fi
 		exit 0
 	fi
-	
-	if [ $2 == "xfce4-meta" ]; then
-		InstallXfce4Meta
-		exit 0
-	fi
-
-	if [ $2 == "mate-meta" ]; then
-        InstallMateMeta
-        exit 0
-    fi
-
-	if [ $2 == "dev-meta" ]; then
-        InstallDevMeta
-        exit 0
-    fi
-
-	if [ $2 == "enlightenment-meta" ]; then
-        InstallEnlightenmentMeta
-        exit 0
-    fi
-	
-	if [ $2 == "kde-all-meta" ]; then
-    	InstallKdeAllMeta
-        exit 0
-    fi
-	
-	if [ $2 == "kde-core-meta" ]; then
-    	InstallKdeCoreMeta
-        exit 0
-    fi
-
 
 	ISEXIT=0;
 	
