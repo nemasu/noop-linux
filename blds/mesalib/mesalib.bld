@@ -2,7 +2,7 @@
 NAME=mesalib
 
 #Description
-DESC=""
+DESC="An open-source implementation of the OpenGL specification"
 
 #package version
 VERSION=11.0.2

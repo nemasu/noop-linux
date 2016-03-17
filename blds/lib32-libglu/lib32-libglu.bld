@@ -2,7 +2,7 @@
 NAME=lib32-libglu
 
 #Description
-DESC=""
+DESC="Mesa OpenGL Utility library (32-bit)"
 
 #package version
 VERSION=9.0.0

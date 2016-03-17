@@ -2,7 +2,7 @@
 NAME=libpthread-stubs
 
 #Description
-DESC=""
+DESC="Provides weak aliases for pthread functions not provided in libc"
 
 #package version
 VERSION=0.1

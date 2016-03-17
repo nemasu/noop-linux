@@ -2,7 +2,7 @@
 NAME=luit
 
 #Description
-DESC=""
+DESC="Provides a filter for displaying and converting UTF-8 characters in text console windows"
 
 #package version
 VERSION=1.1.1

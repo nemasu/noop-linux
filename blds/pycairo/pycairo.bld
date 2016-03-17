@@ -2,7 +2,7 @@
 NAME=pycairo
 
 #Description
-DESC=""
+DESC="Set of Python 3 bindings for the cairo graphics library"
 
 #package version
 VERSION=1.10.0-1

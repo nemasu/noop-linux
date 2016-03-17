@@ -2,7 +2,7 @@
 NAME=mksha512pw
 
 #Description
-DESC=""
+DESC="Tool to create SHA512 shadow style passwords"
 
 #package version
 VERSION=20160208

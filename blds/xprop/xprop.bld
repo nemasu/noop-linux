@@ -2,7 +2,7 @@
 NAME=xprop
 
 #Description
-DESC=""
+DESC="Property displayer for X"
 
 #package version
 VERSION=1.2.2

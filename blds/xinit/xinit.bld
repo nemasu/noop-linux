@@ -2,7 +2,7 @@
 NAME=xinit
 
 #Description
-DESC=""
+DESC="X Window System initializer"
 
 #package version
 VERSION=1.3.4

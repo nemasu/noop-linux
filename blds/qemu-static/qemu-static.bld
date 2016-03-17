@@ -2,7 +2,7 @@
 NAME=qemu-static
 
 #Description
-DESC=""
+DESC="Static build of qemu"
 
 #package version
 VERSION=2.4.1

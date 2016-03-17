@@ -2,7 +2,7 @@
 NAME=makedepend
 
 #Description
-DESC=""
+DESC="C-preprocessor like utility to determine build-time dependencies"
 
 #package version
 VERSION=1.0.5

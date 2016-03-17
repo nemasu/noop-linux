@@ -2,7 +2,7 @@
 NAME=tiff
 
 #Description
-DESC=""
+DESC="Library for manipulation of TIFF images"
 
 #package version
 VERSION=4.0.2

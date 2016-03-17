@@ -2,7 +2,7 @@
 NAME=xset
 
 #Description
-DESC=""
+DESC="User preference utility for X"
 
 #package version
 VERSION=1.2.3

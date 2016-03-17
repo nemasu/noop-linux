@@ -2,7 +2,7 @@
 NAME=libmpcdec
 
 #Description
-DESC=""
+DESC="MusePack decoding library"
 
 #package version
 VERSION=1.2.6

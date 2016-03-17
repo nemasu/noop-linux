@@ -2,7 +2,7 @@
 NAME=setxkbmap
 
 #Description
-DESC=""
+DESC="Sets the keyboard using the X Keyboard Extension"
 
 #package version
 VERSION=1.3.0

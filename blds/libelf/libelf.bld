@@ -2,7 +2,7 @@
 NAME=libelf
 
 #Description
-DESC=""
+DESC="Library to handle ELF object files and DWARF debugging information"
 
 #package version
 VERSION=0.8.13

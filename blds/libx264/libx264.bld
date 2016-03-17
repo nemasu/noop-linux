@@ -2,7 +2,7 @@
 NAME=libx264
 
 #Description
-DESC=""
+DESC="Library for encoding H264/AVC video streams"
 
 #package version
 VERSION=20160223

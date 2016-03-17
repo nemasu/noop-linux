@@ -2,7 +2,7 @@
 NAME=xrdb
 
 #Description
-DESC=""
+DESC="X server resource database utility"
 
 #package version
 VERSION=1.1.0

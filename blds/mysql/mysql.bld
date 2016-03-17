@@ -2,7 +2,7 @@
 NAME=mysql
 
 #Description
-DESC=""
+DESC="Widely used and fast SQL database server"
 
 #package version
 VERSION=5.7.10

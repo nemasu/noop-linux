@@ -2,7 +2,7 @@
 NAME=mate-indicator-applet
 
 #Description
-DESC=""
+DESC="Exposes Ayatana Indicators in the MATE Panel"
 
 #package version
 VERSION=1.10.0

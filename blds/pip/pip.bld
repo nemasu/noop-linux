@@ -2,7 +2,7 @@
 NAME=pip
 
 #Description
-DESC=""
+DESC="Package management for Python applications"
 
 #package version
 VERSION=8.0.2

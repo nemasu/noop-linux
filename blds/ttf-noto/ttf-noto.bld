@@ -2,7 +2,7 @@
 NAME=ttf-noto
 
 #Description
-DESC=""
+DESC="Fonts support all languages/characters in Unicode"
 
 #package version
 VERSION=20140716

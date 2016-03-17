@@ -2,7 +2,7 @@
 NAME=xdriinfo
 
 #Description
-DESC=""
+DESC="Queries configuration information of DRI drivers"
 
 #package version
 VERSION=1.0.4

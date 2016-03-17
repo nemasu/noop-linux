@@ -2,7 +2,7 @@
 NAME=netcat
 
 #Description
-DESC=""
+DESC="Utility for reading from and writing to network connections using TCP or UDP"
 
 #package version
 VERSION=0.7.1

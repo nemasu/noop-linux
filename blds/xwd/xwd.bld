@@ -2,7 +2,7 @@
 NAME=xwd
 
 #Description
-DESC=""
+DESC="Dumps an image of an X window"
 
 #package version
 VERSION=1.0.6

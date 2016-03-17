@@ -2,7 +2,7 @@
 NAME=lzo2
 
 #Description
-DESC=""
+DESC="LZO is a data compression library which is suitable for data decompression and compression in real-time (version 2)"
 
 #package version
 VERSION=2.06

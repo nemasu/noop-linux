@@ -2,7 +2,7 @@
 NAME=xwininfo
 
 #Description
-DESC=""
+DESC="Window information utility for X"
 
 #package version
 VERSION=1.1.3

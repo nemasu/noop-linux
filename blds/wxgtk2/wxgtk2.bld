@@ -2,7 +2,7 @@
 NAME=wxgtk2
 
 #Description
-DESC=""
+DESC="GTK+ implementation of wxWidgets API for GUI (GTK2)"
 
 #package version
 VERSION=2.8.12.1

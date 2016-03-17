@@ -2,7 +2,7 @@
 NAME=sasl
 
 #Description
-DESC=""
+DESC="Simple Authentication and Security Layer"
 
 #package version
 VERSION=2.1.26-1

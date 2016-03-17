@@ -2,7 +2,7 @@
 NAME=procps
 
 #Description
-DESC=""
+DESC="Programs for monitoring processes"
 
 #package version
 VERSION=3.3.11-1

@@ -2,7 +2,7 @@
 NAME=xsetroot
 
 #Description
-DESC=""
+DESC="Root window parameter setting utility for X"
 
 #package version
 VERSION=1.1.1

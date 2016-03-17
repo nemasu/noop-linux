@@ -2,7 +2,7 @@
 NAME=libidl
 
 #Description
-DESC=""
+DESC="Libraries for Interface Definition Language files"
 
 #package version
 VERSION=0.8.14

@@ -2,7 +2,7 @@
 NAME=xorriso
 
 #Description
-DESC=""
+DESC="Utilities for Rock Ridge enhanced ISO 9660 filesystems"
 
 #package version
 VERSION=1.4.1

@@ -2,7 +2,7 @@
 NAME=mkfontscale
 
 #Description
-DESC=""
+DESC="Creates an index of scalable font files for X"
 
 #package version
 VERSION=1.1.0

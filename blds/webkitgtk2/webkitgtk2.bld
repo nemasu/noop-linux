@@ -2,7 +2,7 @@
 NAME=webkitgtk2
 
 #Description
-DESC=""
+DESC="GTK+ Web content engine library for GTK2"
 
 #package version
 VERSION=2.4.9

@@ -2,7 +2,7 @@
 NAME=mongo-tools
 
 #Description
-DESC=""
+DESC="Tools for mongodb"
 
 
 #package version

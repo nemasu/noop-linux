@@ -2,7 +2,7 @@
 NAME=skype4pidgin
 
 #Description
-DESC=""
+DESC="Skype plugin for pidgin"
 
 #package version
 VERSION=664

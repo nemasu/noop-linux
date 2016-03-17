@@ -2,7 +2,7 @@
 NAME=xf86-video-suncg6
 
 #Description
-DESC=""
+DESC="GX/Turbo GX video driver for X.Org"
 
 #package version
 VERSION=1.1.2-1

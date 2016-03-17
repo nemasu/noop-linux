@@ -2,7 +2,7 @@
 NAME=xkbevd
 
 #Description
-DESC=""
+DESC="XKB event daemon"
 
 #package version
 VERSION=1.1.3

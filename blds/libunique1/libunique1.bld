@@ -2,7 +2,7 @@
 NAME=libunique1
 
 #Description
-DESC=""
+DESC="Library for writing single instance applications"
 
 #package version
 VERSION=1.1.6

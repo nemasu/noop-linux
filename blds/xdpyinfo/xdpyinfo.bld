@@ -2,7 +2,7 @@
 NAME=xdpyinfo
 
 #Description
-DESC=""
+DESC="Display information utility for X."
 
 #package version
 VERSION=1.3.1

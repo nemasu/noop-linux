@@ -2,7 +2,7 @@
 NAME=python-caja
 
 #Description
-DESC=""
+DESC="Python 2 bindings for caja"
 
 #package version
 VERSION=1.10.0

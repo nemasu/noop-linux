@@ -2,7 +2,7 @@
 NAME=vasm
 
 #Description
-DESC=""
+DESC="A portable and retargetable assembler"
 
 #package version
 VERSION=1.7

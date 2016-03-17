@@ -2,7 +2,7 @@
 NAME=xf86-video-sunffb
 
 #Description
-DESC=""
+DESC="SUNFFB video driver for X.Org"
 
 #package version
 VERSION=1.2.2-1

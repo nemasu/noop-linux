@@ -2,7 +2,7 @@
 NAME=xkbutils
 
 #Description
-DESC=""
+DESC="XKB utility demos"
 
 #package version
 VERSION=1.0.4

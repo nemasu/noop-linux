@@ -2,7 +2,7 @@
 NAME=xf86bigfontproto
 
 #Description
-DESC=""
+DESC="XF86BigFont extension headers"
 
 #package version
 VERSION=1.2.0

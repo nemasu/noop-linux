@@ -2,7 +2,7 @@
 NAME=mkfontdir
 
 #Description
-DESC=""
+DESC="Creates an index of X font files in a directory"
 
 #package version
 VERSION=1.0.7

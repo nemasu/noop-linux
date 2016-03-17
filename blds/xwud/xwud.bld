@@ -2,7 +2,7 @@
 NAME=xwud
 
 #Description
-DESC=""
+DESC="Image displayer for X"
 
 #package version
 VERSION=1.0.4

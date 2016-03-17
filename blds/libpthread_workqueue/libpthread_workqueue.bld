@@ -2,7 +2,7 @@
 NAME=libpthread_workqueue
 
 #Description
-DESC=""
+DESC="Thread pool library"
 
 #package version
 VERSION=0.9

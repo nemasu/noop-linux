@@ -2,7 +2,7 @@
 NAME=xcmsdb
 
 #Description
-DESC=""
+DESC="Device Color Characterization utility for X Color Management System"
 
 #package version
 VERSION=1.0.4

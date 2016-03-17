@@ -2,7 +2,7 @@
 NAME=xcursorgen
 
 #Description
-DESC=""
+DESC="Creates an X cursor file from a collection of PNG images"
 
 #package version
 VERSION=1.0.6

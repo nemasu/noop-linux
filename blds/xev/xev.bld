@@ -2,7 +2,7 @@
 NAME=xev
 
 #Description
-DESC=""
+DESC="Prints contents of X eventsprints contents of X events"
 
 #package version
 VERSION=1.2.1

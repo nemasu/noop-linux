@@ -2,7 +2,7 @@
 NAME=xlsclients
 
 #Description
-DESC=""
+DESC="Lists client applications running on a display"
 
 #package version
 VERSION=1.1.3

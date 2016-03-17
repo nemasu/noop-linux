@@ -2,7 +2,7 @@
 NAME=xinput
 
 #Description
-DESC=""
+DESC="Utility to configure and test X input devices"
 
 #package version
 VERSION=1.6.1

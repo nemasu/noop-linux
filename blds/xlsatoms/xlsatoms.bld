@@ -2,7 +2,7 @@
 NAME=xlsatoms
 
 #Description
-DESC=""
+DESC="Lists interned atoms defined on the server"
 
 #package version
 VERSION=1.1.1

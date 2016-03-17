@@ -2,7 +2,7 @@
 NAME=libreoffice
 
 #Description
-DESC=""
+DESC="Office suite"
 
 #package version
 VERSION=5.0.4.2

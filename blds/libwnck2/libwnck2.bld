@@ -2,7 +2,7 @@
 NAME=libwnck2
 
 #Description
-DESC=""
+DESC="CLI binding for wnck (version 2)"
 
 #package version
 VERSION=2.31.0

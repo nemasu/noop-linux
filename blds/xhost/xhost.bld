@@ -2,7 +2,7 @@
 NAME=xhost
 
 #Description
-DESC=""
+DESC="Server access control program for X"
 
 #package version
 VERSION=1.0.6

@@ -2,7 +2,7 @@
 NAME=x11perf
 
 #Description
-DESC=""
+DESC="X11 server performance test program"
 
 #package version
 VERSION=1.5.4

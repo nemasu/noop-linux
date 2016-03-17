@@ -2,7 +2,7 @@
 NAME=lzip
 
 #Description
-DESC=""
+DESC="Lossless data compressor"
 
 #package version
 VERSION=1.17

@@ -2,7 +2,7 @@
 NAME=libnfsidmap
 
 #Description
-DESC=""
+DESC="Library to help mapping id's, mainly for NFSv4"
 
 #package version
 VERSION=0.25

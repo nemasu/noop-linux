@@ -2,7 +2,7 @@
 NAME=xbacklight
 
 #Description
-DESC=""
+DESC="Adjusts backlight brightness using RandR extension"
 
 #package version
 VERSION=1.2.1

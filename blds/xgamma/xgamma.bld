@@ -2,7 +2,7 @@
 NAME=xgamma
 
 #Description
-DESC=""
+DESC="Alters a monitor's gamma correction through the X server"
 
 #package version
 VERSION=1.0.5

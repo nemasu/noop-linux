@@ -2,7 +2,7 @@
 NAME=sessreg
 
 #Description
-DESC=""
+DESC="Manages utmp/wtmp entries for non-init clients"
 
 #package version
 VERSION=1.1.0

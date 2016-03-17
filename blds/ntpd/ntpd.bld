@@ -2,7 +2,7 @@
 NAME=ntpd
 
 #Description
-DESC=""
+DESC="Network Time Protocol daemon"
 
 #package version
 VERSION=4.2.7-475

@@ -2,7 +2,7 @@
 NAME=xkbcomp
 
 #Description
-DESC=""
+DESC="Compiles an XKB keyboard description"
 
 #package version
 VERSION=1.3.0

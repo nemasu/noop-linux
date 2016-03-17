@@ -2,7 +2,7 @@
 NAME=xmodmap
 
 #Description
-DESC=""
+DESC="Uility for modifying keymaps and pointer button mappings in X"
 
 #package version
 VERSION=1.0.8

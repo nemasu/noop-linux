@@ -2,7 +2,7 @@
 NAME=xrandr
 
 #Description
-DESC=""
+DESC="Command line interface to RandR extension"
 
 #package version
 VERSION=1.4.3

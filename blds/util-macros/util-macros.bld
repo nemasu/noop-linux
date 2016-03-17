@@ -2,7 +2,7 @@
 NAME=util-macros
 
 #Description
-DESC=""
+DESC="M4 macros used by all of the Xorg packages"
 
 #package version
 VERSION=1.19.0
