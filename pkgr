@@ -905,7 +905,7 @@ if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
 	fi
 	$echo
 	$echo -ne "${Cyan}Generating packages list..."
-	curl -s -L $HOST/packages/${ARCH}/ | $grep href | $awk '{print $2;}' | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
+	curl -s -L $HOST/packages/${ARCH}/ | $grep ".pkg" | $awk '{print $2;}' | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
 	$echo -e "${Green}done."
 	$echo
 	$echo -en "${Cyan}Generating deps list..."
@@ -1890,7 +1890,11 @@ then
 		size=`grep -m1 "^SIZE:" $i | sed -e 's/SIZE://g;'`
 	fi
 
-	desc=`grep -m1 "^DESC=" /var/noop/blds/$2/${2}.bld | sed -e 's/DESC=//g;'`
+	if [ -e /var/noop/blds/$2/${2}.bld ]; then
+		desc=`grep -m1 "^DESC=" /var/noop/blds/$2/${2}.bld | sed -e 's/DESC=//g;'`
+	else
+		desc=
+	fi
 
 	echo "{"
 	echo "\"name\":\"${name}\","
