@@ -16,6 +16,7 @@ ISUSR=1
 SRC=http://prdownloads.sourceforge.net/libpng/libpng-${VERSION}.tar.xz?download
 EXTRACONF=
 ISSPECIAL=1
+DEPS=
 
 function BuildAndInstall
 {

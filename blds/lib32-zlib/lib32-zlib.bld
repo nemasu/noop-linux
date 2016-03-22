@@ -16,6 +16,7 @@ ISUSR=1
 SRC=http://zlib.net/zlib-${VERSION}.tar.bz2
 EXTRACONF=
 ISSPECIAL=1
+DEPS=
 
 function BuildAndInstall
 {

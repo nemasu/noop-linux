@@ -17,6 +17,7 @@ ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/gawk/gawk-${DVERSION}.tar.xz
 EXTRACONF=
 ISSPECIAL=0
+DEPS=
 
 function Detect
 {

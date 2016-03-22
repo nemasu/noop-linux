@@ -17,6 +17,7 @@ ISUSR=1
 SRC=http://pkgs.fedoraproject.org/repo/pkgs/grep/grep-2.22.tar.xz/e1015e951a49a82b02e38891026ef5df/grep-2.22.tar.xz
 EXTRACONF=
 ISSPECIAL=0
+DEPS=
 
 function Detect
 {

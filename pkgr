@@ -1,5 +1,4 @@
 #!/usr/bin/bash
-
 if [ -e $PREFIX/usr/bin/busybox ];
 then
 
@@ -282,13 +281,17 @@ function bininst_install() {
 
 #1 name
 function get_packagedb_version() {
-	 ARCHPOST="_$ARCH"
-	 $echo "`$egrep "^${1}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`"
+	ARCHPOST="_$ARCH"
+	#Why isnt this working...	
+	#$echo "`$egrep "^${1}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`"
+	echo "`egrep "^${1}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | sed -e 's/\.pkg//g' | sed -e 's/'"$ARCHPOST"'//g'`"
 }
 
 #1 name
 function get_installed_version() {
-	$echo `$grep -m1 "VER:" "$INSTALLEDDIR/$1" | $sed -e 's/VER://'`
+	#why isnt this working...
+	#$echo `$grep -m1 "VER:" "$INSTALLEDDIR/$1" | $sed -e 's/VER://'`
+	grep "VER:" "$INSTALLEDDIR/$1" | sed 's/VER://'
 }
 
 if [ $1 == "--instbin" ]; then
@@ -1862,63 +1865,98 @@ fi
 if [ "$1" == "--jsonmeta" ];
 then
 
-	if [ -z "$2" ] || [ ! -e "$INSTALLEDDIR/$2" ]; then
+	if [ -z "$2" ]; then
 		exit 1
 	fi
+
+	if [ ! -e /var/noop/installed/$2 ] && [ ! -e /var/noop/blds/$2/$2.bld ];
+	then
+		echo "$2 is not a valid package name."
+		exit -1
+	fi
+		
 
 	IFS=$'\n'
 	i=/var/noop/installed/$2
 
 	if [ ! -e "$i" ];
 	then
-		echo "$i is not a valid path"
-		exit -1
+		#not installed
+		name=`grep -m1 "NAME=" /var/noop/blds/${2}/${2}.bld | sed 's/NAME=//g'`
+		version=`get_packagedb_version $2`
+	else
+		name=`grep -m1 "^NAME:" $i | sed -e 's/NAME://g;'`
+		version=`get_installed_version $2`
+		size=`grep -m1 "^SIZE:" $i | sed -e 's/SIZE://g;'`
 	fi
 
-	name=`grep -m1 "^NAME:" $i | sed -e 's/NAME://g;'`
+	desc=`grep -m1 "^DESC=" /var/noop/blds/$2/${2}.bld | sed -e 's/DESC=//g;'`
+
 	echo "{"
 	echo "\"name\":\"${name}\","
 
-	desc=`grep -m1 "^DESC=" /var/noop/blds/$2/${2}.bld | sed -e 's/DESC=//g;'`
 	echo "\"desc\":${desc},"
 
-	version=`grep -m1 "^VER:" $i | sed -e 's/VER://g;'`
 	echo "\"version\":\"${version}\","
 
 	echo "\"deps\":["
-	let lines=`sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d' | wc -l`
-	let line=1
-	for dep in `sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d'`;
-	do
-			if [ $lines -eq $line ];
+
+	if [ -e "$i" ];
+	then
+		let lines=`sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d' | wc -l`
+		let line=1
+		for dep in `sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d'`;
+		do
+				if [ $lines -eq $line ];
+				then
+						echo "\"$dep\""
+				else
+						echo "\"$dep\","
+				fi
+				let line=$line+1
+		done
+		echo "],"
+	else
+		#uninstalled deps
+		declare -a json_pkg_deps=$(grep -m1 "DEPS" /var/noop/blds/$2/$2.bld | sed -e 's/DEPS=//')
+		let lines=${#json_pkg_deps[@]}
+		let line=1
+		for dep in ${json_pkg_deps[@]};
+		do
+				if [ $lines -eq $line ];
+				then
+						echo "\"$dep\""
+				else
+						echo "\"$dep\","
+				fi
+				let line=$line+1
+		done
+		echo "],"
+	fi
+
+	if [ -e "$i" ];
+	then
+		echo "\"size\":${size},"
+		echo "\"files\":["
+		let lines=`sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;' | wc -l`
+		let line=1
+		for file in `sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;'`;
+		do
+				if [ $lines -eq $line ];
 			then
-					echo "\"$dep\""
-			else
-					echo "\"$dep\","
-			fi
-			let line=$line+1
-	done
-	echo "],"
+						echo "\"$file\""
+				else
+						echo "\"$file\","
+				fi
+				let line=$line+1
+		done
 
-
-	size=`grep -m1 "^SIZE:" $i | sed -e 's/SIZE://g;'`
-	echo "\"size\":${size},"
-
-	echo "\"files\":["
-	let lines=`sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;' | wc -l`
-	let line=1
-	for file in `sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;'`;
-	do
-			if [ $lines -eq $line ];
-		then
-					echo "\"$file\""
-			else
-					echo "\"$file\","
-			fi
-			let line=$line+1
-	done
-
-	echo "]}"
+		echo "],"
+		echo "\"installed\":\"true\""
+	else
+		echo "\"installed\":\"false\""
+	fi
+	echo "}";
 
 fi
 

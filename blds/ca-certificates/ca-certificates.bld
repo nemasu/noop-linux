@@ -17,6 +17,7 @@ ISUSR=1
 SRC=http://ftp.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_${VERSION}.tar.xz
 EXTRACONF=
 ISSPECIAL=1
+DEPS=
 
 function BuildAndInstall
 {

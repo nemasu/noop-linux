@@ -16,6 +16,7 @@ ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/glibc/glibc-${VERSION}.tar.xz
 EXTRACONF=
 ISSPECIAL=1
+DEPS=
 
 function BuildAndInstall
 {
