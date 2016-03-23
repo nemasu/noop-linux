@@ -94,6 +94,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		$echo -e "\t-s,\t--sync                        パッケージのデータベースを同期します"
 		$echo -e "\t-d,\t--download pkg                ダウンロードだけ"
 		$echo -e "\t-i,\t--install pkg                 インストール"
+		$echo -e "\t   \t--to-install pkg              Display required dependencies for pkg(s)."
 		$echo -e "\t   \t--instbin name                最新のビルド全、非noopのバイナリはoptと更新プロファイルにインストールします"
 		$echo -e "\t   \t--instbin -l                  上のバイナリインストールをリストします"
 		$echo -e "\t-f,\t--install-file foo.pkg        pkgファイルからインストールします"
@@ -119,6 +120,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		$echo -e "\t-s,\t--sync                        Sync packgage database"
 		$echo -e "\t-d,\t--download pkg                Only download"
 		$echo -e "\t-i,\t--install pkg                 Install"
+		$echo -e "\t   \t--to-install pkg              Display required dependencies for pkg(s)."
 		$echo -e "\t   \t--instbin name                Install latest pre-built, non-noop binary to /opt and update profile."
 		$echo -e "\t   \t--instbin -l                  List available bin installs."
 		$echo -e "\t-f,\t--install-file foo.pkg        Install from .pkg file"
@@ -1382,6 +1384,35 @@ function DoesPkgExist
 	return 0
 }
 
+function FindRequiredDeps() {
+
+	for pkg in $@;
+	do
+		[ "$pkg" == "--to-install" ] && continue
+		
+		DoesPkgExist $pkg
+		[ $? == "1" ] && echo "$pkg does not exist" && exit 1
+
+		for i in `pkgr --jsonmeta $pkg | jq '.deps[]?' | sed -e 's/^"//;s/"$//;'`;
+		do
+			[ -e $INSTALLEDDIR/$i ] && continue
+			[ ${reqPkgs[$i]+exists} ] && continue
+			reqPkgs[$i]=1
+			FindRequiredDeps $i;
+		done
+	done
+}
+
+if [ $1 = "--to-install" ]; then
+	declare -A reqPkgs;
+	FindRequiredDeps $@
+	for i in ${!reqPkgs[@]};
+	do
+		echo $i;
+	done
+fi
+
+
 if [ $1 = "--install" ] || [ $1 == "-i" ]; then
 
 	if [ -z $2 ]; then
@@ -1890,7 +1921,7 @@ then
 		
 
 	IFS=$'\n'
-	i=/var/noop/installed/$2
+	i=$INSTALLEDDIR/$2
 
 	if [ ! -e "$i" ];
 	then

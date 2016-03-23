@@ -31,3 +31,4 @@ ca-certificates
 openresolv
 networkmanager
 git
+jq
