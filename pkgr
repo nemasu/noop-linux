@@ -1877,7 +1877,8 @@ then
 		then
 			echo "{"
 		    echo "\"name\":\"${2}\","
-			echo "\"version\":\"`get_packagedb_version $2`\""
+			echo "\"version\":\"`get_packagedb_version $2`\","
+			echo "\"installed\":\"false\""
 			echo "}"
 			exit 0
 		fi
