@@ -1463,8 +1463,8 @@ if [ $1 = "-genmeta" ]; then
 	touch $LIBDB
 	$cp $LIBDB $TMPLIBDB
 	$sed -i -e '/^'"$2"',/ d;' $TMPLIBDB
-	$find * -name "*.so*" | $sed -e 's/.*\///g' | $sed -e 's/^/'"$2"',/g' | sort | uniq >> $TMPLIBDB
-	$cat $TMPLIBDB | sort | uniq > $LIBDB
+	$find * -name "*.so*" | $sed -e 's/.*\///g' | $sed -e 's/^/'"$2"',/g' | LC_COLLATE=C sort | uniq >> $TMPLIBDB
+	$cat $TMPLIBDB | LC_COLLATE=C sort | uniq > $LIBDB
 
 	
 	$echo "DEPS:" >> $TMPFILE
@@ -1524,7 +1524,7 @@ if [ $1 = "-genmeta" ]; then
 	if [ -a $TMPLIBFILE ];
 	then
 		$sed -i -e '/^'"$2"'$/d' $TMPLIBFILE
-		$cat $TMPLIBFILE | sort | uniq >> $TMPFILE
+		$cat $TMPLIBFILE | LC_COLLATE=C sort | uniq >> $TMPFILE
 	fi
 
 	$echo SIZE:`du | tail -n 1 | $sed -e 's/.\.//g'` >> $TMPFILE
@@ -1806,7 +1806,7 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
 		$sed -i '/^lib32-.*/ !d;' $LIBDB.tmp;
 	fi
 
-    for j in `ldd $2 | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d; /ld-linux-armhf.so.3/d; /ld-linux-aarch64.so.1/d; /libgcc/d; /libstdc++/d;' | $awk '{print $1;}' | sort | uniq`;
+    for j in `ldd $2 | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d; /ld-linux-armhf.so.3/d; /ld-linux-aarch64.so.1/d; /libgcc/d; /libstdc++/d;' | $awk '{print $1;}' | LC_COLLATE=C sort | uniq`;
     do
 
 		let isFound=`$grep -e ",$j$" $LIBDB.tmp | $sed -e 's/,.*//g' | uniq | wc -l`
@@ -1846,7 +1846,7 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
 			echo "$j" >> $TMPLIBFILE.out
 		done
 
-		cat $TMPLIBFILE.out | sort | uniq
+		cat $TMPLIBFILE.out | LC_COLLATE=C sort | uniq
 	fi
 
 	$rm -rf $TMPLIBFILE $TMPLIBFILE.out

@@ -5,7 +5,7 @@ NAME=jq
 DESC="Command-line JSON processor"
 
 #package version
-VERSION=1.4
+VERSION=1.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
