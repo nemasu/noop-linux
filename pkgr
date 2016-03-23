@@ -1871,6 +1871,18 @@ then
 
 	if [ ! -e /var/noop/installed/$2 ] && [ ! -e /var/noop/blds/$2/$2.bld ];
 	then
+		#special case, not installed and no bld. This will be removed.
+		let in_pkg_file=`egrep -m1 "^$2," $PACKAGEDB | wc -l`
+		if [ $in_pkg_file -eq 1 ];
+		then
+			echo "{"
+		    echo "\"name\":\"${2}\","
+			echo "\"version\":\"`get_packagedb_version $2`\""
+			echo "}"
+			exit 0
+		fi
+
+
 		echo "$2 is not a valid package name."
 		exit -1
 	fi
@@ -1893,7 +1905,7 @@ then
 	if [ -e /var/noop/blds/$2/${2}.bld ]; then
 		desc=`grep -m1 "^DESC=" /var/noop/blds/$2/${2}.bld | sed -e 's/DESC=//g;'`
 	else
-		desc=
+		desc="\"\""
 	fi
 
 	echo "{"
