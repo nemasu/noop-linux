@@ -2,7 +2,7 @@
 NAME=xorg-server
 
 #Description
-DESC="X.Org font utilities"
+DESC="X Windows server"
 
 #package version
 VERSION=1.17.1

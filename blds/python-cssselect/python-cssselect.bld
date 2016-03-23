@@ -2,7 +2,7 @@
 NAME=python-cssselect
 
 #Description
-DESC="A high-level scripting language"
+DESC="A Python3 library that parses CSS3 Selectors and translates them to XPath 1.0"
 
 #package version
 VERSION=0.9.1-1

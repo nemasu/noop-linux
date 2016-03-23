@@ -2,7 +2,7 @@
 NAME=lvm2
 
 #Description
-DESC="Just-in-time compiler and drop-in replacement for Lua 5.1"
+DESC="Device mapper userspace library and tools"
 
 #package version
 VERSION=2.2.02.138

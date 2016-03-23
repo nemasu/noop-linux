@@ -2,7 +2,7 @@
 NAME=samba
 
 #Description
-DESC="Systems programming language focused on safety, speed and concurrency"
+DESC="Samba winbind client library"
 
 #package version
 VERSION=4.3.4

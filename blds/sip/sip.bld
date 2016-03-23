@@ -2,7 +2,7 @@
 NAME=sip
 
 #Description
-DESC="A lean, mean and hackable AVR simulator"
+DESC="A tool that makes it easy to create Python bindings for C and C++ libraries"
 
 #package version
 VERSION=4.17

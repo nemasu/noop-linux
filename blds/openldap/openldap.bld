@@ -2,7 +2,7 @@
 NAME=openldap
 
 #Description
-DESC="Open Source Computer Vision Library"
+DESC="Lightweight Directory Access Protocol (LDAP) client libraries"
 
 #package version
 VERSION=2.4.43

@@ -2,7 +2,7 @@
 NAME=pygobject
 
 #Description
-DESC="A terminal-based tool for monitoring the progress of data through a pipeline."
+DESC="Python 3 bindings for GObject"
 
 #package version
 VERSION=3.13.91-1

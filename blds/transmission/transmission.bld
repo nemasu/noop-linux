@@ -2,7 +2,7 @@
 NAME=transmission
 
 #Description
-DESC="A video/DVD ripper and encoder for the terminal/console"
+DESC="Fast, easy, and free BitTorrent client (CLI tools, daemon and web client)"
 
 #package version
 VERSION=2.84

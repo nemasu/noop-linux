@@ -2,7 +2,7 @@
 NAME=zsh
 
 #Description
-DESC="Compression library implementing the deflate compression method found in gzip and PKZIP"
+DESC="A very advanced and programmable command interpreter (shell) for UNIX"
 
 #package version
 VERSION=5.2

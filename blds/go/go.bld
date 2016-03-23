@@ -2,7 +2,7 @@
 NAME=go
 
 #Description
-DESC="A library which provides a secure layer over a reliable transport layer"
+DESC="Compiler and tools for the Go programming language from Google"
 
 #package version
 VERSION=1.6

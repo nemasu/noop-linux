@@ -2,7 +2,7 @@
 NAME=libsigc++
 
 #Description
-DESC="Library for accessing a shoutcast/icecast server"
+DESC="Libsigc++ implements a full callback system for use in widget libraries - V2"
 
 #package version
 VERSION=2.6.2

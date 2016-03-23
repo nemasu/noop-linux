@@ -2,7 +2,7 @@
 NAME=poppler
 
 #Description
-DESC="Application development toolkit for controlling system-wide privileges"
+DESC="PDF rendering library based on xpdf 3.0"
 
 #package version
 VERSION=0.24.3-1

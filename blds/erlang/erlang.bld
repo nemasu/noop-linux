@@ -2,7 +2,7 @@
 NAME=erlang
 
 #Description
-DESC="A GNOME web browser based on the WebKit rendering engine."
+DESC="General-purpose concurrent functional programming language developed by Ericsson"
 
 #package version
 VERSION=18.1

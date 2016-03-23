@@ -2,7 +2,7 @@
 NAME=virtualbox
 
 #Description
-DESC="X11 Video extension wire protocol"
+DESC="Powerful x86 virtualization for enterprise as well as home use"
 
 #package version
 VERSION=5.0.16

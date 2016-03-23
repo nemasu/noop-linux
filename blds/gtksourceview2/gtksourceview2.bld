@@ -2,7 +2,7 @@
 NAME=gtksourceview2
 
 #Description
-DESC="A text widget adding syntax highlighting and more to GNOME (version 2)"
+DESC="A text widget adding syntax highlighting and more to GNOME"
 
 #package version
 VERSION=2.10.5

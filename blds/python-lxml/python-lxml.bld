@@ -2,7 +2,7 @@
 NAME=python-lxml
 
 #Description
-DESC="A high-level scripting language"
+DESC="Python2 binding for the libxml2 and libxslt libraries"
 
 #package version
 VERSION=3.5.0

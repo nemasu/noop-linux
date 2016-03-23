@@ -2,7 +2,7 @@
 NAME=ruby
 
 #Description
-DESC="Tool to download rtmp streams"
+DESC="An object-oriented language for quick and easy programming"
 
 #package version
 VERSION=2.2.3

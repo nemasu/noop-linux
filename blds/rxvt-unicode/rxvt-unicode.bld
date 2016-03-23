@@ -2,7 +2,7 @@
 NAME=rxvt-unicode
 
 #Description
-DESC="Systems programming language focused on safety, speed and concurrency"
+DESC="A unicode enabled rxvt-clone terminal emulator (urxvt)"
 
 #package version
 VERSION=9.20

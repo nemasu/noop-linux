@@ -2,7 +2,7 @@
 NAME=postgresql
 
 #Description
-DESC="Fast, easy to administer, secure mail server"
+DESC="Libraries for use with PostgreSQL"
 
 #package version
 VERSION=9.4.5

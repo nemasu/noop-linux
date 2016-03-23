@@ -2,7 +2,7 @@
 NAME=projectm
 
 #Description
-DESC="Faster OpenGL offloading for Bumblebee"
+DESC="Music visualizer which uses 3D accelerated iterative image based rendering"
 
 #package version
 VERSION=2.1.0

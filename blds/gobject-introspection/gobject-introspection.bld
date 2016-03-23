@@ -2,7 +2,7 @@
 NAME=gobject-introspection
 
 #Description
-DESC="A library which provides a secure layer over a reliable transport layer"
+DESC="Introspection system for GObject-based libraries - runtime files"
 
 #package version
 VERSION=1.42.0

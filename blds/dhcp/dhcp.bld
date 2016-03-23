@@ -2,7 +2,7 @@
 NAME=dhcp
 
 #Description
-DESC="A GTK+ audio player for GNU/Linux."
+DESC="A DHCP server, client, and relay agent"
 
 #package version
 VERSION=4.3.2

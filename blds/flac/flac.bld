@@ -2,7 +2,7 @@
 NAME=flac
 
 #Description
-DESC="X11 Fixes extension wire protocol"
+DESC="Free Lossless Audio Codec"
 
 #package version
 VERSION=1.2.1

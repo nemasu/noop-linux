@@ -2,7 +2,7 @@
 NAME=cups
 
 #Description
-DESC="Userspace setup tool for transparent encryption of block devices using dm-crypt"
+DESC="The CUPS Printing System - client libraries and headers"
 
 #package version
 VERSION=2.1.3

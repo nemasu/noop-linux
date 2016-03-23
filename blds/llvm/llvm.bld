@@ -2,7 +2,7 @@
 NAME=llvm
 
 #Description
-DESC="A C library for reading, creating, and modifying zip archives"
+DESC="Low Level Virtual Machine"
 
 #package version
 VERSION=3.7.0-1

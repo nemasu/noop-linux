@@ -2,7 +2,7 @@
 NAME=vim
 
 #Description
-DESC="X11 Video extension wire protocol"
+DESC="Amazing text editor"
 
 #package version
 VERSION=7.4.979

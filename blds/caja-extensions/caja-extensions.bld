@@ -2,7 +2,7 @@
 NAME=caja-extensions
 
 #Description
-DESC="File manager for the MATE desktop (GTK2 version)"
+DESC="Caja extensions (common files)"
 
 #package version
 VERSION=1.10.0

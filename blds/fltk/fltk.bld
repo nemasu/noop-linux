@@ -2,7 +2,7 @@
 NAME=fltk
 
 #Description
-DESC="A tool for generating text-scanning programs"
+DESC="Graphical user interface toolkit for X"
 
 #package version
 VERSION=1.3.3
