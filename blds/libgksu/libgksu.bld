@@ -1,0 +1,69 @@
+#package name
+NAME=libgksu
+
+#Description
+DESC="Authorization library"
+
+#package version
+VERSION=2.0.12
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://people.debian.org/~kov/gksu/libgksu-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	touch NEWS README
+	intltoolize --force --copy --automake
+	autoreconf -fi
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-schemas-install
+	make -j${BLDR_CORES}
+	make GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=/root/bldr-inst install
+	mkdir -p /root/bldr-inst/usr/share/gconf/schemas
+	gconf-merge-schema /root/bldr-inst/usr/share/gconf/schemas/${NAME}.schemas --domain libgksu /root/bldr-inst/etc/gconf/schemas/*.schemas
+	rm -f /root/bldr-inst/etc/gconf/schemas/*.schemas
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://www.nongnu.org/gksu/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

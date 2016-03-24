@@ -4023,6 +4023,9 @@ libgee,libgee-0.8.so.2.5.1
 libgee0.6,libgee.so
 libgee0.6,libgee.so.2
 libgee0.6,libgee.so.2.0.0
+libgksu,libgksu2.so
+libgksu,libgksu2.so.0
+libgksu,libgksu2.so.0.0.2
 libglade,libglade-2.0.so
 libglade,libglade-2.0.so.0
 libglade,libglade-2.0.so.0.0.7
