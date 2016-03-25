@@ -16,7 +16,7 @@ ISUSR=1
 SRC=http://prdownloads.sourceforge.net/libpng/libpng-${VERSION}.tar.xz?download
 EXTRACONF=
 ISSPECIAL=1
-DEPS=
+DEPS=('lib32-glibc' 'lib32-zlib')
 
 function BuildAndInstall
 {

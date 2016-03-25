@@ -16,7 +16,7 @@ ISUSR=1
 SRC=http://www.openssl.org/source/openssl-1.0.1c.tar.gz
 EXTRACONF=
 ISSPECIAL=1
-DEPS=
+DEPS=('lib32-glibc' 'lib32-zlib')
 
 function BuildAndInstall
 {

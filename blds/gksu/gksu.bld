@@ -20,7 +20,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gconf' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libgksu' 'libgnome-keyring' 'pango' 'startup-notification')
 
 # 'no' to skip calls to strip
 STRIP=

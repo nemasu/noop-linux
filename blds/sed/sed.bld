@@ -16,7 +16,7 @@ ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/sed/sed-${VERSION}.tar.bz2
 EXTRACONF=
 ISSPECIAL=0
-DEPS=
+DEPS=('acl' 'glibc')
 
 function Detect
 {
