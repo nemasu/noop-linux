@@ -20,7 +20,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'krb5' 'libxml2' 'libxslt' 'openssl' 'postgresql-libs' 'wxgtk' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
