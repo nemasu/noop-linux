@@ -1,0 +1,51 @@
+#package name
+NAME=pgadmin3
+
+#Description
+DESC="Postgresql administration UI"
+
+#package version
+VERSION=1.22.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://ftp.postgresql.org/pub/pgadmin3/release/v${VERSION}/src/pgadmin3-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure --prefix=/usr --with-wx-version=3.0 #Static not working, wxgtk may not include static libraries.
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s -L http://www.pgadmin.org/download/source.php | egrep "pgAdmin v[0-9\.]*" | head -n1 | sed -e 's/.*pgAdmin v\([0-9\.]*\)<.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
