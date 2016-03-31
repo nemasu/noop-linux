@@ -87,71 +87,6 @@ PKGHOST=$HOST/packages/$ARCH
 $mkdir -p $INSTALLEDDIR
 $mkdir -p $METADIR
 $mkdir -p $TMPDIR/run
-if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
-	if [ "$LANG" == "ja_JP.UTF-8" ]; then
-		$echo -e "\npkgr -- noop Linuxのパッケージマナじゃー"
-		$echo -e "\n使用法:"
-		$echo -e "\t-s,\t--sync                        パッケージのデータベースを同期します"
-		$echo -e "\t-d,\t--download pkg                ダウンロードだけ"
-		$echo -e "\t-i,\t--install pkg                 インストール"
-		$echo -e "\t   \t--to-install pkg              Display required dependencies for pkg(s)."
-		$echo -e "\t   \t--instbin name                最新のビルド全、非noopのバイナリはoptと更新プロファイルにインストールします"
-		$echo -e "\t   \t--instbin -l                  上のバイナリインストールをリストします"
-		$echo -e "\t-f,\t--install-file foo.pkg        pkgファイルからインストールします"
-		$echo -e "\t-u,\t--upgrade pkg                 アップグレード"
-		$echo -e "\t-U,\t--upgrade-all                 システムアップグレード"
-		$echo -e "\t-r,\t--remove pkg                  削除します"
-		$echo -e "\t-l,\t--list                        リスト利用可能なパッケージ"
-		$echo -e "\t   \t--list-non-meta               List installed packages that don't belong to any meta package."
-		$echo -e "\t-b,\t--belongs file-path           パッケージのファイルをさがす"
-		$echo -e "\t-D,\t--show-revdeps pkg            パッケージの逆依存関係をリストします"
-		$echo -e "\t-c,\t--depcheck dynamic-binary     バイナリの依存関係をチェックします"
-		$echo -e "\t-C,\t--depcheck-system             全システムの依存関係をチェックします"
-		$echo -e "\t-Cp,\t--depcheck-package            パッケージの依存関係をチェックします"
-		$echo -e "\t-Cr,\t--depcheck-revdep             パッケージの逆依存関係の依存関係をチェックします"
-		$echo -e "\t-m,\t--make-bldj foo.bldj or name  パッケージをビルドします（bldjファイルそれと、レポからダウンロードします）"
-		$echo -e "\t-V,\t--version-check name          ビルドのため、新ソースをチェックみて。"
-		$echo -e "\t-n,\t--new-config                  新コンフィグファイルを処理します"
-		$echo -e "\t   \t--mkinitramfs                 Create initramfs"
-
-	else
-		$echo -e "\npkgr -- noop Linux package manager"
-		$echo -e "\nUsage:"
-		$echo -e "\t-s,\t--sync                        Sync packgage database"
-		$echo -e "\t-d,\t--download pkg                Only download"
-		$echo -e "\t-i,\t--install pkg                 Install"
-		$echo -e "\t   \t--to-install pkg              Display required dependencies for pkg(s)."
-		$echo -e "\t   \t--instbin name                Install latest pre-built, non-noop binary to /opt and update profile."
-		$echo -e "\t   \t--instbin -l                  List available bin installs."
-		$echo -e "\t-f,\t--install-file foo.pkg        Install from .pkg file"
-		$echo -e "\t-u,\t--upgrade pkg                 Upgrade"
-		$echo -e "\t-U,\t--upgrade-all                 Upgrade system"
-		$echo -e "\t-r,\t--remove pkg                  Remove"
-		$echo -e "\t-l,\t--list                        List available packages"
-		$echo -e "\t   \t--list-non-meta               List installed packages that don't belong to any meta package."
-		$echo -e "\t-b,\t--belongs file-path           List package file belongs to"
-		$echo -e "\t-D,\t--show-revdeps pkg            List reverse dependencies for a package"
-		$echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
-		$echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
-		$echo -e "\t-Cp,\t--depcheck-package            Check dependencies for given package"
-		$echo -e "\t-Cr,\t--depcheck-revdep             Check dependencies for given packages reverse dependencies"
-		$echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a package (bldj file or grab it from repo)"
-		$echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building"
-		$echo -e "\t-n,\t--new-config                  Process new config files"
-		$echo -e "\t   \t--mkinitramfs                 Create initramfs"
-		#$echo -e "\t"
-		#$echo -e "\t-libdiff"
-		#$echo -e "\t-genmeta package-name version"
-		#$echo -e "\t-genpkg <metafile>"
-		#$echo -e "\t-getfiles pkg-file"
-		#$echo -e "\t-readmeta pkg-file"
-		#$echo -e "\t-update-bldjs"
-		$echo
-		$echo -e "Mirrors:\n\tcopy /var/noop/etc/mirrors to /etc/noop/mirrors and uncomment desired mirror."
-	fi
-	$echo -e "\n"
-	exit 0;
-fi
 
 Black='\033[0;30m'
 Red='\033[0;31m'
@@ -170,7 +105,6 @@ LightPurple='\033[1;35m'
 LightCyan='\033[1;36m'
 White='\033[1;37m'
 NoColor='\033[0m'
-
 
 function vercomp ()
 {
@@ -296,17 +230,20 @@ function get_installed_version() {
 	grep "VER:" "$INSTALLEDDIR/$1" | sed 's/VER://'
 }
 
-if [ $1 == "--instbin" ]; then
-	if [ "$2" == "-l" ] || [ -z "$2" ]; then
-		echo "jdk8";
-		echo "ant";
-		echo "maven";
-		echo "tuxguitar";
-		echo "chefdk";
-		exit;
-	fi
+function DoInstbinList() {
+	echo "jdk8";
+	echo "ant";
+	echo "maven";
+	echo "tuxguitar";
+	echo "chefdk";
 
-	if [ $2 == "chefdk" ]; then
+}
+
+function DoInstbin() {
+
+	name=$1
+
+	if [ "$name" == "chefdk" ]; then
 		BININST_NAME=chefdk
 		BININST_ENV_HOME=CHEFDK_HOME
 		BININST_ENV_BINDIR=/bin
@@ -314,36 +251,37 @@ if [ $1 == "--instbin" ]; then
 		DOWNLOAD_TAR="https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_${VERSION}-1_amd64.deb"
 
 		bininst_install deb
+		return 0
 	fi
 
-	if [ $2 == "maven" ]; then
+	if [ "$name" == "maven" ]; then
 		BININST_NAME=maven
 		BININST_ENV_HOME=MAVEN_HOME
 		BININST_ENV_BINDIR=/bin
 		DOWNLOAD_TAR=`curl -s -L http://maven.apache.org/download.cgi | grep "apache-maven-[0-9\.]*-bin.tar.gz" | head -n1 | sed -e 's/.*a href="\(.*\)">apache-maven.*/\1/g'`
 
 		bininst_install		
-		
+		return 0
 	fi
-	if [ $2 == "ant" ]; then
+	if [ "$name" == "ant" ]; then
 		BININST_NAME=ant
 		BININST_ENV_HOME=ANT_HOME
 		BININST_ENV_BINDIR=/bin
 		DOWNLOAD_TAR=`curl -s -L http://ant.apache.org/bindownload.cgi | grep "apache-ant-[0-9\.]*-bin.tar.gz" | head -n1 | sed -e 's/.*a href="\(.*\)">apache-ant.*/\1/g'`
 
 		bininst_install		
-		
+		return 0
 	fi
-	if [ $2 == "tuxguitar" ]; then
+	if [ "$name" == "tuxguitar" ]; then
 		BININST_NAME=tuxguitar
 		BININST_ENV_HOME=TUXGUITAR_HOME
 		BININST_ENV_BINDIR=
 		DOWNLOAD_TAR=`curl -s -L http://tuxguitar.herac.com.ar/download.html | grep "tuxguitar-[0-9\.]*-linux-x86_64.tar.gz" | sed -e 's/.* href="\(.*\)">GNU.*/\1/g'`
 		
 		bininst_install
-
+		return 0
 	fi
-	if [ $2 == "jdk8" ]; then
+	if [ "$name" == "jdk8" ]; then
 		echo "Do you accept the Oracle Binary Code License Agreement for Java SE?";
 		echo "Found here: http://www.oracle.com/technetwork/java/javase/terms/license/index.html"
 		echo -n "(yes/no): "
@@ -375,40 +313,68 @@ if [ $1 == "--instbin" ]; then
 			echo
 			echo "Done, source /etc/profile or re-login to gain environment variables."
 		fi
+		return 0
 	fi
-fi
 
-if [ $1 == "-update-bldjs" ]; then
-	mkdir -p /root/bldj-done/
-	mkdir -p /root/bldr-done/
-	mkdir -p /tmp/bldr/
-	mkdir -p /tmp/noop/
-	mkdir -p /root/bldr-inst/
-	rm -rf /root/bldr-inst/*
-	rm -rf /tmp/blds-list && touch /tmp/blds-list
+	echo "Error: $name is not a valid option, list available packages with pkgr --instbin -l"
+	exit 1
+}
 
-	cd /root/bldr-inst
-	FILE_LIST=`find /root/bldr-done/*.pkg`
-	for i in ${FILE_LIST[@]};
-	do
-		wget $HOST/blds/`pkgr -readmeta $i | grep NAME: | sed 's/NAME://g'`-`pkgr -readmeta $i | grep VER: | sed 's/VER://g'`.bldj
-		FILE=`ls`
-		tar xf $FILE
-		rm $FILE
-		NEW_DEPS=`echo -n "(";`
-		for j in `pkgr -readmeta $i | sed -ne '/DEPS:/,/SIZE:/p;' | sed '/DEPS:/d;/SIZE:/d;'`;
-		do
-			NEW_DEPS=`echo $NEW_DEPS;echo -n "'$j' "`
-		done;
-		NEW_DEPS=`echo -n $NEW_DEPS;echo -n " )";`
 
-		sed -i -e 's|^DEPS=.*|DEPS='"${NEW_DEPS}"'|' `echo $FILE | sed -e 's/.$//g'`
-		tar cjf /root/bldj-done/$FILE *
-		rm -rf /root/bldr-inst/*
-	done
-fi
+function DoSync() {
+	if [ ! -e $PREFIX/var/noop/.git ];
+	then
+		echo "New install detected, initializing repo."
+		cd $PREFIX/var/
+		mv noop noop.bak
+		git clone $GITHOST noop
+		cp -r noop.bak/* noop/ && rm -rf noop.bak
+		rm -rf $PREFIX/usr/sbin/pkgr
+		ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
+		pushd $PREFIX/var/noop $> /dev/null
+		$echo
+	else
+		$echo -e "${Cyan}Syncing ...${LightBlue}"
+		pushd $PREFIX/var/noop &> /dev/null
+		git pull
+		$echo
+		$echo -e "${Green}done.${NoColor}"
+	fi
+	$echo
+	$echo -ne "${Cyan}Generating packages list..."
+	curl -s -L $HOST/packages/${ARCH}/ | $grep ".pkg" | $awk '{print $2;}' | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
+	$echo -e "${Green}done."
+	$echo
+	$echo -en "${Cyan}Generating deps list..."
+	rm -rf deps; for i in `cat packages | sed 's/,/ /' | awk '{print $1;}'`; do for j in `grep -m1 "DEPS=" blds/$i/*.bld 2>/dev/null | sed "s/DEPS=//g;s/(//g;s/)//;s/'//g;"`; do echo ${i}:${j} >> deps; done done
+	$echo -e "${Green}done.${NoColor}"
+	popd &> /dev/null
+}
 
-if [ $1 == "--new-config" ] || [ $1 == "-n" ]; then
+function DoDownload() {
+	name=$1
+	dest=$2
+	let PKGEXIST=`$grep "^$name," $PACKAGEDB | $wc -l`
+    if [ 1 -eq $PKGEXIST ]; then
+		PKGNAME=`$grep "^$name," $PACKAGEDB | $sed -e 's/^'"$name"',//g'`;
+		$wget $PKGHOST/$PKGNAME -O$TMPDIR/$PKGNAME
+		if [ $? != 0 ]; then
+    	    $echo $wget encountered an error.
+        	exit 1
+	    fi
+		if [ ! -z $dest ]; then
+			$mv $TMPDIR/$PKGNAME $dest
+			$echo Location: $dest
+		else
+			$echo Location: $TMPDIR/$PKGNAME
+		fi
+	else
+		$echo "Error: $name is not a valid package."
+		exit 1
+	fi
+}
+
+function DoNewconfig() {
 	let NUM=`cat $NEWCONF | wc -l`
 	if [ $NUM -gt 0 ]; then
 		echo "You have $NUM files that need updating."
@@ -437,50 +403,47 @@ if [ $1 == "--new-config" ] || [ $1 == "-n" ]; then
 		fi
 	else
 		echo "No files need updating."
-		exit 0
 	fi
-fi
+}
 
-if [ $1 == "--version-check" ] || [ $1 == "-V" ]; then
-
-		
-		if ! [[ $2 =~ .*\.bldj ]];
-		then
-			pushd $PREFIX/var/noop/blds/$2 &> /dev/null
-		else
-			rm -rf /tmp/noop/verchecktmp
-			mkdir -p /tmp/noop/verchecktmp
-			pushd /tmp/noop/verchecktmp &> /dev/null
-			BLDJFILE=`readlink -f $2`
-			tar xf $BLDJFILE
-		fi
-
-		BLDFILE=`ls *.bld`
-		source ./$BLDFILE
-		Detect
-		popd &> /dev/null
+function DoVersioncheck() {
+	name=$1
+	if ! [[ $name =~ .*\.bldj ]];
+	then
+		pushd $PREFIX/var/noop/blds/$name &> /dev/null
+	else
 		rm -rf /tmp/noop/verchecktmp
-fi
+		mkdir -p /tmp/noop/verchecktmp
+		pushd /tmp/noop/verchecktmp &> /dev/null
+		BLDJFILE=`readlink -f $name`
+		tar xf $BLDJFILE
+	fi
 
-if [ $1 == "--show-revdeps" ] || [ $1 == "-D" ]; then
-	if [ -z "$2" ]; then
+	BLDFILE=`ls *.bld`
+	source ./$BLDFILE
+	Detect
+	popd &> /dev/null
+	rm -rf /tmp/noop/verchecktmp
+}
+
+function DoShowRevdeps() {
+	name=$1
+	if [ -z "$name" ]; then
 		echo "Please provide a package name."
 		exit 1
 	fi
-
 	$grep ":$2$" $DEPDB | $sed -e 's/:.*//g'
+}
 
-fi
-
-if [ $1 == "--depcheck-package" ] || [ $1 == "-Cp" ]; then
-
+function DoDepcheckPackages() {
+	name=$1
 	$echo "Scanning machine for missing dependencies"
     ldconfig &>/dev/null
     tput civis
     $rm -f /tmp/missinglibs && touch /tmp/missinglibs
     $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
 
-	sed -ne '/FILES:/,$p' "$INSTALLEDDIR/$2" | grep -E "/usr/bin|/usr/lib|/bin|/lib" > /tmp/filelist
+	sed -ne '/FILES:/,$p' "$INSTALLEDDIR/$name" | grep -E "/usr/bin|/usr/lib|/bin|/lib" > /tmp/filelist
 	
 	#TODO Factorize out these two depcheck functions
 	total_lines=`cat /tmp/filelist | wc -l`
@@ -525,9 +488,129 @@ if [ $1 == "--depcheck-package" ] || [ $1 == "-Cp" ]; then
     $echo "Results saved in /tmp/depcheck.results"
     $rm /tmp/missinglibs /tmp/missinglibs.sorted /tmp/filelist 2>/dev/null
     tput cnorm
+}
+
+#TODO while loop not called if no parameters are passed
+if [ -z $1 ]; then
+	isold=1
+fi
+
+while [[ $# > 0 ]]
+do
+	key="$1"
+
+	case $key in
+		-s|--sync)
+			DoSync
+		;;
+		-d|--download)
+			shift
+			DoDownload $@
+		;;
+		--instbin)
+			shift
+			if [ "$1" == "-l" ]; then
+				DoInstbinList
+			else
+				DoInstbin $1
+			fi
+		;;
+		-n|--newconfig)
+			DoNewconfig
+		;;
+		-V|--version-check)
+			shift
+			DoVersioncheck $1
+		;;
+		-D|--show-revdeps)
+			shift
+			DoShowRevdeps $1
+		;;
+		-Cp|--depcheck-package)
+			shift
+			DoDepcheckPackages $1
+		;;
+		*)
+#echo "Error: Unknown option: $1"
+#exit 1
+		isold=1
+		break #TODO do this for now till the rest is ported over
+		;;
+	esac
+	shift # past argument or value
+done
+
+#TODO Fall through for now
+if [ "$isold" != "1" ]; then
+	exit 0
 fi
 
 
+if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
+	if [ "$LANG" == "ja_JP.UTF-8" ]; then
+		$echo -e "\npkgr -- noop Linuxのパッケージマナじゃー"
+		$echo -e "\n使用法:"
+		$echo -e "\t-s,\t--sync                        パッケージのデータベースを同期します"
+		$echo -e "\t-d,\t--download pkg                ダウンロードだけ"
+		$echo -e "\t-i,\t--install pkg                 インストール"
+		$echo -e "\t   \t--to-install pkg              Display required dependencies for pkg(s)."
+		$echo -e "\t   \t--instbin name                最新のビルド全、非noopのバイナリはoptと更新プロファイルにインストールします"
+		$echo -e "\t   \t--instbin -l                  上のバイナリインストールをリストします"
+		$echo -e "\t-f,\t--install-file foo.pkg        pkgファイルからインストールします"
+		$echo -e "\t-u,\t--upgrade pkg                 アップグレード"
+		$echo -e "\t-U,\t--upgrade-all                 システムアップグレード"
+		$echo -e "\t-r,\t--remove pkg                  削除します"
+		$echo -e "\t-l,\t--list                        リスト利用可能なパッケージ"
+		$echo -e "\t   \t--list-non-meta               List installed packages that don't belong to any meta package."
+		$echo -e "\t-b,\t--belongs file-path           パッケージのファイルをさがす"
+		$echo -e "\t-D,\t--show-revdeps pkg            パッケージの逆依存関係をリストします"
+		$echo -e "\t-c,\t--depcheck dynamic-binary     バイナリの依存関係をチェックします"
+		$echo -e "\t-C,\t--depcheck-system             全システムの依存関係をチェックします"
+		$echo -e "\t-Cp,\t--depcheck-package            パッケージの依存関係をチェックします"
+		$echo -e "\t-Cr,\t--depcheck-revdep             パッケージの逆依存関係の依存関係をチェックします"
+		$echo -e "\t-m,\t--make-bldj foo.bldj or name  パッケージをビルドします（bldjファイルそれと、レポからダウンロードします）"
+		$echo -e "\t-V,\t--version-check name          ビルドのため、新ソースをチェックみて。"
+		$echo -e "\t-n,\t--new-config                  新コンフィグファイルを処理します"
+		$echo -e "\t   \t--mkinitramfs                 Create initramfs"
+
+	else
+		$echo -e "\npkgr -- noop Linux package manager"
+		$echo -e "\nUsage:"
+		$echo -e "\t-s,\t--sync                        Sync packgage database"
+		$echo -e "\t-d,\t--download pkg                Only download"
+		$echo -e "\t-i,\t--install pkg                 Install"
+		$echo -e "\t   \t--to-install pkg              Display required dependencies for pkg(s)."
+		$echo -e "\t   \t--instbin name                Install latest pre-built, non-noop binary to /opt and update profile."
+		$echo -e "\t   \t--instbin -l                  List available bin installs."
+		$echo -e "\t-f,\t--install-file foo.pkg        Install from .pkg file"
+		$echo -e "\t-u,\t--upgrade pkg                 Upgrade"
+		$echo -e "\t-U,\t--upgrade-all                 Upgrade system"
+		$echo -e "\t-r,\t--remove pkg                  Remove"
+		$echo -e "\t-l,\t--list                        List available packages"
+		$echo -e "\t   \t--list-non-meta               List installed packages that don't belong to any meta package."
+		$echo -e "\t-b,\t--belongs file-path           List package file belongs to"
+		$echo -e "\t-D,\t--show-revdeps pkg            List reverse dependencies for a package"
+		$echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
+		$echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
+		$echo -e "\t-Cp,\t--depcheck-package            Check dependencies for given package"
+		$echo -e "\t-Cr,\t--depcheck-revdep             Check dependencies for given packages reverse dependencies"
+		$echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a package (bldj file or grab it from repo)"
+		$echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building"
+		$echo -e "\t-n,\t--new-config                  Process new config files"
+		$echo -e "\t   \t--mkinitramfs                 Create initramfs"
+		#$echo -e "\t"
+		#$echo -e "\t-libdiff"
+		#$echo -e "\t-genmeta package-name version"
+		#$echo -e "\t-genpkg <metafile>"
+		#$echo -e "\t-getfiles pkg-file"
+		#$echo -e "\t-readmeta pkg-file"
+		#$echo -e "\t-update-bldjs"
+		$echo
+		$echo -e "Mirrors:\n\tcopy /var/noop/etc/mirrors to /etc/noop/mirrors and uncomment desired mirror."
+	fi
+	$echo -e "\n"
+	exit 0;
+fi
 
 if [ $1 == "--depcheck-revdep" ] || [ $1 == "-Cr" ]; then
 
@@ -884,39 +967,6 @@ if [ $1 == "--belongs" ] || [ $1 == "-b" ]; then
 	#fi
 
 fi
-
-if [ $1 == "--sync" ] || [ $1 == "-s" ]; then
-	
-	if [ ! -e $PREFIX/var/noop/.git ];
-	then
-		echo "New install detected, initializing repo."
-		cd $PREFIX/var/
-		mv noop noop.bak
-		git clone $GITHOST noop
-		cp -r noop.bak/* noop/ && rm -rf noop.bak
-		rm -rf $PREFIX/usr/sbin/pkgr
-		ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
-		pushd $PREFIX/var/noop $> /dev/null
-		$echo
-	else
-		$echo -e "${Cyan}Syncing ...${LightBlue}"
-		pushd $PREFIX/var/noop &> /dev/null
-		git pull
-		$echo
-		$echo -e "${Green}done.${NoColor}"
-	fi
-	$echo
-	$echo -ne "${Cyan}Generating packages list..."
-	curl -s -L $HOST/packages/${ARCH}/ | $grep ".pkg" | $awk '{print $2;}' | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
-	$echo -e "${Green}done."
-	$echo
-	$echo -en "${Cyan}Generating deps list..."
-	rm -rf deps; for i in `cat packages | sed 's/,/ /' | awk '{print $1;}'`; do for j in `grep -m1 "DEPS=" blds/$i/*.bld 2>/dev/null | sed "s/DEPS=//g;s/(//g;s/)//;s/'//g;"`; do echo ${i}:${j} >> deps; done done
-	$echo -e "${Green}done.${NoColor}"
-	popd &> /dev/null
-	exit 0
-fi
-
 
 if [ $1 == "--list" ] || [ $1 == "-l" ]; then
 	$echo -e "Package List. Legend: ${Green}Installed ${Red}Available ${Yellow}Update Available${NoColor}"
@@ -1331,30 +1381,7 @@ if [ $1 = "--install-file" ] || [ $1 == "-f" ]; then
 
 fi
 
-if [ $1 = "--download" ] || [ $1 == "-d" ]; then
-
-	if [ -z $2 ]; then
-        $echo Not enough arguments
-        exit 1
-    fi
-
-    let PKGEXIST=`$grep "^$2," $PACKAGEDB | $wc -l`
-    if [ 1 -eq $PKGEXIST ]; then
-		PKGNAME=`$grep "^$2," $PACKAGEDB | $sed -e 's/^'"$2"',//g'`;
-		$wget $PKGHOST/$PKGNAME -O$TMPDIR/$PKGNAME
-		if [ $? != 0 ]; then
-    	    $echo $wget encountered an error.
-        	exit 1
-	    fi
-		if [ ! -z $3 ]; then
-			$mv $TMPDIR/$PKGNAME $3
-			$echo Location: $3
-		else
-			$echo Location: $TMPDIR/$PKGNAME
-		fi
-	fi
-fi
-
+    
 function InstallPkg
 {
 	local PKG=$1
