@@ -5,16 +5,17 @@ NAME=screen
 DESC="Full-screen window manager that multiplexes a physical terminal"
 
 #package version
-VERSION=4.3.1
+VERSION=4.3.1-1
+DVERSION=4.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnu.org/gnu/screen/screen-${VERSION}.tar.gz
+SRC=ftp://ftp.gnu.org/gnu/screen/screen-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--enable-colors256"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 ISSPECIAL=0
@@ -52,7 +53,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
