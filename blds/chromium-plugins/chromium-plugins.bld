@@ -5,7 +5,7 @@ NAME=chromium-plugins
 DESC="Pepper flash plugin for Chromium"
 
 #package version
-VERSION=49.0.2623.75
+VERSION=50.0.2661.102
 #UPDATE post stuff
 
 #directory locations, 99.99% of the time this is 1

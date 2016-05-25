@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=49.0.2623.75
-VERSION=49.0.2623.75
+DVERSION=50.0.2661.102
+VERSION=50.0.2661.102
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
