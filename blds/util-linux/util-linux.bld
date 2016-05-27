@@ -22,7 +22,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('elfutils' 'glibc' 'libcap2' 'libcap-ng' 'libgcrypt' 'libgpg-error' 'linux-pam' 'ncurses' 'python2' 'systemd' 'xz' 'zlib')
+DEPS=('glibc' 'libcap2' 'libcap-ng' 'libgcrypt' 'libgpg-error' 'linux-pam' 'ncurses' 'python' 'systemd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
