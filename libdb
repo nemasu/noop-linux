@@ -4332,7 +4332,7 @@ libplist,libplist.so.1.1.10
 libpng,libpng.so
 libpng,libpng16.so
 libpng,libpng16.so.16
-libpng,libpng16.so.16.18.0
+libpng,libpng16.so.16.21.0
 libpng15,libpng15.so
 libpng15,libpng15.so.15
 libpthread_workqueue,libpthread_workqueue.so
@@ -4481,9 +4481,9 @@ libvorbis,libvorbisfile.so
 libvorbis,libvorbisfile.so.3
 libvorbis,libvorbisfile.so.3.3.7
 libvpx,libvpx.so
-libvpx,libvpx.so.2
-libvpx,libvpx.so.2.0
-libvpx,libvpx.so.2.0.0
+libvpx,libvpx.so.3
+libvpx,libvpx.so.3.0
+libvpx,libvpx.so.3.0.0
 libwebp,libwebp.so
 libwebp,libwebp.so.5
 libwebp,libwebp.so.5.0.3
@@ -5156,6 +5156,7 @@ nspr,libnspr4.so
 nspr,libplc4.so
 nspr,libplds4.so
 nss,libfreebl3.so
+nss,libfreeblpriv3.so
 nss,libgtest1.so
 nss,libnss3.so
 nss,libnssckbi.so
@@ -7307,7 +7308,7 @@ speex,libspeex.so.1.5.0
 speex,libspeexdsp.so
 speex,libspeexdsp.so.1
 speex,libspeexdsp.so.1.5.0
-sqlite,libsqlite3.9.2.so
+sqlite,libsqlite3.13.0.so
 sqlite,libsqlite3.so
 sqlite,libsqlite3.so.0
 sqlite,libsqlite3.so.0.8.6

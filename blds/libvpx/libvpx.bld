@@ -5,7 +5,7 @@ NAME=libvpx
 DESC="VP8 and VP9 codec"
 
 #package version
-VERSION=1.4.0
+VERSION=1.5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -51,7 +51,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://downloads.webmprojcaect.org/releases/webm/index.html
+	LISTURL=http://downloads.webmproject.org/releases/webm/index.html
 	FILELIST=`GetFileList`
 	LATEST=0
 

@@ -5,14 +5,14 @@ NAME=sqlite
 DESC="A C library that implements an SQL database engine"
 
 #package version
-VERSION=3090200-1
-DVERSION=3090200
+VERSION=3130000
+DVERSION=3130000
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.sqlite.org/2015/sqlite-autoconf-${DVERSION}.tar.gz
+SRC=http://www.sqlite.org/2016/sqlite-autoconf-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

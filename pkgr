@@ -432,7 +432,7 @@ function DoShowRevdeps() {
 		echo "Please provide a package name."
 		exit 1
 	fi
-	$grep ":$2$" $DEPDB | $sed -e 's/:.*//g'
+	$grep ":$name$" $DEPDB | $sed -e 's/:.*//g'
 }
 
 function DoDepcheckPackages() {

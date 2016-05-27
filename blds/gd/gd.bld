@@ -5,13 +5,14 @@ NAME=gd
 DESC="Library for the dynamic creation of images by programmers"
 
 #package version
-VERSION=2.1.1
+VERSION=2.1.1-1
+DVERSION=2.1.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/libgd/libgd/archive/gd-${VERSION}.tar.gz
+SRC=https://github.com/libgd/libgd/archive/gd-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--disable-rpath --with-vpx=/usr --with-tiff=/usr"
@@ -56,7 +57,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

@@ -5,7 +5,7 @@ NAME=ffmpeg2
 DESC="Complete solution to record, convert and stream audio and video (version 2)"
 
 #package version
-VERSION=2.8.6
+VERSION=2.8.6-1
 DVERSION=2.8.6
 
 #directory locations, 99.99% of the time this is 1
