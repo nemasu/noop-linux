@@ -5,8 +5,8 @@ NAME=wine
 DESC="A compatibility layer for running Windows programs"
 
 #package version
-VERSION=1.8
-DVERSION=1.8
+VERSION=1.9.11
+DVERSION=1.9.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
