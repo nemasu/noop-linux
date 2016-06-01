@@ -5,7 +5,7 @@ NAME=ttf-noto
 DESC="Fonts support all languages/characters in Unicode"
 
 #package version
-VERSION=20140716
+VERSION=20160601
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,7 +33,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	wget http://www.google.com/get/noto/pkgs/Noto-hinted.zip
+	wget https://noto-website-2.storage.googleapis.com/pkgs/Noto-hinted.zip
 	unzip *.zip
 	mkdir -p /root/bldr-inst/usr/share/fonts/TTF/
 	cp *.ttf /root/bldr-inst/usr/share/fonts/TTF/
