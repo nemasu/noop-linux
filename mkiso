@@ -27,7 +27,7 @@ mkdir -p iso iso-fs efs
 #Initramfs
 /var/noop/initramfs/mkinitramfs-live
 
-#Grab latest installer
+#Instlr
 /var/noop/instlr /root/iso-fs $2
 
 umount iso-fs/dev iso-fs/sys iso-fs/proc;
@@ -42,8 +42,8 @@ grub-install \
 	--no-nvram \
 	/dev/zero
 
-#Create fat partition image
-dd if=/dev/zero of=/root/iso/boot/efs.img bs=1024 count=20480
+#Create fat partition image, 30MB
+dd if=/dev/zero of=/root/iso/boot/efs.img bs=1024 count=30720
 mkfs.vfat /root/iso/boot/efs.img
 mount /root/iso/boot/efs.img /root/efs
 
