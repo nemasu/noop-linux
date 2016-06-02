@@ -227,7 +227,7 @@ function get_packagedb_version() {
 function get_installed_version() {
 	#why isnt this working...
 	#$echo `$grep -m1 "VER:" "$INSTALLEDDIR/$1" | $sed -e 's/VER://'`
-	grep "VER:" "$INSTALLEDDIR/$1" | sed 's/VER://'
+	grep -m1 "VER:" "$INSTALLEDDIR/$1" | sed 's/VER://'
 }
 
 function DoInstbinList() {

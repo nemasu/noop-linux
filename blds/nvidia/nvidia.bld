@@ -2,8 +2,8 @@ NAME=nvidia
 
 #Description
 DESC="NVIDIA drivers for linux"
-VERSION=361.28-1
-DVERSION=361.28
+VERSION=361.45.11
+DVERSION=361.45.11
 ISUSR=1
 
 if [ "${ARCH}" == "x86_64" ];
