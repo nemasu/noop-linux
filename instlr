@@ -77,7 +77,7 @@ then
 	PREFIX=$PREFIX pkgr -s
 	export PKGR_SUPPRESS_P_OUTPUT=1
 
-	pkgr -i base-meta
+	PREFIX=$PREFIX pkgr -i base-meta
 
 	if [ "`$UNAME -m`" == "x86_64" ];
 	then
