@@ -1,0 +1,105 @@
+#package name
+NAME=mingw-gcc
+
+#Description
+DESC="Cross GCC for the MinGW-w64 cross-compiler"
+
+#package version
+VERSION=6.1.1
+_snapshot=6-20160505
+_islver=0.17.1
+_cloogver=0.18.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.bz2"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=no
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=1
+
+function BuildAndInstall
+{
+	#Based off ArchLinux's build.
+
+	_basedir=gcc-${_snapshot}
+	cd ..
+	srcdir=`pwd`
+
+	if [ -z ${BLDR_CONTINUE} ];
+	then
+
+		wget http://isl.gforge.inria.fr/isl-${_islver}.tar.bz2
+		wget http://www.bastoul.net/cloog/pages/download/cloog-${_cloogver}.tar.gz
+		tar xf *.bz2
+		tar xf *.gz
+	fi
+	cd gcc-*
+	
+	# link isl/cloog for in-tree builds
+	rm isl && ln -s ../isl-${_islver} isl
+	rm cloog && ln -s ../cloog-${_cloogver} cloog
+
+	_targets="i686-w64-mingw32 x86_64-w64-mingw32"
+
+	for _target in ${_targets}; do
+		mkdir -p ${srcdir}/gcc-build-${_target} && cd ${srcdir}/gcc-build-${_target}
+	
+		${srcdir}/${_basedir}/configure --prefix=/usr --libexecdir=/usr/lib \
+		--target=${_target} \
+		--enable-languages=c,c++ \
+		--enable-shared --enable-static \
+		--enable-threads=posix --enable-fully-dynamic-string --enable-libstdcxx-time=yes \
+		--with-system-zlib --enable-cloog-backend=isl \
+		--disable-dw2-exceptions --enable-libgomp \
+		--disable-multilib --enable-checking=release
+		make -j${BLDR_CORES} all
+	done
+
+	pkgdir=/root/bldr-inst
+	for _target in ${_targets}; do
+		cd ${srcdir}/gcc-build-${_target}
+		make DESTDIR=${pkgdir} install
+		${_target}-strip ${pkgdir}/usr/${_target}/lib/*.dll
+		strip ${pkgdir}/usr/bin/${_target}-*
+		strip ${pkgdir}/usr/lib/gcc/${_target}/${VERSION}/{cc1*,collect2}
+		ln -s ${_target}-gcc $pkgdir/usr/bin/${_target}-cc
+# mv dlls
+		mkdir -p $pkgdir/usr/${_target}/bin/
+		mv $pkgdir/usr/${_target}/lib/*.dll $pkgdir/usr/${_target}/bin/
+	done
+	strip ${pkgdir}/usr/bin/*
+# remove unnecessary files
+	rm -r ${pkgdir}/usr/share
+	rm -f ${pkgdir}/usr/lib/libcc1.so*
+	rm -f ${pkgdir}/usr/lib/libcc1.a
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+
+	LATEST=`curl -L -s ftp://ftp.gnu.org/gnu/gcc/ | awk '{print $9;}' | egrep "gcc-[0-9\.][0-9\.]*" | tail -n1`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

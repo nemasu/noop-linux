@@ -1,0 +1,89 @@
+#package name
+NAME=mingw-binutils
+
+#Description
+DESC="Cross binutils for the MinGW-w64 cross-compiler"
+
+#package version
+VERSION=2.26
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="http://ftp.gnu.org/gnu/binutils/binutils-${VERSION}.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	sed -i 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in
+	sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
+
+	cd ..
+	dir=`ls`
+	cp -r $dir ${dir}-i686
+	cd $dir
+	./configure --prefix=/usr \
+        --target=x86_64-w64-mingw32 \
+        --infodir=/usr/share/info/x86_64-w64-mingw32 \
+        --enable-lto --enable-plugins \
+        --disable-multilib --disable-nls \
+        --disable-werror
+    make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+
+	cd ../${dir}-i686
+	./configure --prefix=/usr \
+        --target=i686-w64-mingw32 \
+        --infodir=/usr/share/info/i686-w64-mingw32 \
+        --enable-lto --enable-plugins \
+        --disable-multilib --disable-nls \
+        --disable-werror
+    make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	NAME=binutils
+	LISTURL=http://ftp.gnu.org/gnu/binutils
+	FILELIST=`GetFileList`
+	LATEST=0
+	NAME=mingw-binutils
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

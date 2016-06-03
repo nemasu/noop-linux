@@ -1,0 +1,68 @@
+#package name
+NAME=mingw-crt
+
+#Description
+DESC="MinGW-w64 CRT for Windows"
+
+#package version
+VERSION=4.0.6
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/mingw-w64-v${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=no
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+
+	_targets="i686-w64-mingw32 x86_64-w64-mingw32"
+	#Based off ArchLinux's build
+	cd ..
+	curdur=`pwd`
+	srcdir=`pwd`
+	cd $curdur
+
+	for _target in ${_targets}; do
+		if [ ${_target} == "i686-w64-mingw32" ]; then
+			_crt_configure_args="--disable-lib64 --enable-lib32"
+		elif [ ${_target} == "x86_64-w64-mingw32" ]; then
+			_crt_configure_args="--disable-lib32 --enable-lib64"
+		fi
+		mkdir -p ${srcdir}/crt-${_target} && cd ${srcdir}/crt-${_target}
+		${srcdir}/mingw-w64-v${VERSION}/mingw-w64-crt/configure --prefix=/usr/${_target} --host=${_target} --enable-wildcard ${_crt_configure_args}
+		make -j${BLDR_CORES}
+		make DESTDIR=/root/bldr-inst install
+	done
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s -L https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/ | egrep "mingw-w64-v[0-9\.]*\.tar\.bz2" | sed -e 's/.*mingw-w64-v\([0-9\.]*\)\.tar\.bz2.*/\1/g' | head -n1`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
