@@ -13,6 +13,7 @@ murrine
 aurora
 gvfs
 gnome-keyring
+gsettings-desktop-schemas
 mate-common
 mate-desktop
 libmatekbd

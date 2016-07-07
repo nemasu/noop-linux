@@ -297,7 +297,8 @@ function DoInstbin() {
 				echo 'export PATH=${JAVA_HOME}/bin:${JDK_HOME}/bin:${PATH}' >> /etc/profile
 			fi
 		
-			JAVA8_VER=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/index.html | egrep "name=\"JDK8\">Java SE 8u[0-9]*<\/a>" | sed -e 's/.*name="JDK8">Java SE \(8u[0-9]*\)<\/a>.*/\1/g'`
+#JAVA8_VER=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/index.html | egrep "name=\"JDK8\">Java SE 8u[0-9]*<\/a>" | sed -e 's/.*name="JDK8">Java SE \(8u[0-9]*\)<\/a>.*/\1/g'`
+			JAVA8_VER=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/index.html | egrep "8u[0-9]*" | sed 's/.*\(8u[0-9]*\).*/\1/g' | head -n1`
 			DOWNLOADS_PAGE=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/index.html | grep "jdk8-downloads-" | sed -e 's/.*jdk8-downloads-\([0-9]*\)\.html.*/\1/g' | head -n1`
 			BVERSION=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-${DOWNLOADS_PAGE}.html | grep "jdk-${JAVA8_VER}-linux-x64.tar.gz" | sed -e 's|.*otn-pub/java/jdk/\(.*\)/jdk-8u.*|\1|g'`
 			JAVA_TAR=http://download.oracle.com/otn-pub/java/jdk/${BVERSION}/jdk-${JAVA8_VER}-linux-x64.tar.gz
