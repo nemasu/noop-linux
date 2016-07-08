@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=50.0.2661.102
-VERSION=50.0.2661.102
+DVERSION=51.0.2704.106
+VERSION=51.0.2704.106
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -23,10 +23,15 @@ RESTORELIBDB=1
 DEPS=('alsa-lib' 'atk' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libevent' 'libjpeg' 'libpng' 'libxml2' 'libxslt' 'nspr' 'nss' 'pango' 'pciutils' 'speech-dispatcher')
 
 
-#needs ninja, gperf and yasm to build
-
 function BuildAndInstall
 {
+
+  for i in yasm ninja llvm gperf;
+  do
+	  if [ ! -e /var/noop/installed/$i ]; then
+		pkgr -i $i
+	  fi;
+  done
   
   for i in `ls $BLDRTMPDIR/*.arm_patch`;
   do

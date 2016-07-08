@@ -5,8 +5,8 @@ NAME=caja-extensions
 DESC="Caja extensions (common files)"
 
 #package version
-VERSION=1.10.0
-DVERSION=1.10.0
+VERSION=1.14.0
+DVERSION=1.14.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

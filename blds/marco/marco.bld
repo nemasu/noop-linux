@@ -5,8 +5,8 @@ NAME=marco
 DESC="A window manager for MATE (GTK2 version)"
 
 #package version
-VERSION=1.10.1
-DVERSION=1.10.1
+VERSION=1.14.2
+DVERSION=1.14.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

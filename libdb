@@ -4332,7 +4332,7 @@ libplist,libplist.so.1.1.10
 libpng,libpng.so
 libpng,libpng16.so
 libpng,libpng16.so.16
-libpng,libpng16.so.16.21.0
+libpng,libpng16.so.16.23.0
 libpng15,libpng15.so
 libpng15,libpng15.so.15
 libpthread_workqueue,libpthread_workqueue.so

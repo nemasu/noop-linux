@@ -5,8 +5,8 @@ NAME=mate-control-center
 DESC="The Control Center for MATE (GTK2 version)"
 
 #package version
-VERSION=1.10.0
-DVERSION=1.10.0
+VERSION=1.14.0
+DVERSION=1.14.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
