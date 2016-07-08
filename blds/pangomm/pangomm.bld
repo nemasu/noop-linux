@@ -1,28 +1,27 @@
 #package name
-NAME=mate-terminal
+NAME=pangomm
 
 #Description
-DESC="The MATE Terminal Emulator (GTK2 version)"
+DESC="C++ bindings for pango"
 
 #package version
-VERSION=1.14.0
-DVERSION=1.14.0
+VERSION=2.38.1
+DVERSION=2.38.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-SRC=http://pub.mate-desktop.org/releases/${MM}/${NAME}-${DVERSION}.tar.xz
+SRC=http://ftp.gnome.org/pub/GNOME/sources/pangomm/${VERSION:0:4}/pangomm-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('cairo' 'freetype2' 'gcc-libs' 'glibc' 'libpng' 'libsigc++' 'libX11' 'libXext' 'libXrender' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,24 +32,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	sed -i 's/env python/env python2/' mate-terminal.wrapper
-	./configure \
-        --prefix=/usr \
-        --with-gtk=2.0 \
-        --disable-static
-    make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	#Limit to same series
-	MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-	LISTURL=http://pub.mate-desktop.org/releases/${MM}/
+	LISTURL=http://www.cairographics.org/releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -64,7 +53,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

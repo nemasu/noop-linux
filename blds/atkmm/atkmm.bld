@@ -1,28 +1,27 @@
 #package name
-NAME=python-caja
+NAME=atkmm
 
 #Description
-DESC="Python 2 bindings for caja"
+DESC="C++ bindings for ATK"
 
 #package version
-VERSION=1.10.0
-DVERSION=1.10.0
+VERSION=2.24.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-SRC=http://pub.mate-desktop.org/releases/${MM}/${NAME}-${DVERSION}.tar.xz
+SRC=http://ftp.gnome.org/pub/GNOME/sources/atkmm/${VERSION:0:4}/atkmm-${VERSION}.tar.xz
+
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'caja' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'pango' 'python2')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,21 +32,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	PYTHON=/usr/bin/python2 ./configure \
-        --prefix=/usr \
-        --disable-static
-    make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	#Limit to same series
-	MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-	LISTURL=http://pub.mate-desktop.org/releases/${MM}/
+	LISTURL=
 	FILELIST=`GetFileList`
 	LATEST=0
 

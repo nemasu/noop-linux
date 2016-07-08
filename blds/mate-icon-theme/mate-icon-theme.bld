@@ -33,6 +33,8 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+#requires icon-naming-utils
+
 #function BuildAndInstall
 #{
 #}
