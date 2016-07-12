@@ -3,7 +3,7 @@
 set -e
 
 #Prereqs
-pkgr -i cpio squashfs-tools xorriso mtools &> /dev/null
+pkgr -i dosfstools cpio squashfs-tools xorriso mtools &> /dev/null
 
 #Current options: core, mate, xfce4, enlightenment
 export NOOP_ISO_CREATE=$1
@@ -32,7 +32,7 @@ mkdir -p iso iso-fs efs
 
 umount iso-fs/dev iso-fs/sys iso-fs/proc;
 
-#Install grub to iso
+#Install grub to iso, fails on encrypted drives, doesn't matter though.
 grub-install \
 	--boot-directory=/root/iso/boot \
 	--no-bootsector \
@@ -40,7 +40,7 @@ grub-install \
 	--target=i386-pc \
 	--skip-fs-probe \
 	--no-nvram \
-	/dev/zero
+	/dev/zero || true
 
 #Create fat partition image, 30MB
 dd if=/dev/zero of=/root/iso/boot/efs.img bs=1024 count=30720

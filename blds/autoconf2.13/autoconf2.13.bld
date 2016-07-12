@@ -1,0 +1,47 @@
+#package name
+NAME=autoconf2.13
+
+#Description
+DESC="A GNU tool for automatically configuring source code (Version 2.1X)"
+
+#package version
+VERSION=2.13
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://ftpmirror.gnu.org/autoconf/autoconf-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+ISSPECIAL=1
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  ./configure --prefix=/usr --infodir=/usr/share/info --program-suffix=-2.13
+  make -j${BLDR_CORES}
+  make prefix=/root/bldr-inst/usr infodir=/root/bldr-inst/usr/share/info install
+  mv /root/bldr-inst/usr/share/info/autoconf{,-2.13}.info
+  mv /root/bldr-inst/usr/share/info/standards{,-2.13}.info
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "$NAME: Legacy Version"
+}

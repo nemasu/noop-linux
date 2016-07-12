@@ -2,8 +2,8 @@ NAME=firefox
 
 #Description
 DESC="Standalone web browser from mozilla.org"
-VERSION=46.0.1
-DVERSION=46.0.1
+VERSION=47.0.1
+DVERSION=47.0.1
 ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
@@ -16,18 +16,41 @@ RESTORELIBDB=1
 function BuildAndInstall
 {
 
+  #build prereqs
+  for i in zip autoconf2.13; do
+	  pkgr -i $i;
+  done
+
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for noop Linux use ONLY. For your own distribution, please
   # get your own set of keys. 
   _google_api_key=AIzaSyB9Q6_d-Yce6g1iFO0rLj4N74ANKqWnrNc
+  _google_default_client_id=89099530172.apps.googleusercontent.com
+  _google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ
+
+
 
   mv $BLDRTMPDIR/mozconfig .mozconfig
 
   echo -n "$_google_api_key" >google-api-key
   echo "ac_add_options --with-google-api-keyfile=\"$PWD/google-api-key\"" >>.mozconfig
 
+  echo -n "$_google_default_client_id $_google_default_client_secret" >google-oauth-api-key
+  echo "ac_add_options --with-google-oauth-api-keyfile=\"$PWD/google-oauth-api-key\"" >>.mozconfig
+
+  echo -n "$_mozilla_api_key" >mozilla-api-key
+  echo "ac_add_options --with-mozilla-api-keyfile=\"$PWD/mozilla-api-key\"" >>.mozconfig
+
   export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/firefox"
   export PYTHON="/usr/bin/python2"
+
+  pushd js/src
+  autoconf-2.13 old-configure.in
+  popd
+
+  pushd memory/jemalloc/src || die
+  WANT_AUTOCONF= autoconf
+  popd
 
   # Enable PGO
   export DISPLAY=:99
