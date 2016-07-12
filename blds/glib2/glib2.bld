@@ -35,6 +35,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
   patch -Rp1 -i $BLDRTMPDIR/revert-warn-glib-compile-schemas.rpatch
+	  && rm $BLDRTMPDIR/revert-warn-glib-compile-schemas.rpatch
   
   PYTHON=/usr/bin/python2 ./configure --prefix=/usr --libdir=/usr/lib \
 	  --enable-static \

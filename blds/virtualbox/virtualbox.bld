@@ -72,6 +72,7 @@ function BuildAndInstall
 	popd
 	echo "function postinst() {" > /tmp/bldr/pkg.install
 	echo "depmod"                >>/tmp/bldr/pkg.install
+	echo "modprobe vboxsf" >>/tmp/bldr/pkg.install
 	echo "modprobe vboxdrv" >>/tmp/bldr/pkg.install
 	echo "modprobe vboxnetadp" >>/tmp/bldr/pkg.install
 	echo "modprobe vboxnetflt" >>/tmp/bldr/pkg.install
