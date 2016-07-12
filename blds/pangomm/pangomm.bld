@@ -21,7 +21,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('cairo' 'freetype2' 'gcc-libs' 'glibc' 'libpng' 'libsigc++' 'libX11' 'libXext' 'libXrender' 'zlib')
+DEPS=('cairo' 'cairomm' 'gcc-libs' 'glib2' 'glibc' 'glibmm' 'libsigc++' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=

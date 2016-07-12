@@ -20,7 +20,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'atkmm' 'cairo' 'cairomm' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'glibmm' 'gtk+' 'libsigc++' 'pango' 'pangomm')
 
 # 'no' to skip calls to strip
 STRIP=

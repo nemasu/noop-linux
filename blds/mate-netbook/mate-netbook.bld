@@ -22,7 +22,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libfakekey' 'libunique1' 'libwnck2' 'libX11' 'libXtst' 'mate-desktop' 'mate-panel' 'pango' 'startup-notification')
+DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXtst' 'libfakekey' 'libunique1' 'libwnck2' 'mate-desktop' 'mate-panel' 'pango' 'startup-notification')
 
 # 'no' to skip calls to strip
 STRIP=
