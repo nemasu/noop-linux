@@ -5,7 +5,7 @@ NAME=libfilezilla
 DESC="Small and modern C++ library, offering some basic functionality to build high-performing, platform-independent programs"
 
 #package version
-VERSION=0.4.0
+VERSION=0.5.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
