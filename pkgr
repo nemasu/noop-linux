@@ -218,9 +218,11 @@ function bininst_install() {
 #1 name
 function get_packagedb_version() {
 	ARCHPOST="_$ARCH"
+	#+ is a valid character in a package name.
+	name=`echo ${1} | sed -e 's|+|\\\+|g'`
 	#Why isnt this working...	
 	#$echo "`$egrep "^${1}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`"
-	echo "`egrep "^${1}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | sed -e 's/\.pkg//g' | sed -e 's/'"$ARCHPOST"'//g'`"
+	echo "`egrep "^${name}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | sed -e 's/\.pkg//g' | sed -e 's/'"$ARCHPOST"'//g'`"
 }
 
 #1 name
@@ -1183,10 +1185,8 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 		OLD=`get_installed_version $NAME`
 	fi
 
-	
-
 	ARCHPOST="_$ARCH"
-    
+   
 	if [ $ISFILE -eq 1 ];
 	then
 		NEW=`pkgr -readmeta "$2" | $grep -m1 "VER:" | $sed -e 's/VER://g' | $sed -e 's/'"$ARCHPOST"'//g'`
@@ -1194,7 +1194,6 @@ if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
 		NEW=`get_packagedb_version $NAME`
 	fi
 
-    
 	vercomp $OLD $NEW
 	
 	if [ $? != 2 ]; then
