@@ -2207,10 +2207,10 @@ gtk+,libgailutil-3.so.0
 gtk+,libgailutil-3.so.0.0.0
 gtk+,libgdk-3.so
 gtk+,libgdk-3.so.0
-gtk+,libgdk-3.so.0.1800.7
+gtk+,libgdk-3.so.0.2000.6
 gtk+,libgtk-3.so
 gtk+,libgtk-3.so.0
-gtk+,libgtk-3.so.0.1800.7
+gtk+,libgtk-3.so.0.2000.6
 gtk+,libprintbackend-cups.so
 gtk+,libprintbackend-file.so
 gtk+,libprintbackend-lpr.so
