@@ -226,7 +226,6 @@ augeas,libfa.so
 augeas,libfa.so.1
 augeas,libfa.so.1.4.1
 aurora,libaurora.so
-avahi,avahi-daemon.socket
 avahi,libavahi-client.so
 avahi,libavahi-client.so.3
 avahi,libavahi-client.so.3.2.9
@@ -542,8 +541,6 @@ cups,libcupsmime.so
 cups,libcupsmime.so.1
 cups,libcupsppdc.so
 cups,libcupsppdc.so.1
-cups,org.cups.cups-lpd.socket
-cups,org.cups.cupsd.socket
 cups-filters,libcupsfilters.so
 cups-filters,libcupsfilters.so.1
 cups-filters,libcupsfilters.so.1.0.0
@@ -564,7 +561,7 @@ db,libdb_sql-5.so
 db,libdb_sql.so
 dbus,libdbus-1.so
 dbus,libdbus-1.so.3
-dbus,libdbus-1.so.3.7.2
+dbus,libdbus-1.so.3.15.1
 dbus-glib,libdbus-glib-1.so
 dbus-glib,libdbus-glib-1.so.2
 dbus-glib,libdbus-glib-1.so.2.2.2
@@ -2579,7 +2576,6 @@ kmod,libkmod.so.2.2.9
 krb5,db2.so
 krb5,k5tls.so
 krb5,kldap.so
-krb5,krb5-kpropd.socket
 krb5,libgssapi_krb5.so
 krb5,libgssapi_krb5.so.2
 krb5,libgssapi_krb5.so.2.2
@@ -3240,7 +3236,6 @@ lib32-icu4c,libicuuc.so.53
 lib32-icu4c,libicuuc.so.53.1
 lib32-krb5,db2.so
 lib32-krb5,kldap.so
-lib32-krb5,krb5-kpropd.socket
 lib32-krb5,libgssapi_krb5.so
 lib32-krb5,libgssapi_krb5.so.2
 lib32-krb5,libgssapi_krb5.so.2.2
@@ -4710,7 +4705,6 @@ lua,liblua.so.5.3.2
 luajit,libluajit-5.1.so
 luajit,libluajit-5.1.so.2
 luajit,libluajit-5.1.so.2.0.3
-lvm2,dm-event.socket
 lvm2,libdevmapper-event-lvm2.so
 lvm2,libdevmapper-event-lvm2.so.2.02
 lvm2,libdevmapper-event-lvm2mirror.so
@@ -4725,7 +4719,6 @@ lvm2,liblvm2app.so
 lvm2,liblvm2app.so.2.2
 lvm2,liblvm2cmd.so
 lvm2,liblvm2cmd.so.2.02
-lvm2,lvm2-lvmetad.socket
 lz4,liblz4.so
 lz4,liblz4.so.1
 lz4,liblz4.so.1.7.1
@@ -6779,9 +6772,6 @@ recode,librecode.so.0
 recode,librecode.so.0.0.0
 rtmpdump,librtmp.so
 rtmpdump,librtmp.so.1
-rust,fn.socket.html
-rust,fn.socketpair.html
-rust,fn.soft_link.html
 rust,libarena-71b07a99.so
 rust,libflate-71b07a99.so
 rust,libfmt_macros-71b07a99.so
@@ -7149,7 +7139,6 @@ samba,smb.so
 samba,smb_acl.so
 samba,smb_traffic_analyzer.so
 samba,smbd.so
-samba,smbd.socket
 samba,smbpasswd.so
 samba,snapper.so
 samba,srvsvc.so
@@ -7443,25 +7432,6 @@ systemd,libudev.so
 systemd,libudev.so.1
 systemd,libudev.so.1.6.4
 systemd,pam_systemd.so
-systemd,syslog.socket
-systemd,systemd-coredump.socket
-systemd,systemd-coredump.socket.8
-systemd,systemd-initctl.socket
-systemd,systemd-initctl.socket.8
-systemd,systemd-journald-audit.socket
-systemd,systemd-journald-audit.socket.8
-systemd,systemd-journald-dev-log.socket
-systemd,systemd-journald-dev-log.socket.8
-systemd,systemd-journald.socket
-systemd,systemd-journald.socket.8
-systemd,systemd-networkd.socket
-systemd,systemd-rfkill.socket
-systemd,systemd-rfkill.socket.8
-systemd,systemd-udevd-control.socket
-systemd,systemd-udevd-control.socket.8
-systemd,systemd-udevd-kernel.socket
-systemd,systemd-udevd-kernel.socket.8
-systemd,systemd.socket.5
 taglib,libtag.so
 taglib,libtag.so.1
 taglib,libtag.so.1.14.0
@@ -7680,7 +7650,6 @@ util-linux,libuuid.so
 util-linux,libuuid.so.1
 util-linux,libuuid.so.1.3.0
 util-linux,pylibmount.so
-util-linux,uuidd.socket
 v4l-utils,libdvbv5.so
 v4l-utils,libdvbv5.so.0
 v4l-utils,libdvbv5.so.0.0.0
