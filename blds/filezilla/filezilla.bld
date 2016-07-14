@@ -20,7 +20,7 @@ EXTRACONF="--disable-manualupdatecheck --disable-autoupdatecheck --with-pugixml=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gnutls' 'gtk+' 'libfilezilla' 'pango' 'sqlite' 'wxgtk')
+DEPS=('atk' 'cairo' 'dbus' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gnutls' 'gtk+' 'libfilezilla' 'nettle' 'pango' 'sqlite' 'wxgtk')
 
 # 'no' to skip calls to strip
 STRIP=
