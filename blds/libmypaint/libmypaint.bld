@@ -1,18 +1,18 @@
 #package name
-NAME=gimp
+NAME=libmypaint
 
 #Description
-DESC="GNU Image Manipulation Program"
+DESC="Library for making brushstrokes which is used by MyPaint and other projects."
 
 #package version
-VERSION=2.9.4
-DVERSION=2.9.4
+VERSION=1.3.0-1
+DVERSION=1.3.0-beta.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://download.gimp.org/mirror/pub/gimp/v${DVERSION:0:3}/gimp-${DVERSION}.tar.bz2
+SRC=https://github.com/mypaint/libmypaint/releases/download/v${DVERSION}/libmypaint-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -21,7 +21,7 @@ EXTRACONF=
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=('alsa-lib' 'atk' 'babl' 'cairo' 'exiv2' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'gegl' 'gexiv2' 'ghostscript' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'ilmbase' 'jasper' 'json-glib' 'lcms2' 'libgudev' 'libICE' 'libjpeg' 'libmng' 'libpng' 'librsvg' 'libSM' 'libsoup' 'libwmf' 'libX11' 'libXcursor' 'libXext' 'libXfixes' 'libXmu' 'libXpm' 'libXt' 'openexr' 'pango' 'poppler' 'tiff' 'webkitgtk2' 'xz' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -39,7 +39,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://www.gimp.org/downloads/
+	LISTURL=https://github.com/mypaint/libmypaint/releases/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -53,7 +53,7 @@ function Detect
 			fi
 	done
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

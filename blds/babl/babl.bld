@@ -5,7 +5,7 @@ NAME=babl
 DESC="Dynamic, any to any, pixel format conversion library"
 
 #package version
-VERSION=0.1.14
+VERSION=0.1.18
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
