@@ -972,6 +972,12 @@ if [ $1 == "--belongs" ] || [ $1 == "-b" ]; then
 fi
 
 if [ $1 == "--list" ] || [ $1 == "-l" ]; then
+	if [ "$2" == "-nc" ]; then
+		Green=
+		Red=
+		Yellow=
+		NoColor=
+	fi
 	$echo -e "Package List. Legend: ${Green}Installed ${Red}Available ${Yellow}Update Available${NoColor}"
 	for i in `$sed -e 's/,.*//g' $PACKAGEDB`;
 	do
