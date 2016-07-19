@@ -5,14 +5,14 @@ NAME=bash
 DESC="The GNU Bourne Again shell"
 
 #package version
-VERSION=4.3-42
+VERSION=4.3.46
 DVERSION=4.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnu.org/gnu/bash/bash-${DVERSION}.tar.gz
+SRC=http://ftp.gnu.org/gnu/bash/bash-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
