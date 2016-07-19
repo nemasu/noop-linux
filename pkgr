@@ -2145,6 +2145,7 @@ if [ $1 = "--mkinitramfs" ]; then
     copy_binary `which bash` $INITRAMFS_WORKDIR/usr/bin/bash
     copy_binary `which mount.aufs` $INITRAMFS_WORKDIR/sbin/mount.aufs
     copy_binary `which lvm` $INITRAMFS_WORKDIR/sbin/lvm
+	copy_binary `which lvmetad` $INITRAMFS_WORKDIR/sbin/lvmetad
     copy_binary `which dmsetup` $INITRAMFS_WORKDIR/sbin/dmsetup
     copy_binary `which veritysetup` $INITRAMFS_WORKDIR/bin/veritysetup
     copy_binary `which cryptsetup-reencrypt` $INITRAMFS_WORKDIR/bin/cryptsetup-reencrypt

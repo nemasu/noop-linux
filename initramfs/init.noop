@@ -54,6 +54,9 @@ do
 done
 
 #LVM2
+mkdir -p /run/lvm
+lvmetad -f -t 30 &> /dev/null &
+lvmetad_pid=$!
 lvm vgscan --mknodes
 lvm vgchange -ay
 dmsetup mknodes
@@ -77,6 +80,7 @@ mount ${root} /newroot
 if [[ -x "/newroot/${init}" ]] ; then
     #Unmount all other mounts so that the ram used by
     #the initramfs can be cleared after switch_root
+	kill $lvmetad_pid
     umount /sys /proc /dev
 
     #Switch to the new root and execute init
