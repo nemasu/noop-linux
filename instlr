@@ -127,6 +127,7 @@ else
 		echo -n "Copying metadata...";
 	fi
 	cp -r /var/noop $PREFIX/var/
+	rm $PREFIX/var/noop/file-base.tar.bz2
 	ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
 	echo "done.";
 
@@ -145,8 +146,7 @@ else
 	fi
 
 	popd &> /dev/null
-	
-	cp `which pkgr` $PREFIX/usr/sbin/pkgr
+
 	export PATH=$PREFIX/usr/sbin:$PATH
 	PREFIX=$PREFIX pkgr -s
 	echo "done.";

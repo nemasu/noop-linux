@@ -4,7 +4,7 @@ function postinst() {
 }
 
 function postup() {
-	postup
+	postinst
 }
 
 function postrm() {
