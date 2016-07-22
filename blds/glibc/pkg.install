@@ -1,4 +1,17 @@
+function genLocales() {
+	echo "Generating Locales..."
+	for i in `ls /usr/share/i18n/locales | sed -e '/translit/d;/@/d;/iso/d'`;
+	do
+		echo "${i}.UTF-8"; localedef -i "${i}" -f UTF-8 "${i}.UTF-8";
+	done
+	echo "done."
+}
+
 function postinst() {
     mkdir -p /lib/locale
-    localedef -i en_US -f UTF-8 en_US.UTF-8
+	genLocales
+}
+
+function postup() {
+	postinst
 }
