@@ -48,6 +48,9 @@ function BuildAndInstall
     make -j${BLDR_CORES}
 
 	make DESTDIR=/root/bldr-inst install
+
+	#remove colliding files
+	rm /root/bldr-inst/usr/bin/gtk-update-icon-cache
 }
 
 #Default HTTP curl new version detection

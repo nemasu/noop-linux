@@ -1870,6 +1870,7 @@ gnome-keyring,gkm-ssh-store-standalone.so
 gnome-keyring,gkm-xdg-store-standalone.so
 gnome-keyring,gnome-keyring-pkcs11.so
 gnome-keyring,pam_gnome_keyring.so
+gnome-themes-standard,libadwaita.so
 gnutls,libgnutls.so
 gnutls,libgnutls.so.30
 gnutls,libgnutls.so.30.6.1

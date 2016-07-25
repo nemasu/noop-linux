@@ -11,6 +11,8 @@ desktop-file-utils
 gtk-engines
 murrine
 aurora
+gnome-themes-standard
+adwaita-icon-theme
 gvfs
 gnome-keyring
 gsettings-desktop-schemas
