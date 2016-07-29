@@ -20,7 +20,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('gnu-efi' 'gperf' 'acl' 'attr' 'curl' 'elfutils' 'glibc' 'iptables' 'kmod' 'libcap2' 'libgcrypt' 'libgpg-error' 'libidn' 'libseccomp' 'linux-pam' 'qrencode' 'util-linux' 'xz' 'zlib')
+DEPS=('python-lxml' 'docbook-xml' 'docbook-xsl' 'libxslt' 'gnu-efi' 'gperf' 'acl' 'attr' 'curl' 'elfutils' 'glibc' 'iptables' 'kmod' 'libcap2' 'libgcrypt' 'libgpg-error' 'libidn' 'libseccomp' 'linux-pam' 'qrencode' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

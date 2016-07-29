@@ -21,7 +21,7 @@ EXTRACONF="--with-systemdsystemunitdir=/usr/lib/systemd/system"
 ISSPECIAL=0
 
 # build/package dependancies
-DEPS=
+DEPS=('acl' 'attr' 'elfutils' 'glib2' 'glibc' 'libatasmart' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libgudev' 'pcre' 'polkit' 'systemd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
