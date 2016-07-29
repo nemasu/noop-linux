@@ -5,8 +5,8 @@ NAME=clementine
 DESC="A modern music player and library organizer"
 
 #package version
-VERSION=1.2.3-2
-DVERSION=1.2.3
+VERSION=1.3.1
+DVERSION=1.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -34,17 +34,21 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  if [ ! -e /var/noop/installed/sparsehash ];
-  then
-	echo "You need sparsehash to build $NAME";
-    exit 1
-  fi
-  mkdir -p build && cd build
-  cmake .. \
-  	-DCMAKE_INSTALL_PREFIX='/usr' \
-	-DCMAKE_BUILD_TYPE='Release'
-  make -j${BLDR_CORES}
-  make DESTDIR=/root/bldr-inst install
+
+	for i in sparsehash boost; do
+		if [ ! -e /var/noop/installed/$i ];
+		then
+			echo "You need $i to build $NAME";
+			exit 1
+		fi
+	done
+
+	mkdir -p build && cd build
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX='/usr' \
+		-DCMAKE_BUILD_TYPE='Release'
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

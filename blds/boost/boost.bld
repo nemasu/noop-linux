@@ -5,8 +5,8 @@ NAME=boost
 DESC="Free peer-reviewed portable C++ source libraries - development headers"
 
 #package version
-VERSION=1.59.0-1
-DVERSION=1.59.0
+VERSION=1.61.0
+DVERSION=1.61.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -7,12 +7,13 @@ DESC="A C library that implements an SQL database engine"
 #package version
 VERSION=3130000
 DVERSION=3130000
+tcl_dir=/usr/lib/sqlite3.13.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.sqlite.org/2016/sqlite-autoconf-${DVERSION}.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -34,15 +35,26 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export CFLAGS="$CFLAGS -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY -DSQLITE_SECURE_DELETE -DSQLITE_ENABLE_DBSTAT_VTAB"
+	wget http://www.sqlite.org/2016/sqlite-src-${DVERSION}.zip
+	unzip *.zip && rm *.zip && cd `ls`
 
-	./configure $STDUSRCONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+	export CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1 \
+							 -DSQLITE_ENABLE_UNLOCK_NOTIFY \
+							 -DSQLITE_ENABLE_DBSTAT_VTAB=1 \
+							 -DSQLITE_ENABLE_FTS3_TOKENIZER=1 \
+							 -DSQLITE_SECURE_DELETE"
 
-	cd tea
-	./configure $STDUSRCONF --with-system-sqlite
-	make -j${BLDR_CORES}
+	./configure --prefix=/usr \
+		--disable-amalgamation \
+		--enable-fts3 \
+		--enable-fts4 \
+		--enable-fts5 \
+		--enable-rtree \
+		--enable-json1 \
+		TCLLIBDIR=$tcl_dir
+
+	make
+	make showdb showjournal showstat4 showwal sqldiff sqlite3_analyzer
 	make DESTDIR=/root/bldr-inst install
 }
 

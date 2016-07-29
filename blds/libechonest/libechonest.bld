@@ -1,18 +1,17 @@
 #package name
-NAME=protobuf
+NAME=libechonest
 
 #Description
-DESC="Protocol Buffers - Google's data interchange format"
+DESC="C++ library for interfacing with Echo Nest"
 
 #package version
-VERSION=3.0.0
-DVERSION=3.0.0
+VERSION=2.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/google/protobuf/archive/v${DVERSION}.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -21,7 +20,7 @@ EXTRACONF=
 ISSPECIAL=1
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -34,18 +33,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./autogen.sh
-	./configure $STDUSRCONF
+	git clone git://anongit.kde.org/libechonest.git
+	cd libechonest
+	git checkout tags/$VERSION
+
+	mkdir build && cd build	
+	cmake .. \
+		-DCMAKE_BUILD_TYPE='Release' \
+		-DCMAKE_INSTALL_PREFIX='/usr' \
+		-DECHONEST_BUILD_TESTS='False'
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
 
-#Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://github.com/google/protobuf/releases | egrep "v[0-9\.]+\.tar\.gz" | head -n1 | sed 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+	LATEST=`curl -L -s "https://quickgit.kde.org/?p=libechonest.git" | grep "Tag version" | head -n1 | sed -e 's/.*Tag version \([0-9\.]*\).*/\1/g'`
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
