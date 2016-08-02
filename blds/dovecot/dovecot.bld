@@ -18,7 +18,7 @@ SRC=http://dovecot.org/releases/2.2/dovecot-${DVERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('e2fsprogs' 'glibc' 'icu4c' 'krb5' 'libcap2' 'linux-pam' 'lz4' 'mysql-libs' 'openldap' 'openssl' 'postgresql-libs' 'sqlite' 'xz' 'zlib')

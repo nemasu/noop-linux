@@ -17,7 +17,7 @@ SRC=
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libffi' 'libxcb' 'libxkbfile' 'libxml2' 'pcre' 'xz' 'zlib')

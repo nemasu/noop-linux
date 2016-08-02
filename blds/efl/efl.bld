@@ -18,7 +18,7 @@ SRC=http://download.enlightenment.org/rel/libs/efl/efl-${DVERSION}.tar.xz
 EXTRACONF="--enable-systemd"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('printproto' 'bullet' 'dbus' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'gdbm' 'giflib' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'harfbuzz' 'ibus' 'json-c' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXp' 'libXrandr' 'libXrender' 'libXtst' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libsndfile' 'libxcb' 'libxshmfence' 'luajit' 'mesalib' 'openjpeg' 'openssl' 'orc' 'pcre' 'pulseaudio' 'systemd' 'tiff' 'util-linux' 'xz' 'zlib')

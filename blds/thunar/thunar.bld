@@ -18,7 +18,7 @@ SRC=http://archive.xfce.org/src/xfce/${NAME}/${MM}/Thunar-${VERSION}.tar.bz2
 EXTRACONF="--enable-gio-unix --enable-dbus --enable-gudev --enable-notifications --enable-exif --enable-pcre"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'exo' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'libexif' 'libffi' 'libgudev' 'libICE' 'libnotify' 'libpng' 'libSM' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libxfce4ui' 'libxfce4util' 'libXrender' 'pango' 'pcre' 'pixman' 'startup-notification' 'util-linux' 'xcb-util' 'xfce4-panel' 'xfconf' 'zlib')

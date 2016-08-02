@@ -17,7 +17,7 @@ SRC=http://v3.sk/~lkundrak/dev86/bin86-0.16.21.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc')

@@ -17,7 +17,7 @@ SRC=http://www.fontconfig.org/release/fontconfig-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('expat' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libpng' 'pcre' 'zlib')

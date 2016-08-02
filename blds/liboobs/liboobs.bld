@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/liboobs/$MAJOR/liboobs-${VERSION}.tar
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc')

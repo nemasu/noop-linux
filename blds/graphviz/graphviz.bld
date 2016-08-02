@@ -17,7 +17,7 @@ SRC=http://www.graphviz.org/pub/graphviz/stable/SOURCES/graphviz-${VERSION}.tar.
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'ghostscript' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXau' 'libXaw' 'libXdmcp' 'libXext' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libcroco' 'libffi' 'libjpeg' 'libpng' 'libpng15' 'librsvg' 'libtool' 'libxcb' 'libxml2' 'openjpeg' 'pango' 'pcre' 'pixman' 'poppler' 'qt4' 'tiff' 'tk' 'util-linux' 'xz' 'zlib')

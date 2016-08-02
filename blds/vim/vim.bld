@@ -18,7 +18,7 @@ SRC=https://github.com/vim/vim/archive/v${VERSION}.tar.gz
 EXTRACONF="--with-features=huge --enable-gpm --enable-acl --with-x=no --disable-gui --enable-multibyte --enable-cscope --disable-netbeans --disable-pythoninterp --disable-python3interp --disable-rubyinterp --disable-luainterp --enable-perlinterp"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('acl' 'glibc' 'ncurses' 'perl')

@@ -17,7 +17,7 @@ SRC=https://launchpad.net/plank/1.0/${VERSION}/+download/plank-${VERSION}.tar.xz
 EXTRACONF="--disable-apport"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('atk' 'bamf' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libffi' 'libgee' 'libpng' 'libwnck' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXrender' 'libXres' 'pango' 'pcre' 'pixman' 'startup-notification' 'xcb-util' 'zlib')

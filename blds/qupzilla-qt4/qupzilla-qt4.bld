@@ -17,7 +17,7 @@ SRC=https://github.com/QupZilla/qupzilla/releases/download/v${VERSION}/QupZilla-
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'libX11' 'openssl' 'qt4')

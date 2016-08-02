@@ -17,7 +17,7 @@ SRC=http://samba.org/ftp/talloc/talloc-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('attr' 'glibc' 'ldb' 'python2')

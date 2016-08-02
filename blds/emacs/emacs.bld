@@ -18,7 +18,7 @@ SRC=ftp://ftp.gnu.org/gnu/emacs/emacs-${DVERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('acl' 'alsa-lib' 'atk' 'cairo' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'gconf' 'gdk-pixbuf' 'giflib' 'glib2' 'glibc' 'gnutls' 'gtk+2' 'imagemagick' 'libICE' 'libjpeg' 'libotf' 'libpng' 'librsvg' 'libSM' 'libX11' 'libXft' 'libXinerama' 'libxml2' 'libXpm' 'libXrandr' 'libXrender' 'm17n-lib' 'ncurses' 'pango' 'tiff' 'zlib')

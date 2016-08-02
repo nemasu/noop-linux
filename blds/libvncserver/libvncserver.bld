@@ -18,7 +18,7 @@ SRC="https://github.com/LibVNC/libvncserver/archive/LibVNCServer-${DVERSION}.tar
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'gmp' 'gnutls' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libidn' 'libjpeg' 'libpng' 'libtasn1' 'libva' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXfixes' 'nettle' 'openssl' 'p11-kit' 'zlib')

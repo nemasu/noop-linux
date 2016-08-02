@@ -18,7 +18,7 @@ SRC=https://launchpad.net/compiz/${BASE}/${VERSION}/+download/compiz-${VERSION}.
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('cairo' 'dbus' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'glibmm' 'libICE' 'libSM' 'libX11' 'libXcomposite' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libglu' 'libjpeg' 'libnotify' 'libpng' 'librsvg' 'libsigc++' 'libxcb' 'libxml2' 'libxslt' 'mesalib' 'pango' 'protobuf' 'python2' 'startup-notification' 'zlib')

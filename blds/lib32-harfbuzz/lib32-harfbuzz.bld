@@ -17,7 +17,7 @@ SRC=http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-${VERSION}.tar
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'lib32-freetype2' 'lib32-glib2' 'lib32-glibc' 'lib32-icu4c' 'lib32-libffi' 'lib32-zlib')

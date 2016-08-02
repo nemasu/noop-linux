@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/gnome/sources/libunique/$MM/libunique-${VERSION}.ta
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXau' 'libXdmcp' 'libXrender' 'libffi' 'libpng15' 'libxcb' 'pango' 'pcre' 'pixman' 'zlib')

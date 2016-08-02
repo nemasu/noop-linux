@@ -18,7 +18,7 @@ SRC=http://www.open-mpi.org/software/ompi/v${MM}/downloads/openmpi-${VERSION}.ta
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'hwloc' 'libpciaccess' 'libtool' 'libxml2' 'xz' 'zlib')

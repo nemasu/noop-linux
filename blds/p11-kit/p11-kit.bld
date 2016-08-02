@@ -17,7 +17,7 @@ SRC=http://p11-glue.freedesktop.org/releases/p11-kit-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'libffi' 'libtasn1')

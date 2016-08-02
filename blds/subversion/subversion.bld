@@ -15,7 +15,7 @@ ISUSR=1
 SRC=http://apache.org/dist/subversion/subversion-$DVERSION.tar.bz2
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('apr' 'apr-util' 'db' 'dbus' 'expat' 'file' 'glib2' 'glibc' 'libffi' 'libgcrypt' 'libgnome-keyring' 'libgpg-error' 'pcre' 'sasl' 'serf' 'sqlite' 'util-linux' 'zlib')

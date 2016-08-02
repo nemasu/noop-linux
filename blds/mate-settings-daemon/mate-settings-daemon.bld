@@ -19,7 +19,7 @@ SRC=http://pub.mate-desktop.org/releases/${MM}/${NAME}-${DVERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'dconf' 'expat' 'fontconfig' 'freetype2' 'gdbm' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'json-c' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libcanberra' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libmatekbd' 'libmatemixer' 'libnotify' 'libogg' 'libpng' 'libpng15' 'libsndfile' 'libtool' 'libvorbis' 'libxcb' 'libxkbfile' 'libxklavier' 'libxml2' 'mate-desktop' 'nspr' 'nss' 'pango' 'pcre' 'pixman' 'polkit' 'pulseaudio' 'startup-notification' 'systemd' 'tdb' 'util-linux' 'xcb-util' 'xz' 'zlib')

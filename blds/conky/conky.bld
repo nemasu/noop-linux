@@ -17,7 +17,7 @@ SRC=https://github.com/brndnmtthws/conky/archive/v${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('perl-xml-namespacesupport' 'curl' 'gcc-libs' 'glibc' 'imlib2' 'libICE' 'libSM' 'libX11' 'libXdamage' 'libXext' 'libXfixes' 'libXft' 'libxml2' 'lua' 'ncurses' 'wireless_tools')

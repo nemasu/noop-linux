@@ -17,7 +17,7 @@ SRC=http://sourceforge.net/projects/hte/files/ht-source/ht-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'libX11' 'lzo2' 'ncurses')

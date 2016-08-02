@@ -18,7 +18,7 @@ SRC=http://downloads.xiph.org/releases/speex/speex-${DVERSION}rc1.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('glibc' 'libogg')

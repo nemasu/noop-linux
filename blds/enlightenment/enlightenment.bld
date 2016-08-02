@@ -18,7 +18,7 @@ SRC=http://download.enlightenment.org/rel/apps/enlightenment/enlightenment-${DVE
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('alsa-lib' 'bluez' 'bullet' 'dbus' 'efl' 'elementary' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'gdbm' 'glib2' 'glibc' 'harfbuzz' 'json-c' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXp' 'libXrandr' 'libXrender' 'libXtst' 'libcap2' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libsndfile' 'libxcb' 'linux-pam' 'luajit' 'openssl' 'pcre' 'pulseaudio' 'systemd' 'util-linux' 'xcb-util-keysyms' 'xz' 'zlib')

@@ -17,7 +17,7 @@ SRC=https://github.com/systemd/systemd/archive/v${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('python-lxml' 'docbook-xml' 'docbook-xsl' 'libxslt' 'gnu-efi' 'gperf' 'acl' 'attr' 'curl' 'elfutils' 'glibc' 'iptables' 'kmod' 'libcap2' 'libgcrypt' 'libgpg-error' 'libidn' 'libseccomp' 'linux-pam' 'qrencode' 'util-linux' 'xz' 'zlib')

@@ -17,7 +17,7 @@ SRC=ftp://xmlsoft.org/libxml2/libxml2-${VERSION}.tar.gz
 EXTRACONF="--with-python=/usr/bin/python2 --with-history --with-threads"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('glibc' 'ncurses' 'python2' 'readline' 'xz' 'zlib')

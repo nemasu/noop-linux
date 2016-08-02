@@ -17,7 +17,7 @@ SRC=https://github.com/vathpela/efivar/releases/download/efivar-${VERSION}/efiva
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'popt')

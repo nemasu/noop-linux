@@ -16,7 +16,7 @@ VERSION=`curl -s -L "http://ftp.debian.org/debian/pool/main/c/ca-certificates/?C
 ISUSR=1
 SRC=http://ftp.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_${VERSION}.tar.xz
 EXTRACONF=
-ISSPECIAL=1
+BUILD=custom
 DEPS=
 
 function BuildAndInstall

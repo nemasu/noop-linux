@@ -17,7 +17,7 @@ SRC=http://www.citi.umich.edu/projects/nfsv4/linux/libnfsidmap/libnfsidmap-${VER
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('glibc')

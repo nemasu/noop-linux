@@ -17,7 +17,7 @@ SRC=http://downloads.sourceforge.net/sourceforge/fluxbox/fluxbox-${VERSION}.tar.
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'glibc' 'imlib2' 'libX11' 'libXext' 'libXft' 'libXinerama' 'libXpm' 'libXrandr' 'libXrender')

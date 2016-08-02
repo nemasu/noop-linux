@@ -18,7 +18,7 @@ SRC=http://download.gnome.org/sources/at-spi2-core/$MM/at-spi2-core-${VERSION}.t
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('dbus' 'glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libXtst' 'libffi' 'libxcb' 'pcre' 'zlib')

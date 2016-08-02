@@ -19,7 +19,7 @@ SRC=http://www.nooplinux.org/dist/transcode-${DVERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('a52dec' 'alsa-lib' 'ffmpeg' 'freetype2' 'gcc-libs' 'glibc' 'imagemagick' 'lame' 'libdv' 'libdvdread' 'libICE' 'libjpeg' 'libmpeg2' 'libogg' 'libpng' 'libSM' 'libtheora' 'libvorbis' 'libX11' 'libXaw' 'libXext' 'libxml2' 'libXpm' 'libXt' 'libXv' 'lzo2' 'mjpegtools' 'sdl' 'zlib')

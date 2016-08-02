@@ -18,7 +18,7 @@ SRC=http://www.openprinting.org/download/cups-filters/cups-filters-${DVERSION}.t
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('avahi' 'cups' 'dbus' 'e2fsprogs' 'fontconfig' 'freetype2' 'gcc-libs' 'ghostscript' 'glib2' 'glibc' 'krb5' 'lcms2' 'libjpeg' 'libpng' 'openldap' 'poppler' 'qpdf' 'tiff' 'zlib')

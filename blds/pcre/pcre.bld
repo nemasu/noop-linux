@@ -17,7 +17,7 @@ SRC=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${VERSION}.tar.bz
 EXTRACONF="--enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-jit -enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'ncurses' 'readline' 'zlib')

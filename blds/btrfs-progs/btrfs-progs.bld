@@ -17,7 +17,7 @@ SRC=https://github.com/kdave/btrfs-progs/archive/v${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('asciidoc' 'e2fsprogs' 'glibc' 'lzo2' 'util-linux' 'zlib')

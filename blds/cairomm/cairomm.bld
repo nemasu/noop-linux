@@ -18,7 +18,7 @@ SRC=http://www.cairographics.org/releases/cairomm-${DVERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('cairo' 'freetype2' 'gcc-libs' 'glibc' 'libpng' 'libsigc++' 'libX11' 'libXext' 'libXrender' 'zlib')

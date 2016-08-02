@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/gnome/sources/gtk+/$MM/gtk+-${VERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'at-spi2-atk' 'at-spi2-core' 'cairo' 'colord' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libcanberra' 'libepoxy' 'libffi' 'libogg' 'libpng' 'libpng15' 'libtool' 'libvorbis' 'libX11' 'libXau' 'libxcb' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'pango' 'pcre' 'pixman' 'tdb' 'zlib')

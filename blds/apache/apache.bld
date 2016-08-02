@@ -17,7 +17,7 @@ SRC=http://www.apache.org/dist/httpd/httpd-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('apr' 'apr-util' 'db' 'expat' 'gdbm' 'glibc' 'libxml2' 'lua' 'openldap' 'openssl' 'pcre' 'sasl' 'util-linux' 'xz' 'zlib')

@@ -17,7 +17,7 @@ SRC=http://www.cabextract.org.uk/cabextract-1.4.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('glibc')

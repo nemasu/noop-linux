@@ -18,7 +18,7 @@ SRC=http://dev.gentoo.org/~hwoarang/distfiles/rtmpdump-${DVERSION}_p20131018.tar
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'openssl' 'zlib')

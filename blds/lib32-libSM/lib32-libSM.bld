@@ -17,7 +17,7 @@ SRC=http://xorg.freedesktop.org/releases/individual/lib/libSM-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('lib32-glibc' 'lib32-libICE' 'lib32-util-linux')

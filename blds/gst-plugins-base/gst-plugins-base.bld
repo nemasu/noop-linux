@@ -17,7 +17,7 @@ SRC=http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${VER
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glib2' 'glibc' 'gstreamer' 'libX11' 'libXext' 'libXv' 'orc' 'zlib')

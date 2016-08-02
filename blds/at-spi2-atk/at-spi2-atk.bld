@@ -18,7 +18,7 @@ SRC=http://download.gnome.org/sources/at-spi2-atk/$MM/at-spi2-atk-${VERSION}.tar
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('at-spi2-core' 'atk' 'dbus' 'glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libffi' 'libxcb' 'pcre')

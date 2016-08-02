@@ -17,7 +17,7 @@ SRC=http://freedesktop.org/software/vaapi/releases/libva/libva-${VERSION}.tar.bz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('expat' 'gcc-libs' 'glibc' 'libdrm' 'libX11' 'libXau' 'libxcb' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libxshmfence' 'libXxf86vm' 'mesalib')

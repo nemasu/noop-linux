@@ -18,7 +18,7 @@ SRC=http://download.virtualbox.org/virtualbox/${DVERSION}/VirtualBox-${DVERSION}
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('virtualbox-modules' 'curl' 'gcc-libs' 'glibc' 'libpng' 'libvpx' 'libX11' 'libXcursor' 'libXext' 'libXinerama' 'libxml2' 'libXmu' 'libXt' 'mesalib' 'openssl' 'python2' 'qt4' 'sdl' 'zlib')

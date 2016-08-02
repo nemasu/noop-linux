@@ -18,7 +18,7 @@ SRC=http://www.intra2net.com/en/developer/libftdi/download/libftdi1-${DVERSION}.
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'libusb' 'python')

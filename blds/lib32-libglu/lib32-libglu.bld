@@ -17,7 +17,7 @@ SRC=ftp://ftp.freedesktop.org/pub/mesa/glu/glu-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'lib32-glibc' 'lib32-libdrm' 'lib32-libX11' 'lib32-libXau' 'lib32-libxcb' 'lib32-libXdamage' 'lib32-libXdmcp' 'lib32-libXext' 'lib32-libXfixes' 'lib32-libXxf86vm' 'lib32-mesalib')

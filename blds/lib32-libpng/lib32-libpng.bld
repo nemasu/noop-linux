@@ -15,7 +15,7 @@ VERSION=1.5.12
 ISUSR=1
 SRC=http://prdownloads.sourceforge.net/libpng/libpng-${VERSION}.tar.xz?download
 EXTRACONF=
-ISSPECIAL=1
+BUILD=custom
 DEPS=('lib32-glibc' 'lib32-zlib')
 
 function BuildAndInstall

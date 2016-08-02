@@ -17,7 +17,7 @@ SRC=http://download.fcitx-im.org/fcitx-m17n/fcitx-m17n-${VERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'm17n-lib')

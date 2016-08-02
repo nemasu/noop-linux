@@ -17,7 +17,7 @@ SRC=http://serf.googlecode.com/svn/src_releases/serf-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('apr' 'apr-util' 'db' 'expat' 'gdbm' 'glibc' 'openldap' 'openssl' 'util-linux' 'zlib')

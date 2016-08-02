@@ -18,7 +18,7 @@ SRC=http://pkgs.fedoraproject.org/repo/pkgs/libcanberra/libcanberra-0.30.tar.xz/
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('alsa-lib' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gdbm' 'gdk-pixbuf' 'glib2' 'glibc' 'gstreamer' 'harfbuzz' 'json-c' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libXrender' 'libXtst' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libogg' 'libpng' 'libpng15' 'libsndfile' 'libtool' 'libvorbis' 'libxcb' 'pango' 'pcre' 'pixman' 'pulseaudio' 'systemd' 'tdb' 'util-linux' 'xz' 'zlib')

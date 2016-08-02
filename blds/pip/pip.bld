@@ -17,7 +17,7 @@ SRC=http://pypi.python.org/packages/source/p/pip/pip-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=

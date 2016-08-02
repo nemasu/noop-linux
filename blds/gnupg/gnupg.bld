@@ -17,7 +17,7 @@ SRC=ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'gnutls' 'libassuan' 'libgcrypt' 'libgpg-error' 'libksba' 'libusb-compat' 'ncurses' 'npth' 'openldap' 'readline' 'sqlite' 'zlib')

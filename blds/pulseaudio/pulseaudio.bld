@@ -18,7 +18,7 @@ SRC=http://freedesktop.org/software/pulseaudio/releases/pulseaudio-${DVERSION}.t
 EXTRACONF="--enable-udev --with-udev-rules-dir=/usr/lib/udev/rules.d --enable-systemd --disable-default-build-tests --with-database=gdbm --disable-tcpwrap --disable-bluez4 --disable-rpath"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('alsa-lib' 'avahi' 'dbus' 'fftw' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libICE' 'libSM' 'libX11' 'libXtst' 'libcap2' 'libsamplerate' 'libsndfile' 'libtool' 'libxcb' 'openssl' 'orc' 'speex' 'systemd')

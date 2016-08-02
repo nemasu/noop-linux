@@ -15,7 +15,7 @@ VERSION=5.0.3
 ISUSR=1
 SRC=http://tukaani.org/xz/xz-5.0.3.tar.bz2
 EXTRACONF=
-ISSPECIAL=1
+BUILD=custom
 DEPS=('lib32-glibc')
 
 function BuildAndInstall

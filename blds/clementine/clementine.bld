@@ -18,7 +18,7 @@ SRC="https://github.com/clementine-player/Clementine/archive/${DVERSION}.tar.gz"
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('chromaprint' 'crypto++' 'fftw' 'gcc-libs' 'gdk-pixbuf' 'glew' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libX11' 'libcdio' 'libechonest' 'libglu' 'libgpod' 'libimobiledevice' 'liblastfm' 'libmtp' 'libplist' 'libusb' 'mesalib' 'openssl' 'protobuf' 'pulseaudio' 'qjson' 'qt4' 'sqlite' 'taglib' 'usbmuxd' 'zlib')

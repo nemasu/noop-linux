@@ -17,7 +17,7 @@ SRC=http://xorg.freedesktop.org/releases/individual/xserver/xorg-server-${VERSIO
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('dbus' 'glibc' 'libX11' 'libXau' 'libXaw' 'libXdmcp' 'libXext' 'libXfixes' 'libXfont' 'libXi' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libcap2' 'libdmx' 'libdrm' 'libepoxy' 'libgcrypt' 'libgpg-error' 'libpciaccess' 'libunwind' 'libxcb' 'libxshmfence' 'mesalib' 'pixman' 'systemd' 'xcb-util' 'xcb-util-image' 'xcb-util-keysyms' 'xcb-util-renderutil' 'xcb-util-wm' 'xz')

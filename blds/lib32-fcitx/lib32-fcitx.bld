@@ -17,7 +17,7 @@ SRC=http://download.fcitx-im.org/fcitx/fcitx-${VERSION}_dict.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'lib32-dbus' 'lib32-glib2' 'lib32-glibc' 'lib32-gtk+2' 'lib32-libX11' 'lib32-pango' 'lib32-qt4')

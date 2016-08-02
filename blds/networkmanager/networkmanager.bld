@@ -19,7 +19,7 @@ SRC=https://download.gnome.org/sources/NetworkManager/${DVERSION:0:3}/NetworkMan
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('dhcp' 'ppp' 'dbus' 'dbus-glib' 'elfutils' 'expat' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libgudev' 'libndp' 'libnl' 'libsoup' 'libxml2' 'modemmanager' 'ncurses' 'nspr' 'nss' 'pcre' 'polkit' 'readline' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')

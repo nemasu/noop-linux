@@ -17,7 +17,7 @@ SRC=http://cairographics.org/releases/py2cairo-1.10.0.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('cairo' 'glibc' 'python2')

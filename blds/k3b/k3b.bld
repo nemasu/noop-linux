@@ -18,7 +18,7 @@ SRC=http://download.kde.org/stable/k3b/k3b-${DVERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('ffmpeg' 'flac' 'gcc-libs' 'glibc' 'kdelibs' 'lame' 'libdvdread' 'libkcddb' 'libmad' 'libmpcdec' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'qt4' 'soprano' 'taglib')

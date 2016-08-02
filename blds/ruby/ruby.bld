@@ -18,7 +18,7 @@ SRC=http://cache.ruby-lang.org/pub/ruby/$MM/ruby-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('db' 'gdbm' 'ghc' 'glibc' 'gmp' 'libffi' 'libX11' 'ncurses' 'openssl' 'readline' 'tcl' 'tk' 'zlib')

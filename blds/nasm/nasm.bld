@@ -17,7 +17,7 @@ SRC=http://www.nasm.us/pub/nasm/releasebuilds/2.10.01/nasm-2.10.01.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc')

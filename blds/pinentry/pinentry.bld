@@ -17,7 +17,7 @@ SRC=ftp://ftp.gnupg.org/gcrypt/pinentry/pinentry-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gcc-libs' 'gcr' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'gtk+2' 'libassuan' 'libcap2' 'libgpg-error' 'libsecret' 'ncurses' 'p11-kit' 'pango' 'qt')

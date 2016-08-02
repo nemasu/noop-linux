@@ -17,7 +17,7 @@ SRC=ftp://ftp.gnupg.org/gcrypt/npth/npth-${VERSION}.tar.bz2
 EXTRACONF="--enable-maintainer-mode"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('glibc')

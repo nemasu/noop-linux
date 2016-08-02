@@ -17,7 +17,7 @@ SRC=http://download.icu-project.org/files/icu4c/53.1/icu4c-53_1-src.tgz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'lib32-glibc')

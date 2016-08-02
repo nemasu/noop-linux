@@ -6,7 +6,7 @@ VERSION=3.0.26
 ISUSR=1
 SRC=http://ftp.de.debian.org/debian/pool/main/d/dosfstools/dosfstools_3.0.26.orig.tar.xz
 EXTRACONF=
-ISSPECIAL=1
+BUILD=custom
 DEPS=('glibc')
 
 function BuildAndInstall

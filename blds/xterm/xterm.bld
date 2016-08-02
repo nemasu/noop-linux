@@ -17,7 +17,7 @@ SRC=ftp://invisible-island.net/xterm/xterm-${VERSION}.tgz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('fontconfig' 'glibc' 'libICE' 'libutempter' 'libX11' 'libXaw' 'libXft' 'libXinerama' 'libXmu' 'libXpm' 'libXt' 'ncurses')

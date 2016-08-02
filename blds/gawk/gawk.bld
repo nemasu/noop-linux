@@ -16,7 +16,7 @@ DVERSION=4.1.3
 ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/gawk/gawk-${DVERSION}.tar.xz
 EXTRACONF=
-ISSPECIAL=0
+BUILD=autotools
 DEPS=('glibc' 'gmp' 'mpfr' 'ncurses' 'readline')
 
 function Detect

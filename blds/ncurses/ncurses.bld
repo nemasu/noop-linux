@@ -17,7 +17,7 @@ SRC=http://ftp.gnu.org/pub/gnu/ncurses/ncurses-${VERSION}.tar.gz
 EXTRACONF="--enable-widec --with-shared --with-normal --without-debug --without-ada --with-cxx-binding --with-cxx-shared --enable-pc-files"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc')

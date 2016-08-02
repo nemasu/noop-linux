@@ -17,7 +17,7 @@ SRC=http://www.jwz.org/xscreensaver/xscreensaver-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libglade' 'libglu' 'libICE' 'libjpeg' 'libSM' 'libX11' 'libXext' 'libXft' 'libXi' 'libXinerama' 'libxml2' 'libXmu' 'libXpm' 'libXrandr' 'libXrender' 'libXt' 'libXxf86vm' 'linux-pam' 'mesalib' 'pango')

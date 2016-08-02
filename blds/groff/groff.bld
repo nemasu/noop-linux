@@ -17,7 +17,7 @@ SRC=ftp://ftp.gnu.org/gnu/groff/groff-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'libICE' 'libSM' 'libX11' 'libXaw' 'libXmu' 'libXt')

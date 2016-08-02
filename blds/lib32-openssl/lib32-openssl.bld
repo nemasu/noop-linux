@@ -15,7 +15,7 @@ VERSION=1.0.1-3
 ISUSR=1
 SRC=http://www.openssl.org/source/openssl-1.0.1c.tar.gz
 EXTRACONF=
-ISSPECIAL=1
+BUILD=custom
 DEPS=('lib32-glibc' 'lib32-zlib')
 
 function BuildAndInstall

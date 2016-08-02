@@ -18,7 +18,7 @@ SRC=http://archive.xfce.org/src/xfce/${NAME}/${MM}/${NAME}-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('cairo' 'dbus' 'dbus-glib' 'exo' 'fontconfig' 'garcon' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libnotify' 'libX11' 'libXcursor' 'libxfce4ui' 'libxfce4util' 'libXi' 'libxklavier' 'libXrandr' 'pango' 'upower' 'xfconf')

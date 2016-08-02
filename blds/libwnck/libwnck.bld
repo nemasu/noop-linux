@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/libwnck/$MAJOR/libwnck-${VERSION}.tar
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libX11' 'libXext' 'libXrender' 'libXres' 'pango' 'startup-notification')

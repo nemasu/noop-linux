@@ -17,7 +17,7 @@ SRC=http://www.wireshark.org/download/src/wireshark-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('e2fsprogs' 'gcc-libs' 'glib2' 'glibc' 'krb5' 'libcap2' 'libgcrypt' 'libgpg-error' 'libnl' 'libpcap' 'lua' 'openssl' 'pcre' 'qt' 'zlib')

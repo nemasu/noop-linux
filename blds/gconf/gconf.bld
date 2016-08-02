@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/GConf/$MM/GConf-${VERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libxml2' 'openldap' 'openssl' 'pcre' 'polkit' 'sasl' 'systemd' 'xz' 'zlib')

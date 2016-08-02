@@ -18,7 +18,7 @@ SRC=https://github.com/google/protobuf/archive/v${DVERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'zlib')

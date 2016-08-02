@@ -18,7 +18,7 @@ SRC="https://github.com/Bumblebee-Project/bbswitch/archive/v${DVERSION}.tar.gz"
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=

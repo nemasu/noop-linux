@@ -17,7 +17,7 @@ SRC=http://www.nooplinux.org/dist/gtk-engines-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libffi' 'libpng15' 'libxcb' 'pango' 'pcre' 'pixman' 'zlib')

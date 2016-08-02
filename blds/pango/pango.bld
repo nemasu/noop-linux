@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/pango/$MAJOR/pango-${DVERSION}.tar.xz
 EXTRACONF="--with-cairo"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('cairo' 'expat' 'fontconfig' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libffi' 'libpng' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXft' 'libXrender' 'pcre' 'pixman' 'zlib')

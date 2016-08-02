@@ -17,7 +17,7 @@ SRC=http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${VER
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('alsa-lib' 'cairo' 'cdparanoia' 'glib2' 'glibc' 'gstreamer0.10' 'libICE' 'libSM' 'libX11' 'libXext' 'libXv' 'libogg' 'libtheora' 'libvorbis' 'libxml2' 'pango' 'zlib')

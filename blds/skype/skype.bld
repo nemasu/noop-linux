@@ -17,7 +17,7 @@ SRC=http://download.skype.com/linux/skype-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'lib32-glibc' 'lib32-libX11' 'lib32-libXScrnSaver' 'lib32-libXext' 'lib32-libXv' 'lib32-qt4')

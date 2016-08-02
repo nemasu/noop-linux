@@ -17,7 +17,7 @@ SRC=http://pkgs.fedoraproject.org/repo/pkgs/ladspa/ladspa_sdk_1.13.tgz/671be3e10
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc')

@@ -17,7 +17,7 @@ SRC=https://ftp.postgresql.org/pub/pgadmin3/release/v${VERSION}/src/pgadmin3-${V
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'krb5' 'libxml2' 'libxslt' 'openssl' 'postgresql-libs' 'wxgtk' 'zlib')

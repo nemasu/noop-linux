@@ -13,7 +13,7 @@ VERSION=5.3.0
 ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-$VERSION.tar.bz2
 EXTRACONF=
-ISSPECIAL=1
+BUILD=custom
 DEPS=('gcc-libs' 'glibc' 'gmp' 'lib32-glibc' 'mpc' 'mpfr' 'zlib')
 
 function BuildAndInstall

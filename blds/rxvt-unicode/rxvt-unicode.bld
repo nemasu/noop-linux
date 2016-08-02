@@ -17,7 +17,7 @@ SRC=http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.20.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'libX11' 'libXft' 'libXrender' 'perl' 'startup-notification')

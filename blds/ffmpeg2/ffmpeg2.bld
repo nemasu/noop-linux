@@ -18,7 +18,7 @@ SRC=http://ffmpeg.org/releases/ffmpeg-$DVERSION.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('alsa-lib' 'fontconfig' 'freetype2' 'fribidi' 'glibc' 'gnutls' 'gsm' 'lame' 'libX11' 'libXext' 'libXv' 'libass' 'libbluray' 'libmodplug' 'libtheora' 'libva' 'libvorbis' 'libvpx' 'libx264' 'libxcb' 'opencore-amr' 'openjpeg' 'opus' 'pulseaudio' 'rtmpdump' 'schroedinger' 'sdl' 'speex' 'v4l-utils' 'x265' 'xvidcore' 'xz' 'zlib')

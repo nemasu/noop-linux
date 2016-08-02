@@ -15,7 +15,7 @@ VERSION=3071300
 ISUSR=1
 SRC=http://www.sqlite.org/sqlite-autoconf-3071300.tar.gz
 EXTRACONF=
-ISSPECIAL=1
+BUILD=custom
 DEPS=('lib32-glibc')
 
 function BuildAndInstall

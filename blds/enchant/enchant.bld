@@ -17,7 +17,7 @@ SRC=http://www.abisource.com/downloads/enchant/${VERSION}/enchant-${VERSION}.tar
 EXTRACONF="--disable-ispell --with-myspell-dir=/usr/share/myspell --disable-static"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('aspell' 'gcc-libs' 'glib2' 'glibc' 'hunspell' 'pcre')

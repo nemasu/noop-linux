@@ -15,7 +15,7 @@ VERSION=1.2.7
 ISUSR=1
 SRC=http://zlib.net/zlib-${VERSION}.tar.bz2
 EXTRACONF=
-ISSPECIAL=1
+BUILD=custom
 DEPS=('lib32-glibc')
 
 function BuildAndInstall

@@ -18,7 +18,7 @@ SRC=ftp://ftp.archlinux.org/other/eject/eject-2.1.5.tar.bz2
 EXTRACONF="--enable-default-device=sr0"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('glibc')

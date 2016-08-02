@@ -18,7 +18,7 @@ SRC=http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-${DVERSION}.tar.x
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'ncurses')

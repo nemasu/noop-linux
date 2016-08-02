@@ -17,7 +17,7 @@ SRC=http://www.playonlinux.com/script_files/PlayOnLinux/${VERSION/.0/}/PlayOnLin
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('icoutils' 'gnupg' 'mesa-demos' 'unzip' 'cabextract' 'wxpython' 'xterm' 'imagemagick' 'wine')

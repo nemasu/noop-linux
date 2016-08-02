@@ -18,7 +18,7 @@ SRC=http://download.savannah.gnu.org/releases/m17n/m17n-lib-${DVERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('anthy' 'fontconfig' 'freetype2' 'glibc' 'libICE' 'libSM' 'libX11' 'libXaw' 'libXft' 'libXmu' 'libXt' 'libotf' 'libxml2' 'zlib')

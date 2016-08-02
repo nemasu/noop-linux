@@ -17,7 +17,7 @@ SRC=https://static.rust-lang.org/dist/rustc-${VERSION}-src.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc')

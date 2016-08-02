@@ -19,7 +19,7 @@ SRC=http://ftp.gnome.org/pub/gnome/sources/libgdata/${DVERSION:0:4}/libgdata-${D
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('curl' 'dbus' 'glib2' 'glibc' 'libffi' 'libgcrypt' 'libgnome-keyring' 'libgpg-error' 'libidn' 'liboauth' 'libsoup' 'libxml2' 'openssl' 'pcre' 'sqlite' 'xz' 'zlib')

@@ -18,7 +18,7 @@ SRC=http://downloads.sourceforge.net/gphoto/libgphoto2-${DVERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('expat' 'fontconfig' 'freetype2' 'gd' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXpm' 'libexif' 'libjpeg' 'libpng' 'libtool' 'libusb' 'libvpx' 'libxcb' 'libxml2' 'pcre' 'tiff' 'xz' 'zlib')

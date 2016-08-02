@@ -18,7 +18,7 @@ SRC=http://archive.xfce.org/src/xfce/${NAME}/${MM}/thunar-volman-${VERSION}.tar.
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('exo' 'glib2' 'glibc' 'gtk+2' 'libgudev' 'libnotify' 'libxfce4ui' 'libxfce4util' 'pango' 'xfconf')

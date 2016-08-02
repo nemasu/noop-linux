@@ -19,7 +19,7 @@ SRC=http://pkgs.fedoraproject.org/repo/pkgs/ibus-qt/ibus-qt-1.3.3-Source.tar.gz/
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('dbus' 'gcc-libs' 'glibc' 'icu4c' 'libICE' 'libSM' 'libX11' 'libXext' 'qt4')

@@ -18,7 +18,7 @@ SRC=http://www.open-mpi.org/software/hwloc/v${DVERSION}/downloads/hwloc-${DVERSI
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('cairo' 'expat' 'fontconfig' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libpciaccess' 'libpng' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libxml2' 'libXrender' 'ncurses' 'pcre' 'pixman' 'xz' 'zlib')

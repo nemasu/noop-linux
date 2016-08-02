@@ -17,7 +17,7 @@ SRC=http://downloads.sourceforge.net/project/filezilla/libfilezilla/${VERSION}/l
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc')

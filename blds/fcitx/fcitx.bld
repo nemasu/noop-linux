@@ -18,7 +18,7 @@ SRC=http://download.fcitx-im.org/fcitx/fcitx-${DVERSION}_dict.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('cairo' 'dbus' 'gcc-libs' 'gettext' 'glib2' 'glibc' 'gtk+' 'gtk+2' 'libICE' 'libSM' 'libX11' 'libXext' 'libXfixes' 'libXinerama' 'libxkbcommon' 'libxkbfile' 'libxml2' 'libXrender' 'pango' 'qt4')

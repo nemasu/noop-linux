@@ -17,7 +17,7 @@ SRC=http://people.debian.org/~kov/gksu/gksu-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gconf' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libgksu' 'libgnome-keyring' 'pango' 'startup-notification')

@@ -17,7 +17,7 @@ SRC=ftp://sources.redhat.com/pub/lvm2/LVM${VERSION}.tgz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'ncurses' 'readline' 'systemd' 'util-linux')

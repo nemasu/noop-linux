@@ -17,7 +17,7 @@ SRC=https://inkscape.global.ssl.fastly.net/dl/resources/file/inkscape-${VERSION}
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('aspell' 'atk' 'atkmm' 'cairo' 'cairomm' 'fontconfig' 'freetype2' 'gc' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'glibmm' 'gsl' 'gtk+2' 'gtkmm2' 'imagemagick' 'lcms2' 'libexif' 'libjpeg' 'libpng' 'libsigc++' 'libX11' 'libxml2' 'libxslt' 'pango' 'pangomm' 'poppler' 'popt' 'zlib')

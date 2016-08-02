@@ -17,7 +17,7 @@ SRC=http://ftp.gnome.org/pub/gnome/sources/gssdp/${VERSION:0:4}/gssdp-${VERSION}
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libsoup' 'pango')

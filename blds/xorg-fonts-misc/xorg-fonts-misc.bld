@@ -17,7 +17,7 @@ SRC=http://xorg.freedesktop.org/releases/individual/font/font-arabic-misc-${VERS
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=

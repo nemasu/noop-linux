@@ -17,7 +17,7 @@ SRC=https://github.com/TigerVNC/tigervnc/archive/v${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('xorg-font-util' 'expat' 'fltk' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'gmp' 'gnutls' 'harfbuzz' 'libdrm' 'libffi' 'libfontenc' 'libICE' 'libidn' 'libjpeg' 'libpng' 'libSM' 'libtasn1' 'libunwind' 'libX11' 'libXau' 'libxcb' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXfont' 'libXft' 'libXinerama' 'libXrender' 'libxshmfence' 'libXtst' 'libXxf86vm' 'linux-pam' 'mesalib' 'nettle' 'p11-kit' 'pcre' 'pixman' 'xz' 'zlib')

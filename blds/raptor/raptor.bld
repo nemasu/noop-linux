@@ -18,7 +18,7 @@ SRC=http://librdf.org/dist/source/raptor2-${DVERSION}.tar.gz
 EXTRACONF="--with-yajl=no --with-icu-config=/usr/bin/icu-config"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('curl' 'glibc' 'icu4c' 'libxml2' 'libxslt' 'zlib')

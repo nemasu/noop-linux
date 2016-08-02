@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/seahorse/$MAJOR/seahorse-${VERSION}.t
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'avahi' 'cairo' 'fontconfig' 'freetype2' 'gcr' 'gdk-pixbuf' 'glib2' 'glibc' 'gpgme' 'gtk+' 'libassuan' 'libgpg-error' 'libsecret' 'libsoup' 'openldap' 'p11-kit' 'pango')

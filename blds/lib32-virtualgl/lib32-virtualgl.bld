@@ -17,7 +17,7 @@ SRC="http://downloads.sourceforge.net/project/virtualgl/${VERSION}/VirtualGL-${V
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('lib32-glibc' 'lib32-libglu' 'lib32-libjpeg' 'lib32-libX11' 'lib32-libXext' 'lib32-libXv' 'lib32-mesalib')

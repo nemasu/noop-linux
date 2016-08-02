@@ -18,7 +18,7 @@ SRC=http://www.apache.org/dist/apr/apr-util-${DVERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('apr' 'db' 'expat' 'freetds' 'gdbm' 'glibc' 'libtool' 'nspr' 'nss' 'openldap' 'openssl' 'postgresql-libs' 'sasl' 'sqlite' 'unixodbc' 'util-linux')

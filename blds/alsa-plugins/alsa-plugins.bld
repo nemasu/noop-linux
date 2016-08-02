@@ -18,7 +18,7 @@ SRC=ftp://ftp.alsa-project.org/pub/plugins/alsa-plugins-${DVERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('alsa-lib' 'dbus' 'ffmpeg' 'gdbm' 'glibc' 'json-c' 'libcap2' 'libgcrypt' 'libgpg-error' 'libICE' 'libsamplerate' 'libSM' 'libsndfile' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXi' 'libXtst' 'pulseaudio' 'speex' 'systemd' 'util-linux' 'xz')

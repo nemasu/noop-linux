@@ -17,7 +17,7 @@ SRC=http://cmake.org/files/v${VERSION:0:3}/cmake-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('curl' 'expat' 'gcc-libs' 'glibc' 'libarchive' 'ncurses' 'qt' 'zlib')

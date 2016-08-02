@@ -17,7 +17,7 @@ SRC=http://hostap.epitest.fi/releases/wpa_supplicant-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('dbus' 'glibc' 'libnl' 'ncurses' 'openssl' 'readline')

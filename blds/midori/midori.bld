@@ -17,7 +17,7 @@ SRC=http://midori-browser.org/downloads/midori_${VERSION}_all_.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libnotify' 'libsoup' 'libxml2' 'pango' 'sqlite' 'webkitgtk2')

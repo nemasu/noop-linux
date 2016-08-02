@@ -17,7 +17,7 @@ SRC=http://download.enlightenment.org/rel/apps/econnman/econnman-${VERSION}.tar.
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=

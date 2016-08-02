@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/network-manager-applet/$MAJOR/network
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'elfutils' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libgudev' 'libnotify' 'libpng' 'libsecret' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXrender' 'modemmanager' 'networkmanager' 'nspr' 'nss' 'pango' 'pcre' 'pixman' 'systemd' 'util-linux' 'zlib')

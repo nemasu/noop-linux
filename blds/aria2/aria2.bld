@@ -17,7 +17,7 @@ SRC=http://download.sourceforge.net/aria2/aria2-${VERSION}.tar.xz
 EXTRACONF="--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'gmp' 'gnutls' 'libffi' 'libidn' 'libssh2' 'libtasn1' 'libxml2' 'nettle' 'openssl' 'p11-kit' 'sqlite' 'xz' 'zlib')

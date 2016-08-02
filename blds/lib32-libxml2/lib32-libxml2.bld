@@ -15,7 +15,7 @@ VERSION=2.8.0
 ISUSR=1
 SRC=ftp://xmlsoft.org/libxml2/libxml2-2.8.0.tar.gz
 EXTRACONF=
-ISSPECIAL=1
+BUILD=custom
 DEPS=('lib32-glibc' 'lib32-xz' 'lib32-zlib')
 
 function BuildAndInstall

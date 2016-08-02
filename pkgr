@@ -759,7 +759,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	#ISUSR=
 	#SRC=
 	#EXTRACONF=
-	#ISSPECIAL=
+	#BUILD=
 	#DEPS=
 	#STRIP=
 	#PKGDEPS=
@@ -891,11 +891,20 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 		export CXXFLAGS="$CXXFLAGS -march=native"
 	fi
 
-	if [ $ISSPECIAL == 0 ]; then
+	if [ "$BUILD" == "autotools" ]; then
 		./configure $CONF $EXTRACNF $EXTRACONF
 		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
-	else
+	fi
+	if [ "$BUILD" == "cmake" ]; then
+		mkdir -p build && cd build
+		cmake .. \
+			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DCMAKE_BUILD_TYPE=Release
+		make -j${BLDR_CORES}
+		make DESTDIR=/root/bldr-inst install
+	fi
+	if [ "$BUILD" == "custom" ]; then
 		BuildAndInstall;
 	fi
 

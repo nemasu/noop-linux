@@ -17,7 +17,7 @@ SRC=ftp://ftp.gnu.org/gnu/gettext/gettext-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('acl' 'attr' 'gcc-libs' 'glib2' 'glibc' 'libcroco' 'libxml2' 'ncurses' 'pcre' 'xz' 'zlib')

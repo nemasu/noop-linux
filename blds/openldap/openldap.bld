@@ -18,7 +18,7 @@ SRC=ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-${DVERSION}.tg
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('db' 'glibc' 'libtool' 'openssl' 'sasl' 'util-linux')

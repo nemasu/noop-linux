@@ -18,7 +18,7 @@ SRC=http://webkitgtk.org/releases/webkitgtk-${DVERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'enchant' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'harfbuzz' 'icu4c' 'libICE' 'libSM' 'libX11' 'libXau' 'libXcomposite' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXt' 'libXxf86vm' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libpng15' 'libsecret' 'libsoup' 'libwebp' 'libxcb' 'libxml2' 'libxshmfence' 'libxslt' 'mesalib' 'orc' 'pango' 'pcre' 'pixman' 'sqlite' 'util-linux' 'xz' 'zlib')

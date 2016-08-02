@@ -17,7 +17,7 @@ SRC=ftp://ftp.remotesensing.org/pub/libtiff/tiff-4.0.2.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'libjpeg' 'xz' 'zlib')

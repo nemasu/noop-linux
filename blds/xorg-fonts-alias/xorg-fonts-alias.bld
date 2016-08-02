@@ -17,7 +17,7 @@ SRC=http://xorg.freedesktop.org/releases/individual/font/font-alias-${VERSION}.t
 EXTRACONF="--with-fontrootdir=/usr/share/fonts"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=

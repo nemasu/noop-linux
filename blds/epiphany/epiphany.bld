@@ -18,7 +18,7 @@ SRC=https://download.gnome.org/sources/epiphany/$MM/epiphany-${VERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=

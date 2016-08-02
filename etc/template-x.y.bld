@@ -16,8 +16,8 @@ SRC=
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+#autotools, cmake, custom
+BUILD=autotools
 
 # build/package dependancies
 DEPS=

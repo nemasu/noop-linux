@@ -17,7 +17,7 @@ SRC=http://linuxtv.org/downloads/v4l-utils/v4l-utils-${VERSION}.tar.bz2
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('alsa-lib' 'gcc-libs' 'glibc' 'lib32-glibc' 'libjpeg' 'mesalib' 'qt4')

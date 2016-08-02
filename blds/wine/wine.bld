@@ -20,7 +20,7 @@ SRC=http://ftp.winehq.org/pub/wine/source/${DVERSION:0:3}/wine-${DVERSION}.tar.b
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # 'no' to skip calls to strip
 STRIP=

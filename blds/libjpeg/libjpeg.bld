@@ -17,7 +17,7 @@ SRC=http://sourceforge.net/projects/libjpeg-turbo/files/${VERSION}/libjpeg-turbo
 EXTRACONF=""
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc')

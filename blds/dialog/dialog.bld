@@ -17,7 +17,7 @@ SRC=ftp://invisible-island.net/dialog/dialog-${VERSION}.tgz
 EXTRACONF="--with-ncursesw --with-shared --with-versioned-syms --enable-nls"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('glibc' 'ncurses')

@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/pangomm/${VERSION:0:4}/pangomm-${VERS
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('cairo' 'cairomm' 'gcc-libs' 'glib2' 'glibc' 'glibmm' 'libsigc++' 'pango')

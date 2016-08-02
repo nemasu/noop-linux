@@ -17,7 +17,7 @@ SRC=http://dl.hexchat.net/hexchat/hexchat-${VERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libcanberra' 'libffi' 'libnotify' 'libogg' 'libpng15' 'libtool' 'libvorbis' 'libxcb' 'openssl' 'pango' 'pciutils' 'pcre' 'perl' 'pixman' 'python2' 'tdb' 'zlib')

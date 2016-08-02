@@ -18,7 +18,7 @@ SRC=http://samba.org/ftp/tdb/tdb-${DVERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('attr' 'glibc' 'python2')

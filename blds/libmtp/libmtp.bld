@@ -17,7 +17,7 @@ SRC="http://downloads.sourceforge.net/libmtp/libmtp-${VERSION}.tar.gz"
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'libgcrypt' 'libgpg-error' 'libusb')

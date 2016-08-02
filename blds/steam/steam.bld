@@ -17,7 +17,7 @@ SRC=http://repo.steampowered.com/steam/pool/steam/s/steam/steam_${VERSION}.tar.g
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=1
+BUILD=custom
 
 # build/package dependancies
 DEPS=('lib32-libX11' 'lib32-mesalib')

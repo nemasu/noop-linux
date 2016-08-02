@@ -17,7 +17,7 @@ SRC=http://archive.xfce.org/src/xfce/${NAME}/${VERSION:0:3}/${NAME}-${VERSION}.t
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-ISSPECIAL=0
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'gtk+2' 'harfbuzz' 'libffi' 'libICE' 'libpng' 'libSM' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libxfce4ui' 'libxfce4util' 'libXrender' 'pango' 'pcre' 'pixman' 'startup-notification' 'util-linux' 'xcb-util' 'zlib')
