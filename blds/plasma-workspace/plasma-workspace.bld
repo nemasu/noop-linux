@@ -31,9 +31,20 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+
+	# be sure to use the Qt5 version of qtpaths
+	sed -e 's:qtpaths:qtpaths-qt5:' -i startkde/start*.cmake
+
+	mkdir -p build && cd build
+	cmake .. \ 
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_TESTING=OFF ${EXTRACONF}
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
