@@ -1,0 +1,81 @@
+#package name
+NAME=docutils
+
+#Description
+DESC="Set of tools for processing plaintext docs into formats such as HTML, XML, or LaTeX"
+
+#package version
+VERSION=0.12
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://downloads.sourceforge.net/docutils/docutils-$VERSION.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  python2 setup.py build --build-lib=build/python2
+  find build/python2 -type f -exec \
+    sed -i '1s,^#! \?/usr/bin/\(env \|\)python$,#!/usr/bin/python2,' {} \;
+
+  python2 setup.py build --build-lib=build/python2 \
+                   install --root=/root/bldr-inst --optimize=1
+  # fix python-docutils conflict
+  for _f in /root/bldr-inst/usr/bin/*.py; do
+      mv -v "$_f" "${_f%.py}2.py"
+  done
+
+  python3 setup.py build --build-lib=build/python
+  find build/python -type f -exec \
+    sed -i '1s,^#! \?/usr/bin/\(env \|\)python$,#!/usr/bin/python3,' {} \;
+  
+  python3 setup.py build --build-lib=build/python \
+                  install --root=/root/bldr-inst --optimize=1
+  
+  # symlink without .py
+  for _f in /root/bldr-inst/usr/bin/*.py; do
+      ln -s "$(basename $_f)" /root/bldr-inst/usr/bin/$(basename $_f .py)
+  done
+}
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://downloads.sourceforge.net/docutils/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
