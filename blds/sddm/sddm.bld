@@ -20,7 +20,7 @@ EXTRACONF="-DBUILD_MAN_PAGES=OFF -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib/sddm -DDBUS
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'libxcb' 'linux-pam' 'qt' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=
