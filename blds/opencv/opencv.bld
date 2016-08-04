@@ -5,13 +5,14 @@ NAME=opencv
 DESC="Open Source Computer Vision Library"
 
 #package version
-VERSION=3.1.0
+VERSION=3.1.0-1
+DVERSION=3.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/Itseez/opencv/archive/${VERSION}.tar.gz
+SRC=https://github.com/Itseez/opencv/archive/${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'ffmpeg' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'ilmbase' 'jasper' 'libexif' 'libgphoto2' 'libjpeg' 'libpng' 'libwebp' 'openexr' 'pango' 'tiff' 'v4l-utils' 'zlib')
+DEPS=('atk' 'cairo' 'ffmpeg' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'jasper' 'libexif' 'libgphoto2' 'libjpeg' 'libpng' 'libwebp' 'pango' 'tiff' 'v4l-utils' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -73,7 +74,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

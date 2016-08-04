@@ -1,0 +1,60 @@
+#package name
+NAME=polkit-qt
+
+#Description
+DESC="A library that allows developers to access PolicyKit API with a nice Qt-style API."
+
+#package version
+VERSION=0.112.0-20160226
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="http://quickgit.kde.org/?p=polkit-qt-1.git&a=snapshot&h=15c7867e88c5278f61896b5531ac2b544add8220&fmt=tgz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=('gcc-libs' 'glib2' 'glibc' 'polkit' 'qt' 'qt4')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	mkdir -p build{,-qt5}
+	cd build
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLIB_DESTINATION=/usr/lib \
+		-DUSE_QT4=ON
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+	cd ../build-qt5
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLIB_DESTINATION=/usr/lib
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "${NAME}: Git based"
+}

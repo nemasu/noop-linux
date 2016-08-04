@@ -5,7 +5,7 @@ NAME=talloc
 DESC="Hierarchical pool based memory allocator with destructors"
 
 #package version
-VERSION=2.1.5
+VERSION=2.1.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('attr' 'glibc' 'ldb' 'python2')
+DEPS=('attr' 'glibc' 'python2')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -16,7 +16,7 @@ SRC=
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#autotools, cmake, custom
+#autotools, perl, cmake, custom
 BUILD=autotools
 
 # build/package dependancies

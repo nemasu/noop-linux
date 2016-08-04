@@ -1,0 +1,75 @@
+#package name
+NAME=gst-plugins-ugly
+
+#Description
+DESC="GStreamer Multimedia Framework Ugly Plugins"
+
+#package version
+VERSION=1.8.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=('a52dec' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'lame' 'libcdio' 'libdvdread' 'libmad' 'libmpeg2' 'libx264' 'opencore-amr' 'orc' 'twolame')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+    --disable-static --enable-experimental \
+    --with-package-name="GStreamer Ugly Plugins (noop Linux)" \
+    --with-package-origin="http://www.nooplinux.org/"
+
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+  
+  make -j${BLDR_CORES}
+  
+  sed -e 's/^SUBDIRS_EXT =.*/SUBDIRS_EXT =/' -i Makefile
+  
+  make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://gstreamer.freedesktop.org/src/gst-plugins-base/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

@@ -5,7 +5,7 @@ NAME=gimp
 DESC="GNU Image Manipulation Program"
 
 #package version
-VERSION=2.9.4
+VERSION=2.9.4-1
 DVERSION=2.9.4
 
 #directory locations, 99.99% of the time this is 1

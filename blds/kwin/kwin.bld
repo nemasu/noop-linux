@@ -1,0 +1,60 @@
+#package name
+NAME=kwin
+
+#Description
+DESC="KWin is an easy to use, but flexible, composited Window Manger for Xorg windowing systems on Linux. Its primary usage is in conjunction with a Shell (e.g. KDE Plasma Desktop). KWin is designed to go out of the way; users should not notice that they use a window manager at all. Nevertheless KWin provides a steep learning curve for advanced features, which are available, if they do not conflict with the primary mission. KWin does not have a dedicated targeted user group, but follows the targeted user group of the Desktop Shell using KWin as itDESC=#039;s Window Manager."
+
+#package version
+VERSION=5.7.3
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://download.kde.org/stable/plasma/${VERSION}/kwin-$VERSION.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, perl, cmake, custom
+BUILD=cmake
+
+# build/package dependancies
+DEPS=('attica' 'fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'kactivities' 'kauth' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdeclarative' 'kdecoration' 'kglobalaccel' 'ki18n' 'kiconthemes' 'kidletime' 'kio' 'kjobwidgets' 'knewstuff' 'knotifications' 'kpackage' 'kscreenlocker' 'kservice' 'kwayland' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libICE' 'libSM' 'libX11' 'libXext' 'libXi' 'libepoxy' 'libxcb' 'libxkbcommon' 'plasma-framework' 'qt' 'systemd' 'wayland' 'xcb-util-cursor' 'xcb-util-image' 'xcb-util-keysyms')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://download.kde.org/stable/plasma/${VERSION}/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

@@ -1,0 +1,61 @@
+#package name
+NAME=libdbusmenu-qt
+
+#Description
+DESC="A library that provides a Qt implementation of the DBusMenu spec"
+
+#package version
+VERSION=0.9.3-16.04.20160218
+DVERSION=0.9.3+16.04.20160218
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="http://archive.ubuntu.com/ubuntu/pool/main/libd/libdbusmenu-qt/libdbusmenu-qt_${DVERSION}.orig.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=('gcc-libs' 'glibc' 'qt' 'qt4')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	mkdir -p build{,-qt5}
+	cd build
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLIB_DESTINATION=/usr/lib \
+		-DUSE_QT4=ON -DWITH_DOC=0
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+	cd ../build-qt5
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLIB_DESTINATION=/usr/lib -DWITH_DOC=0
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo $NAME
+}

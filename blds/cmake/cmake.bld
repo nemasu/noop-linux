@@ -5,7 +5,7 @@ NAME=cmake
 DESC="A cross-platform open-source make system"
 
 #package version
-VERSION=3.4.3
+VERSION=3.6.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,13 +20,13 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('curl' 'expat' 'gcc-libs' 'glibc' 'libarchive' 'ncurses' 'qt' 'zlib')
+DEPS=('jsoncpp' 'curl' 'expat' 'gcc-libs' 'glibc' 'libarchive' 'ncurses' 'qt' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('jsoncpp')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=

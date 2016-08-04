@@ -1,0 +1,76 @@
+#package name
+NAME=gst-plugins-bad
+
+#Description
+DESC="GStreamer Multimedia Framework Bad Plugins"
+
+#package version
+VERSION=1.8.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=('cairo' 'chromaprint' 'curl' 'faad2' 'fluidsynth' 'gcc-libs' 'glib2' 'glibc' 'gsm' 'gst-plugins-base' 'gstreamer' 'gtk+' 'libX11' 'libass' 'libgudev' 'libjpeg' 'libkate' 'libmodplug' 'libpng' 'librsvg' 'libsndfile' 'libusb' 'libvdpau' 'libwebp' 'libxml2' 'mesalib' 'neon' 'nettle' 'openal' 'openjpeg' 'openssl' 'opus' 'orc' 'qt' 'rtmpdump' 'schroedinger' 'x265')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  export CXXFLAGS=-std=c++11
+  
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+    --disable-static --enable-experimental  --disable-wayland \
+    --with-package-name="GStreamer Bad Plugins (noop Linux)" \
+    --with-package-origin="http://www.nooplinux.org/"
+
+  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+  
+  make -j${BLDR_CORES}
+  
+  sed -e 's/^SUBDIRS_EXT =.*/SUBDIRS_EXT =/' -i Makefile
+  
+  make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=http://gstreamer.freedesktop.org/src/gst-plugins-base/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
+

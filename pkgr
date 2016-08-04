@@ -853,7 +853,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 
 	if [ -z "$BLDR_CONTINUE" ];
 	then
-		rm -rf ~/bldr-tmp
+		rm -rf ~/bldr-tmp/*
 	fi
 	
 	rm -rf ~/bldr-inst
@@ -892,7 +892,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	fi
 
 	if [ "$BUILD" == "autotools" ]; then
-		./configure $CONF $EXTRACNF $EXTRACONF
+		./configure $CONF $EXTRACNF ${EXTRACONF}
 		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
 	fi
@@ -900,7 +900,13 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 		mkdir -p build && cd build
 		cmake .. \
 			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DCMAKE_BUILD_TYPE=Release
+			-DCMAKE_BUILD_TYPE=Release \
+			-DBUILD_TESTING=OFF ${EXTRACONF}
+		make -j${BLDR_CORES}
+		make DESTDIR=/root/bldr-inst install
+	fi
+	if [ "$BUILD" == "perl" ]; then
+		perl Makefile.PL INSTALLDIRS=vendor
 		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
 	fi

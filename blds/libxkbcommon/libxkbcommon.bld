@@ -1,22 +1,22 @@
 #package name
-NAME=libxkbcommon
+NAME=libxcbcommon
 
 #Description
-DESC="Keyboard handling library using XKB data"
+DESC="Library to handle keyboard descriptions."
 
 #package version
-VERSION=0.5.0
+VERSION=0.6.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xkbcommon.org/download/libxkbcommon-${VERSION}.tar.xz
+SRC=http://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+#autotools, perl, cmake, custom
 BUILD=autotools
 
 # build/package dependancies

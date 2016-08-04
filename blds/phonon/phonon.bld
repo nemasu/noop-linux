@@ -5,13 +5,13 @@ NAME=phonon
 DESC="The multimedia framework for KDE4"
 
 #package version
-VERSION=4.8.3
+VERSION=4.9.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/phonon/${VERSION}/src/phonon-${VERSION}.tar.xz
+SRC=http://download.kde.org/stable/phonon/${VERSION}/phonon-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

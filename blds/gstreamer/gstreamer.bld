@@ -5,7 +5,7 @@ NAME=gstreamer
 DESC="GStreamer Multimedia Framework"
 
 #package version
-VERSION=1.4.5
+VERSION=1.8.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glib2' 'glibc')
+DEPS=('glib2' 'glibc' 'libcap2')
 
 # 'no' to skip calls to strip
 STRIP=
