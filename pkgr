@@ -2233,7 +2233,7 @@ if [ $1 = "-init" ]; then
 	localedef -i ${SET_LOCALE} -f UTF-8 "${SET_LOCALE}.UTF-8"
 	echo "LANG=${SET_LOCALE}.UTF-8" > /etc/locale.conf
 	/usr/bin/systemd-machine-id-setup
-	useradd -M messagebus &> /dev/null
+	useradd --system -M messagebus &> /dev/null
 	groupadd lock &> /dev/null
 	groupadd adm &> /dev/null
 	groupadd systemd-journal &> /dev/null

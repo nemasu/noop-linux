@@ -1,5 +1,5 @@
 function postinst() {
-    useradd -M sshd -s /sbin/nologin
+    useradd --system -M sshd -s /sbin/nologin
     if [ ! -e /etc/ssh_host_rsa_key ]; then
     	ssh-keygen -t rsa1 -f /etc/ssh_host_rsa_key -N ""
     fi
