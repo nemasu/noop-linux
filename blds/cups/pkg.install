@@ -1,4 +1,3 @@
 function postinst() {
-    useradd -M lp
-    groupadd lpadmin
+    groupadd lpadmin &> /dev/null
 }

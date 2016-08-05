@@ -1,4 +1,7 @@
 function postinst() {
-    useradd -M pulse
-    groupadd pulse-access
+	systemctl --global enable pulseaudio.socket
+}
+
+function postup() {
+	postinst
 }
