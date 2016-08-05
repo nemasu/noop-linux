@@ -110,6 +110,7 @@ discover
 kactivitymanagerd
 plasma-integration
 kdelibs
+kio-extras
 kdegraphics-thumbnailers
 ark
 kate
