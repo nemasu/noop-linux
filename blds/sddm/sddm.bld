@@ -14,7 +14,7 @@ ISUSR=1
 SRC=https://github.com/sddm/sddm/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="-DBUILD_MAN_PAGES=OFF -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib/sddm -DDBUS_CONFIG_FILENAME=sddm_org.freedesktop.DisplayManager.conf -DBUILD_MAN_PAGES=ON"
+EXTRACONF="-DCMAKE_INSTALL_LIBEXECDIR=/usr/lib/sddm -DBUILD_MAN_PAGES=ON -DDBUS_CONFIG_FILENAME=sddm_org.freedesktop.DisplayManager.conf"
 
 #autotools, perl, cmake, custom
 BUILD=cmake

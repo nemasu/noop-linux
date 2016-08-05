@@ -5491,7 +5491,7 @@ libzip,libzip.so.2.1.0
 linux-kernel,modules.softdep
 linux-pam,libpam.so
 linux-pam,libpam.so.0
-linux-pam,libpam.so.0.84.1
+linux-pam,libpam.so.0.84.2
 linux-pam,libpam_misc.so
 linux-pam,libpam_misc.so.0
 linux-pam,libpam_misc.so.0.82.1
@@ -5536,10 +5536,6 @@ linux-pam,pam_timestamp.so
 linux-pam,pam_umask.so
 linux-pam,pam_unix.so
 linux-pam,pam_unix2.so
-linux-pam,pam_unix_acct.so
-linux-pam,pam_unix_auth.so
-linux-pam,pam_unix_passwd.so
-linux-pam,pam_unix_session.so
 linux-pam,pam_warn.so
 linux-pam,pam_wheel.so
 linux-pam,pam_xauth.so
