@@ -17,7 +17,7 @@ SRC=http://download.kde.org/stable/plasma/${VERSION}/kwallet-pam-$VERSION.tar.xz
 EXTRACONF=
 
 #autotools, perl, cmake, custom
-BUILD=cmake
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'libgcrypt' 'libgpg-error' 'linux-pam')
@@ -31,9 +31,24 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	mkdir -p build build4
+	cd build
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+	cd ../build4
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DKWALLET4=1
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
