@@ -1,23 +1,23 @@
 #package name
-NAME=libkdcraw
+NAME=libraw
 
 #Description
-DESC="Libkdcraw is a C++ interface around DESC=quot;LibRaw libraryDESC=quot;:http://www.libraw.org used to decode DESC=quot;RAW picture filesDESC=quot;:http://en.wikipedia.org/wiki/Raw_image_format."
+DESC="A library for reading RAW files"
 
 #package version
-VERSION=16.04.3
+VERSION=0.17.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/libkdcraw-$VERSION.tar.xz
+SRC=http://www.libraw.org/data/LibRaw-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, perl, cmake, custom
-BUILD=cmake
+BUILD=autotools
 
 # build/package dependancies
 DEPS=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+	LISTURL=http://www.libraw.org/data/
 	FILELIST=`GetFileList`
 	LATEST=0
 

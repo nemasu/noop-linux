@@ -14,7 +14,7 @@ ISUSR=1
 SRC=http://download.kde.org/stable/applications/16.04.3/src/kdelibs-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="-DDOCBOOKXSL_DIR=/usr/share/xml/docbook/xsl-stylesheets-1.79.1"
+EXTRACONF=
 
 #autotools, perl, cmake, custom
 BUILD=cmake
@@ -31,9 +31,26 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	mkdir -p build && cd build
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DKDE4_BUILD_TESTS=OFF \
+		-DCMAKE_SKIP_RPATH=ON \
+		-DKDE_DISTRIBUTION_TEXT='noop Linux' \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DSYSCONF_INSTALL_DIR=/etc \
+		-DLOCALE_INSTALL_DIR=/usr/share/locale/kde4 \
+		-DKDE_DEFAULT_HOME='.kde4' \
+		-DWITH_FAM=OFF \
+		-DWITH_SOLID_UDISKS2=ON \
+		-DDOCBOOKXSL_DIR="/usr/share/xml/docbook/xsl-stylesheets-1.79.1"
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+	rm -f /root/bldr-inst/usr/share/apps/kssl/ca-bundle.crt
+	ln -sf /etc/ssl/certs/ca-certificates.crt /root/bldr-inst/usr/share/apps/kssl/ca-bundle.crt
+}
 
 #Default HTTP curl new version detection
 function Detect

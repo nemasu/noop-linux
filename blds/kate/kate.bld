@@ -1,8 +1,8 @@
 #package name
-NAME=libkdcraw
+NAME=kate
 
 #Description
-DESC="Libkdcraw is a C++ interface around DESC=quot;LibRaw libraryDESC=quot;:http://www.libraw.org used to decode DESC=quot;RAW picture filesDESC=quot;:http://en.wikipedia.org/wiki/Raw_image_format."
+DESC="An advanced editor component which is used in numerous KDE applications requiring a text editing component"
 
 #package version
 VERSION=16.04.3
@@ -11,7 +11,7 @@ VERSION=16.04.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/libkdcraw-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${VERSION}/src/kate-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

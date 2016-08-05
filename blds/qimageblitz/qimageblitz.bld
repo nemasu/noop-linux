@@ -1,20 +1,20 @@
 #package name
-NAME=libkdcraw
+NAME=qimageblitz
 
 #Description
-DESC="Libkdcraw is a C++ interface around DESC=quot;LibRaw libraryDESC=quot;:http://www.libraw.org used to decode DESC=quot;RAW picture filesDESC=quot;:http://en.wikipedia.org/wiki/Raw_image_format."
+DESC="A graphical effect and filter library for KDE"
 
 #package version
-VERSION=16.04.3
+VERSION=0.0.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/libkdcraw-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/${NAME}/${NAME}-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="-DQT_MOC_EXECUTABLE=/usr/bin/moc-qt4 -DQT_UIC_EXECUTABLE=/usr/bin/uic-qt4 -DQT_INCLUDE_DIR=/usr/include/qt4/"
 
 #autotools, perl, cmake, custom
 BUILD=cmake
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+	LISTURL=http://download.kde.org/stable/${NAME}/
 	FILELIST=`GetFileList`
 	LATEST=0
 

@@ -1,8 +1,8 @@
 #package name
-NAME=libkdcraw
+NAME=kmime
 
 #Description
-DESC="Libkdcraw is a C++ interface around DESC=quot;LibRaw libraryDESC=quot;:http://www.libraw.org used to decode DESC=quot;RAW picture filesDESC=quot;:http://en.wikipedia.org/wiki/Raw_image_format."
+DESC="Unnamed repository; edit this file DESC=#039;descriptionDESC=#039; to name the repository."
 
 #package version
 VERSION=16.04.3
@@ -11,7 +11,7 @@ VERSION=16.04.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/libkdcraw-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${VERSION}/src/kmime-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
