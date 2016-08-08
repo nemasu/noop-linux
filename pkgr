@@ -2337,7 +2337,17 @@ if [ $1 = "-init" ]; then
 
 		if [ "core" != "$NOOP_ISO_CREATE" ];
 		then
-			for i in xorg-meta ${NOOP_ISO_CREATE}-meta gvfs chromium chromium-plugins firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
+			pkgr -i xorg-meta
+
+			if [ "$NOOP_ISO_CREATE" == "kde" ]; then
+				for i in kde-framework-meta kde-plasma-meta kde-applications-meta; do
+					pkgr -i $i
+				done
+			else
+				pkgr -i ${NOOP_ISO_CREATE}-meta
+			fi
+			
+			for i in gvfs chromium chromium-plugins firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
 			do
 				pkgr -i $i;
 			done
@@ -2358,7 +2368,10 @@ if [ $1 = "-init" ]; then
 			then
 				sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/enlightenment_start/g' /etc/lxdm/lxdm.conf
 			fi
-
+			if [ "$NOOP_ISO_CREATE" == "kde" ];
+			then
+				sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startkde/session=\/usr\/bin\/enlightenment_start/g' /etc/lxdm/lxdm.conf
+			fi
 
 			systemctl enable lxdm.service
 

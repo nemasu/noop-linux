@@ -5,7 +5,7 @@ set -e
 #Prereqs
 pkgr -i dosfstools cpio squashfs-tools xorriso mtools &> /dev/null
 
-#Current options: core, mate, xfce4, enlightenment
+#Current options: core, mate, xfce4, enlightenment, kde
 export NOOP_ISO_CREATE=$1
 
 #Yes this is bad, but ISO creation is done in a VM anyways.
