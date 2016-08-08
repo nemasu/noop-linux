@@ -1,0 +1,56 @@
+#package name
+NAME=qtscriptgenerator
+
+#Description
+DESC="A tool that generates Qt bindings for Qt Script"
+
+#package version
+VERSION=0.2.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://qtscriptgenerator.googlecode.com/files/qtscriptgenerator-src-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+# prepare plugins
+	cd generator
+	qmake-qt4
+	make -j${BLDR_CORES}
+	QTDIR=/usr ./generator --include-paths=/usr/include/qt4
+
+# build plugins
+	cd ../qtbindings
+	qmake-qt4
+	make -j${BLDR_CORES}
+
+# move plugins to correct directory
+	install -d /root/bldr-inst/usr/lib/qt4/plugins/script
+	cp -a ../plugins/script/* /root/bldr-inst/usr/lib/qt4/plugins/script/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "$NAME: Too Old."
+}

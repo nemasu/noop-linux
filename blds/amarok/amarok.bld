@@ -27,7 +27,7 @@ DEPS=('gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'kdelibs' 'libX11' 'libgpod' 'libl
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('qtscriptgenerator')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -41,8 +41,7 @@ function BuildAndInstall
 		-DKDE4_BUILD_TESTS=OFF \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DWITH_NepomukCore=OFF \
-		-DWITH_Soprano=OFF \
-		-DCMAKE_CXX_FLAGS="-Wno-deprecated -D__STDC_CONSTANT_MACROS"
+		-DWITH_Soprano=OFF
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
