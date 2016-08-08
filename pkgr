@@ -2370,7 +2370,7 @@ if [ $1 = "-init" ]; then
 			fi
 			if [ "$NOOP_ISO_CREATE" == "kde" ];
 			then
-				sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startkde/session=\/usr\/bin\/enlightenment_start/g' /etc/lxdm/lxdm.conf
+				sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
 			fi
 
 			systemctl enable lxdm.service
