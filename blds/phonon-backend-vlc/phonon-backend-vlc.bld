@@ -5,22 +5,22 @@ NAME=phonon-backend-vlc
 DESC="Provides a Phonon backend which utilizes the VLC media framework."
 
 #package version
-VERSION=0.3.1
+VERSION=0.9.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/phonon-backend-vlc/${VERSION}/src/phonon-backend-vlc-${VERSION}.tar.bz2
+SRC=http://download.kde.org/stable/phonon/phonon-backend-vlc/${VERSION}/phonon-backend-vlc-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, cmake, custom
-BUILD=cmake
+BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'phonon' 'qt4' 'v4l-utils' 'vlc')
+DEPS=('gcc-libs' 'glibc' 'phonon' 'qt' 'qt4' 'vlc')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,9 +31,33 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	mkdir -p build build-qt4
+	cd build-qt4
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_SKIP_RPATH=ON \
+		-D__KDE_HAVE_GCC_VISIBILITY=NO \
+		-DPLUGIN_INSTALL_DIR=/usr/lib/kde4
+
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+	cd ../build
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_SKIP_RPATH=ON \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DPHONON_BUILD_PHONON4QT5=ON \
+		-D__KDE_HAVE_GCC_VISIBILITY=NO
+
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+}
 
 #Default HTTP curl new version detection
 function Detect

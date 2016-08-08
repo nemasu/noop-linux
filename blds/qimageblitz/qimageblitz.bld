@@ -20,7 +20,7 @@ EXTRACONF="-DQT_MOC_EXECUTABLE=/usr/bin/moc-qt4 -DQT_UIC_EXECUTABLE=/usr/bin/uic
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'qt4')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('freetype2' 'gcc-libs' 'glibc' 'kdelibs' 'libjpeg' 'phonon' 'poppler' 'qca' 'qimageblitz' 'qt4' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -5,14 +5,14 @@ NAME=amarok
 DESC="The powerful music player for KDE"
 
 #package version
-VERSION=2.8.0-1
-DVERSION=2.8.0
+VERSION=2.8.90
+DVERSION=2.8.90
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://download.kde.org/stable/amarok/${DVERSION}/src/amarok-${DVERSION}.tar.bz2"
+SRC=http://download.kde.org/stable/amarok/${DVERSION}/src/amarok-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('curl' 'ffmpeg' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'kdelibs' 'libX11' 'libgcrypt' 'libgpod' 'liblastfm' 'libmtp' 'libmygpo-qt' 'libofa' 'libxml2' 'loudmouth' 'mesalib' 'mysql' 'mysql-libs' 'phonon' 'qjson' 'qt4' 'taglib')
+DEPS=('gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'kdelibs' 'libX11' 'libgpod' 'liblastfm' 'libmtp' 'libmygpo-qt' 'mesalib' 'mysql' 'mysql-libs' 'phonon' 'qca' 'qjson' 'qt4' 'taglib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -34,7 +34,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir build
+	mkdir -p build
 	cd build 
 	cmake .. \
 		-DCMAKE_BUILD_TYPE=Release \

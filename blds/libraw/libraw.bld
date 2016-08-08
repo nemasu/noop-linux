@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'jasper' 'lcms2' 'libjpeg')
 
 # 'no' to skip calls to strip
 STRIP=
