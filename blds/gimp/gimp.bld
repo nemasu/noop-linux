@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('alsa-lib' 'atk' 'babl' 'cairo' 'exiv2' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'gegl' 'gexiv2' 'ghostscript' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'ilmbase' 'jasper' 'json-c' 'json-glib' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXcursor' 'libXext' 'libXfixes' 'libXmu' 'libXpm' 'libXt' 'libgudev' 'libjpeg' 'libmng' 'libmypaint' 'libpng' 'librsvg' 'libsoup' 'libwmf' 'openexr' 'pango' 'poppler' 'tiff' 'webkitgtk2' 'xz' 'zlib')
+DEPS=('alsa-lib' 'atk' 'babl' 'cairo' 'exiv2' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'gegl' 'gexiv2' 'ghostscript' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'jasper' 'json-c' 'json-glib' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXcursor' 'libXext' 'libXfixes' 'libXmu' 'libXpm' 'libXt' 'libgudev' 'libjpeg' 'libmng' 'libmypaint' 'libpng' 'librsvg' 'libsoup' 'libwmf' 'pango' 'poppler' 'tiff' 'webkitgtk2' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

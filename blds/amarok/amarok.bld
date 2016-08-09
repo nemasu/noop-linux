@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'kdelibs' 'libX11' 'libgpod' 'liblastfm' 'libmtp' 'libmygpo-qt' 'mesalib' 'mariadb' 'mariadb-libs' 'phonon' 'qca' 'qjson' 'qt4' 'taglib')
+DEPS=('qtscriptgenerator' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'kdelibs' 'libX11' 'libgpod' 'liblastfm' 'libmtp' 'libmygpo-qt' 'mariadb-libs' 'mesalib' 'phonon' 'qca' 'qjson' 'qt4' 'taglib')
 
 # 'no' to skip calls to strip
 STRIP=

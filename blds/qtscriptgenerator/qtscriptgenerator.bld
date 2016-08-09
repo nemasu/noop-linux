@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'mesalib' 'qt4')
 
 # 'no' to skip calls to strip
 STRIP=

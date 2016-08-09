@@ -22,7 +22,7 @@ EXTRACONF="--prefix=/usr  --with-sdl --with-openexr --with-librsvg --with-libavf
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('babl' 'cairo' 'exiv2' 'expat' 'ffmpeg' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'gexiv2' 'glib2' 'glibc' 'harfbuzz' 'ilmbase' 'jasper' 'json-glib' 'lcms2' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libcroco' 'libffi' 'libjpeg' 'libpng' 'libpng15' 'librsvg' 'libwebp' 'libxcb' 'libxml2' 'openexr' 'pango' 'pcre' 'pixman' 'sdl' 'tiff' 'xz' 'zlib')
+DEPS=('babl' 'cairo' 'exiv2' 'expat' 'ffmpeg' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'gexiv2' 'glib2' 'glibc' 'harfbuzz' 'jasper' 'json-glib' 'lcms2' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libcroco' 'libffi' 'libjpeg' 'libpng' 'libpng15' 'librsvg' 'libwebp' 'libxcb' 'libxml2' 'pango' 'pcre' 'pixman' 'sdl' 'tiff' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

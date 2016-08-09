@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('cracklib' 'e2fsprogs' 'gcc-libs' 'glibc' 'krb5' 'libaio' 'libxml2' 'linux-pam' 'lz4' 'lzo2' 'ncurses' 'openssl' 'pcre' 'snappy' 'systemd' 'unixodbc' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
