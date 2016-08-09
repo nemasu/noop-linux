@@ -33,10 +33,6 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-
-	# be sure to use the Qt5 version of qtpaths
-	sed -e 's:qtpaths:qtpaths-qt5:' -i startkde/start*.cmake
-
 	mkdir -p build && cd build
 	cmake .. \ 
 		-DCMAKE_INSTALL_PREFIX=/usr \

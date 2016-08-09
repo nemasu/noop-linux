@@ -1,0 +1,143 @@
+#package name
+NAME=mariadb
+
+#Description
+DESC='Drop in replacement for MySQL'
+
+#package version
+VERSION=10.1.16
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://downloads.mariadb.org/interstitial/mariadb-${VERSION}/source/mariadb-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+
+function BuildAndInstall
+{
+	sed -i -e '/^Alias/d' \
+		-e '/^PrivateTmp/c PrivateTmp=true' \
+		support-files/mariadb{,@}.service.in
+
+	mkdir -p build && cd build
+
+	cmake .. \
+		-DCMAKE_AR=/usr/bin/gcc-ar \
+		-DCMAKE_RANLIB=/usr/bin/gcc-ranlib \
+		-DBUILD_CONFIG=mysql_release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DSYSCONFDIR=/etc/mysql \
+		-DMYSQL_DATADIR=/var/lib/mysql \
+		-DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
+		-DDEFAULT_CHARSET=utf8 \
+		-DDEFAULT_COLLATION=utf8_general_ci \
+		-DENABLED_LOCAL_INFILE=ON \
+		-DINSTALL_INFODIR=share/mysql/docs \
+		-DINSTALL_MANDIR=share/man \
+		-DINSTALL_PLUGINDIR=lib/mysql/plugin \
+		-DINSTALL_SCRIPTDIR=bin \
+		-DINSTALL_INCLUDEDIR=include/mysql \
+		-DINSTALL_DOCREADMEDIR=share/mysql \
+		-DINSTALL_SUPPORTFILESDIR=share/mysql \
+		-DINSTALL_MYSQLSHAREDIR=share/mysql \
+		-DINSTALL_DOCDIR=share/mysql/docs \
+		-DINSTALL_SHAREDIR=share/mysql \
+		-DINSTALL_SYSTEMD_UNITDIR=/usr/lib/systemd/system/ \
+		-DWITH_SYSTEMD=yes \
+		-DWITH_READLINE=ON \
+		-DWITH_ZLIB=system \
+		-DWITH_SSL=system \
+		-DWITH_PCRE=system \
+		-DWITH_LIBWRAP=OFF \
+		-DWITH_EXTRA_CHARSETS=complex \
+		-DWITH_EMBEDDED_SERVER=ON \
+		-DWITH_ARCHIVE_STORAGE_ENGINE=1 \
+		-DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
+		-DWITH_INNOBASE_STORAGE_ENGINE=1 \
+		-DWITH_PARTITION_STORAGE_ENGINE=1 \
+		-DWITH_TOKUDB_STORAGE_ENGINE=1 \
+		-DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 \
+		-DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
+		-DWITHOUT_PBXT_STORAGE_ENGINE=1 \
+		-DWITH_JEMALLOC=OFF \
+		-DCMAKE_C_FLAGS="-fPIC $CFLAGS -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
+		-DCMAKE_CXX_FLAGS="-fPIC $CXXFLAGS -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-rtti -fno-delete-null-pointer-checks" \
+		-DWITH_MYSQLD_LDFLAGS="-pie -z,now"
+		#-DWITH_JEMALLOC=ON \
+		#-DCMAKE_EXE_LINKER_FLAGS='-ljemalloc' \
+
+	make -j${BLDR_CORES}
+
+	PushScripts
+	rm -rf /root/mariadb-libs-inst && mkdir /root/mariadb-libs-inst
+	for dir in include libmysql libmysqld libservices; do
+		make -C $dir DESTDIR=/root/mariadb-libs-inst install
+	done
+
+	install -Dm755 scripts/mysql_config /root/mariadb-libs-inst/usr/bin/mysql_config
+	install -d /root/mariadb-libs-inst/usr/share/man/man1
+	for man in mysql_config mysql_client_test_embedded mysqltest_embedded; do
+		install -m644 ../man/$man.1 /root/mariadb-libs-inst/usr/share/man/man1/$man.1
+	done
+
+	rm /root/mariadb-libs-inst/usr/lib/libmysql{client,client_r,d}.a
+	pushd /root/mariadb-libs-inst
+	pkgr -genmeta mariadb-libs $VERSION
+	pkgr -genpkg
+	mkdir -p /root/bldr-inst/ && mv *.pkg /root/bldr-inst/
+	popd
+	rm -rf /root/mariadb-libs-inst
+	PopScripts
+
+	make DESTDIR=/root/bldr-inst install
+
+	install -Dm644 /root/bldr-inst/usr/share/mysql/my-medium.cnf /root/bldr-inst/etc/mysql/my.cnf
+	ln -s mariadb.service /root/bldr-inst/usr/lib/systemd/system/mysqld.service
+	ln -s mariadb@.service /root/bldr-inst/usr/lib/systemd/system/mysqld@.service
+
+	install -dm700 /root/bldr-inst/var/lib/mysql
+	chown -R 89:89 /root/bldr-inst/var/lib/mysql &>/dev/null
+
+# provided by mariadb-libs
+	cd /root/bldr-inst
+	rm usr/bin/{mysql_config,mysql_client_test_embedded,mysqltest_embedded}
+	rm usr/lib/libmysql*
+	rm -r usr/include/
+	rm usr/share/man/man1/{mysql_config,mysql_client_test_embedded,mysqltest_embedded}.1
+
+# not needed
+	rm -r usr/{data,mysql-test,sql-bench}
+	rm usr/share/man/man1/mysql-test-run.pl.1
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s https://downloads.mariadb.org/ | egrep "Download [0-9\.]+ Stable Now" | head -n1 | sed -e 's/.*Download \([0-9\.]*\) Stable Now.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
