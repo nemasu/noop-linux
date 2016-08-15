@@ -34,9 +34,16 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+	cd ..
+	srcdir=`ls`
+	wget "https://github.com/opencv/opencv_contrib/archive/${DVERSION}.tar.gz" -Oopencv_contrib.tar.gz
+	tar xf opencv_contrib.tar.gz
+	cd $srcdir
+	
 	mkdir -p build
 	cd build
 	cmake .. \
+		-DOPENCV_EXTRA_MODULES_PATH=/root/bldr-tmp/opencv_contrib-${DVERSION}/modules \
 		-DWITH_OPENCL=ON \
 		-DWITH_OPENGL=ON \
 		-DBUILD_SHARED_LIBS=ON \
