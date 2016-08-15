@@ -20,7 +20,7 @@ EXTRACONF="-DENABLE_OPENCV3:BOOL=ON"
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('exiv2' 'expat' 'gcc-libs' 'glibc' 'jasper' 'kauth' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kfilemetadata' 'ki18n' 'kiconthemes' 'kio' 'kjobwidgets' 'knotifications' 'knotifyconfig' 'kservice' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libglu' 'libgphoto2' 'libjpeg' 'libpng' 'libusb' 'mesalib' 'opencv' 'qt' 'qt-webkit' 'solid' 'threadweaver' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

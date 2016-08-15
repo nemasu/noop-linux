@@ -5099,7 +5099,7 @@ libkate,liboggkate.so.1.2.2
 libkcddb,kcm_cddb.so
 libkcddb,libkcddb.so
 libkcddb,libkcddb.so.4
-libkcddb,libkcddb.so.4.10.1
+libkcddb,libkcddb.so.4.14.22
 libkcompactdisc,libkcompactdisc.so
 libkcompactdisc,libkcompactdisc.so.4
 libkcompactdisc,libkcompactdisc.so.4.10.1

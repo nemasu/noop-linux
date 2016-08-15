@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('ffmpeg' 'flac' 'gcc-libs' 'glibc' 'kdelibs' 'lame' 'libdvdread' 'libkcddb' 'libmad' 'libmpcdec' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'qt4' 'soprano' 'taglib')
+DEPS=('ffmpeg' 'flac' 'gcc-libs' 'glibc' 'kdelibs' 'lame' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXft' 'libXpm' 'libdvdread' 'libkcddb' 'libmad' 'libmpcdec' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'qt4' 'taglib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -34,13 +34,15 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  mkdir build && cd build
-  cmake .. \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release
-  make -j${BLDR_CORES}
-  
-  make DESTDIR=/root/bldr-inst install
+	sed -e "s|^cmake_minimum_required|#cmake_minimum_required|" -i CMakeLists.txt
+
+	mkdir build && cd build
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release
+	make -j${BLDR_CORES}
+
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
