@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=('glibc' 'ncurses' 'readline')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -5713,6 +5713,8 @@ mariadb,dialog_examples.so
 mariadb,example_key_management.so
 mariadb,file_key_management.so
 mariadb,ha_connect.so
+mariadb,ha_federatedx.so
+mariadb,ha_innodb.so
 mariadb,ha_mroonga.so
 mariadb,ha_sphinx.so
 mariadb,ha_spider.so

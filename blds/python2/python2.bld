@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('db' 'expat' 'gdbm' 'ghc' 'glibc' 'libffi' 'libX11' 'ncurses' 'openssl' 'readline' 'sqlite' 'tcl' 'tk' 'zlib')
+DEPS=('db' 'expat' 'gdbm' 'glibc' 'libffi' 'libX11' 'ncurses' 'openssl' 'readline' 'sqlite' 'tcl' 'tk' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
