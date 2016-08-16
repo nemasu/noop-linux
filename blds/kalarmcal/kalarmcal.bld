@@ -2,7 +2,7 @@
 NAME=kalarmcal
 
 #Description
-DESC="Unnamed repository; edit this file DESC=#039;descriptionDESC=#039; to name the repository."
+DESC="The KAlarm client library"
 
 #package version
 VERSION=16.04.3
@@ -11,7 +11,7 @@ VERSION=16.04.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/kalarmcal-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/$VERSION/src/kalarmcal-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('akonadi' 'gcc-libs' 'glibc' 'kauth' 'kbookmarks' 'kcalcore' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdelibs4support' 'kguiaddons' 'kholidays' 'ki18n' 'kiconthemes' 'kidentitymanagement' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'knotifications' 'kparts' 'kpimtextedit' 'kservice' 'ktextwidgets' 'kunitconversion' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libical' 'qt' 'solid' 'sonnet')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+	LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
 	FILELIST=`GetFileList`
 	LATEST=0
 

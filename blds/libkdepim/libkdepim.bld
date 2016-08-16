@@ -2,7 +2,7 @@
 NAME=libkdepim
 
 #Description
-DESC="lib for common kdepim apps"
+DESC="Libraries for KDE PIM applications"
 
 #package version
 VERSION=16.04.3
@@ -11,7 +11,7 @@ VERSION=16.04.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/libkdepim-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/$VERSION/src/libkdepim-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('akonadi' 'akonadi-search' 'gcc-libs' 'glibc' 'kauth' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kdepimlibs' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kldap' 'kservice' 'kwallet' 'kwidgetsaddons' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+	LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
 	FILELIST=`GetFileList`
 	LATEST=0
 

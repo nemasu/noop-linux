@@ -1,17 +1,17 @@
 #package name
-NAME=grantleetheme
+NAME=grantlee
 
 #Description
-DESC="KDE PIM GrantLee theme"
+DESC="Libraries for text templating with Qt"
 
 #package version
-VERSION=16.04.3
+VERSION=5.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/$VERSION/src/grantleetheme-$VERSION.tar.xz
+SRC=https://github.com/steveire/grantlee/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('attica' 'gcc-libs' 'glibc' 'grantlee' 'kauth' 'kcodecs' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'ki18n' 'kiconthemes' 'knewstuff' 'kservice' 'kwidgetsaddons' 'kxmlgui' 'qt')
+DEPS=('gcc-libs' 'glibc' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,20 +38,8 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
-
+	LATEST=`curl -L -s https://github.com/steveire/grantlee/releases | grep ".tar.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+	
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then

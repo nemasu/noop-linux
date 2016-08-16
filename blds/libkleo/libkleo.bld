@@ -2,7 +2,7 @@
 NAME=libkleo
 
 #Description
-DESC="This lib provides crypto for mails"
+DESC="KDE PIM cryptographic library"
 
 #package version
 VERSION=16.04.3
@@ -11,7 +11,7 @@ VERSION=16.04.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/libkleo-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/$VERSION/src/libkleo-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'gpgme' 'gpgmepp' 'kcompletion' 'kconfig' 'kcoreaddons' 'ki18n' 'kpimtextedit' 'ktextwidgets' 'kwidgetsaddons' 'kwindowsystem' 'libassuan' 'libgpg-error' 'qt' 'sonnet')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+	LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
 	FILELIST=`GetFileList`
 	LATEST=0
 

@@ -1,8 +1,8 @@
 #package name
-NAME=akonadi-search
+NAME=syndication
 
 #Description
-DESC="Libraries and daemons to implement searching in Akonadi."
+DESC="RSS/Atom parser library"
 
 #package version
 VERSION=16.04.3
@@ -11,7 +11,7 @@ VERSION=16.04.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/akonadi-search-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/$VERSION/src/syndication-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('akonadi' 'gcc-libs' 'glibc' 'kauth' 'kbookmarks' 'kcalcore' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kcrash' 'kdelibs4support' 'kdepimlibs' 'kguiaddons' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kmime' 'knotifications' 'kpackage' 'kparts' 'krunner' 'kservice' 'ktextwidgets' 'kunitconversion' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libical' 'plasma-framework' 'qt' 'solid' 'sonnet' 'xapian-core')
+DEPS=('gcc-libs' 'glibc' 'kcodecs' 'kconfig' 'kcoreaddons' 'kio' 'kservice' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+	LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
 	FILELIST=`GetFileList`
 	LATEST=0
 

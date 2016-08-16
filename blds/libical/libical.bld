@@ -5,22 +5,22 @@ NAME=libical
 DESC="An open source reference implementation of the icalendar data type and serialization format"
 
 #package version
-VERSION=0.48
+VERSION=2.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/freeassociation/libical-${VERSION}.tar.gz
+SRC=https://github.com/libical/libical/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-shared"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+BUILD=cmake
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=('gcc-libs' 'glibc' 'icu4c')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://sourceforge.net/projects/freeassociation/files/
+	LISTURL=https://github.com/libical/libical/releases
 	FILELIST=`GetFileList`
 	LATEST=0
 
