@@ -5,7 +5,7 @@ NAME=go
 DESC="Compiler and tools for the Go programming language from Google"
 
 #package version
-VERSION=1.6
+VERSION=1.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -23,7 +23,7 @@ BUILD=custom
 DEPS=('glibc' 'lib32-glibc')
 
 # 'no' to skip calls to strip
-STRIP=
+STRIP=no
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
 PKGDEPS=
@@ -38,20 +38,24 @@ function BuildAndInstall
 	export GOBIN="$GOROOT/bin"
 	export GOROOT_FINAL=/usr/lib/go
 	export GOOS=linux
-	export GARCH=amd64
+	export GOARCH=amd64
 	export GOPATH=/root/bldr-tmp
 
 	cd src
 	./make.bash
-	../bin/go get -d golang.org/x/tools/cmd/godoc
-	../bin/go build -o /root/bldr-tmp/godoc golang.org/x/tools/cmd/godoc
-	for tool in vet cover callgraph; do
-		../bin/go get -d golang.org/x/tools/cmd/${tool}
-		../bin/go build -o $GOROOT/pkg/tool/${GOOS}_${GOARCH}/${tool} golang.org/x/tools/cmd/${tool}
-	done
 	cd ..
 
-	install -Dm755 /root/bldr-tmp/godoc /root/bldr-inst/usr/bin/godoc
+# System-wide tools
+	for tool in godex godoc goimports gomvpkg gorename gotype; do
+		$GOROOT/bin/go get -d golang.org/x/tools/cmd/$tool
+		$GOROOT/bin/go build -v -x -o $GOPATH/bin/$tool golang.org/x/tools/cmd/$tool
+	done
+
+# Distribution tools
+	for tool in benchcmp bundle callgraph digraph eg fiximports guru html2article oracle present ssadump stress stringer ; do
+		$GOROOT/bin/go get -d golang.org/x/tools/cmd/$tool
+		$GOROOT/bin/go build -v -x -o $GOPATH/pkg/tool/${GOOS}_$GOARCH/$tool golang.org/x/tools/cmd/$tool
+	done
 
 	mkdir -p \
 		/root/bldr-inst/{etc/profile.d,usr/{share/go,lib/go,lib/go/src,lib/go/site/src}}
@@ -62,6 +66,15 @@ function BuildAndInstall
 	cp -a pkg /root/bldr-inst/usr/lib/go
 	cp -a $GOROOT/src /root/bldr-inst/usr/lib/go/
 	cp -a $GOROOT/lib /root/bldr-inst/usr/lib/go/
+
+	mkdir -p /root/bldr-inst/usr/lib/go/pkg/tool/${GOOS}_$GOARCH/
+	install -p -m755 ../pkg/tool/${GOOS}_$GOARCH/* /root/bldr-inst/usr/lib/go/pkg/tool/${GOOS}_$GOARCH/
+	install -p -m755 ../bin/* /root/bldr-inst/usr/bin/
+
+
+	for i in /root/bldr-inst/usr/bin/* /root/bldr-inst/usr/lib/go/pkg/tool/linux_$GOARCH/*; do
+		strip -s "$i"
+	done
 
 
     # This is to make go get code.google.com/p/go-tour/gotour and
