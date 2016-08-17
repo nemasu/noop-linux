@@ -2,7 +2,7 @@
 NAME=libksieve
 
 #Description
-DESC="This lib manages sieve support"
+DESC="KDE PIM library for managing sieves"
 
 #package version
 VERSION=16.04.3
@@ -11,7 +11,7 @@ VERSION=16.04.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/libksieve-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/$VERSION/src/libksieve-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+	LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
 	FILELIST=`GetFileList`
 	LATEST=0
 

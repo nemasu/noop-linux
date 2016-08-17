@@ -156,8 +156,13 @@ mailimporter
 libkleo
 grantleetheme
 kdepim-apps-libs
-messagelib <--
+messagelib
 mailcommon
+calendarsupport
+kdgantt2
+eventviews
+incidenceeditor
+libksieve
 kdepim
 kdepim-runtime
 kdepim-addons

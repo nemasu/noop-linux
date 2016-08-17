@@ -1,8 +1,8 @@
 #package name
-NAME=calendarsupport
+NAME=kdgantt2
 
 #Description
-DESC="KDE PIM calendar support"
+DESC="KDE gantt library"
 
 #package version
 VERSION=16.04.3
@@ -11,7 +11,7 @@ VERSION=16.04.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/$VERSION/src/calendarsupport-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/$VERSION/src/kdgantt2-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
