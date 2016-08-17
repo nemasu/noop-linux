@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('akonadi' 'akonadi-calendar' 'akonadi-search' 'attica' 'calendarsupport' 'eventviews' 'gcc-libs' 'glibc' 'gpgme' 'gpgmepp' 'grantlee' 'grantleetheme' 'incidenceeditor' 'kalarmcal' 'karchive' 'kauth' 'kblog' 'kbookmarks' 'kcalcore' 'kcalutils' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kcrash' 'kdbusaddons' 'kdelibs4support' 'kdepim-apps-libs' 'kdepimlibs' 'kdewebkit' 'kdgantt2' 'kdnssd' 'kglobalaccel' 'kguiaddons' 'kholidays' 'ki18n' 'kiconthemes' 'kidentitymanagement' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kldap' 'kmailtransport' 'kmime' 'knewstuff' 'knotifications' 'knotifyconfig' 'kontactinterface' 'kparts' 'kpimtextedit' 'kross' 'kservice' 'ktexteditor' 'ktextwidgets' 'ktnef' 'kunitconversion' 'kwallet' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libICE' 'libSM' 'libX11' 'libXext' 'libassuan' 'libgpg-error' 'libgravatar' 'libical' 'libkdepim' 'libkleo' 'libksieve' 'mailcommon' 'mailimporter' 'messagelib' 'phonon' 'pimcommon' 'prison-frameworks' 'qt' 'qt-webkit' 'solid' 'sonnet' 'syndication')
 
 # 'no' to skip calls to strip
 STRIP=
