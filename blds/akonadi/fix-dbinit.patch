@@ -1,0 +1,23 @@
+diff -crB akonadi-16.04.3-orig/src/server/storage/dbconfigmysql.cpp akonadi-16.04.3/src/server/storage/dbconfigmysql.cpp
+*** akonadi-16.04.3-orig/src/server/storage/dbconfigmysql.cpp	2016-08-17 13:48:59.195381646 +0900
+--- akonadi-16.04.3/src/server/storage/dbconfigmysql.cpp	2016-08-17 13:53:12.706308135 +0900
+***************
+*** 78,83 ****
+--- 78,84 ----
+  #endif
+      const QStringList mysqldSearchPath = QStringList()
+                                           << QStringLiteral("/usr/sbin")
++                                          << QStringLiteral("/usr/bin")
+                                           << QStringLiteral("/usr/local/sbin")
+                                           << QStringLiteral("/usr/local/libexec")
+                                           << QStringLiteral("/usr/libexec")
+***************
+*** 501,506 ****
+--- 502,508 ----
+      return 0 == execute(mMysqlInstallDbPath,
+                          { QStringLiteral("--defaults-file=%1").arg(confFile),
+                            QStringLiteral("--force"),
++                           QStringLiteral("--basedir=/usr"),
+                            QStringLiteral("--datadir=%1/").arg(dataDir) });
+  }
+  
