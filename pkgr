@@ -1567,7 +1567,8 @@ if [ $1 = "-genmeta" ]; then
 	touch $LIBDB
 	$cp $LIBDB $TMPLIBDB
 	$sed -i -e '/^'"$2"',/ d;' $TMPLIBDB
-	$find * -name "*.so*" | $sed -e 's/.*\///g' | $sed -e 's/^/'"$2"',/g' | LC_COLLATE=C sort | uniq >> $TMPLIBDB
+#$find * -name "*.so*" | $sed -e 's/.*\///g' | $sed -e 's/^/'"$2"',/g' | LC_COLLATE=C sort | uniq >> $TMPLIBDB
+	$find . -type f -or -type l | $sed -e '/.*\.so$\|.*\.so.*[0-9]$/!d' | $sed -e 's/.*\///g' | $sed -e '/^lib.*/!d;' | $sed -e 's/^/'"$2"',/g' | LC_COLLATE=C sort | uniq >> $TMPLIBDB
 	$cat $TMPLIBDB | LC_COLLATE=C sort | uniq > $LIBDB
 
 	

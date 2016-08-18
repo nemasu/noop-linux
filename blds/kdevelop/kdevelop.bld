@@ -1,0 +1,49 @@
+#package name
+NAME=kdevelop
+
+#Description
+DESC="Feature-full, plugin extensible IDE for C/C++ and other programming languages."
+
+#package version
+VERSION=4.90.91
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+#SRC=http://download.kde.org/stable/kdevelop/${VERSION}/src/kdevelop-${VERSION}.tar.bz2
+SRC=http://download.kde.org/unstable/kdevelop/${VERSION}/src/kdevelop-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, perl, cmake, custom
+BUILD=cmake
+
+# build/package dependancies
+DEPS=('attica' 'gcc-libs' 'glibc' 'kauth' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kdeclarative' 'kdevplatform' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'knewstuff' 'kpackage' 'kparts' 'krunner' 'kservice' 'ktexteditor' 'ktextwidgets' 'kwidgetsaddons' 'kxmlgui' 'libksysguard' 'llvm-libs' 'plasma-framework' 'qt' 'qt-webkit' 'sonnet' 'threadweaver')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -s -L http://download.kde.org/stable/kdevelop/ | egrep "[0-9\.]+\/" | tail -n1 | sed -e 's/.*href="\([0-9\.]*\)\/">.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
