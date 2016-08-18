@@ -164,5 +164,6 @@ eventviews
 incidenceeditor
 libksieve
 kdepim
+libkgapi
 kdepim-runtime
 kdepim-addons
