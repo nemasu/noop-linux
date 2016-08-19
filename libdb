@@ -641,7 +641,7 @@ db,libdb_sql-5.so
 db,libdb_sql.so
 dbus,libdbus-1.so
 dbus,libdbus-1.so.3
-dbus,libdbus-1.so.3.15.1
+dbus,libdbus-1.so.3.15.2
 dbus-glib,libdbus-glib-1.so
 dbus-glib,libdbus-glib-1.so.2
 dbus-glib,libdbus-glib-1.so.2.2.2

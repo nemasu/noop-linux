@@ -5,7 +5,7 @@ NAME=dbus
 DESC="Freedesktop.org message bus system"
 
 #package version
-VERSION=1.11.2
+VERSION=1.11.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
