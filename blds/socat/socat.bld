@@ -1,59 +1,44 @@
 #package name
-NAME=kwallet-pam
+NAME=socat
 
 #Description
-DESC="Unnamed repository; edit this file DESC=#039;descriptionDESC=#039; to name the repository."
+DESC="Multipurpose relay"
 
 #package version
-VERSION=5.7.3
+VERSION=1.7.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/plasma/${VERSION}/kwallet-pam-$VERSION.tar.xz
+SRC=http://www.dest-unreach.org/socat/download/socat-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, perl, cmake, custom
-BUILD=custom
+BUILD=autotools
 
 # build/package dependancies
-DEPS=('socat' 'glibc' 'libgcrypt' 'libgpg-error' 'linux-pam')
+DEPS=('glibc' 'ncurses' 'openssl' 'readline')
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('socat')
+PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	mkdir -p build build4
-	cd build
-	cmake .. \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=/usr
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-
-	cd ../build4
-	cmake .. \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DKWALLET4=1
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/plasma/${VERSION}/
+	LISTURL=http://www.dest-unreach.org/socat/download/
 	FILELIST=`GetFileList`
 	LATEST=0
 

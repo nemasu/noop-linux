@@ -3733,8 +3733,6 @@ kwallet,libKF5Wallet.so.5.24.0
 kwallet,libkwalletbackend5.so
 kwallet,libkwalletbackend5.so.5
 kwallet,libkwalletbackend5.so.5.24.0
-kwallet-pam,pam_kwallet.so
-kwallet-pam,pam_kwallet5.so
 kwalletmanager,kcm_kwallet5.so
 kwayland,libKF5WaylandClient.so
 kwayland,libKF5WaylandClient.so.5
