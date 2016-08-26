@@ -2,9 +2,8 @@ function postinst() {
     getent group polkitd >/dev/null || groupadd -g 102 polkitd
     getent passwd polkitd >/dev/null || useradd --system -c 'Policy Kit Daemon' -u 102 -g polkitd -d '/' -s /bin/false polkitd
     passwd -l polkitd &>/dev/null
-    chown 102 /etc/polkit-1/rules.d
-    chown 102 /usr/share/polkit-1/rules.d
-    chmod 700 /etc/polkit-1/rules.d
+    chown root:102 /{etc,usr/share}/polkit-1/rules.d
+    chmod 750      /{etc,usr/share}/polkit-1/rules.d
     chmod 4755 /usr/bin/pkexec
     chmod 4775 /usr/lib/polkit-1/polkit-agent-helper-1
 }
