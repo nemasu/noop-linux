@@ -37,7 +37,8 @@ function BuildAndInstall
 	./configure --prefix=/usr \
 		--sbindir=/usr/bin \
 		--enable-online-resize \
-		--enable-libparted-dmraid
+		--enable-libparted-dmraid \
+		--disable-doc
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }
@@ -45,19 +46,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=` curl -s -L https://sourceforge.net/projects/gparted/files/gparted/ | egrep "gparted-[0-9\.]+" | head -n1 | sed -e 's/.*gparted-\([0-9\.]*\).*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
