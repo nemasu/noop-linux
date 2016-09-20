@@ -512,6 +512,34 @@ function DoCheckIsRequired() {
 
 }
 
+function genDepTree() {
+	if [ -z "$1" ]; then
+		return
+	fi
+	for i in `pkgr --jsonmeta $1 | jq -r .deps[]`; do
+		if [ ${listedPkgs[$i]+_} ]; then #if found
+			continue
+		else
+			listedPkgs[$i]=1
+		fi
+
+		for (( j=0; j<$2; j++ )) do
+			echo -n " "
+		done
+	
+		echo "|$i";
+		genDepTree $i $(($2+1))
+	done
+}
+
+
+function DoPrintDepTree() {
+	unset listedPkgs
+	declare -A listedPkgs
+
+	genDepTree $1 0
+}
+
 #TODO while loop not called if no parameters are passed
 if [ -z $1 ]; then
 	isold=1
@@ -556,6 +584,10 @@ do
 			shift
 			DoDepcheckPackages $1
 		;;
+		-pdt|--print-dep-tree)
+			shift
+			DoPrintDepTree $1
+		;;
 		*)
 #echo "Error: Unknown option: $1"
 #exit 1
@@ -590,6 +622,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		$echo -e "\t   \t--list-non-meta               List installed packages that are not required."
 		$echo -e "\t-R,\t--is-required pkg             Check if any packages that require pkg are installed"
 		$echo -e "\t-b,\t--belongs file-path           パッケージのファイルをさがす"
+		$echo -e "\t-pdt,\t--print-dep-tree pkg          Print dependency tree for pkg."
 		$echo -e "\t-D,\t--show-revdeps pkg            パッケージの逆依存関係をリストします"
 		$echo -e "\t-c,\t--depcheck dynamic-binary     バイナリの依存関係をチェックします"
 		$echo -e "\t-C,\t--depcheck-system             全システムの依存関係をチェックします"
@@ -617,6 +650,7 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		$echo -e "\t   \t--list-non-meta               List installed packages that are not required."
 		$echo -e "\t-R,\t--is-required pkg             Check if any packages that require pkg are installed"
 		$echo -e "\t-b,\t--belongs file-path           List package file belongs to"
+		$echo -e "\t-pdt,\t--print-dep-tree pkg          Print dependency tree for pkg."
 		$echo -e "\t-D,\t--show-revdeps pkg            List reverse dependencies for a package"
 		$echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
 		$echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
@@ -2018,6 +2052,7 @@ then
 
 	if [ -e /var/noop/blds/$2/${2}.bld ]; then
 		desc=`grep -m1 "^DESC=" /var/noop/blds/$2/${2}.bld | sed -e 's/DESC=//g;'`
+		[[ -z "$desc" ]] && desc="\"\""
 	else
 		desc="\"\""
 	fi
