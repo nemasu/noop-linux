@@ -1,8 +1,9 @@
 function postinst() {
+    mkdir -p /etc/ssl/certs
     /usr/bin/update-ca-certificates --fresh >/dev/null 2>&1
 }
 function postup() {
-    /usr/bin/update-ca-certificates --fresh >/dev/null 2>&1
+    postinst
 }
 function prerm() {
     # clean up certificates
