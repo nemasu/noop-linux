@@ -102,6 +102,8 @@ function BuildAndInstall
 
 	rm /root/mariadb-libs-inst/usr/lib/libmysql{client,client_r,d}.a
 	pushd /root/mariadb-libs-inst
+    find {,usr/}{bin,lib,sbin} -type f -exec strip --strip-debug '{}' ';'
+    find {,usr/}{bin,sbin} -type f -exec strip --strip-all '{}' ';'
 	pkgr -genmeta mariadb-libs $VERSION
 	pkgr -genpkg
 	mkdir -p /root/bldr-inst/ && mv *.pkg /root/bldr-inst/
