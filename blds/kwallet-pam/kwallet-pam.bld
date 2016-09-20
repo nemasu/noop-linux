@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('socat' 'glibc' 'libgcrypt' 'libgpg-error' 'linux-pam')
+DEPS=('glibc' 'libgcrypt' 'libgpg-error' 'linux-pam')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF="-DPHONON_BUILD_PHONON4QT5=ON -Wno-dev"
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'mesalib' 'phonon' 'qt' 'qt4')
+DEPS=('gcc-libs' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'mesalib' 'phonon' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=

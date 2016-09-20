@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('e2fsprogs' 'gdbm' 'glibc' 'krb5' 'linux-pam' 'mysql-libs' 'openldap' 'openssl' 'postgresql-libs' 'sqlite')
+DEPS=('e2fsprogs' 'gdbm' 'glibc' 'krb5' 'linux-pam' 'mariadb-libs' 'openldap' 'openssl' 'postgresql-libs' 'sqlite')
 
 # 'no' to skip calls to strip
 STRIP=

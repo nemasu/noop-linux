@@ -5,7 +5,7 @@ NAME=glibc
 DESC="GNU C Library"
 
 #package version
-VERSION=2.23
+VERSION=2.24
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gd' 'libpng' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
