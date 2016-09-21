@@ -339,6 +339,11 @@ function DoSync() {
 	else
 		$echo -e "${Cyan}Syncing ...${LightBlue}"
 		pushd $PREFIX/var/noop &> /dev/null
+		if [ ! `git status -s | wc -l` -eq 0 ]; then
+			$echo "Local noop repository contains changes, exiting..."
+			popd &> /dev/null
+			return 1
+		fi
 		git pull
 		$echo
 		$echo -e "${Green}done.${NoColor}"
