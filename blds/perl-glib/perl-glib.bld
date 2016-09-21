@@ -1,0 +1,48 @@
+#package name
+NAME=perl-glib
+
+#Description
+DESC="Glib bindings"
+
+#package version
+VERSION=1.322
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://search.cpan.org/CPAN/authors/id/X/XA/XAOC/Glib-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, perl, cmake, custom
+BUILD=perl
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=` curl -s -L "http://search.cpan.org/search?query=Glib&mode=all" | egrep "Glib-[0-9\.]+" | head -n1 | sed "s/.*Glib-\([0-9\.]*\).*/\1/g"`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

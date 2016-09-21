@@ -5,13 +5,13 @@ NAME=rxvt-unicode
 DESC="A unicode enabled rxvt-clone terminal emulator (urxvt)"
 
 #package version
-VERSION=9.20
+VERSION=9.22
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.20.tar.bz2
+SRC=http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -26,7 +26,7 @@ DEPS=('fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'libX11' 'libXft' 'libXrender'
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('gtk2-perl')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
