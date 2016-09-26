@@ -5,8 +5,8 @@ NAME=protobuf
 DESC="Protocol Buffers - Google's data interchange format"
 
 #package version
-VERSION=3.0.0
-DVERSION=3.0.0
+VERSION=3.0.2
+DVERSION=3.0.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

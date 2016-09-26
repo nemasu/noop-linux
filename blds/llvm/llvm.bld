@@ -5,8 +5,8 @@ NAME=llvm
 DESC="Low Level Virtual Machine"
 
 #package version
-VERSION=3.7.0-1
-DVERSION=3.7.0
+VERSION=3.9.0
+DVERSION=3.9.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -49,18 +49,23 @@ function BuildAndInstall
 
 	mkdir -p build && cd build
 
-	../configure \
-		--prefix=/usr \
-		--sysconfdir=/etc \
-		--enable-shared \
-		--enable-libffi \
-		--enable-targets=all \
-		--disable-expensive-checks \
-		--disable-debug-runtime \
-		--disable-assertions \
-		--with-binutils-include=/usr/include \
-		--with-python=/usr/bin/python2
-	make REQUIRES_RTTI=1 -j3
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLLVM_BUILD_LLVM_DYLIB=ON \
+		-DLLVM_DYLIB_EXPORT_ALL=ON \
+		-DLLVM_LINK_LLVM_DYLIB=ON \
+		-DLLVM_ENABLE_RTTI=ON \
+		-DLLVM_ENABLE_FFI=ON \
+		-DLLVM_BUILD_TESTS=OFF \
+		-DLLVM_BUILD_DOCS=OFF \
+		-DLLVM_ENABLE_SPHINX=OFF \
+		-DLLVM_ENABLE_DOXYGEN=OFF \
+		-DSPHINX_WARNINGS_AS_ERRORS=OFF \
+		-DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi) \
+		-DLLVM_BINUTILS_INCDIR=/usr/include
+
+	make -j3
 	make DESTDIR=/root/bldr-inst install
 
 	cd tools/clang
@@ -72,6 +77,9 @@ function BuildAndInstall
 	pushd /root/llvm-lib-install
     
 	find /root/bldr-inst/usr/lib/ -name "*.so" -exec mv -v {} /root/llvm-lib-install/usr/lib/ \;
+	
+	find {,usr/}{bin,lib,sbin} -type f -exec strip --strip-debug '{}' ';'
+	find {,usr/}{bin,sbin} -type f -exec strip --strip-all '{}' ';'
 	
 	pkgr -genmeta llvm-libs $VERSION
 	pkgr -genpkg

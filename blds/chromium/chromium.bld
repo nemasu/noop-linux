@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=52.0.2743.116
-VERSION=52.0.2743.116
+DVERSION=53.0.2785.116
+VERSION=53.0.2785.116
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -89,6 +89,7 @@ function BuildAndInstall
     
      options=(
 	-Dwerror=
+	-Duse_system_protobuf=0
 	-Duse_sysroot=0
 	-Dlinux_use_bundled_gold=0
     -Dlinux_use_bundled_binutils=0
@@ -228,7 +229,7 @@ function BuildAndInstall
 function Detect
 {
 	#This cant be accurate...
-	LATEST=`curl -s "http://googlechromereleases.blogspot.jp/search/label/Stable%20updates" | grep "Linux" | grep -E "[0-9\.][0-9\.]*" | head -n1 | sed -e 's/.*\s\([0-9\.]*\)\s.*/\1/g'`
+	LATEST=`curl -s "https://googlechromereleases.blogspot.jp/search/label/Stable%20updates" | grep "Linux" | grep -E "[0-9\.][0-9\.]*" | head -n1 | sed -e 's/.*\s\([0-9\.]*\)\s.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
