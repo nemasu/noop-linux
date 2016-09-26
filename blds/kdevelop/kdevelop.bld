@@ -5,14 +5,14 @@ NAME=kdevelop
 DESC="Feature-full, plugin extensible IDE for C/C++ and other programming languages."
 
 #package version
-VERSION=4.90.91
+VERSION=5.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 #SRC=http://download.kde.org/stable/kdevelop/${VERSION}/src/kdevelop-${VERSION}.tar.bz2
-SRC=http://download.kde.org/unstable/kdevelop/${VERSION}/src/kdevelop-${VERSION}.tar.xz
+SRC=http://download.kde.org/stable/kdevelop/${VERSION}/src/kdevelop-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

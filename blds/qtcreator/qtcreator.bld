@@ -5,7 +5,7 @@ NAME=qtcreator
 DESC="Lightweight, cross-platform integrated development environment"
 
 #package version
-VERSION=4.0.3
+VERSION=4.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
