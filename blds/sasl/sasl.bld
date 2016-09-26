@@ -5,7 +5,7 @@ NAME=sasl
 DESC="Simple Authentication and Security Layer"
 
 #package version
-VERSION=2.1.26-1
+VERSION=2.1.26-2
 DVERSION=2.1.26
 
 #directory locations, 99.99% of the time this is 1
@@ -79,7 +79,7 @@ function BuildAndInstall
 		--enable-ntlm \
 		--disable-passdss \
 		--enable-sql \
-		--with-mysql \
+		--with-mysql=/usr \
 		--with-pgsql=/usr/lib \
 		--with-sqlite3=/usr/lib \
 		--enable-ldapdb \
