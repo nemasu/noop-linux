@@ -5,7 +5,7 @@ NAME=xcb-proto
 DESC="XML-XCB protocol descriptions"
 
 #package version
-VERSION=1.11
+VERSION=1.12
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

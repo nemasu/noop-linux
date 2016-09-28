@@ -5,8 +5,8 @@ NAME=xf86-video-openchrome
 DESC="X.Org Openchrome drivers"
 
 #package version
-VERSION=0.3.3-1
-DVERSION=0.3.3
+VERSION=0.5.0
+DVERSION=0.5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

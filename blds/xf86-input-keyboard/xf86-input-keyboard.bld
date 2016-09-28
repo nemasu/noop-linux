@@ -5,8 +5,8 @@ NAME=xf86-input-keyboard
 DESC="X.Org keyboard input driver"
 
 #package version
-VERSION=1.8.0-1
-DVERSION=1.8.0
+VERSION=1.8.1
+DVERSION=1.8.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

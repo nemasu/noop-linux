@@ -5,7 +5,7 @@ NAME=xproto
 DESC="X11 core wire protocol and auxiliary headers"
 
 #package version
-VERSION=7.0.28
+VERSION=7.0.31
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

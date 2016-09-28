@@ -5,7 +5,7 @@ NAME=xf86-input-joystick
 DESC="X.Org Joystick input driver"
 
 #package version
-VERSION=1.6.2-1
+VERSION=1.6.2-2
 DVERSION=1.6.2
 
 #directory locations, 99.99% of the time this is 1

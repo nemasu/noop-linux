@@ -5,19 +5,21 @@ NAME=xf86-video-intel
 DESC="X.org Intel i810/i830/i915/945G/G965+ video drivers"
 
 #package version
-VERSION=2.99.917
+VERSION=2.99.917-1
+DVERSION=2.99.917
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-intel-${VERSION}.tar.bz2
+SRC=
+#SRC=http://xorg.freedesktop.org/releases/individual/driver/xf86-video-intel-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'libX11' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXinerama' 'libXrandr' 'libXrender' 'libXtst' 'libXv' 'libXvMC' 'libdrm' 'libpciaccess' 'libxcb' 'libxshmfence' 'pixman' 'xcb-util')
@@ -31,9 +33,18 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    if [ ! -e xf86-video-intel ]; then
+        git clone git://anongit.freedesktop.org/xorg/driver/xf86-video-intel
+    fi
+    cd xf86-video-intel
+    git checkout 8f33f80
+    ./autogen.sh
+    ./configure $STDUSRCONF
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
@@ -52,7 +63,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

@@ -5,7 +5,7 @@ NAME=libXt
 DESC="X11 toolkit intrinsics library"
 
 #package version
-VERSION=1.1.4
+VERSION=1.1.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

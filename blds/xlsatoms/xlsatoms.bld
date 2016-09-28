@@ -5,7 +5,7 @@ NAME=xlsatoms
 DESC="Lists interned atoms defined on the server"
 
 #package version
-VERSION=1.1.1
+VERSION=1.1.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

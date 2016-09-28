@@ -5,8 +5,8 @@ NAME=xf86-video-mach64
 DESC="X.org mach64 video driver"
 
 #package version
-VERSION=6.9.4-1
-DVERSION=6.9.4
+VERSION=6.9.5
+DVERSION=6.9.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,8 +5,8 @@ NAME=xf86-input-evdev
 DESC="X.org evdev input driver"
 
 #package version
-VERSION=2.9.2
-DVERSION=2.9.2
+VERSION=2.10.3
+DVERSION=2.10.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

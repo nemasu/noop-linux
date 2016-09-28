@@ -5,8 +5,8 @@ NAME=xf86-video-ast
 DESC="X.Org driver for ASpeedTech cards"
 
 #package version
-VERSION=1.0.1-1
-DVERSION=1.0.1
+VERSION=1.1.5
+DVERSION=1.1.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

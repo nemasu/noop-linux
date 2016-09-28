@@ -33,6 +33,7 @@ libfontenc
 mkfontscale
 xtrans
 libXfont
+libXfont2
 bdftopcf
 xorg-fonts100dpi
 xorg-fonts75dpi

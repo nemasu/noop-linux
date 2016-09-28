@@ -5,7 +5,7 @@ NAME=xorg-docs
 DESC="X.org documentations"
 
 #package version
-VERSION=1.7
+VERSION=1.7.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

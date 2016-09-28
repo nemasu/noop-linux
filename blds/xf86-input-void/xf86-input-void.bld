@@ -5,8 +5,8 @@ NAME=xf86-input-void
 DESC="X.org void input driver"
 
 #package version
-VERSION=1.4.0-2
-DVERSION=1.4.0
+VERSION=1.4.1
+DVERSION=1.4.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

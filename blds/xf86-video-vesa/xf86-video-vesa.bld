@@ -5,8 +5,8 @@ NAME=xf86-video-vesa
 DESC="X.org vesa video driver"
 
 #package version
-VERSION=2.3.3-1
-DVERSION=2.3.3
+VERSION=2.3.4
+DVERSION=2.3.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

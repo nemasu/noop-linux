@@ -5,7 +5,7 @@ NAME=libXrender
 DESC="X Rendering Extension client library"
 
 #package version
-VERSION=0.9.8
+VERSION=0.9.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

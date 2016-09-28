@@ -5,7 +5,7 @@ NAME=smproxy
 DESC="Session Manager Proxy"
 
 #package version
-VERSION=1.0.5
+VERSION=1.0.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

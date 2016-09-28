@@ -5,7 +5,7 @@ NAME=xf86-video-ati
 DESC="X.org ati video driver"
 
 #package version
-VERSION=7.5.0
+VERSION=7.7.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

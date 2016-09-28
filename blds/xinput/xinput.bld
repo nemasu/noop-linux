@@ -5,7 +5,7 @@ NAME=xinput
 DESC="Utility to configure and test X input devices"
 
 #package version
-VERSION=1.6.1
+VERSION=1.6.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

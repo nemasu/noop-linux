@@ -5,8 +5,8 @@ NAME=xf86-video-siliconmotion
 DESC="X.org siliconmotion video driver"
 
 #package version
-VERSION=1.7.7-1
-DVERSION=1.7.7
+VERSION=1.7.8
+DVERSION=1.7.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

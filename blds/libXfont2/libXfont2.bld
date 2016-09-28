@@ -1,17 +1,17 @@
 #package name
-NAME=mkfontscale
+NAME=libXfont2
 
 #Description
-DESC="Creates an index of scalable font files for X"
+DESC="X11 font rasterisation library. Version 2."
 
 #package version
-VERSION=1.1.2
+VERSION=2.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/app/mkfontscale-${VERSION}.tar.bz2
+SRC=http://xorg.freedesktop.org/releases/individual/lib/libXfont2-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/app/
+	LISTURL=http://xorg.freedesktop.org/releases/individual/lib/
 	FILELIST=`GetFileList`
 	LATEST=0
 
