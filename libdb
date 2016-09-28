@@ -9875,7 +9875,7 @@ xvidcore,libxvidcore.so.4
 xvidcore,libxvidcore.so.4.3
 xz,liblzma.so
 xz,liblzma.so.5
-xz,liblzma.so.5.0.3
+xz,liblzma.so.5.2.2
 yaml-cpp,libyaml-cpp.so
 yaml-cpp,libyaml-cpp.so.0.5
 yaml-cpp,libyaml-cpp.so.0.5.3

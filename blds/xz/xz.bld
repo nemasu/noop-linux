@@ -5,7 +5,7 @@ NAME=xz
 DESC="Library and command line tools for XZ and LZMA compressed files"
 
 #package version
-VERSION=5.0.3
+VERSION=5.2.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
