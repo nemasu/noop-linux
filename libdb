@@ -5658,7 +5658,6 @@ libxslt,libxsltmod.so
 libzip,libzip.so
 libzip,libzip.so.2
 libzip,libzip.so.2.1.0
-linux-kernel,modules.softdep
 linux-pam,libpam.so
 linux-pam,libpam.so.0
 linux-pam,libpam.so.0.84.2
@@ -9221,16 +9220,6 @@ valgrind,vgpreload_memcheck-x86-linux.so
 vcdimager,libvcdinfo.so
 vcdimager,libvcdinfo.so.0
 vcdimager,libvcdinfo.so.0.2.0
-virtualbox-guest-additions,VBoxOGL.so
-virtualbox-guest-additions,VBoxOGLarrayspu.so
-virtualbox-guest-additions,VBoxOGLcrutil.so
-virtualbox-guest-additions,VBoxOGLerrorspu.so
-virtualbox-guest-additions,VBoxOGLfeedbackspu.so
-virtualbox-guest-additions,VBoxOGLpackspu.so
-virtualbox-guest-additions,VBoxOGLpassthroughspu.so
-virtualbox-guest-additions,pam_vbox.so
-virtualbox-guest-additions,vboxvideo.so
-virtualbox-guest-additions,vboxvideo_dri.so
 vlc,liba52_plugin.so
 vlc,liba52tofloat32_plugin.so
 vlc,liba52tospdif_plugin.so

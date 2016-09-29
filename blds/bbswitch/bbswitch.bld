@@ -5,7 +5,7 @@ NAME=bbswitch
 DESC="Kernel module allowing to switch dedicated graphics card on Optimus laptops"
 
 #package version
-VERSION=0.8-5
+VERSION=0.8-6
 DVERSION=0.8
 
 #directory locations, 99.99% of the time this is 1

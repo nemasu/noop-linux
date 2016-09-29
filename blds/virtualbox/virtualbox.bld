@@ -5,7 +5,7 @@ NAME=virtualbox
 DESC="Powerful x86 virtualization for enterprise as well as home use"
 
 #package version
-VERSION=5.1.6
+VERSION=5.1.6-1
 DVERSION=5.1.6
 
 #directory locations, 99.99% of the time this is 1
