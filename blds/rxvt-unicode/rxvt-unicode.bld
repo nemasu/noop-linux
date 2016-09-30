@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'libX11' 'libXft' 'libXrender' 'perl' 'startup-notification')
+DEPS=('gtk2-perl' 'fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'libX11' 'libXft' 'libXrender' 'networkmanager' 'perl' 'startup-notification')
 
 # 'no' to skip calls to strip
 STRIP=

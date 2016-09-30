@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('dbus' 'glibc' 'libX11' 'libXau' 'libXaw' 'libXdmcp' 'libXext' 'libXfixes' 'libXfont' 'libXi' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libcap2' 'libdmx' 'libdrm' 'libepoxy' 'libgcrypt' 'libgpg-error' 'libpciaccess' 'libunwind' 'libxcb' 'libxshmfence' 'mesalib' 'pixman' 'systemd' 'xcb-util' 'xcb-util-image' 'xcb-util-keysyms' 'xcb-util-renderutil' 'xcb-util-wm' 'xz')
+DEPS=('dbus' 'expat' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libICE' 'libSM' 'libX11' 'libXau' 'libXaw' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXfont' 'libXi' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libXxf86vm' 'libcap2' 'libdmx' 'libdrm' 'libepoxy' 'libffi' 'libfontenc' 'libgcrypt' 'libgpg-error' 'libpciaccess' 'libpng' 'libunwind' 'libxcb' 'libxshmfence' 'mesalib' 'pcre' 'pixman' 'systemd' 'util-linux' 'wayland' 'xcb-util' 'xcb-util-image' 'xcb-util-keysyms' 'xcb-util-renderutil' 'xcb-util-wm' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

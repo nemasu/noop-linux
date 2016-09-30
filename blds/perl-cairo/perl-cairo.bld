@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=perl
 
 # build/package dependancies
-DEPS=
+DEPS=('cairo' 'freetype2' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=
