@@ -5,7 +5,7 @@ NAME=vim
 DESC="Amazing text editor"
 
 #package version
-VERSION=7.4.979
+VERSION=8.0.0032
 
 
 #directory locations, 99.99% of the time this is 1
@@ -39,19 +39,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.vim.org/sources.php
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -s -L https://github.com/vim/vim/releases | egrep "v[0-9\.]+\.tar\.gz" | head -n1  | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
