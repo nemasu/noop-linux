@@ -5,7 +5,7 @@ NAME=rust
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 #package version
-VERSION=1.6.0
+VERSION=1.12.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -41,7 +41,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://static.rust-lang.org/dist/ | egrep "rustc-[0-9\.]*-src\.tar\.gz" | tail -n1 | sed -e 's/.*rustc-\([0-9\.]*\)-src\.tar\.gz.*/\1/g'`
+	LATEST=`curl -s -L "https://www.rust-lang.org/en-US/downloads.html" | egrep "rustc-[0-9\.]+-src.tar.gz" | sed -e 's/.*rustc-\([0-9\.]*\)-src.tar.gz.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
