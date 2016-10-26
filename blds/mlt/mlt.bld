@@ -14,13 +14,13 @@ ISUSR=1
 SRC=https://github.com/mltframework/mlt/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-gpl --enable-gpl3"
+EXTRACONF="--enable-gpl --enable-gpl3 --avformat-swscale --qt-libdir=/usr/lib --qt-includedir=/usr/include/qt"
 
 #autotools, perl, cmake, custom
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'ffmpeg' 'fftw' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libexif' 'libsamplerate' 'libxml2' 'pango' 'pulseaudio' 'qt' 'sdl')
 
 # 'no' to skip calls to strip
 STRIP=
