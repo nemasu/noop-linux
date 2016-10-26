@@ -5,13 +5,14 @@ NAME=inkscape
 DESC="Professional vector graphics editor"
 
 #package version
-VERSION=0.91
+VERSION=0.91-1
+DVERSION=0.91
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://inkscape.global.ssl.fastly.net/dl/resources/file/inkscape-${VERSION}.tar.bz2
+SRC=https://inkscape.global.ssl.fastly.net/dl/resources/file/inkscape-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +21,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('aspell' 'atk' 'atkmm' 'cairo' 'cairomm' 'fontconfig' 'freetype2' 'gc' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'glibmm' 'gsl' 'gtk+2' 'gtkmm2' 'imagemagick' 'lcms2' 'libexif' 'libjpeg' 'libpng' 'libsigc++' 'libX11' 'libxml2' 'libxslt' 'pango' 'pangomm' 'poppler' 'popt' 'zlib')
+DEPS=('aspell' 'atk' 'atkmm' 'cairo' 'cairomm' 'fontconfig' 'freetype2' 'gc' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'glibmm' 'gsl' 'gtk+2' 'gtkmm2' 'imagemagick' 'lcms2' 'libX11' 'libexif' 'libjpeg' 'libpng' 'libsigc++' 'libxml2' 'libxslt' 'pango' 'pangomm' 'poppler' 'popt' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -40,7 +41,7 @@ export CXXFLAGS+=' -std=c++11 -O2 -w'
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://inkscape.org/en/download/
+	LISTURL=https://inkscape.org/en/download/source/
 	FILELIST=`GetFileList`
 	LATEST=0
 
@@ -54,7 +55,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

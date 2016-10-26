@@ -5,7 +5,7 @@ NAME=transcode
 DESC="A video/DVD ripper and encoder for the terminal/console"
 
 #package version
-VERSION=1.1.7-3
+VERSION=1.1.7-4
 DVERSION=1.1.7
 
 #directory locations, 99.99% of the time this is 1
@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('a52dec' 'alsa-lib' 'ffmpeg' 'freetype2' 'gcc-libs' 'glibc' 'imagemagick' 'lame' 'libdv' 'libdvdread' 'libICE' 'libjpeg' 'libmpeg2' 'libogg' 'libpng' 'libSM' 'libtheora' 'libvorbis' 'libX11' 'libXaw' 'libXext' 'libxml2' 'libXpm' 'libXt' 'libXv' 'lzo2' 'mjpegtools' 'sdl' 'zlib')
+DEPS=('a52dec' 'alsa-lib' 'ffmpeg' 'freetype2' 'gcc-libs' 'glibc' 'imagemagick' 'lame' 'libICE' 'libSM' 'libX11' 'libXaw' 'libXext' 'libXpm' 'libXt' 'libXv' 'libdv' 'libdvdread' 'libjpeg' 'libmpeg2' 'libogg' 'libpng' 'libtheora' 'libvorbis' 'libxml2' 'lzo2' 'mjpegtools' 'sdl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

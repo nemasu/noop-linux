@@ -5,7 +5,7 @@ NAME=imagemagick
 DESC="Provides functionalities about Internationalized Domain Name processing"
 
 #package version
-VERSION=6.9.2-8
+VERSION=6.9.6-2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('cairo' 'expat' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'harfbuzz' 'ilmbase' 'lcms2' 'libffi' 'libICE' 'libjpeg' 'liblqr' 'libpng' 'libSM' 'libwebp' 'libwmf' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libxml2' 'libXrender' 'libXt' 'openexr' 'pango' 'pcre' 'pixman' 'tiff' 'util-linux' 'xz' 'zlib')
+DEPS=('cairo' 'expat' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'graphviz' 'harfbuzz' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libXt' 'libffi' 'libjpeg' 'liblqr' 'libpng' 'libtool' 'libwebp' 'libwmf' 'libxcb' 'libxml2' 'pango' 'pcre' 'pixman' 'tiff' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,19 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.imagemagick.org/download/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -L -s "http://www.imagemagick.org/download/" | egrep "ImageMagick-[0-9\.-]+\.tar\.xz" | tail -n1 | sed -e 's/.*ImageMagick-\([0-9\.-]*\)\.tar\.xz.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
