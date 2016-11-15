@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=53.0.2785.116
-VERSION=53.0.2785.116
+DVERSION=54.0.2840.100
+VERSION=54.0.2840.100
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -52,7 +52,8 @@ function BuildAndInstall
   sed -i -e '/mthumb/d' ./third_party/ffmpeg/ffmpeg.gyp
   
   export CFLAGS="-march=armv6k -DUSE_EABI_HARDFLOAT $CFLAGS"
-  
+ 
+  #TODO update this for arm build 
   arch_specific_flags="
 		-Dtarget_arch=arm \
 		-Darmv7=0 \
@@ -72,10 +73,11 @@ function BuildAndInstall
   fi
 
   if [ "${ARCH}" == "x86_64" ]; then
-	 arch_specific_flags="
-		-Dclang=1 \
-		-Dclang_use_chrome_plugins=0 \
-		-Dtarget_arch=x64"
+	 local arch_specific_flags=(
+		'is_clang=true'
+		'clang_use_chrome_plugins=false'
+	 )
+#'target_arch=x64'
   fi
 
   	# Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
@@ -86,51 +88,38 @@ function BuildAndInstall
 	_google_default_client_id=89099530172.apps.googleusercontent.com
 	_google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ
 
-    
-     options=(
-	-Dwerror=
-	-Duse_system_protobuf=0
-	-Duse_sysroot=0
-	-Dlinux_use_bundled_gold=0
-    -Dlinux_use_bundled_binutils=0
-	-Dlinux_use_gold_flags=0
-	-Dgoogle_api_key=$_google_api_key 
-    -Dgoogle_default_client_id=$_google_default_client_id 
-    -Dgoogle_default_client_secret=$_google_default_client_secret 
-    -Dlogging_like_official_build=1
-	-Dproprietary_codecs=1
-	-Dlinux_link_libpci=1 
-	-Dlinux_link_libspeechd=1 
-	-Dlinux_link_gsettings=1 
-    -Dlinux_strip_binary=1 
-    -Drelease_extra_cflags="$CFLAGS" 
-    -Dproprietary_codecs=1 
-    -Duse_system_bzip2=1 
-    -Dffmpeg_branding=Chrome 
-    -Duse_system_ffmpeg=0 
-    -Duse_system_libevent=1 
-	-Denable_hangout_services_extension=1
-	-Duse_system_libvpx=0
-    -Duse_system_libjpeg=1 
-    -Duse_system_libpng=1 
-    -Duse_system_libxml=1 
-    -Duse_system_ssl=0 
-    -Duse_system_yasm=1 
-    -Duse_system_zlib=0 
-    -Duse_gconf=0
-	-Duse_mojo=0
-	-Ddisable_fatal_linker_warnings=1
-	-Ddisable_glibc=1
-    -Ddisable_sse2=1 ${arch_specific_flags})
-
-  # Use Python 2 - this is terrible -_-
-  if [ -e /usr/bin/python ];
-  then
-  	rm /usr/bin/python
-  fi
-  ln -s /usr/bin/python2 /usr/bin/python
-
-  if [ "${ARCH}" != "armv6l" ];
+   
+  local _flags=(
+    'clang_use_chrome_plugins=false'
+    'symbol_level=0'
+    'is_debug=false'
+    'fatal_linker_warnings=false'
+    'treat_warnings_as_errors=false'
+    'fieldtrial_testing_like_official_build=true'
+    'remove_webcore_debug_symbols=true'
+    'ffmpeg_branding="Chrome"'
+    'proprietary_codecs=true'
+    'link_pulseaudio=true'
+    'linux_use_bundled_binutils=false'
+    'use_allocator="none"'
+    'use_cups=true'
+    'use_gconf=false'
+    'use_gnome_keyring=false'
+    'use_gold=false'
+    'use_gtk3=false'
+    'use_kerberos=true'
+    'use_pulseaudio=true'
+    'use_sysroot=false'
+    'enable_hangout_services_extension=true'
+    'enable_widevine=false'
+    'enable_nacl=true'
+    'enable_nacl_nonsfi=true'
+    "google_api_key=\"${_google_api_key}\""
+    "google_default_client_id=\"${_google_default_client_id}\""
+    "google_default_client_secret=\"${_google_default_client_secret}\""
+  ) 
+  
+ if [ "${ARCH}" != "armv6l" ];
   then
 	# Prepare NaCL toolchain - this is way easier
 	python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator sync
@@ -158,8 +147,9 @@ function BuildAndInstall
   # https://groups.google.com/a/chromium.org/d/topic/chromium-packagers/9JX1N2nf4PU/discussion
   touch chrome/test/data/webui/i18n_process_css_test.html
 
-  build/linux/unbundle/replace_gyp_files.py "${options[@]}"
-  build/gyp_chromium --depth . "${options[@]}"
+  python2 tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]} ${arch_specific_flags[*]}"
+  out/Release/gn gen out/Release --args="${_flags[*]} ${arch_specific_flags[*]}" \
+      --script-executable=/usr/bin/python2
 
   #Bug? Opus has -Wno-#pragma-messages, i think the # is commenting the pragma-messages part out
   sed -i -e '/-Wno-/d' third_party/opus/opus.gyp
@@ -176,37 +166,29 @@ function BuildAndInstall
   install -Dm4755 -o root -g root out/Release/chrome_sandbox \
     /root/bldr-inst/usr/lib/chromium/chrome-sandbox
 
+  cp -a out/Release/{*.pak,*.bin,icudtl.dat} \
+     out/Release/locales \
+	 out/Release/gen/content/content_resources.pak \
+	 /root/bldr-inst/usr/lib/chromium/
 
-  cp out/Release/{*.pak,*.bin} /root/bldr-inst/usr/lib/chromium/
+  install -Dm644 out/Release/chrome.1 /root/bldr-inst/usr/share/man/man1/chromium.1
   
   if [ "${ARCH}" != "armv6l" ];
   then
-  	install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
 
   	cp out/Release/nacl_helper{,_bootstrap} out/Release/nacl_irt_*.nexe \
 		/root/bldr-inst/usr/lib/chromium/
-  
+
+	install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
+	mkdir -p /root/bldr-inst/usr/bin/
+	ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
+
     # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
 	strip /root/bldr-inst/usr/lib/chromium/chromedriver \
     	/root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap}
-
   fi
-
+  
   strip /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
-	
-  cp -a out/Release/locales out/Release/icudtl.dat /root/bldr-inst/usr/lib/chromium/
- 
-  if [ -e out/Release/natives_blob.bin ];
-  then
-  	cp -a out/Release/natives_blob.bin /root/bldr-inst/usr/lib/chromium/
-  fi
-
-  if [ -e out/Release/snapshot_blob.bin ];
-  then
-  	cp -a out/Release/snapshot_blob.bin /root/bldr-inst/usr/lib/chromium/
-  fi
-
-  install -Dm644 out/Release/chrome.1 /root/bldr-inst/usr/share/man/man1/chromium.1
 
   for size in 22 24 48 64 128 256; do
     install -Dm644 "chrome/app/theme/chromium/product_logo_$size.png" \
@@ -218,11 +200,6 @@ function BuildAndInstall
       /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
   done
 
-  mkdir -p /root/bldr-inst/usr/bin/
-  if [ "${ARCH}" != "armv6l" ];
-  then
-  	ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
-  fi
 }
 
 #Default HTTP curl new version detection
