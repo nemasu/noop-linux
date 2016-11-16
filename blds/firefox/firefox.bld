@@ -2,8 +2,8 @@ NAME=firefox
 
 #Description
 DESC="Standalone web browser from mozilla.org"
-VERSION=47.0.1
-DVERSION=47.0.1
+VERSION=50.0
+DVERSION=50.0
 ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
@@ -17,7 +17,7 @@ function BuildAndInstall
 {
 
   #build prereqs
-  for i in zip autoconf2.13; do
+  for i in zip autoconf2.13 rust; do
 	  pkgr -i $i;
   done
 
@@ -28,8 +28,6 @@ function BuildAndInstall
   _google_default_client_id=89099530172.apps.googleusercontent.com
   _google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ
 
-
-
   mv $BLDRTMPDIR/mozconfig .mozconfig
 
   echo -n "$_google_api_key" >google-api-key
@@ -38,19 +36,12 @@ function BuildAndInstall
   echo -n "$_google_default_client_id $_google_default_client_secret" >google-oauth-api-key
   echo "ac_add_options --with-google-oauth-api-keyfile=\"$PWD/google-oauth-api-key\"" >>.mozconfig
 
-  echo -n "$_mozilla_api_key" >mozilla-api-key
-  echo "ac_add_options --with-mozilla-api-keyfile=\"$PWD/mozilla-api-key\"" >>.mozconfig
+#echo -n "$_mozilla_api_key" >mozilla-api-key
+#echo "ac_add_options --with-mozilla-api-keyfile=\"$PWD/mozilla-api-key\"" >>.mozconfig
 
-  export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/firefox"
+   # GCC 6
+  CXXFLAGS+=" -fno-delete-null-pointer-checks -fno-schedule-insns2"
   export PYTHON="/usr/bin/python2"
-
-  pushd js/src
-  autoconf-2.13 old-configure.in
-  popd
-
-  pushd memory/jemalloc/src || die
-  WANT_AUTOCONF= autoconf
-  popd
 
   # Enable PGO
   export DISPLAY=:99
