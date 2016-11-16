@@ -963,7 +963,10 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 	fi
 
 	if [ "$BUILD" == "autotools" ]; then
-		./configure $CONF $EXTRACNF ${EXTRACONF}
+		if [ ! -e ./configure ] && [ -e ./autogen.sh ]; then
+            ./autogen.sh
+        fi
+        ./configure $CONF $EXTRACNF ${EXTRACONF}
 		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
 	fi
