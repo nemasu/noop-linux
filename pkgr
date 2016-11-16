@@ -981,6 +981,15 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
 	fi
+    if [ "$BUILD" == "python" ]; then
+        cd ..
+        DIR=`ls`
+        cp -r $DIR ${DIR}-python2
+        cd $DIR
+        python3 setup.py install --root=/root/bldr-inst/ --optimize=1
+        cd ../${DIR}-python2
+        python2 setup.py install --root=/root/bldr-inst/ --optimize=1
+    fi
 	if [ "$BUILD" == "custom" ]; then
 		BuildAndInstall;
 	fi

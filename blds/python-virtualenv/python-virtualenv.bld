@@ -1,23 +1,23 @@
 #package name
-NAME=
+NAME=python-virtualenv
 
 #Description
-DESC=
+DESC=""
 
 #package version
-VERSION=
+VERSION=15.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC=https://github.com/pypa/virtualenv/archive/${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#autotools, python, perl, cmake, custom
-BUILD=autotools
+#autotools, perl, cmake, custom
+BUILD=python
 
 # build/package dependancies
 DEPS=
@@ -38,19 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -L -s "https://pypi.python.org/pypi/virtualenv" | egrep -e "\/virtualenv-[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*\/virtualenv-\([0-9\.]*\)\.tar\.gz.*/\1/'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
