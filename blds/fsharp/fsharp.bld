@@ -1,17 +1,17 @@
 #package name
-NAME=libart-lgpl
+NAME=fsharp
 
 #Description
-DESC="A library for high-performance 2D graphics"
+DESC="The Open Edition of the F# compiler, core library and tools"
 
 #package version
-VERSION=2.3.21
+VERSION=4.0.1.20
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/libart_lgpl-2.3.21.tar.bz2
+SRC=https://github.com/fsharp/fsharp/archive/${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,19 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -s -L https://github.com/fsharp/fsharp/releases | egrep "\/[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*\/\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];

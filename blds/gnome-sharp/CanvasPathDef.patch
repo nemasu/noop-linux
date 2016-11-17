@@ -1,0 +1,22 @@
+diff -crB gnome-sharp-2.24.2-orig/gnome/CanvasPathDef.custom gnome-sharp-2.24.2/gnome/CanvasPathDef.custom
+*** gnome-sharp-2.24.2-orig/gnome/CanvasPathDef.custom	2010-10-10 03:01:29.000000000 +0900
+--- gnome-sharp-2.24.2/gnome/CanvasPathDef.custom	2016-11-17 16:36:12.632402921 +0900
+***************
+*** 21,29 ****
+  
+  		public static CanvasPathDef NewFromBpath (Art.Bpath bpath)
+  		{
+!                         IntPtr native_bpath = GLib.Marshaller.StructureToPtrAlloc (bpath);
+!                         CanvasPathDef result = new CanvasPathDef (gnome_canvas_path_def_new_from_bpath (native_bpath));
+! 			GLib.Marshaller.Free (native_bpath);
+  			return result;
+  		}
+  
+--- 21,27 ----
+  
+  		public static CanvasPathDef NewFromBpath (Art.Bpath bpath)
+  		{
+!             CanvasPathDef result = new CanvasPathDef (gnome_canvas_path_def_new_from_bpath (ref bpath));
+  			return result;
+  		}
+  

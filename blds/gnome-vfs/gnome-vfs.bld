@@ -1,0 +1,80 @@
+#package name
+NAME=gnome-vfs
+
+#Description
+DESC="The GNOME Virtual File System"
+
+#package version
+VERSION=2.24.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://download.gnome.org/sources/gnome-vfs/2.24/gnome-vfs-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    sed -i -s 's|$(srcdir)/auto-test|auto-test|' test/Makefile.am
+	libtoolize --force
+	gtkdocize
+	aclocal
+	autoconf
+	automake --add-missing
+	CFLAGS="$CFLAGS -fno-strict-aliasing" ./configure \
+        --prefix=/usr --sysconfdir=/etc \
+        --localstatedir=/var --disable-static \
+        --libexecdir=/usr/lib/gnome-vfs-2.0 \
+        --enable-samba --with-samba-includes=/usr/include/samba-4.0 \
+        --disable-hal --enable-avahi --disable-howl \
+        --disable-openssl --enable-gnutls
+	sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+	make -j${BLDR_CORES}
+    make GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=/root/bldr-inst install
+
+    install -d -m755 /root/bldr-inst/usr/share/gconf/schemas
+    gconf-merge-schema /root/bldr-inst/usr/share/gconf/schemas/gnome-vfs.schemas --domain gnome-vfs-2.0 /root/bldr-inst/etc/gconf/schemas/*.schemas
+    rm -f /root/bldr-inst/etc/gconf/schemas/*.schemas
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=https://download.gnome.org/sources/gnome-vfs/2.24/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

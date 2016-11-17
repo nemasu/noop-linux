@@ -1,23 +1,24 @@
 #package name
-NAME=libart-lgpl
+NAME=monodevelop
 
 #Description
-DESC="A library for high-performance 2D graphics"
+DESC="MonoDevelop is a cross platform IDE mostly aimed at Mono/.NET developers"
 
 #package version
-VERSION=2.3.21
+#VERSION=6.2.0.1413
+VERSION=20161117
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/libart_lgpl-2.3.21.tar.bz2
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,14 +32,21 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    if [ -z "$BLDR_CONTINUE" ]; then
+        git clone --depth=1 --recursive https://github.com/mono/monodevelop.git
+    fi
+    cd monodevelop
+    ./configure --prefix=/usr --profile=stable
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/
+	LISTURL=https://github.com/mono/monodevelop/releases
 	FILELIST=`GetFileList`
 	LATEST=0
 

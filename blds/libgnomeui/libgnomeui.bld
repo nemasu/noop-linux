@@ -1,17 +1,17 @@
 #package name
-NAME=libart-lgpl
+NAME=libgnomeui
 
 #Description
-DESC="A library for high-performance 2D graphics"
+DESC="User Interface library for GNOME"
 
 #package version
-VERSION=2.3.21
+VERSION=2.24.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/libart_lgpl-2.3.21.tar.bz2
+SRC=https://download.gnome.org/sources/libgnomeui/2.24/libgnomeui-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/
+	LISTURL=https://download.gnome.org/sources/libgnomeui/2.24/
 	FILELIST=`GetFileList`
 	LATEST=0
 

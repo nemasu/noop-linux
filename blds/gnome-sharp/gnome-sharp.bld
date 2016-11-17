@@ -1,23 +1,23 @@
 #package name
-NAME=libart-lgpl
+NAME=gnome-sharp
 
 #Description
-DESC="A library for high-performance 2D graphics"
+DESC="C# bindings to the core Gnome APIs"
 
 #package version
-VERSION=2.3.21
+VERSION=2.24.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/libart_lgpl-2.3.21.tar.bz2
+SRC=https://ftp.acc.umu.se/pub/gnome/sources/gnome-sharp/${VERSION:0:4}/gnome-sharp-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,14 +31,17 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./configure --prefix=/usr --sysconfdir=/etc
+    make
+    make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/
+	LISTURL=https://ftp.acc.umu.se/pub/gnome/sources/gnome-sharp/${VERSION:0:4}/
 	FILELIST=`GetFileList`
 	LATEST=0
 

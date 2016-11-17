@@ -1,0 +1,75 @@
+#package name
+NAME=libgnome
+
+#Description
+DESC="Common libraries for GNOME"
+
+#package version
+VERSION=2.32.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://download.gnome.org/sources/libgnome/2.32/libgnome-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    autoreconf -fi
+    ./configure --prefix=/usr --sysconfdir=/etc \
+        --localstatedir=/var --disable-esd
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    make -j${BLDR_CORES}
+   
+    make -C libgnome DESTDIR=/root/bldr-inst install
+    make -C monikers DESTDIR=/root/bldr-inst install
+    for dir in doc gnome-data po schemas; do
+        make -C $dir GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=/root/bldr-inst install
+    done
+
+    mkdir -p /root/bldr-inst/usr/share/gconf/schemas
+    gconf-merge-schema /root/bldr-inst/usr/share/gconf/schemas/libgnome.schemas --domain libgnome-2.0 /root/bldr-inst/etc/gconf/schemas/*.schemas
+    rm -f /root/bldr-inst/etc/gconf/schemas/*.schemas
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=https://download.gnome.org/sources/libgnome/2.32/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}

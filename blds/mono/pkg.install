@@ -1,0 +1,7 @@
+function postinst() {
+    cert-sync &> /dev/null
+}
+
+function postup() {
+    postinst
+}

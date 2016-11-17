@@ -1,17 +1,17 @@
 #package name
-NAME=libart-lgpl
+NAME=gnome-mime-data
 
 #Description
-DESC="A library for high-performance 2D graphics"
+DESC="The base MIME and Application database for GNOME"
 
 #package version
-VERSION=2.3.21
+VERSION=2.18.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/libart_lgpl-2.3.21.tar.bz2
+SRC=http://ftp.acc.umu.se/pub/gnome/sources/gnome-mime-data/2.18/gnome-mime-data-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/
+	LISTURL=http://ftp.acc.umu.se/pub/gnome/sources/gnome-mime-data/2.18/
 	FILELIST=`GetFileList`
 	LATEST=0
 

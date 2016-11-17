@@ -1,23 +1,23 @@
 #package name
-NAME=libart-lgpl
+NAME=gtk-sharp-2
 
 #Description
-DESC="A library for high-performance 2D graphics"
+DESC="C# bindings for GTK+2"
 
 #package version
-VERSION=2.3.21
+VERSION=2.12.42
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/libart_lgpl-2.3.21.tar.bz2
+SRC=https://download.mono-project.com/sources/gtk-sharp212/gtk-sharp-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,14 +31,18 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    ./configure --prefix=/usr --sysconfdir=/etc
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.gnome.org/pub/GNOME/sources/libart_lgpl/2.3/
+	LISTURL=https://download.mono-project.com/sources/gtk-sharp212/
 	FILELIST=`GetFileList`
 	LATEST=0
 
