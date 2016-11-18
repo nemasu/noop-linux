@@ -5,8 +5,8 @@ NAME=gdk-pixbuf
 DESC="Image loading and manipulation library"
 
 #package version
-VERSION=2.31.4
-DVERSION=2.31.4
+VERSION=2.36.0
+DVERSION=2.36.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
