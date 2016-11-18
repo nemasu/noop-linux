@@ -5,8 +5,7 @@ NAME=monodevelop
 DESC="MonoDevelop is a cross platform IDE mostly aimed at Mono/.NET developers"
 
 #package version
-#VERSION=6.2.0.1413
-VERSION=20161117
+VERSION=6.2.0.1413
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -27,20 +26,21 @@ DEPS=
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('gnome-sharp' 'mono' 'mono-addins')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
 function BuildAndInstall
 {
-    if [ -z "$BLDR_CONTINUE" ]; then
-        git clone --depth=1 --recursive https://github.com/mono/monodevelop.git
-    fi
-    cd monodevelop
-    ./configure --prefix=/usr --profile=stable
-    make -j${BLDR_CORES}
-    make DESTDIR=/root/bldr-inst install
+	if [ ! -e "./monodevelop" ]; then
+		git clone --recursive https://github.com/mono/monodevelop.git
+	fi
+	cd monodevelop
+	git checkout monodevelop-$VERSION
+	./configure --prefix=/usr --profile=stable --enable-release
+	make
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

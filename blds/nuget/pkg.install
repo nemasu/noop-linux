@@ -1,0 +1,10 @@
+function postinst() {
+	cert-sync /etc/ssl/ca-bundle.crt &> /dev/null
+    certmgr -ssl -m https://go.microsoft.com &> /dev/null
+    certmgr -ssl -m https://nugetgallery.blob.core.windows.net &> /dev/null
+    certmgr -ssl -m https://nuget.org &> /dev/null
+}
+
+function postup() {
+	postinst
+}

@@ -1,17 +1,17 @@
 #package name
-NAME=gnome-sharp
+NAME=referenceassemblies-pcl
 
 #Description
-DESC="C# bindings to the core Gnome APIs"
+DESC=".NET Portable Class Library reference assemblies"
 
 #package version
-VERSION=2.24.2
+VERSION=4.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://ftp.acc.umu.se/pub/gnome/sources/gnome-sharp/${VERSION:0:4}/gnome-sharp-${VERSION}.tar.bz2
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -23,25 +23,26 @@ BUILD=custom
 DEPS=
 
 # 'no' to skip calls to strip
-STRIP=
+STRIP=no
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('gtk-sharp2')
+PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr --sysconfdir=/etc
-    make
-    make DESTDIR=/root/bldr-inst install
+	wget http://download.mono-project.com/repo/centos/r/referenceassemblies-pcl/referenceassemblies-pcl-${VERSION}-0.noarch.rpm
+	rpm2cpio *.rpm | bsdtar -xf -
+	rm *.rpm
+	cp -r * /root/bldr-inst
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://ftp.acc.umu.se/pub/gnome/sources/gnome-sharp/${VERSION:0:4}/
+	LISTURL=
 	FILELIST=`GetFileList`
 	LATEST=0
 

@@ -1,0 +1,44 @@
+#package name
+NAME=xamarin-referenceassemblies-pcl
+
+#Description
+DESC=
+
+#package version
+VERSION=2014.04.14
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/directhex/xamarin-referenceassemblies-pcl/archive/upstream/${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	mkdir -p /root/bldr-inst/usr/lib/mono/xbuild-frameworks/.NETPortable/
+	cp -r v* /root/bldr-inst/usr/lib/mono/xbuild-frameworks/.NETPortable/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	echo "$NAME old"
+}

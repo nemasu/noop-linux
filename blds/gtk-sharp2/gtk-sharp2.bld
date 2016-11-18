@@ -1,5 +1,5 @@
 #package name
-NAME=gtk-sharp-2
+NAME=gtk-sharp2
 
 #Description
 DESC="C# bindings for GTK+2"
