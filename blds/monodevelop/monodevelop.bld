@@ -41,6 +41,7 @@ function BuildAndInstall
 	./configure --prefix=/usr --profile=stable --enable-release
 	make
 	make DESTDIR=/root/bldr-inst install
+    install -Dm755 main/external/nuget-binary/NuGet.exe /root/bldr-inst/usr/lib/monodevelop/AddIns/MonoDevelop.PackageManagement/NuGet.exe
 }
 
 #Default HTTP curl new version detection
