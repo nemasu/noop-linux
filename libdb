@@ -716,16 +716,6 @@ discover,libDiscoverCommon.so
 discover,libDiscoverNotifierDeclarativePlugin.so
 discover,libDiscoverNotifiers.so
 discover,libdiscoverdeclarativeplugin.so
-docbook-xsl,custom.css.source.xml
-docbook-xsl,docbook.css.source.xml
-docbook-xsl,glossary.sort.xml
-docbook-xsl,highlight.source.xml
-docbook-xsl,process.empty.source.toc.xml
-docbook-xsl,process.source.toc.xml
-docbook-xsl,refentry.source.fallback.profile.xml
-docbook-xsl,refentry.source.name.profile.enabled.xml
-docbook-xsl,refentry.source.name.profile.xml
-docbook-xsl,refentry.source.name.suppress.xml
 dolphin,dolphinpart.so
 dolphin,kcm_dolphingeneral.so
 dolphin,kcm_dolphinnavigation.so
@@ -5680,7 +5670,7 @@ libxslt,libexslt.so.0
 libxslt,libexslt.so.0.8.17
 libxslt,libxslt.so
 libxslt,libxslt.so.1
-libxslt,libxslt.so.1.1.28
+libxslt,libxslt.so.1.1.29
 libxslt,libxsltmod.so
 libzip,libzip.so
 libzip,libzip.so.2

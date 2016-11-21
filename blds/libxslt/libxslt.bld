@@ -5,8 +5,8 @@ NAME=libxslt
 DESC="XML stylesheet transformation library"
 
 #package version
-VERSION=1.1.28-2
-DVERSION=1.1.28
+VERSION=1.1.29
+DVERSION=1.1.29
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

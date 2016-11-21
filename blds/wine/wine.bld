@@ -5,8 +5,8 @@ NAME=wine
 DESC="A compatibility layer for running Windows programs"
 
 #package version
-VERSION=1.9.11
-DVERSION=1.9.11
+VERSION=1.9.23
+DVERSION=1.9.23
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -36,19 +36,21 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-		cd ..
-        mv `ls` wine
-        mkdir -p {wine32-build,wine64-build}
+        cd ..
+        if [ -z "$BLDR_CONTINUE" ]; then
+            mv `ls` wine
+            mkdir -p {wine32-build,wine64-build}
 
-		#Let's try staging!
-		STG_URL=https://github.com/wine-compholio/wine-staging/archive/v${DVERSION}.tar.gz
-		wget ${STG_URL}
-		tar xf *.gz
-		rm *.gz
-		cd wine-staging-*
-		cd patches
-		./patchinstall.sh DESTDIR=../../wine --all
-		cd ../../
+            #Let's try staging!
+            STG_URL=https://github.com/wine-compholio/wine-staging/archive/v${DVERSION}.tar.gz
+            wget ${STG_URL}
+            tar xf *.gz
+            rm *.gz
+            cd wine-staging-*
+            cd patches
+            ./patchinstall.sh DESTDIR=../../wine --all
+            cd ../../
+        fi;
         
         export CFLAGS="${CFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"
         export CXXFLAGS="${CXXFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"

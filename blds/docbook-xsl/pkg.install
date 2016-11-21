@@ -1,29 +1,32 @@
 function postinst() {
-  dir=`ls /usr/share/xml/docbook/ | grep xsl-stylesheets`
 
-  if [ ! -f /etc/xml/catalog ]; then
-    xmlcatalog --noout --create /etc/xml/catalog
-  fi
+	if [ ! -d /etc/xml ]; then
+		mkdir /etc/xml;
+    fi
 
-  xmlcatalog --noout --add "rewriteSystem" \
-    "http://docbook.sourceforge.net/release/xsl/${_NEW}" \
-    "/usr/share/xml/docbook/$dir" \
-    /etc/xml/catalog
+	if [ ! -f /etc/xml/catalog ]; then
+    	xmlcatalog --noout --create /etc/xml/catalog
+	fi &&
 
-  xmlcatalog --noout --add "rewriteURI" \
-    "http://docbook.sourceforge.net/release/xsl/${_NEW}" \
-    "/usr/share/xml/docbook/$dir" \
-    /etc/xml/catalog &&
+	xmlcatalog --noout --add "rewriteSystem" \
+        "http://docbook.sourceforge.net/release/xsl/1.79.1" \
+        "/usr/share/xml/docbook/xsl-stylesheets-1.79.1" \
+        /etc/xml/catalog
 
-  xmlcatalog --noout --add "rewriteSystem" \
-    "http://docbook.sourceforge.net/release/xsl/current" \
-    "/usr/share/xml/docbook/$dir" \
-    /etc/xml/catalog &&
+	xmlcatalog --noout --add "rewriteURI" \
+        "http://docbook.sourceforge.net/release/xsl/1.79.1" \
+        "/usr/share/xml/docbook/xsl-stylesheets-1.79.1" \
+        /etc/xml/catalog
 
-  xmlcatalog --noout --add "rewriteURI" \
-    "http://docbook.sourceforge.net/release/xsl/current" \
-    "/usr/share/xml/docbook/$dir" \
-    /etc/xml/catalog
+	xmlcatalog --noout --add "rewriteSystem" \
+        "http://docbook.sourceforge.net/release/xsl/current" \
+        "/usr/share/xml/docbook/xsl-stylesheets-1.79.1" \
+        /etc/xml/catalog
+
+	xmlcatalog --noout --add "rewriteURI" \
+        "http://docbook.sourceforge.net/release/xsl/current" \
+        "/usr/share/xml/docbook/xsl-stylesheets-1.79.1" \
+        /etc/xml/catalog
 }
 
 function postrm() {
