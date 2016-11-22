@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libgcrypt' 'libxml2' 'python2')
+DEPS=('glibc' 'libgcrypt' 'libgpg-error' 'libxml2' 'python2' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'glib2' 'glibc' 'gtk+2')
 
 # 'no' to skip calls to strip
 STRIP=

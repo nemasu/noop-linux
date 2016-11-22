@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('acl' 'avahi' 'dbus' 'dbus-glib' 'gamin' 'gcc-libs' 'gconf' 'glib2' 'glibc' 'gmp' 'gnutls' 'krb5' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libidn' 'libtasn1' 'libxml2' 'nettle' 'p11-kit' 'pcre' 'systemd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

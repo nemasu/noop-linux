@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('cairo' 'fontconfig' 'freetype2' 'giflib' 'glib2' 'glibc' 'libX11' 'libXrender' 'libjpeg' 'libpng' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

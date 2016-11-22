@@ -22,7 +22,7 @@ EXTRACONF="--with-x11"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glib2' 'glibc' 'libffi' 'libjpeg' 'libpng' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'pcre' 'tiff' 'xz' 'zlib')
+DEPS=('glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libffi' 'libjpeg' 'libpng' 'libxcb' 'pcre' 'tiff' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
