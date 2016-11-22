@@ -7251,8 +7251,8 @@ prison-frameworks,libKF5Prison.so
 prison-frameworks,libKF5Prison.so.1
 prison-frameworks,libKF5Prison.so.1.2.1
 procps,libprocps.so
-procps,libprocps.so.5
-procps,libprocps.so.5.0.0
+procps,libprocps.so.6
+procps,libprocps.so.6.0.0
 projectm,libprojectM-qt.so
 projectm,libprojectM-qt.so.1
 projectm,libprojectM-qt.so.1.10

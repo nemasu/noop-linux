@@ -5,8 +5,8 @@ NAME=procps
 DESC="Programs for monitoring processes"
 
 #package version
-VERSION=3.3.11-1
-DVERSION=3.3.11
+VERSION=3.3.12
+DVERSION=3.3.12
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -40,8 +40,6 @@ function BuildAndInstall
 	./configure $STDUSRCONF $EXTRACONF
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
-	rm /root/bldr-inst/usr/bin/kill
-
 }
 
 #Default HTTP curl new version detection
