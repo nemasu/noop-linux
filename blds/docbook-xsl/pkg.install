@@ -6,7 +6,7 @@ function postinst() {
 
 	if [ ! -f /etc/xml/catalog ]; then
     	xmlcatalog --noout --create /etc/xml/catalog
-	fi &&
+	fi
 
 	xmlcatalog --noout --add "rewriteSystem" \
         "http://docbook.sourceforge.net/release/xsl/1.79.1" \
