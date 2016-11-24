@@ -5,7 +5,7 @@ NAME=cmake
 DESC="A cross-platform open-source make system"
 
 #package version
-VERSION=3.6.1
+VERSION=3.7.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

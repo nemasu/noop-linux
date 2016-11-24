@@ -5483,8 +5483,8 @@ libutempter,libutempter.so
 libutempter,libutempter.so.0
 libutempter,libutempter.so.1.1.6
 libuv,libuv.so
-libuv,libuv.so.11
-libuv,libuv.so.11.0.0
+libuv,libuv.so.1
+libuv,libuv.so.1.0.0
 libva,dummy_drv_video.so
 libva,libva-drm.so
 libva,libva-drm.so.1
