@@ -35,21 +35,27 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	wget http://llvm.org/releases/${DVERSION}/cfe-${DVERSION}.src.tar.xz
-	tar xf cfe-${DVERSION}.src.tar.xz
-	mv cfe-${DVERSION}.src tools/clang
+	if [ -z "$BLDR_CONTINUE" ]; then
+		wget http://llvm.org/releases/${DVERSION}/cfe-${DVERSION}.src.tar.xz
+		tar xf cfe-${DVERSION}.src.tar.xz
+		mv cfe-${DVERSION}.src tools/clang
 
-	wget http://llvm.org/releases/${DVERSION}/compiler-rt-${DVERSION}.src.tar.xz
-	tar xf compiler-rt-${DVERSION}.src.tar.xz
-	mv compiler-rt-${DVERSION}.src projects/compiler-rt
+		wget http://llvm.org/releases/${DVERSION}/compiler-rt-${DVERSION}.src.tar.xz
+		tar xf compiler-rt-${DVERSION}.src.tar.xz
+		mv compiler-rt-${DVERSION}.src projects/compiler-rt
 
-	wget http://llvm.org/releases/${DVERSION}/clang-tools-extra-${DVERSION}.src.tar.xz
-	tar xf clang-tools-extra-${DVERSION}.src.tar.xz
-	mv clang-tools-extra-${DVERSION}.src tools/clang/tools/extra
+		wget http://llvm.org/releases/${DVERSION}/clang-tools-extra-${DVERSION}.src.tar.xz
+		tar xf clang-tools-extra-${DVERSION}.src.tar.xz
+		mv clang-tools-extra-${DVERSION}.src tools/clang/tools/extra
+
+		wget http://llvm.org/releases/${DVERSION}/lldb-${DVERSION}.src.tar.xz
+		tar xf lldb-${DVERSION}.src.tar.xz
+		mv lldb-${DVERSION}.src tools/lldb
+	fi
 
 	mkdir -p build && cd build
 
-	cmake .. \
+	[ ! -e ./Makefile ] && cmake .. \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DLLVM_BUILD_LLVM_DYLIB=ON \
@@ -61,25 +67,30 @@ function BuildAndInstall
 		-DLLVM_BUILD_DOCS=OFF \
 		-DLLVM_ENABLE_SPHINX=OFF \
 		-DLLVM_ENABLE_DOXYGEN=OFF \
+		-DLLDB_DISABLE_LIBEDIT=1 \
 		-DSPHINX_WARNINGS_AS_ERRORS=OFF \
 		-DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi) \
 		-DLLVM_BINUTILS_INCDIR=/usr/include
 
-	make -j3
+	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 
-	cd tools/clang
-	make DESTDIR=/root/bldr-inst install
+	make -C tools/clang DESTDIR=/root/bldr-inst install
+	make -C tools/lldb DESTDIR=/root/bldr-inst install
+	make -C projects/compiler-rt DESTDIR=/root/bldr-inst install
+	make -C tools/clang/tools/extra DESTDIR=/root/bldr-inst install
 
 	#llvm-libs package
 	PushScripts
 	rm -rf /root/llvm-lib-install && mkdir -p /root/llvm-lib-install/usr/lib/
 	pushd /root/llvm-lib-install
     
-	find /root/bldr-inst/usr/lib/ -name "*.so" -exec mv -v {} /root/llvm-lib-install/usr/lib/ \;
-	
+	find /usr/lib -regextype sed -regex ".*so[0-9\.]*" -exec mv -v {} /root/llvm-lib-install/usr/lib/ \;
+
+	set +e
 	find {,usr/}{bin,lib,sbin} -type f -exec strip --strip-debug '{}' ';'
 	find {,usr/}{bin,sbin} -type f -exec strip --strip-all '{}' ';'
+	set -e
 	
 	pkgr -genmeta llvm-libs $VERSION
 	pkgr -genpkg
