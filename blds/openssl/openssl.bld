@@ -5,14 +5,13 @@ NAME=openssl
 DESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 
 #package version
-VERSION=1.1.0c
-DVERSION=1.1.0c
+VERSION=1.0.2j
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.openssl.org/source/openssl-${DVERSION}.tar.gz
+SRC=http://www.openssl.org/source/openssl-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -47,7 +46,7 @@ function BuildAndInstall
 
 	./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib --openssldir=/etc/ssl \
 			shared threads enable-idea enable-mdc2 enable-rc5 disable-deprecated enable-camellia enable-zlib enable-md2 ${optflags} \
-			--api=1.1.0 \
+			-DOPENSSL_NO_TLS1_2_CLIENT \
 			enable-ec_nistp_64_gcc_128 enable-sctp enable-ec enable-asm enable-rfc3779 enable-heartbeats \
 			disable-deprecated \
 			-Wa,--noexecstack "${CFLAGS}" "${LDFLAGS}" \
@@ -55,18 +54,18 @@ function BuildAndInstall
 			enable-ssl3 \
 			enable-ssl3-method \
 			"${openssltarget}"
-
 	make depend
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst MANDIR=/usr/share/man install
+	make -j${BLDR_CORES} || true #Returns 2 for some reason
+	make INSTALL_PREFIX=/root/bldr-inst MANDIR=/usr/share/man install
 
 }
 
 function Detect
 {
-	LATEST=`curl -L -s https://www.openssl.org/source/ | egrep "openssl-1\.1\.0.\.tar\.gz" | sed -e 's/.*openssl-\(1\.1\.0.\)\.tar\.gz.*/\1/g'`
+	#Only checkes 1.0.2 series
+	LATEST=`curl -L -s https://www.openssl.org/source/ | egrep "openssl-1\.0\.2.\.tar\.gz" | sed -e 's/.*openssl-\(1\.0\.2.\)\.tar\.gz.*/\1/g'`
 
-	vercomp $DVERSION $LATEST
+	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
