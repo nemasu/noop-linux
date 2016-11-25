@@ -1,47 +1,44 @@
 #package name
-NAME=cmake
+NAME=lttng-ust
 
 #Description
-DESC="A cross-platform open-source make system"
+DESC="Open source tracing framework for Linux."
 
 #package version
-VERSION=3.7.0
+VERSION=2.8.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://cmake.org/files/v${VERSION:0:3}/cmake-${VERSION}.tar.gz
+SRC=http://lttng.org/files/lttng-ust/lttng-ust-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+#autotools, python, perl, cmake, custom
+BUILD=autotools
 
 # build/package dependancies
-DEPS=('jsoncpp' 'curl' 'expat' 'gcc-libs' 'glibc' 'libarchive' 'ncurses' 'qt' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('jsoncpp')
+PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	./configure --prefix=/usr --datadir=/share --docdir=/share/doc --mandir=/share/man --system-libs --qt-gui
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.cmake.org/cmake/resources/software.html
+	LISTURL=https://lttng.org/download/
 	FILELIST=`GetFileList`
 	LATEST=0
 

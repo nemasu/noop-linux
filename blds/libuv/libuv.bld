@@ -5,20 +5,19 @@ NAME=libuv
 DESC="Multi-platform support library with a focus on asynchronous I/O"
 
 #package version
-VERSION=0.11.25
-DVERSION=0.11.25
+VERSION=1.10.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://libuv.org/dist/v${DVERSION}/libuv-v${DVERSION}.tar.gz
+SRC=https://github.com/libuv/libuv/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('glibc')
@@ -32,30 +31,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	sh autogen.sh
-	./configure $STDUSRCONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://libuv.org/dist/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/v//g; s/\/.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -s -L "https://github.com/libuv/libuv/releases" | egrep "v[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
