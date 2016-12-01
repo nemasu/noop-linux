@@ -8901,6 +8901,8 @@ sqlite,libtclsqlite3.so
 startup-notification,libstartup-notification-1.so
 startup-notification,libstartup-notification-1.so.0
 startup-notification,libstartup-notification-1.so.0.0.0
+stfl,libstfl.so
+stfl,libstfl.so.0.23
 strigi,libsearchclient.so
 strigi,libsearchclient.so.0
 strigi,libsearchclient.so.0.7.8

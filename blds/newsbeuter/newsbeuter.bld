@@ -5,7 +5,7 @@ NAME=newsbeuter
 DESC="A RSS feed reader for the text console with special Podcast support"
 
 #package version
-VERSION=20160303
+VERSION=20161201
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
