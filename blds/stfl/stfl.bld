@@ -36,6 +36,9 @@ function BuildAndInstall
 	sed -i -e 's|ncursesw/||g' stfl_internals.h
 	make -j${BLDR_CORES}
 	make prefix=/usr DESTDIR=/root/bldr-inst install
+    pushd /root/bldr-inst/usr/lib
+    ln -s libstfl.so.0.23 libstfl.so.0
+    popd
 }
 
 #Default HTTP curl new version detection
