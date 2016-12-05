@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('jsoncpp' 'curl' 'expat' 'gcc-libs' 'glibc' 'libarchive' 'ncurses' 'qt' 'zlib')
+DEPS=('jsoncpp' 'curl' 'expat' 'gcc-libs' 'glibc' 'libarchive' 'libuv' 'ncurses' 'qt' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

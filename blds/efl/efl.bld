@@ -21,7 +21,7 @@ EXTRACONF="--enable-systemd"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('printproto' 'bullet' 'dbus' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'gdbm' 'giflib' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'harfbuzz' 'ibus' 'json-c' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXp' 'libXrandr' 'libXrender' 'libXtst' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libsndfile' 'libxcb' 'libxshmfence' 'luajit' 'mesalib' 'openjpeg' 'openssl' 'orc' 'pcre' 'pulseaudio' 'systemd' 'tiff' 'util-linux' 'xz' 'zlib')
+DEPS=('printproto' 'bullet' 'cairo' 'dbus' 'elementary' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'giflib' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'harfbuzz' 'ibus' 'libX11' 'libXScrnSaver' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXtst' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libraw' 'librsvg' 'libspectre' 'libunwind' 'libxcb' 'libxshmfence' 'luajit' 'lz4' 'mesalib' 'openjpeg' 'openssl' 'orc' 'pcre' 'poppler' 'systemd' 'tiff' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
