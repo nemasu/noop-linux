@@ -5,8 +5,8 @@ NAME=dovecot
 DESC="An IMAP and POP3 server written with security primarily in mind"
 
 #package version
-VERSION=2.2.21-1
-DVERSION=2.2.21
+VERSION=2.2.27
+DVERSION=2.2.27
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -57,7 +57,7 @@ function BuildAndInstall
 	--with-lz4 \
 	--with-libcap \
 	--with-docs #--help
-  make -j3
+  make -j${BLDR_CORES}
 	
   make DESTDIR=/root/bldr-inst install
 

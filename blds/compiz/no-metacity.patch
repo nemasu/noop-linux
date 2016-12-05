@@ -1,0 +1,23 @@
+diff -crB compiz-0.9.13.1-orig/gtk/window-decorator/gwd-settings-storage.c compiz-0.9.13.1/gtk/window-decorator/gwd-settings-storage.c
+*** compiz-0.9.13.1-orig/gtk/window-decorator/gwd-settings-storage.c	2016-11-12 01:20:40.000000000 +0900
+--- compiz-0.9.13.1/gtk/window-decorator/gwd-settings-storage.c	2016-12-05 15:46:52.322581391 +0900
+***************
+*** 190,195 ****
+--- 190,196 ----
+  void
+  update_metacity_theme (GWDSettingsStorage *storage)
+  {
++ #ifdef USE_METACITY
+      gboolean use_metacity_theme;
+      gint metacity_theme_type;
+      gchar *metacity_theme_name;
+***************
+*** 220,225 ****
+--- 221,227 ----
+                                           metacity_theme_type, metacity_theme_name);
+  
+      g_free (metacity_theme_name);
++ #endif
+  }
+  
+  void

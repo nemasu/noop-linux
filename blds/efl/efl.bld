@@ -5,8 +5,8 @@ NAME=efl
 DESC="Enlightenment Foundation Libraries"
 
 #package version
-VERSION=1.13.1-1
-DVERSION=1.13.1
+VERSION=1.18.3
+DVERSION=1.18.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

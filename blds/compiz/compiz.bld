@@ -5,7 +5,7 @@ NAME=compiz
 DESC="Compositing window manager for X Windows"
 
 #package version
-VERSION=0.9.12.1
+VERSION=0.9.13.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -41,7 +41,7 @@ function BuildAndInstall
 	# Fix Python build directory with CMake 3.2
 	sed -i 's/${PY_BUILD_DIR}/lib/g' compizconfig/ccsm/CMakeLists.txt
 
-	mkdir build; cd build
+	mkdir -p build; cd build
 
 	cmake .. \
 		-DCMAKE_BUILD_TYPE="Release" \
@@ -55,6 +55,7 @@ function BuildAndInstall
 		-DUSE_GCONF=Off \
 		-DUSE_GSETTINGS=On \
 		-DCOMPIZ_BUILD_TESTING=Off \
+		-DBUILD_METACITY=Off \
 		-DCOMPIZ_WERROR=Off \
 		-DCOMPIZ_DEFAULT_PLUGINS="composite,opengl,decor,resize,place,move,ccp"
 
