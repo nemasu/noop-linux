@@ -424,28 +424,38 @@ function DoNewconfig() {
 	if [ $NUM -gt 0 ]; then
 		echo "You have $NUM files that need updating."
 		echo "What would you like to do?"
-		read -p "Overwrite all old files(a), Quit(q): " INPUT
+		read -p "Overwrite all old files(a), Quit(q), Wizard(w): " INPUT
 		if [ "$INPUT" == "q" ]; then
 			exit 0
 		else
-			if [ "$INPUT" == "a" ];
-			then
-				for i in `cat $NEWCONF`; do
-					if [ -e "$i" ]; then
-						OLD=`echo "$i" | sed 's/\.new$//g'`
-						mv $i $OLD
-					else
-						echo "$i not found, skipping.."
-					fi
-					
-					let LOC=`grep -n "$i" $NEWCONF | sed 's/:/ /;' | awk '{print $1;}'`
-					$sed -i -e "${LOC}d" $NEWCONF
-				done
-			else
-				echo "Invalid input, exiting..."
-				exit 1
-			fi
-		fi
+            for i in `cat $NEWCONF`; do
+                if [ -e "$i" ]; then
+                    OLD=`echo "$i" | sed 's/\.new$//g'`
+                    if [ "$INPUT" == "a" ]; then
+                        mv -v "$i" "$OLD"
+                    elif [ "$INPUT" == "w" ]; then
+                        git diff "$OLD" "$i"
+                        read -p "(k)eep yours or (r)eplace with new?: " WATDO
+                        if [ "$WATDO" == "k" ]; then
+                            rm -v "$i"
+                        elif [ "$WATDO" == "r" ]; then
+                            mv -v "$i" "$OLD"
+                        else
+                            echo "Invalid input, exiting..."
+                            exit 1
+                        fi
+                    else
+                        echo "Invalid input, exiting..."
+                        exit 1
+                    fi
+                else
+                    echo "$i not found, skipping.."
+                fi
+                
+                let LOC=`grep -n "$i" $NEWCONF | sed 's/:/ /;' | awk '{print $1;}'`
+                $sed -i -e "${LOC}d" $NEWCONF
+            done
+        fi
 	else
 		echo "No files need updating."
 	fi
