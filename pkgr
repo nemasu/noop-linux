@@ -387,7 +387,7 @@ function DoSync() {
 	fi
 	$echo
 	$echo -ne "${Cyan}Generating packages list..."
-	curl -s -L $HOST/packages/${ARCH}/ | $grep -E "href=\".+.pkg\"" | $sed 's/href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
+	curl -s -L $HOST/packages/${ARCH}/ | $grep -E "href=\".+.pkg\"" | $sed 's/.*href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
 	$echo -e "${Green}done."
 	$echo
 	$echo -en "${Cyan}Generating deps list..."
