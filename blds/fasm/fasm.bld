@@ -1,0 +1,87 @@
+#package name
+NAME=fasm
+
+#Description
+DESC="flat assembler - Open source assembly language compiler."
+
+#package version
+VERSION=1.71.58
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://flatassembler.net/fasm-${VERSION}.tgz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    ./fasm source/libc/fasm.asm
+    gcc -m32 -L/usr/lib32 source/libc/fasm.o -o source/libc/fasm
+
+    for i in listing prepsrc symbols; do
+        ./source/libc/fasm tools/libc/$i.asm $i.o
+		gcc -m32 -o $i $i.o
+    done
+
+	mkdir -p /root/bldr-inst/usr/bin
+    mkdir -p /root/bldr-inst/usr/share/licenses/fasm
+    mkdir -p /root/bldr-inst/usr/share/doc/fasm/examples/elfexe/dynamic
+    mkdir -p /root/bldr-inst/usr/share/doc/fasm/examples/libcdemo
+    mkdir -p /root/bldr-inst/usr/share/doc/fasm/examples/elfobj
+    
+	cp -v source/libc/fasm /root/bldr-inst/usr/bin
+    
+	for i in listing prepsrc symbols; do
+        cp -v $i /root/bldr-inst/usr/bin/fasm-${i}
+    done
+
+    cp -v fasm.txt whatsnew.txt /root/bldr-inst/usr/share/doc/fasm
+    cp -v examples/elfexe/*.asm /root/bldr-inst/usr/share/doc/fasm/examples/elfexe/
+    cp -v examples/elfexe/dynamic/*.asm /root/bldr-inst/usr/share/doc/fasm/examples/elfexe/dynamic
+    cp -v examples/elfexe/dynamic/*.inc /root/bldr-inst/usr/share/doc/fasm/examples/elfexe/dynamic
+    cp -v examples/elfobj/*.asm /root/bldr-inst/usr/share/doc/fasm/examples/elfobj/
+    cp -v examples/libcdemo/*.asm /root/bldr-inst/usr/share/doc/fasm/examples/libcdemo/
+    cp -v examples/libcdemo/*.inc /root/bldr-inst/usr/share/doc/fasm/examples/libcdemo/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=https://flatassembler.net/download.php
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
