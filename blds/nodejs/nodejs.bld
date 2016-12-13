@@ -1,0 +1,79 @@
+#package name
+NAME=nodejs
+
+#Description
+DESC="JavaScript runtime built on Chrome's V8 JavaScript engine."
+
+#package version
+VERSION=7.2.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://nodejs.org/dist/v${VERSION}/node-v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    find -type f -exec sed \
+        -e 's_^#!/usr/bin/env python$_&2_' \
+        -e 's_^\(#!/usr/bin/python2\).[45]$_\1_' \
+        -e 's_^#!/usr/bin/python$_&2_' \
+        -e 's_^\( *exec \+\)python\( \+.*\)$_\1python2\2_'\
+        -e 's_^\(.*\)python\( \+-c \+.*\)$_\1python2\2_'\
+        -e "s_'python'_'python2'_" -i {} \;
+    find test/ -type f -exec sed 's_python _python2 _' -i {} \;
+
+    export PYTHON=python2
+    ./configure \
+        --prefix=/usr \
+        --with-intl=system-icu \
+        --shared-openssl \
+        --shared-zlib \
+        --shared-libuv
+
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LISTURL=https://nodejs.org/en/download/current/
+	FILELIST=`GetFileList`
+	LATEST=0
+
+	for i in ${FILELIST[@]};
+	do
+			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			vercomp $LATEST $CURVER
+			if [ $? -eq 2 ];
+			then
+					LATEST=$CURVER
+			fi
+	done
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
