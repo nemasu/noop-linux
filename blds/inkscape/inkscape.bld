@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('aspell' 'atk' 'atkmm' 'cairo' 'cairomm' 'fontconfig' 'freetype2' 'gc' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'glibmm' 'gsl' 'gtk+2' 'gtkmm2' 'imagemagick' 'lcms2' 'libX11' 'libexif' 'libjpeg' 'libpng' 'libsigc++' 'libxml2' 'libxslt' 'pango' 'pangomm' 'poppler' 'popt' 'zlib')
+DEPS=('aspell' 'atk' 'atkmm' 'cairo' 'cairomm' 'fontconfig' 'freetype2' 'gc' 'gcc-libs' 'gconf' 'gdk-pixbuf' 'glib2' 'glibc' 'glibmm' 'gnome-vfs' 'gsl' 'gtk+2' 'gtkmm2' 'imagemagick' 'lcms2' 'libX11' 'libexif' 'libjpeg' 'libpng' 'libsigc++' 'libxml2' 'libxslt' 'pango' 'pangomm' 'poppler' 'popt' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

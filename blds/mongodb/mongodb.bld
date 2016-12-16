@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('boost' 'gcc-libs' 'glibc' 'libpcap' 'openssl' 'pcre' 'sasl' 'snappy' 'wiredtiger' 'yaml-cpp' 'zlib')
+DEPS=('boost' 'gcc-libs' 'glibc' 'openssl' 'pcre' 'sasl' 'snappy' 'wiredtiger' 'yaml-cpp' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

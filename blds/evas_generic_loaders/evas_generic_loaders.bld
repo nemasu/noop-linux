@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('cairo' 'efl' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gstreamer' 'librsvg' 'poppler' 'zlib')
+DEPS=('cairo' 'efl' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gstreamer' 'lcms2' 'libraw' 'librsvg' 'libspectre' 'poppler' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
