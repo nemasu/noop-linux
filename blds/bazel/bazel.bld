@@ -1,0 +1,71 @@
+#package name
+NAME=bazel
+
+#Description
+DESC="Correct, reproducible, and fast builds for everyone"
+
+#package version
+VERSION=0.4.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=no
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    export JAVA_HOME=/opt/jdk
+    
+    if [ -z "$BLDR_CONTINUE" ]; then    
+        wget https://github.com/bazelbuild/bazel/releases/download/${VERSION}/bazel-${VERSION}-dist.zip -Obazel.zip
+        mkdir bazel && pushd bazel
+        unzip ../bazel.zip
+        popd && rm bazel.zip
+    fi
+
+    cd bazel  
+    ./compile.sh
+    ./output/bazel build scripts:bazel-complete.bash
+    pushd output
+    ./bazel shutdown
+    popd
+    
+    install -Dm755 output/bazel /root/bldr-inst/usr/bin/bazel
+    install -Dm755 bazel-bin/scripts/bazel-complete.bash /root/bldr-inst/etc/bash_completion.d/bazel-complete.bash
+    mkdir -p /root/bldr-inst/opt/bazel/
+    for d in examples third_party tools; do
+        cp -r ${d} /root/bldr-inst/opt/bazel/
+    done
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+	LATEST=`curl -L -s https://github.com/bazelbuild/bazel/releases | egrep "bazel-[0-9\.]+-dist\.zip" | head -n1 | sed -e 's/.*bazel-\([0-9\.]*\)-dist\.zip.*/\1/g'`
+	
+    vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
