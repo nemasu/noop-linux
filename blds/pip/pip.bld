@@ -5,19 +5,19 @@ NAME=pip
 DESC="Package management for Python applications"
 
 #package version
-VERSION=8.0.2
+VERSION=9.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://pypi.python.org/packages/source/p/pip/pip-${VERSION}.tar.gz
+SRC=https://pypi.io/packages/source/p/pip/pip-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=python
 
 # build/package dependancies
 DEPS=
@@ -26,34 +26,14 @@ DEPS=
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('python-setuptools')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-
-	if [ ! -e /var/noop/installed/python-setuptools ];
-	then
-		pkgr -i python-setuptools
-	fi
-
-	cd ..
-	py2_dir=`ls`
-	py3_dir=${py2_dir}-py3
-	cp -r $py2_dir $py3_dir
-
-	cd $py2_dir
-	python2 setup.py build
-    python2 setup.py install --prefix=/usr --root=/root/bldr-inst
-	sed -i "s|#!/usr/bin/env python$|#!/usr/bin/env python2|" /root/bldr-inst/usr/lib/python2.7/site-packages/pip/__init__.py
-    python2 -m compileall /root/bldr-inst/usr/lib/python2.7/site-packages/pip/__init__.py
-
-	cd ../$py3_dir
-	python3 setup.py build
-    python3 setup.py install --prefix=/usr --root=/root/bldr-inst
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
