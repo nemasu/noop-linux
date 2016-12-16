@@ -5,7 +5,7 @@ NAME=inkscape
 DESC="Professional vector graphics editor"
 
 #package version
-VERSION=0.91-1
+VERSION=0.91-2
 DVERSION=0.91
 
 #directory locations, 99.99% of the time this is 1
@@ -41,19 +41,7 @@ export CXXFLAGS+=' -std=c++11 -O2 -w'
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://inkscape.org/en/download/source/
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+	LATEST=`curl -s -L https://inkscape.org/en/download/source/ | egrep "inkscape-[0-9\.]+\.tar\.bz2" | head -n1 | sed -e 's/.*inkscape-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
 	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];

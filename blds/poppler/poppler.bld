@@ -5,8 +5,8 @@ NAME=poppler
 DESC="PDF rendering library based on xpdf 3.0"
 
 #package version
-VERSION=0.24.3-1
-DVERSION=0.24.3
+VERSION=0.49.0
+DVERSION=0.49.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

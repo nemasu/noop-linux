@@ -1,7 +1,7 @@
 Index: /icu/trunk/source/common/ulist.c
 ===================================================================
---- a/common/ulist.c	(revision 39483)
-+++ b/common/ulist.c	(revision 39484)
+--- a/source/common/ulist.c	(revision 39483)
++++ b/source/common/ulist.c	(revision 39484)
 @@ -30,5 +30,4 @@
      
      int32_t size;
@@ -48,8 +48,8 @@ Index: /icu/trunk/source/common/ulist.c
 -
 Index: /icu/trunk/source/i18n/ucol_res.cpp
 ===================================================================
---- a/i18n/ucol_res.cpp	(revision 39483)
-+++ b/i18n/ucol_res.cpp	(revision 39484)
+--- a/source/i18n/ucol_res.cpp	(revision 39483)
++++ b/source/i18n/ucol_res.cpp	(revision 39484)
 @@ -681,4 +681,5 @@
      }
      memcpy(en, &defaultKeywordValues, sizeof(UEnumeration));
@@ -58,8 +58,8 @@ Index: /icu/trunk/source/i18n/ucol_res.cpp
      sink.values = NULL;  // Avoid deletion in the sink destructor.
 Index: /icu/trunk/source/test/intltest/apicoll.cpp
 ===================================================================
---- a/test/intltest/apicoll.cpp	(revision 39483)
-+++ b/test/intltest/apicoll.cpp	(revision 39484)
+--- a/source/test/intltest/apicoll.cpp	(revision 39483)
++++ b/source/test/intltest/apicoll.cpp	(revision 39484)
 @@ -82,14 +82,7 @@
      col = Collator::createInstance(Locale::getEnglish(), success);
      if (U_FAILURE(success)){
@@ -114,8 +114,8 @@ Index: /icu/trunk/source/test/intltest/apicoll.cpp
      TESTCASE_AUTO(TestDuplicate);
 Index: /icu/trunk/source/test/intltest/apicoll.h
 ===================================================================
---- a/test/intltest/apicoll.h	(revision 39483)
-+++ b/test/intltest/apicoll.h	(revision 39484)
+--- a/source/test/intltest/apicoll.h	(revision 39483)
++++ b/source/test/intltest/apicoll.h	(revision 39484)
 @@ -36,4 +36,5 @@
       */
      void TestProperty(/* char* par */);

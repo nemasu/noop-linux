@@ -5,7 +5,7 @@ NAME=evas_generic_loaders
 DESC="Additional generic loaders for Evas"
 
 #package version
-VERSION=1.13.0
+VERSION=1.17.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,14 +5,15 @@ NAME=tumbler
 DESC="D-Bus service for applications to request thumbnails"
 
 #package version
-VERSION=0.1.31
+VERSION=0.1.31-1
+DVERSION=0.1.31
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $VERSION | sed 's/\([0-9]*\.[0-9]*\).*/\1/g'`
-SRC=http://archive.xfce.org/src/xfce/${NAME}/${MM}/${NAME}-${VERSION}.tar.bz2
+MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\).*/\1/g'`
+SRC=http://archive.xfce.org/src/xfce/${NAME}/${MM}/${NAME}-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -54,7 +55,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

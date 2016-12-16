@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=54.0.2840.100
-VERSION=54.0.2840.100
+DVERSION=55.0.2883.87 
+VERSION=55.0.2883.87
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -111,7 +111,7 @@ function BuildAndInstall
     'use_pulseaudio=true'
     'use_sysroot=false'
     'enable_hangout_services_extension=true'
-    'enable_widevine=false'
+    'enable_widevine=true'
     'enable_nacl=true'
     'enable_nacl_nonsfi=true'
     "google_api_key=\"${_google_api_key}\""
@@ -158,7 +158,7 @@ function BuildAndInstall
   then
   	ninja -C out/Release chrome chrome_sandbox
   else
-  	ninja -C out/Release chrome chrome_sandbox chromedriver
+  	ninja -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
   fi
 
   install -D out/Release/chrome /root/bldr-inst/usr/lib/chromium/chromium
@@ -180,12 +180,21 @@ function BuildAndInstall
 		/root/bldr-inst/usr/lib/chromium/
 
 	install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
+	cp out/Release/libwidevinecdmadapter.so /root/bldr-inst/usr/lib/chromium/
 	mkdir -p /root/bldr-inst/usr/bin/
 	ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
 
     # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
 	strip /root/bldr-inst/usr/lib/chromium/chromedriver \
     	/root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap}
+
+	mkdir -p ../widevine
+	pushd ../widevine
+	wget https://dl.google.com/linux/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION}-1_amd64.deb -Ochrome.deb
+	ar x chrome.deb
+	tar xf data.tar.xz
+	cp opt/google/chrome/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
+	popd
   fi
   
   strip /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
@@ -199,7 +208,6 @@ function BuildAndInstall
     install -Dm644 "chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
       /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
   done
-
 }
 
 #Default HTTP curl new version detection

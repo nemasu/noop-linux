@@ -14,10 +14,10 @@ ISUSR=1
 SRC=http://download.savannah.nongnu.org/releases/openexr/openexr-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="-DILMBASE_PACKAGE_PREFIX=/usr"
+EXTRACONF=
 
 #autotools, cmake, custom
-BUILD=cmake
+BUILD=autotools
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'ilmbase' 'zlib')

@@ -5,13 +5,14 @@ NAME=graphviz
 DESC="Graph visualization software"
 
 #package version
-VERSION=2.38.0
+VERSION=2.38.0-1
+DVERSION=2.38.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.graphviz.org/pub/graphviz/stable/SOURCES/graphviz-${VERSION}.tar.gz
+SRC=http://www.graphviz.org/pub/graphviz/stable/SOURCES/graphviz-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -59,7 +60,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

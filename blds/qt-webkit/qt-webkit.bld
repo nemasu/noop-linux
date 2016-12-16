@@ -5,13 +5,14 @@ NAME=qt-webkit
 DESC="WebKit2 for Qt5"
 
 #package version
-VERSION=5.7.0
+VERSION=5.7.0-1
+DVERSION=5.7.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.qt.io/community_releases/${VERSION:0:3}/${VERSION}/qtwebkit-opensource-src-${VERSION}.tar.xz
+SRC=http://download.qt.io/community_releases/${DVERSION:0:3}/${DVERSION}/qtwebkit-opensource-src-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -49,7 +50,7 @@ function Detect
 	MM=`curl -s http://download.qt-project.org/official_releases/qt/ | grep -E "href=\"[0-9\.][0-9\.]*\/" | sed -e 's/.*href=\"\([0-9\.][0-9\.]*\)\/.*/\1/g' | head -n1`
 	LATEST=`curl -s http://download.qt-project.org/official_releases/qt/$MM/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g' | head -n1`
 
-	vercomp $DVERSION $LATEST
+	vercomp $DDVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 					echo "$NAME: New Version Available! - $LATEST"

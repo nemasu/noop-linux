@@ -5,13 +5,14 @@ NAME=libical
 DESC="An open source reference implementation of the icalendar data type and serialization format"
 
 #package version
-VERSION=2.0.0
+VERSION=2.0.0-1
+DVERSION=2.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/libical/libical/archive/v${VERSION}.tar.gz
+SRC=https://github.com/libical/libical/archive/v${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -52,7 +53,7 @@ function Detect
 			fi
 	done
 
-	vercomp $VERSION $LATEST
+	vercomp $DVERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"

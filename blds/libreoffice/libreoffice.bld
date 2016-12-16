@@ -5,8 +5,8 @@ NAME=libreoffice
 DESC="Office suite"
 
 #package version
-VERSION=5.1.4.2
-DVERSION=5.1.4.2
+VERSION=5.2.3.3
+DVERSION=5.2.3.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,6 +35,15 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
+
+	# Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)                                                                                                                                         
+    # Note: These are for noop Linux use ONLY. For your own distribution, please                                                                                                                                        
+    # get your own set of keys. Feel free to contact chromium@nooplinux.org for                                                                                                                                         
+    # more information.                                                                                                                                                                                                 
+    _google_default_client_id=89099530172.apps.googleusercontent.com                                                                                                                                                    
+    _google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ                     
+
+
 	#Make sure tests dont fail
 	# Start virtual X 
 	# Needs to be 24 bit, otherwise emf tests fail 
@@ -49,13 +58,15 @@ function BuildAndInstall
 		--disable-gtk3 \
 		--with-system-zlib --with-system-openssl --with-system-jpeg \
 		--with-system-expat --with-system-lcms2 --with-system-libxml \
-		--with-system-icu --without-system-npapi-headers \
+		--without-system-icu --with-system-firebird \
 		--with-system-libpng --with-gssapi --without-java --without-doxygen \
 		--with-system-cairo --without-system-boost \
 		--with-system-headers --with-alloc=system --enable-split-app-modules \
-		--without-system-mdds --without-system-vigra --without-system-sane \
+		--without-system-mdds --without-system-sane \
 		--enable-release-build=yes --with-system-nss --with-parallelism=${BLDR_CORES} \
-		--with-system-neon
+		--with-system-neon \
+		--with-gdrive-client-id=${_google_default_client_id} \
+		--with-gdrive-client-secret=${_google_default_client_secret}
 
 	make build
 	make DESTDIR=/root/bldr-inst distro-pack-install

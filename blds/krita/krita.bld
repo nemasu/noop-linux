@@ -5,13 +5,13 @@ NAME=krita
 DESC="Digital painting application"
 
 #package version
-VERSION=3.0
+VERSION=3.0.1.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/krita/${VERSION}/krita-${VERSION}.tgz
+SRC=http://download.kde.org/stable/krita/${VERSION}/krita-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -26,7 +26,7 @@ DEPS=('boost' 'curl' 'exiv2' 'fftw' 'gcc-libs' 'glibc' 'gsl' 'karchive' 'kcomple
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('vc')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=1
@@ -40,13 +40,12 @@ export CXXFLAGS='-fext-numeric-literals'
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.kde.org/stable/krita/
-	FILELIST=`GetFileList`
+	FILELIST=`curl -L -s http://download.kde.org/stable/krita/  | egrep "href=\"[0-9\.]+/\"" | sed -e 's/.*href="\([0-9\.]*\)\/".*/\1/g'`
 	LATEST=0
 
 	for i in ${FILELIST[@]};
 	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+			CURVER=$i
 			vercomp $LATEST $CURVER
 			if [ $? -eq 2 ];
 			then

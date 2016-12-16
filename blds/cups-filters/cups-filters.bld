@@ -5,8 +5,8 @@ NAME=cups-filters
 DESC="OpenPrinting CUPS Filters"
 
 #package version
-VERSION=1.5.0
-DVERSION=1.5.0
+VERSION=1.13.0
+DVERSION=1.13.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -39,6 +39,7 @@ function BuildAndInstall
 		--sbindir=/usr/bin \
 		--localstatedir=/var \
 		--with-rcdir=no \
+		--disable-mutool \
 		--enable-avahi \
 		--with-browseremoteprotocols=DNSSD,CUPS \
 		--with-test-font-path=/usr/share/fonts/TTF/DejaVuSans.ttf

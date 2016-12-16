@@ -5,8 +5,8 @@ NAME=webkitgtk2
 DESC="GTK+ Web content engine library for GTK2"
 
 #package version
-VERSION=2.4.9
-DVERSION=2.4.9
+VERSION=2.4.11
+DVERSION=2.4.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
