@@ -1,3 +1,4 @@
 function postinst() {
+	getent passwd sshd &> /dev/null || useradd --system -M sshd -s /sbin/nologin
 	ssh-keygen -A
 }
