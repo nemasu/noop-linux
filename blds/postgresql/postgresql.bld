@@ -5,8 +5,8 @@ NAME=postgresql
 DESC="Libraries for use with PostgreSQL"
 
 #package version
-VERSION=9.4.5
-DVERSION=9.4.5
+VERSION=9.6.1
+DVERSION=9.6.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -51,15 +51,16 @@ function BuildAndInstall
 			--with-tcl \
 			--with-pam \
 			--with-system-tzdata=/usr/share/zoneinfo \
+            --with-python PYTHON=/usr/bin/python2 \
 			--enable-nls ${EXTRACONF}
-#--with-python PYTHON=/usr/bin/python2 \
 
-	#Missing libcom_err for some reason	
-	make -j${BLDR_CORES} LDFLAGS_EX=/usr/lib/libcom_err.so.2 world
-	make DESTDIR=/root/bldr-inst install
+	make -j${BLDR_CORES} world
+	
+    make DESTDIR=/root/bldr-inst install
+	make -C contrib DESTDIR=/root/bldr-inst install
+    make -C doc/src/sgml DESTDIR=/root/bldr-inst install
 
-
-#Get them libs
+    #Get them libs
 	mkdir -p /root/noop-bldr-postgresql-libs/usr/lib/postgresql/
 	for i in `find /root/bldr-inst/usr/lib/postgresql -name "*.so*"`;
 	do
