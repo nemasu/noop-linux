@@ -151,9 +151,6 @@ function BuildAndInstall
   out/Release/gn gen out/Release --args="${_flags[*]} ${arch_specific_flags[*]}" \
       --script-executable=/usr/bin/python2
 
-  #Bug? Opus has -Wno-#pragma-messages, i think the # is commenting the pragma-messages part out
-  sed -i -e '/-Wno-/d' third_party/opus/opus.gyp
-  
   if [ "${ARCH}" == "armv6l" ];
   then
   	ninja -C out/Release chrome chrome_sandbox
