@@ -5,8 +5,8 @@ NAME=mesalib
 DESC="An open-source implementation of the OpenGL specification"
 
 #package version
-VERSION=12.0.3
-DVERSION=12.0.3
+VERSION=13.0.2
+DVERSION=13.0.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
