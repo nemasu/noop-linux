@@ -1457,9 +1457,9 @@ fi
 
 if [ $1 == "--upgrade-all" ] || [ $1 == "-U" ]; then
 	
-	for i in `$find $INSTALLEDDIR/*` ; 
+	for i in `$ls $INSTALLEDDIR/` ; 
 	do
-		NAME=`$grep NAME: $i | $sed -e 's/NAME://g'`
+		NAME=$i
 		OLD=`get_installed_version $NAME`
 		NEW=`get_packagedb_version $NAME`
 		vercomp $OLD $NEW
@@ -1479,8 +1479,12 @@ if [ $1 == "--upgrade-all" ] || [ $1 == "-U" ]; then
         do
             if [ "$i" == "linux-kernel" ];
             then
-                echo 'There is a kernel update, please run:'
-                echo 'pkgr -u linux-kernel; pkgr -u linux-firmware; and reboot before doing a system update.'
+                echo 'There is a kernel update.'
+                read -p 'Press [Enter] to update kernel, a reboot after is recommended. <Ctrl + C> to cancel.'
+                pkgr -u linux-firmware; pkgr -u linux-kernel;
+                echo
+                echo
+                echo "Please Reboot, and run update again."
                 exit 0
             fi
         done
