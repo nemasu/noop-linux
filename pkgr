@@ -286,8 +286,8 @@ function DoInstbin() {
 		BININST_NAME=chefdk
 		BININST_ENV_HOME=CHEFDK_HOME
 		BININST_ENV_BINDIR=/bin
-		VERSION=`curl -L -s "https://downloads.chef.io/chef-dk/ubuntu/" | tr 'url' '\n' | egrep "chefdk_[0-9\.]*-1_amd64\.deb" | sed -e 's/.*chefdk_\([0-9\.]*\)-1_amd64\.deb.*/\1/g' | sort -n | uniq | head -n1`
-		DOWNLOAD_TAR="https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_${VERSION}-1_amd64.deb"
+		VERSION=`curl -s -L "https://downloads.chef.io/chefdk" | egrep -m1 "https://packages.chef.io/files/stable/chefdk/[0-9\.]+/ubuntu/16.04/chefdk_[0-9\.]+-1_amd64.deb" | sed -e 's|.*https://packages.chef.io/files/stable/chefdk/[0-9\.]*/ubuntu/16.04/chefdk_\([0-9\.]*\)-1_amd64.deb.*|\1|g'`
+		DOWNLOAD_TAR="https://packages.chef.io/files/stable/chefdk/${VERSION}/ubuntu/16.04/chefdk_${VERSION}-1_amd64.deb"
 
 		bininst_install deb
 		return 0
