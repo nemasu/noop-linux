@@ -5,8 +5,9 @@ NAME=wine
 DESC="A compatibility layer for running Windows programs"
 
 #package version
-VERSION=1.9.23
-DVERSION=1.9.23
+VERSION=2.0
+DVERSION=2.0
+STAGING_VER=${DVERSION}-rc6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -42,7 +43,7 @@ function BuildAndInstall
             mkdir -p {wine32-build,wine64-build}
 
             #Let's try staging!
-            STG_URL=https://github.com/wine-compholio/wine-staging/archive/v${DVERSION}.tar.gz
+            STG_URL=https://github.com/wine-compholio/wine-staging/archive/v${STAGING_VER}.tar.gz
             wget ${STG_URL}
             tar xf *.gz
             rm *.gz
