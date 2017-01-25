@@ -5,7 +5,7 @@ NAME=go
 DESC="Compiler and tools for the Go programming language from Google"
 
 #package version
-VERSION=1.7
+VERSION=1.7.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -52,7 +52,7 @@ function BuildAndInstall
 	done
 
 # Distribution tools
-	for tool in benchcmp bundle callgraph digraph eg fiximports guru html2article oracle present ssadump stress stringer ; do
+	for tool in benchcmp bundle callgraph digraph eg fiximports guru html2article present ssadump stress stringer ; do
 		$GOROOT/bin/go get -d golang.org/x/tools/cmd/$tool
 		$GOROOT/bin/go build -v -x -o $GOPATH/pkg/tool/${GOOS}_$GOARCH/$tool golang.org/x/tools/cmd/$tool
 	done
