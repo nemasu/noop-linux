@@ -2,8 +2,8 @@ NAME=firefox
 
 #Description
 DESC="Standalone web browser from mozilla.org"
-VERSION=50.1.0
-DVERSION=50.1.0
+VERSION=51.0
+DVERSION=51.0
 ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
@@ -17,7 +17,7 @@ function BuildAndInstall
 {
 
   #build prereqs
-  for i in zip autoconf2.13 rust; do
+  for i in zip autoconf2.13 rust cargo; do
 	  pkgr -i $i;
   done
 
@@ -32,9 +32,6 @@ function BuildAndInstall
 
   echo -n "$_google_api_key" >google-api-key
   echo "ac_add_options --with-google-api-keyfile=\"$PWD/google-api-key\"" >>.mozconfig
-
-  echo -n "$_google_default_client_id $_google_default_client_secret" >google-oauth-api-key
-  echo "ac_add_options --with-google-oauth-api-keyfile=\"$PWD/google-oauth-api-key\"" >>.mozconfig
 
 #echo -n "$_mozilla_api_key" >mozilla-api-key
 #echo "ac_add_options --with-mozilla-api-keyfile=\"$PWD/mozilla-api-key\"" >>.mozconfig

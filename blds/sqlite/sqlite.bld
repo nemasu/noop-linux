@@ -5,8 +5,8 @@ NAME=sqlite
 DESC="A C library that implements an SQL database engine"
 
 #package version
-VERSION=3130000
-DVERSION=3130000
+VERSION=3160200
+DVERSION=3160200
 tcl_dir=/usr/lib/sqlite3.13.0
 
 #directory locations, 99.99% of the time this is 1
@@ -35,7 +35,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	wget http://www.sqlite.org/2016/sqlite-src-${DVERSION}.zip
+	wget http://www.sqlite.org/2017/sqlite-src-${DVERSION}.zip
 	unzip *.zip && rm *.zip && cd `ls`
 
 	export CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1 \

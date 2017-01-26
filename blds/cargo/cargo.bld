@@ -1,26 +1,26 @@
 #package name
-NAME=rust
+NAME=cargo
 
 #Description
-DESC="Systems programming language focused on safety, speed and concurrency"
+DESC="Package manager for rust"
 
 #package version
-VERSION=1.14.0
+VERSION=0.15.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://static.rust-lang.org/dist/rustc-$VERSION-src.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+#autotools, python, perl, cmake, custom
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,16 +33,23 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr
+	if [ -z "$BLDR_CONTINUE" ]; then
+		git clone --recursive https://github.com/rust-lang/cargo.git && cd cargo
+		git checkout $VERSION
+	else
+		cd cargo
+	fi
+	setconf Makefile.in CFG_RELEASE_NUM="$VERSION"
+	./configure --prefix=/usr --enable-optimize
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
+	rm -f /root/bldr-inst/usr/lib/rustlib/{install.log,manifest-cargo,uninstall.sh}
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L "https://www.rust-lang.org/en-US/other-installers.html" | egrep "rustc-[0-9\.]+-src.tar.gz" | sed -e 's/.*rustc-\([0-9\.]*\)-src.tar.gz.*/\1/g'`
-
+	LATEST=`curl -L -s https://github.com/rust-lang/cargo/releases | egrep "archive/[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*archive\/\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 	vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
