@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=python
 
 # build/package dependancies
-DEPS=
+DEPS=('python-setuptools')
 
 # 'no' to skip calls to strip
 STRIP=
