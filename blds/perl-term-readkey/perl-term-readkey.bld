@@ -5,7 +5,7 @@ NAME=perl-term-readkey
 DESC="Provides simple control over terminal driver modes"
 
 #package version
-VERSION=2.32
+VERSION=2.37
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
