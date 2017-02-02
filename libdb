@@ -400,6 +400,9 @@ cdparanoia,libcdda_interface.so.0.10.2
 cdparanoia,libcdda_paranoia.so
 cdparanoia,libcdda_paranoia.so.0
 cdparanoia,libcdda_paranoia.so.0.10.2
+check,libcheck.so
+check,libcheck.so.0
+check,libcheck.so.0.0.0
 chromaprint,libchromaprint.so
 chromaprint,libchromaprint.so.1
 chromaprint,libchromaprint.so.1.3.0
