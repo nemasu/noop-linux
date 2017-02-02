@@ -1,0 +1,92 @@
+#!/bin/bash
+
+set -e
+if [ -z "$1" ];
+then
+	echo "Need a URL for source"
+fi
+pkgr -i git &> /dev/null
+pkgr -i bc &> /dev/null
+
+BLDRTMPDIR=/tmp/bldr
+VERSION=`echo $1 | sed 's/.*linux-//g; s/\.tar\.xz//g'`
+mkdir -p $BLDRTMPDIR
+cd /usr/src
+
+if [ ! -e linux-$VERSION ];
+then
+	if [ ! -e /tmp/linux-$VERSION.tar.xz ];
+	then
+		wget $1 -O/tmp/linux-$VERSION.tar.xz
+	fi
+	tar xf /tmp/linux-$VERSION.tar.xz
+fi
+
+cd linux-$VERSION
+
+rm -rf /root/noopkern
+mkdir -p /root/noopkern/boot
+mkdir -p /root/noopfirm
+mkdir -p /root/noophead/usr
+
+make vexpress_defconfig
+make -j3
+cp -v arch/arm/boot/bzImage /root/noopkern/boot/vmlinuz
+
+make INSTALL_MOD_PATH=/root/noopkern modules_install
+
+make INSTALL_HDR_PATH=/root/noophead/usr headers_install
+
+cd /root/noopkern
+
+#This is in linux-firmware
+rm -rf lib/firmware
+
+if [ `echo $VERSION | sed -e 's/\./\n/g' | wc -l` -eq 2 ];
+then
+	depmod -F /usr/src/linux-${VERSION}/System.map -a -b /root/noopkern -E /usr/src/linux-${VERSION}/Module.symvers "${VERSION}.0"
+else
+	depmod -F /usr/src/linux-${VERSION}/System.map -a -b /root/noopkern -E /usr/src/linux-${VERSION}/Module.symvers ${VERSION}
+fi
+
+wget https://raw.githubusercontent.com/nemasu/noop-linux/master/etc/kbldr-pkg.install -O$BLDRTMPDIR/pkg.install
+
+pkgr -genmeta linux-kernel ${VERSION}
+pkgr -genpkg
+
+mv *.pkg /root/bldr-done
+
+cd /root/noophead
+
+pkgr -genmeta linux-headers ${VERSION}
+pkgr -genpkg
+
+mv *.pkg /root/bldr-done
+
+cd /root/noopfirm
+
+git clone git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+cd linux-firmware
+git archive --format=tar --prefix linux-firmware-$(date +%Y%m%d)/ master | bzip2 -9 > /tmp/linux-firmware-$(date +%Y%m%d).tar.bz2
+cd ..
+rm -rf *
+mkdir -p lib/firmware
+
+mkdir -p /tmp/noopfirmtmp && cd /tmp/noopfirmtmp && rm -rf *
+tar xf /tmp/linux-firmware-$(date +%Y%m%d).tar.bz2
+cd `ls`
+
+cp -a * /root/noopfirm/lib/firmware/
+rm -rf /tmp/linux-firmware-$(date +%Y%m%d).tar.bz2
+
+cd /root/noopfirm
+
+pkgr -genmeta linux-firmware $(date +%Y%m%d)
+pkgr -genpkg
+
+mv *.pkg /root/bldr-done
+
+rm -rf /tmp/noopfirmtmp
+cd /root
+rm -rf noopfirm/ noopkern/ noophead/
+echo "Done! Need to recompile bbswitch, virtualbox, and nvidia."

@@ -43,7 +43,7 @@ if [ ! -e .config ];
 then
 	if [ `uname -m` == "x86_64" ];
 	then
-		wget https://raw.githubusercontent.com/nemasu/noop-linux/master/etc/config64 -O.config
+		wget https://raw.githubusercontent.com/nemasu/noop-linux/master/kernel/config64 -O.config
 	fi
 	
 	echo "CONFIG_AUFS_FS=y" >> .config

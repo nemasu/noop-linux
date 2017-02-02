@@ -99,7 +99,7 @@ depmod -a -b $PREFIX
 cp -v `which mount.aufs` $PREFIX/sbin
 
 PREFIX=$PREFIX pkgr -s
-rm -rf $PREFIX/var/noop/{blds,etc,initramfs,kbldr*,instlr,mkiso,meta}
+rm -rf $PREFIX/var/noop/{blds,etc,initramfs,kbldr*,instlr,mkiso,meta,kernel}
 export PKGR_SUPPRESS_P_OUTPUT=1
 
 for i in busybox bash;
