@@ -43,7 +43,8 @@ if [ ! -e .config ];
 then
 	if [ `uname -m` == "x86_64" ];
 	then
-		wget https://raw.githubusercontent.com/nemasu/noop-linux/master/kernel/config64 -O.config
+        #wget https://raw.githubusercontent.com/nemasu/noop-linux/master/kernel/config64 -O.config
+        cp -v /var/noop/kernel/config64 .config
 	fi
 	
 	echo "CONFIG_AUFS_FS=y" >> .config
@@ -92,7 +93,8 @@ else
 	depmod -F /usr/src/linux-${VERSION}/System.map -a -b /root/noopkern -E /usr/src/linux-${VERSION}/Module.symvers ${VERSION}
 fi
 
-wget https://raw.githubusercontent.com/nemasu/noop-linux/master/etc/kbldr-pkg.install -O$BLDRTMPDIR/pkg.install
+#wget https://raw.githubusercontent.com/nemasu/noop-linux/master/kernel/kbldr-pkg.install -O$BLDRTMPDIR/pkg.install
+cp -v /var/noop/kernel/kbldr-pkg.install $BLDRTMPDIR/pkg.install
 
 pkgr -genmeta linux-kernel ${VERSION}
 pkgr -genpkg
