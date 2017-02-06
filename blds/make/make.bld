@@ -5,13 +5,13 @@ NAME=make
 DESC="GNU make utility to maintain groups of programs"
 
 #package version
-VERSION=3.82
+VERSION=4.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnu.org/gnu/make/make-3.82.tar.bz2
+SRC=ftp://ftp.gnu.org/gnu/make/make-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
