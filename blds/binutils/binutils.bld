@@ -5,8 +5,8 @@ NAME=binutils
 DESC="A set of programs to assemble and manipulate binary and object files"
 
 #package version
-VERSION=2.25.1
-DVERSION=2.25.1
+VERSION=2.27
+DVERSION=2.27
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -230,9 +230,9 @@ baloo,timeline.so
 bamf,libbamf3.so
 bamf,libbamf3.so.2
 bamf,libbamf3.so.2.0.0
-binutils,libbfd-2.25.1.so
+binutils,libbfd-2.27.so
 binutils,libbfd.so
-binutils,libopcodes-2.25.1.so
+binutils,libopcodes-2.27.so
 binutils,libopcodes.so
 bluedevil,bluedevil.so
 bluedevil,bluetoothfileitemaction.so
