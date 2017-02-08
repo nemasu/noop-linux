@@ -1,0 +1,45 @@
+#package name
+NAME=xtool
+
+#Description
+DESC="Build a cross compiler (binutils, glibc, gcc)."
+
+#package version
+VERSION=20170208
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    git clone https://github.com/nemasu/xtool && cd xtool
+    mkdir -p /root/bldr-inst/usr/sbin/
+    cp xtool /root/bldr-inst/usr/sbin/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+    echo "$NAME Git based"
+}
