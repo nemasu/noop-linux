@@ -1,17 +1,17 @@
 #package name
-NAME=wayland
+NAME=wayland-protocols
 
 #Description
-DESC="A computer display server protocol"
+DESC="Wayland protocols"
 
 #package version
-VERSION=1.12.92
+VERSION=1.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://wayland.freedesktop.org/releases/wayland-$VERSION.tar.xz
+SRC=https://wayland.freedesktop.org/releases/wayland-protocols-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--disable-documentation"

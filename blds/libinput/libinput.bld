@@ -1,26 +1,26 @@
 #package name
-NAME=wayland
+NAME=libinput
 
 #Description
-DESC="A computer display server protocol"
+DESC="Library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
 
 #package version
-VERSION=1.12.92
+VERSION=1.6.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://wayland.freedesktop.org/releases/wayland-$VERSION.tar.xz
+SRC=https://www.freedesktop.org/software/libinput/libinput-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--disable-documentation"
+EXTRACONF="--disable-libwacom"
 
-#autotools, perl, cmake, custom
+#autotools, python, perl, cmake, custom
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('expat' 'glibc' 'libffi' 'libxml2')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,6 +31,8 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
+
 #function BuildAndInstall
 #{
 #}
@@ -38,7 +40,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://wayland.freedesktop.org/releases/
+	LISTURL=https://www.freedesktop.org/software/libinput/
 	FILELIST=`GetFileList`
 	LATEST=0
 

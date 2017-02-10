@@ -5,7 +5,7 @@ NAME=cairo
 DESC="Cairo vector graphics library"
 
 #package version
-VERSION=1.14.6
+VERSION=1.14.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -31,10 +31,22 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+
 function BuildAndInstall
 {
-	autoreconf -vfi
-	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --disable-lto
+	./configure --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --enable-xml \
+        --enable-gl \
+        --enable-egl \
+        --enable-ps \
+        --enable-pdf \
+        --enable-gobject \
+        --enable-tee \
+        --enable-xlib-xcb
+
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }

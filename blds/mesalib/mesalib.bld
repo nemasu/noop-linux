@@ -5,8 +5,8 @@ NAME=mesalib
 DESC="An open-source implementation of the OpenGL specification"
 
 #package version
-VERSION=13.0.2
-DVERSION=13.0.2
+VERSION=13.0.4
+DVERSION=13.0.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -42,9 +42,11 @@ function BuildAndInstall
 	then
 		GALLIUM_DRIVERS=swrast
 		DRI_DRIVERS=swrast
+        EGL_PLATFORMS=
 	else
-		GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,svga,swrast" 
+		GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,svga,swrast,virgl" 
 		DRI_DRIVERS="i915,i965,r200,radeon,nouveau,swrast"
+        EGL_PLATFORMS="x11,wayland,drm"
 		ARCHCONF="--enable-opencl --enable-opencl-icd --enable-xa"
 	fi
 
@@ -54,10 +56,10 @@ function BuildAndInstall
 		--with-clang-libdir=/usr/lib \
 		--with-gallium-drivers=${GALLIUM_DRIVERS} \
 		--with-dri-drivers=${DRI_DRIVERS} \
+        --with-egl-platforms=${EGL_PLATFORMS} \
 		--enable-gallium-llvm \
 		--enable-llvm-shared-libs \
 		--enable-egl \
-		--with-egl-platforms=x11,drm \
 		--enable-shared-glapi \
 		--enable-gbm \
 		--enable-glx-tls \
@@ -74,8 +76,8 @@ function BuildAndInstall
 		--enable-dri3 \
 		--enable-omx \
 		--enable-vdpau ${ARCHCONF}
-
-		make -j${BLDR_CORES}
+		
+        make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install
 
 }

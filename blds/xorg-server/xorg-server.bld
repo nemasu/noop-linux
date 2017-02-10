@@ -65,8 +65,8 @@ function BuildAndInstall
 											  --sysconfdir=/etc \
 											  --localstatedir=/var \
 											  --with-fontrootdir=/usr/share/fonts \
-											  --with-sha1=libgcrypt"
-	#--enable-xwayland \
+											  --with-sha1=libgcrypt \
+	                                          --enable-xwayland"
 
 	./configure $STDUSRCONF $CONFIG
 	make -j${BLDR_CORES}
