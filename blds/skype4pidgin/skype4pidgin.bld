@@ -5,13 +5,13 @@ NAME=skype4pidgin
 DESC="Skype plugin for pidgin"
 
 #package version
-VERSION=664
+VERSION=1.2.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.nooplinux.org/dist/skype4pidgin-${VERSION}.tar.xz
+SRC=https://github.com/EionRobb/skype4pidgin/archive/${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libX11')
+DEPS=('glib2' 'glibc' 'json-glib' 'pidgin' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,22 +33,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make all
-	install -D -m 0755 libskype.so "/root/bldr-inst/$(pkg-config --variable=plugindir purple)/libskype.so"
-	install -D -m 0755 libskype_dbus.so "/root/bldr-inst/$(pkg-config --variable=plugindir purple)/libskype_dbus.so"
-	install -D -m 0644 icons/16/skype.png /root/bldr-inst/usr/share/pixmaps/pidgin/protocols/16/skype.png
-	install -D -m 0644 icons/22/skype.png /root/bldr-inst/usr/share/pixmaps/pidgin/protocols/22/skype.png
-	install -D -m 0644 icons/48/skype.png /root/bldr-inst/usr/share/pixmaps/pidgin/protocols/48/skype.png
-	install -D -m 0644 theme /root/bldr-inst/usr/share/pixmaps/pidgin/emotes/skype/theme
-
-	GetSource https://sync.dray.be/public/packages/skype_icons_empathy.tar.xz
-	install -d -m 0755 /root/bldr-inst/usr/share/empathy/icons
-	cp -r . /root/bldr-inst/usr/share/empathy/icons/
-		
+    cd skypeweb
+	make
+    make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: SVN Based
+    LATEST=`curl -s -L "https://github.com/EionRobb/skype4pidgin/releases" | egrep "archive/[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*archive\/\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+		echo "$NAME: New Version Available! - $LATEST"
+	fi
+
 }

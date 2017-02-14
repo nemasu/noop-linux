@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libffi' 'libnice' 'pcre' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'avahi' 'cairo' 'dbus' 'dbus-glib' 'farstream' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-base0.10' 'gstreamer0.10' 'gtk+2' 'libICE' 'libidn' 'libSM' 'libX11' 'libXext' 'libxml2' 'libXScrnSaver' 'ncurses' 'nspr' 'nss' 'pango' 'perl' 'python2' 'sasl' 'tcl')
+DEPS=('atk' 'avahi' 'cairo' 'dbus' 'dbus-glib' 'farstream' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'gtk+2' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXext' 'libidn' 'libxml2' 'ncurses' 'networkmanager' 'nspr' 'nss' 'pango' 'perl' 'python2' 'sasl' 'tcl')
 
 # 'no' to skip calls to strip
 STRIP=
