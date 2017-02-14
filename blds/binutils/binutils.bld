@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('flex' 'bison' 'glibc' 'zlib')
+DEPS=('bison' 'flex' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=

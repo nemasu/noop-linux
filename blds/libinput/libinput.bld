@@ -20,7 +20,7 @@ EXTRACONF="--disable-libwacom"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'libcap2' 'libevdev' 'mtdev' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=
