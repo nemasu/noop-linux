@@ -721,7 +721,8 @@ if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
 		$echo -e "\nUsage:"
         $echo -e "\n---Basic---"
 		$echo -e "\t-s,\t--sync                        Sync packgage database"
-		$echo -e "\t-i,\t--install pkg                 Install"
+		$echo -e "\t-i,\t--install pkg1 <pkg2...>      Install"
+		$echo -e "\t-ia\t                              Install (show dependencies first)"
 		$echo -e "\t-u,\t--upgrade pkg                 Upgrade"
 		$echo -e "\t-U,\t--upgrade-all                 Upgrade system"
 		$echo -e "\t-r,\t--remove pkg                  Remove"
@@ -1622,6 +1623,30 @@ if [ $1 = "--to-install" ]; then
 	done
 fi
 
+if [ "$1" == "-ia" ]; then
+    shift
+    
+    if [ -z $1 ]; then
+        $echo Not enough arguments
+        exit 1
+    fi
+    
+    DoesPkgExist "$1"
+    if [ $? == "1" ]; then
+        $echo "ERROR: $1 does not exist."
+        exit 1
+    fi
+
+    if [ -e $PREFIX/var/noop/installed/$1 ]; then
+        $echo "Warning: $PKG is already installed, use 'pkgr -i --force ${PKG}' to force."
+        exit 1
+    fi
+
+    $echo "The following packages will also be installed:"
+    pkgr --to-install "$1"
+    read -p 'Press [Enter] to install, <Ctrl + C> to cancel.'
+    pkgr -i "$1"
+fi
 
 if [ $1 = "--install" ] || [ $1 == "-i" ]; then
 
@@ -1646,7 +1671,7 @@ if [ $1 = "--install" ] || [ $1 == "-i" ]; then
 	fi
 
 	ISEXIT=0;
-	
+
 	$rm -f $TMPDIR/*.pkg
 	for ARG in "$@";
     do
