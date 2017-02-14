@@ -1,0 +1,48 @@
+#package name
+NAME=libnice
+
+#Description
+DESC="An implementation of the IETF's draft ICE (for p2p UDP data streams)"
+
+#package version
+VERSION=20170214
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    git clone https://anongit.freedesktop.org/git/libnice/libnice
+    cd libnice
+    ./autogen.sh --prefix=/usr --with-gstreamer-0.10=no
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+    echo "$NAME: Git based"
+}

@@ -5,8 +5,8 @@ NAME=pidgin
 DESC="Multi-protocol instant messaging client"
 
 #package version
-VERSION=2.10.11-1
-DVERSION=2.10.11
+VERSION=2.11.0
+DVERSION=2.11.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
