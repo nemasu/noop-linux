@@ -1,5 +1,5 @@
 #package name
-NAME=libxcbcommon
+NAME=libxkbcommon
 
 #Description
 DESC="Library to handle keyboard descriptions."
