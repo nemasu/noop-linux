@@ -5,8 +5,8 @@ NAME=virtualbox
 DESC="Powerful x86 virtualization for enterprise as well as home use"
 
 #package version
-VERSION=5.1.6-1
-DVERSION=5.1.6
+VERSION=5.1.14
+DVERSION=5.1.14
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -48,9 +48,12 @@ function BuildAndInstall
         --with-makeself=/usr/bin/echo
 	source ./env.sh
 	
-	kmk
-	kmk -C src/VBox/RDP/client-1.8.3
-    kmk -C src/VBox/ExtPacks/VNC packing
+    #Note: Kernel source needs patches as of kernel 4.9.x
+    #See https://bugs.gentoo.org/show_bug.cgi?id=603472
+
+    kmk KBUILD_VERBOSE=2 CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
+	kmk -C src/VBox/RDP/client-1.8.3 KBUILD_VERBOSE=2  CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
+    kmk -C src/VBox/ExtPacks/VNC packing KBUILD_VERBOSE=2 CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
 
 	PushScripts
 
