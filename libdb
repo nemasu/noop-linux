@@ -5059,6 +5059,9 @@ libkdepim,libKF5Libkdepim.so.5.2.3
 libkexiv2,libKF5KExiv2.so
 libkexiv2,libKF5KExiv2.so.15.0.0
 libkexiv2,libKF5KExiv2.so.5.0.0
+libkeybinder3,libkeybinder-3.0.so
+libkeybinder3,libkeybinder-3.0.so.0
+libkeybinder3,libkeybinder-3.0.so.0.0.0
 libkgapi,libKF5GAPIBlogger.so
 libkgapi,libKF5GAPIBlogger.so.5
 libkgapi,libKF5GAPIBlogger.so.5.1.0
@@ -8877,7 +8880,7 @@ tdb,libtdb.so.1.3.10
 tdb,tdb.so
 telepathy-glib,libtelepathy-glib.so
 telepathy-glib,libtelepathy-glib.so.0
-telepathy-glib,libtelepathy-glib.so.0.73.0
+telepathy-glib,libtelepathy-glib.so.0.84.1
 telepathy-logger,libtelepathy-logger.so
 telepathy-logger,libtelepathy-logger.so.2
 telepathy-logger,libtelepathy-logger.so.2.2.1
@@ -8993,9 +8996,9 @@ v4l-utils,libv4lconvert.so.0
 v4l-utils,libv4lconvert.so.0.0.0
 v4l-utils,v4l1compat.so
 v4l-utils,v4l2convert.so
-vala,libvala-0.22.so
-vala,libvala-0.22.so.0
-vala,libvala-0.22.so.0.0.0
+vala,libvala-0.34.so
+vala,libvala-0.34.so.0
+vala,libvala-0.34.so.0.0.0
 valgrind,libmpiwrap-amd64-linux.so
 valgrind,vgpreload_core-amd64-linux.so
 valgrind,vgpreload_core-x86-linux.so
@@ -9563,7 +9566,7 @@ x265,libx265.so
 x265,libx265.so.79
 xapian-core,libxapian.so
 xapian-core,libxapian.so.30
-xapian-core,libxapian.so.30.0.0
+xapian-core,libxapian.so.30.2.0
 xcb-util,libxcb-util.so
 xcb-util,libxcb-util.so.1
 xcb-util,libxcb-util.so.1.0.0
@@ -9642,6 +9645,9 @@ xz,liblzma.so.5.2.2
 yaml-cpp,libyaml-cpp.so
 yaml-cpp,libyaml-cpp.so.0.5
 yaml-cpp,libyaml-cpp.so.0.5.3
+zeitgeist,libzeitgeist-2.0.so
+zeitgeist,libzeitgeist-2.0.so.0
+zeitgeist,libzeitgeist-2.0.so.0.0.0
 zlib,libz.so
 zlib,libz.so.1
 zlib,libz.so.1.2.8

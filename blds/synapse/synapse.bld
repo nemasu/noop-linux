@@ -1,17 +1,17 @@
 #package name
-NAME=xapian-core
+NAME=synapse
 
 #Description
-DESC='Open source search engine library.'
+DESC="A semantic file launcher"
 
 #package version
-VERSION=1.4.2
+VERSION=0.2.99.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://oligarchy.co.uk/xapian/${VERSION}/xapian-core-${VERSION}.tar.xz"
+SRC="https://launchpad.net/synapse-project/0.3/$VERSION/+download/synapse-$VERSION.tar.xz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://xapian.org/download
+	LISTURL=https://launchpad.net/synapse-project/
 	FILELIST=`GetFileList`
 	LATEST=0
 

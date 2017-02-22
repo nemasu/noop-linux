@@ -1,23 +1,23 @@
 #package name
-NAME=xapian-core
+NAME=python-isodate
 
 #Description
-DESC='Open source search engine library.'
+DESC="An ISO 8601 date/time/duration parser and formatter"
 
 #package version
-VERSION=1.4.2
+VERSION=0.5.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://oligarchy.co.uk/xapian/${VERSION}/xapian-core-${VERSION}.tar.xz"
+SRC=http://pypi.python.org/packages/source/i/isodate/isodate-$VERSION.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=python
 
 # build/package dependancies
 DEPS=
@@ -38,9 +38,11 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://xapian.org/download
+    NAME=isodate
+	LISTURL=http://pypi.python.org/packages/source/i/isodate/
 	FILELIST=`GetFileList`
 	LATEST=0
+    NAME=python-isodate
 
 	for i in ${FILELIST[@]};
 	do

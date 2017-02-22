@@ -1,17 +1,17 @@
 #package name
-NAME=xapian-core
+NAME=libkeybinder3
 
 #Description
-DESC='Open source search engine library.'
+DESC="A library for registering global keyboard shortcuts"
 
 #package version
-VERSION=1.4.2
+VERSION=0.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://oligarchy.co.uk/xapian/${VERSION}/xapian-core-${VERSION}.tar.xz"
+SRC=http://archive.ubuntu.com/ubuntu/pool/universe/k/keybinder-3.0/keybinder-3.0_${VERSION}.orig.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,21 +38,9 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://xapian.org/download
-	FILELIST=`GetFileList`
-	LATEST=0
-
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
-
-	vercomp $VERSION $LATEST
+	LATEST=`curl -s -L http://archive.ubuntu.com/ubuntu/pool/universe/k/keybinder-3.0/ | egrep "keybinder-3.0_[0-9\.]+\.orig\.tar\.gz" | tail -n1 | sed -e 's/.*keybinder-3.0_\([0-9\.]*\)\.orig\.tar\.gz.*/\1/g'`
+	
+    vercomp $VERSION $LATEST
 	if [ $? -eq 2 ];
 	then
 			echo "$NAME: New Version Available! - $LATEST"
