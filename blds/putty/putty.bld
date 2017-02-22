@@ -1,0 +1,47 @@
+#package name
+NAME=putty
+
+#Description
+DESC="PuTTY is a free implementation of SSH and Telnet for Windows and Unix platforms, along with an xterm terminal emulator."
+
+#package version
+VERSION=0.68
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://the.earth.li/~sgtatham/putty/latest/putty-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=autotools
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+function Detect
+{
+	LATEST=`curl -s -L http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html | egrep "putty-[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*putty-\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
+}
