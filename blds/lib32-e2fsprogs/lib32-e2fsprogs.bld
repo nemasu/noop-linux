@@ -34,9 +34,9 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 
-	export CC="gcc -m32"
-	export CXX="g++ -m32"
-	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+        export CC="gcc -m32"
+        export CXX="g++ -m32"
+        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
   # Remove unnecessary init.d directory
   sed -i '/init\.d/s|^|#|' misc/Makefile.in
@@ -56,23 +56,23 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://sourceforge.net/projects/e2fsprogs/files/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://sourceforge.net/projects/e2fsprogs/files/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

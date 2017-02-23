@@ -33,28 +33,28 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	pushd .
-	sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
-	sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
-	make -f Makefile-libbz2_so
-	make
-	make PREFIX=`pwd`/../../bldr-inst install
-	cp -v *.so* `pwd`/../../bldr-inst/lib
-	cd `pwd`/../../bldr-inst
-	mkdir usr
-	mv bin/ usr/
-	mv include/ usr/
-	mv lib/ usr/
-	mv share/ usr/
-	cd usr/lib
-	rm libbz2.so.1.0
-	ln -s libbz2.so.${VERSION} libbz2.so.1.0
-	ln -s libbz2.so.${VERSION} libbz2.so
-	popd
+        pushd .
+        sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
+        sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
+        make -f Makefile-libbz2_so
+        make
+        make PREFIX=`pwd`/../../bldr-inst install
+        cp -v *.so* `pwd`/../../bldr-inst/lib
+        cd `pwd`/../../bldr-inst
+        mkdir usr
+        mv bin/ usr/
+        mv include/ usr/
+        mv lib/ usr/
+        mv share/ usr/
+        cd usr/lib
+        rm libbz2.so.1.0
+        ln -s libbz2.so.${VERSION} libbz2.so.1.0
+        ln -s libbz2.so.${VERSION} libbz2.so
+        popd
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: Old
+        echo $NAME: Old
 }

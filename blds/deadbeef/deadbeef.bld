@@ -39,11 +39,11 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://deadbeef.sourceforge.net/download.html | grep -E "deadbeef-[0-9\.]*\.tar\.bz2" | sed -e 's/.*deadbeef-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+        LATEST=`curl -s http://deadbeef.sourceforge.net/download.html | grep -E "deadbeef-[0-9\.]*\.tar\.bz2" | sed -e 's/.*deadbeef-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

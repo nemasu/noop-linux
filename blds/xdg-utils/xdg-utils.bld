@@ -33,22 +33,22 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	git clone git://anongit.freedesktop.org/xdg/xdg-utils && cd xdg-utils*
-	./configure --prefix=/usr --mandir=/usr/share/man
-	make
-	make DESTDIR=/root/bldr-inst install
-	mkdir -p /root/bldr-inst/usr/share/desktop-directories
-	
+        git clone git://anongit.freedesktop.org/xdg/xdg-utils && cd xdg-utils*
+        ./configure --prefix=/usr --mandir=/usr/share/man
+        make
+        make DESTDIR=/root/bldr-inst install
+        mkdir -p /root/bldr-inst/usr/share/desktop-directories
+        
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L  http://cgit.freedesktop.org/xdg/xdg-utils/ | egrep "<td>[0-9-]*</td>" | head -n1 | sed 's/.*<tr><td>\([0-9-]*\)<\/td>.*/\1/g' | sed 's/-//g;'`
+        LATEST=`curl -s -L  http://cgit.freedesktop.org/xdg/xdg-utils/ | egrep "<td>[0-9-]*</td>" | head -n1 | sed 's/.*<tr><td>\([0-9-]*\)<\/td>.*/\1/g' | sed 's/-//g;'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

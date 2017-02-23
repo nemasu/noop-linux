@@ -34,8 +34,8 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i -e "s|^#.* /usr/local/bin/python|#!/usr/bin/python|" Lib/cgi.py
-	./configure --prefix=/usr \
+        sed -i -e "s|^#.* /usr/local/bin/python|#!/usr/bin/python|" Lib/cgi.py
+        ./configure --prefix=/usr \
               --enable-shared \
               --with-threads \
               --with-computed-gotos \
@@ -46,33 +46,33 @@ function BuildAndInstall
               --with-system-libmpdec \
               --enable-loadable-sqlite-extensions \
               --without-ensurepip
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install maninstall
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install maninstall
 
-	ln -s python3               /root/bldr-inst/usr/bin/python
-	ln -s python3-config        /root/bldr-inst/usr/bin/python-config
-	ln -s idle3                 /root/bldr-inst/usr/bin/idle
-	ln -s pydoc3                /root/bldr-inst/usr/bin/pydoc
-	ln -s python${_pybasever}.1 /root/bldr-inst/usr/share/man/man1/python.1
+        ln -s python3               /root/bldr-inst/usr/bin/python
+        ln -s python3-config        /root/bldr-inst/usr/bin/python-config
+        ln -s idle3                 /root/bldr-inst/usr/bin/idle
+        ln -s pydoc3                /root/bldr-inst/usr/bin/pydoc
+        ln -s python${_pybasever}.1 /root/bldr-inst/usr/share/man/man1/python.1
 
-	ln -sf ../../libpython${_pybasever}m.so "/root/bldr-inst/usr/lib/python${_pybasever}/config-${_pybasever}m/libpython${_pybasever}m.so"
+        ln -sf ../../libpython${_pybasever}m.so "/root/bldr-inst/usr/lib/python${_pybasever}/config-${_pybasever}m/libpython${_pybasever}m.so"
 
-	install -dm755 /root/bldr-inst/usr/lib/python${_pybasever}/Tools/{i18n,scripts}
-	install -m755 Tools/i18n/{msgfmt,pygettext}.py /root/bldr-inst/usr/lib/python${_pybasever}/Tools/i18n/
-	install -m755 Tools/scripts/{README,*py} /root/bldr-inst/usr/lib/python${_pybasever}/Tools/scripts/
+        install -dm755 /root/bldr-inst/usr/lib/python${_pybasever}/Tools/{i18n,scripts}
+        install -m755 Tools/i18n/{msgfmt,pygettext}.py /root/bldr-inst/usr/lib/python${_pybasever}/Tools/i18n/
+        install -m755 Tools/scripts/{README,*py} /root/bldr-inst/usr/lib/python${_pybasever}/Tools/scripts/
 
-	sed -i "s|/root/bldr-tmp/Python-${VERSION}:||" "/root/bldr-inst/usr/lib/python${_pybasever}/config-${_pybasever}m/Makefile"
+        sed -i "s|/root/bldr-tmp/Python-${VERSION}:||" "/root/bldr-inst/usr/lib/python${_pybasever}/config-${_pybasever}m/Makefile"
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://www.python.org/ | grep "Latest:" | sed 's|.*Python \(3[\.0-9]*\).*|\1|g'`
+        LATEST=`curl -s -L https://www.python.org/ | grep "Latest:" | sed 's|.*Python \(3[\.0-9]*\).*|\1|g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

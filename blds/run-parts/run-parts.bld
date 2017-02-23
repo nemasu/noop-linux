@@ -33,36 +33,36 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr
-	make run-parts
-	install -D -m755 run-parts ~/bldr-inst/usr/bin/run-parts
-	install -D -m644 run-parts.8 ~/bldr-inst/usr/share/man/man8/run-parts.8
-	for l in po4a/*/run-parts.8; do
-			install -D -m644  ${l} ~/bldr-inst/usr/share/man/${l:5:2}/man8/run-parts.8
-	done
+        ./configure --prefix=/usr
+        make run-parts
+        install -D -m755 run-parts ~/bldr-inst/usr/bin/run-parts
+        install -D -m644 run-parts.8 ~/bldr-inst/usr/share/man/man8/run-parts.8
+        for l in po4a/*/run-parts.8; do
+                        install -D -m644  ${l} ~/bldr-inst/usr/share/man/${l:5:2}/man8/run-parts.8
+        done
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=debianutils
-	LISTURL=http://http.debian.net/debian/pool/main/d/debianutils/
-	FILELIST=`GetFileList`
-	LATEST=0
+        NAME=debianutils
+        LISTURL=http://http.debian.net/debian/pool/main/d/debianutils/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'_//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'_//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

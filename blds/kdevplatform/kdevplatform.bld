@@ -39,25 +39,25 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST_KDEV=`curl -s -L http://download.kde.org/stable/kdevelop/ | egrep "[0-9\.]+\/" | tail -n1 | sed -e 's/.*href="\([0-9\.]*\)\/">.*/\1/g'`
+        LATEST_KDEV=`curl -s -L http://download.kde.org/stable/kdevelop/ | egrep "[0-9\.]+\/" | tail -n1 | sed -e 's/.*href="\([0-9\.]*\)\/">.*/\1/g'`
 
-	LISTURL=http://download.kde.org/stable/kdevelop/${LATEST_KDEV}/src/
-	FILELIST=`GetFileList`                                                                                                                                               
-	LATEST=0                                                                                                                                                             
-																																										 
-	for i in ${FILELIST[@]};                                                                                                                                             
-	do                                                                                                                                                                   
-					CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`                                                                                           
-					vercomp $LATEST $CURVER                                                                                                                              
-					if [ $? -eq 2 ];                                                                                                                                     
-					then                                                                                                                                                 
-									LATEST=$CURVER                                                                                                                       
-					fi                                                                                                                                                   
-	done          
+        LISTURL=http://download.kde.org/stable/kdevelop/${LATEST_KDEV}/src/
+        FILELIST=`GetFileList`                                                                                                                                               
+        LATEST=0                                                                                                                                                             
+                                                                                                                                                                                                                                                                                                                                                 
+        for i in ${FILELIST[@]};                                                                                                                                             
+        do                                                                                                                                                                   
+                                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`                                                                                           
+                                        vercomp $LATEST $CURVER                                                                                                                              
+                                        if [ $? -eq 2 ];                                                                                                                                     
+                                        then                                                                                                                                                 
+                                                                        LATEST=$CURVER                                                                                                                       
+                                        fi                                                                                                                                                   
+        done          
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

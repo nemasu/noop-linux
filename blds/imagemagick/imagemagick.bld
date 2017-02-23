@@ -38,11 +38,11 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s "http://www.imagemagick.org/download/" | egrep "ImageMagick-[0-9\.-]+\.tar\.xz" | tail -n1 | sed -e 's/.*ImageMagick-\([0-9\.-]*\)\.tar\.xz.*/\1/g'`
+        LATEST=`curl -L -s "http://www.imagemagick.org/download/" | egrep "ImageMagick-[0-9\.-]+\.tar\.xz" | tail -n1 | sed -e 's/.*ImageMagick-\([0-9\.-]*\)\.tar\.xz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

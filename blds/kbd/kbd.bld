@@ -33,43 +33,43 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	# rename keymap files with the same names
-	# this is needed because when only name of keymap is specified
-	# loadkeys loads the first keymap it can find, which is bad (see Arch FS#13837)
-	# this should be removed when upstream adopts the change
-	mv data/keymaps/i386/qwertz/cz{,-qwertz}.map
-	mv data/keymaps/i386/olpc/es{,-olpc}.map
-	mv data/keymaps/i386/olpc/pt{,-olpc}.map
-	mv data/keymaps/i386/dvorak/no{,-dvorak}.map
-	mv data/keymaps/i386/fgGIod/trf{,-fgGIod}.map
-	mv data/keymaps/i386/colemak/{en-latin9,colemak}.map
+        # rename keymap files with the same names
+        # this is needed because when only name of keymap is specified
+        # loadkeys loads the first keymap it can find, which is bad (see Arch FS#13837)
+        # this should be removed when upstream adopts the change
+        mv data/keymaps/i386/qwertz/cz{,-qwertz}.map
+        mv data/keymaps/i386/olpc/es{,-olpc}.map
+        mv data/keymaps/i386/olpc/pt{,-olpc}.map
+        mv data/keymaps/i386/dvorak/no{,-dvorak}.map
+        mv data/keymaps/i386/fgGIod/trf{,-fgGIod}.map
+        mv data/keymaps/i386/colemak/{en-latin9,colemak}.map
 
-	./configure --prefix=/usr --datadir=/usr/share/kbd --mandir=/usr/share/man
-	make KEYCODES_PROGS=yes RESIZECONS_PROGS=yes
-	make KEYCODES_PROGS=yes RESIZECONS_PROGS=yes DESTDIR=/root/bldr-inst install
+        ./configure --prefix=/usr --datadir=/usr/share/kbd --mandir=/usr/share/man
+        make KEYCODES_PROGS=yes RESIZECONS_PROGS=yes
+        make KEYCODES_PROGS=yes RESIZECONS_PROGS=yes DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.altlinux.org/pub/people/legion/kbd/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.altlinux.org/pub/people/legion/kbd/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -34,14 +34,14 @@ RESTORELIBDB=
 function BuildAndInstall
 {
     # set default user
-	sed -e 's#User daemon#User http#' \
-	  -e 's#Group daemon#Group http#' \
-	  -i docs/conf/httpd.conf.in
+        sed -e 's#User daemon#User http#' \
+          -e 's#Group daemon#Group http#' \
+          -i docs/conf/httpd.conf.in
 
-	cat $BLDRTMPDIR/noop.layout >> config.layout
-	rm $BLDRTMPDIR/noop.layout
+        cat $BLDRTMPDIR/noop.layout >> config.layout
+        rm $BLDRTMPDIR/noop.layout
 
-	./configure --sbindir=/usr/bin \
+        ./configure --sbindir=/usr/bin \
       --enable-layout=noop \
       --enable-mpms-shared=all \
       --enable-modules=all \
@@ -91,11 +91,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s http://www.apache.org/dist/httpd/ | grep "CURRENT-IS-" | sed 's/.*CURRENT-IS-\([0-9\.]*\).*/\1/g'`
+        LATEST=`curl -L -s http://www.apache.org/dist/httpd/ | grep "CURRENT-IS-" | sed 's/.*CURRENT-IS-\([0-9\.]*\).*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

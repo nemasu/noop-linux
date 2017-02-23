@@ -33,39 +33,39 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i 's/-Werror//' Makefile
-	./configure $STDUSRCONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	install -Dm644 include/libnetlink.h /root/bldr-inst/usr/include/libnetlink.h
-	install -Dm644 lib/libnetlink.a /root/bldr-inst/usr/lib/libnetlink.a
-	cd /root/bldr-inst
-	mkdir -p usr/bin/
-	mv sbin/* usr/bin/
-	rm -rf sbin
+        sed -i 's/-Werror//' Makefile
+        ./configure $STDUSRCONF
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        install -Dm644 include/libnetlink.h /root/bldr-inst/usr/include/libnetlink.h
+        install -Dm644 lib/libnetlink.a /root/bldr-inst/usr/lib/libnetlink.a
+        cd /root/bldr-inst
+        mkdir -p usr/bin/
+        mv sbin/* usr/bin/
+        rm -rf sbin
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://www.kernel.org/pub/linux/utils/net/iproute2/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://www.kernel.org/pub/linux/utils/net/iproute2/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

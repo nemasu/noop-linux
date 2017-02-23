@@ -38,12 +38,12 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s "ftp://ftp.videolan.org/pub/videolan/libbluray/" | tail -n2 | head -n1 | awk '{print $9;}'`
-	
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        LATEST=`curl -s "ftp://ftp.videolan.org/pub/videolan/libbluray/" | tail -n2 | head -n1 | awk '{print $9;}'`
+        
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

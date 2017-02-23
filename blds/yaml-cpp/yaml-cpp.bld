@@ -33,23 +33,23 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cmake . -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON
+        cmake . -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON
     make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
-	install -Dm644 yaml-cpp-config.cmake /root/bldr-inst/usr/lib/cmake/yaml-cpp/yaml-cpp-config.cmake
-	install -Dm644 yaml-cpp-config-version.cmake /root/bldr-inst/usr/lib/cmake/yaml-cpp/yaml-cpp-config-version.cmake
-	install -Dm644 yaml-cpp-targets.cmake /root/bldr-inst/usr/lib/cmake/yaml-cpp/yaml-cpp-targets.cmake
+        install -Dm644 yaml-cpp-config.cmake /root/bldr-inst/usr/lib/cmake/yaml-cpp/yaml-cpp-config.cmake
+        install -Dm644 yaml-cpp-config-version.cmake /root/bldr-inst/usr/lib/cmake/yaml-cpp/yaml-cpp-config-version.cmake
+        install -Dm644 yaml-cpp-targets.cmake /root/bldr-inst/usr/lib/cmake/yaml-cpp/yaml-cpp-targets.cmake
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://github.com/jbeder/yaml-cpp/releases | egrep "release-[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*release-\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -s -L https://github.com/jbeder/yaml-cpp/releases | egrep "release-[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*release-\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

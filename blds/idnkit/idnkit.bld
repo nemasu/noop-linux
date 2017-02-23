@@ -33,30 +33,30 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	
-	./configure \
-		--prefix=/usr \
-		--sysconfdir=/etc \
-		--localstatedir=/var \
-		--mandir=/usr/share/man \
-		--enable-static=no
-	make
-	
-	make DESTDIR=/root/bldr-inst install
-	install -Dm644 LICENSE.txt /root/bldr-inst/usr/share/licenses/idnkit/LICENSE
-	rm /root/bldr-inst/etc/*.sample
+        
+        ./configure \
+                --prefix=/usr \
+                --sysconfdir=/etc \
+                --localstatedir=/var \
+                --mandir=/usr/share/man \
+                --enable-static=no
+        make
+        
+        make DESTDIR=/root/bldr-inst install
+        install -Dm644 LICENSE.txt /root/bldr-inst/usr/share/licenses/idnkit/LICENSE
+        rm /root/bldr-inst/etc/*.sample
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://www.nic.ad.jp/ja/idn/idnkit/download/
-	LATEST=`curl -s https://www.nic.ad.jp/ja/idn/idnkit/download/ | grep "sources/idnkit" | sed -e 's/.*idnkit-\(.*\)-src.tar.gz.*/\1/g'`
+        LISTURL=https://www.nic.ad.jp/ja/idn/idnkit/download/
+        LATEST=`curl -s https://www.nic.ad.jp/ja/idn/idnkit/download/ | grep "sources/idnkit" | sed -e 's/.*idnkit-\(.*\)-src.tar.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

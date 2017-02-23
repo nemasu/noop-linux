@@ -33,32 +33,32 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	wget http://download.mono-project.com/repo/centos/r/referenceassemblies-pcl/referenceassemblies-pcl-${VERSION}-0.noarch.rpm
-	rpm2cpio *.rpm | bsdtar -xf -
-	rm *.rpm
-	cp -r * /root/bldr-inst
+        wget http://download.mono-project.com/repo/centos/r/referenceassemblies-pcl/referenceassemblies-pcl-${VERSION}-0.noarch.rpm
+        rpm2cpio *.rpm | bsdtar -xf -
+        rm *.rpm
+        cp -r * /root/bldr-inst
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

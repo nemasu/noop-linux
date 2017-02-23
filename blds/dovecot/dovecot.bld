@@ -38,27 +38,27 @@ function BuildAndInstall
   ./configure --prefix=/usr --sysconfdir=/etc \
     --sbindir=/usr/bin \
     --localstatedir=/var \
-	--libexecdir=/usr/lib \
-  	--with-moduledir=/usr/lib/dovecot/modules \
-  	--with-systemdsystemunitdir=/usr/lib/systemd/system \
-	--disable-static \
-	--with-nss \
-	--with-pam \
-	--with-mysql \
-	--with-pgsql \
-	--with-sqlite \
-	--with-ssl=openssl \
-	--with-ssldir=/etc/ssl \
-	--with-gssapi \
-	--with-ldap=plugin \
-	--with-zlib \
-	--with-bzlib \
-	--with-lzma \
-	--with-lz4 \
-	--with-libcap \
-	--with-docs #--help
+        --libexecdir=/usr/lib \
+        --with-moduledir=/usr/lib/dovecot/modules \
+        --with-systemdsystemunitdir=/usr/lib/systemd/system \
+        --disable-static \
+        --with-nss \
+        --with-pam \
+        --with-mysql \
+        --with-pgsql \
+        --with-sqlite \
+        --with-ssl=openssl \
+        --with-ssldir=/etc/ssl \
+        --with-gssapi \
+        --with-ldap=plugin \
+        --with-zlib \
+        --with-bzlib \
+        --with-lzma \
+        --with-lz4 \
+        --with-libcap \
+        --with-docs #--help
   make -j${BLDR_CORES}
-	
+        
   make DESTDIR=/root/bldr-inst install
 
   # install example conf files and ssl.conf
@@ -76,24 +76,24 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.dovecot.org/download.html
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.dovecot.org/download.html
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

@@ -1,24 +1,24 @@
 function postinst() {
     if ! getent group memcached >/dev/null; then
-    	groupadd --system memcached
+        groupadd --system memcached
     fi
     if ! getent passwd memcached >/dev/null; then
-    	useradd --system -c 'memcached user' -g memcached -d / -s /bin/bash memcached
+        useradd --system -c 'memcached user' -g memcached -d / -s /bin/bash memcached
     fi
 }
 function postup() {
     if ! getent group memcached >/dev/null; then
-    	groupadd --system memcached
+        groupadd --system memcached
     fi
     if ! getent passwd memcached >/dev/null; then
-    	useradd --system -c 'memcached user' -g memcached -d / -s /bin/bash memcached
+        useradd --system -c 'memcached user' -g memcached -d / -s /bin/bash memcached
     fi
 }
 function postrm() {
     if getent passwd memcached >/dev/null; then
-    	userdel memcached
+        userdel memcached
     fi
     if getent group memcached >/dev/null; then
-    	groupdel memcached
+        groupdel memcached
     fi
 }

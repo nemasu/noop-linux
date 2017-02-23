@@ -33,40 +33,40 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -e 's/AM_CONFIG_HEADER(/AC_CONFIG_HEADERS(/' -i configure.ac
-	autoreconf -f -i
-	 ./configure \
-		--prefix=/usr \
-		--mandir=/usr/share/man \
-		--program-transform-name 's,2x-,2,'
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	sed -i 's|http://docbook2x.sf.net/latest|/usr/share/docbook2X|g' /root/bldr-inst/usr/bin/db2x_xsltproc
+        sed -e 's/AM_CONFIG_HEADER(/AC_CONFIG_HEADERS(/' -i configure.ac
+        autoreconf -f -i
+         ./configure \
+                --prefix=/usr \
+                --mandir=/usr/share/man \
+                --program-transform-name 's,2x-,2,'
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        sed -i 's|http://docbook2x.sf.net/latest|/usr/share/docbook2X|g' /root/bldr-inst/usr/bin/db2x_xsltproc
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=docbook2X
-	LISTURL=http://docbook2x.sourceforge.net/
-	FILELIST=`GetFileList`
-	LATEST=0
-	NAME=docbook2x
+        NAME=docbook2X
+        LISTURL=http://docbook2x.sourceforge.net/
+        FILELIST=`GetFileList`
+        LATEST=0
+        NAME=docbook2x
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -33,58 +33,58 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	rm -rf path && mkdir path
-	pushd path
-	ln -s /usr/bin/gcc cc
-	PATH=`pwd`:$PATH
-	popd
+        rm -rf path && mkdir path
+        pushd path
+        ln -s /usr/bin/gcc cc
+        PATH=`pwd`:$PATH
+        popd
 
-	cd wpa_supplicant
-	mv $BLDRTMPDIR/config .config
-	sed -i -e 's|/usr/local|/usr|g' Makefile
-	make PREFIX=/usr
-	make DESTDIR=/root/bldr-inst install
+        cd wpa_supplicant
+        mv $BLDRTMPDIR/config .config
+        sed -i -e 's|/usr/local|/usr|g' Makefile
+        make PREFIX=/usr
+        make DESTDIR=/root/bldr-inst install
 
-	pkgdir=/root/bldr-inst
-	install -d -m755 "${pkgdir}/etc/wpa_supplicant"
-	install -m644 wpa_supplicant.conf "${pkgdir}/etc/wpa_supplicant/wpa_supplicant.conf"
+        pkgdir=/root/bldr-inst
+        install -d -m755 "${pkgdir}/etc/wpa_supplicant"
+        install -m644 wpa_supplicant.conf "${pkgdir}/etc/wpa_supplicant/wpa_supplicant.conf"
 
-	install -d -m755 "${pkgdir}/usr/share/man/man"{5,8}
-	install -m644 doc/docbook/*.5 "${pkgdir}/usr/share/man/man5/"
-	install -m644 doc/docbook/*.8 "${pkgdir}/usr/share/man/man8/"
-	rm -f "${pkgdir}/usr/share/man/man8/wpa_"{priv,gui}.8
+        install -d -m755 "${pkgdir}/usr/share/man/man"{5,8}
+        install -m644 doc/docbook/*.5 "${pkgdir}/usr/share/man/man5/"
+        install -m644 doc/docbook/*.8 "${pkgdir}/usr/share/man/man8/"
+        rm -f "${pkgdir}/usr/share/man/man8/wpa_"{priv,gui}.8
 
-	install -d -m755 "${pkgdir}/usr/share/dbus-1/system-services"
-	install -m644 dbus/{fi.epitest.hostap.WPASupplicant.service,fi.w1.wpa_supplicant1.service} "${pkgdir}/usr/share/dbus-1/system-services/"
+        install -d -m755 "${pkgdir}/usr/share/dbus-1/system-services"
+        install -m644 dbus/{fi.epitest.hostap.WPASupplicant.service,fi.w1.wpa_supplicant1.service} "${pkgdir}/usr/share/dbus-1/system-services/"
 
-	install -d -m755 "${pkgdir}/etc/dbus-1/system.d"
-	install -m644 dbus/dbus-wpa_supplicant.conf "${pkgdir}/etc/dbus-1/system.d/wpa_supplicant.conf"
+        install -d -m755 "${pkgdir}/etc/dbus-1/system.d"
+        install -m644 dbus/dbus-wpa_supplicant.conf "${pkgdir}/etc/dbus-1/system.d/wpa_supplicant.conf"
 
-	install -d -m755 "${pkgdir}/usr/lib/systemd/system"
-	install -m644 systemd/*.service "${pkgdir}/usr/lib/systemd/system/"
+        install -d -m755 "${pkgdir}/usr/lib/systemd/system"
+        install -m644 systemd/*.service "${pkgdir}/usr/lib/systemd/system/"
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://hostap.epitest.fi/releases/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://hostap.epitest.fi/releases/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

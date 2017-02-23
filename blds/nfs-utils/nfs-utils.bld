@@ -33,49 +33,49 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./autogen.sh
-	export LDFLAGS="-pthread"
+        ./autogen.sh
+        export LDFLAGS="-pthread"
   ./configure --prefix=/usr --sbindir=/usr/bin --enable-nfsv4 --enable-nfsv41 --enable-gss \
               --without-tcp-wrappers --with-statedir=/var/lib/nfs \
               --enable-ipv6 --sysconfdir=/etc --enable-libmount-mount \
               --with-gssglue \
               --enable-mountconfig --with-start-statd=/usr/bin/start-statd
 
-	make -j${BLDR_CORES}
-	mkdir /root/bldr-inst/sbin
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        mkdir /root/bldr-inst/sbin
+        make DESTDIR=/root/bldr-inst install
 
 
-	# Configuration
-	install -D -m 644 utils/mount/nfsmount.conf /root/bldr-inst/etc/nfsmount.conf
+        # Configuration
+        install -D -m 644 utils/mount/nfsmount.conf /root/bldr-inst/etc/nfsmount.conf
 
-	# directories
-	mkdir -p /root/bldr-inst/etc/exports.d
-	mkdir -p /root/bldr-inst/var/lib/nfs/rpc_pipefs
-	mkdir -p /root/bldr-inst/var/lib/nfs/v4recovery
+        # directories
+        mkdir -p /root/bldr-inst/etc/exports.d
+        mkdir -p /root/bldr-inst/var/lib/nfs/rpc_pipefs
+        mkdir -p /root/bldr-inst/var/lib/nfs/v4recovery
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://sourceforge.net/projects/nfs/files/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://sourceforge.net/projects/nfs/files/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

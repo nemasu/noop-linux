@@ -33,77 +33,77 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
-	make
-	make DESTDIR=/root/bldr-inst install
-	cd ..
-	rm -rf *
+        ./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
+        make
+        make DESTDIR=/root/bldr-inst install
+        cd ..
+        rm -rf *
 
-	wget http://xorg.freedesktop.org/releases/individual/font/font-adobe-utopia-100dpi-1.0.4.tar.bz2
-	tar xf *.bz2
-	rm *.bz2
-	cd `ls`
-	./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
-	make
-	make DESTDIR=/root/bldr-inst install
-	cd ..
-	rm -rf *
+        wget http://xorg.freedesktop.org/releases/individual/font/font-adobe-utopia-100dpi-1.0.4.tar.bz2
+        tar xf *.bz2
+        rm *.bz2
+        cd `ls`
+        ./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
+        make
+        make DESTDIR=/root/bldr-inst install
+        cd ..
+        rm -rf *
 
-	wget http://xorg.freedesktop.org/releases/individual/font/font-bh-100dpi-1.0.3.tar.bz2
-	tar xf *.bz2
-	rm *.bz2
-	cd `ls`
-	./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
-	make
-	make DESTDIR=/root/bldr-inst install
-	cd ..
-	rm -rf *
+        wget http://xorg.freedesktop.org/releases/individual/font/font-bh-100dpi-1.0.3.tar.bz2
+        tar xf *.bz2
+        rm *.bz2
+        cd `ls`
+        ./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
+        make
+        make DESTDIR=/root/bldr-inst install
+        cd ..
+        rm -rf *
 
-	wget http://xorg.freedesktop.org/releases/individual/font/font-bh-lucidatypewriter-100dpi-1.0.3.tar.bz2
-	tar xf *.bz2
-	rm *.bz2
-	cd `ls`
-	./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
-	make
-	make DESTDIR=/root/bldr-inst install
-	cd ..
-	rm -rf *
+        wget http://xorg.freedesktop.org/releases/individual/font/font-bh-lucidatypewriter-100dpi-1.0.3.tar.bz2
+        tar xf *.bz2
+        rm *.bz2
+        cd `ls`
+        ./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
+        make
+        make DESTDIR=/root/bldr-inst install
+        cd ..
+        rm -rf *
 
-	wget http://xorg.freedesktop.org/releases/individual/font/font-bitstream-100dpi-1.0.3.tar.bz2
-	tar xf *.bz2
-	rm *.bz2
-	cd `ls`
-	./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
-	make
-	make DESTDIR=/root/bldr-inst install
-	cd ..
-	rm -rf *
+        wget http://xorg.freedesktop.org/releases/individual/font/font-bitstream-100dpi-1.0.3.tar.bz2
+        tar xf *.bz2
+        rm *.bz2
+        cd `ls`
+        ./configure --prefix=/usr --with-fontdir=/usr/share/fonts/100dpi
+        make
+        make DESTDIR=/root/bldr-inst install
+        cd ..
+        rm -rf *
 
-	rm -f /root/bldr-inst/usr/share/fonts/100dpi/fonts.*
+        rm -f /root/bldr-inst/usr/share/fonts/100dpi/fonts.*
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=font-adobe-100dpi
-	LISTURL=http://xorg.freedesktop.org/releases/individual/font/
-	FILELIST=`GetFileList`
-	LATEST=0
+        NAME=font-adobe-100dpi
+        LISTURL=http://xorg.freedesktop.org/releases/individual/font/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

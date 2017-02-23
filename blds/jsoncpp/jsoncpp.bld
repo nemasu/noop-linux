@@ -33,24 +33,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cmake . \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DJSONCPP_LIB_BUILD_SHARED=ON \
-		-DJSONCPP_WITH_TESTS=OFF
+        cmake . \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DJSONCPP_LIB_BUILD_SHARED=ON \
+                -DJSONCPP_WITH_TESTS=OFF
     make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
   
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://github.com/open-source-parsers/jsoncpp/tags | egrep "/1[0-9\.]*\.tar\.gz" | sed 's/.*\/\(1[0-9\.]*\)\.tar\.gz.*/\1/g' | head -n1`
+        LATEST=`curl -s -L https://github.com/open-source-parsers/jsoncpp/tags | egrep "/1[0-9\.]*\.tar\.gz" | sed 's/.*\/\(1[0-9\.]*\)\.tar\.gz.*/\1/g' | head -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

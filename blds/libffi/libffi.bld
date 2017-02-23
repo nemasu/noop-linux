@@ -33,11 +33,11 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  	autoreconf -fi
-	./configure --prefix=/usr
-	make -j${BLDR_CORES}
+        autoreconf -fi
+        ./configure --prefix=/usr
+        make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

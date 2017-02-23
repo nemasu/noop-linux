@@ -33,12 +33,12 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	install -d /root/bldr-inst/usr/share/{fonts/TTF,licenses/"${NAME}"}
-	install *.ttf /root/bldr-inst/usr/share/fonts/TTF
+        install -d /root/bldr-inst/usr/share/{fonts/TTF,licenses/"${NAME}"}
+        install *.ttf /root/bldr-inst/usr/share/fonts/TTF
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "${NAME}: Too old"
+        echo "${NAME}: Too old"
 }

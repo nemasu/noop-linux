@@ -40,22 +40,22 @@ export CXXFLAGS='-fext-numeric-literals'
 #Default HTTP curl new version detection
 function Detect
 {
-	FILELIST=`curl -L -s http://download.kde.org/stable/krita/  | egrep "href=\"[0-9\.]+/\"" | sed -e 's/.*href="\([0-9\.]*\)\/".*/\1/g'`
-	LATEST=0
+        FILELIST=`curl -L -s http://download.kde.org/stable/krita/  | egrep "href=\"[0-9\.]+/\"" | sed -e 's/.*href="\([0-9\.]*\)\/".*/\1/g'`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=$i
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=$i
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

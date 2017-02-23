@@ -33,24 +33,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd ..
-	install -d /root/bldr-inst/usr/share/playonlinux
-	install -d /root/bldr-inst/usr/bin 
-	cp -r playonlinux /root/bldr-inst/usr/share/
+        cd ..
+        install -d /root/bldr-inst/usr/share/playonlinux
+        install -d /root/bldr-inst/usr/bin 
+        cp -r playonlinux /root/bldr-inst/usr/share/
 
-	install -D -m644 playonlinux/etc/PlayOnLinux.desktop /root/bldr-inst/usr/share/applications/playonlinux.desktop
-	sed -i "s/ %F//g" /root/bldr-inst/usr/share/applications/playonlinux.desktop
+        install -D -m644 playonlinux/etc/PlayOnLinux.desktop /root/bldr-inst/usr/share/applications/playonlinux.desktop
+        sed -i "s/ %F//g" /root/bldr-inst/usr/share/applications/playonlinux.desktop
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://www.playonlinux.com/en/download.html | egrep "PlayOnLinux_[0-9\.]*\.tar\.gz" | sed -e 's/.*PlayOnLinux_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -L -s https://www.playonlinux.com/en/download.html | egrep "PlayOnLinux_[0-9\.]*\.tar\.gz" | sed -e 's/.*PlayOnLinux_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

@@ -36,24 +36,24 @@ function BuildAndInstall
 {
     mkdir -p /root/bldr-inst/usr/share/xml/docbook/xsl-stylesheets-1.79.1
 
-	cp -v -R VERSION assembly common eclipse epub epub3 extensions fo        \
-			 highlighting html htmlhelp images javahelp lib manpages params  \
-			 profiling roundtrip slides template tests tools webhelp website \
-			 xhtml xhtml-1_1 xhtml5                                          \
-		/root/bldr-inst/usr/share/xml/docbook/xsl-stylesheets-1.79.1/
+        cp -v -R VERSION assembly common eclipse epub epub3 extensions fo        \
+                         highlighting html htmlhelp images javahelp lib manpages params  \
+                         profiling roundtrip slides template tests tools webhelp website \
+                         xhtml xhtml-1_1 xhtml5                                          \
+                /root/bldr-inst/usr/share/xml/docbook/xsl-stylesheets-1.79.1/
 
-	ln -s VERSION /root/bldr-inst/usr/share/xml/docbook/xsl-stylesheets-1.79.1/VERSION.xsl
+        ln -s VERSION /root/bldr-inst/usr/share/xml/docbook/xsl-stylesheets-1.79.1/VERSION.xsl
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
 
-	LATEST=`curl -L -s http://sourceforge.net/projects/docbook/files/docbook-xsl/ | grep "Download docbook" | sed -e 's/.*Download docbook-xsl-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+        LATEST=`curl -L -s http://sourceforge.net/projects/docbook/files/docbook-xsl/ | grep "Download docbook" | sed -e 's/.*Download docbook-xsl-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

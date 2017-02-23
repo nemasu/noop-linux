@@ -33,28 +33,28 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure \
-		--prefix=/usr \
-		--libexecdir=/usr/lib \
-		--enable-linuxcaps \
-		--enable-ntp-signd
+        ./configure \
+                --prefix=/usr \
+                --libexecdir=/usr/lib \
+                --enable-linuxcaps \
+                --enable-ntp-signd
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	mkdir -p /root/bldr-inst/var/lib/ntp/
-	touch /root/bldr-inst/var/lib/ntp/.placeholder
+        mkdir -p /root/bldr-inst/var/lib/ntp/
+        touch /root/bldr-inst/var/lib/ntp/.placeholder
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s "http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-dev/?C=M;O=A" | grep ".tar.gz" | tail -n1 | sed -e 's/.*ntp-dev-\([p0-9\.]*\)\.tar\.gz.*/\1/g' | sed 's/p/-/g'`
+        LATEST=`curl -s "http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-dev/?C=M;O=A" | grep ".tar.gz" | tail -n1 | sed -e 's/.*ntp-dev-\([p0-9\.]*\)\.tar\.gz.*/\1/g' | sed 's/p/-/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 
 }

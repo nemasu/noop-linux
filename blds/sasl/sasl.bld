@@ -34,89 +34,89 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export CFLAGS="$CFLAGS -fPIC"
-	sed 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/' -i configure.in
-	rm -f config/config.guess config/config.sub 
-	rm -f config/ltconfig config/ltmain.sh config/libtool.m4
-	rm -fr autom4te.cache
-	libtoolize -c
-	aclocal -I config -I cmulocal
-	automake -a -c
-	autoheader
-	autoconf
+        export CFLAGS="$CFLAGS -fPIC"
+        sed 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/' -i configure.in
+        rm -f config/config.guess config/config.sub 
+        rm -f config/ltconfig config/ltmain.sh config/libtool.m4
+        rm -fr autom4te.cache
+        libtoolize -c
+        aclocal -I config -I cmulocal
+        automake -a -c
+        autoheader
+        autoconf
 
-	pushd saslauthd
-	rm -f config/config.guess config/config.sub 
-	rm -f config/ltconfig config/ltmain.sh config/libtool.m4
-	rm -fr autom4te.cache
-	libtoolize -c
-	aclocal -I config -I ../cmulocal -I ../config
-	automake -a -c
-	autoheader
-	autoconf
-	popd
+        pushd saslauthd
+        rm -f config/config.guess config/config.sub 
+        rm -f config/ltconfig config/ltmain.sh config/libtool.m4
+        rm -fr autom4te.cache
+        libtoolize -c
+        aclocal -I config -I ../cmulocal -I ../config
+        automake -a -c
+        autoheader
+        autoconf
+        popd
 
 
-	./configure --prefix=/usr \
-		--sbin=/usr/bin \
-		--mandir=/usr/share/man \
-		--infodir=/usr/share/info \
-		--disable-static \
-		--enable-shared \
-		--enable-alwaystrue \
-		--enable-checkapop \
-		--enable-cram \
-		--enable-digest \
-		--disable-otp \
-		--disable-srp \
-		--disable-srp-setpass \
-		--disable-krb4 \
-		--enable-gssapi \
-		--enable-auth-sasldb \
-		--enable-plain \
-		--enable-anon \
-		--enable-login \
-		--enable-ntlm \
-		--disable-passdss \
-		--enable-sql \
-		--with-mysql=/usr \
-		--with-pgsql=/usr/lib \
-		--with-sqlite3=/usr/lib \
-		--enable-ldapdb \
-		--disable-macos-framework \
-		--with-pam \
-		--with-saslauthd=/var/run/saslauthd \
-		--with-ldap \
-		--with-dblib=gdbm \
-		--with-configdir=/etc/sasl2:/etc/sasl:/usr/lib/sasl2 \
-		--sysconfdir=/etc \
-		--with-devrandom=/dev/urandom
-	
-	make
-	make DESTDIR=/root/bldr-inst install
+        ./configure --prefix=/usr \
+                --sbin=/usr/bin \
+                --mandir=/usr/share/man \
+                --infodir=/usr/share/info \
+                --disable-static \
+                --enable-shared \
+                --enable-alwaystrue \
+                --enable-checkapop \
+                --enable-cram \
+                --enable-digest \
+                --disable-otp \
+                --disable-srp \
+                --disable-srp-setpass \
+                --disable-krb4 \
+                --enable-gssapi \
+                --enable-auth-sasldb \
+                --enable-plain \
+                --enable-anon \
+                --enable-login \
+                --enable-ntlm \
+                --disable-passdss \
+                --enable-sql \
+                --with-mysql=/usr \
+                --with-pgsql=/usr/lib \
+                --with-sqlite3=/usr/lib \
+                --enable-ldapdb \
+                --disable-macos-framework \
+                --with-pam \
+                --with-saslauthd=/var/run/saslauthd \
+                --with-ldap \
+                --with-dblib=gdbm \
+                --with-configdir=/etc/sasl2:/etc/sasl:/usr/lib/sasl2 \
+                --sysconfdir=/etc \
+                --with-devrandom=/dev/urandom
+        
+        make
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.cyrusimap.org/cyrus-sasl/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.cyrusimap.org/cyrus-sasl/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

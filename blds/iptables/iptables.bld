@@ -34,36 +34,36 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	rm include/linux/types.h
-	./configure --prefix=/usr \
-		--libexecdir=/usr/lib/iptables --sysconfdir=/etc \
-		--with-xtlibdir=/usr/lib/iptables \
-		--enable-devel --enable-shared \
-		--sbindir=/usr/bin
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        rm include/linux/types.h
+        ./configure --prefix=/usr \
+                --libexecdir=/usr/lib/iptables --sysconfdir=/etc \
+                --with-xtlibdir=/usr/lib/iptables \
+                --enable-devel --enable-shared \
+                --sbindir=/usr/bin
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.netfilter.org/projects/iptables/files/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.netfilter.org/projects/iptables/files/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -33,10 +33,10 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	echo "Nothing to do"
+        echo "Nothing to do"
 }
 
 function Detect
 {
-	echo $NAME: From AUR
+        echo $NAME: From AUR
 }

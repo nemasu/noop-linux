@@ -38,11 +38,11 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://github.com/hishamhm/htop/releases | egrep "archive\/[0-9\.]+\.tar\.gz" | head -n1  | sed -e 's/.*archive\/\([0-9\.]*\)\.tar\.gz.*/\1/g'`
-	
+        LATEST=`curl -s -L https://github.com/hishamhm/htop/releases | egrep "archive\/[0-9\.]+\.tar\.gz" | head -n1  | sed -e 's/.*archive\/\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        
     vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

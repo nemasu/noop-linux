@@ -35,83 +35,83 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	git clone git://git.savannah.gnu.org/grub.git
-	cd grub
-	sed 's|/usr/share/fonts/unifont|/usr/share/fonts/unifont /usr/share/fonts/misc|g' -i configure.ac
-	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i configure.ac
-	./autogen.sh
-	cd ..
-	dir1=`ls`
-	cp -r $dir1 ${dir1}_64
-	
-	if [ "${ARCH}" == "x86_64" ];
-	then
-		cd ${dir1}_64
-		
-		./configure \
-			--enable-device-mapper \
-			--enable-cache-stats \
-			--enable-grub-mkfont \
-			--prefix=/usr \
-			--sysconfdir=/etc \
-			--with-bootdir=/boot \
-			--with-grubdir="grub" \
-			--with-platform="efi" \
-			--disable-efiemu \
-			--enable-mm-debug \
-			--enable-nls \
-			--enable-grub-mount \
-			--enable-boot-time
+        git clone git://git.savannah.gnu.org/grub.git
+        cd grub
+        sed 's|/usr/share/fonts/unifont|/usr/share/fonts/unifont /usr/share/fonts/misc|g' -i configure.ac
+        sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i configure.ac
+        ./autogen.sh
+        cd ..
+        dir1=`ls`
+        cp -r $dir1 ${dir1}_64
+        
+        if [ "${ARCH}" == "x86_64" ];
+        then
+                cd ${dir1}_64
+                
+                ./configure \
+                        --enable-device-mapper \
+                        --enable-cache-stats \
+                        --enable-grub-mkfont \
+                        --prefix=/usr \
+                        --sysconfdir=/etc \
+                        --with-bootdir=/boot \
+                        --with-grubdir="grub" \
+                        --with-platform="efi" \
+                        --disable-efiemu \
+                        --enable-mm-debug \
+                        --enable-nls \
+                        --enable-grub-mount \
+                        --enable-boot-time
 
-		make -j${BLDR_CORES}
-		make DESTDIR=/root/bldr-inst install
-	fi
+                make -j${BLDR_CORES}
+                make DESTDIR=/root/bldr-inst install
+        fi
 
-	cd ../$dir1
+        cd ../$dir1
 
-	./configure \
-		--enable-device-mapper \
-		--enable-cache-stats \
-		--enable-grub-mkfont \
-		--enable-boot-time \
-		--enable-grub-mount \
-		--prefix=/usr \
-		--sysconfdir=/etc \
-		--with-bootdir=/boot \
-		--with-grubdir="grub" \
-		--with-platform="pc" \
-		--enable-efiemu \
-		--enable-mm-debug \
-		--enable-nls 
-		
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./configure \
+                --enable-device-mapper \
+                --enable-cache-stats \
+                --enable-grub-mkfont \
+                --enable-boot-time \
+                --enable-grub-mount \
+                --prefix=/usr \
+                --sysconfdir=/etc \
+                --with-bootdir=/boot \
+                --with-grubdir="grub" \
+                --with-platform="pc" \
+                --enable-efiemu \
+                --enable-mm-debug \
+                --enable-nls 
+                
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	grub-mkfont -o /root/bldr-inst/usr/share/grub/unicode.pf2 /usr/share/fonts/misc/unifont.bdf
+        grub-mkfont -o /root/bldr-inst/usr/share/grub/unicode.pf2 /usr/share/fonts/misc/unifont.bdf
 
-	
+        
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnu.org/gnu/grub/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.gnu.org/gnu/grub/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

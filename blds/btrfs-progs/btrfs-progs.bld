@@ -33,20 +33,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./autogen.sh
-	./configure --prefix=/usr
-	make -j${BLDR_CORES}
-	make prefix=/root/bldr-inst/usr install
+        ./autogen.sh
+        ./configure --prefix=/usr
+        make -j${BLDR_CORES}
+        make prefix=/root/bldr-inst/usr install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://github.com/kdave/btrfs-progs/releases | egrep "v[0-9\.]*\.tar\.gz" | head -n1 | sed 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -L -s https://github.com/kdave/btrfs-progs/releases | egrep "v[0-9\.]*\.tar\.gz" | head -n1 | sed 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

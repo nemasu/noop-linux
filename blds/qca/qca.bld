@@ -33,39 +33,39 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p build build4
+        mkdir -p build build4
 
-	cd build4
-	cmake .. \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DBUILD_TESTS=OFF \
-		-DQCA_LIBRARY_INSTALL_DIR=/usr/lib \
-		-DQCA_FEATURE_INSTALL_DIR=/usr/share/qt4/mkspecs/features/ \
-		-DQT4_BUILD=ON
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        cd build4
+        cmake .. \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DBUILD_TESTS=OFF \
+                -DQCA_LIBRARY_INSTALL_DIR=/usr/lib \
+                -DQCA_FEATURE_INSTALL_DIR=/usr/share/qt4/mkspecs/features/ \
+                -DQT4_BUILD=ON
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	cd ../build
-	cmake .. \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DBUILD_TESTS=OFF \
-		-DQCA_INSTALL_IN_QT_PREFIX=ON \
-		-DQCA_MAN_INSTALL_DIR=/usr/share/man
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        cd ../build
+        cmake .. \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DBUILD_TESTS=OFF \
+                -DQCA_INSTALL_IN_QT_PREFIX=ON \
+                -DQCA_MAN_INSTALL_DIR=/usr/share/man
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s http://download.kde.org/stable/qca/ | egrep "href=\"[0-9\.]+\/\">" | sed -e 's/.*href=\"\([0-9\.]*\)\/\">.*/\1/g'`
+        LATEST=`curl -L -s http://download.kde.org/stable/qca/ | egrep "href=\"[0-9\.]+\/\">" | sed -e 's/.*href=\"\([0-9\.]*\)\/\">.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -33,20 +33,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd unix
-	if [ "${ARCH}" == "x86_64" ] || [ "${ARCH}" == "aarch64" ]; then
-		./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --enable-64bit
-	else
-		./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --disable-64bit
-	fi
+        cd unix
+        if [ "${ARCH}" == "x86_64" ] || [ "${ARCH}" == "aarch64" ]; then
+                ./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --enable-64bit
+        else
+                ./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --disable-64bit
+        fi
 
-	make -j${BLDR_CORES}
+        make -j${BLDR_CORES}
 
-	make INSTALL_ROOT=/root/bldr-inst install install-private-headers
-	mkdir -p /root/bldr-inst/usr/bin/
-	mkdir -p /root/bldr-inst/usr/lib/
-	ln -sf tclsh8.6 /root/bldr-inst/usr/bin/tclsh
-	ln -sf libtcl${VERSION%.*}.so /root/bldr-inst/usr/lib/libtcl.so
+        make INSTALL_ROOT=/root/bldr-inst install install-private-headers
+        mkdir -p /root/bldr-inst/usr/bin/
+        mkdir -p /root/bldr-inst/usr/lib/
+        ln -sf tclsh8.6 /root/bldr-inst/usr/bin/tclsh
+        ln -sf libtcl${VERSION%.*}.so /root/bldr-inst/usr/lib/libtcl.so
 
 
 # remove buildroot traces
@@ -70,11 +70,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://www.tcl.tk/software/tcltk/download.html | grep -E "tcl[0-9\.]*-src\.tar\.gz" | sed -e 's/.*tcl\([0-9\.]*\)-src\.tar\.gz.*/\1/g' | sort | uniq | tail -n`
+        LATEST=`curl -s http://www.tcl.tk/software/tcltk/download.html | grep -E "tcl[0-9\.]*-src\.tar\.gz" | sed -e 's/.*tcl\([0-9\.]*\)-src\.tar\.gz.*/\1/g' | sort | uniq | tail -n`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -36,34 +36,34 @@ export PKG_CONFIG_PATH=/usr/pkgconfig:/lib/pkgconfig:/usr/lib/ffmpeg2/pkgconfig
 
 function BuildAndInstall
 {
-	autoreconf -fi
+        autoreconf -fi
 
-	sed -i -e 's:truetype/freefont:TTF:g' modules/text_renderer/freetype.c
-	sed -i -e 's:truetype/ttf-dejavu:TTF:g' modules/visualization/projectm.cpp
+        sed -i -e 's:truetype/freefont:TTF:g' modules/text_renderer/freetype.c
+        sed -i -e 's:truetype/ttf-dejavu:TTF:g' modules/visualization/projectm.cpp
 
-	CFLAGS+=" -I/usr/include/samba-4.0" CPPFLAGS+=" -I/usr/include/samba-4.0" \
-	LDFLAGS+=" -L/usr/share/OpenCV/3rdparty/lib" \
-		./configure --prefix=/usr \
-			--sysconfdir=/etc \
-			--disable-rpath \
-			--enable-faad \
-			--enable-nls \
-			--enable-lirc \
-			--enable-ncurses \
-			--enable-realrtsp \
-			--enable-aa \
-			--enable-vcdx \
-			--enable-upnp \
-			--enable-opus \
-			--enable-sftp \
-			LUAC=/usr/bin/luac  LUA_LIBS="`pkg-config --libs lua`" \
-			RCC=/usr/bin/rcc-qt4
+        CFLAGS+=" -I/usr/include/samba-4.0" CPPFLAGS+=" -I/usr/include/samba-4.0" \
+        LDFLAGS+=" -L/usr/share/OpenCV/3rdparty/lib" \
+                ./configure --prefix=/usr \
+                        --sysconfdir=/etc \
+                        --disable-rpath \
+                        --enable-faad \
+                        --enable-nls \
+                        --enable-lirc \
+                        --enable-ncurses \
+                        --enable-realrtsp \
+                        --enable-aa \
+                        --enable-vcdx \
+                        --enable-upnp \
+                        --enable-opus \
+                        --enable-sftp \
+                        LUAC=/usr/bin/luac  LUA_LIBS="`pkg-config --libs lua`" \
+                        RCC=/usr/bin/rcc-qt4
 
-	#Prevent build from failing
-	find . -name Makefile | xargs sed -i -e 's/-Werror-implicit-function-declaration//g'
+        #Prevent build from failing
+        find . -name Makefile | xargs sed -i -e 's/-Werror-implicit-function-declaration//g'
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
   for res in 16 32 48 128; do
     install -D -m644 "./share/icons/${res}x${res}/vlc.png" \
@@ -74,23 +74,23 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.videolan.org/vlc/download-sources.html
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.videolan.org/vlc/download-sources.html
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

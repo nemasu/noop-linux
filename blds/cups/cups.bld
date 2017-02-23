@@ -34,26 +34,26 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	aclocal -I config-scripts
-	autoconf -I config-scripts
+        aclocal -I config-scripts
+        autoconf -I config-scripts
 
-	./configure $STDUSRCONF --with-systemd=/usr/lib/systemd/system --without-perl --without-php --enable-avahi --enable-threads --enable-raw-printing --with-dbusdir=/etc/dbus-1 --enable-ssl=yes --enable-gnutls --enable-pam=yes --with-logdir=/var/log/cups --with-cups-user=daemon --with-cups-group=lp --with-system_groups="sys root" --with-optim="$CFLAGS"
+        ./configure $STDUSRCONF --with-systemd=/usr/lib/systemd/system --without-perl --without-php --enable-avahi --enable-threads --enable-raw-printing --with-dbusdir=/etc/dbus-1 --enable-ssl=yes --enable-gnutls --enable-pam=yes --with-logdir=/var/log/cups --with-cups-user=daemon --with-cups-group=lp --with-system_groups="sys root" --with-optim="$CFLAGS"
 
-	make -j${BLDR_CORES}
-	make BUILDROOT=/root/bldr-inst install
-	rm -rf /root/bldr-inst/etc/rc.d
-	rm -rf /root/bldr-inst/etc/init.d
+        make -j${BLDR_CORES}
+        make BUILDROOT=/root/bldr-inst install
+        rm -rf /root/bldr-inst/etc/rc.d
+        rm -rf /root/bldr-inst/etc/init.d
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s "https://www.cups.org/software.php" | egrep "cups-[0-9\.]*-source\.tar\.bz2" | head -n1 | sed -e 's/.*cups-\([0-9\.]*\)-source\.tar\.bz2.*/\1/g'`
+        LATEST=`curl -L -s "https://www.cups.org/software.php" | egrep "cups-[0-9\.]*-source\.tar\.bz2" | head -n1 | sed -e 's/.*cups-\([0-9\.]*\)-source\.tar\.bz2.*/\1/g'`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -42,12 +42,12 @@ export PYTHON=/usr/bin/python2
 function Detect
 {
 
-	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gobject-introspection/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gobject-introspection/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+        MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gobject-introspection/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+        LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gobject-introspection/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

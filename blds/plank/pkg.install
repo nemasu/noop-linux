@@ -1,7 +1,7 @@
 function postinst() {
-	 gtk-update-icon-cache -ftq /usr/share/icons/hicolor
+         gtk-update-icon-cache -ftq /usr/share/icons/hicolor
 }
 
 function postup() {
-	postinst
+        postinst
 }

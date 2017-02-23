@@ -33,30 +33,30 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make -j${BLDR_CORES}
-	make INSTALL_DIR="/root/bldr-inst/usr/sbin" INSTALL_LIB="/root/bldr-inst/usr/lib" INSTALL_INC="/root/bldr-inst/usr/include" INSTALL_MAN="/root/bldr-inst/usr/share/man" install
+        make -j${BLDR_CORES}
+        make INSTALL_DIR="/root/bldr-inst/usr/sbin" INSTALL_LIB="/root/bldr-inst/usr/lib" INSTALL_INC="/root/bldr-inst/usr/include" INSTALL_MAN="/root/bldr-inst/usr/share/man" install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

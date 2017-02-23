@@ -35,37 +35,37 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	wget http://www.sqlite.org/2017/sqlite-src-${DVERSION}.zip
-	unzip *.zip && rm *.zip && cd `ls`
+        wget http://www.sqlite.org/2017/sqlite-src-${DVERSION}.zip
+        unzip *.zip && rm *.zip && cd `ls`
 
-	export CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1 \
-							 -DSQLITE_ENABLE_UNLOCK_NOTIFY \
-							 -DSQLITE_ENABLE_DBSTAT_VTAB=1 \
-							 -DSQLITE_ENABLE_FTS3_TOKENIZER=1 \
-							 -DSQLITE_SECURE_DELETE"
+        export CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1 \
+                                                         -DSQLITE_ENABLE_UNLOCK_NOTIFY \
+                                                         -DSQLITE_ENABLE_DBSTAT_VTAB=1 \
+                                                         -DSQLITE_ENABLE_FTS3_TOKENIZER=1 \
+                                                         -DSQLITE_SECURE_DELETE"
 
-	./configure --prefix=/usr \
-		--disable-amalgamation \
-		--enable-fts3 \
-		--enable-fts4 \
-		--enable-fts5 \
-		--enable-rtree \
-		--enable-json1 \
-		TCLLIBDIR=$tcl_dir
+        ./configure --prefix=/usr \
+                --disable-amalgamation \
+                --enable-fts3 \
+                --enable-fts4 \
+                --enable-fts5 \
+                --enable-rtree \
+                --enable-json1 \
+                TCLLIBDIR=$tcl_dir
 
-	make
-	make showdb showjournal showstat4 showwal sqldiff sqlite3_analyzer
-	make DESTDIR=/root/bldr-inst install
+        make
+        make showdb showjournal showstat4 showwal sqldiff sqlite3_analyzer
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://www.sqlite.org/download.html | grep -E 'sqlite-autoconf-[0-9]*\.tar\.gz' | sed -e 's/.*sqlite-autoconf-\([0-9]*\)\.tar\.gz.*/\1/g' | sort | uniq`
+        LATEST=`curl -s http://www.sqlite.org/download.html | grep -E 'sqlite-autoconf-[0-9]*\.tar\.gz' | sed -e 's/.*sqlite-autoconf-\([0-9]*\)\.tar\.gz.*/\1/g' | sort | uniq`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

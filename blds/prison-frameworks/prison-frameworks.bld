@@ -33,38 +33,38 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	git clone git://anongit.kde.org/prison.git || true
-	cd prison
-	git checkout 84724fa132b983266d8cd2b036d5a0f75a78ca46
-	mkdir -p build && cd build
-	cmake .. \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DKDE_INSTALL_LIBDIR=lib
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        git clone git://anongit.kde.org/prison.git || true
+        cd prison
+        git checkout 84724fa132b983266d8cd2b036d5a0f75a78ca46
+        mkdir -p build && cd build
+        cmake .. \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DKDE_INSTALL_LIBDIR=lib
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

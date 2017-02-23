@@ -33,33 +33,33 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	
-	qmake-qt4 PREFIX='/usr' 'CONFIG-=debug' -r
-	make -j${BLDR_CORES}
-	make INSTALL_ROOT=/root/bldr-inst install
+        
+        qmake-qt4 PREFIX='/usr' 'CONFIG-=debug' -r
+        make -j${BLDR_CORES}
+        make INSTALL_ROOT=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://code.google.com/p/arora/downloads/list
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://code.google.com/p/arora/downloads/list
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

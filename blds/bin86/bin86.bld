@@ -33,32 +33,32 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make PREFIX=/usr
-	mkdir -p /root/bldr-inst/usr/bin
-	mkdir -p /root/bldr-inst/usr/share/man/man1
-	make "PREFIX=/root/bldr-inst/usr" "MANDIR=/root/bldr-inst/usr/share/man/man1" install
+        make PREFIX=/usr
+        mkdir -p /root/bldr-inst/usr/bin
+        mkdir -p /root/bldr-inst/usr/share/man/man1
+        make "PREFIX=/root/bldr-inst/usr" "MANDIR=/root/bldr-inst/usr/share/man/man1" install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://v3.sk/~lkundrak/dev86/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://v3.sk/~lkundrak/dev86/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

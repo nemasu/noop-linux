@@ -35,14 +35,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	 #warning: type-punning to incomplete type might break strict-aliasing rules
+         #warning: type-punning to incomplete type might break strict-aliasing rules
   export CFLAGS="$CFLAGS -fno-strict-aliasing"
 
   PYTHON=/usr/bin/python2 ./configure --prefix=/usr --sysconfdir=/etc \
       --libexecdir=/usr/lib/vte \
       --localstatedir=/var --disable-static \
       --enable-introspection --with-gtk=2.0 \
-	  --disable-gnome-pty-helper
+          --disable-gnome-pty-helper
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
@@ -50,5 +50,5 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME Too old
+        echo $NAME Too old
 }

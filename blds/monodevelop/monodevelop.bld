@@ -33,37 +33,37 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	if [ ! -e "./monodevelop" ]; then
-		git clone --recursive https://github.com/mono/monodevelop.git
-	fi
-	cd monodevelop
-	git checkout monodevelop-$VERSION
-	./configure --prefix=/usr --profile=stable --enable-release
-	make
-	make DESTDIR=/root/bldr-inst install
+        if [ ! -e "./monodevelop" ]; then
+                git clone --recursive https://github.com/mono/monodevelop.git
+        fi
+        cd monodevelop
+        git checkout monodevelop-$VERSION
+        ./configure --prefix=/usr --profile=stable --enable-release
+        make
+        make DESTDIR=/root/bldr-inst install
     install -Dm755 main/external/nuget-binary/NuGet.exe /root/bldr-inst/usr/lib/monodevelop/AddIns/MonoDevelop.PackageManagement/NuGet.exe
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://github.com/mono/monodevelop/releases
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://github.com/mono/monodevelop/releases
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

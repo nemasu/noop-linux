@@ -18,7 +18,7 @@ function BuildAndInstall
 
   #build prereqs
   for i in zip autoconf2.13 rust cargo; do
-	  pkgr -i $i;
+          pkgr -i $i;
   done
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
@@ -83,11 +83,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s "https://download.mozilla.org/?product=firefox-latest&os=linux&lang=en-US" | grep "firefox" | sed 's/.*firefox-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+        LATEST=`curl -s "https://download.mozilla.org/?product=firefox-latest&os=linux&lang=en-US" | grep "firefox" | sed 's/.*firefox-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-					echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

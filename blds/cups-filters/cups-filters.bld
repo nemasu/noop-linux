@@ -34,44 +34,44 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr \
-		--sysconfdir=/etc \
-		--sbindir=/usr/bin \
-		--localstatedir=/var \
-		--with-rcdir=no \
-		--disable-mutool \
-		--enable-avahi \
-		--with-browseremoteprotocols=DNSSD,CUPS \
-		--with-test-font-path=/usr/share/fonts/TTF/DejaVuSans.ttf
+        ./configure --prefix=/usr \
+                --sysconfdir=/etc \
+                --sbindir=/usr/bin \
+                --localstatedir=/var \
+                --with-rcdir=no \
+                --disable-mutool \
+                --enable-avahi \
+                --with-browseremoteprotocols=DNSSD,CUPS \
+                --with-test-font-path=/usr/share/fonts/TTF/DejaVuSans.ttf
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	install -Dm644 utils/cups-browsed.service /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
-	sed -i "s|/usr/sbin/cups-browsed|/usr/bin/cups-browsed|" /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
-	chgrp -R lp /root/bldr-inst/etc/cups
+        install -Dm644 utils/cups-browsed.service /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
+        sed -i "s|/usr/sbin/cups-browsed|/usr/bin/cups-browsed|" /root/bldr-inst/usr/lib/systemd/system/cups-browsed.service
+        chgrp -R lp /root/bldr-inst/etc/cups
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.openprinting.org/download/cups-filters/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.openprinting.org/download/cups-filters/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

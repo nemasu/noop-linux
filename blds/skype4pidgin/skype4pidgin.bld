@@ -34,7 +34,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
     cd skypeweb
-	make
+        make
     make DESTDIR=/root/bldr-inst install
 }
 
@@ -43,10 +43,10 @@ function Detect
 {
     LATEST=`curl -s -L "https://github.com/EionRobb/skype4pidgin/releases" | egrep "archive/[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*archive\/\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-		echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                echo "$NAME: New Version Available! - $LATEST"
+        fi
 
 }

@@ -33,12 +33,12 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p /root/bldr-inst/usr/lib/mono/xbuild-frameworks/.NETPortable/
-	cp -r v* /root/bldr-inst/usr/lib/mono/xbuild-frameworks/.NETPortable/
+        mkdir -p /root/bldr-inst/usr/lib/mono/xbuild-frameworks/.NETPortable/
+        cp -r v* /root/bldr-inst/usr/lib/mono/xbuild-frameworks/.NETPortable/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME old"
+        echo "$NAME old"
 }

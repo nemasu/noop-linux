@@ -34,41 +34,41 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export CC="gcc -m32"
-	export CXX="g++ -m32"
-	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+        export CC="gcc -m32"
+        export CXX="g++ -m32"
+        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
-	CXX=/bin/false ./configure --prefix=/usr \
+        CXX=/bin/false ./configure --prefix=/usr \
         --sysconfdir=/etc \
         --localstatedir=/var \
-		--libexecdir=/usr/lib32 \
-		--libdir=/usr/lib32 \
-		--disable-static \
+                --libexecdir=/usr/lib32 \
+                --libdir=/usr/lib32 \
+                --disable-static \
         --enable-gtk2-dependency \
         --disable-schemas-compile \
         --enable-x11-backend \
-		--enable-introspection
+                --enable-introspection
 
-	#https://bugzilla.gnome.org/show_bug.cgi?id=655517
+        #https://bugzilla.gnome.org/show_bug.cgi?id=655517
     sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
     make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
-	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
+        rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
 
-	 MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gtk+/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gtk+/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+         MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gtk+/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+        LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/gtk+/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

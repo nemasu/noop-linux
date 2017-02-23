@@ -1,6 +1,6 @@
 function postinst() {
     if [ -e /usr/bin/gdk-pixbuf-query-loaders ];
     then
-    	gdk-pixbuf-query-loaders --update-cache
+        gdk-pixbuf-query-loaders --update-cache
     fi
 }

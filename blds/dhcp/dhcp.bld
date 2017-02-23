@@ -33,40 +33,40 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	# Define _GNU_SOURCE to fix IPV6.
-	sed '/^CFLAGS="$CFLAGS/ s/INGS"/INGS -D_GNU_SOURCE"/' -i configure
+        # Define _GNU_SOURCE to fix IPV6.
+        sed '/^CFLAGS="$CFLAGS/ s/INGS"/INGS -D_GNU_SOURCE"/' -i configure
 
-	./configure --prefix=/usr --sbindir=/usr/bin --sysconfdir=/etc \
-		--with-srv-lease-file=/var/lib/dhcp/dhcpd.leases \
-		--with-srv6-lease-file=/var/lib/dhcp/dhcpd6.leases \
-		--with-cli-lease-file=/var/lib/dhclient/dhclient.leases \
-		--with-cli6-lease-file=/var/lib/dhclient/dhclient6.leases
+        ./configure --prefix=/usr --sbindir=/usr/bin --sysconfdir=/etc \
+                --with-srv-lease-file=/var/lib/dhcp/dhcpd.leases \
+                --with-srv6-lease-file=/var/lib/dhcp/dhcpd6.leases \
+                --with-cli-lease-file=/var/lib/dhclient/dhclient.leases \
+                --with-cli6-lease-file=/var/lib/dhclient/dhclient6.leases
 
-	make -j${BLDR_CORES}
+        make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.isc.org/isc/dhcp/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.isc.org/isc/dhcp/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

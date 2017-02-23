@@ -34,44 +34,44 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	ac_cv_lib_gif_EGifPutExtensionLast=yes ./configure \
-		--prefix=/usr \
-		--sysconfdir=/etc \
-		--libexecdir=/usr/lib \
-		--localstatedir=/var \
-		--with-x-toolkit=gtk2 \
-		--with-xft
+        ac_cv_lib_gif_EGifPutExtensionLast=yes ./configure \
+                --prefix=/usr \
+                --sysconfdir=/etc \
+                --libexecdir=/usr/lib \
+                --localstatedir=/var \
+                --with-x-toolkit=gtk2 \
+                --with-xft
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	# remove conflict with ctags package
-	mv /root/bldr-inst/usr/bin/{ctags,ctags.emacs}
-	mv /root/bldr-inst/usr/share/man/man1/{ctags.1.gz,ctags.emacs.1}
-	# remove conflict with texinfo
-	rm /root/bldr-inst/usr/share/info/info.info.gz
+        # remove conflict with ctags package
+        mv /root/bldr-inst/usr/bin/{ctags,ctags.emacs}
+        mv /root/bldr-inst/usr/share/man/man1/{ctags.1.gz,ctags.emacs.1}
+        # remove conflict with texinfo
+        rm /root/bldr-inst/usr/share/info/info.info.gz
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnu.org/gnu/emacs/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.gnu.org/gnu/emacs/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

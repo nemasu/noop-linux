@@ -33,18 +33,18 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd ..
-	SRCDIR=`ls`
-	cp -r $SRCDIR ${SRCDIR}-qt5
+        cd ..
+        SRCDIR=`ls`
+        cp -r $SRCDIR ${SRCDIR}-qt5
 
-	cd ${SRCDIR}
-	cmake . \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_SKIP_RPATH=ON \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT=ON \
-		-DQT_QMAKE_EXECUTABLE=/usr/bin/qmake-qt4 \
-		-DCMAKE_INSTALL_LIBDIR=lib
+        cd ${SRCDIR}
+        cmake . \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_SKIP_RPATH=ON \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT=ON \
+                -DQT_QMAKE_EXECUTABLE=/usr/bin/qmake-qt4 \
+                -DCMAKE_INSTALL_LIBDIR=lib
    make -j${BLDR_CORES}
    make DESTDIR=/root/bldr-inst install
 
@@ -72,11 +72,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s http://download.kde.org/stable/phonon/ | egrep "[0-9\.]\/" | tail -n1 | sed -e 's/.*href="\([0-9\.]*\)\/".*/\1/g'`
+        LATEST=`curl -L -s http://download.kde.org/stable/phonon/ | egrep "[0-9\.]\/" | tail -n1 | sed -e 's/.*href="\([0-9\.]*\)\/".*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

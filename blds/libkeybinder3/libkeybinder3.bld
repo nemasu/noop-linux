@@ -38,11 +38,11 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L http://archive.ubuntu.com/ubuntu/pool/universe/k/keybinder-3.0/ | egrep "keybinder-3.0_[0-9\.]+\.orig\.tar\.gz" | tail -n1 | sed -e 's/.*keybinder-3.0_\([0-9\.]*\)\.orig\.tar\.gz.*/\1/g'`
-	
+        LATEST=`curl -s -L http://archive.ubuntu.com/ubuntu/pool/universe/k/keybinder-3.0/ | egrep "keybinder-3.0_[0-9\.]+\.orig\.tar\.gz" | tail -n1 | sed -e 's/.*keybinder-3.0_\([0-9\.]*\)\.orig\.tar\.gz.*/\1/g'`
+        
     vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

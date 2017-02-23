@@ -34,42 +34,42 @@ RESTORELIBDB=
 function BuildAndInstall
 {
    ./configure \
-			--prefix=/usr \
-			--sysconfdir=/etc \
-			--localstatedir=/var \
-			--enable-anacron \
-			--with-inotify \
-			--with-pam
+                        --prefix=/usr \
+                        --sysconfdir=/etc \
+                        --localstatedir=/var \
+                        --enable-anacron \
+                        --with-inotify \
+                        --with-pam
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	install -Dm644 crond.sysconfig /root/bldr-inst/etc/conf.d/crond
-	install -Dm644 contrib/anacrontab /root/bldr-inst/etc/anacrontab
-	install -Dm644 contrib/0hourly /root/bldr-inst/etc/cron.d/0hourly
-	install -Dm755 contrib/0anacron /root/bldr-inst/etc/cron.hourly/0anacron
+        install -Dm644 crond.sysconfig /root/bldr-inst/etc/conf.d/crond
+        install -Dm644 contrib/anacrontab /root/bldr-inst/etc/anacrontab
+        install -Dm644 contrib/0hourly /root/bldr-inst/etc/cron.d/0hourly
+        install -Dm755 contrib/0anacron /root/bldr-inst/etc/cron.hourly/0anacron
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://fedorahosted.org/releases/c/r/cronie/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://fedorahosted.org/releases/c/r/cronie/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

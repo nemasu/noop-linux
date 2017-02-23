@@ -33,9 +33,9 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	git clone https://github.com/buserror/simavr.git
-	cd simavr
-	make AVR_ROOT=/usr/avr RELEASE=1 \
+        git clone https://github.com/buserror/simavr.git
+        cd simavr
+        make AVR_ROOT=/usr/avr RELEASE=1 \
       CFLAGS="-fPIC -O2 -std=gnu99" \
       build-simavr
     make PREFIX=/usr DESTDIR=/root/bldr-inst/usr install
@@ -44,5 +44,5 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME - Git 
+        echo $NAME - Git 
 }

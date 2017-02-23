@@ -1,14 +1,14 @@
 function postinst() {
-	echo "Updating font cache..."
-	fc-cache -fs &>/dev/null
-	mkfontscale /usr/share/fonts/steam-fonts
-	mkfontdir /usr/share/fonts/steam-fonts
+        echo "Updating font cache..."
+        fc-cache -fs &>/dev/null
+        mkfontscale /usr/share/fonts/steam-fonts
+        mkfontdir /usr/share/fonts/steam-fonts
 }
 
 function postup() {
-	postinst
+        postinst
 }
 
 function postrm() {
-	postinst
+        postinst
 }

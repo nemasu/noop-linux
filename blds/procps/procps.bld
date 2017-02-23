@@ -36,34 +36,34 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
-	sed 's:<ncursesw/:<:g' -i watch.c
-	./configure $STDUSRCONF $EXTRACONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        sed 's:<ncursesw/:<:g' -i watch.c
+        ./configure $STDUSRCONF $EXTRACONF
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=procps-ng
-	LISTURL=http://sourceforge.net/projects/procps-ng/
-	FILELIST=`GetFileList`
-	LATEST=0
-	NAME=procps
+        NAME=procps-ng
+        LISTURL=http://sourceforge.net/projects/procps-ng/
+        FILELIST=`GetFileList`
+        LATEST=0
+        NAME=procps
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

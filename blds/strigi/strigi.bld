@@ -33,43 +33,43 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p build && cd build
-	cmake .. \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_SKIP_RPATH=ON \
-		-DCMAKE_INSTALL_LIBDIR=lib \
-		-DENABLE_INOTIFY=ON \
-		-DENABLE_LOG4CXX=OFF \
-		-DENABLE_FAM=OFF \
-		-DENABLE_CLUCENE=OFF \
-		-DENABLE_CLUCENE_NG=OFF \
-		-DENABLE_FFMPEG=OFF \
-		-DENABLE_QT4=OFF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        mkdir -p build && cd build
+        cmake .. \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DCMAKE_SKIP_RPATH=ON \
+                -DCMAKE_INSTALL_LIBDIR=lib \
+                -DENABLE_INOTIFY=ON \
+                -DENABLE_LOG4CXX=OFF \
+                -DENABLE_FAM=OFF \
+                -DENABLE_CLUCENE=OFF \
+                -DENABLE_CLUCENE_NG=OFF \
+                -DENABLE_FFMPEG=OFF \
+                -DENABLE_QT4=OFF
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

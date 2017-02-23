@@ -35,49 +35,49 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+        ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
                --static --python=/usr/bin/python2 --disable-werror \
               --disable-docs --disable-gtk --disable-vnc --disable-kvm --disable-libssh2 \
               --enable-user --disable-system --disable-fdt
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst libexecdir=/usr/lib/qemu install
-	
-	# remove conflicting /var/run directory
-	rm -rf /root/bldr-inst/var
-	
-	# add sample config
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst libexecdir=/usr/lib/qemu install
+        
+        # remove conflicting /var/run directory
+        rm -rf /root/bldr-inst/var
+        
+        # add sample config
 #mkdir -p /root/bldr-inst/etc/qemu/
 #echo "allow br0" > /root/bldr-inst/etc/qemu/bridge.conf.sample
-	cd /root/bldr-inst/usr/bin/
-	for f in `ls -1`;
-	do
-		mv "$f" "$f-static"
-	done
+        cd /root/bldr-inst/usr/bin/
+        for f in `ls -1`;
+        do
+                mv "$f" "$f-static"
+        done
 
-	rm -rf /root/bldr-inst/usr/{share,lib} /root/bldr-inst/etc
-	
+        rm -rf /root/bldr-inst/usr/{share,lib} /root/bldr-inst/etc
+        
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://wiki.qemu-project.org/download/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://wiki.qemu-project.org/download/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

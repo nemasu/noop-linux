@@ -33,60 +33,60 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in
-	sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
+        sed -i 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in
+        sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
 
-	#gc-collect bug revert
-	patch -R -p1 < $BLDRTMPDIR/coff-pe-gc-sections.revpatch && rm $BLDRTMPDIR/coff-pe-gc-sections.revpatch
+        #gc-collect bug revert
+        patch -R -p1 < $BLDRTMPDIR/coff-pe-gc-sections.revpatch && rm $BLDRTMPDIR/coff-pe-gc-sections.revpatch
 
-	cd ..
-	dir=`ls`
-	cp -r $dir ${dir}-i686
-	cd $dir
-	./configure --prefix=/usr \
+        cd ..
+        dir=`ls`
+        cp -r $dir ${dir}-i686
+        cd $dir
+        ./configure --prefix=/usr \
         --target=x86_64-w64-mingw32 \
         --infodir=/usr/share/info/x86_64-w64-mingw32 \
         --enable-lto --enable-plugins \
         --disable-multilib --disable-nls \
         --disable-werror
     make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
 
-	cd ../${dir}-i686
-	./configure --prefix=/usr \
+        cd ../${dir}-i686
+        ./configure --prefix=/usr \
         --target=i686-w64-mingw32 \
         --infodir=/usr/share/info/i686-w64-mingw32 \
         --enable-lto --enable-plugins \
         --disable-multilib --disable-nls \
         --disable-werror
     make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=binutils
-	LISTURL=http://ftp.gnu.org/gnu/binutils
-	FILELIST=`GetFileList`
-	LATEST=0
-	NAME=mingw-binutils
+        NAME=binutils
+        LISTURL=http://ftp.gnu.org/gnu/binutils
+        FILELIST=`GetFileList`
+        LATEST=0
+        NAME=mingw-binutils
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

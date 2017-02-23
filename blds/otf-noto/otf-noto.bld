@@ -35,13 +35,13 @@ function BuildAndInstall
 {
 #wget https://noto-website-2.storage.googleapis.com/pkgs/Noto-hinted.zip
 #Gonna use the CJF super OTF file instead, it's ... much smaller.
-	wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJK.ttc.zip
-	unzip *.zip
-	mkdir -p /root/bldr-inst/usr/share/fonts/OTF/
-	cp *.ttc /root/bldr-inst/usr/share/fonts/OTF/
+        wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJK.ttc.zip
+        unzip *.zip
+        mkdir -p /root/bldr-inst/usr/share/fonts/OTF/
+        cp *.ttc /root/bldr-inst/usr/share/fonts/OTF/
 }
 
 function Detect
 {
-	echo "$NAME: Not versioned"
+        echo "$NAME: Not versioned"
 }

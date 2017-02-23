@@ -33,13 +33,13 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	wget https://noto-website-2.storage.googleapis.com/pkgs/Noto-hinted.zip
-	unzip *.zip
-	mkdir -p /root/bldr-inst/usr/share/fonts/TTF/
-	cp *.ttf /root/bldr-inst/usr/share/fonts/TTF/
+        wget https://noto-website-2.storage.googleapis.com/pkgs/Noto-hinted.zip
+        unzip *.zip
+        mkdir -p /root/bldr-inst/usr/share/fonts/TTF/
+        cp *.ttf /root/bldr-inst/usr/share/fonts/TTF/
 }
 
 function Detect
 {
-	echo "$NAME: Not versioned"
+        echo "$NAME: Not versioned"
 }

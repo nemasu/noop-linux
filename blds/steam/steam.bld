@@ -33,27 +33,27 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make DESTDIR=/root/bldr-inst install
-	
-	# blank steamdeps because apt-get
-	ln -sf /bin/true /root/bldr-inst/usr/bin/steamdeps
+        make DESTDIR=/root/bldr-inst install
+        
+        # blank steamdeps because apt-get
+        ln -sf /bin/true /root/bldr-inst/usr/bin/steamdeps
 
-	mkdir tmp && cd tmp
-	wget https://support.steampowered.com/downloads/1974-YFKL-4947/SteamFonts.zip
-	unzip SteamFonts.zip
-	mkdir -p /root/bldr-inst/usr/share/fonts/steam-fonts/
-	cp * /root/bldr-inst/usr/share/fonts/steam-fonts/
+        mkdir tmp && cd tmp
+        wget https://support.steampowered.com/downloads/1974-YFKL-4947/SteamFonts.zip
+        unzip SteamFonts.zip
+        mkdir -p /root/bldr-inst/usr/share/fonts/steam-fonts/
+        cp * /root/bldr-inst/usr/share/fonts/steam-fonts/
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s http://repo.steampowered.com/steam/pool/steam/s/steam/ | grep -E "steam_[0-9\.]*\.tar\.gz" | tail -n1 | sed -e 's/.*steam_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -L -s http://repo.steampowered.com/steam/pool/steam/s/steam/ | grep -E "steam_[0-9\.]*\.tar\.gz" | tail -n1 | sed -e 's/.*steam_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

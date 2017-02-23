@@ -42,38 +42,38 @@ function BuildAndInstall
   export LD_LIBRARY_PATH=${QTDIR}/qtbase/lib:${QTDIR}/qttools/lib:${LD_LIBRARY_PATH}
   export QT_PLUGIN_PATH=${QTDIR}/qtbase/plugins
 
-  	if [ "${ARCH}" == "armv6l" ];
-	then
-		CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
-	else
-		CONF=
-	fi
+        if [ "${ARCH}" == "armv6l" ];
+        then
+                CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
+        else
+                CONF=
+        fi
 
   if [ "`readlink /usr/bin/python`" != "python2" ];
   then
-	echo "Python2 must be linked to /usr/bin/python";
+        echo "Python2 must be linked to /usr/bin/python";
      exit 1
   fi
 
   PYTHON=/usr/bin/python2 ./configure -confirm-license -opensource \
-		-prefix /usr \
-		-bindir /usr/bin \
-		-docdir /usr/share/doc/qt \
-		-headerdir /usr/include/qt \
-		-archdatadir /usr/lib/qt \
-		-datadir /usr/share/qt \
-		-sysconfdir /etc/xdg \
-		-examplesdir /usr/share/doc/qt/examples \
-		-plugin-sql-{psql,mysql,sqlite,odbc,ibase} \
-		-system-sqlite \
-		-openssl-linked \
-		-nomake examples \
-		-no-rpath \
-		-optimized-qmake \
-		-dbus-linked \
-		-system-harfbuzz \
-		-journald \
-		-reduce-relocations ${CONF}
+                -prefix /usr \
+                -bindir /usr/bin \
+                -docdir /usr/share/doc/qt \
+                -headerdir /usr/include/qt \
+                -archdatadir /usr/lib/qt \
+                -datadir /usr/share/qt \
+                -sysconfdir /etc/xdg \
+                -examplesdir /usr/share/doc/qt/examples \
+                -plugin-sql-{psql,mysql,sqlite,odbc,ibase} \
+                -system-sqlite \
+                -openssl-linked \
+                -nomake examples \
+                -no-rpath \
+                -optimized-qmake \
+                -dbus-linked \
+                -system-harfbuzz \
+                -journald \
+                -reduce-relocations ${CONF}
   make -j${BLDR_CORES}
 
   #Skip doc install for now
@@ -123,13 +123,13 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	MM=`curl -s http://download.qt-project.org/official_releases/qt/ | grep -E "href=\"[0-9\.][0-9\.]*\/" | sed -e 's/.*href=\"\([0-9\.][0-9\.]*\)\/.*/\1/g' | head -n1`
-	LATEST=`curl -s http://download.qt-project.org/official_releases/qt/$MM/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g' | head -n1`
+        MM=`curl -s http://download.qt-project.org/official_releases/qt/ | grep -E "href=\"[0-9\.][0-9\.]*\/" | sed -e 's/.*href=\"\([0-9\.][0-9\.]*\)\/.*/\1/g' | head -n1`
+        LATEST=`curl -s http://download.qt-project.org/official_releases/qt/$MM/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g' | head -n1`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

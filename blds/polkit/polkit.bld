@@ -36,35 +36,35 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
 
 function BuildAndInstall
 {
-	./configure  --prefix=/usr --sysconfdir=/etc \
-		--localstatedir=/var --libexecdir=/usr/lib/polkit-1 \
-		--enable-libsystemd-login=yes --disable-static \
-		--enable-gtk-doc --with-os-type=redhat
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./configure  --prefix=/usr --sysconfdir=/etc \
+                --localstatedir=/var --libexecdir=/usr/lib/polkit-1 \
+                --enable-libsystemd-login=yes --disable-static \
+                --enable-gtk-doc --with-os-type=redhat
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.freedesktop.org/software/polkit/releases/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.freedesktop.org/software/polkit/releases/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -14,6 +14,6 @@ function postup() {
 function postrm() {
     if getent group wireshark >/dev/null 2>&1;
     then
-    	groupdel wireshark
+        groupdel wireshark
     fi
 }

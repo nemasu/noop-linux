@@ -44,12 +44,12 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://bitbucket.org/multicoreware/x265/downloads | egrep "x265_[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*x265_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -s -L https://bitbucket.org/multicoreware/x265/downloads | egrep "x265_[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*x265_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

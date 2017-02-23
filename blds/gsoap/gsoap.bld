@@ -33,42 +33,42 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	wget http://prdownloads.sourceforge.net/gsoap2/gsoap_${VERSION}.zip
-	unzip *.zip
-	rm *.zip
-	cd `ls`
-	
-	export CFLAGS+=" -fPIC"
-	export CXXFLAGS+=" -fPIC"
-	
-	./configure --prefix=/usr --enable-openssl
-	make -j1
-	make DESTDIR=/root/bldr-inst install
-	mkdir -p /root/bldr-inst/usr/share/gsoap/import
-	mkdir -p /root/bldr-inst/usr/share/gsoap/WS
-	cp -R gsoap/import /root/bldr-inst/usr/share/gsoap/
-	cp -R gsoap/WS /root/bldr-inst/usr/share/gsoap/
+        wget http://prdownloads.sourceforge.net/gsoap2/gsoap_${VERSION}.zip
+        unzip *.zip
+        rm *.zip
+        cd `ls`
+        
+        export CFLAGS+=" -fPIC"
+        export CXXFLAGS+=" -fPIC"
+        
+        ./configure --prefix=/usr --enable-openssl
+        make -j1
+        make DESTDIR=/root/bldr-inst install
+        mkdir -p /root/bldr-inst/usr/share/gsoap/import
+        mkdir -p /root/bldr-inst/usr/share/gsoap/WS
+        cp -R gsoap/import /root/bldr-inst/usr/share/gsoap/
+        cp -R gsoap/WS /root/bldr-inst/usr/share/gsoap/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	FILELIST=`curl -s -L http://sourceforge.net/projects/gsoap2/files/gSOAP/ | egrep "gsoap_[0-9\.]*\.zip" | sed -e 's/.*gsoap_\([0-9\.]*\)\.zip.*/\1/g' | sort | uniq`
-	LATEST=0
+        FILELIST=`curl -s -L http://sourceforge.net/projects/gsoap2/files/gSOAP/ | egrep "gsoap_[0-9\.]*\.zip" | sed -e 's/.*gsoap_\([0-9\.]*\)\.zip.*/\1/g' | sort | uniq`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

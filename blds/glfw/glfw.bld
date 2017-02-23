@@ -45,12 +45,12 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L http://www.glfw.org/download.html | egrep "glfw-[0-9\.]*\.zip" | sed -e 's/.*glfw-\([0-9\.]*\)\.zip.*/\1/g'`
-	
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        LATEST=`curl -s -L http://www.glfw.org/download.html | egrep "glfw-[0-9\.]*\.zip" | sed -e 's/.*glfw-\([0-9\.]*\)\.zip.*/\1/g'`
+        
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

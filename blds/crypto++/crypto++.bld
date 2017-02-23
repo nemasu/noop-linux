@@ -34,30 +34,30 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	pkgr -i unzip &> /dev/null
+        pkgr -i unzip &> /dev/null
 
-	wget http://www.cryptopp.com/cryptopp${DVERSION}.zip
-	unzip cryptopp${DVERSION}.zip
-	rm *.zip
+        wget http://www.cryptopp.com/cryptopp${DVERSION}.zip
+        unzip cryptopp${DVERSION}.zip
+        rm *.zip
 
-	sed -i -e 's/^CXXFLAGS/#CXXFLAGS/' GNUmakefile
-	export CXXFLAGS="${CXXFLAGS} -DNDEBUG -fPIC"
-	make -f GNUmakefile  
-	make libcryptopp.so
+        sed -i -e 's/^CXXFLAGS/#CXXFLAGS/' GNUmakefile
+        export CXXFLAGS="${CXXFLAGS} -DNDEBUG -fPIC"
+        make -f GNUmakefile  
+        make libcryptopp.so
 
-	install -d /root/bldr-inst/usr/{lib/pkgconfig,include/cryptopp}
-	install -m644 *.h /root/bldr-inst/usr/include/cryptopp/
-	install -m644 libcryptopp.so /root/bldr-inst/usr/lib/libcryptopp.so
+        install -d /root/bldr-inst/usr/{lib/pkgconfig,include/cryptopp}
+        install -m644 *.h /root/bldr-inst/usr/include/cryptopp/
+        install -m644 libcryptopp.so /root/bldr-inst/usr/lib/libcryptopp.so
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s http://www.cryptopp.com/ | egrep "\.zip\">Crypto++" | tail -n1 | sed 's/.*Crypto++ \([0-9\.]*\).*/\1/g'`
+        LATEST=`curl -L -s http://www.cryptopp.com/ | egrep "\.zip\">Crypto++" | tail -n1 | sed 's/.*Crypto++ \([0-9\.]*\).*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

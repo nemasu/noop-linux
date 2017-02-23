@@ -34,7 +34,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	# Make sure we use the system ltdl library rather than the ones in the tarball
+        # Make sure we use the system ltdl library rather than the ones in the tarball
    rm -r opal/libltdl
 
    ./configure --prefix=/usr \
@@ -59,23 +59,23 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.open-mpi.org/software/ompi/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.open-mpi.org/software/ompi/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

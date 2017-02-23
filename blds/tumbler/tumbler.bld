@@ -40,24 +40,24 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	MM=`curl -L -s http://archive.xfce.org/src/xfce/${NAME}/ | grep -E ">[0-9\.]*\/" | tail -n1 | sed 's/.*>\([0-9\.]*\)\/.*/\1/g'`
-	LISTURL=http://archive.xfce.org/src/xfce/${NAME}/$MM/
-	FILELIST=`GetFileList`
-	LATEST=0
+        MM=`curl -L -s http://archive.xfce.org/src/xfce/${NAME}/ | grep -E ">[0-9\.]*\/" | tail -n1 | sed 's/.*>\([0-9\.]*\)\/.*/\1/g'`
+        LISTURL=http://archive.xfce.org/src/xfce/${NAME}/$MM/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

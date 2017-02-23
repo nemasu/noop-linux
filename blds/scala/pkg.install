@@ -1,7 +1,7 @@
 function postinst() {
-	chmod +x /usr/share/scala/{bin,lib}/*
+        chmod +x /usr/share/scala/{bin,lib}/*
 }
 
 function postup() {
-	postinst
+        postinst
 }

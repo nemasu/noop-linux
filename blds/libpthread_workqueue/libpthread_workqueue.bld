@@ -38,12 +38,12 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://sourceforge.net/projects/libpwq/files/
-	LATEST=`curl -s $LISTURL | sed -ne '/libpthread_workqueue-[0-9.]*/p' | sed -e 's/.*libpthread_workqueue-//g;s/\.tar\.gz.*//g' | sort | uniq | tail -n1`
+        LISTURL=http://sourceforge.net/projects/libpwq/files/
+        LATEST=`curl -s $LISTURL | sed -ne '/libpthread_workqueue-[0-9.]*/p' | sed -e 's/.*libpthread_workqueue-//g;s/\.tar\.gz.*//g' | sort | uniq | tail -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

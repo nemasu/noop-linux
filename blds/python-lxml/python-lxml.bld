@@ -33,26 +33,26 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd ..
-	DIR=`ls`
-	cp -r $DIR ${DIR}-python2
+        cd ..
+        DIR=`ls`
+        cp -r $DIR ${DIR}-python2
 
-	cd $DIR
-	python3 setup.py install --root=/root/bldr-inst/ --optimize=1
+        cd $DIR
+        python3 setup.py install --root=/root/bldr-inst/ --optimize=1
 
-	cd ../${DIR}-python2
-	python2 setup.py install --root=/root/bldr-inst/ --optimize=1
+        cd ../${DIR}-python2
+        python2 setup.py install --root=/root/bldr-inst/ --optimize=1
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://pypi.python.org/pypi/lxml | grep -e "lxml&nbsp;" | sed 's/.*\/\([0-9\.][0-9\.]*\)\".*/\1/g' | head -n1`
+        LATEST=`curl -L -s https://pypi.python.org/pypi/lxml | grep -e "lxml&nbsp;" | sed 's/.*\/\([0-9\.][0-9\.]*\)\".*/\1/g' | head -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

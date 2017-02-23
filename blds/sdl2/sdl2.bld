@@ -44,27 +44,27 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=SDL2
-	LISTURL=http://www.libsdl.org/release/
-	FILELIST=`GetFileList`
-	LATEST=0
+        NAME=SDL2
+        LISTURL=http://www.libsdl.org/release/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
+        vercomp $VERSION $LATEST
 
-	if [ $? -eq 2 ];
-	then
-			NAME=sdl2
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        if [ $? -eq 2 ];
+        then
+                        NAME=sdl2
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

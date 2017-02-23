@@ -38,58 +38,58 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
 
-	if [ "${ARCH}" == "armv6l" ];
-	then
-		GALLIUM_DRIVERS=swrast
-		DRI_DRIVERS=swrast
+        if [ "${ARCH}" == "armv6l" ];
+        then
+                GALLIUM_DRIVERS=swrast
+                DRI_DRIVERS=swrast
         EGL_PLATFORMS=
-	else
-		GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,svga,swrast,virgl" 
-		DRI_DRIVERS="i915,i965,r200,radeon,nouveau,swrast"
+        else
+                GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,svga,swrast,virgl" 
+                DRI_DRIVERS="i915,i965,r200,radeon,nouveau,swrast"
         EGL_PLATFORMS="x11,wayland,drm"
-		ARCHCONF="--enable-opencl --enable-opencl-icd --enable-xa"
-	fi
+                ARCHCONF="--enable-opencl --enable-opencl-icd --enable-xa"
+        fi
 
     ./configure \
-		--prefix=/usr \
-		--sysconfdir=/etc \
-		--with-clang-libdir=/usr/lib \
-		--with-gallium-drivers=${GALLIUM_DRIVERS} \
-		--with-dri-drivers=${DRI_DRIVERS} \
+                --prefix=/usr \
+                --sysconfdir=/etc \
+                --with-clang-libdir=/usr/lib \
+                --with-gallium-drivers=${GALLIUM_DRIVERS} \
+                --with-dri-drivers=${DRI_DRIVERS} \
         --with-egl-platforms=${EGL_PLATFORMS} \
-		--enable-gallium-llvm \
-		--enable-llvm-shared-libs \
-		--enable-egl \
-		--enable-shared-glapi \
-		--enable-gbm \
-		--enable-glx-tls \
-		--enable-xa \
-		--enable-nine \
-		--enable-opencl \
-		--enable-opencl-icd \
-		--enable-dri \
-		--enable-glx \
-		--enable-osmesa \
-		--enable-gles1 \
-		--enable-gles2 \
-		--enable-texture-float \
-		--enable-dri3 \
-		--enable-omx \
-		--enable-vdpau ${ARCHCONF}
-		
+                --enable-gallium-llvm \
+                --enable-llvm-shared-libs \
+                --enable-egl \
+                --enable-shared-glapi \
+                --enable-gbm \
+                --enable-glx-tls \
+                --enable-xa \
+                --enable-nine \
+                --enable-opencl \
+                --enable-opencl-icd \
+                --enable-dri \
+                --enable-glx \
+                --enable-osmesa \
+                --enable-gles1 \
+                --enable-gles2 \
+                --enable-texture-float \
+                --enable-dri3 \
+                --enable-omx \
+                --enable-vdpau ${ARCHCONF}
+                
         make -j${BLDR_CORES}
-		make DESTDIR=/root/bldr-inst install
+                make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s ftp://ftp.freedesktop.org/pub/mesa/ | awk '{print $9;}' | egrep "[0-9\.]+" | tail -n1`
+        LATEST=`curl -L -s ftp://ftp.freedesktop.org/pub/mesa/ | awk '{print $9;}' | egrep "[0-9\.]+" | tail -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -8,11 +8,11 @@ ISUSR=1
 
 if [ "${ARCH}" == "x86_64" ];
 then
-	SSRC=ftp://download.nvidia.com/XFree86/Linux-x86_64/${DVERSION}/NVIDIA-Linux-x86_64-${DVERSION}.run
-	PKGDEPS=('mesalib' 'lib32-mesalib' 'xorg-server')
+        SSRC=ftp://download.nvidia.com/XFree86/Linux-x86_64/${DVERSION}/NVIDIA-Linux-x86_64-${DVERSION}.run
+        PKGDEPS=('mesalib' 'lib32-mesalib' 'xorg-server')
 else
-	SSRC=ftp://download.nvidia.com/XFree86/Linux-x86/${DVERSION}/NVIDIA-Linux-x86-${DVERSION}.run
-	PKGDEPS=('mesalib' 'xorg-server')
+        SSRC=ftp://download.nvidia.com/XFree86/Linux-x86/${DVERSION}/NVIDIA-Linux-x86-${DVERSION}.run
+        PKGDEPS=('mesalib' 'xorg-server')
 fi
 
 SRC=
@@ -27,10 +27,10 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-	wget $SSRC -Oout
-	sh ./out --extract-only
-	rm out
-	cd `ls`
+        wget $SSRC -Oout
+        sh ./out --extract-only
+        rm out
+        cd `ls`
 
 #mv $BLDRTMPDIR/*.p .
 #for i in `ls *.p`;
@@ -40,85 +40,85 @@ function BuildAndInstall
 #done
 
 
-	#Module
-	pushd kernel
-	make SYSSRC=/lib/modules/`uname -r`/build module
-	install -D -m644 nvidia.ko /root/bldr-inst/lib/modules/`uname -r`/misc/nvidia.ko
-	popd
+        #Module
+        pushd kernel
+        make SYSSRC=/lib/modules/`uname -r`/build module
+        install -D -m644 nvidia.ko /root/bldr-inst/lib/modules/`uname -r`/misc/nvidia.ko
+        popd
 
-	#libs
-	mkdir -p /root/bldr-inst/usr/lib/nvidia
-	rm *.la
-	mv lib* /root/bldr-inst/usr/lib/
-	mv tls/lib* /root/bldr-inst/usr/lib/
-	mv /root/bldr-inst/usr/lib/libG* /root/bldr-inst/usr/lib/nvidia/
-	mv /root/bldr-inst/usr/lib/libE* /root/bldr-inst/usr/lib/nvidia/
+        #libs
+        mkdir -p /root/bldr-inst/usr/lib/nvidia
+        rm *.la
+        mv lib* /root/bldr-inst/usr/lib/
+        mv tls/lib* /root/bldr-inst/usr/lib/
+        mv /root/bldr-inst/usr/lib/libG* /root/bldr-inst/usr/lib/nvidia/
+        mv /root/bldr-inst/usr/lib/libE* /root/bldr-inst/usr/lib/nvidia/
 
-	#X driver
-	mkdir -p /root/bldr-inst/usr/lib/xorg/modules/drivers/
-	mv nvidia_drv.so /root/bldr-inst/usr/lib/xorg/modules/drivers/
+        #X driver
+        mkdir -p /root/bldr-inst/usr/lib/xorg/modules/drivers/
+        mv nvidia_drv.so /root/bldr-inst/usr/lib/xorg/modules/drivers/
 
-	#glx
-	mkdir -p /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions
-	mv /root/bldr-inst/usr/lib/libglx* /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions
-	
-	#Application profiles
-	mkdir -p /root/bldr-inst/usr/share/nvidia/
-	mv nvidia-application-profiles* /root/bldr-inst/usr/share/nvidia/
+        #glx
+        mkdir -p /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions
+        mv /root/bldr-inst/usr/lib/libglx* /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions
+        
+        #Application profiles
+        mkdir -p /root/bldr-inst/usr/share/nvidia/
+        mv nvidia-application-profiles* /root/bldr-inst/usr/share/nvidia/
 
- 	#Binaries
-	mkdir -p /root/bldr-inst/usr/bin/ 
-	mv nvidia-cuda-mps-control nvidia-cuda-mps-server nvidia-debugdump nvidia-modprobe nvidia-persistenced nvidia-settings nvidia-smi nvidia-xconfig nvidia-bug-report.sh /root/bldr-inst/usr/bin/
+        #Binaries
+        mkdir -p /root/bldr-inst/usr/bin/ 
+        mv nvidia-cuda-mps-control nvidia-cuda-mps-server nvidia-debugdump nvidia-modprobe nvidia-persistenced nvidia-settings nvidia-smi nvidia-xconfig nvidia-bug-report.sh /root/bldr-inst/usr/bin/
 
-	#OpenCL icd
-	mkdir -p /root/bldr-inst/etc/OpenCL/vendors/
-	mv *.icd /root/bldr-inst/etc/OpenCL/vendors/
+        #OpenCL icd
+        mkdir -p /root/bldr-inst/etc/OpenCL/vendors/
+        mv *.icd /root/bldr-inst/etc/OpenCL/vendors/
 
-	#Desktop files
-	mkdir -p /root/bldr-inst/usr/share/applications/
-	mkdir -p /root/bldr-inst/usr/share/pixmaps/
-	sed -e 's:__UTILS_PATH__:/usr/bin:' -e 's:__PIXMAP_PATH__:/usr/share/pixmaps:' -i *.desktop
-	mv *.desktop /root/bldr-inst/usr/share/applications/
-	mv *.png /root/bldr-inst/usr/share/pixmaps/
+        #Desktop files
+        mkdir -p /root/bldr-inst/usr/share/applications/
+        mkdir -p /root/bldr-inst/usr/share/pixmaps/
+        sed -e 's:__UTILS_PATH__:/usr/bin:' -e 's:__PIXMAP_PATH__:/usr/share/pixmaps:' -i *.desktop
+        mv *.desktop /root/bldr-inst/usr/share/applications/
+        mv *.png /root/bldr-inst/usr/share/pixmaps/
 
-	#persistenced systemd
-	tar xf nvidia-persistenced-init.tar.bz2
-	mkdir -p /root/bldr-inst/usr/lib/systemd/system/
-	mv nvidia-persistenced-init/systemd/nvidia-persistenced.service.template /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
-	sed -i -e 's/__USER__/persistenced/g' /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
+        #persistenced systemd
+        tar xf nvidia-persistenced-init.tar.bz2
+        mkdir -p /root/bldr-inst/usr/lib/systemd/system/
+        mv nvidia-persistenced-init/systemd/nvidia-persistenced.service.template /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
+        sed -i -e 's/__USER__/persistenced/g' /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
 
-	#32-bit libs
-	mkdir -p /root/bldr-inst/usr/lib32/nvidia
-	cd 32
+        #32-bit libs
+        mkdir -p /root/bldr-inst/usr/lib32/nvidia
+        cd 32
     rm *.la
     mv lib* /root/bldr-inst/usr/lib32/
     mv tls/lib* /root/bldr-inst/usr/lib32/
-	mv /root/bldr-inst/usr/lib32/libG* /root/bldr-inst/usr/lib32/nvidia/
-	mv /root/bldr-inst/usr/lib32/libE* /root/bldr-inst/usr/lib32/nvidia/
-	cd ..
+        mv /root/bldr-inst/usr/lib32/libG* /root/bldr-inst/usr/lib32/nvidia/
+        mv /root/bldr-inst/usr/lib32/libE* /root/bldr-inst/usr/lib32/nvidia/
+        cd ..
 
-	#Symlinks
-	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so.1
-	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so
-	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/libGL.so.1
-	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/libGL.so
-	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so.1
-	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so
-	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/nvidia/libGL.so.1
-	ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/nvidia/libGL.so
-	ln -s libglx.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions/libglx.so.1
-	ln -s libglx.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions/libglx.so
+        #Symlinks
+        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so.1
+        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so
+        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/libGL.so.1
+        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/libGL.so
+        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so.1
+        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so
+        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/nvidia/libGL.so.1
+        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/nvidia/libGL.so
+        ln -s libglx.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions/libglx.so.1
+        ln -s libglx.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions/libglx.so
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s ftp://download.nvidia.com/XFree86/Linux-x86_64/latest.txt | awk '{print $1;}'`
+        LATEST=`curl -L -s ftp://download.nvidia.com/XFree86/Linux-x86_64/latest.txt | awk '{print $1;}'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-		echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

@@ -37,32 +37,32 @@ function BuildAndInstall
         mkdir -p bin && cd bin && ln -s /usr/bin/mcs gmcs && cd ..
     fi
     export PATH=`pwd`/bin:$PATH
-	./configure --prefix=/usr --enable-gui
-	make -j${BLDR_CORES}
-	make GACUTIL="/usr/bin/gacutil -root /root/bldr-inst/usr/lib"  DESTDIR=/root/bldr-inst install
+        ./configure --prefix=/usr --enable-gui
+        make -j${BLDR_CORES}
+        make GACUTIL="/usr/bin/gacutil -root /root/bldr-inst/usr/lib"  DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://download.mono-project.com/sources/mono-addins/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://download.mono-project.com/sources/mono-addins/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

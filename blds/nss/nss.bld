@@ -101,22 +101,22 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	FILELIST=`curl -L -s http://ftp.mozilla.org/pub/security/nss/releases/ | grep "NSS_[0-9_]*_RTM" | sed 's/.*NSS_\([0-9_]*\)_RTM.*/\1/g' | sed 's/_/./g'`
-	LATEST=0
+        FILELIST=`curl -L -s http://ftp.mozilla.org/pub/security/nss/releases/ | grep "NSS_[0-9_]*_RTM" | sed 's/.*NSS_\([0-9_]*\)_RTM.*/\1/g' | sed 's/_/./g'`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-					CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-					vercomp $LATEST $CURVER
-					if [ $? -eq 2 ];
-					then
-									LATEST=$CURVER
-					fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                                        vercomp $LATEST $CURVER
+                                        if [ $? -eq 2 ];
+                                        then
+                                                                        LATEST=$CURVER
+                                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-					echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

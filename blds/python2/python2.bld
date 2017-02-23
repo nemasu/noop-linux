@@ -32,90 +32,90 @@ PKGDEPS=
 RESTORELIBDB=
 
 function BuildAndInstall
-{	
-	# Temporary workaround for FS#22322
-	# See http://bugs.python.org/issue10835 for upstream report
-	sed -i "/progname =/s/python/python${_pybasever}/" Python/pythonrun.c
+{       
+        # Temporary workaround for FS#22322
+        # See http://bugs.python.org/issue10835 for upstream report
+        sed -i "/progname =/s/python/python${_pybasever}/" Python/pythonrun.c
 
-	# Enable built-in SQLite module to load extensions (fix FS#22122)
-	sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" setup.py
+        # Enable built-in SQLite module to load extensions (fix FS#22122)
+        sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" setup.py
 
-	# FS#23997
-	sed -i -e "s|^#.* /usr/local/bin/python|#!/usr/bin/python2|" Lib/cgi.py
+        # FS#23997
+        sed -i -e "s|^#.* /usr/local/bin/python|#!/usr/bin/python2|" Lib/cgi.py
 
-	sed -i "s/python2.3/python2/g" Lib/distutils/tests/test_build_scripts.py \
-	 Lib/distutils/tests/test_install_scripts.py
+        sed -i "s/python2.3/python2/g" Lib/distutils/tests/test_build_scripts.py \
+         Lib/distutils/tests/test_install_scripts.py
 
-	# clean up #!s
-	find . -name '*.py' | \
-		xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|"
+        # clean up #!s
+        find . -name '*.py' | \
+                xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|"
 
-	# Workaround asdl_c.py error after we touched the shebangs
-	touch Include/Python-ast.h Python/Python-ast.c
+        # Workaround asdl_c.py error after we touched the shebangs
+        touch Include/Python-ast.h Python/Python-ast.c
 
-	export OPT="${CFLAGS}"
-	./configure --prefix=/usr \
-			  --enable-shared \
-			  --with-threads \
-			  --enable-ipv6 \
-			  --enable-unicode=ucs4 \
-			  --with-system-expat \
-			  --with-system-ffi \
-			  --with-dbmliborder=gdbm:ndbm \
-			  --without-ensurepip
+        export OPT="${CFLAGS}"
+        ./configure --prefix=/usr \
+                          --enable-shared \
+                          --with-threads \
+                          --enable-ipv6 \
+                          --enable-unicode=ucs4 \
+                          --with-system-expat \
+                          --with-system-ffi \
+                          --with-dbmliborder=gdbm:ndbm \
+                          --without-ensurepip
 
-	#Workaround for error 127
-	touch  ./Python/opcode_targets.h
+        #Workaround for error 127
+        touch  ./Python/opcode_targets.h
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst altinstall maninstall
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst altinstall maninstall
 
-	rm /root/bldr-inst/usr/share/man/man1/python.1
+        rm /root/bldr-inst/usr/share/man/man1/python.1
 
-	ln -sf python2.7        /root/bldr-inst/usr/bin/python2
-	ln -sf python2.7-config /root/bldr-inst/usr/bin/python2-config
-	ln -sf python2.7.1      /root/bldr-inst/usr/share/man/man1/python2.1
+        ln -sf python2.7        /root/bldr-inst/usr/bin/python2
+        ln -sf python2.7-config /root/bldr-inst/usr/bin/python2-config
+        ln -sf python2.7.1      /root/bldr-inst/usr/share/man/man1/python2.1
 
-	# FS#33954
-	ln -sf python-2.7.pc    /root/bldr-inst/usr/lib/pkgconfig/python2.pc
+        # FS#33954
+        ln -sf python-2.7.pc    /root/bldr-inst/usr/lib/pkgconfig/python2.pc
 
-	ln -sf ../../libpython2.7.so /root/bldr-inst/usr/lib/python2.7/config/libpython2.7.so
+        ln -sf ../../libpython2.7.so /root/bldr-inst/usr/lib/python2.7/config/libpython2.7.so
 
-	mv /root/bldr-inst/usr/bin/smtpd.py /root/bldr-inst/usr/lib/python2.7/
+        mv /root/bldr-inst/usr/bin/smtpd.py /root/bldr-inst/usr/lib/python2.7/
 
-	# some useful "stuff"
-	install -dm755 /root/bldr-inst/usr/lib/python2.7/Tools/{i18n,scripts}
-	install -m755 Tools/i18n/{msgfmt,pygettext}.py /root/bldr-inst/usr/lib/python2.7/Tools/i18n/
-	install -m755 Tools/scripts/{README,*py} /root/bldr-inst/usr/lib/python2.7/Tools/scripts/
+        # some useful "stuff"
+        install -dm755 /root/bldr-inst/usr/lib/python2.7/Tools/{i18n,scripts}
+        install -m755 Tools/i18n/{msgfmt,pygettext}.py /root/bldr-inst/usr/lib/python2.7/Tools/i18n/
+        install -m755 Tools/scripts/{README,*py} /root/bldr-inst/usr/lib/python2.7/Tools/scripts/
 
-	# fix conflicts with python
-	if [ -e /root/bldr-inst/usr/bin/idle ];
-	then
-		mv /root/bldr-inst/usr/bin/idle{,2}
-	fi
+        # fix conflicts with python
+        if [ -e /root/bldr-inst/usr/bin/idle ];
+        then
+                mv /root/bldr-inst/usr/bin/idle{,2}
+        fi
 
-	if [ -e /root/bldr-inst/usr/bin/pydoc ];
-	then
-		mv /root/bldr-inst/usr/bin/pydoc{,2}
-	fi
+        if [ -e /root/bldr-inst/usr/bin/pydoc ];
+        then
+                mv /root/bldr-inst/usr/bin/pydoc{,2}
+        fi
 
-	if [ -e /root/bldr-inst/usr/bin/2to3 ];
-	then
-		mv /root/bldr-inst/usr/bin/2to3{,-2.7}
-	fi
+        if [ -e /root/bldr-inst/usr/bin/2to3 ];
+        then
+                mv /root/bldr-inst/usr/bin/2to3{,-2.7}
+        fi
 
-	# clean-up reference to build directory
-	sed -i "s#/root/bldr-tmp/Python-${VERSION}:##" /root/bldr-inst/usr/lib/python2.7/config/Makefile
+        # clean-up reference to build directory
+        sed -i "s#/root/bldr-tmp/Python-${VERSION}:##" /root/bldr-inst/usr/lib/python2.7/config/Makefile
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://www.python.org/ | grep "Latest:" | sed 's|.*Python \(2[\.0-9]*\).*|\1|g'`
+        LATEST=`curl -s -L https://www.python.org/ | grep "Latest:" | sed 's|.*Python \(2[\.0-9]*\).*|\1|g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -33,33 +33,33 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i -e 's/SHARED=no/SHARED=yes/g' Makefile
-	sed -i -e 's/PREFIX=\/usr\/local/PREFIX=\/usr/g' Makefile
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install install-lib
+        sed -i -e 's/SHARED=no/SHARED=yes/g' Makefile
+        sed -i -e 's/PREFIX=\/usr\/local/PREFIX=\/usr/g' Makefile
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install install-lib
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.kernel.org/pub/software/utils/pciutils/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.kernel.org/pub/software/utils/pciutils/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

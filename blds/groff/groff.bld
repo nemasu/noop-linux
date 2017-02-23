@@ -33,38 +33,38 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure $STDUSRCONF --with-x --with-appresdir=/usr/share/X11/app-defaults
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	ln -s eqn /root/bldr-inst/usr/bin/geqn
-	ln -s tbl /root/bldr-inst/usr/bin/gtbl
-	ln -s soelim /root/bldr-inst/usr/bin/zsoelim
+        ./configure $STDUSRCONF --with-x --with-appresdir=/usr/share/X11/app-defaults
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        ln -s eqn /root/bldr-inst/usr/bin/geqn
+        ln -s tbl /root/bldr-inst/usr/bin/gtbl
+        ln -s soelim /root/bldr-inst/usr/bin/zsoelim
 
-	cat $BLDRTMPDIR/site.tmac >> /root/bldr-inst/usr/share/groff/site-tmac/man.local
-	cat $BLDRTMPDIR/site.tmac >> /root/bldr-inst/usr/share/groff/site-tmac/mdoc.local
-	rm $BLDRTMPDIR/site.tmac
+        cat $BLDRTMPDIR/site.tmac >> /root/bldr-inst/usr/share/groff/site-tmac/man.local
+        cat $BLDRTMPDIR/site.tmac >> /root/bldr-inst/usr/share/groff/site-tmac/mdoc.local
+        rm $BLDRTMPDIR/site.tmac
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnu.org/gnu/groff/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.gnu.org/gnu/groff/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

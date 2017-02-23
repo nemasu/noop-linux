@@ -33,14 +33,14 @@ PKGDEPS=
 RESTORELIBDB=
 
 function BuildAndInstall
-{	
-	sed \
-		-e "s:-g -fno-omit-frame-pointer -O6:\${CFLAGS}:" \
-		-e "s:SSLDIR=/usr/local/ssl:SSLDIR=/usr:" \
-		-e "s:SSLCERTS=\$(SSLDIR)/certs:SSLCERTS=/etc/ssl/certs:" \
-		-i src/osdep/unix/Makefile
+{       
+        sed \
+                -e "s:-g -fno-omit-frame-pointer -O6:\${CFLAGS}:" \
+                -e "s:SSLDIR=/usr/local/ssl:SSLDIR=/usr:" \
+                -e "s:SSLCERTS=\$(SSLDIR)/certs:SSLCERTS=/etc/ssl/certs:" \
+                -i src/osdep/unix/Makefile
 
-	yes "y" | make lnp SPECIALAUTHENTICATORS=ssl SSLTYPE=unix EXTRACFLAGS="${CFLAGS} -fPIC"
+        yes "y" | make lnp SPECIALAUTHENTICATORS=ssl SSLTYPE=unix EXTRACFLAGS="${CFLAGS} -fPIC"
     # create ssl certs for secure imap
   for i in imapd ipop3d; do
     PEM1=./pem1
@@ -56,50 +56,50 @@ localhost.localdomain
 root@localhost.localdomain
 EOF
 
-		cat $PEM1 >  ${i}.pem
-		echo ""    >> ${i}.pem
-		cat $PEM2 >> ${i}.pem
-		rm $PEM1 $PEM2
-		umask 022
+                cat $PEM1 >  ${i}.pem
+                echo ""    >> ${i}.pem
+                cat $PEM2 >> ${i}.pem
+                rm $PEM1 $PEM2
+                umask 022
     done
 
-	install -d /root/bldr-inst/usr/bin
-	install -D -m755 imapd/imapd /root/bldr-inst/usr/bin/imapd
-	install -D -m755 ipopd/ipop2d /root/bldr-inst/usr/bin/ipop2d
-	install -D -m755 ipopd/ipop3d /root/bldr-inst/usr/bin/ipop3d
-	for i in c-client mail imap4r1 rfc822 linkage misc smtp nntp \
-		osdep env_unix env fs ftl nl tcp sslio utf8 utf8aux; do
-		install -D -m644 c-client/${i}.h /root/bldr-inst/usr/include/imap/${i}.h
-	done
+        install -d /root/bldr-inst/usr/bin
+        install -D -m755 imapd/imapd /root/bldr-inst/usr/bin/imapd
+        install -D -m755 ipopd/ipop2d /root/bldr-inst/usr/bin/ipop2d
+        install -D -m755 ipopd/ipop3d /root/bldr-inst/usr/bin/ipop3d
+        for i in c-client mail imap4r1 rfc822 linkage misc smtp nntp \
+                osdep env_unix env fs ftl nl tcp sslio utf8 utf8aux; do
+                install -D -m644 c-client/${i}.h /root/bldr-inst/usr/include/imap/${i}.h
+        done
 
-	install -D -m644 c-client/c-client.a /root/bldr-inst/usr/lib/c-client.a
-	ln -sf c-client.a /root/bldr-inst/usr/lib/libc-client.a
+        install -D -m644 c-client/c-client.a /root/bldr-inst/usr/lib/c-client.a
+        ln -sf c-client.a /root/bldr-inst/usr/lib/libc-client.a
 
 # install certs
-	install -D -m600 imapd.pem /root/bldr-inst/etc/ssl/certs/imapd.pem
-	install -D -m600 ipop3d.pem /root/bldr-inst/etc/ssl/certs/ipop3d.pem
+        install -D -m600 imapd.pem /root/bldr-inst/etc/ssl/certs/imapd.pem
+        install -D -m600 ipop3d.pem /root/bldr-inst/etc/ssl/certs/ipop3d.pem
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.cac.washington.edu/imap/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.cac.washington.edu/imap/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g' | tr a-z 0-9`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g' | tr a-z 0-9`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

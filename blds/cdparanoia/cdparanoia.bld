@@ -42,5 +42,5 @@ function BuildAndInstall
 
 function Detect
 {
-	echo $NAME: Old
+        echo $NAME: Old
 }

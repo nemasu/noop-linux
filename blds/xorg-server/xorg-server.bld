@@ -35,64 +35,64 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
-	[[ "${ARCH}" == "armv6l" ]] || [[ "${ARCH}" == "armv7l" ]] || [[ "${ARCH}" == "aarch64" ]] && CONFIG="--disable-glx --disable-dri --disable-dri2"
-	[[ "${ARCH}" == "x86_64" ]] && CONFIG="--enable-ipv6 \
-											  --enable-dri \
-											  --enable-dri2 \
-											  --enable-dmx \
-											  --enable-xvfb \
-											  --enable-xnest \
-											  --enable-composite \
-											  --enable-xcsecurity \
-											  --enable-libunwind \
-											  --enable-xorg \
-											  --enable-xephyr \
-											  --enable-glamor \
-											  --enable-glx-tls \
-											  --enable-kdrive \
-											  --enable-kdrive-evdev \
-											  --enable-kdrive-kbd \
-											  --enable-kdrive-mouse \
-											  --enable-config-udev \
-											  --enable-systemd-logind \
-											  --enable-suid-wrapper \
-											  --disable-install-setuid \
-											  --enable-record \
-											  --disable-xfbdev \
-											  --disable-xfake \
-											  --disable-static \
-											  --libexecdir=/usr/lib/xorg-server \
-											  --sysconfdir=/etc \
-											  --localstatedir=/var \
-											  --with-fontrootdir=/usr/share/fonts \
-											  --with-sha1=libgcrypt \
-	                                          --enable-xwayland"
+        [[ "${ARCH}" == "armv6l" ]] || [[ "${ARCH}" == "armv7l" ]] || [[ "${ARCH}" == "aarch64" ]] && CONFIG="--disable-glx --disable-dri --disable-dri2"
+        [[ "${ARCH}" == "x86_64" ]] && CONFIG="--enable-ipv6 \
+                                                                                          --enable-dri \
+                                                                                          --enable-dri2 \
+                                                                                          --enable-dmx \
+                                                                                          --enable-xvfb \
+                                                                                          --enable-xnest \
+                                                                                          --enable-composite \
+                                                                                          --enable-xcsecurity \
+                                                                                          --enable-libunwind \
+                                                                                          --enable-xorg \
+                                                                                          --enable-xephyr \
+                                                                                          --enable-glamor \
+                                                                                          --enable-glx-tls \
+                                                                                          --enable-kdrive \
+                                                                                          --enable-kdrive-evdev \
+                                                                                          --enable-kdrive-kbd \
+                                                                                          --enable-kdrive-mouse \
+                                                                                          --enable-config-udev \
+                                                                                          --enable-systemd-logind \
+                                                                                          --enable-suid-wrapper \
+                                                                                          --disable-install-setuid \
+                                                                                          --enable-record \
+                                                                                          --disable-xfbdev \
+                                                                                          --disable-xfake \
+                                                                                          --disable-static \
+                                                                                          --libexecdir=/usr/lib/xorg-server \
+                                                                                          --sysconfdir=/etc \
+                                                                                          --localstatedir=/var \
+                                                                                          --with-fontrootdir=/usr/share/fonts \
+                                                                                          --with-sha1=libgcrypt \
+                                                  --enable-xwayland"
 
-	./configure $STDUSRCONF $CONFIG
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./configure $STDUSRCONF $CONFIG
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/xserver/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://xorg.freedesktop.org/releases/individual/xserver/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

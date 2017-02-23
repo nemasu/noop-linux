@@ -33,19 +33,19 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./configure --prefix=/usr
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L "https://www.rust-lang.org/en-US/other-installers.html" | egrep "rustc-[0-9\.]+-src.tar.gz" | sed -e 's/.*rustc-\([0-9\.]*\)-src.tar.gz.*/\1/g'`
+        LATEST=`curl -s -L "https://www.rust-lang.org/en-US/other-installers.html" | egrep "rustc-[0-9\.]+-src.tar.gz" | sed -e 's/.*rustc-\([0-9\.]*\)-src.tar.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

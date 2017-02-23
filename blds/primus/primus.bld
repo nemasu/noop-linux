@@ -33,41 +33,41 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-	git clone git://github.com/amonakov/primus.git
-	cd `ls`
+        git clone git://github.com/amonakov/primus.git
+        cd `ls`
 
-	make
+        make
 
-	install -D lib/libGL.so.1 /root/bldr-inst/usr/lib/primus/libGL.so.1
-	sed -e "s#^PRIMUS_libGL=.*#PRIMUS_libGL='/usr/\$LIB/primus'#" primusrun > primusrun.dist
-	install -D "primusrun.dist" /root/bldr-inst/usr/bin/primusrun
+        install -D lib/libGL.so.1 /root/bldr-inst/usr/lib/primus/libGL.so.1
+        sed -e "s#^PRIMUS_libGL=.*#PRIMUS_libGL='/usr/\$LIB/primus'#" primusrun > primusrun.dist
+        install -D "primusrun.dist" /root/bldr-inst/usr/bin/primusrun
 
-	install -D "primus.bash-completion" /root/bldr-inst/etc/bash_completion.d/primusrun
+        install -D "primus.bash-completion" /root/bldr-inst/etc/bash_completion.d/primusrun
 
-	gzip -9 "primusrun.1"
-	install -D "primusrun.1.gz" /root/bldr-inst/usr/share/man/man1/primusrun.1.gz
+        gzip -9 "primusrun.1"
+        install -D "primusrun.1.gz" /root/bldr-inst/usr/share/man/man1/primusrun.1.gz
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

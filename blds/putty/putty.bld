@@ -37,11 +37,11 @@ RESTORELIBDB=
 
 function Detect
 {
-	LATEST=`curl -s -L http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html | egrep "putty-[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*putty-\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -s -L http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html | egrep "putty-[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*putty-\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

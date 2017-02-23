@@ -33,24 +33,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i "s:@gksuprog@ @installdir@/gparted %f:@installdir@/gparted_polkit %f:g" gparted.desktop.in.in
-	./configure --prefix=/usr \
-		--sbindir=/usr/bin \
-		--enable-online-resize \
-		--enable-libparted-dmraid \
-		--disable-doc
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        sed -i "s:@gksuprog@ @installdir@/gparted %f:@installdir@/gparted_polkit %f:g" gparted.desktop.in.in
+        ./configure --prefix=/usr \
+                --sbindir=/usr/bin \
+                --enable-online-resize \
+                --enable-libparted-dmraid \
+                --disable-doc
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=` curl -s -L https://sourceforge.net/projects/gparted/files/gparted/ | egrep "gparted-[0-9\.]+" | head -n1 | sed -e 's/.*gparted-\([0-9\.]*\).*/\1/g'`
+        LATEST=` curl -s -L https://sourceforge.net/projects/gparted/files/gparted/ | egrep "gparted-[0-9\.]+" | head -n1 | sed -e 's/.*gparted-\([0-9\.]*\).*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

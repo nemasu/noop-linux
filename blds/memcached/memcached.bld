@@ -33,34 +33,34 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure $STDUSRCONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./configure $STDUSRCONF
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	mkdir -p /root/bldr-inst/usr/bin/
-	cp scripts/memcached-tool /root/bldr-inst/usr/bin/
+        mkdir -p /root/bldr-inst/usr/bin/
+        cp scripts/memcached-tool /root/bldr-inst/usr/bin/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.memcached.org/files/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.memcached.org/files/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

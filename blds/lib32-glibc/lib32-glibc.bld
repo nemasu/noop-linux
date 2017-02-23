@@ -20,51 +20,51 @@ DEPS=
 
 function BuildAndInstall
 {
-	export CC="gcc -m32"
-	export CXX="g++ -m32"
+        export CC="gcc -m32"
+        export CXX="g++ -m32"
 
-	cd ..
-	mkdir build-dir
-	cd build-dir
+        cd ..
+        mkdir build-dir
+        cd build-dir
 
-	echo "slibdir=/lib32" >> configparms
-	
-	../glibc-$VERSION/configure --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var --libdir=/lib32 --datarootdir=/usr/share --datadir=/usr/share --bindir=/bin --prefix=/ --enable-multilib --enable-multi-arch i686-unknown-linux-gnu
-	make -j${BLDR_CORES}
-	make install_root=/root/bldr-inst install
+        echo "slibdir=/lib32" >> configparms
+        
+        ../glibc-$VERSION/configure --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var --libdir=/lib32 --datarootdir=/usr/share --datadir=/usr/share --bindir=/bin --prefix=/ --enable-multilib --enable-multi-arch i686-unknown-linux-gnu
+        make -j${BLDR_CORES}
+        make install_root=/root/bldr-inst install
 
-	rm -rf /root/bldr-inst/{bin,etc,sbin,usr/{bin,sbin,share},var}
-	find /root/bldr-inst/usr/include -type f -not -name stubs-32.h -delete
+        rm -rf /root/bldr-inst/{bin,etc,sbin,usr/{bin,sbin,share},var}
+        find /root/bldr-inst/usr/include -type f -not -name stubs-32.h -delete
 
-	cd /root/bldr-inst
+        cd /root/bldr-inst
 
-	mkdir -p usr/lib32
-	mkdir lib
-	ln -s ../lib32/ld-linux.so.2 lib/
-	ln -s ../lib/locale usr/lib32/locale
+        mkdir -p usr/lib32
+        mkdir lib
+        ln -s ../lib32/ld-linux.so.2 lib/
+        ln -s ../lib/locale usr/lib32/locale
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnu.org/gnu/glibc/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.gnu.org/gnu/glibc/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-					CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-					vercomp $LATEST $CURVER
-					if [ $? -eq 2 ];
-					then
-									LATEST=$CURVER
-					fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                                        vercomp $LATEST $CURVER
+                                        if [ $? -eq 2 ];
+                                        then
+                                                                        LATEST=$CURVER
+                                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-					echo "$NAME: New Version Available! - $LATEST"
-	fi
-	}
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+        }
 

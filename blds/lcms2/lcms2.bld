@@ -38,12 +38,12 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://sourceforge.net/projects/lcms/files/lcms/ | grep -E "lcms\/[0-9\.][0-9\.]*\/\"" | sed -e 's/.*lcms\/\([0-9\.][0-9\.]*\)\/\".*/\1/g' | head -n1`
+        LATEST=`curl -s http://sourceforge.net/projects/lcms/files/lcms/ | grep -E "lcms\/[0-9\.][0-9\.]*\/\"" | sed -e 's/.*lcms\/\([0-9\.][0-9\.]*\)\/\".*/\1/g' | head -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

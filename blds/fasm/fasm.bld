@@ -38,18 +38,18 @@ function BuildAndInstall
 
     for i in listing prepsrc symbols; do
         ./source/libc/fasm tools/libc/$i.asm $i.o
-		gcc -m32 -o $i $i.o
+                gcc -m32 -o $i $i.o
     done
 
-	mkdir -p /root/bldr-inst/usr/bin
+        mkdir -p /root/bldr-inst/usr/bin
     mkdir -p /root/bldr-inst/usr/share/licenses/fasm
     mkdir -p /root/bldr-inst/usr/share/doc/fasm/examples/elfexe/dynamic
     mkdir -p /root/bldr-inst/usr/share/doc/fasm/examples/libcdemo
     mkdir -p /root/bldr-inst/usr/share/doc/fasm/examples/elfobj
     
-	cp -v source/libc/fasm /root/bldr-inst/usr/bin
+        cp -v source/libc/fasm /root/bldr-inst/usr/bin
     
-	for i in listing prepsrc symbols; do
+        for i in listing prepsrc symbols; do
         cp -v $i /root/bldr-inst/usr/bin/fasm-${i}
     done
 
@@ -65,23 +65,23 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://flatassembler.net/download.php
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://flatassembler.net/download.php
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

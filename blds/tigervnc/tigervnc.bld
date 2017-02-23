@@ -56,20 +56,20 @@ function BuildAndInstall
   CONFIG="--enable-dri2 --enable-glx"
   [[ ${ARCH} == "armv6l" ]] && CONFIG="--disable-glx --disable-dri2"
 
-	cd unix/xserver
-	autoreconf -fiv
-	./configure --prefix=/usr \
-		--disable-static --disable-xinerama --without-dtrace \
-		--disable-xorg --disable-xnest --disable-xvfb --disable-dmx \
-		--disable-xwin --disable-xephyr --disable-kdrive --disable-xwayland \
-		--disable-config-hal --disable-config-udev --with-pic \
-		--disable-unit-tests --disable-devel-docs --disable-selective-werror \
-		--disable-dri --enable-dri3 ${CONFIG}
-	make -j${BLDR_CORES}
-	cd hw/vnc
-	make DESTDIR=/root/bldr-inst install
-	
-	sed -i 's/iconic/nowin/' /root/bldr-inst/usr/bin/vncserver
+        cd unix/xserver
+        autoreconf -fiv
+        ./configure --prefix=/usr \
+                --disable-static --disable-xinerama --without-dtrace \
+                --disable-xorg --disable-xnest --disable-xvfb --disable-dmx \
+                --disable-xwin --disable-xephyr --disable-kdrive --disable-xwayland \
+                --disable-config-hal --disable-config-udev --with-pic \
+                --disable-unit-tests --disable-devel-docs --disable-selective-werror \
+                --disable-dri --enable-dri3 ${CONFIG}
+        make -j${BLDR_CORES}
+        cd hw/vnc
+        make DESTDIR=/root/bldr-inst install
+        
+        sed -i 's/iconic/nowin/' /root/bldr-inst/usr/bin/vncserver
 }
 #Default HTTP curl new version detection
 function Detect

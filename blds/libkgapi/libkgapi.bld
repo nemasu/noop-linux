@@ -33,25 +33,25 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	git clone git://anongit.kde.org/libkgapi.git
-	cd libkgapi
-	git checkout tags/v${VERSION}
+        git clone git://anongit.kde.org/libkgapi.git
+        cd libkgapi
+        git checkout tags/v${VERSION}
 
-	mkdir build
-	cd build
-	cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L "https://quickgit.kde.org/?p=libkgapi.git" | egrep "LibKGAPI [0-9\.]+" | head -n1 | sed -e 's/.*LibKGAPI \([0-9\.]*\).*/\1/g'`
+        LATEST=`curl -s -L "https://quickgit.kde.org/?p=libkgapi.git" | egrep "LibKGAPI [0-9\.]+" | head -n1 | sed -e 's/.*LibKGAPI \([0-9\.]*\).*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

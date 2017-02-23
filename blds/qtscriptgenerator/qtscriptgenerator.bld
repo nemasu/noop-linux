@@ -34,23 +34,23 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 # prepare plugins
-	cd generator
-	qmake-qt4
-	make -j${BLDR_CORES}
-	QTDIR=/usr ./generator --include-paths=/usr/include/qt4
+        cd generator
+        qmake-qt4
+        make -j${BLDR_CORES}
+        QTDIR=/usr ./generator --include-paths=/usr/include/qt4
 
 # build plugins
-	cd ../qtbindings
-	qmake-qt4
-	make -j${BLDR_CORES}
+        cd ../qtbindings
+        qmake-qt4
+        make -j${BLDR_CORES}
 
 # move plugins to correct directory
-	install -d /root/bldr-inst/usr/lib/qt4/plugins/script
-	cp -a ../plugins/script/* /root/bldr-inst/usr/lib/qt4/plugins/script/
+        install -d /root/bldr-inst/usr/lib/qt4/plugins/script
+        cp -a ../plugins/script/* /root/bldr-inst/usr/lib/qt4/plugins/script/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME: Too Old."
+        echo "$NAME: Too Old."
 }

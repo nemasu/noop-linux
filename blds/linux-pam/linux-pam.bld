@@ -35,45 +35,45 @@ pam_unix2_version=2.9.1
 
 function BuildAndInstall
 {
-	./configure --libdir=/usr/lib --disable-db --sbindir=/usr/bin
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst SCONFIGDIR=/etc/security install
+        ./configure --libdir=/usr/lib --disable-db --sbindir=/usr/bin
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst SCONFIGDIR=/etc/security install
 
-	cd ..
-	wget http://sourceforge.net/projects/kaosx/files/sources/pam/pam_unix2-${pam_unix2_version}.tar.bz2
-	tar xf pam_unix2-${pam_unix2_version}.tar.bz2
-	cd pam_unix2-${pam_unix2_version}
+        cd ..
+        wget http://sourceforge.net/projects/kaosx/files/sources/pam/pam_unix2-${pam_unix2_version}.tar.bz2
+        tar xf pam_unix2-${pam_unix2_version}.tar.bz2
+        cd pam_unix2-${pam_unix2_version}
 
-	mv $BLDRTMPDIR/pam_unix2-glibc216.p .
-	patch -Np1 -i pam_unix2-glibc216.p
-	./configure \
+        mv $BLDRTMPDIR/pam_unix2-glibc216.p .
+        patch -Np1 -i pam_unix2-glibc216.p
+        ./configure \
       CFLAGS="$CFLAGS -I/root/bldr-tmp/Linux-PAM-${VERSION}/libpam/include/" \
       LDFLAGS="$LDFLAGS -L/root/bldr-tmp/Linux-PAM-${VERSION}/libpam/.libs/" \
       --libdir=/usr/lib \
       --sbindir=/usr/bin
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://fedorahosted.org/releases/l/i/linux-pam/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://fedorahosted.org/releases/l/i/linux-pam/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

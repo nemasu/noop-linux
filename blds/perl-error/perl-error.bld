@@ -33,31 +33,31 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	perl Makefile.PL INSTALLDIRS=vendor
-	make
-	make DESTDIR=/root/bldr-inst install
+        perl Makefile.PL INSTALLDIRS=vendor
+        make
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://search.cpan.org/CPAN/authors/id/S/SH/SHLOMIF/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://search.cpan.org/CPAN/authors/id/S/SH/SHLOMIF/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

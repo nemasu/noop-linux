@@ -1,7 +1,7 @@
 function posinst() {
     systemd-sysusers mariadb.conf
     systemd-tmpfiles --create mariadb.conf
-	mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+        mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 }
 function postup() {
     systemd-sysusers mariadb.conf

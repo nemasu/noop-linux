@@ -33,12 +33,12 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p /root/bldr-inst/usr/share/backgrounds/noop
-	wget http://nooplinux.org/noop-wallpaper1.png -O/root/bldr-inst/usr/share/backgrounds/noop/noop-wallpaper1.png
+        mkdir -p /root/bldr-inst/usr/share/backgrounds/noop
+        wget http://nooplinux.org/noop-wallpaper1.png -O/root/bldr-inst/usr/share/backgrounds/noop/noop-wallpaper1.png
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME: noop Package"
+        echo "$NAME: noop Package"
 }

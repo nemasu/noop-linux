@@ -1,7 +1,7 @@
 function postinst() {
-	sudo chmod u+s /usr/bin/fbterm
+        sudo chmod u+s /usr/bin/fbterm
 }
 
 function postup() {
-	postinst
+        postinst
 }

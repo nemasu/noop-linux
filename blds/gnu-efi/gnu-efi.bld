@@ -33,33 +33,33 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make lib gnuefi inc apps
-	make INSTALLROOT=/root/bldr-inst PREFIX="/usr" LIBDIR="/usr/lib" install
+        make lib gnuefi inc apps
+        make INSTALLROOT=/root/bldr-inst PREFIX="/usr" LIBDIR="/usr/lib" install
 
-	install -d /root/bldr-inst/usr/share/gnu-efi/apps/x86_64/
-	install -D -m0644 x86_64/apps/*.efi /root/bldr-inst/usr/share/gnu-efi/apps/x86_64/
+        install -d /root/bldr-inst/usr/share/gnu-efi/apps/x86_64/
+        install -D -m0644 x86_64/apps/*.efi /root/bldr-inst/usr/share/gnu-efi/apps/x86_64/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://sourceforge.net/projects/gnu-efi/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://sourceforge.net/projects/gnu-efi/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

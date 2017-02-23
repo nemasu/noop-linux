@@ -1,7 +1,7 @@
 function postinst() {
-	if [ ! -e /etc/xml/catalog ]; then
-		xmlcatalog --noout --create /etc/xml/catalog
-	fi
+        if [ ! -e /etc/xml/catalog ]; then
+                xmlcatalog --noout --create /etc/xml/catalog
+        fi
 
     xmlcatalog --noout --add "public" \
         "-//OASIS//DTD DocBook XML V4.5//EN" \
@@ -48,21 +48,21 @@ function postinst() {
         "file:///usr/share/xml/docbook/xml-dtd-4.5" \
         /etc/xml/catalog
 
-	for DTDVERSION in 4.1.2 4.2 4.3 4.4
-	do
+        for DTDVERSION in 4.1.2 4.2 4.3 4.4
+        do
       xmlcatalog --noout --add "public" \
-		"-//OASIS//DTD DocBook XML V$DTDVERSION//EN" \
-		"http://www.oasis-open.org/docbook/xml/$DTDVERSION/docbookx.dtd" \
-		/etc/xml/catalog
-	  xmlcatalog --noout --add "rewriteSystem" \
-		"http://www.oasis-open.org/docbook/xml/$DTDVERSION" \
-		"file:///usr/share/xml/docbook/xml-dtd-4.5" \
-		/etc/xml/catalog
-	  xmlcatalog --noout --add "rewriteURI" \
-		"http://www.oasis-open.org/docbook/xml/$DTDVERSION" \
-		"file:///usr/share/xml/docbook/xml-dtd-4.5" \
-		/etc/xml/catalog
-	done
+                "-//OASIS//DTD DocBook XML V$DTDVERSION//EN" \
+                "http://www.oasis-open.org/docbook/xml/$DTDVERSION/docbookx.dtd" \
+                /etc/xml/catalog
+          xmlcatalog --noout --add "rewriteSystem" \
+                "http://www.oasis-open.org/docbook/xml/$DTDVERSION" \
+                "file:///usr/share/xml/docbook/xml-dtd-4.5" \
+                /etc/xml/catalog
+          xmlcatalog --noout --add "rewriteURI" \
+                "http://www.oasis-open.org/docbook/xml/$DTDVERSION" \
+                "file:///usr/share/xml/docbook/xml-dtd-4.5" \
+                /etc/xml/catalog
+        done
 }
 function postrm() {
     rm -rf /etc/xml/catalog

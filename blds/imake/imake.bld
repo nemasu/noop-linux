@@ -33,77 +33,77 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure $STDUSRCONF
-	make
-	make DESTDIR=/root/bldr-inst install
+        ./configure $STDUSRCONF
+        make
+        make DESTDIR=/root/bldr-inst install
 
-	cd ..
-	rm -rf *
+        cd ..
+        rm -rf *
 
-	wget http://xorg.freedesktop.org/releases/individual/util/gccmakedep-1.0.3.tar.bz2
-	tar xf `ls`
-	rm *.bz2
-	cd `ls`
-	./configure $STDUSRCONF
-	make
-	make DESTDIR=/root/bldr-inst install
-	cd ..
-	rm -rf *
+        wget http://xorg.freedesktop.org/releases/individual/util/gccmakedep-1.0.3.tar.bz2
+        tar xf `ls`
+        rm *.bz2
+        cd `ls`
+        ./configure $STDUSRCONF
+        make
+        make DESTDIR=/root/bldr-inst install
+        cd ..
+        rm -rf *
 
-	wget http://xorg.freedesktop.org/releases/individual/util/lndir-1.0.3.tar.bz2
-	tar xf `ls`
-	rm *.bz2
-	cd `ls`
-	./configure $STDUSRCONF
-	make
-	make DESTDIR=/root/bldr-inst install
-	cd ..
-	rm -rf *
+        wget http://xorg.freedesktop.org/releases/individual/util/lndir-1.0.3.tar.bz2
+        tar xf `ls`
+        rm *.bz2
+        cd `ls`
+        ./configure $STDUSRCONF
+        make
+        make DESTDIR=/root/bldr-inst install
+        cd ..
+        rm -rf *
 
-	wget http://xorg.freedesktop.org/releases/individual/util/makedepend-1.0.5.tar.bz2
-	tar xf `ls`
-	rm *.bz2
-	cd `ls`
-	./configure $STDUSRCONF
-	make
-	make DESTDIR=/root/bldr-inst install
-	cd ..
-	rm -rf *
+        wget http://xorg.freedesktop.org/releases/individual/util/makedepend-1.0.5.tar.bz2
+        tar xf `ls`
+        rm *.bz2
+        cd `ls`
+        ./configure $STDUSRCONF
+        make
+        make DESTDIR=/root/bldr-inst install
+        cd ..
+        rm -rf *
 
-	wget http://xorg.freedesktop.org/releases/individual/util/xorg-cf-files-1.0.5.tar.bz2
-	tar xf `ls`
-	rm *.bz2
-	cd `ls`
-	mv $BLDRTMPDIR/cf-patch .
-	patch -Np1 -i cf-patch
-	rm cf-patch
-	./configure $STDUSRCONF
-	make
-	make DESTDIR=/root/bldr-inst install
-	cd ..
+        wget http://xorg.freedesktop.org/releases/individual/util/xorg-cf-files-1.0.5.tar.bz2
+        tar xf `ls`
+        rm *.bz2
+        cd `ls`
+        mv $BLDRTMPDIR/cf-patch .
+        patch -Np1 -i cf-patch
+        rm cf-patch
+        ./configure $STDUSRCONF
+        make
+        make DESTDIR=/root/bldr-inst install
+        cd ..
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://xorg.freedesktop.org/releases/individual/util/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://xorg.freedesktop.org/releases/individual/util/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

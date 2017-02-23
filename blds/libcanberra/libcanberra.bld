@@ -34,15 +34,15 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export PKG_CONFIG_PATH=/usr/lib/pkconfig:/lib/pkgconfig
-	./autogen.sh
-	./configure $STDUSRCONF --disable-oss
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        export PKG_CONFIG_PATH=/usr/lib/pkconfig:/lib/pkgconfig
+        ./autogen.sh
+        ./configure $STDUSRCONF --disable-oss
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: Nowhere to be found
+        echo $NAME: Nowhere to be found
 }

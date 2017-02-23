@@ -34,12 +34,12 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	#autoreconf -fi
-	./configure --prefix=/usr \
-	    --libexecdir=/usr/lib/webkitgtk2 --with-gtk=2.0 \
-		--disable-gtk-doc \
-		--disable-webkit2 \
-		--enable-introspection
+        #autoreconf -fi
+        ./configure --prefix=/usr \
+            --libexecdir=/usr/lib/webkitgtk2 --with-gtk=2.0 \
+                --disable-gtk-doc \
+                --disable-webkit2 \
+                --enable-introspection
   
 # https://bugzilla.gnome.org/show_bug.cgi?id=655517
   sed -i 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
@@ -53,11 +53,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
+        LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

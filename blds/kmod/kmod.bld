@@ -33,41 +33,41 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure \
-		--sysconfdir=/etc \
-		--with-zlib \
-		--with-xz
+        ./configure \
+                --sysconfdir=/etc \
+                --with-zlib \
+                --with-xz
 
-	make -j${BLDR_CORES}
+        make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
-	install -dm755 /root/bldr-inst/{etc,usr/lib}/{depmod,modprobe}.d
-	
-	for tool in {ins,ls,rm,dep}mod mod{probe,info}; do
-    	ln -s kmod /root/bldr-inst/usr/bin/$tool
-  	done
+        make DESTDIR=/root/bldr-inst install
+        install -dm755 /root/bldr-inst/{etc,usr/lib}/{depmod,modprobe}.d
+        
+        for tool in {ins,ls,rm,dep}mod mod{probe,info}; do
+        ln -s kmod /root/bldr-inst/usr/bin/$tool
+        done
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.kernel.org/pub/linux/utils/kernel/kmod/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.kernel.org/pub/linux/utils/kernel/kmod/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

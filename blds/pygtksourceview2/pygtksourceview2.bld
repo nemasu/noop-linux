@@ -34,15 +34,15 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	#NOTE: There was some weirdness, had to:  ln -s /usr/lib/python2.7/site-packages/gtk-2.0/codegen/codegen.py /usr/share/pygobject/2.0/codegen/codegen.py
-	PYTHON=python2 ./configure --prefix=/usr --sysconfdir=/etc \
+        #NOTE: There was some weirdness, had to:  ln -s /usr/lib/python2.7/site-packages/gtk-2.0/codegen/codegen.py /usr/share/pygobject/2.0/codegen/codegen.py
+        PYTHON=python2 ./configure --prefix=/usr --sysconfdir=/etc \
       --localstatedir=/var --disable-static --disable-docs
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: Too Old
+        echo $NAME: Too Old
 }

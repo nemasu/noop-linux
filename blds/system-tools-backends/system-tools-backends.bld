@@ -34,28 +34,28 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure \
+        ./configure \
         --prefix=/usr \
         --with-dbus-sys=/etc/dbus-1/system.d \
         --localstatedir=/var \
         --mandir=/usr/share \
         --sbindir=/usr/bin \
         --disable-static  
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	rm -rf /root/bldr-inst/usr/share/system-tools-backends-2.0/modules/share/
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        rm -rf /root/bldr-inst/usr/share/system-tools-backends-2.0/modules/share/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
 
-	MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/system-tools-backends/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/system-tools-backends/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+        MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/system-tools-backends/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+        LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/system-tools-backends/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

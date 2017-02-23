@@ -33,7 +33,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr --enable-animation
+        ./configure --prefix=/usr --enable-animation
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
@@ -41,5 +41,5 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: Too old.
+        echo $NAME: Too old.
 }

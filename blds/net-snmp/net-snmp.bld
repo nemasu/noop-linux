@@ -33,42 +33,42 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	PYTHONPROG=/usr/bin/python2 ./configure --prefix=/usr \
-		--sysconfdir=/etc --sbindir=/usr/bin \
-		--mandir=/usr/share/man \
-		--enable-ucd-snmp-compatibility \
-		--enable-ipv6 \
-		--with-python-modules \
-		--with-default-snmp-version="3" \
-		--with-sys-contact="root@localhost" \
-		--with-sys-location="Unknown" \
-		--with-logfile="/var/log/snmpd.log" \
-		--with-mib-modules="host misc/ipfwacc ucd-snmp/diskio tunnel ucd-snmp/dlmod" \
-		--with-persistent-directory="/var/net-snmp"
-	make -j${BLDR_CORES} NETSNMP_DONT_CHECK_VERSION=1
-	make DESTDIR=/root/bldr-inst install
+        PYTHONPROG=/usr/bin/python2 ./configure --prefix=/usr \
+                --sysconfdir=/etc --sbindir=/usr/bin \
+                --mandir=/usr/share/man \
+                --enable-ucd-snmp-compatibility \
+                --enable-ipv6 \
+                --with-python-modules \
+                --with-default-snmp-version="3" \
+                --with-sys-contact="root@localhost" \
+                --with-sys-location="Unknown" \
+                --with-logfile="/var/log/snmpd.log" \
+                --with-mib-modules="host misc/ipfwacc ucd-snmp/diskio tunnel ucd-snmp/dlmod" \
+                --with-persistent-directory="/var/net-snmp"
+        make -j${BLDR_CORES} NETSNMP_DONT_CHECK_VERSION=1
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

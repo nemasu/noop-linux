@@ -34,45 +34,45 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd ..
+        cd ..
 
-	srcdir=`ls`
-	mv $srcdir py2
-	cp -r py2 py3
+        srcdir=`ls`
+        mv $srcdir py2
+        cp -r py2 py3
 
-	cd py3
-	python3 configure-ng.py \
-		--confirm-license \
-		--no-sip-files \
-		--qsci-api \
-		-q /usr/bin/qmake-qt4
+        cd py3
+        python3 configure-ng.py \
+                --confirm-license \
+                --no-sip-files \
+                --qsci-api \
+                -q /usr/bin/qmake-qt4
 
-	# Thanks Gerardo for the rpath fix
-	find -name 'Makefile' | xargs sed -i 's|-Wl,-rpath,/usr/lib||g;s|-Wl,-rpath,.* ||g'
-	make -j3
-	make DESTDIR=/root/bldr-inst INSTALL_ROOT=/root/bldr-inst install
+        # Thanks Gerardo for the rpath fix
+        find -name 'Makefile' | xargs sed -i 's|-Wl,-rpath,/usr/lib||g;s|-Wl,-rpath,.* ||g'
+        make -j3
+        make DESTDIR=/root/bldr-inst INSTALL_ROOT=/root/bldr-inst install
 
-	cd ../py2
-	python2 configure-ng.py \
-		--confirm-license \
-		--no-sip-files \
-		--qsci-api \
-		-q /usr/bin/qmake-qt4
+        cd ../py2
+        python2 configure-ng.py \
+                --confirm-license \
+                --no-sip-files \
+                --qsci-api \
+                -q /usr/bin/qmake-qt4
 
-	# Thanks Gerardo for the rpath fix
-	find -name 'Makefile' | xargs sed -i 's|-Wl,-rpath,/usr/lib||g;s|-Wl,-rpath,.* ||g'
-	make -j3
-	make DESTDIR=/root/bldr-inst INSTALL_ROOT=/root/bldr-inst install
+        # Thanks Gerardo for the rpath fix
+        find -name 'Makefile' | xargs sed -i 's|-Wl,-rpath,/usr/lib||g;s|-Wl,-rpath,.* ||g'
+        make -j3
+        make DESTDIR=/root/bldr-inst INSTALL_ROOT=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s http://sourceforge.net/projects/pyqt/files/PyQt4/ | egrep "/PyQt-[0-9\.]+/\"" | sed -e 's|.*/PyQt-\([0-9\.]*\)/.*|\1|g' | head -n1`
+        LATEST=`curl -L -s http://sourceforge.net/projects/pyqt/files/PyQt4/ | egrep "/PyQt-[0-9\.]+/\"" | sed -e 's|.*/PyQt-\([0-9\.]*\)/.*|\1|g' | head -n1`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

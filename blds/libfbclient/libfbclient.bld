@@ -34,45 +34,45 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr --with-system-icu --without-fbudf \
-		--without-fbsbin --without-fbconf --without-fbdoc --without-fbsample \
-		--without-fbsample-db --without-fbintl --without-fbmisc --without-fbhelp \
-		--without-fbsecure-db --with-fbmsg=/usr/share/firebird --without-fblog \
-		--without-fbglock --without-fbplugins
+        ./configure --prefix=/usr --with-system-icu --without-fbudf \
+                --without-fbsbin --without-fbconf --without-fbdoc --without-fbsample \
+                --without-fbsample-db --without-fbintl --without-fbmisc --without-fbhelp \
+                --without-fbsecure-db --with-fbmsg=/usr/share/firebird --without-fblog \
+                --without-fbglock --without-fbplugins
 
-	CXXFLAGS+=" -std=gnu++98 -fno-lifetime-dse" make
+        CXXFLAGS+=" -std=gnu++98 -fno-lifetime-dse" make
 
-	mkdir -p /root/bldr-inst/usr/{bin,share/firebird}
-	cp -R gen/firebird/{lib,include} /root/bldr-inst/usr
-	rm -f /root/bldr-inst/usr/lib/libedit.a
-	cp gen/firebird/*.msg /root/bldr-inst/usr/share/firebird
-	cp gen/firebird/bin/fb_config /root/bldr-inst/usr/bin
-	
-	cd /root/bldr-inst/usr/lib
-	ln -s libfbclient.so libgds.so.0
-	ln -s libfbclient.so libgds.so
+        mkdir -p /root/bldr-inst/usr/{bin,share/firebird}
+        cp -R gen/firebird/{lib,include} /root/bldr-inst/usr
+        rm -f /root/bldr-inst/usr/lib/libedit.a
+        cp gen/firebird/*.msg /root/bldr-inst/usr/share/firebird
+        cp gen/firebird/bin/fb_config /root/bldr-inst/usr/bin
+        
+        cd /root/bldr-inst/usr/lib
+        ln -s libfbclient.so libgds.so.0
+        ln -s libfbclient.so libgds.so
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.firebirdsql.org/en/firebird-2-5-3/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.firebirdsql.org/en/firebird-2-5-3/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

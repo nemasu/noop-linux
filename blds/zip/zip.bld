@@ -33,13 +33,13 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make -f unix/Makefile generic_gcc
-	make prefix=/root/bldr-inst/usr -f unix/Makefile install
+        make -f unix/Makefile generic_gcc
+        make prefix=/root/bldr-inst/usr -f unix/Makefile install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: Too Old
+        echo $NAME: Too Old
 }

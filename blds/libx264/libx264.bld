@@ -35,37 +35,37 @@ function BuildAndInstall
 {
 #Can only have 8 bit or 10 bit installed, default to 8 for now
 #   cd ../
-#	DIR=`ls`
-#	cp -r $DIR ${DIR}-10bit
-	
-#	cd ${DIR}-10bit
+#       DIR=`ls`
+#       cp -r $DIR ${DIR}-10bit
+        
+#       cd ${DIR}-10bit
 
-#	./configure --enable-shared --enable-pic --bit-depth=10
-	
-#	make -j${BLDR_CORES} DESTDIR=/root/bldr-inst \
+#       ./configure --enable-shared --enable-pic --bit-depth=10
+        
+#       make -j${BLDR_CORES} DESTDIR=/root/bldr-inst \
 #     bindir=/usr/bin \
 #     libdir=/usr/lib \
 #     includedir=/usr/include \
 #     install
 
-#	mv -v /root/bldr-inst/usr/bin/x264 /root/bldr-inst/usr/bin/x264-10bit
+#       mv -v /root/bldr-inst/usr/bin/x264 /root/bldr-inst/usr/bin/x264-10bit
 
-#	cd ../$DIR
+#       cd ../$DIR
 
-	./configure --enable-shared --enable-pic
-	
-	make -j${BLDR_CORES} DESTDIR=/root/bldr-inst \
+        ./configure --enable-shared --enable-pic
+        
+        make -j${BLDR_CORES} DESTDIR=/root/bldr-inst \
       bindir=/usr/bin \
       libdir=/usr/lib \
       includedir=/usr/include \
       install
-	
-	
+        
+        
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME: Snapshot based"
+        echo "$NAME: Snapshot based"
 }

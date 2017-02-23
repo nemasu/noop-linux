@@ -1,7 +1,7 @@
 function postinst() {
-	depmod
+        depmod
 }
 
 function postup() {
-	postinst
+        postinst
 }

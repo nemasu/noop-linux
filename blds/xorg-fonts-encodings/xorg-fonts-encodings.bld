@@ -33,39 +33,39 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr --with-fontrootdir=/usr/share/fonts
-	make
-	make DESTDIR=/root/bldr-inst install
+        ./configure --prefix=/usr --with-fontrootdir=/usr/share/fonts
+        make
+        make DESTDIR=/root/bldr-inst install
 
-	# regenerate encodngs file not to include non-compressed versions
-	cd /root/bldr-inst/usr/share/fonts/encodings/large
-	mkfontscale -b -s -l -n -r -p /usr/share/fonts/encodings/large -e . .
-	cd /root/bldr-inst/usr/share/fonts/encodings/
-	mkfontscale -b -s -l -n -r -p /usr/share/fonts/encodings -e . -e large .
+        # regenerate encodngs file not to include non-compressed versions
+        cd /root/bldr-inst/usr/share/fonts/encodings/large
+        mkfontscale -b -s -l -n -r -p /usr/share/fonts/encodings/large -e . .
+        cd /root/bldr-inst/usr/share/fonts/encodings/
+        mkfontscale -b -s -l -n -r -p /usr/share/fonts/encodings -e . -e large .
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=encodings
-	LISTURL=http://xorg.freedesktop.org/releases/individual/font/
-	FILELIST=`GetFileList`
-	LATEST=0
+        NAME=encodings
+        LISTURL=http://xorg.freedesktop.org/releases/individual/font/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

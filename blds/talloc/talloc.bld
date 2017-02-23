@@ -33,37 +33,37 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export PYTHON=/usr/bin/python2
-	sed -i -e 's#python#python2#g' buildtools/bin/waf
-	./configure --prefix=/usr \
-		--sysconfdir=/etc/samba \
-		--localstatedir=/var \
-		--enable-talloc-compat1
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        export PYTHON=/usr/bin/python2
+        sed -i -e 's#python#python2#g' buildtools/bin/waf
+        ./configure --prefix=/usr \
+                --sysconfdir=/etc/samba \
+                --localstatedir=/var \
+                --enable-talloc-compat1
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://samba.org/ftp/talloc/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://samba.org/ftp/talloc/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -5,7 +5,7 @@ function postinst() {
     [ -x /usr/bin/install-info ] || exit 0
     for file in ${filelist[@]};
     do
-    	install-info $infodir/$file $infodir/dir 2> /dev/null
+        install-info $infodir/$file $infodir/dir 2> /dev/null
     done
     
 }

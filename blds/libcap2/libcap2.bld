@@ -33,27 +33,27 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make -j${BLDR_CORES}
-	make RAISE_SETFCAP=no DESTDIR=/root/bldr-inst install
-	cp -r /root/bldr-inst/sbin /root/bldr-inst/usr/
+        make -j${BLDR_CORES}
+        make RAISE_SETFCAP=no DESTDIR=/root/bldr-inst install
+        cp -r /root/bldr-inst/sbin /root/bldr-inst/usr/
 
-	if [ -e /root/bldr-inst/lib64 ];
-	then
-		mv /root/bldr-inst/lib64 /root/bldr-inst/lib
-	fi
-	cp -r /root/bldr-inst/lib /root/bldr-inst/usr/
-	rm -rf /root/bldr-inst/lib
-	rm -rf /root/bldr-inst/sbin
+        if [ -e /root/bldr-inst/lib64 ];
+        then
+                mv /root/bldr-inst/lib64 /root/bldr-inst/lib
+        fi
+        cp -r /root/bldr-inst/lib /root/bldr-inst/usr/
+        rm -rf /root/bldr-inst/lib
+        rm -rf /root/bldr-inst/sbin
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s ftp://ftp.de.debian.org/debian/pool/main/libc/libcap2/ | grep "libcap2_[0-9\.]*\.orig\.tar\.xz" | sed 's/.*libcap2_\([0-9\.]*\)\.orig\.tar\.xz.*/\1/g'`
+        LATEST=`curl -s ftp://ftp.de.debian.org/debian/pool/main/libc/libcap2/ | grep "libcap2_[0-9\.]*\.orig\.tar\.xz" | sed 's/.*libcap2_\([0-9\.]*\)\.orig\.tar\.xz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

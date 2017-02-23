@@ -34,30 +34,30 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i 's|set(LIBDIR "/lib")|set(LIBDIR "/usr/lib")|' CMakeLists.txt
-	cmake \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_SKIP_RPATH=ON \
-		-DUSE_PAM=yes \
-		-DUSE_CONSOLEKIT=no
-	make -j${BLDR_CORES}
+        sed -i 's|set(LIBDIR "/lib")|set(LIBDIR "/usr/lib")|' CMakeLists.txt
+        cmake \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_SKIP_RPATH=ON \
+                -DUSE_PAM=yes \
+                -DUSE_CONSOLEKIT=no
+        make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
-	install -Dm644 slimlock.conf /root/bldr-inst/etc/slimlock.conf
+        install -Dm644 slimlock.conf /root/bldr-inst/etc/slimlock.conf
 
-	# Provide sane defaults
-	sed -i -e 's|#xserver_arguments.*|xserver_arguments -nolisten tcp vt07|' \
-		 -e 's|/var/run/slim.lock|/var/lock/slim.lock|' \
-	/root/bldr-inst/etc/slim.conf
+        # Provide sane defaults
+        sed -i -e 's|#xserver_arguments.*|xserver_arguments -nolisten tcp vt07|' \
+                 -e 's|/var/run/slim.lock|/var/lock/slim.lock|' \
+        /root/bldr-inst/etc/slim.conf
 
-	sed -i -e 's|/sbin/shutdown -h now|/usr/bin/systemctl poweroff|g' /root/bldr-inst/etc/slim.conf
-	sed -i -e 's|/sbin/shutdown -r now|/usr/bin/systemctl reboot|g' /root/bldr-inst/etc/slim.conf
+        sed -i -e 's|/sbin/shutdown -h now|/usr/bin/systemctl poweroff|g' /root/bldr-inst/etc/slim.conf
+        sed -i -e 's|/sbin/shutdown -r now|/usr/bin/systemctl reboot|g' /root/bldr-inst/etc/slim.conf
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: Self hosted
+        echo $NAME: Self hosted
 }

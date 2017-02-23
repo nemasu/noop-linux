@@ -23,7 +23,7 @@ BUILD=custom
 
 if [ "${ARCH}" == "x86_64" ];
 then
-	EXTRADEPS="cups"
+        EXTRADEPS="cups"
 fi
 
 # build/package dependancies
@@ -45,9 +45,9 @@ function BuildAndInstall
   export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
 
-	CXX=/bin/false ./configure --prefix=/usr \
-		--libdir=/usr/lib32 \
-		--libexecdir=/usr/lib32 \
+        CXX=/bin/false ./configure --prefix=/usr \
+                --libdir=/usr/lib32 \
+                --libexecdir=/usr/lib32 \
         --sysconfdir=/etc \
         --localstatedir=/var \
         --with-xinput=yes
@@ -57,28 +57,28 @@ function BuildAndInstall
 
     make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
-	sed -i "s#env python#env python2#" /root/bldr-inst/usr/bin/gtk-builder-convert
+        sed -i "s#env python#env python2#" /root/bldr-inst/usr/bin/gtk-builder-convert
 
-	cd /root/bldr-inst
-	rm -rf etc
+        cd /root/bldr-inst
+        rm -rf etc
     rm -rf usr/{include,share}
 
-	cd usr/bin
-	mv gtk-query-immodules-2.0 gtk-query-immodules-2.0-32
-	rm -f gtk-builder-convert gtk-demo gtk-update-icon-cache
+        cd usr/bin
+        mv gtk-query-immodules-2.0 gtk-query-immodules-2.0-32
+        rm -f gtk-builder-convert gtk-demo gtk-update-icon-cache
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	MM=`curl -s http://ftp.gnome.org/pub/gnome/sources/gtk+/ | grep -E "2\.[0-8][0-8]*\/<" | tail -n1 | sed -e "s/.*\(2\.[0-8][0-8]*\)\/<.*/\1/g"`
-	LATEST=`curl -s http://ftp.gnome.org/pub/gnome/sources/gtk+/$MM/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\).*/\1/g'`
+        MM=`curl -s http://ftp.gnome.org/pub/gnome/sources/gtk+/ | grep -E "2\.[0-8][0-8]*\/<" | tail -n1 | sed -e "s/.*\(2\.[0-8][0-8]*\)\/<.*/\1/g"`
+        LATEST=`curl -s http://ftp.gnome.org/pub/gnome/sources/gtk+/$MM/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\).*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

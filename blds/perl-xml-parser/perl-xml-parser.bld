@@ -33,20 +33,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	perl Makefile.PL PREFIX=/usr
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        perl Makefile.PL PREFIX=/usr
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://www.cpan.org/authors/id/T/TO/TODDR/ | grep -E "XML-Parser-[0-9\.]*\.tar\.gz" | sed -e 's/.*XML-Parser-\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -s http://www.cpan.org/authors/id/T/TO/TODDR/ | grep -E "XML-Parser-[0-9\.]*\.tar\.gz" | sed -e 's/.*XML-Parser-\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

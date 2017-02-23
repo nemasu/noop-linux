@@ -41,9 +41,9 @@ function BuildAndInstall
   mv $BLDRTMPDIR/*.patch2 .
   patch -Np1 -i  subtitleripper-0.3.4-linkingorder.patch2 && rm subtitleripper-0.3.4-linkingorder.patch2
   patch -Np1 -i  subtitleripper-0.3.4-respect-ldflags.patch2 && rm subtitleripper-0.3.4-respect-ldflags.patch2
-	
+        
   sed -i "s:av_close_input_file:avformat_close_input:g" \
-	  import/probe_ffmpeg.c
+          import/probe_ffmpeg.c
 
   ./configure --prefix=/usr \
     --disable-sse --disable-sse2 --disable-altivec --enable-mmx \
@@ -73,5 +73,5 @@ function BuildAndInstall
 
 function Detect
 {
-	echo "${NAME}: Too old"
+        echo "${NAME}: Too old"
 }

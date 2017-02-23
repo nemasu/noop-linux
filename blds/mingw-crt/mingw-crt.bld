@@ -34,35 +34,35 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 
-	_targets="i686-w64-mingw32 x86_64-w64-mingw32"
-	#Based off ArchLinux's build
-	cd ..
-	curdur=`pwd`
-	srcdir=`pwd`
-	cd $curdur
+        _targets="i686-w64-mingw32 x86_64-w64-mingw32"
+        #Based off ArchLinux's build
+        cd ..
+        curdur=`pwd`
+        srcdir=`pwd`
+        cd $curdur
 
-	for _target in ${_targets}; do
-		if [ ${_target} == "i686-w64-mingw32" ]; then
-			_crt_configure_args="--disable-lib64 --enable-lib32"
-		elif [ ${_target} == "x86_64-w64-mingw32" ]; then
-			_crt_configure_args="--disable-lib32 --enable-lib64"
-		fi
-		mkdir -p ${srcdir}/crt-${_target} && cd ${srcdir}/crt-${_target}
-		${srcdir}/mingw-w64-v${VERSION}/mingw-w64-crt/configure --prefix=/usr/${_target} --host=${_target} --enable-wildcard ${_crt_configure_args}
-		make -j${BLDR_CORES}
-		make DESTDIR=/root/bldr-inst install
-	done
+        for _target in ${_targets}; do
+                if [ ${_target} == "i686-w64-mingw32" ]; then
+                        _crt_configure_args="--disable-lib64 --enable-lib32"
+                elif [ ${_target} == "x86_64-w64-mingw32" ]; then
+                        _crt_configure_args="--disable-lib32 --enable-lib64"
+                fi
+                mkdir -p ${srcdir}/crt-${_target} && cd ${srcdir}/crt-${_target}
+                ${srcdir}/mingw-w64-v${VERSION}/mingw-w64-crt/configure --prefix=/usr/${_target} --host=${_target} --enable-wildcard ${_crt_configure_args}
+                make -j${BLDR_CORES}
+                make DESTDIR=/root/bldr-inst install
+        done
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/ | egrep "mingw-w64-v[0-9\.]*\.tar\.bz2" | sed -e 's/.*mingw-w64-v\([0-9\.]*\)\.tar\.bz2.*/\1/g' | head -n1`
+        LATEST=`curl -s -L https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/ | egrep "mingw-w64-v[0-9\.]*\.tar\.bz2" | sed -e 's/.*mingw-w64-v\([0-9\.]*\)\.tar\.bz2.*/\1/g' | head -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

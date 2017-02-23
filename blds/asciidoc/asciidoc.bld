@@ -33,45 +33,45 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	# python2 fix
-  	for file in asciidocapi.py a2x.py asciidoc.py filters/music/music2png.py filters/latex/latex2png.py \
-	  filters/code/code-filter.py filters/graphviz/graphviz2png.py; do
-		sed -i 's_#!/usr/bin/env python_#!/usr/bin/env python2_' $file
-	done
+        # python2 fix
+        for file in asciidocapi.py a2x.py asciidoc.py filters/music/music2png.py filters/latex/latex2png.py \
+          filters/code/code-filter.py filters/graphviz/graphviz2png.py; do
+                sed -i 's_#!/usr/bin/env python_#!/usr/bin/env python2_' $file
+        done
 
-	./configure --prefix=/usr --sysconfdir=/etc
+        ./configure --prefix=/usr --sysconfdir=/etc
 
-	make
-	make DESTDIR=/root/bldr-inst install
-	
-	install -Dm644 asciidocapi.py \
-    	/root/bldr-inst/usr/lib/python2.7/site-packages/asciidocapi.py
+        make
+        make DESTDIR=/root/bldr-inst install
+        
+        install -Dm644 asciidocapi.py \
+        /root/bldr-inst/usr/lib/python2.7/site-packages/asciidocapi.py
 
     install -Dm644 vim/syntax/asciidoc.vim \
-    	/root/bldr-inst/usr/share/vim/vimfiles/syntax/asciidoc.vim
+        /root/bldr-inst/usr/share/vim/vimfiles/syntax/asciidoc.vim
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.methods.co.nz/asciidoc/INSTALL.html
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.methods.co.nz/asciidoc/INSTALL.html
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

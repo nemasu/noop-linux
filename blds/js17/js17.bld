@@ -50,6 +50,6 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME: No new packages"
+        echo "$NAME: No new packages"
 }
 

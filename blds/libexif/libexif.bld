@@ -39,11 +39,11 @@ RESTORELIBDB=
 function Detect
 {
 
-	LATEST=`curl -s http://sourceforge.net/projects/libexif/files/libexif/ | grep zip | sed -e 's/.*libexif-\([0-9\.]*\)\.zip.*/\1/g' | sort | uniq`
+        LATEST=`curl -s http://sourceforge.net/projects/libexif/files/libexif/ | grep zip | sed -e 's/.*libexif-\([0-9\.]*\)\.zip.*/\1/g' | sort | uniq`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

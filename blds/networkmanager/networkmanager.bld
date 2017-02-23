@@ -37,33 +37,33 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
-	sed -i -e '/gtkdocize/d' autogen.sh
-	NOCONFIGURE=1 ./autogen.sh
+        sed -i -e '/gtkdocize/d' autogen.sh
+        NOCONFIGURE=1 ./autogen.sh
 
-	 ./configure --prefix=/usr \
-		--sysconfdir=/etc \
-		--localstatedir=/var \
-		--sbindir=/usr/bin \
-		--libexecdir=/usr/lib/networkmanager \
-		--with-crypto=nss \
-		--with-dhclient=/usr/bin/dhclient \
-		--without-dhcpcd \
-		--with-dnsmasq=/usr/bin/dnsmasq \
-		--with-iptables=/usr/bin/iptables \
-		--with-systemdsystemunitdir=/usr/lib/systemd/system \
-		--with-udev-dir=/usr/lib/udev \
-		--with-resolvconf=/usr/bin/resolvconf \
-		--with-pppd=/usr/bin/pppd \
-		--with-pppd-plugin-dir=/usr/lib/pppd/$_pppver \
-		--with-pppoe=/usr/bin/pppoe \
-		--with-kernel-firmware-dir=/lib/firmware \
-		--with-session-tracking=systemd \
-		--with-modem-manager-1 \
-		--disable-static \
-		--enable-more-warnings=no \
-		--disable-wimax \
-		--enable-modify-system \
-		--disable-doc
+         ./configure --prefix=/usr \
+                --sysconfdir=/etc \
+                --localstatedir=/var \
+                --sbindir=/usr/bin \
+                --libexecdir=/usr/lib/networkmanager \
+                --with-crypto=nss \
+                --with-dhclient=/usr/bin/dhclient \
+                --without-dhcpcd \
+                --with-dnsmasq=/usr/bin/dnsmasq \
+                --with-iptables=/usr/bin/iptables \
+                --with-systemdsystemunitdir=/usr/lib/systemd/system \
+                --with-udev-dir=/usr/lib/udev \
+                --with-resolvconf=/usr/bin/resolvconf \
+                --with-pppd=/usr/bin/pppd \
+                --with-pppd-plugin-dir=/usr/lib/pppd/$_pppver \
+                --with-pppoe=/usr/bin/pppoe \
+                --with-kernel-firmware-dir=/lib/firmware \
+                --with-session-tracking=systemd \
+                --with-modem-manager-1 \
+                --disable-static \
+                --enable-more-warnings=no \
+                --disable-wimax \
+                --enable-modify-system \
+                --disable-doc
 
   make -j${BLDR_CORES}
 
@@ -74,12 +74,12 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	MAJOR=`curl -s https://download.gnome.org/sources/NetworkManager/ | grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s https://download.gnome.org/sources/NetworkManager/1.0/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+        MAJOR=`curl -s https://download.gnome.org/sources/NetworkManager/ | grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+        LATEST=`curl -s https://download.gnome.org/sources/NetworkManager/1.0/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

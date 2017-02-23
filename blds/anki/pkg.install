@@ -1,7 +1,7 @@
 function postinst() {
-	xdg-mime install /usr/share/anki/anki.xml --novendor
-	echo "Run the following as your user to open anki files with anki:"
-	echo "xdg-mime default anki.desktop application/x-anki"
-	echo "xdg-mime default anki.desktop application/x-apkg"
+        xdg-mime install /usr/share/anki/anki.xml --novendor
+        echo "Run the following as your user to open anki files with anki:"
+        echo "xdg-mime default anki.desktop application/x-anki"
+        echo "xdg-mime default anki.desktop application/x-apkg"
 }
 

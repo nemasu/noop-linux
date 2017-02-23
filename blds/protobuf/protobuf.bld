@@ -34,20 +34,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./autogen.sh
-	./configure $STDUSRCONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./autogen.sh
+        ./configure $STDUSRCONF
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://github.com/google/protobuf/releases | egrep "v[0-9\.]+\.tar\.gz" | head -n1 | sed 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -L -s https://github.com/google/protobuf/releases | egrep "v[0-9\.]+\.tar\.gz" | head -n1 | sed 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

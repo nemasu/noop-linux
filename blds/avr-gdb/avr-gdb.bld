@@ -44,7 +44,7 @@ function BuildAndInstall
     --enable-languages=c,c++ \
     --infodir=/usr/share/info \
     --libdir=/usr/lib \
-	--libexecdir=/usr/lib \
+        --libexecdir=/usr/lib \
     --mandir=/usr/share/man \
     --prefix=/usr \
     --program-prefix=avr- \
@@ -64,26 +64,26 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=gdb
-	LISTURL=http://ftp.gnu.org/gnu/gdb/
-	FILELIST=`GetFileList`
-	LATEST=0
-	NAME=avr-gdb
+        NAME=gdb
+        LISTURL=http://ftp.gnu.org/gnu/gdb/
+        FILELIST=`GetFileList`
+        LATEST=0
+        NAME=avr-gdb
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

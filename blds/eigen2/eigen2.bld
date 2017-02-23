@@ -47,7 +47,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME: Too old"
+        echo "$NAME: Too old"
 
 }
 

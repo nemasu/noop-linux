@@ -33,39 +33,39 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-	if [ -z "$BLDR_CONTINUE" ]; then
-		curdir=`pwd`
-	
-		git clone git://code.qt.io/qt-labs/qbs.git
-		git clone git://code.qt.io/qt-creator/qt-creator.git
-		
-		cd qt-creator
-		git checkout tags/v${VERSION}
-		git submodule init
-		git config submodule.qbs.url $curdir/qbs
-		git submodule update
-		cd ..
-	fi
-	
-	cd qt-creator
-	
-	mkdir -p build && cd build
+        if [ -z "$BLDR_CONTINUE" ]; then
+                curdir=`pwd`
+        
+                git clone git://code.qt.io/qt-labs/qbs.git
+                git clone git://code.qt.io/qt-creator/qt-creator.git
+                
+                cd qt-creator
+                git checkout tags/v${VERSION}
+                git submodule init
+                git config submodule.qbs.url $curdir/qbs
+                git submodule update
+                cd ..
+        fi
+        
+        cd qt-creator
+        
+        mkdir -p build && cd build
 
-	LLVM_INSTALL_DIR=/usr qmake CONFIG+=journald -r ../qtcreator.pro
-	make -j${BLDR_CORES}
-	make docs -j1
-	make INSTALL_ROOT=/root/bldr-inst/usr/ install
-	make INSTALL_ROOT=/root/bldr-inst/usr/ install_docs
+        LLVM_INSTALL_DIR=/usr qmake CONFIG+=journald -r ../qtcreator.pro
+        make -j${BLDR_CORES}
+        make docs -j1
+        make INSTALL_ROOT=/root/bldr-inst/usr/ install
+        make INSTALL_ROOT=/root/bldr-inst/usr/ install_docs
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L http://code.qt.io/cgit/qt-creator/qt-creator.git/ | egrep "v[0-9\.]+'" | head -n1 | sed -e 's/.*\?h=v\([0-9\.]*\).*/\1/g'`
+        LATEST=`curl -s -L http://code.qt.io/cgit/qt-creator/qt-creator.git/ | egrep "v[0-9\.]+'" | head -n1 | sed -e 's/.*\?h=v\([0-9\.]*\).*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

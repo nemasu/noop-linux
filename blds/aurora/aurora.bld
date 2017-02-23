@@ -33,38 +33,38 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	tar xzf aurora-gtk-engine-1.5.tar.gz 
-	cd aurora-1.5
-	./configure --prefix=/usr --enable-animation
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	mkdir -p /root/bldr-inst/usr/share/themes
-	tar xjf ../Aurora.tar.bz2 -C /root/bldr-inst/usr/share/themes
-	chown -R root:root /root/bldr-inst/usr/share/themes
+        tar xzf aurora-gtk-engine-1.5.tar.gz 
+        cd aurora-1.5
+        ./configure --prefix=/usr --enable-animation
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        mkdir -p /root/bldr-inst/usr/share/themes
+        tar xjf ../Aurora.tar.bz2 -C /root/bldr-inst/usr/share/themes
+        chown -R root:root /root/bldr-inst/usr/share/themes
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=56438-aurora
-	LISTURL=http://www.gnome-look.org/CONTENT/content-files/
-	FILELIST=`GetFileList`
-	LATEST=0
+        NAME=56438-aurora
+        LISTURL=http://www.gnome-look.org/CONTENT/content-files/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

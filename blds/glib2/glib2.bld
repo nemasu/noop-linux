@@ -37,8 +37,8 @@ function BuildAndInstall
   patch -Rp1 -i $BLDRTMPDIR/revert-warn-glib-compile-schemas.rpatch && rm $BLDRTMPDIR/revert-warn-glib-compile-schemas.rpatch
   
   PYTHON=/usr/bin/python2 ./configure --prefix=/usr --libdir=/usr/lib \
-	  --enable-static \
-	  --sysconfdir=/etc \
+          --enable-static \
+          --sysconfdir=/etc \
       --with-pcre=system \
       --disable-fam
    make -j${BLDR_CORES}
@@ -49,13 +49,13 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	MAJOR=`curl -s https://developer.gnome.org/glib/ | grep "<strong>" | sed -e 's/.*href="\([0-9\.]*\)\/.*/\1/g'`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+        MAJOR=`curl -s https://developer.gnome.org/glib/ | grep "<strong>" | sed -e 's/.*href="\([0-9\.]*\)\/.*/\1/g'`
+        LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-					echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

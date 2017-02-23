@@ -33,7 +33,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure \
+        ./configure \
     --prefix=/usr \
     --with-terminfo=/usr/share/terminfo \
     --enable-256-color \
@@ -62,35 +62,35 @@ function BuildAndInstall
     --disable-pixbuf \
     --disable-frills
 
-	make -j${BLDR_CORES}
-	export TERMINFO=`pwd`/terminfo
-	install -d "$TERMINFO"
-	make DESTDIR=/root/bldr-inst install
-	sed -i 's/\"rxvt\"/"urxvt"/' doc/rxvt-tabbed
-	install -Dm 755 doc/rxvt-tabbed /root/bldr-inst/usr/bin/urxvt-tabbed
-	mv terminfo /root/bldr-inst/usr/share/
+        make -j${BLDR_CORES}
+        export TERMINFO=`pwd`/terminfo
+        install -d "$TERMINFO"
+        make DESTDIR=/root/bldr-inst install
+        sed -i 's/\"rxvt\"/"urxvt"/' doc/rxvt-tabbed
+        install -Dm 755 doc/rxvt-tabbed /root/bldr-inst/usr/bin/urxvt-tabbed
+        mv terminfo /root/bldr-inst/usr/share/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://dist.schmorp.de/rxvt-unicode/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://dist.schmorp.de/rxvt-unicode/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

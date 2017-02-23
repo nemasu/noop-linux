@@ -37,11 +37,11 @@ RESTORELIBDB=
 
 function Detect
 {
-	LATEST=`curl -L -s https://github.com/radare/radare2/releases | egrep "\/[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*\/\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -L -s https://github.com/radare/radare2/releases | egrep "\/[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*\/\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

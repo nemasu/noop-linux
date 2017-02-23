@@ -33,32 +33,32 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export INSTALL_USER=root INSTALL_GROUP=root
+        export INSTALL_USER=root INSTALL_GROUP=root
     ./configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib
     make -j${BLDR_CORES}
-	make DIST_ROOT=/root/bldr-inst install install-lib install-dev
+        make DIST_ROOT=/root/bldr-inst install install-lib install-dev
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://download.savannah.gnu.org/releases/acl/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://download.savannah.gnu.org/releases/acl/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

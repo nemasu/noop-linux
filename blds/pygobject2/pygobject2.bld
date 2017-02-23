@@ -33,28 +33,28 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	autoreconf -fi
-	
-	cd ..
-	orig=`ls`
-	cp -r ${orig} ${orig}-py3
+        autoreconf -fi
+        
+        cd ..
+        orig=`ls`
+        cp -r ${orig} ${orig}-py3
 
-	cd ${orig}-py3
-	./configure $STDUSRCONF --disable-introspection
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        cd ${orig}-py3
+        ./configure $STDUSRCONF --disable-introspection
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	cd ../${orig}
-	find -O3 . \
-		\( -name '*.py' -o -name '*.py.in' \) \
-		-exec sed -i '1s|python$|&2|' {} +
-	./configure $STDUSRCONF  --disable-introspection PYTHON=`which python2`
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        cd ../${orig}
+        find -O3 . \
+                \( -name '*.py' -o -name '*.py.in' \) \
+                -exec sed -i '1s|python$|&2|' {} +
+        ./configure $STDUSRCONF  --disable-introspection PYTHON=`which python2`
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: Not updated
+        echo $NAME: Not updated
 }

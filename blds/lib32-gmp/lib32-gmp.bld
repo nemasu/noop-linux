@@ -34,38 +34,38 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export CC="gcc -m32"
-  	export CXX="g++ -m32"
-	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-	export ABI=32
+        export CC="gcc -m32"
+        export CXX="g++ -m32"
+        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+        export ABI=32
 
-	./configure --libdir=/usr/lib32 --prefix=/usr ${EXTRACONF}
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	rm -rf /root/bldr-inst/usr/{bin,include,share}
+        ./configure --libdir=/usr/lib32 --prefix=/usr ${EXTRACONF}
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        rm -rf /root/bldr-inst/usr/{bin,include,share}
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://gmplib.org/download/gmp/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://gmplib.org/download/gmp/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

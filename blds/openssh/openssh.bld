@@ -34,20 +34,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure $STDUSRCONF --with-pam --with-kerberos5=/usr --with-xauth=/usr/bin/xauth --with-mantype=man --with-md5-passwords --with-pid-dir=/run
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	sed -e '/^#ChallengeResponseAuthentication yes$/c ChallengeResponseAuthentication no' -e '/^#UsePAM no$/c UsePAM yes' -i /root/bldr-inst/etc/sshd_config
+        ./configure $STDUSRCONF --with-pam --with-kerberos5=/usr --with-xauth=/usr/bin/xauth --with-mantype=man --with-md5-passwords --with-pid-dir=/run
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        sed -e '/^#ChallengeResponseAuthentication yes$/c ChallengeResponseAuthentication no' -e '/^#UsePAM no$/c UsePAM yes' -i /root/bldr-inst/etc/sshd_config
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://www.ftp.ne.jp/OpenBSD/OpenSSH/portable/ | grep -E "openssh-[0-6\.]*p[0-9]\.tar\.gz<" | tail -n1 | sed -e 's/.*openssh-\([0-6\.]*p[0-9]\)\.tar\.gz<.*/\1/g' | sed -e 's/p/-/g'`
+        LATEST=`curl -s http://www.ftp.ne.jp/OpenBSD/OpenSSH/portable/ | grep -E "openssh-[0-6\.]*p[0-9]\.tar\.gz<" | tail -n1 | sed -e 's/.*openssh-\([0-6\.]*p[0-9]\)\.tar\.gz<.*/\1/g' | sed -e 's/p/-/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

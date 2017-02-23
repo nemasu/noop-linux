@@ -33,11 +33,11 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	echo "Nothing to do..."
+        echo "Nothing to do..."
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME script"
+        echo "$NAME script"
 }

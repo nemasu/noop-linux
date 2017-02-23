@@ -34,43 +34,43 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p path
-	pushd path
-	ln -s /usr/bin/gcc cc
-	popd
+        mkdir -p path
+        pushd path
+        ln -s /usr/bin/gcc cc
+        popd
 
-	PATH=`pwd`/path:$PATH
+        PATH=`pwd`/path:$PATH
 
-	wget http://www.iana.org/time-zones/repository/releases/tzcode${DVERSION}.tar.gz -Otzcode && tar xf tzcode && rm tzcode
-	make -j${BLDR_CORES}
-	mkdir -p /root/bldr-inst/usr/sbin
-	mkdir -p /root/bldr-inst/usr/lib
-	cp -v tzselect /root/bldr-inst/usr/sbin
-	cp -v zdump /root/bldr-inst/usr/sbin
-	cp -v zic /root/bldr-inst/usr/sbin
-	cp -v libtz.a /root/bldr-inst/usr/lib
+        wget http://www.iana.org/time-zones/repository/releases/tzcode${DVERSION}.tar.gz -Otzcode && tar xf tzcode && rm tzcode
+        make -j${BLDR_CORES}
+        mkdir -p /root/bldr-inst/usr/sbin
+        mkdir -p /root/bldr-inst/usr/lib
+        cp -v tzselect /root/bldr-inst/usr/sbin
+        cp -v zdump /root/bldr-inst/usr/sbin
+        cp -v zic /root/bldr-inst/usr/sbin
+        cp -v libtz.a /root/bldr-inst/usr/lib
 
-	timezones=('africa' 'antarctica' 'asia' 'australasia'
+        timezones=('africa' 'antarctica' 'asia' 'australasia'
            'europe' 'northamerica' 'southamerica'
            'pacificnew' 'etcetera' 'backward'
            'systemv' 'factory')
 
-	chmod +x yearistype.sh
-	./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo ${timezones[@]}
-	./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/posix ${timezones[@]}
-	./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/right -L leapseconds ${timezones[@]}
-	./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo -p America/New_York
-	install -m444 -t /root/bldr-inst/usr/share/zoneinfo iso3166.tab zone.tab
+        chmod +x yearistype.sh
+        ./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo ${timezones[@]}
+        ./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/posix ${timezones[@]}
+        ./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo/right -L leapseconds ${timezones[@]}
+        ./zic -y ./yearistype.sh -d /root/bldr-inst/usr/share/zoneinfo -p America/New_York
+        install -m444 -t /root/bldr-inst/usr/share/zoneinfo iso3166.tab zone.tab
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://www.iana.org/time-zones | grep -E 'tzdata[0-9a-z]*\.tar\.gz' | sed -e 's/.*tzdata\([0-9a-z]*\)\.tar\.gz.*/\1/g' | tr a-z 0-9`
+        LATEST=`curl -s http://www.iana.org/time-zones | grep -E 'tzdata[0-9a-z]*\.tar\.gz' | sed -e 's/.*tzdata\([0-9a-z]*\)\.tar\.gz.*/\1/g' | tr a-z 0-9`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

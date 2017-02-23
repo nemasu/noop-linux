@@ -33,13 +33,13 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make PREFIX=/usr
-	make docs
-	make PREFIX=/root/bldr-inst/usr install
-	install -D -m644 compton.sample.conf /root/bldr-inst/etc/xdg/compton.conf.example
+        make PREFIX=/usr
+        make docs
+        make PREFIX=/root/bldr-inst/usr install
+        install -D -m644 compton.sample.conf /root/bldr-inst/etc/xdg/compton.conf.example
 }
 
 function Detect
 {
-	echo $NAME: Git Based
+        echo $NAME: Git Based
 }

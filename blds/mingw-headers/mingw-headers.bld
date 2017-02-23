@@ -33,33 +33,33 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd ..
-	dir=`ls`
-	cp -r $dir ${dir}-i686
-	cd $dir/mingw-w64-headers
-	./configure --prefix=/usr/x86_64-w64-mingw32 --enable-sdk=all --enable-secure-api --host=x86_64-w64-mingw32 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        cd ..
+        dir=`ls`
+        cp -r $dir ${dir}-i686
+        cd $dir/mingw-w64-headers
+        ./configure --prefix=/usr/x86_64-w64-mingw32 --enable-sdk=all --enable-secure-api --host=x86_64-w64-mingw32 
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	cd ../../${dir}-i686/mingw-w64-headers
-	./configure --prefix=/usr/i686-w64-mingw32 --enable-sdk=all --enable-secure-api --host=i686-w64-mingw32 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        cd ../../${dir}-i686/mingw-w64-headers
+        ./configure --prefix=/usr/i686-w64-mingw32 --enable-sdk=all --enable-secure-api --host=i686-w64-mingw32 
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	rm /root/bldr-inst/usr/{x86_64-w64-mingw32,i686-w64-mingw32}/include/pthread_signal.h
-	rm /root/bldr-inst/usr/{x86_64-w64-mingw32,i686-w64-mingw32}/include/pthread_time.h
-	rm /root/bldr-inst/usr/{x86_64-w64-mingw32,i686-w64-mingw32}/include/pthread_unistd.h
+        rm /root/bldr-inst/usr/{x86_64-w64-mingw32,i686-w64-mingw32}/include/pthread_signal.h
+        rm /root/bldr-inst/usr/{x86_64-w64-mingw32,i686-w64-mingw32}/include/pthread_time.h
+        rm /root/bldr-inst/usr/{x86_64-w64-mingw32,i686-w64-mingw32}/include/pthread_unistd.h
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/ | egrep "mingw-w64-v[0-9\.]*\.tar\.bz2" | sed -e 's/.*mingw-w64-v\([0-9\.]*\)\.tar\.bz2.*/\1/g' | head -n1`
+        LATEST=`curl -s -L https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/ | egrep "mingw-w64-v[0-9\.]*\.tar\.bz2" | sed -e 's/.*mingw-w64-v\([0-9\.]*\)\.tar\.bz2.*/\1/g' | head -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

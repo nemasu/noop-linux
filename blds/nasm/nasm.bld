@@ -33,20 +33,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/usr/bin --prefix=/usr
-	make -j${BLDR_CORES}
-	INSTALLROOT=/root/bldr-inst make install
+        ./configure --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/usr/bin --prefix=/usr
+        make -j${BLDR_CORES}
+        INSTALLROOT=/root/bldr-inst make install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://www.nasm.us/ | grep -E "\/\">[0-9\.]*<\/" | sed -e 's/.*\/\">\([0-9\.]*\)<\/.*/\1/g'`
+        LATEST=`curl -s http://www.nasm.us/ | grep -E "\/\">[0-9\.]*<\/" | sed -e 's/.*\/\">\([0-9\.]*\)<\/.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

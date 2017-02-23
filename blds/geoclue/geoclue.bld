@@ -34,23 +34,23 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure $STDUSRCONF
-	find . -name Makefile | xargs sed -i -e 's/-Werror=missing-prototypes -Werror=implicit-function-declaration -Werror=pointer-arith -Werror=init-self -Werror=format=2 -Werror=missing-include-dirs//g;'
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./configure $STDUSRCONF
+        find . -name Makefile | xargs sed -i -e 's/-Werror=missing-prototypes -Werror=implicit-function-declaration -Werror=pointer-arith -Werror=init-self -Werror=format=2 -Werror=missing-include-dirs//g;'
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
 
-	MM=`curl -s http://www.freedesktop.org/software/geoclue/releases/ | grep -E "href=\"[0-9\.]*\/\"" | tail -n1 | sed -e 's/.*href=\"\([0-9\.]*\)\/\".*/\1/g'`
-	LATEST=`curl -s http://www.freedesktop.org/software/geoclue/releases/$MM/ | grep -E "geoclue-[0-9\.]*\.tar\.xz" | tail -n1 | sed -e 's/.*geoclue-\([0-9\.]*\)\.tar\.xz.*/\1/g'`
-	
+        MM=`curl -s http://www.freedesktop.org/software/geoclue/releases/ | grep -E "href=\"[0-9\.]*\/\"" | tail -n1 | sed -e 's/.*href=\"\([0-9\.]*\)\/\".*/\1/g'`
+        LATEST=`curl -s http://www.freedesktop.org/software/geoclue/releases/$MM/ | grep -E "geoclue-[0-9\.]*\.tar\.xz" | tail -n1 | sed -e 's/.*geoclue-\([0-9\.]*\)\.tar\.xz.*/\1/g'`
+        
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

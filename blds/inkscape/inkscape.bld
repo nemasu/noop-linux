@@ -41,11 +41,11 @@ export CXXFLAGS+=' -std=c++11 -O2 -w'
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://inkscape.org/en/download/source/ | egrep "inkscape-[0-9\.]+\.tar\.bz2" | head -n1 | sed -e 's/.*inkscape-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+        LATEST=`curl -s -L https://inkscape.org/en/download/source/ | egrep "inkscape-[0-9\.]+\.tar\.bz2" | head -n1 | sed -e 's/.*inkscape-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

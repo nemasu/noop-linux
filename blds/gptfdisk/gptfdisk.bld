@@ -33,34 +33,34 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make -j${BLDR_CORES}
-	install -d /root/bldr-inst/usr/{bin,share/{doc/gdisk,man/man8}}
-	install -t /root/bldr-inst/usr/bin {,c,s}gdisk fixparts
-	install -m644 -t /root/bldr-inst/usr/share/man/man8 {{,c,s}gdisk,fixparts}.8
-	install -m644 -t /root/bldr-inst/usr/share/doc/gdisk README NEWS
+        make -j${BLDR_CORES}
+        install -d /root/bldr-inst/usr/{bin,share/{doc/gdisk,man/man8}}
+        install -t /root/bldr-inst/usr/bin {,c,s}gdisk fixparts
+        install -m644 -t /root/bldr-inst/usr/share/man/man8 {{,c,s}gdisk,fixparts}.8
+        install -m644 -t /root/bldr-inst/usr/share/doc/gdisk README NEWS
 
 
 }
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.rodsbooks.com/gdisk/download.html
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.rodsbooks.com/gdisk/download.html
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -33,22 +33,22 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	git clone --recursive https://github.com/NuGet/NuGet2.git
-	cd NuGet2
-	git checkout $VERSION
-	./build.sh
-	pushd xdt/XmlTransform
-	xbuild /p:Configuration=Release Microsoft.Web.XmlTransform.csproj
-	popd
-	
-	install -d /root/bldr-inst/usr/lib/nuget
-	install -m 0644 src/CommandLine/obj/Mono\ Release/NuGet.exe /root/bldr-inst/usr/lib/nuget/
-	install -m 0644 src/Core/obj/Mono\ Release/NuGet.Core.dll /root/bldr-inst/usr/lib/nuget/
-	install -m 0644 xdt/XmlTransform/obj/Release/Microsoft.Web.XmlTransform.dll /root/bldr-inst/usr/lib/nuget/
+        git clone --recursive https://github.com/NuGet/NuGet2.git
+        cd NuGet2
+        git checkout $VERSION
+        ./build.sh
+        pushd xdt/XmlTransform
+        xbuild /p:Configuration=Release Microsoft.Web.XmlTransform.csproj
+        popd
+        
+        install -d /root/bldr-inst/usr/lib/nuget
+        install -m 0644 src/CommandLine/obj/Mono\ Release/NuGet.exe /root/bldr-inst/usr/lib/nuget/
+        install -m 0644 src/Core/obj/Mono\ Release/NuGet.Core.dll /root/bldr-inst/usr/lib/nuget/
+        install -m 0644 xdt/XmlTransform/obj/Release/Microsoft.Web.XmlTransform.dll /root/bldr-inst/usr/lib/nuget/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME git based"
+        echo "$NAME git based"
 }

@@ -35,47 +35,47 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
 
 function BuildAndInstall
 {
-	./autogen.sh
+        ./autogen.sh
 
-	if [ "${ARCH}" == "x86_64" ];
-	then
-		extra_opts="--enable-gnuefi"
-	fi
-	
-	./configure \
-		   --includedir=/usr/include \
-		   --mandir=/usr/man \
-		   --sbindir=/sbin \
-		   --libexecdir=/usr/lib \
-		   --sysconfdir=/etc \
-		   --localstatedir=/var \
-		   --libdir=/lib \
-		   --datarootdir=/usr/share \
-		   --datadir=/usr/share \
-		   --bindir=/bin \
-		   --with-pamlibdir=/usr/lib/security \
-		   --enable-split-usr \
-		   --with-sysvinit-path= \
-		   --with-sysvrcnd-path= \
-		   --with-ntp-servers="0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org" ${extra_opts}
+        if [ "${ARCH}" == "x86_64" ];
+        then
+                extra_opts="--enable-gnuefi"
+        fi
+        
+        ./configure \
+                   --includedir=/usr/include \
+                   --mandir=/usr/man \
+                   --sbindir=/sbin \
+                   --libexecdir=/usr/lib \
+                   --sysconfdir=/etc \
+                   --localstatedir=/var \
+                   --libdir=/lib \
+                   --datarootdir=/usr/share \
+                   --datadir=/usr/share \
+                   --bindir=/bin \
+                   --with-pamlibdir=/usr/lib/security \
+                   --enable-split-usr \
+                   --with-sysvinit-path= \
+                   --with-sysvrcnd-path= \
+                   --with-ntp-servers="0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org" ${extra_opts}
 
     sed -i -e 's/\"\/bin\/loadkeys/\"\/usr\/bin\/loadkeys/g' Makefile Makefile.am Makefile.in
-	sed -i -e 's/\"\/bin\/setfont/\"\/usr\/bin\/setfont/g' Makefile Makefile.am Makefile.in
-	sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
-	sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
+        sed -i -e 's/\"\/bin\/setfont/\"\/usr\/bin\/setfont/g' Makefile Makefile.am Makefile.in
+        sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
+        sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
 
-	make
-	make DESTDIR=/root/bldr-inst install
+        make
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://github.com/systemd/systemd/releases | egrep "v[0-9]*.tar.gz" | head -n1 | sed -e 's/.*v\([0-9]*\).tar.gz.*/\1/g'`
+        LATEST=`curl -L -s https://github.com/systemd/systemd/releases | egrep "v[0-9]*.tar.gz" | head -n1 | sed -e 's/.*v\([0-9]*\).tar.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

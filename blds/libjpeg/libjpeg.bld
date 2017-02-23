@@ -34,23 +34,23 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 
-	[[ ${ARCH} == armv6l ]] && CONF="--without-simd"
+        [[ ${ARCH} == armv6l ]] && CONF="--without-simd"
 
-	./configure $STDUSRCONF --with-jpeg8 $CONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst docdir="/usr/share/doc/libjpeg" exampledir="/usr/share/doc/libjpeg" install
+        ./configure $STDUSRCONF --with-jpeg8 $CONF
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst docdir="/usr/share/doc/libjpeg" exampledir="/usr/share/doc/libjpeg" install
 
-	install -m644 jpegint.h /root/bldr-inst/usr/include/
+        install -m644 jpegint.h /root/bldr-inst/usr/include/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://sourceforge.net/projects/libjpeg-turbo/files/ | grep -E "files\/[0-9\.][0-9\.]*\/\"" | sed -e 's/.*files\/\([0-9\.][0-9\.]*\)\/\".*/\1/g' | head -n1`
+        LATEST=`curl -s http://sourceforge.net/projects/libjpeg-turbo/files/ | grep -E "files\/[0-9\.][0-9\.]*\/\"" | sed -e 's/.*files\/\([0-9\.][0-9\.]*\)\/\".*/\1/g' | head -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

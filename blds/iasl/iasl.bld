@@ -33,42 +33,42 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd generate/unix
+        cd generate/unix
 
-	sed -i -e 's/_CYGWIN/_LINUX/g' -e 's/-Werror//g' Makefile.config
-	sed -i -e 's/_CYGWIN/_LINUX/g' -e 's/-Werror//g' iasl/Makefile
+        sed -i -e 's/_CYGWIN/_LINUX/g' -e 's/-Werror//g' Makefile.config
+        sed -i -e 's/_CYGWIN/_LINUX/g' -e 's/-Werror//g' iasl/Makefile
 
-	if [ ${ARCH} == "i686" ]; then
-		make BITS=32
-	else
-		make BITS=64
-	fi
+        if [ ${ARCH} == "i686" ]; then
+                make BITS=32
+        else
+                make BITS=64
+        fi
 
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=acpica-unix
-	LISTURL=https://acpica.org/downloads
-	FILELIST=`GetFileList`
-	LATEST=0
+        NAME=acpica-unix
+        LISTURL=https://acpica.org/downloads
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

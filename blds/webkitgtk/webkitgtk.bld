@@ -41,7 +41,7 @@ function BuildAndInstall
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DSYSCONFDIR=/etc \
-	-DPORT=GTK
+        -DPORT=GTK
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 
@@ -51,11 +51,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
+        LATEST=`curl -s http://webkitgtk.org/releases/ | grep -E "LATEST-STABLE-[0-9\.]*" | sed -e 's/.*"LATEST-STABLE-\([0-9\.]*\)".*/\1/g'`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

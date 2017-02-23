@@ -35,41 +35,41 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-	if [ "${ARCH}" == "x86_64" ];
-	then
-		wget $SRC64 -O out
-	else
-		wget $SRC32 -O out
-	fi
-	
-	ar x out
-	rm out
-	rm control* debian*
-	tar xf data.tar.lzma && rm data.tar.lzma
+        if [ "${ARCH}" == "x86_64" ];
+        then
+                wget $SRC64 -O out
+        else
+                wget $SRC32 -O out
+        fi
+        
+        ar x out
+        rm out
+        rm control* debian*
+        tar xf data.tar.lzma && rm data.tar.lzma
 
-	rm -rf etc
-	mv opt lib
-	mv lib usr/
-	pushd usr/bin
-	rm google-musicmanager
-	ln -s ../lib/google/musicmanager/google-musicmanager
-	popd
+        rm -rf etc
+        mv opt lib
+        mv lib usr/
+        pushd usr/bin
+        rm google-musicmanager
+        ln -s ../lib/google/musicmanager/google-musicmanager
+        popd
 
-	mkdir usr/share/applications
-	cp usr/lib/google/musicmanager/google-musicmanager.desktop usr/share/applications/
-	sed -i -e 's|/opt/google/musicmanager/google-musicmanager|/usr/lib/google/musicmanager/google-musicmanager|' usr/share/applications/google-musicmanager.desktop
+        mkdir usr/share/applications
+        cp usr/lib/google/musicmanager/google-musicmanager.desktop usr/share/applications/
+        sed -i -e 's|/opt/google/musicmanager/google-musicmanager|/usr/lib/google/musicmanager/google-musicmanager|' usr/share/applications/google-musicmanager.desktop
 
-	mkdir -p usr/share/icons/hicolor/{128x128,16x16,32x32,48x48}/apps
-	
-	cp usr/lib/google/musicmanager/product_logo_128.png usr/share/icons/hicolor/128x128/apps/google-musicmanager.png
-	cp usr/lib/google/musicmanager/product_logo_16.png usr/share/icons/hicolor/16x16/apps/google-musicmanager.png
-	cp usr/lib/google/musicmanager/product_logo_32.xpm usr/share/icons/hicolor/32x32/apps/google-musicmanager.xpm
-	cp usr/lib/google/musicmanager/product_logo_32.png usr/share/icons/hicolor/32x32/apps/google-musicmanager.png
-	cp usr/lib/google/musicmanager/product_logo_48.png usr/share/icons/hicolor/48x48/apps/google-musicmanager.png
+        mkdir -p usr/share/icons/hicolor/{128x128,16x16,32x32,48x48}/apps
+        
+        cp usr/lib/google/musicmanager/product_logo_128.png usr/share/icons/hicolor/128x128/apps/google-musicmanager.png
+        cp usr/lib/google/musicmanager/product_logo_16.png usr/share/icons/hicolor/16x16/apps/google-musicmanager.png
+        cp usr/lib/google/musicmanager/product_logo_32.xpm usr/share/icons/hicolor/32x32/apps/google-musicmanager.xpm
+        cp usr/lib/google/musicmanager/product_logo_32.png usr/share/icons/hicolor/32x32/apps/google-musicmanager.png
+        cp usr/lib/google/musicmanager/product_logo_48.png usr/share/icons/hicolor/48x48/apps/google-musicmanager.png
 
-	sed -i -e 's|/opt/|/usr/lib/|g' usr/share/menu/google-musicmanager.menu
+        sed -i -e 's|/opt/|/usr/lib/|g' usr/share/menu/google-musicmanager.menu
 
-	cp -r * ~/bldr-inst/
+        cp -r * ~/bldr-inst/
 
 
 }

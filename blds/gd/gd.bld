@@ -34,33 +34,33 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./bootstrap.sh
-	./configure $STDUSRCONF $EXTRACONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./bootstrap.sh
+        ./configure $STDUSRCONF $EXTRACONF
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://github.com/libgd/libgd/releases
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://github.com/libgd/libgd/releases
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

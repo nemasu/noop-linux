@@ -33,9 +33,9 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	autoreconf -fi
-	./configure \
-		CONF_DRIVER_MODULE_NVIDIA=nvidia \
+        autoreconf -fi
+        ./configure \
+                CONF_DRIVER_MODULE_NVIDIA=nvidia \
         CONF_LDPATH_NVIDIA=/usr/lib/nvidia:/usr/lib32/nvidia \
         CONF_MODPATH_NVIDIA=/usr/lib/nvidia/xorg/,/usr/lib/xorg/modules \
         --prefix=/usr \
@@ -45,9 +45,9 @@ function BuildAndInstall
         --without-pidfile
 
     make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
-	install -D -m644 scripts/systemd/bumblebeed.service /root/bldr-inst/usr/lib/systemd/system/bumblebeed.service
+        install -D -m644 scripts/systemd/bumblebeed.service /root/bldr-inst/usr/lib/systemd/system/bumblebeed.service
     sed -i 's/sbin/bin/' /root/bldr-inst/usr/lib/systemd/system/bumblebeed.service
 
 }
@@ -55,11 +55,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://github.com/Bumblebee-Project/Bumblebee/releases | grep ".tar.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -L -s https://github.com/Bumblebee-Project/Bumblebee/releases | grep ".tar.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -34,53 +34,53 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure \
-		--prefix=/usr \
-		--disable-rpath
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./configure \
+                --prefix=/usr \
+                --disable-rpath
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
 # Remove unused udev helper
-	rm -rf /root/bldr-inst/usr/lib/udev
+        rm -rf /root/bldr-inst/usr/lib/udev
 
-	install -m755 -d /root/bldr-inst/usr/lib/udev/hwdb.d
-	install -m755 -d /root/bldr-inst/usr/lib/udev/rules.d
+        install -m755 -d /root/bldr-inst/usr/lib/udev/hwdb.d
+        install -m755 -d /root/bldr-inst/usr/lib/udev/rules.d
 
-	LD_LIBRARY_PATH="/root/bldr-inst/usr/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" \
-		CAMLIBS="/root/bldr-inst/usr/lib/libgphoto2/${DVERSION}" \
-		/root/bldr-inst/usr/lib/libgphoto2/print-camera-list hwdb > \
-		/root/bldr-inst/usr/lib/udev/hwdb.d/20-gphoto.hwdb
+        LD_LIBRARY_PATH="/root/bldr-inst/usr/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" \
+                CAMLIBS="/root/bldr-inst/usr/lib/libgphoto2/${DVERSION}" \
+                /root/bldr-inst/usr/lib/libgphoto2/print-camera-list hwdb > \
+                /root/bldr-inst/usr/lib/udev/hwdb.d/20-gphoto.hwdb
 
-	LD_LIBRARY_PATH="/root/bldr-inst/usr/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" \
-		CAMLIBS="/root/bldr-inst/usr/lib/libgphoto2/${DVERSION}" \
-		/root/bldr-inst/usr/lib/libgphoto2/print-camera-list udev-rules version 201 > \
-		/root/bldr-inst/usr/lib/udev/rules.d/40-gphoto.rules
+        LD_LIBRARY_PATH="/root/bldr-inst/usr/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" \
+                CAMLIBS="/root/bldr-inst/usr/lib/libgphoto2/${DVERSION}" \
+                /root/bldr-inst/usr/lib/libgphoto2/print-camera-list udev-rules version 201 > \
+                /root/bldr-inst/usr/lib/udev/rules.d/40-gphoto.rules
 
 # Remove recursive symlink
-	rm -fv /root/bldr-inst/usr/include/gphoto2/gphoto2
+        rm -fv /root/bldr-inst/usr/include/gphoto2/gphoto2
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://sourceforge.net/projects/gphoto/files/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://sourceforge.net/projects/gphoto/files/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

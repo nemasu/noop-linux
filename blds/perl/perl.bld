@@ -33,50 +33,50 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	if [ "${ARCH}" = "x86_64" ]; then
-		arch_opts="-Dcccdlflags='-fPIC'"
-	else
-		arch_opts=""
-	fi
+        if [ "${ARCH}" = "x86_64" ]; then
+                arch_opts="-Dcccdlflags='-fPIC'"
+        else
+                arch_opts=""
+        fi
 
-	./Configure -des -Dusethreads -Duseshrplib -Doptimize="${CFLAGS}" \
-		-Dprefix=/usr -Dvendorprefix=/usr \
-		-Dprivlib=/usr/share/perl5/core_perl \
-		-Darchlib=/usr/lib/perl5/core_perl \
-		-Dsitelib=/usr/share/perl5/site_perl \
-		-Dsitearch=/usr/lib/perl5/site_perl \
-		-Dvendorlib=/usr/share/perl5/vendor_perl \
-		-Dvendorarch=/usr/lib/perl5/vendor_perl \
-		-Dscriptdir=/usr/bin/core_perl \
-		-Dsitescript=/usr/bin/site_perl \
-		-Dvendorscript=/usr/bin/vendor_perl \
-		-Dinc_version_list=none \
-		-Dman1ext=1perl -Dman3ext=3perl ${arch_opts} \
-		-Dlddlflags="-shared ${LDFLAGS}" -Dldflags="${LDFLAGS}"
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./Configure -des -Dusethreads -Duseshrplib -Doptimize="${CFLAGS}" \
+                -Dprefix=/usr -Dvendorprefix=/usr \
+                -Dprivlib=/usr/share/perl5/core_perl \
+                -Darchlib=/usr/lib/perl5/core_perl \
+                -Dsitelib=/usr/share/perl5/site_perl \
+                -Dsitearch=/usr/lib/perl5/site_perl \
+                -Dvendorlib=/usr/share/perl5/vendor_perl \
+                -Dvendorarch=/usr/lib/perl5/vendor_perl \
+                -Dscriptdir=/usr/bin/core_perl \
+                -Dsitescript=/usr/bin/site_perl \
+                -Dvendorscript=/usr/bin/vendor_perl \
+                -Dinc_version_list=none \
+                -Dman1ext=1perl -Dman3ext=3perl ${arch_opts} \
+                -Dlddlflags="-shared ${LDFLAGS}" -Dldflags="${LDFLAGS}"
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.cpan.org/src/5.0/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.cpan.org/src/5.0/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

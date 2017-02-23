@@ -35,11 +35,11 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p ../stagedir/usr
+        mkdir -p ../stagedir/usr
 
-	./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python2
+        ./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python2
 
-	echo "using mpi ;" >> project-config.jam
+        echo "using mpi ;" >> project-config.jam
 
    ./b2 \
       variant=release \
@@ -54,19 +54,19 @@ function BuildAndInstall
       -j3 \
       install
 
-	  mkdir -p /root/bldr-inst/usr
-	  cp -r /root/bldr-tmp/stagedir/{include,lib} /root/bldr-inst/usr
+          mkdir -p /root/bldr-inst/usr
+          cp -r /root/bldr-tmp/stagedir/{include,lib} /root/bldr-inst/usr
 }
 
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L http://www.boost.org | grep -E "version_[0-9_]*\.html" | head -n1 | sed -e 's/.*version_\([0-9_]*\)\.html.*/\1/g;' | sed -e 's/_/\./g;'`
+        LATEST=`curl -s -L http://www.boost.org | grep -E "version_[0-9_]*\.html" | head -n1 | sed -e 's/.*version_\([0-9_]*\)\.html.*/\1/g;' | sed -e 's/_/\./g;'`
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

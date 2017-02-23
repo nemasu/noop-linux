@@ -35,69 +35,69 @@ RESTORELIBDB=1
 function BuildAndInstall
 {
 
-	pkgr -i "${PKGDEPS[@]}"
+        pkgr -i "${PKGDEPS[@]}"
 
 
-	mv $BLDRTMPDIR/LocalConfig.kmk .
-	sed -i 's/^check_gcc$/#check_gcc/' configure
-	./configure \
+        mv $BLDRTMPDIR/LocalConfig.kmk .
+        sed -i 's/^check_gcc$/#check_gcc/' configure
+        ./configure \
         --disable-docs \
         --enable-webservice \
         --enable-vde \
         --enable-vnc \
         --with-makeself=/usr/bin/echo
-	source ./env.sh
-	
+        source ./env.sh
+        
     #Note: Kernel source needs patches as of kernel 4.9.x
     #See https://bugs.gentoo.org/show_bug.cgi?id=603472
 
     kmk KBUILD_VERBOSE=2 CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
-	kmk -C src/VBox/RDP/client-1.8.3 KBUILD_VERBOSE=2  CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
+        kmk -C src/VBox/RDP/client-1.8.3 KBUILD_VERBOSE=2  CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
     kmk -C src/VBox/ExtPacks/VNC packing KBUILD_VERBOSE=2 CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
 
-	PushScripts
+        PushScripts
 
-	#Modules
-	pushd out/linux.amd64/release/bin/src
-	make
-	mkdir -p /root/bldr-inst/lib/modules/`uname -r`/misc/
-	mv *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
-	popd
-	pushd src/VBox/Additions/linux
-	rm -rf build_dir
-	mkdir build_dir
-	./export_modules mod_src.tar.gz
-	cd build_dir
-	tar xf ../mod_src.tar.gz
-	sed -i -e '/# error/d' vboxguest/include/VBox/version.h
-	make
-	mv *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
-	popd
-	echo "function postinst() {" > /tmp/bldr/pkg.install
-	echo "depmod"                >>/tmp/bldr/pkg.install
-	echo "modprobe vboxsf" >>/tmp/bldr/pkg.install
-	echo "modprobe vboxdrv" >>/tmp/bldr/pkg.install
-	echo "modprobe vboxnetadp" >>/tmp/bldr/pkg.install
-	echo "modprobe vboxnetflt" >>/tmp/bldr/pkg.install
-	echo "modprobe vboxpci" >>/tmp/bldr/pkg.install
-	echo "}"                     >>/tmp/bldr/pkg.install
-	echo "function postup() {"   >>/tmp/bldr/pkg.install
-	echo "postinst"                >>/tmp/bldr/pkg.install
-	echo "}"                     >>/tmp/bldr/pkg.install
-	echo "function postrm() {"   >>/tmp/bldr/pkg.install
-	echo "rm -rf /etc/modules-load.d/virtualbox.conf" >>/tmp/bldr/pkg.install
-	echo "}"                     >>/tmp/bldr/pkg.install
-	pushd /root/bldr-inst 
-	mkdir -p etc/modules-load.d/
-	mv $BLDRTMPDIR/virtualbox.conf etc/modules-load.d/
-	pkgr -genmeta virtualbox-modules ${VERSION}
-	pkgr -genpkg
-	mv *.pkg /root/bldr-done/
-	popd
-	rm -rf /root/bldr-inst/*
+        #Modules
+        pushd out/linux.amd64/release/bin/src
+        make
+        mkdir -p /root/bldr-inst/lib/modules/`uname -r`/misc/
+        mv *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
+        popd
+        pushd src/VBox/Additions/linux
+        rm -rf build_dir
+        mkdir build_dir
+        ./export_modules mod_src.tar.gz
+        cd build_dir
+        tar xf ../mod_src.tar.gz
+        sed -i -e '/# error/d' vboxguest/include/VBox/version.h
+        make
+        mv *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
+        popd
+        echo "function postinst() {" > /tmp/bldr/pkg.install
+        echo "depmod"                >>/tmp/bldr/pkg.install
+        echo "modprobe vboxsf" >>/tmp/bldr/pkg.install
+        echo "modprobe vboxdrv" >>/tmp/bldr/pkg.install
+        echo "modprobe vboxnetadp" >>/tmp/bldr/pkg.install
+        echo "modprobe vboxnetflt" >>/tmp/bldr/pkg.install
+        echo "modprobe vboxpci" >>/tmp/bldr/pkg.install
+        echo "}"                     >>/tmp/bldr/pkg.install
+        echo "function postup() {"   >>/tmp/bldr/pkg.install
+        echo "postinst"                >>/tmp/bldr/pkg.install
+        echo "}"                     >>/tmp/bldr/pkg.install
+        echo "function postrm() {"   >>/tmp/bldr/pkg.install
+        echo "rm -rf /etc/modules-load.d/virtualbox.conf" >>/tmp/bldr/pkg.install
+        echo "}"                     >>/tmp/bldr/pkg.install
+        pushd /root/bldr-inst 
+        mkdir -p etc/modules-load.d/
+        mv $BLDRTMPDIR/virtualbox.conf etc/modules-load.d/
+        pkgr -genmeta virtualbox-modules ${VERSION}
+        pkgr -genpkg
+        mv *.pkg /root/bldr-done/
+        popd
+        rm -rf /root/bldr-inst/*
 
-	#Guest additions
-	pushd out/linux.amd64/release/bin/additions
+        #Guest additions
+        pushd out/linux.amd64/release/bin/additions
     install -d /root/bldr-inst/usr/bin
     install -m755 VBoxClient VBoxControl VBoxService mount.vboxsf /root/bldr-inst/usr/bin
     install -m755 -D ../../../../../src/VBox/Additions/x11/Installer/98vboxadd-xclient \
@@ -111,32 +111,32 @@ function BuildAndInstall
     ln -s /usr/lib/VBoxOGL.so /root/bldr-inst/usr/lib/xorg/modules/dri/vboxvideo_dri.so
     install -m755 -D pam_vbox.so /root/bldr-inst/usr/lib/security/pam_vbox.so
     mkdir -p /root/bldr-inst/usr/lib/udev/rules.d/
-	mkdir -p /root/bldr-inst/usr/lib/systemd/system/
-	mkdir -p /root/bldr-inst/usr/lib/sysusers.d/
-	mv $BLDRTMPDIR/60-vboxguest.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxguest.rules
+        mkdir -p /root/bldr-inst/usr/lib/systemd/system/
+        mkdir -p /root/bldr-inst/usr/lib/sysusers.d/
+        mv $BLDRTMPDIR/60-vboxguest.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxguest.rules
     mv $BLDRTMPDIR/vboxservice.service /root/bldr-inst/usr/lib/systemd/system/vboxservice.service
     mv $BLDRTMPDIR/virtualbox-guest-utils.sysusers /root/bldr-inst/usr/lib/sysusers.d/virtualbox-guest-utils.conf
-	pushd /root/bldr-inst
-	mkdir -p sbin
-	cd sbin
-	ln -s /usr/bin/mount.vboxsf
-	cd ..
-	echo "function postinst() {" > /tmp/bldr/pkg.install
-	echo "systemd-sysusers virtualbox-guest-utils.conf"  >>/tmp/bldr/pkg.install
-	echo "}"                     >>/tmp/bldr/pkg.install
-	echo "function postup() {"   >>/tmp/bldr/pkg.install
-	echo "postinst"                >>/tmp/bldr/pkg.install
-	echo "}"                     >>/tmp/bldr/pkg.install
-	pkgr -genmeta virtualbox-guest-additions ${VERSION}
-	pkgr -genpkg
-	mv *.pkg /root/bldr-done/
-	popd
-	popd
-	rm -rf /root/bldr-inst/*
+        pushd /root/bldr-inst
+        mkdir -p sbin
+        cd sbin
+        ln -s /usr/bin/mount.vboxsf
+        cd ..
+        echo "function postinst() {" > /tmp/bldr/pkg.install
+        echo "systemd-sysusers virtualbox-guest-utils.conf"  >>/tmp/bldr/pkg.install
+        echo "}"                     >>/tmp/bldr/pkg.install
+        echo "function postup() {"   >>/tmp/bldr/pkg.install
+        echo "postinst"                >>/tmp/bldr/pkg.install
+        echo "}"                     >>/tmp/bldr/pkg.install
+        pkgr -genmeta virtualbox-guest-additions ${VERSION}
+        pkgr -genpkg
+        mv *.pkg /root/bldr-done/
+        popd
+        popd
+        rm -rf /root/bldr-inst/*
 
 
-	#Main app
-	cd out/linux.amd64/release/bin
+        #Main app
+        cd out/linux.amd64/release/bin
 
     # binaries
     install -dm755 /root/bldr-inst/usr/bin
@@ -152,9 +152,9 @@ function BuildAndInstall
     install -dm755 /root/bldr-inst/usr/lib/virtualbox
     install -m755 *.so /root/bldr-inst/usr/lib/virtualbox
     install -m644 *.rc *.r0 VBoxEFI*.fd /root/bldr-inst/usr/lib/virtualbox
-	#suid stuff
-	install -m4755 VBoxSDL VirtualBox VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl VBoxNetNAT -t /root/bldr-inst/usr/lib/virtualbox
-	# other binaries
+        #suid stuff
+        install -m4755 VBoxSDL VirtualBox VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl VBoxNetNAT -t /root/bldr-inst/usr/lib/virtualbox
+        # other binaries
     install -m755 VBoxManage VBoxSVC VBoxExtPackHelperApp VBoxXPCOMIPCD VBoxTestOGL VBoxBalloonCtrl vboxwebsrv webtest -t /root/bldr-inst/usr/lib/virtualbox
 
     # components
@@ -162,11 +162,11 @@ function BuildAndInstall
     install -m755 components/* -t /root/bldr-inst/usr/lib/virtualbox/components
 
     # extensions packs
-	#TODO ?
+        #TODO ?
     install -dm755 /root/bldr-inst/usr/lib/virtualbox/ExtensionPacks
 
-	mkdir -p /root/bldr-inst/usr/share/virtualbox/extensions/
-	cp ../packages/VNC-*.vbox-extpack /root/bldr-inst/usr/share/virtualbox/extensions/
+        mkdir -p /root/bldr-inst/usr/share/virtualbox/extensions/
+        cp ../packages/VNC-*.vbox-extpack /root/bldr-inst/usr/share/virtualbox/extensions/
 
     # languages
     install -dm755 /root/bldr-inst/usr/share/virtualbox/nls
@@ -199,23 +199,23 @@ function BuildAndInstall
 
     #systemd
     mkdir -p /root/bldr-inst/usr/lib/udev/rules.d/
-	mkdir -p /root/bldr-inst/usr/lib/systemd/system/
-	mkdir -p /root/bldr-inst/usr/lib/sysusers.d/
-	mv $BLDRTMPDIR/60-vboxdrv.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxdrv.rules
+        mkdir -p /root/bldr-inst/usr/lib/systemd/system/
+        mkdir -p /root/bldr-inst/usr/lib/sysusers.d/
+        mv $BLDRTMPDIR/60-vboxdrv.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxdrv.rules
     mv $BLDRTMPDIR/vboxweb.service /root/bldr-inst/usr/lib/systemd/system/vboxweb.service
     mv $BLDRTMPDIR/virtualbox.sysusers /root/bldr-inst/usr/lib/sysusers.d/virtualbox.conf
-	
-	PopScripts
+        
+        PopScripts
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://www.virtualbox.org/wiki/Downloads | egrep "VirtualBox-[0-9\.]*\.tar\.bz2" | sed -e 's/.*VirtualBox-\([0-9\.]*\)\.tar\.bz2.*/\1/g;'`
-	
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        LATEST=`curl -L -s https://www.virtualbox.org/wiki/Downloads | egrep "VirtualBox-[0-9\.]*\.tar\.bz2" | sed -e 's/.*VirtualBox-\([0-9\.]*\)\.tar\.bz2.*/\1/g;'`
+        
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

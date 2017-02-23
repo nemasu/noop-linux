@@ -34,28 +34,28 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p build{,-qt5}
-	cd build
-	cmake .. \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DLIB_DESTINATION=/usr/lib \
-		-DUSE_QT4=ON -DWITH_DOC=0
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        mkdir -p build{,-qt5}
+        cd build
+        cmake .. \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DLIB_DESTINATION=/usr/lib \
+                -DUSE_QT4=ON -DWITH_DOC=0
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	cd ../build-qt5
-	cmake .. \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DLIB_DESTINATION=/usr/lib -DWITH_DOC=0
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        cd ../build-qt5
+        cmake .. \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DLIB_DESTINATION=/usr/lib -DWITH_DOC=0
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME
+        echo $NAME
 }

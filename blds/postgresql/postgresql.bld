@@ -34,74 +34,74 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	if [ "$ARCH" = "armv6l" ];
-	then
-		EXTRACONF="--disable-thread-safety"
-	else
-		EXTRACONF="--enable-thread-safety"
-	fi
-	
-	./configure --prefix=/usr \
-			--mandir=/usr/share/man \
-			--datadir=/usr/share/postgresql \
-			--with-krb5 \
-			--with-libxml \
-			--with-openssl \
-			--with-perl \
-			--with-tcl \
-			--with-pam \
-			--with-system-tzdata=/usr/share/zoneinfo \
+        if [ "$ARCH" = "armv6l" ];
+        then
+                EXTRACONF="--disable-thread-safety"
+        else
+                EXTRACONF="--enable-thread-safety"
+        fi
+        
+        ./configure --prefix=/usr \
+                        --mandir=/usr/share/man \
+                        --datadir=/usr/share/postgresql \
+                        --with-krb5 \
+                        --with-libxml \
+                        --with-openssl \
+                        --with-perl \
+                        --with-tcl \
+                        --with-pam \
+                        --with-system-tzdata=/usr/share/zoneinfo \
             --with-python PYTHON=/usr/bin/python2 \
-			--enable-nls ${EXTRACONF}
+                        --enable-nls ${EXTRACONF}
 
-	make -j${BLDR_CORES} world
-	
+        make -j${BLDR_CORES} world
+        
     make DESTDIR=/root/bldr-inst install
-	make -C contrib DESTDIR=/root/bldr-inst install
+        make -C contrib DESTDIR=/root/bldr-inst install
     make -C doc/src/sgml DESTDIR=/root/bldr-inst install
 
     #Get them libs
-	mkdir -p /root/noop-bldr-postgresql-libs/usr/lib/postgresql/
-	for i in `find /root/bldr-inst/usr/lib/postgresql -name "*.so*"`;
-	do
-		mv -v $i /root/noop-bldr-postgresql-libs/usr/lib/postgresql/
+        mkdir -p /root/noop-bldr-postgresql-libs/usr/lib/postgresql/
+        for i in `find /root/bldr-inst/usr/lib/postgresql -name "*.so*"`;
+        do
+                mv -v $i /root/noop-bldr-postgresql-libs/usr/lib/postgresql/
     done
 
-	for i in `find /root/bldr-inst/usr/lib/ -name "*.so*"`;
-	do
-		mv -v $i /root/noop-bldr-postgresql-libs/usr/lib/
+        for i in `find /root/bldr-inst/usr/lib/ -name "*.so*"`;
+        do
+                mv -v $i /root/noop-bldr-postgresql-libs/usr/lib/
     done
 
-	pushd /root/noop-bldr-postgresql-libs/
-	PushScripts
-	pkgr -genmeta postgresql-libs ${DVERSION}
-	pkgr -genpkg
-	PopScripts
-	mv *.pkg /root/bldr-done/
-	popd
-	rm -rf /root/noop-bldr-postgresql-libs/
+        pushd /root/noop-bldr-postgresql-libs/
+        PushScripts
+        pkgr -genmeta postgresql-libs ${DVERSION}
+        pkgr -genpkg
+        PopScripts
+        mv *.pkg /root/bldr-done/
+        popd
+        rm -rf /root/noop-bldr-postgresql-libs/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://ftp.postgresql.org/pub/latest/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://ftp.postgresql.org/pub/latest/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

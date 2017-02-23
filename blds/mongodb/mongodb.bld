@@ -33,21 +33,21 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	args=(--use-system-boost --use-system-pcre --use-system-snappy --use-system-yaml --use-system-zlib --use-sasl-client --ssl --disable-warnings-as-errors --use-system-wiredtiger)
+        args=(--use-system-boost --use-system-pcre --use-system-snappy --use-system-yaml --use-system-zlib --use-sasl-client --ssl --disable-warnings-as-errors --use-system-wiredtiger)
 
-	scons core tools "${args[@]}" -j${BLDR_CORES}
+        scons core tools "${args[@]}" -j${BLDR_CORES}
 
-	scons install --prefix=/root/bldr-inst/usr --nostrip "${args[@]}"
+        scons install --prefix=/root/bldr-inst/usr --nostrip "${args[@]}"
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L https://www.mongodb.org/downloads | egrep "mongodb-src-r[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*mongodb-src-r\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        LATEST=`curl -s -L https://www.mongodb.org/downloads | egrep "mongodb-src-r[0-9\.]*\.tar\.gz" | head -n1 | sed -e 's/.*mongodb-src-r\([0-9\.]*\)\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

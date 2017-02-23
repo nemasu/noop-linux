@@ -34,10 +34,10 @@ RESTORELIBDB=
 export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
-	autoreconf -fi 
-	sed -i 's|use_lvmetad = 0|use_lvmetad = 1|' conf/example.conf.in
+        autoreconf -fi 
+        sed -i 's|use_lvmetad = 0|use_lvmetad = 1|' conf/example.conf.in
 
-	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --sbindir=/usr/bin \
+        ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --sbindir=/usr/bin \
       --with-udev-prefix=/usr --with-systemdsystemunitdir=/usr/lib/systemd/system \
       --with-default-pid-dir=/run --with-default-dm-run-dir=/run --with-default-run-dir=/run/lvm \
       --enable-pkgconfig --enable-readline --enable-dmeventd --enable-cmdlib --enable-applib \
@@ -45,31 +45,31 @@ function BuildAndInstall
       --enable-lvmetad --with-thin=internal --with-cache=internal --enable-udev-systemd-background-jobs
 
 
-	CFLAGS="-pthread" make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install_device-mapper install_lvm2 install_systemd_units install_systemd_generators
-	make -C liblvm DESTDIR=/root/bldr-inst install
+        CFLAGS="-pthread" make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install_device-mapper install_lvm2 install_systemd_units install_systemd_generators
+        make -C liblvm DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	FILELIST=`curl -s -L ftp://sources.redhat.com/pub/lvm2/ | sed '/asc/d' | egrep "LVM[0-9\.]*\.tgz" | awk '{print $9;}' | sed 's/LVM//g;s/\.tgz//g'`
-	LATEST=0
+        FILELIST=`curl -s -L ftp://sources.redhat.com/pub/lvm2/ | sed '/asc/d' | egrep "LVM[0-9\.]*\.tgz" | awk '{print $9;}' | sed 's/LVM//g;s/\.tgz//g'`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-		CURVER=$i
-		vercomp $LATEST $CURVER
-		if [ $? -eq 2 ];
-		then
-			LATEST=$CURVER
-		fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                CURVER=$i
+                vercomp $LATEST $CURVER
+                if [ $? -eq 2 ];
+                then
+                        LATEST=$CURVER
+                fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-		echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

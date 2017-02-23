@@ -2,10 +2,10 @@ function preup() {
     echo "Backing up files..."
     for i in 'inputrc' 'profile' 'skel/.bash_profile' 'skel/.bashrc';
     do
-    	if [ -e /etc/$i ];
-    	then
-    		mv /etc/${i} /etc/${i}.pkgr.bak
-    	fi
+        if [ -e /etc/$i ];
+        then
+                mv /etc/${i} /etc/${i}.pkgr.bak
+        fi
     done
     
 }
@@ -13,10 +13,10 @@ function postup() {
     echo "Restoring files..."
     for i in 'inputrc' 'profile' 'skel/.bash_profile' 'skel/.bashrc';
     do
-    	if [ -e /etc/$i.pkgr.bak ];
-    	then
-    		mv /etc/${i}.pkgr.bak /etc/${i}
-    	fi
+        if [ -e /etc/$i.pkgr.bak ];
+        then
+                mv /etc/${i}.pkgr.bak /etc/${i}
+        fi
     done
     
 }

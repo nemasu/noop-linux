@@ -33,13 +33,13 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p ~/bldr-inst/usr/share/fonts/Type1
-	install -m644 *.{pfb,pfm,afm} ~/bldr-inst/usr/share/fonts/Type1/
+        mkdir -p ~/bldr-inst/usr/share/fonts/Type1
+        install -m644 *.{pfb,pfm,afm} ~/bldr-inst/usr/share/fonts/Type1/
 }
 
 #Default HTTP curl new version detection
 #Hasn't been an update since Jan 2004
 function Detect
 {
-	echo $NAME: Old
+        echo $NAME: Old
 }

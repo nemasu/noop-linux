@@ -38,25 +38,25 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=font-util
-	LISTURL=http://xorg.freedesktop.org/releases/individual/font/
-	FILELIST=`GetFileList`
-	LATEST=0
-	NAME=xorg-font-util
+        NAME=font-util
+        LISTURL=http://xorg.freedesktop.org/releases/individual/font/
+        FILELIST=`GetFileList`
+        LATEST=0
+        NAME=xorg-font-util
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

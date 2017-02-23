@@ -43,5 +43,5 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME: Legacy Version"
+        echo "$NAME: Legacy Version"
 }

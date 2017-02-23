@@ -34,31 +34,31 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make -j${BLDR_CORES}
-	mkdir -p /root/bldr-inst/usr/bin
-	cp bwmon /root/bldr-inst/usr/bin/
+        make -j${BLDR_CORES}
+        mkdir -p /root/bldr-inst/usr/bin
+        cp bwmon /root/bldr-inst/usr/bin/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://sourceforge.net/projects/bwmon/files/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://sourceforge.net/projects/bwmon/files/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

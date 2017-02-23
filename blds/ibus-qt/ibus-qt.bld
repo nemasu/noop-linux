@@ -38,36 +38,36 @@ function BuildAndInstall
     #Disable doxygen requirment
     sed -i -e '/Doxygen REQUIRED/d' CMakeLists.txt
 
-	mkdir -p build
-	cd build
+        mkdir -p build
+        cd build
 
-	cmake .. -DCMAKE_INSTALL_PREFIX=/usr
-	make -j${BLDR_CORES}
+        cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://code.google.com/p/ibus/downloads/list
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://code.google.com/p/ibus/downloads/list
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

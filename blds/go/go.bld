@@ -33,63 +33,63 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export GOROOT_BOOTSTRAP=/usr/lib/go
-	export GOROOT=`pwd`
-	export GOBIN="$GOROOT/bin"
-	export GOROOT_FINAL=/usr/lib/go
-	export GOOS=linux
-	export GOARCH=amd64
-	export GOPATH=/root/bldr-tmp
+        export GOROOT_BOOTSTRAP=/usr/lib/go
+        export GOROOT=`pwd`
+        export GOBIN="$GOROOT/bin"
+        export GOROOT_FINAL=/usr/lib/go
+        export GOOS=linux
+        export GOARCH=amd64
+        export GOPATH=/root/bldr-tmp
 
-	cd src
-	./make.bash
-	cd ..
+        cd src
+        ./make.bash
+        cd ..
 
 # System-wide tools
-	for tool in godex godoc goimports gomvpkg gorename gotype; do
-		$GOROOT/bin/go get -d golang.org/x/tools/cmd/$tool
-		$GOROOT/bin/go build -v -x -o $GOPATH/bin/$tool golang.org/x/tools/cmd/$tool
-	done
+        for tool in godex godoc goimports gomvpkg gorename gotype; do
+                $GOROOT/bin/go get -d golang.org/x/tools/cmd/$tool
+                $GOROOT/bin/go build -v -x -o $GOPATH/bin/$tool golang.org/x/tools/cmd/$tool
+        done
 
 # Distribution tools
-	for tool in benchcmp bundle callgraph digraph eg fiximports guru html2article present ssadump stress stringer ; do
-		$GOROOT/bin/go get -d golang.org/x/tools/cmd/$tool
-		$GOROOT/bin/go build -v -x -o $GOPATH/pkg/tool/${GOOS}_$GOARCH/$tool golang.org/x/tools/cmd/$tool
-	done
+        for tool in benchcmp bundle callgraph digraph eg fiximports guru html2article present ssadump stress stringer ; do
+                $GOROOT/bin/go get -d golang.org/x/tools/cmd/$tool
+                $GOROOT/bin/go build -v -x -o $GOPATH/pkg/tool/${GOOS}_$GOARCH/$tool golang.org/x/tools/cmd/$tool
+        done
 
-	mkdir -p \
-		/root/bldr-inst/{etc/profile.d,usr/{share/go,lib/go,lib/go/src,lib/go/site/src}}
+        mkdir -p \
+                /root/bldr-inst/{etc/profile.d,usr/{share/go,lib/go,lib/go/src,lib/go/site/src}}
 
-	cp -r doc misc -t /root/bldr-inst/usr/share/go
-	ln -s /usr/share/go/doc /root/bldr-inst/usr/lib/go/doc
-	cp -a bin /root/bldr-inst/usr
-	cp -a pkg /root/bldr-inst/usr/lib/go
-	cp -a $GOROOT/src /root/bldr-inst/usr/lib/go/
-	cp -a $GOROOT/lib /root/bldr-inst/usr/lib/go/
+        cp -r doc misc -t /root/bldr-inst/usr/share/go
+        ln -s /usr/share/go/doc /root/bldr-inst/usr/lib/go/doc
+        cp -a bin /root/bldr-inst/usr
+        cp -a pkg /root/bldr-inst/usr/lib/go
+        cp -a $GOROOT/src /root/bldr-inst/usr/lib/go/
+        cp -a $GOROOT/lib /root/bldr-inst/usr/lib/go/
 
-	mkdir -p /root/bldr-inst/usr/lib/go/pkg/tool/${GOOS}_$GOARCH/
-	install -p -m755 ../pkg/tool/${GOOS}_$GOARCH/* /root/bldr-inst/usr/lib/go/pkg/tool/${GOOS}_$GOARCH/
-	install -p -m755 ../bin/* /root/bldr-inst/usr/bin/
+        mkdir -p /root/bldr-inst/usr/lib/go/pkg/tool/${GOOS}_$GOARCH/
+        install -p -m755 ../pkg/tool/${GOOS}_$GOARCH/* /root/bldr-inst/usr/lib/go/pkg/tool/${GOOS}_$GOARCH/
+        install -p -m755 ../bin/* /root/bldr-inst/usr/bin/
 
 
-	for i in /root/bldr-inst/usr/bin/* /root/bldr-inst/usr/lib/go/pkg/tool/linux_$GOARCH/*; do
-		strip -s "$i"
-	done
+        for i in /root/bldr-inst/usr/bin/* /root/bldr-inst/usr/lib/go/pkg/tool/linux_$GOARCH/*; do
+                strip -s "$i"
+        done
 
 
     # This is to make go get code.google.com/p/go-tour/gotour and
     # then running the gotour executable work out of the box.
-	ln -sf /usr/bin /root/bldr-inst/usr/lib/go/bin
+        ln -sf /usr/bin /root/bldr-inst/usr/lib/go/bin
 
-	cp -r misc/ /root/bldr-inst/usr/lib/go/
+        cp -r misc/ /root/bldr-inst/usr/lib/go/
 
     # For godoc
-	install -Dm644 favicon.ico /root/bldr-inst/usr/lib/go/favicon.ico
+        install -Dm644 favicon.ico /root/bldr-inst/usr/lib/go/favicon.ico
 
-	install -Dm644 VERSION /root/bldr-inst/usr/lib/go/VERSION
+        install -Dm644 VERSION /root/bldr-inst/usr/lib/go/VERSION
 
-	# Clean Windows specific files.
-	rm -f /root/bldr-inst/usr/lib/go/src/*.bat
+        # Clean Windows specific files.
+        rm -f /root/bldr-inst/usr/lib/go/src/*.bat
 
 
 }
@@ -97,11 +97,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s https://golang.org/dl/ | egrep "go[0-9\.]*\.src\.tar\.gz" | head -n1 | sed 's/.*go\([0-9\.]*\)\.src\.tar\.gz.*/\1/g'`
+        LATEST=`curl -L -s https://golang.org/dl/ | egrep "go[0-9\.]*\.src\.tar\.gz" | head -n1 | sed 's/.*go\([0-9\.]*\)\.src\.tar\.gz.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

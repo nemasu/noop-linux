@@ -3,8 +3,8 @@ function postinst() {
     let count=`grep lib32 /etc/ld.so.conf | wc -l`
     if [ $count == 0 ];
     then
-    	echo "/lib32" >> /etc/ld.so.conf
-    	echo "/usr/lib32" >> /etc/ld.so.conf
+        echo "/lib32" >> /etc/ld.so.conf
+        echo "/usr/lib32" >> /etc/ld.so.conf
     fi
     
 }

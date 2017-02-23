@@ -28,19 +28,19 @@ function BuildAndInstall
 
   for i in yasm ninja llvm gperf;
   do
-	  if [ ! -e /var/noop/installed/$i ]; then
-		pkgr -i $i
-	  fi;
+          if [ ! -e /var/noop/installed/$i ]; then
+                pkgr -i $i
+          fi;
   done
   
   for i in `ls $BLDRTMPDIR/*.arm_patch`;
   do
-	if [ "${ARCH}" == "armv6l" ]; then
-    	patch -Np0 -i $i 
-	fi
-	rm $i;
+        if [ "${ARCH}" == "armv6l" ]; then
+        patch -Np0 -i $i 
+        fi
+        rm $i;
   done  
-	
+        
   export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
   # CFLAGS are passed through release_extra_cflags below
@@ -55,38 +55,38 @@ function BuildAndInstall
  
   #TODO update this for arm build 
   arch_specific_flags="
-		-Dtarget_arch=arm \
-		-Darmv7=0 \
-		-Darmv6=1 \
-		-Darm_version=6 \
-		-Darm_neon=0 \
-		-Darm_fpu=vfp \
-		-Darm_thumb=0 \
-		-Duse_allocator=none \
-		-Darm_float_abi=hard \
-		-Dv8_use_arm_eabi_hardfloat=true \
-		-Dv8_can_use_vfp_instructions=false \
-		-Dv8_can_use_vfp2_instructions=true \
-		-Dsysroot= \
-		-Dclang=0 \
-		-Ddisable_nacl=1"
+                -Dtarget_arch=arm \
+                -Darmv7=0 \
+                -Darmv6=1 \
+                -Darm_version=6 \
+                -Darm_neon=0 \
+                -Darm_fpu=vfp \
+                -Darm_thumb=0 \
+                -Duse_allocator=none \
+                -Darm_float_abi=hard \
+                -Dv8_use_arm_eabi_hardfloat=true \
+                -Dv8_can_use_vfp_instructions=false \
+                -Dv8_can_use_vfp2_instructions=true \
+                -Dsysroot= \
+                -Dclang=0 \
+                -Ddisable_nacl=1"
   fi
 
   if [ "${ARCH}" == "x86_64" ]; then
-	 local arch_specific_flags=(
-		'is_clang=true'
-		'clang_use_chrome_plugins=false'
-	 )
+         local arch_specific_flags=(
+                'is_clang=true'
+                'clang_use_chrome_plugins=false'
+         )
 #'target_arch=x64'
   fi
 
-  	# Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
-	# Note: These are for noop Linux use ONLY. For your own distribution, please
-	# get your own set of keys. Feel free to contact chromium@nooplinux.org for
-	# more information.
-	_google_api_key=AIzaSyB9Q6_d-Yce6g1iFO0rLj4N74ANKqWnrNc
-	_google_default_client_id=89099530172.apps.googleusercontent.com
-	_google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ
+        # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
+        # Note: These are for noop Linux use ONLY. For your own distribution, please
+        # get your own set of keys. Feel free to contact chromium@nooplinux.org for
+        # more information.
+        _google_api_key=AIzaSyB9Q6_d-Yce6g1iFO0rLj4N74ANKqWnrNc
+        _google_default_client_id=89099530172.apps.googleusercontent.com
+        _google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ
 
    
   local _flags=(
@@ -121,27 +121,27 @@ function BuildAndInstall
   
  if [ "${ARCH}" != "armv6l" ];
   then
-	# Prepare NaCL toolchain - this is way easier
-	python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator sync
-	python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator extract
-	
-	# Build with clang
-	mkdir -p third_party/llvm-build/Release+Asserts/bin
-	rm -rf third_party/llvm-build/Release+Asserts/bin/*
-	ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
-	ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
-	ln -s /usr/bin/llvm-symbolizer third_party/llvm-build/Release+Asserts/bin/
-	# remove unsupported clang option
-	sed -i '/-Wno-absolute-value/d' build/common.gypi
+        # Prepare NaCL toolchain - this is way easier
+        python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator sync
+        python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator extract
+        
+        # Build with clang
+        mkdir -p third_party/llvm-build/Release+Asserts/bin
+        rm -rf third_party/llvm-build/Release+Asserts/bin/*
+        ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
+        ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
+        ln -s /usr/bin/llvm-symbolizer third_party/llvm-build/Release+Asserts/bin/
+        # remove unsupported clang option
+        sed -i '/-Wno-absolute-value/d' build/common.gypi
   fi
 
   if [ "${ARCH}" == "armv6l" ];
   then
-	# Re-configure bundled ffmpeg.
-	pushd third_party/ffmpeg
-	chromium/scripts/build_ffmpeg.sh linux arm "${PWD}" config-only
-	chromium/scripts/copy_config.sh
-	popd
+        # Re-configure bundled ffmpeg.
+        pushd third_party/ffmpeg
+        chromium/scripts/build_ffmpeg.sh linux arm "${PWD}" config-only
+        chromium/scripts/copy_config.sh
+        popd
   fi
 
   # https://groups.google.com/a/chromium.org/d/topic/chromium-packagers/9JX1N2nf4PU/discussion
@@ -153,9 +153,9 @@ function BuildAndInstall
 
   if [ "${ARCH}" == "armv6l" ];
   then
-  	ninja -C out/Release chrome chrome_sandbox
+        ninja -C out/Release chrome chrome_sandbox
   else
-  	ninja -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+        ninja -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
   fi
 
   install -D out/Release/chrome /root/bldr-inst/usr/lib/chromium/chromium
@@ -165,33 +165,33 @@ function BuildAndInstall
 
   cp -a out/Release/{*.pak,*.bin,icudtl.dat} \
      out/Release/locales \
-	 out/Release/gen/content/content_resources.pak \
-	 /root/bldr-inst/usr/lib/chromium/
+         out/Release/gen/content/content_resources.pak \
+         /root/bldr-inst/usr/lib/chromium/
 
   install -Dm644 out/Release/chrome.1 /root/bldr-inst/usr/share/man/man1/chromium.1
   
   if [ "${ARCH}" != "armv6l" ];
   then
 
-  	cp out/Release/nacl_helper{,_bootstrap} out/Release/nacl_irt_*.nexe \
-		/root/bldr-inst/usr/lib/chromium/
+        cp out/Release/nacl_helper{,_bootstrap} out/Release/nacl_irt_*.nexe \
+                /root/bldr-inst/usr/lib/chromium/
 
-	install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
-	cp out/Release/libwidevinecdmadapter.so /root/bldr-inst/usr/lib/chromium/
-	mkdir -p /root/bldr-inst/usr/bin/
-	ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
+        install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
+        cp out/Release/libwidevinecdmadapter.so /root/bldr-inst/usr/lib/chromium/
+        mkdir -p /root/bldr-inst/usr/bin/
+        ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
 
     # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
-	strip /root/bldr-inst/usr/lib/chromium/chromedriver \
-    	/root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap}
+        strip /root/bldr-inst/usr/lib/chromium/chromedriver \
+        /root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap}
 
-	mkdir -p ../widevine
-	pushd ../widevine
-	wget https://dl.google.com/linux/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION}-1_amd64.deb -Ochrome.deb
-	ar x chrome.deb
-	tar xf data.tar.xz
-	cp opt/google/chrome/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
-	popd
+        mkdir -p ../widevine
+        pushd ../widevine
+        wget https://dl.google.com/linux/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION}-1_amd64.deb -Ochrome.deb
+        ar x chrome.deb
+        tar xf data.tar.xz
+        cp opt/google/chrome/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
+        popd
   fi
   
   strip /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
@@ -210,12 +210,12 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	#This cant be accurate...
-	LATEST=`curl -s "https://googlechromereleases.blogspot.jp/search/label/Stable%20updates" | grep "Linux" | grep -E "[0-9\.][0-9\.]*" | head -n1 | sed -e 's/.*\s\([0-9\.]*\)\s.*/\1/g'`
+        #This cant be accurate...
+        LATEST=`curl -s "https://googlechromereleases.blogspot.jp/search/label/Stable%20updates" | grep "Linux" | grep -E "[0-9\.][0-9\.]*" | head -n1 | sed -e 's/.*\s\([0-9\.]*\)\s.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

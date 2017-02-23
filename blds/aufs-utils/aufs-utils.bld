@@ -33,14 +33,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	git clone -b aufs${VERSION} git://aufs.git.sourceforge.net/gitroot/aufs/aufs-util.git
-	cd aufs-util
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        git clone -b aufs${VERSION} git://aufs.git.sourceforge.net/gitroot/aufs/aufs-util.git
+        cd aufs-util
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME: Git Based"
+        echo "$NAME: Git Based"
 }

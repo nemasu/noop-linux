@@ -34,43 +34,43 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	_waf_version=1.7.15
+        _waf_version=1.7.15
 
-	#use newer waf
-	cd ..
-	curdir=`ls`
-	wget http://waf.googlecode.com/files/waf-${_waf_version}.tar.bz2
-	tar xf waf-${_waf_version}.tar.bz2
-	cd $curdir
-	
-	cp "../waf-$_waf_version/waf" ./
-	sed -e "s/ctx.\(tool_options\|check_tool\)(/ctx.load(/" -i wscript
-	python3 ./waf --version
-	./waf configure --prefix=/usr
-	./waf build
-	./waf install --destdir=/root/bldr-inst
+        #use newer waf
+        cd ..
+        curdir=`ls`
+        wget http://waf.googlecode.com/files/waf-${_waf_version}.tar.bz2
+        tar xf waf-${_waf_version}.tar.bz2
+        cd $curdir
+        
+        cp "../waf-$_waf_version/waf" ./
+        sed -e "s/ctx.\(tool_options\|check_tool\)(/ctx.load(/" -i wscript
+        python3 ./waf --version
+        ./waf configure --prefix=/usr
+        ./waf build
+        ./waf install --destdir=/root/bldr-inst
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://cairographics.org/releases/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://cairographics.org/releases/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

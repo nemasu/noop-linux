@@ -34,15 +34,15 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
+        ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
     make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	rm -f /root/bldr-inst/usr/bin/wnckprop
+        make DESTDIR=/root/bldr-inst install
+        rm -f /root/bldr-inst/usr/bin/wnckprop
     rm -f /root/bldr-inst/usr/bin/wnck-urgency-monitor
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: Too Old
+        echo $NAME: Too Old
 }

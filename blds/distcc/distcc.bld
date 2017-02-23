@@ -34,43 +34,43 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	[ -f Makefile ] || PYTHON=/usr/bin/python2 ./configure --prefix=/usr \
-	--with-gtk \
-	--sysconfdir=/etc \
-	--mandir=/usr/share/man \
-	--without-avahi 
+        [ -f Makefile ] || PYTHON=/usr/bin/python2 ./configure --prefix=/usr \
+        --with-gtk \
+        --sysconfdir=/etc \
+        --mandir=/usr/share/man \
+        --without-avahi 
 
-	make -j${BLDR_CORES} WERROR_CFLAGS= INCLUDESERVER_PYTHON=/usr/bin/python2
-	make DESTDIR=/root/bldr-inst/ INCLUDESERVER_PYTHON=/usr/bin/python2 install
+        make -j${BLDR_CORES} WERROR_CFLAGS= INCLUDESERVER_PYTHON=/usr/bin/python2
+        make DESTDIR=/root/bldr-inst/ INCLUDESERVER_PYTHON=/usr/bin/python2 install
 
-	install -d /root/bldr-inst/usr/lib/distcc/bin
-	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/cc
-	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/gcc
-	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/g++
-	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/c++
-	ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/cpp
+        install -d /root/bldr-inst/usr/lib/distcc/bin
+        ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/cc
+        ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/gcc
+        ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/g++
+        ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/c++
+        ln -sf /usr/bin/distcc /root/bldr-inst/usr/lib/distcc/bin/cpp
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://distcc.googlecode.com/files/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://distcc.googlecode.com/files/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

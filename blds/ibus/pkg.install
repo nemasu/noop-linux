@@ -6,7 +6,7 @@ function postinst() {
     dconf update
 }
 function postup() {
-	postinst
+        postinst
 }
 function postrm() {
     gtk-query-immodules-2.0 --update-cache

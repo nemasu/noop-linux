@@ -11,6 +11,6 @@ DEPS=('glibc')
 
 function BuildAndInstall
 {
-	make
-	make PREFIX=/root/bldr-inst MANDIR=/root/bldr-inst/usr/share/man DOCDIR=/root/bldr-inst/usr/share/doc install
+        make
+        make PREFIX=/root/bldr-inst MANDIR=/root/bldr-inst/usr/share/man DOCDIR=/root/bldr-inst/usr/share/doc install
 }

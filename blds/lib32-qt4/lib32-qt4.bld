@@ -13,7 +13,7 @@ BUILD=custom
 if [ "${ARCH}" == "x86_64" ];
 then
 
-	EXDEP=('libfbclient' 'mesalib')
+        EXDEP=('libfbclient' 'mesalib')
 
 fi
 
@@ -22,78 +22,78 @@ DEPS=('gcc-libs' 'lib32-alsa-lib' 'lib32-dbus' 'lib32-fontconfig' 'lib32-freetyp
 
 function BuildAndInstall
 {
-	#Build with clang for skype fix...
-	export CC='clang'
-	export CXX='clang++'
+        #Build with clang for skype fix...
+        export CC='clang'
+        export CXX='clang++'
 
-	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
-	export QT4DIR=`pwd`
-	export LD_LIBRARY_PATH=${QT4DIR}/lib:${LD_LIBRARY_PATH}
+        export QT4DIR=`pwd`
+        export LD_LIBRARY_PATH=${QT4DIR}/lib:${LD_LIBRARY_PATH}
 
-	  # some of those are likely unnecessary, but I'm too lazy to find and remove them
-	  sed -i "/^QMAKE_LINK\s/s|g++|g++ -m32|g" mkspecs/common/g++-base.conf
-	  sed -i "s|-O2|${CXXFLAGS} -m32|" mkspecs/common/g++-base.conf
-	  sed -i "s|-O2|${CXXFLAGS} -m32|" mkspecs/common/gcc-base.conf
-	  sed -i "/^QMAKE_LFLAGS_RPATH/s| -Wl,-rpath,||g" mkspecs/common/gcc-base-unix.conf
-	  sed -i "/^QMAKE_LFLAGS\s/s|+=|+= ${LDFLAGS} -m32|g" mkspecs/common/gcc-base.conf
-	  sed -i "s|-Wl,-O1|-m32 -Wl,-O1|" mkspecs/common/g++-unix.conf
-	  sed -e "s|-O2|$CXXFLAGS -m32|" \
+          # some of those are likely unnecessary, but I'm too lazy to find and remove them
+          sed -i "/^QMAKE_LINK\s/s|g++|g++ -m32|g" mkspecs/common/g++-base.conf
+          sed -i "s|-O2|${CXXFLAGS} -m32|" mkspecs/common/g++-base.conf
+          sed -i "s|-O2|${CXXFLAGS} -m32|" mkspecs/common/gcc-base.conf
+          sed -i "/^QMAKE_LFLAGS_RPATH/s| -Wl,-rpath,||g" mkspecs/common/gcc-base-unix.conf
+          sed -i "/^QMAKE_LFLAGS\s/s|+=|+= ${LDFLAGS} -m32|g" mkspecs/common/gcc-base.conf
+          sed -i "s|-Wl,-O1|-m32 -Wl,-O1|" mkspecs/common/g++-unix.conf
+          sed -e "s|-O2|$CXXFLAGS -m32|" \
       -e "/^QMAKE_RPATH/s| -Wl,-rpath,||g" \
       -e "/^QMAKE_LINK\s/s|g++|g++ -m32|g" \
       -e "/^QMAKE_LFLAGS\s/s|+=|+= $LDFLAGS|g" \
       -i mkspecs/common/g++.conf
 
-	./configure -confirm-license -opensource -v -platform linux-g++-32 \
-		-prefix /usr \
-		-libdir /usr/lib32 \
-		-plugindir /usr/lib32/qt4/plugins \
-		-importdir /usr/lib32/qt4/imports \
-		-datadir /usr/share/qt4 \
-		-translationdir /usr/share/qt4/translations \
-		-sysconfdir /etc/xdg \
-		-examplesdir /usr/share/doc/qt4/examples \
-		-demosdir /usr/share/doc/qt4/demos \
-		-plugin-sql-sqlite \
-		-system-sqlite \
-		-no-phonon \
-		-no-phonon-backend \
-		-graphicssystem raster \
-		-openssl-linked -nomake demos -nomake examples -nomake docs -silent \
-		-no-rpath \
-		-optimized-qmake \
-		-reduce-relocations \
-		-dbus-linked \
-		-no-openvg
-		
-		#-plugin-sql-{psql,mysql,sqlite,odbc} \
-		
-		make -j${BLDR_CORES}
-		make INSTALL_ROOT=/root/bldr-inst install
+        ./configure -confirm-license -opensource -v -platform linux-g++-32 \
+                -prefix /usr \
+                -libdir /usr/lib32 \
+                -plugindir /usr/lib32/qt4/plugins \
+                -importdir /usr/lib32/qt4/imports \
+                -datadir /usr/share/qt4 \
+                -translationdir /usr/share/qt4/translations \
+                -sysconfdir /etc/xdg \
+                -examplesdir /usr/share/doc/qt4/examples \
+                -demosdir /usr/share/doc/qt4/demos \
+                -plugin-sql-sqlite \
+                -system-sqlite \
+                -no-phonon \
+                -no-phonon-backend \
+                -graphicssystem raster \
+                -openssl-linked -nomake demos -nomake examples -nomake docs -silent \
+                -no-rpath \
+                -optimized-qmake \
+                -reduce-relocations \
+                -dbus-linked \
+                -no-openvg
+                
+                #-plugin-sql-{psql,mysql,sqlite,odbc} \
+                
+                make -j${BLDR_CORES}
+                make INSTALL_ROOT=/root/bldr-inst install
 
 
-	srcdir=`pwd`
-	# Fix wrong path in pkgconfig files
-	find /root/bldr-inst/usr/lib32/pkgconfig -type f -name '*.pc' \
-		-exec perl -pi -e "s, -L${srcdir}/?\S+,,g" {} \;
-	
-	# Fix wrong path in prl files
-	find /root/bldr-inst/usr/lib32 -type f -name '*.prl' \
-		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d;s/\(QMAKE_PRL_LIBS =\).*/\1/' {} \;
+        srcdir=`pwd`
+        # Fix wrong path in pkgconfig files
+        find /root/bldr-inst/usr/lib32/pkgconfig -type f -name '*.pc' \
+                -exec perl -pi -e "s, -L${srcdir}/?\S+,,g" {} \;
+        
+        # Fix wrong path in prl files
+        find /root/bldr-inst/usr/lib32 -type f -name '*.prl' \
+                -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d;s/\(QMAKE_PRL_LIBS =\).*/\1/' {} \;
 
-	rm -rf /root/bldr-inst/usr/{include,share,bin,tests}
+        rm -rf /root/bldr-inst/usr/{include,share,bin,tests}
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://download.qt-project.org/official_releases/qt/4.8/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g'`
+        LATEST=`curl -s http://download.qt-project.org/official_releases/qt/4.8/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-					echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

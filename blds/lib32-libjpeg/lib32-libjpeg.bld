@@ -33,27 +33,27 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export CC="gcc -m32"
-	export CXX="g++ -m32"
-	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+        export CC="gcc -m32"
+        export CXX="g++ -m32"
+        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
-	./configure --prefix=/usr --with-jpeg8 --mandir=/usr/share/man --libdir=/usr/lib32 --without-simd
-	make -j${BLDR_CORES}
+        ./configure --prefix=/usr --with-jpeg8 --mandir=/usr/share/man --libdir=/usr/lib32 --without-simd
+        make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst docdir=/usr/share/doc/libjpeg exampledir=/usr/share/doc/libjpeg install
+        make DESTDIR=/root/bldr-inst docdir=/usr/share/doc/libjpeg exampledir=/usr/share/doc/libjpeg install
 
-	rm -rf /root/bldr-inst/usr/{include,share,bin,sbin}
+        rm -rf /root/bldr-inst/usr/{include,share,bin,sbin}
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://sourceforge.net/projects/libjpeg-turbo/files/ | grep -E "files\/[0-9\.][0-9\.]*\/\"" | sed -e 's/.*files\/\([0-9\.][0-9\.]*\)\/\".*/\1/g' | head -n1`
+        LATEST=`curl -s http://sourceforge.net/projects/libjpeg-turbo/files/ | grep -E "files\/[0-9\.][0-9\.]*\/\"" | sed -e 's/.*files\/\([0-9\.][0-9\.]*\)\/\".*/\1/g' | head -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

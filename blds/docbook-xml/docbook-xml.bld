@@ -33,14 +33,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	wget http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip
+        wget http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip
     mkdir docbook-xml
     cd docbook-xml
     unzip ../docbook-xml-4.5.zip
 
-	mkdir -p /root/bldr-inst/usr/share/xml/docbook/xml-dtd-4.5
-	mkdir -p /root/bldr-inst/etc/xml
-	cp -v -af docbook.cat *.dtd ent/ *.mod /root/bldr-inst/usr/share/xml/docbook/xml-dtd-4.5
+        mkdir -p /root/bldr-inst/usr/share/xml/docbook/xml-dtd-4.5
+        mkdir -p /root/bldr-inst/etc/xml
+        cp -v -af docbook.cat *.dtd ent/ *.mod /root/bldr-inst/usr/share/xml/docbook/xml-dtd-4.5
 
     
 
@@ -49,5 +49,5 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME: 5.0 doesn't seem to be in use."
+        echo "$NAME: 5.0 doesn't seem to be in use."
 }

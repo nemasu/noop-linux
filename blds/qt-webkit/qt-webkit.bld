@@ -34,26 +34,26 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p build && cd build
-	qmake ../
-	make -j${BLDR_CORES}
-	make INSTALL_ROOT=/root/bldr-inst install
+        mkdir -p build && cd build
+        qmake ../
+        make -j${BLDR_CORES}
+        make INSTALL_ROOT=/root/bldr-inst install
 
-	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
-	find /root/bldr-inst/usr/lib -type f -name "*.prl" | xargs sed -i -e '/^QMAKE_PRL_BUILD_DIR/d';
+        # Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+        find /root/bldr-inst/usr/lib -type f -name "*.prl" | xargs sed -i -e '/^QMAKE_PRL_BUILD_DIR/d';
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	MM=`curl -s http://download.qt-project.org/official_releases/qt/ | grep -E "href=\"[0-9\.][0-9\.]*\/" | sed -e 's/.*href=\"\([0-9\.][0-9\.]*\)\/.*/\1/g' | head -n1`
-	LATEST=`curl -s http://download.qt-project.org/official_releases/qt/$MM/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g' | head -n1`
+        MM=`curl -s http://download.qt-project.org/official_releases/qt/ | grep -E "href=\"[0-9\.][0-9\.]*\/" | sed -e 's/.*href=\"\([0-9\.][0-9\.]*\)\/.*/\1/g' | head -n1`
+        LATEST=`curl -s http://download.qt-project.org/official_releases/qt/$MM/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g' | head -n1`
 
-	vercomp $DDVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-					echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DDVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 
 }

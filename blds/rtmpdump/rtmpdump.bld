@@ -34,19 +34,19 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	make -j${BLDR_CORES}
-	mkdir -p /root/bldr-inst/usr/lib
-	make prefix=/usr mandir=/usr/share/man DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        mkdir -p /root/bldr-inst/usr/lib
+        make prefix=/usr mandir=/usr/share/man DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://dev.gentoo.org/~hwoarang/distfiles/ | grep -E "rtmpdump-[0-9\._a-z]*\.tar\.gz" | sed -e 's/.*rtmpdump-\([0-9\._a-z]*\)\.tar\.gz.*/\1/g' | tr _ \- | tr a-z 0-9 | sort | uniq | tail -n1`
+        LATEST=`curl -s http://dev.gentoo.org/~hwoarang/distfiles/ | grep -E "rtmpdump-[0-9\._a-z]*\.tar\.gz" | sed -e 's/.*rtmpdump-\([0-9\._a-z]*\)\.tar\.gz.*/\1/g' | tr _ \- | tr a-z 0-9 | sort | uniq | tail -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

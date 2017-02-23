@@ -41,12 +41,12 @@ RESTORELIBDB=
 function Detect
 {
 
-	MM=`curl -s http://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/ | grep -E "2\.[0-8][0-8]*\/<" | tail -n1 | sed -e "s/.*\(2\.[0-8][0-8]*\)\/<.*/\1/g"`
+        MM=`curl -s http://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/ | grep -E "2\.[0-8][0-8]*\/<" | tail -n1 | sed -e "s/.*\(2\.[0-8][0-8]*\)\/<.*/\1/g"`
     LATEST=`curl -s http://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/$MM/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\).*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

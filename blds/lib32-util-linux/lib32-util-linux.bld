@@ -38,7 +38,7 @@ function BuildAndInstall
       CC="gcc -m32" \
       PKG_CONFIG_PATH="/usr/lib32/pkgconfig" \
       --libdir=/usr/lib32 \
-	  --prefix=/usr
+          --prefix=/usr
 
   make -j${BLDR_CORES} lib{uuid,blkid,mount,smartcols}.la
   make DESTDIR=/root/bldr-inst install-usrlib_execLTLIBRARIES install-pkgconfigDATA
@@ -49,24 +49,24 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	BASE=`curl -L -s "https://www.kernel.org/pub/linux/utils/util-linux/" | grep -E "v[0-9\.]*" | tail -n1 | sed -e 's/.*v\([0-9\.]*\)\/.*/\1/g'`
-	LISTURL="https://www.kernel.org/pub/linux/utils/util-linux/v${BASE}/"
-	FILELIST=`GetFileList`
-	LATEST=0
+        BASE=`curl -L -s "https://www.kernel.org/pub/linux/utils/util-linux/" | grep -E "v[0-9\.]*" | tail -n1 | sed -e 's/.*v\([0-9\.]*\)\/.*/\1/g'`
+        LISTURL="https://www.kernel.org/pub/linux/utils/util-linux/v${BASE}/"
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -33,40 +33,40 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i -e 's#python#python2#g' buildtools/bin/waf
-	./configure --prefix=/usr \
-	   --localstatedir=/var \
-	   --sysconfdir=/etc/samba \
-		--bundled-libraries=NONE \
-		--builtin-libraries=replace \
-		--with-modulesdir=/usr/lib/ldb/modules \
-		--with-privatelibdir=/usr/lib/ldb
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	cd /root/bldr-inst/usr/lib
+        sed -i -e 's#python#python2#g' buildtools/bin/waf
+        ./configure --prefix=/usr \
+           --localstatedir=/var \
+           --sysconfdir=/etc/samba \
+                --bundled-libraries=NONE \
+                --builtin-libraries=replace \
+                --with-modulesdir=/usr/lib/ldb/modules \
+                --with-privatelibdir=/usr/lib/ldb
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        cd /root/bldr-inst/usr/lib
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.samba.org/ftp/ldb/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.samba.org/ftp/ldb/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -41,6 +41,6 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	echo $NAME: SVN based
+        echo $NAME: SVN based
 }
 

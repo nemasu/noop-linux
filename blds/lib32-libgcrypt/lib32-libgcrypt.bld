@@ -33,39 +33,39 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	export CC="gcc -m32"
-	export CXX="g++ -m32"
-	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-	
-	# Use 32-bit assembler
-	sed 's:path="amd64":path="i586 i386":' -i mpi/config.links
+        export CC="gcc -m32"
+        export CXX="g++ -m32"
+        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+        
+        # Use 32-bit assembler
+        sed 's:path="amd64":path="i586 i386":' -i mpi/config.links
 
-	./configure --prefix=/usr --libexecdir=/usr/lib32 --libdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var --disable-static
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
+        ./configure --prefix=/usr --libexecdir=/usr/lib32 --libdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var --disable-static
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://ftp.gnupg.org/gcrypt/libgcrypt/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://ftp.gnupg.org/gcrypt/libgcrypt/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

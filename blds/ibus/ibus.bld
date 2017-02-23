@@ -35,16 +35,16 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 
-	./autogen.sh \
-		--prefix=/usr \
-		--libexecdir=/usr/lib/ibus \
-		--sysconfdir=/etc \
-		--disable-gconf \
-		--enable-dconf \
-		--disable-memconf \
-		--enable-ui \
-		--enable-python-library \
-		--with-python=python3
+        ./autogen.sh \
+                --prefix=/usr \
+                --libexecdir=/usr/lib/ibus \
+                --sysconfdir=/etc \
+                --disable-gconf \
+                --enable-dconf \
+                --disable-memconf \
+                --enable-ui \
+                --enable-python-library \
+                --with-python=python3
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install
 }
@@ -52,23 +52,23 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://github.com/ibus/ibus/releases
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://github.com/ibus/ibus/releases
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -33,37 +33,37 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./autogen.sh
-	./configure $STDUSRCONF \
-		--enable-leveldb \
+        ./autogen.sh
+        ./configure $STDUSRCONF \
+                --enable-leveldb \
         --enable-bzip2 \
-		--enable-lz4 \
-		--with-builtins=snappy,zlib
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	
+                --enable-lz4 \
+                --with-builtins=snappy,zlib
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=https://github.com/wiredtiger/wiredtiger/releases
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=https://github.com/wiredtiger/wiredtiger/releases
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

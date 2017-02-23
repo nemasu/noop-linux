@@ -34,45 +34,45 @@ RESTORELIBDB=
 function BuildAndInstall
 {
   
-	export CFLAGS="$CFLAGS -fPIC"
-	export LDFLAGS="$LDFLAGS -lncurses" 
-	make -j${BLDR_CORES} MYCFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" MYLDFLAGS="$LDFLAGS" linux
+        export CFLAGS="$CFLAGS -fPIC"
+        export LDFLAGS="$LDFLAGS -lncurses" 
+        make -j${BLDR_CORES} MYCFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" MYLDFLAGS="$LDFLAGS" linux
   
     
-	make \
-		TO_LIB="liblua.a liblua.so liblua.so.${MAJOR} liblua.so.${VERSION}" \
-		INSTALL_DATA='cp -d' \
-		INSTALL_TOP=/root/bldr-inst/usr \
-		INSTALL_MAN=/root/bldr-inst/usr/share/man/man1 \
-		install
+        make \
+                TO_LIB="liblua.a liblua.so liblua.so.${MAJOR} liblua.so.${VERSION}" \
+                INSTALL_DATA='cp -d' \
+                INSTALL_TOP=/root/bldr-inst/usr \
+                INSTALL_MAN=/root/bldr-inst/usr/share/man/man1 \
+                install
 
-	mkdir -p /root/bldr-inst/usr/lib/pkgconfig/
-	sed 's/%VER%/'"${VERSION%.*}"'/g;s/%REL%/'"${VERSION}"'/g' $BLDRTMPDIR/lua.pc > /root/bldr-inst/usr/lib/pkgconfig/lua.pc
-	rm $BLDRTMPDIR/lua.pc
+        mkdir -p /root/bldr-inst/usr/lib/pkgconfig/
+        sed 's/%VER%/'"${VERSION%.*}"'/g;s/%REL%/'"${VERSION}"'/g' $BLDRTMPDIR/lua.pc > /root/bldr-inst/usr/lib/pkgconfig/lua.pc
+        rm $BLDRTMPDIR/lua.pc
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://www.lua.org/ftp/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://www.lua.org/ftp/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

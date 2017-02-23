@@ -64,11 +64,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LASTEST=`curl -s -I -L http://www.skype.com/go/getskype-linux-beta-dynamic | grep -E "skype-[0-9\.]*\.tar\.bz2" | sed 's/.*skype-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+        LASTEST=`curl -s -I -L http://www.skype.com/go/getskype-linux-beta-dynamic | grep -E "skype-[0-9\.]*\.tar\.bz2" | sed 's/.*skype-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-		echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -39,11 +39,11 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s -L http://download.kde.org/stable/kdevelop/ | egrep "[0-9\.]+\/" | tail -n1 | sed -e 's/.*href="\([0-9\.]*\)\/">.*/\1/g'`
+        LATEST=`curl -s -L http://download.kde.org/stable/kdevelop/ | egrep "[0-9\.]+\/" | tail -n1 | sed -e 's/.*href="\([0-9\.]*\)\/">.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

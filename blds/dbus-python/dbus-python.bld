@@ -34,41 +34,41 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir build-python2
-	mkdir build-python3
+        mkdir build-python2
+        mkdir build-python3
 
-	cd build-python2
-	PYTHON=python2 ../configure --prefix=/usr
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        cd build-python2
+        PYTHON=python2 ../configure --prefix=/usr
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	cd ../build-python3
-	PYTHON=python3 ../configure --prefix=/usr
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        cd ../build-python3
+        PYTHON=python3 ../configure --prefix=/usr
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://dbus.freedesktop.org/releases/dbus-python/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://dbus.freedesktop.org/releases/dbus-python/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

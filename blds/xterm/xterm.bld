@@ -33,7 +33,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure --prefix=/usr \
+        ./configure --prefix=/usr \
       --libdir=/etc \
       --mandir=/usr/share/man \
       --with-app-defaults=/usr/share/X11/app-defaults/ \
@@ -61,33 +61,33 @@ function BuildAndInstall
       --with-tty-group=tty \
       --with-utempter
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	mkdir -p /root/bldr-inst/usr/share/applications/
-	cp {xterm,uxterm}.desktop /root/bldr-inst/usr/share/applications/
+        mkdir -p /root/bldr-inst/usr/share/applications/
+        cp {xterm,uxterm}.desktop /root/bldr-inst/usr/share/applications/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=ftp://invisible-island.net/xterm/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=ftp://invisible-island.net/xterm/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

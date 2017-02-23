@@ -33,17 +33,17 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd unix
-	./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --disable-rpath --enable-64bit
-	make -j${BLDR_CORES}
-	make INSTALL_ROOT=/root/bldr-inst install install-private-headers
-	ln -sf wish${VERSION%.*} /root/bldr-inst/usr/bin/wish
-	ln -sf libtk${VERSION%.*}.so /root/bldr-inst/usr/lib/libtk.so
+        cd unix
+        ./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --disable-rpath --enable-64bit
+        make -j${BLDR_CORES}
+        make INSTALL_ROOT=/root/bldr-inst install install-private-headers
+        ln -sf wish${VERSION%.*} /root/bldr-inst/usr/bin/wish
+        ln -sf libtk${VERSION%.*}.so /root/bldr-inst/usr/lib/libtk.so
 
-	# remove buildroot traces
-	sed -e "s#/root/bldr-tmp/tk${VERSION}/unix#/usr/lib#" \
-	  -e "s#/root/bldr-tmp/tk${VERSION}#/usr/include#" \
-	  -i /root/bldr-inst/usr/lib/tkConfig.sh
+        # remove buildroot traces
+        sed -e "s#/root/bldr-tmp/tk${VERSION}/unix#/usr/lib#" \
+          -e "s#/root/bldr-tmp/tk${VERSION}#/usr/include#" \
+          -i /root/bldr-inst/usr/lib/tkConfig.sh
 
 }
 
@@ -51,11 +51,11 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -s http://www.tcl.tk/software/tcltk/download.html | grep -E "tk[0-9\.]*-src\.tar\.gz" | sed -e 's/.*tk\([0-9\.]*\)-src\.tar\.gz.*/\1/g' | sort | uniq | tail -n`
+        LATEST=`curl -s http://www.tcl.tk/software/tcltk/download.html | grep -E "tk[0-9\.]*-src\.tar\.gz" | sed -e 's/.*tk\([0-9\.]*\)-src\.tar\.gz.*/\1/g' | sort | uniq | tail -n`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

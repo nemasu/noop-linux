@@ -2,11 +2,11 @@ function postinst() {
     chown root:root /usr/lib/chromium/chrome-sandbox
     chmod 4755 /usr/lib/chromium/chrome-sandbox
     xdg-icon-resource forceupdate --theme hicolor &>/dev/null
-	update-desktop-database -q
+        update-desktop-database -q
 }
 function postup() {
     chown root:root /usr/lib/chromium/chrome-sandbox
     chmod 4755 /usr/lib/chromium/chrome-sandbox
     xdg-icon-resource forceupdate --theme hicolor &>/dev/null
-	update-desktop-database -q
+        update-desktop-database -q
 }

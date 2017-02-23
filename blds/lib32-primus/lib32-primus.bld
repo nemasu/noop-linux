@@ -33,37 +33,37 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-	git clone git://github.com/amonakov/primus.git
-	cd `ls`
+        git clone git://github.com/amonakov/primus.git
+        cd `ls`
 
-	export CC="g++ -m32"
-	export CXX="g++ -m32"
+        export CC="g++ -m32"
+        export CXX="g++ -m32"
 
-	LIBDIR=lib32 make
-	install -D lib32/libGL.so.1 /root/bldr-inst/usr/lib32/primus/libGL.so.1
+        LIBDIR=lib32 make
+        install -D lib32/libGL.so.1 /root/bldr-inst/usr/lib32/primus/libGL.so.1
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

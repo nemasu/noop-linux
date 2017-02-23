@@ -33,8 +33,8 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd src
-	./configure --prefix=/usr \
+        cd src
+        ./configure --prefix=/usr \
                --sbindir=/usr/bin \
                --sysconfdir=/etc \
                --localstatedir=/var/lib \
@@ -46,28 +46,28 @@ function BuildAndInstall
                --enable-dns-for-realm \
                --with-ldap \
                --without-system-verto
-	make -j${BLDR_CORES}
+        make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst EXAMPLEDIR=/usr/share/doc/krb5/examples install
-	install -m 644 plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} /root/bldr-inst/usr/share/doc/krb5/examples
+        make DESTDIR=/root/bldr-inst EXAMPLEDIR=/usr/share/doc/krb5/examples install
+        install -m 644 plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} /root/bldr-inst/usr/share/doc/krb5/examples
 
-	install -dm 755 /root/bldr-inst/var/lib/krb5kdc
-	install -pm 644 config-files/kdc.conf /root/bldr-inst/var/lib/krb5kdc/kdc.conf
+        install -dm 755 /root/bldr-inst/var/lib/krb5kdc
+        install -pm 644 config-files/kdc.conf /root/bldr-inst/var/lib/krb5kdc/kdc.conf
 
-	install -dm 755 /root/bldr-inst/etc
+        install -dm 755 /root/bldr-inst/etc
     install -pm 644 config-files/krb5.conf /root/bldr-inst/etc/krb5.conf
 
-	install -dm 755 /root/bldr-inst/usr/share/aclocal
+        install -dm 755 /root/bldr-inst/usr/share/aclocal
     install -m 644 util/ac_check_krb5.m4 /root/bldr-inst/usr/share/aclocal
 }
 
 function Detect
 {
-	LATEST=`curl -s "http://web.mit.edu/kerberos/dist/" | grep -E "krb5-[0-9\.]*.tar" | sed 's/.*krb5-\([0-9\.]*\).tar.*/\1/g' | sort | uniq | tail -n1`
+        LATEST=`curl -s "http://web.mit.edu/kerberos/dist/" | grep -E "krb5-[0-9\.]*.tar" | sed 's/.*krb5-\([0-9\.]*\).tar.*/\1/g' | sort | uniq | tail -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

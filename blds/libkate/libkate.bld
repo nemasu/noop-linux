@@ -34,20 +34,20 @@ RESTORELIBDB=
 function BuildAndInstall
 {
   
-	export PYTHON=/usr/bin/python2
-	sed "1s/python$/python2/" -i tools/KateDJ/KateDJ
-	./configure --prefix=/usr \
-		--disable-static \
-		--disable-doc
-	make -j${BLDR_CORES}
+        export PYTHON=/usr/bin/python2
+        sed "1s/python$/python2/" -i tools/KateDJ/KateDJ
+        ./configure --prefix=/usr \
+                --disable-static \
+                --disable-doc
+        make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
-	python2 -m compileall /root/bldr-inst/usr/lib/python2.7/site-packages/kdj/
+        make DESTDIR=/root/bldr-inst install
+        python2 -m compileall /root/bldr-inst/usr/lib/python2.7/site-packages/kdj/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "$NAME: Too old"
+        echo "$NAME: Too old"
 }
 

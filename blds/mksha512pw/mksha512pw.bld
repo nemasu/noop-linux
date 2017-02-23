@@ -33,15 +33,15 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	git clone https://github.com/nemasu/mksha512pw.git
-	cd mksha512pw
-	make -j${BLDR_CORES}
-	mkdir -p /root/bldr-inst/usr/bin/
-	cp mksha512pw /root/bldr-inst/usr/bin/
+        git clone https://github.com/nemasu/mksha512pw.git
+        cd mksha512pw
+        make -j${BLDR_CORES}
+        mkdir -p /root/bldr-inst/usr/bin/
+        cp mksha512pw /root/bldr-inst/usr/bin/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	echo "${NAME}: Git Based"
+        echo "${NAME}: Git Based"
 }

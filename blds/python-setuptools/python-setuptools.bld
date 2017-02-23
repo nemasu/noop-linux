@@ -33,47 +33,47 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd ..
-	py2_build=`ls`
-	py3_build=${py2_build}-py3
-	cp -r $py2_build $py3_build
+        cd ..
+        py2_build=`ls`
+        py3_build=${py2_build}-py3
+        cp -r $py2_build $py3_build
 
-	cd $py2_build
-	sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python2|" setuptools/command/easy_install.py
-	python2 setup.py build
-	python2 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
-	rm /root/bldr-inst/usr/bin/easy_install
+        cd $py2_build
+        sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python2|" setuptools/command/easy_install.py
+        python2 setup.py build
+        python2 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
+        rm /root/bldr-inst/usr/bin/easy_install
 
 
-	cd ../$py3_build
-	sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python3|" setuptools/command/easy_install.py
-	python3 setup.py build
-	python3 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
+        cd ../$py3_build
+        sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python3|" setuptools/command/easy_install.py
+        python3 setup.py build
+        python3 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
 
-	}
+        }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	NAME=setuptools
-	LISTURL=https://pypi.python.org/packages/source/s/setuptools/
-	FILELIST=`GetFileList`
-	LATEST=0
-	NAME=python-setuptools
+        NAME=setuptools
+        LISTURL=https://pypi.python.org/packages/source/s/setuptools/
+        FILELIST=`GetFileList`
+        LATEST=0
+        NAME=python-setuptools
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

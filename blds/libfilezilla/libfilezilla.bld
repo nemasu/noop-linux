@@ -37,12 +37,12 @@ RESTORELIBDB=
 
 #Default HTTP curl new version detection
 function Detect
-{	
-	LATEST=`curl -L -s "https://lib.filezilla-project.org/download.php" | egrep "libfilezilla-[0-9\.]*\.tar\.bz2" | head -n1 | sed 's/.*libfilezilla-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
-	
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+{       
+        LATEST=`curl -L -s "https://lib.filezilla-project.org/download.php" | egrep "libfilezilla-[0-9\.]*\.tar\.bz2" | head -n1 | sed 's/.*libfilezilla-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+        
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

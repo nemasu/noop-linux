@@ -33,26 +33,26 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	git clone git://anongit.kde.org/libechonest.git
-	cd libechonest
-	git checkout tags/$VERSION
+        git clone git://anongit.kde.org/libechonest.git
+        cd libechonest
+        git checkout tags/$VERSION
 
-	mkdir build && cd build	
-	cmake .. \
-		-DCMAKE_BUILD_TYPE='Release' \
-		-DCMAKE_INSTALL_PREFIX='/usr' \
-		-DECHONEST_BUILD_TESTS='False'
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        mkdir build && cd build 
+        cmake .. \
+                -DCMAKE_BUILD_TYPE='Release' \
+                -DCMAKE_INSTALL_PREFIX='/usr' \
+                -DECHONEST_BUILD_TESTS='False'
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 function Detect
 {
-	LATEST=`curl -L -s "https://quickgit.kde.org/?p=libechonest.git" | grep "Tag version" | head -n1 | sed -e 's/.*Tag version \([0-9\.]*\).*/\1/g'`
+        LATEST=`curl -L -s "https://quickgit.kde.org/?p=libechonest.git" | grep "Tag version" | head -n1 | sed -e 's/.*Tag version \([0-9\.]*\).*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

@@ -33,27 +33,27 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	rm -rf *.asc
-	tar xf *.gz
-	rm *.gz
-	cd `ls`/src
+        rm -rf *.asc
+        tar xf *.gz
+        rm *.gz
+        cd `ls`/src
 
-	sed -i "/KRB5ROOT=/s/\/local//" util/ac_check_krb5.m4
+        sed -i "/KRB5ROOT=/s/\/local//" util/ac_check_krb5.m4
 
-	patch -Np1 -i $BLDRTMPDIR/*.p && rm $BLDRTMPDIR/*.p
+        patch -Np1 -i $BLDRTMPDIR/*.p && rm $BLDRTMPDIR/*.p
 
-	export CFLAGS+=" -fPIC -fno-strict-aliasing -fstack-protector-all"
+        export CFLAGS+=" -fPIC -fno-strict-aliasing -fstack-protector-all"
     export CPPFLAGS+=" -I/usr/include/et"
 
-	export CC="gcc -m32"
-	export CXX="g++ -m32"
-	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+        export CC="gcc -m32"
+        export CXX="g++ -m32"
+        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
-	./configure --prefix=/usr \
+        ./configure --prefix=/usr \
                --sbindir=/usr/bin \
                --sysconfdir=/etc \
                --localstatedir=/var/lib \
-			   --libdir=/usr/lib32 \
+                           --libdir=/usr/lib32 \
                --enable-shared \
                --with-system-et \
                --with-system-ss \
@@ -62,19 +62,19 @@ function BuildAndInstall
                --enable-dns-for-realm \
                --with-ldap \
                --without-system-verto
-	make -j${BLDR_CORES}
+        make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
-	rm -rf /root/bldr-inst/usr/{include,share,bin,sbin}
+        make DESTDIR=/root/bldr-inst install
+        rm -rf /root/bldr-inst/usr/{include,share,bin,sbin}
 }
 
 function Detect
 {
-	LATEST=`curl -s "http://web.mit.edu/kerberos/dist/" | grep -E "krb5-[0-9\.]*-signed.tar" | sed 's/.*krb5-\([0-9\.]*\)-signed.tar.*/\1/g' | sort | uniq | tail -n1`
+        LATEST=`curl -s "http://web.mit.edu/kerberos/dist/" | grep -E "krb5-[0-9\.]*-signed.tar" | sed 's/.*krb5-\([0-9\.]*\)-signed.tar.*/\1/g' | sort | uniq | tail -n1`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

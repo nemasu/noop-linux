@@ -37,22 +37,22 @@ RESTORELIBDB=
 
 function Detect
 {
-	FILELIST=`curl -s http://sourceforge.net/projects/expat/rss?path=/expat | grep ".tar.gz" |  sed -e 's/.*expat-\([0-9.]*\)\.tar\.gz.*/\1/g' | sort | uniq`
-	LATEST=0
+        FILELIST=`curl -s http://sourceforge.net/projects/expat/rss?path=/expat | grep ".tar.gz" |  sed -e 's/.*expat-\([0-9.]*\)\.tar\.gz.*/\1/g' | sort | uniq`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | grep ${NAME} | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | grep ${NAME} | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

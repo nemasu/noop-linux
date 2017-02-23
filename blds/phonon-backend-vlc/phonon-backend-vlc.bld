@@ -33,40 +33,40 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	mkdir -p build build-qt4
-	cd build-qt4
-	cmake .. \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_SKIP_RPATH=ON \
-		-D__KDE_HAVE_GCC_VISIBILITY=NO \
-		-DPLUGIN_INSTALL_DIR=/usr/lib/kde4
+        mkdir -p build build-qt4
+        cd build-qt4
+        cmake .. \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DCMAKE_SKIP_RPATH=ON \
+                -D__KDE_HAVE_GCC_VISIBILITY=NO \
+                -DPLUGIN_INSTALL_DIR=/usr/lib/kde4
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
-	cd ../build
-	cmake .. \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_SKIP_RPATH=ON \
-		-DCMAKE_INSTALL_LIBDIR=lib \
-		-DPHONON_BUILD_PHONON4QT5=ON \
-		-D__KDE_HAVE_GCC_VISIBILITY=NO
+        cd ../build
+        cmake .. \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DCMAKE_SKIP_RPATH=ON \
+                -DCMAKE_INSTALL_LIBDIR=lib \
+                -DPHONON_BUILD_PHONON4QT5=ON \
+                -D__KDE_HAVE_GCC_VISIBILITY=NO
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s http://download.kde.org/stable/phonon-backend-vlc/ | egrep "href=\"[0-9\.]+\/" | tail -n1 | sed -e 's/.*href=\"\([0-9\.]*\)\/.*/\1/g'`
+        LATEST=`curl -L -s http://download.kde.org/stable/phonon-backend-vlc/ | egrep "href=\"[0-9\.]+\/" | tail -n1 | sed -e 's/.*href=\"\([0-9\.]*\)\/.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

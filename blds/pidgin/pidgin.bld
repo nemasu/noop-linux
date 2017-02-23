@@ -34,31 +34,31 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure \
-		--prefix=/usr \
-		--sysconfdir=/etc \
-		--disable-schemas-install \
-		--disable-meanwhile \
-		--disable-gnutls \
-		--disable-gtkspell \
-		--disable-tk \
-		--enable-cyrus-sasl \
-		--disable-doxygen \
-		--enable-nm \
-		--with-python=/usr/bin/python2 \
-		--with-system-ssl-certs=/etc/ssl/certs
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./configure \
+                --prefix=/usr \
+                --sysconfdir=/etc \
+                --disable-schemas-install \
+                --disable-meanwhile \
+                --disable-gnutls \
+                --disable-gtkspell \
+                --disable-tk \
+                --enable-cyrus-sasl \
+                --disable-doxygen \
+                --enable-nm \
+                --with-python=/usr/bin/python2 \
+                --with-system-ssl-certs=/etc/ssl/certs
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LATEST=`curl -L -s http://sourceforge.net/projects/pidgin/files/Pidgin/ | grep -E "Pidgin\/[0-9\.]*\/\"" | head -n1 | sed -e 's/.*Pidgin\/\([0-9\.]*\)\/\".*/\1/g'`
-	
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        LATEST=`curl -L -s http://sourceforge.net/projects/pidgin/files/Pidgin/ | grep -E "Pidgin\/[0-9\.]*\/\"" | head -n1 | sed -e 's/.*Pidgin\/\([0-9\.]*\)\/\".*/\1/g'`
+        
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

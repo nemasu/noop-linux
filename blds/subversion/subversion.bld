@@ -32,57 +32,57 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 
-	if [ "${ARCH}" == "x86_64" ]; then
-	
-		if [ ! -e /var/noop/installed/apache ]; 
-		then
-			echo "You need apache to build subversion on x86_64";
-			exit 1
-		fi
-		EXCONF="--with-apxs"
-	fi
+        if [ "${ARCH}" == "x86_64" ]; then
+        
+                if [ ! -e /var/noop/installed/apache ]; 
+                then
+                        echo "You need apache to build subversion on x86_64";
+                        exit 1
+                fi
+                EXCONF="--with-apxs"
+        fi
 
-	
+        
 
-		export PYTHON=/usr/bin/python2
-		./configure --prefix=/usr \
-			--with-apr=/usr \
-			--with-apr-util=/usr \
-			--with-zlib=/usr \
-			--with-sqlite=/usr \
-			--with-berkeley-db=:/usr/include/:/usr/lib:db-5.3 \
-			--with-gnome-keyring \
-			--disable-static \
-			--with-swig \
-			--with-serf=/usr ${EXCONF}
+                export PYTHON=/usr/bin/python2
+                ./configure --prefix=/usr \
+                        --with-apr=/usr \
+                        --with-apr-util=/usr \
+                        --with-zlib=/usr \
+                        --with-sqlite=/usr \
+                        --with-berkeley-db=:/usr/include/:/usr/lib:db-5.3 \
+                        --with-gnome-keyring \
+                        --disable-static \
+                        --with-swig \
+                        --with-serf=/usr ${EXCONF}
 
-		make -j${BLDR_CORES} LT_LDFLAGS="-L/root/bldr-inst/usr/lib"
-		make swig_pydir=/usr/lib/python2.7/site-packages/libsvn swig_pydir_extra=/usr/lib/python2.7/site-packages/svn swig-py swig-pl
-		export LD_LIBRARY_PATH=/root/bldr-inst/usr/lib:${LD_LIBRARY_PATH}
-   		make DESTDIR=/root/bldr-inst INSTALLDIRS=vendor swig_pydir=/usr/lib/python2.7/site-packages/libsvn swig_pydir_extra=/usr/lib/python2.7/site-packages/svn install install-swig-py install-swig-pl
+                make -j${BLDR_CORES} LT_LDFLAGS="-L/root/bldr-inst/usr/lib"
+                make swig_pydir=/usr/lib/python2.7/site-packages/libsvn swig_pydir_extra=/usr/lib/python2.7/site-packages/svn swig-py swig-pl
+                export LD_LIBRARY_PATH=/root/bldr-inst/usr/lib:${LD_LIBRARY_PATH}
+                make DESTDIR=/root/bldr-inst INSTALLDIRS=vendor swig_pydir=/usr/lib/python2.7/site-packages/libsvn swig_pydir_extra=/usr/lib/python2.7/site-packages/svn install install-swig-py install-swig-pl
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://apache.org/dist/subversion/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://apache.org/dist/subversion/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-		CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-		vercomp $LATEST $CURVER
-		if [ $? -eq 2 ];
-		then
-				LATEST=$CURVER
-		fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                vercomp $LATEST $CURVER
+                if [ $? -eq 2 ];
+                then
+                                LATEST=$CURVER
+                fi
+        done
 
-	vercomp $DVERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-		echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $DVERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                echo "$NAME: New Version Available! - $LATEST"
+        fi
 }
 

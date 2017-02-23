@@ -33,56 +33,56 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	# avoid transitive linking issues with binutils 2.22
-	sed -i '/^user\(mod\|add\)_LDADD/s|$| -lattr|' src/Makefile.am
+        # avoid transitive linking issues with binutils 2.22
+        sed -i '/^user\(mod\|add\)_LDADD/s|$| -lattr|' src/Makefile.am
 
-	# link to glibc's crypt(3)
-	LDFLAGS+=" -lcrypt"
+        # link to glibc's crypt(3)
+        LDFLAGS+=" -lcrypt"
 
-	# supress etc/pam.d/*, we provide our own
-	sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.in
+        # supress etc/pam.d/*, we provide our own
+        sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.in
 
-	./configure \
-			--prefix=/usr \
-			--libdir=/lib \
-			--mandir=/usr/share/man \
-			--sysconfdir=/etc \
-			--with-libpam \
-			--without-selinux
+        ./configure \
+                        --prefix=/usr \
+                        --libdir=/lib \
+                        --mandir=/usr/share/man \
+                        --sysconfdir=/etc \
+                        --with-libpam \
+                        --without-selinux
 
-	make
-	make DESTDIR=/root/bldr-inst install
+        make
+        make DESTDIR=/root/bldr-inst install
 
-	install -Dm644 etc/pam.d/groupmems /root/bldr-inst/etc/pam.d/groupmems
-	# we use the 'useradd' PAM file for other similar utilities
-	for file in chage groupadd groupdel groupmod shadow useradd usermod userdel;
-	do
-			install -Dm644 $BLDRTMPDIR/defaults.pam /root/bldr-inst/etc/pam.d/$file
-	done
+        install -Dm644 etc/pam.d/groupmems /root/bldr-inst/etc/pam.d/groupmems
+        # we use the 'useradd' PAM file for other similar utilities
+        for file in chage groupadd groupdel groupmod shadow useradd usermod userdel;
+        do
+                        install -Dm644 $BLDRTMPDIR/defaults.pam /root/bldr-inst/etc/pam.d/$file
+        done
 
-	rm $BLDRTMPDIR/defaults.pam
+        rm $BLDRTMPDIR/defaults.pam
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://pkg-shadow.alioth.debian.org/releases/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://pkg-shadow.alioth.debian.org/releases/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

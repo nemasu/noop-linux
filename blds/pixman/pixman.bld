@@ -33,35 +33,35 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	#Autodetection fails
-	[[ "${ARCH}" == "armv6l" ]] && CONFIG="--disable-arm-simd --disable-arm-neon --disable-arm-iwmmxt"
-	[[ "${ARCH}" == "armv7l" ]] && CONFIG="--disable-arm-neon --disable-arm-iwmmxt"
+        #Autodetection fails
+        [[ "${ARCH}" == "armv6l" ]] && CONFIG="--disable-arm-simd --disable-arm-neon --disable-arm-iwmmxt"
+        [[ "${ARCH}" == "armv7l" ]] && CONFIG="--disable-arm-neon --disable-arm-iwmmxt"
 
-	./configure $STDUSRCONF $CONFIG
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        ./configure $STDUSRCONF $CONFIG
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://cairographics.org/releases/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://cairographics.org/releases/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

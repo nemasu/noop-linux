@@ -34,28 +34,28 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	rm -rf path && mkdir path
-	pushd path
-	ln -s /usr/bin/python2 python
-	PATH=`pwd`:$PATH
-	popd
-	
-	./configure $STDUSRCONF
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
-	
+        rm -rf path && mkdir path
+        pushd path
+        ln -s /usr/bin/python2 python
+        PATH=`pwd`:$PATH
+        popd
+        
+        ./configure $STDUSRCONF
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
 
-	 MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libsoup/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
-	LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libsoup/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+         MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libsoup/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+        LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/libsoup/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

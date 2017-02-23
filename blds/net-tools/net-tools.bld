@@ -33,37 +33,37 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	sed -i -e '/Token/s/y$/n/' config.in
-	yes "" | make
+        sed -i -e '/Token/s/y$/n/' config.in
+        yes "" | make
 
-	make BASEDIR=/root/bldr-inst update
+        make BASEDIR=/root/bldr-inst update
 
-	# hostname,ifconfig is provided by inetutils
-	rm /root/bldr-inst/bin/hostname
-	rm /root/bldr-inst/sbin/ifconfig
+        # hostname,ifconfig is provided by inetutils
+        rm /root/bldr-inst/bin/hostname
+        rm /root/bldr-inst/sbin/ifconfig
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	LISTURL=http://sourceforge.net/projects/net-tools/files/
-	FILELIST=`GetFileList`
-	LATEST=0
+        LISTURL=http://sourceforge.net/projects/net-tools/files/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

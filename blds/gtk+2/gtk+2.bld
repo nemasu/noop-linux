@@ -23,7 +23,7 @@ BUILD=custom
 
 if [ "${ARCH}" == "x86_64" ];
 then
-	EXTRADEPS="cups"
+        EXTRADEPS="cups"
 fi
 
 # build/package dependancies
@@ -40,7 +40,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	CXX=/bin/false ./configure --prefix=/usr \
+        CXX=/bin/false ./configure --prefix=/usr \
         --sysconfdir=/etc \
         --localstatedir=/var \
         --with-xinput=yes
@@ -50,20 +50,20 @@ function BuildAndInstall
 
     make -j${BLDR_CORES}
 
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 
-	sed -i "s#env python#env python2#" /root/bldr-inst/usr/bin/gtk-builder-convert
+        sed -i "s#env python#env python2#" /root/bldr-inst/usr/bin/gtk-builder-convert
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	MM=`curl -s http://ftp.gnome.org/pub/gnome/sources/gtk+/ | grep -E "2\.[0-8][0-8]*\/<" | tail -n1 | sed -e "s/.*\(2\.[0-8][0-8]*\)\/<.*/\1/g"`
-	LATEST=`curl -s http://ftp.gnome.org/pub/gnome/sources/gtk+/$MM/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\).*/\1/g'`
+        MM=`curl -s http://ftp.gnome.org/pub/gnome/sources/gtk+/ | grep -E "2\.[0-8][0-8]*\/<" | tail -n1 | sed -e "s/.*\(2\.[0-8][0-8]*\)\/<.*/\1/g"`
+        LATEST=`curl -s http://ftp.gnome.org/pub/gnome/sources/gtk+/$MM/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\).*/\1/g'`
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

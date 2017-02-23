@@ -1,15 +1,15 @@
 function postinst() {
-	mkdir -p /var/lib/mongodb
-	mkdir -p /var/log/mongodb
-	useradd -r -g daemon -d /var/lib/mongodb -s /sbin/nologin mongodb
-	chown -R mongodb:daemon /var/lib/mongodb
-	chown -R mongodb:daemon /var/log/mongodb
+        mkdir -p /var/lib/mongodb
+        mkdir -p /var/log/mongodb
+        useradd -r -g daemon -d /var/lib/mongodb -s /sbin/nologin mongodb
+        chown -R mongodb:daemon /var/lib/mongodb
+        chown -R mongodb:daemon /var/log/mongodb
 }
 
 function postup() {
-	postinst
+        postinst
 }
 
 function prerm() {
-	userdel mongodb
+        userdel mongodb
 }

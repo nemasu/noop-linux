@@ -35,7 +35,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	./configure \
+        ./configure \
         --prefix=/usr \
         --sysconfdir=/etc \
         --libexecdir=/usr/lib/mate-media \
@@ -46,31 +46,31 @@ function BuildAndInstall
         --disable-gst-mixer-applet \
         --disable-static
     make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-	#Limit to same series
-	MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-	LISTURL=http://pub.mate-desktop.org/releases/${MM}/
-	FILELIST=`GetFileList`
-	LATEST=0
+        #Limit to same series
+        MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
+        LISTURL=http://pub.mate-desktop.org/releases/${MM}/
+        FILELIST=`GetFileList`
+        LATEST=0
 
-	for i in ${FILELIST[@]};
-	do
-			CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-			vercomp $LATEST $CURVER
-			if [ $? -eq 2 ];
-			then
-					LATEST=$CURVER
-			fi
-	done
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
-	vercomp $VERSION $LATEST
-	if [ $? -eq 2 ];
-	then
-			echo "$NAME: New Version Available! - $LATEST"
-	fi
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
 }

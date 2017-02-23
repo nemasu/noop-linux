@@ -33,18 +33,18 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-	cd source
+        cd source
 
-	./configure $STDUSRCONF
-	
-	#arm
-	if [ "${ARCH}" == "armv6l" ] || [ "${ARCH}" == "armv7l" ];
-	then
-		sed -i -e '/LDFLAGSICUDT/d' config/mh-linux
-	fi
+        ./configure $STDUSRCONF
+        
+        #arm
+        if [ "${ARCH}" == "armv6l" ] || [ "${ARCH}" == "armv7l" ];
+        then
+                sed -i -e '/LDFLAGSICUDT/d' config/mh-linux
+        fi
 
-	make -j${BLDR_CORES}
-	make DESTDIR=/root/bldr-inst install
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
 
 }
 
