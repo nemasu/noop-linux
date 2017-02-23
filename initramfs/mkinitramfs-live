@@ -49,9 +49,7 @@ PREFIX=/root/initramfs
 mkdir -p $PREFIX
 
 cd $PREFIX
-$WGET $PKGHOST/file-base.tar.bz2 -O$PREFIX/file-base.tar.bz2
-$TAR xf file-base.tar.bz2
-$RM file-base.tar.bz2
+$TAR xf /var/noop/etc/file-base.tar.bz2
 
 if [ `$UNAME -m` == "x86_64" ]; then
 	$LN -s lib lib64

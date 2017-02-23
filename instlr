@@ -70,9 +70,7 @@ if [ "$internetormedia" == "internet" ];
 then
 
 	cd $PREFIX
-	$WGET $PKGHOST/file-base.tar.bz2 -O$PREFIX/file-base.tar.bz2
-	$TAR xf file-base.tar.bz2
-	$RM file-base.tar.bz2
+	$TAR xf /var/noop/etc/file-base.tar.bz2
 
 	PREFIX=$PREFIX pkgr -s
 	export PKGR_SUPPRESS_P_OUTPUT=1
@@ -127,7 +125,6 @@ else
 		echo -n "Copying metadata...";
 	fi
 	cp -r /var/noop $PREFIX/var/
-	rm $PREFIX/var/noop/file-base.tar.bz2
 	ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
 	echo "done.";
 
@@ -138,12 +135,7 @@ else
 	fi
 	pushd $PREFIX &> /dev/null
 
-	if [ -e /var/noop/file-base.tar.bz2 ]; then
-		tar xf /var/noop/file-base.tar.bz2
-	else
-		wget $PKGHOST/file-base.tar.bz2
-		tar xf file-base.tar.bz2 && rm file-base.tar.bz2
-	fi
+    tar xf /var/noop/etc/file-base.tar.bz2
 
 	popd &> /dev/null
 
