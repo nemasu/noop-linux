@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('python-numpy' 'gcc-libs' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=
