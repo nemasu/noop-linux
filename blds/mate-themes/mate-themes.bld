@@ -5,7 +5,7 @@ NAME=mate-themes
 DESC="Default themes for MATE"
 
 #package version
-VERSION=3.22.0
+VERSION=3.22.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

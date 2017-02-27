@@ -1,28 +1,26 @@
 #package name
-NAME=mate-indicator-applet
+NAME=pcre2
 
 #Description
-DESC="Exposes Ayatana Indicators in the MATE Panel"
+DESC="A library that implements Perl 5-style regular expressions, version 2."
 
 #package version
-VERSION=1.16.0
-DVERSION=1.16.0
+VERSION=10.23
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-SRC=http://pub.mate-desktop.org/releases/${MM}/${NAME}-${DVERSION}.tar.xz
+SRC=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre2-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--enable-unicode-properties --enable-pcre2-16 --enable-pcre2-32 --enable-jit -enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=autotools
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libindicator' 'mate-panel' 'pango')
+DEPS=('gcc-libs' 'glibc' 'ncurses' 'readline' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,25 +31,18 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-        PYTHON=/usr/bin/python2 ./configure \
-        --prefix=/usr \
-        --sysconfdir=/etc \
-        --libexecdir=/usr/lib/mate-indicator-applet \
-        --disable-static
-    make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-        #Limit to same series
-        MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
-        LISTURL=http://pub.mate-desktop.org/releases/${MM}/
+        NAME=pcre2
+        LISTURL=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
         FILELIST=`GetFileList`
         LATEST=0
+        NAME=pcre
 
         for i in ${FILELIST[@]};
         do

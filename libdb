@@ -5785,7 +5785,6 @@ mariadb-libs,libmysqlclient_r.so.18
 mariadb-libs,libmysqlclient_r.so.18.0.0
 mariadb-libs,libmysqld.so
 mariadb-libs,libmysqld.so.18
-mate-applets,mate-battstat_applet.soundlist
 mate-control-center,libmarco.so
 mate-control-center,libmate-slab.so
 mate-control-center,libmate-slab.so.0
@@ -5796,11 +5795,9 @@ mate-control-center,libmate-window-settings.so.1.0.0
 mate-desktop,libmate-desktop-2.so
 mate-desktop,libmate-desktop-2.so.17
 mate-desktop,libmate-desktop-2.so.17.1.4
-mate-desktop,org.mate.sound.gschema.xml
 mate-menus,libmate-menu.so
 mate-menus,libmate-menu.so.2
 mate-menus,libmate-menu.so.2.4.9
-mate-menus,matemenu.so
 mate-notification-daemon,libcoco.so
 mate-notification-daemon,libnodoka.so
 mate-notification-daemon,libslider.so
@@ -5843,7 +5840,6 @@ mate-settings-daemon,libtyping-break.so
 mate-settings-daemon,libxrandr.so
 mate-settings-daemon,libxrdb.so
 mate-settings-daemon,libxsettings.so
-mate-settings-daemon,org.mate.SettingsDaemon.plugins.sound.gschema.xml
 mate-user-share,libcaja-user-share.so
 mate-utils,libmatedict.so
 mate-utils,libmatedict.so.6
@@ -6687,6 +6683,18 @@ pcre,libpcrecpp.so.0.0.1
 pcre,libpcreposix.so
 pcre,libpcreposix.so.0
 pcre,libpcreposix.so.0.0.3
+pcre2,libpcre2-16.so
+pcre2,libpcre2-16.so.0
+pcre2,libpcre2-16.so.0.5.0
+pcre2,libpcre2-32.so
+pcre2,libpcre2-32.so.0
+pcre2,libpcre2-32.so.0.5.0
+pcre2,libpcre2-8.so
+pcre2,libpcre2-8.so.0
+pcre2,libpcre2-8.so.0.5.0
+pcre2,libpcre2-posix.so
+pcre2,libpcre2-posix.so.1
+pcre2,libpcre2-posix.so.1.0.1
 perl,B.so
 perl,Base64.so
 perl,Byte.so
@@ -9365,7 +9373,7 @@ vlc,libyuy2_i422_plugin.so
 vlc,libzip_plugin.so
 vte,libvte-2.91.so
 vte,libvte-2.91.so.0
-vte,libvte-2.91.so.0.3790.0
+vte,libvte-2.91.so.0.4600.1
 vte2,libvte.so
 vte2,libvte.so.9
 vte2,libvte.so.9.2800.2
