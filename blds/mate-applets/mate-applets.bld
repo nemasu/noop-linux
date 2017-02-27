@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'dconf' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'gtksourceview2' 'harfbuzz' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrandr' 'libXrender' 'libXres' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libgtop2' 'libmateweather' 'libnotify' 'libpng' 'libpng15' 'libsoup' 'libwnck2' 'libxcb' 'libxml2' 'mate-desktop' 'mate-panel' 'pango' 'pcre' 'pixman' 'polkit' 'sqlite' 'startup-notification' 'systemd' 'upower' 'util-linux' 'wireless_tools' 'xcb-util' 'xz' 'zlib')
+DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'gtksourceview2' 'harfbuzz' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXres' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libgtop2' 'libmateweather' 'libnotify' 'libpng' 'libpng15' 'libsoup' 'libwnck2' 'libxcb' 'libxml2' 'libxshmfence' 'lz4' 'mate-panel' 'mesalib' 'pango' 'pcre' 'pixman' 'polkit' 'sqlite' 'startup-notification' 'systemd' 'upower' 'util-linux' 'wayland' 'wireless_tools' 'xcb-util' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
