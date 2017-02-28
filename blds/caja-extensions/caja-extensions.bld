@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'caja' 'dbus' 'dbus-glib' 'dconf' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gssdp' 'gtk+2' 'gupnp' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrandr' 'libXrender' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libpng' 'libsoup' 'libxcb' 'libxml2' 'libxshmfence' 'mate-desktop' 'mesalib' 'pango' 'pcre' 'pixman' 'sqlite' 'startup-notification' 'systemd' 'util-linux' 'wayland' 'xcb-util' 'xz' 'zlib')
+DEPS=('atk' 'cairo' 'caja' 'dbus' 'dbus-glib' 'dconf' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gssdp' 'gtk+' 'gupnp' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrandr' 'libXrender' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libpng' 'libsoup' 'libxcb' 'libxml2' 'libxshmfence' 'mate-desktop' 'mesalib' 'pango' 'pcre' 'pixman' 'sqlite' 'startup-notification' 'systemd' 'util-linux' 'wayland' 'xcb-util' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,11 +35,11 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        PYTHON=/usr/bin/python2 ./configure \
+    PYTHON=/usr/bin/python2 ./configure \
         --prefix=/usr \
-        --with-gtk=2.0
+        --with-gtk=3.0
     make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+    make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXext' 'libXrandr' 'libXrender' 'libcanberra' 'libgnome-keyring' 'libnotify' 'libunique1' 'mate-panel' 'pango' 'upower')
+DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libX11' 'libXext' 'libXrandr' 'libXrender' 'libcanberra' 'libgnome-keyring' 'libnotify' 'mate-panel' 'pango' 'upower')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -42,7 +42,8 @@ function BuildAndInstall
         --localstatedir=/var \
         --sbindir=/usr/bin \
         --enable-applets \
-        --enable-unique
+        --enable-unique \
+        --with-gtk=3.0
     make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }

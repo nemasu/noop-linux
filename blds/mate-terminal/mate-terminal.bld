@@ -38,7 +38,7 @@ function BuildAndInstall
         sed -i 's/env python/env python2/' mate-terminal.wrapper
         ./configure \
         --prefix=/usr \
-        --with-gtk=2.0 \
+        --with-gtk=3.0 \
         --disable-static
     make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install

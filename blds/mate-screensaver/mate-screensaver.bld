@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXext' 'libXxf86vm' 'libmatekbd' 'libnotify' 'libxklavier' 'linux-pam' 'mate-desktop' 'mate-menus' 'mesalib' 'pango' 'startup-notification' 'systemd')
+DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXext' 'libXxf86vm' 'libmatekbd' 'libnotify' 'libxklavier' 'linux-pam' 'mate-desktop' 'mate-menus' 'mesalib' 'pango' 'startup-notification' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -46,6 +46,7 @@ function BuildAndInstall
         --with-mit-ext \
         --with-libnotify \
         --enable-locking \
+        --with-gtk=3.0 \
         --disable-static
     make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install

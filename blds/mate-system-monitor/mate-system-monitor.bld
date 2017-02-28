@@ -39,7 +39,7 @@ function BuildAndInstall
         --prefix=/usr \
         --libexecdir=/usr/lib/mate-system-monitor \
         --localstatedir=/var \
-        --with-gtk=2.0 \
+        --with-gtk=3.0 \
         --disable-static
     make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install

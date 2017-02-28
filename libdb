@@ -136,7 +136,6 @@ atril,libatrilview.so
 atril,libatrilview.so.3
 atril,libatrilview.so.3.0.0
 atril,libcomicsdocument.so
-atril,libepubdocument.so
 atril,libpdfdocument.so
 atril,libpixbufdocument.so
 atril,libpsdocument.so
@@ -2246,7 +2245,7 @@ gtkmm2,libgtkmm-2.4.so.1
 gtkmm2,libgtkmm-2.4.so.1.1.0
 gtksourceview,libgtksourceview-3.0.so
 gtksourceview,libgtksourceview-3.0.so.1
-gtksourceview,libgtksourceview-3.0.so.1.2.0
+gtksourceview,libgtksourceview-3.0.so.1.7.0
 gtksourceview2,libgtksourceview-2.0.so
 gtksourceview2,libgtksourceview-2.0.so.0
 gtksourceview2,libgtksourceview-2.0.so.0.0.0
@@ -5020,9 +5019,9 @@ libidn,libidn.so.11.6.8
 libimobiledevice,libimobiledevice.so
 libimobiledevice,libimobiledevice.so.4
 libimobiledevice,libimobiledevice.so.4.0.1
-libindicator,libindicator.so
-libindicator,libindicator.so.7
-libindicator,libindicator.so.7.0.0
+libindicator,libindicator3.so
+libindicator,libindicator3.so.7
+libindicator,libindicator3.so.7.0.0
 libinput,libinput.so
 libinput,libinput.so.10
 libinput,libinput.so.10.11.3
@@ -5354,6 +5353,9 @@ libtirpc,libtirpc.so.1.0.10
 libtool,libltdl.so
 libtool,libltdl.so.7
 libtool,libltdl.so.7.3.0
+libunique,libunique-3.0.so
+libunique,libunique-3.0.so.0
+libunique,libunique-3.0.so.0.0.2
 libunique1,libunique-1.0.so
 libunique1,libunique-1.0.so.0
 libunique1,libunique-1.0.so.0.100.6
@@ -5737,8 +5739,8 @@ man-db,libmandb.so
 man-pages,ld-linux.so.8
 man-pages,ld.so.8
 marco,libmarco-private.so
-marco,libmarco-private.so.0
-marco,libmarco-private.so.0.0.0
+marco,libmarco-private.so.1
+marco,libmarco-private.so.1.0.0
 mariadb,adt_null.so
 mariadb,auth_0x0100.so
 mariadb,auth_gssapi.so
@@ -7023,7 +7025,6 @@ pluma,libcloader.so
 pluma,libdocinfo.so
 pluma,libfilebrowser.so
 pluma,libmodelines.so
-pluma,libpythonloader.so
 pluma,libsort.so
 pluma,libspell.so
 pluma,libtaglist.so
@@ -7254,16 +7255,12 @@ pulseaudio,module-zeroconf-discover.so
 pulseaudio,module-zeroconf-publish.so
 py2cairo,_cairo.so
 pycairo,_cairo.cpython-35m-x86_64-linux-gnu.so
-pygobject2,_gio.so
-pygobject2,_glib.so
-pygobject2,_gobject.so
 pygobject2,libpyglib-2.0-python.so
 pygobject2,libpyglib-2.0-python.so.0
 pygobject2,libpyglib-2.0-python.so.0.0.0
 pygobject2,libpyglib-2.0-python2.so
 pygobject2,libpyglib-2.0-python2.so.0
 pygobject2,libpyglib-2.0-python2.so.0.0.0
-pygobject2,unix.so
 pygtk,_gtk.so
 pygtk,atk.so
 pygtk,glade.so

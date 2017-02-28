@@ -5,7 +5,7 @@ NAME=gtk+
 DESC="GObject-based multi-platform GUI toolkit"
 
 #package version
-VERSION=3.20.6
+VERSION=3.22.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -40,7 +40,7 @@ function BuildAndInstall
         --enable-gtk2-dependency \
         --disable-schemas-compile \
         --enable-x11-backend \
-                --enable-introspection
+        --enable-introspection
 
         #https://bugzilla.gnome.org/show_bug.cgi?id=655517
     sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool

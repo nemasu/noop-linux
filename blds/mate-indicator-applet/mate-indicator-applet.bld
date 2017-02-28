@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libindicator' 'mate-panel' 'pango')
+DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libX11' 'libindicator' 'mate-panel' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,13 +35,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        PYTHON=/usr/bin/python2 ./configure \
+    PYTHON=/usr/bin/python2 ./configure \
         --prefix=/usr \
         --sysconfdir=/etc \
         --libexecdir=/usr/lib/mate-indicator-applet \
+        --with-gtk=3.0 \
         --disable-static
     make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+    make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

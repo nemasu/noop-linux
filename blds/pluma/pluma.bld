@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'enchant' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'gtksourceview2' 'harfbuzz' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXxf86vm' 'libdrm' 'libffi' 'libpng' 'libpng15' 'libxcb' 'libxml2' 'libxshmfence' 'mesalib' 'pango' 'pcre' 'pixman' 'python2' 'util-linux' 'wayland' 'xz' 'zlib')
+DEPS=('atk' 'cairo' 'enchant' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'gtksourceview' 'harfbuzz' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXxf86vm' 'libdrm' 'libffi' 'libpng' 'libxcb' 'libxml2' 'libxshmfence' 'mesalib' 'pango' 'pcre' 'pixman' 'util-linux' 'wayland' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -35,13 +35,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        PYTHON=/usr/bin/python2 ./configure \
+    sed -i 's/python/python2/' plugins/externaltools/data/switch-c.tool.in
+    PYTHON=/usr/bin/python2 ./configure \
         --prefix=/usr \
         --libexecdir=/usr/lib/pluma \
-        --with-gtk=2.0 \
-        --enable-python
+        --with-gtk=3.0 \
+        --disable-python
     make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+    make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

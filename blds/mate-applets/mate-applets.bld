@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'gtksourceview2' 'harfbuzz' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXres' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libgtop2' 'libmateweather' 'libnotify' 'libpng' 'libpng15' 'libsoup' 'libwnck2' 'libxcb' 'libxml2' 'libxshmfence' 'lz4' 'mate-panel' 'mesalib' 'pango' 'pcre' 'pixman' 'polkit' 'sqlite' 'startup-notification' 'systemd' 'upower' 'util-linux' 'wayland' 'wireless_tools' 'xcb-util' 'xz' 'zlib')
+DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'gtksourceview' 'harfbuzz' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXres' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libgtop2' 'libmateweather' 'libnotify' 'libpng' 'libsoup' 'libwnck' 'libxcb' 'libxml2' 'libxshmfence' 'lz4' 'mate-panel' 'mesalib' 'pango' 'pcre' 'pixman' 'polkit' 'sqlite' 'startup-notification' 'systemd' 'upower' 'util-linux' 'wayland' 'wireless_tools' 'xcb-util' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -42,6 +42,7 @@ function BuildAndInstall
         --enable-polkit \
         --enable-networkmanager \
         --enable-ipv6 \
+        --with-gtk=3.0 \
         --disable-static
     make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install

@@ -5,14 +5,15 @@ NAME=libindicator
 DESC="A set of symbols and convience functions that all indicators would like to use"
 
 #package version
-VERSION=12.10.1
+VERSION=12.10.1-1
+DVERSION=12.10.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $VERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/'`
-SRC=https://launchpad.net/libindicator/$MM/$VERSION/+download/libindicator-$VERSION.tar.gz
+MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/'`
+SRC=https://launchpad.net/libindicator/$MM/$DVERSION/+download/libindicator-$DVERSION.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -21,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'pango')
+DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -37,7 +38,7 @@ function BuildAndInstall
         sed '/-Werror/s/$/ -Wno-deprecated-declarations/' -i libindicator/Makefile.{am,in}
         ./configure --prefix='/usr' --sysconfdir='/etc' --localstatedir='/var' \
               --libexecdir="/usr/lib/libindicator" --disable-{static,tests} \
-              --with-gtk='2'
+              --with-gtk='3'
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }
@@ -59,7 +60,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

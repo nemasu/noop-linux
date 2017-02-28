@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXtst' 'libfakekey' 'libwnck2' 'mate-panel' 'pango')
+DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libX11' 'libXtst' 'libfakekey' 'libwnck' 'mate-panel' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -39,7 +39,7 @@ function BuildAndInstall
         --prefix=/usr \
         --libexec=/usr/lib/mate-netbook \
         --sysconfdir=/etc \
-        --with-gtk=2.0 \
+        --with-gtk=3.0 \
         --disable-static
     make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install

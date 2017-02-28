@@ -40,7 +40,7 @@ function BuildAndInstall
         --libexecdir=/usr/lib/mate-polkit \
         --sysconfdir=/etc \
         --localstatedir=/var \
-        --with-gtk=2.0 \
+        --with-gtk=3.0 \
         --enable-introspection \
         --disable-static
     make -j${BLDR_CORES}

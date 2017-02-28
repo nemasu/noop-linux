@@ -16,13 +16,13 @@ MM=`echo $DVERSION | sed 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
 SRC=http://pub.mate-desktop.org/releases/${MM}/${NAME}-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--with-gtk=3.0"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libsoup' 'libxml2' 'pango')
+DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libsoup' 'libxml2' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=

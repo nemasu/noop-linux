@@ -42,7 +42,7 @@ function BuildAndInstall
         --libexecdir=/usr/lib/mate-session-manager \
         --sysconfdir=/etc \
         --localstatedir=/var \
-        --with-gtk=2.0 \
+        --with-gtk=3.0 \
                 --with-systemd
     make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
