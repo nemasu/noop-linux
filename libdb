@@ -5159,6 +5159,9 @@ libmatroska,libmatroska.so.6.0.0
 libmcrypt,libmcrypt.so
 libmcrypt,libmcrypt.so.4
 libmcrypt,libmcrypt.so.4.4.8
+libmicrohttpd,libmicrohttpd.so
+libmicrohttpd,libmicrohttpd.so.12
+libmicrohttpd,libmicrohttpd.so.12.40.0
 libmms,libmms.so
 libmms,libmms.so.0
 libmms,libmms.so.0.0.2
