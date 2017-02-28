@@ -1,0 +1,42 @@
+#package name
+NAME=sdl
+
+#Description
+DESC="A library for portable low-level access to a video framebuffer, audio output, mouse, and keyboard"
+
+#package version
+VERSION=1.2.15
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.libsdl.org/release/SDL-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF="--disable-nasm --enable-alsa --with-x --disable-rpath"
+
+#autotools, python, perl, cmake, custom
+BUILD=autotools
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+#Default HTTP curl new version detection
+function Detect
+{
+    echo "$NAME: too old"
+}
