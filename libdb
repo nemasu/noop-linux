@@ -1213,12 +1213,9 @@ gdk-pixbuf,libpixbufloader-tga.so
 gdk-pixbuf,libpixbufloader-tiff.so
 gdk-pixbuf,libpixbufloader-xbm.so
 gdk-pixbuf,libpixbufloader-xpm.so
-geany,classbuilder.so
-geany,export.so
-geany,filebrowser.so
-geany,htmlchars.so
-geany,saveactions.so
-geany,splitwindow.so
+geany,libgeany.so
+geany,libgeany.so.0
+geany,libgeany.so.0.0.0
 gegl,add.so
 gegl,alien-map.so
 gegl,antialias.so
