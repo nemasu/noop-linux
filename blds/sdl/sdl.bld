@@ -20,7 +20,7 @@ EXTRACONF="--disable-nasm --enable-alsa --with-x --disable-rpath"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc')
 
 # 'no' to skip calls to strip
 STRIP=

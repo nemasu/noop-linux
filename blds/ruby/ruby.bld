@@ -5,7 +5,7 @@ NAME=ruby
 DESC="An object-oriented language for quick and easy programming"
 
 #package version
-VERSION=2.2.3
+VERSION=2.4.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('db' 'gdbm' 'ghc' 'glibc' 'gmp' 'libffi' 'libX11' 'ncurses' 'openssl' 'readline' 'tcl' 'tk' 'zlib')
+DEPS=('db' 'gdbm' 'glibc' 'gmp' 'libffi' 'ncurses' 'openssl' 'readline' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
