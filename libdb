@@ -8889,6 +8889,8 @@ telepathy-glib,libtelepathy-glib.so.0.84.1
 telepathy-logger,libtelepathy-logger.so
 telepathy-logger,libtelepathy-logger.so.2
 telepathy-logger,libtelepathy-logger.so.2.2.1
+tensorflow,libgfortran-ed201abd.so.3.0.0
+tensorflow,libopenblasp-r0-39a31c03.2.18.so
 tevent,_tevent.so
 tevent,libtevent.so
 tevent,libtevent.so.0
