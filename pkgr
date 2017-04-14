@@ -2356,6 +2356,12 @@ if [ $1 = "--mkinitramfs" ]; then
                         mkdir -p $INITRAMFS_WORKDIR/etc/noop/
                         cp -v /etc/noop/initramfs $INITRAMFS_WORKDIR/etc/noop/
                 fi
+
+                fn_exists InitramfsExtra
+                if [ $? -eq 0 ]; then
+                    InitramfsExtra
+                fi
+
         fi
 
     copy_binary `which busybox` $INITRAMFS_WORKDIR/usr/bin/busybox
