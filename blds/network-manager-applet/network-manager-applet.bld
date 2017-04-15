@@ -2,10 +2,10 @@
 NAME=network-manager-applet
 
 #Description
-DESC="Applet for managing network connections"
+ESC="Applet for managing network connections"
 
 #package version
-VERSION=1.0.10
+VERSION=1.4.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -41,8 +41,8 @@ function BuildAndInstall
       --libexecdir=/usr/lib/networkmanager \
       --disable-static \
       --disable-maintainer-mode \
-      --disable-migration \
-      --with-modem-manager-1
+	  --without-team \
+	  --disable-introspection
 
   # https://bugzilla.gnome.org/show_bug.cgi?id=655517
   sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool

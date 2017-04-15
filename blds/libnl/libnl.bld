@@ -5,13 +5,14 @@ NAME=libnl
 DESC="Library for applications dealing with netlink sockets"
 
 #package version
-VERSION=3.2.11
+VERSION=3.2.29
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 SRC=http://www.infradead.org/~tgr/libnl/files/libnl-${VERSION}.tar.gz
+SRC=https://github.com/thom311/libnl/releases/download/libnl`echo $VERSION | sed -e 's/\./_/g'`/libnl-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

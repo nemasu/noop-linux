@@ -67,7 +67,7 @@ TMPDIR=$PREFIX/tmp/noop
 TMPFILE=$TMPDIR/meta.tmp
 TMPLIBFILE=$TMPDIR/tmplib.tmp
 GITHOST=https://github.com/nemasu/noop-linux.git
-HOST=http://www.nooplinux.org/noop
+HOST=https://www.nooplinux.org/noop
 
 if [ -e $USER_MIRRORS ];
 then
