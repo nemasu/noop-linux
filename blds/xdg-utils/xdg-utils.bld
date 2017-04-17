@@ -5,7 +5,7 @@ NAME=xdg-utils
 DESC="Command line tools that assist applications with a variety of desktop integration tasks"
 
 #package version
-VERSION=20150413
+VERSION=20170228
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,7 +5,7 @@ NAME=lua
 DESC="Powerful lightweight programming language designed for extending applications"
 
 #package version
-VERSION=5.3.2
+VERSION=5.3.4
 MAJOR=${VERSION:0:3}
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,8 +5,8 @@ NAME=gvfs
 DESC="Virtual filesystem implementation for GIO"
 
 #package version
-VERSION=1.28.2
-DVERSION=1.28.2
+VERSION=1.32.1
+DVERSION=1.32.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
