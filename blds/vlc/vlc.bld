@@ -5,8 +5,8 @@ NAME=vlc
 DESC="A multi-platform MPEG, VCD/DVD, and DivX player"
 
 #package version
-VERSION=2.2.3
-DVERSION=2.2.3
+VERSION=2.2.4
+DVERSION=2.2.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -27,15 +27,14 @@ DEPS=('qt4' 'ffmpeg2' 'ttf-freefont' 'ttf-dejavu' 'a52dec' 'alsa-lib' 'atk' 'ava
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('ttf-dejavu' 'ttf-freefont' 'ffmpeg2' 'qt4')
+PKGDEPS=('ttf-dejavu' 'ttf-freefont' 'qt4')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-export PKG_CONFIG_PATH=/usr/pkgconfig:/lib/pkgconfig:/usr/lib/ffmpeg2/pkgconfig
-
 function BuildAndInstall
 {
+
         autoreconf -fi
 
         sed -i -e 's:truetype/freefont:TTF:g' modules/text_renderer/freetype.c
@@ -45,6 +44,13 @@ function BuildAndInstall
         LDFLAGS+=" -L/usr/share/OpenCV/3rdparty/lib" \
                 ./configure --prefix=/usr \
                         --sysconfdir=/etc \
+                        --enable-qt5 \
+                        --enable-vlc\
+                        --disable-dependency-tracking \
+                        --disable-optimizations \
+                        --disable-update-check \
+                        --enable-fast-install \
+                        --enable-screen \
                         --disable-rpath \
                         --enable-faad \
                         --enable-nls \

@@ -5,7 +5,7 @@ NAME=digikam
 DESC="Advanced digital photo management application"
 
 #package version
-VERSION=5.1.0
+VERSION=5.5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -14,10 +14,10 @@ ISUSR=1
 SRC=http://download.kde.org/stable/digikam/digikam-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="-DENABLE_OPENCV3:BOOL=ON"
+EXTRACONF=
 
 #autotools, perl, cmake, custom
-BUILD=cmake
+BUILD=custom
 
 # build/package dependancies
 DEPS=('exiv2' 'expat' 'gcc-libs' 'glibc' 'jasper' 'kauth' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kfilemetadata' 'ki18n' 'kiconthemes' 'kio' 'kjobwidgets' 'knotifications' 'knotifyconfig' 'kservice' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libglu' 'libgphoto2' 'libjpeg' 'libpng' 'libusb' 'mesalib' 'opencv' 'qt' 'qt-webkit' 'solid' 'threadweaver' 'tiff' 'zlib')
@@ -31,9 +31,26 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    mkdir -p build && cd build
+  
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_TESTING=OFF \
+        -DENABLE_KFILEMETADATASUPPORT=ON \
+        -DENABLE_MEDIAPLAYER=ON \
+        -DENABLE_AKONADICONTACTSUPPORT=ON \
+        -DENABLE_MYSQLSUPPORT=ON \
+        -DENABLE_OPENCV3=ON \
+        -DENABLE_APPSTYLES=ON \
+        -DDIGIKAMSC_COMPILE_DOC=OFF #docs failing to build
+
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect

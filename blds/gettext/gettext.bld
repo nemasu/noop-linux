@@ -5,7 +5,7 @@ NAME=gettext
 DESC="GNU internationalization library"
 
 #package version
-VERSION=0.19.6
+VERSION=0.19.8.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

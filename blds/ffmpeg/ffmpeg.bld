@@ -5,8 +5,8 @@ NAME=ffmpeg
 DESC="Complete solution to record, convert and stream audio and video"
 
 #package version
-VERSION=3.0.2
-DVERSION=3.0.2
+VERSION=3.3
+DVERSION=3.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -70,8 +70,7 @@ function BuildAndInstall
                 --enable-shared \
                 --enable-swresample \
                 --enable-vdpau \
-                --enable-version3 \
-                --enable-x11grab
+                --enable-version3
 
         make -j${BLDR_CORES}
         make tools/qt-faststart
