@@ -1,0 +1,54 @@
+#package name
+NAME=yarn
+
+#Description
+DESC='Fast, reliable, and secure dependency management'
+
+#package version
+VERSION=0.23.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="https://github.com/yarnpkg/yarn/releases/download/v$VERSION/yarn-v$VERSION.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	mkdir -p /root/bldr-inst/usr/lib/node_modules/yarn
+	cp -R * /root/bldr-inst/usr/lib/node_modules/yarn/
+
+	mkdir -p /root/bldr-inst/usr/bin
+	ln -s /usr/lib/node_modules/yarn/bin/yarn.js /root/bldr-inst/usr/bin/yarn
+	ln -s /usr/lib/node_modules/yarn/bin/yarn.js /root/bldr-inst/usr/bin/yarnpkg
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LATEST=`curl -s -L https://github.com/yarnpkg/yarn/releases | egrep "yarn-v[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*yarn-v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}

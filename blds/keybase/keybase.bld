@@ -1,0 +1,57 @@
+#package name
+NAME=keybase
+
+#Description
+DESC="Crypto for everyone!"
+
+#package version
+VERSION=1.0.21
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=1
+
+function BuildAndInstall
+{
+    pkgr -i yarn rsync &> /dev/null
+    if [ -z "$BLDR_CONTINUE" ]; then
+        git clone https://github.com/keybase/client.git
+        git clone --depth=1 https://github.com/keybase/kbfs.git
+        cd client && git checkout v${VERSION} && cd ..
+    fi
+
+    ./client/packaging/linux/build_binaries.sh prerelease ./build_dir
+    cp -r ./build_dir/binaries/amd64/* /root/bldr-inst/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LATEST=`curl -s -L https://github.com/keybase/client/releases | egrep "keybase-[0-9\.]+-linux\.tgz" | head -n1 | sed -e 's/.*keybase-\([0-9\.]*\)-linux\.tgz.*/\1/g'`
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}

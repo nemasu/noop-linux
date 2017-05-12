@@ -1,0 +1,8 @@
+function postinst() {
+    chmod +x /opt/keybase/{Keybase,*.so,*.sh}
+    /opt/keybase/post_install.sh
+}
+
+function postup() {
+    postinst
+}
