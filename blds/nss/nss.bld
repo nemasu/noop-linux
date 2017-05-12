@@ -5,7 +5,7 @@ NAME=nss
 DESC="Mozilla Network Security Services"
 
 #package version
-VERSION=3.28.1
+VERSION=3.30.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
