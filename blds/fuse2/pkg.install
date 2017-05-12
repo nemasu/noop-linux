@@ -1,0 +1,7 @@
+function postinst() {
+    chmod +s /usr/bin/fusermount
+}
+
+function postup() {
+    postinst
+}

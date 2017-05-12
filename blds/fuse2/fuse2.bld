@@ -1,11 +1,11 @@
 #package name
-NAME=fuse
+NAME=fuse2
 
 #Description
-DESC="A library that makes it possible to implement a filesystem in a userspace program."
+DESC="A library that makes it possible to implement a filesystem in a userspace program. Verison2"
 
 #package version
-VERSION=3.0.1
+VERSION=2.9.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
