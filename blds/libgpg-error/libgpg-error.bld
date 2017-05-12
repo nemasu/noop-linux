@@ -5,7 +5,7 @@ NAME=libgpg-error
 DESC="Support library for libgcrypt"
 
 #package version
-VERSION=1.21
+VERSION=1.27
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

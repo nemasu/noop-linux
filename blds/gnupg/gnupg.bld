@@ -5,7 +5,7 @@ NAME=gnupg
 DESC="Complete and free implementation of the OpenPGP standard"
 
 #package version
-VERSION=2.1.11
+VERSION=2.1.20
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -4659,7 +4659,7 @@ libass,libass.so.5
 libass,libass.so.5.1.2
 libassuan,libassuan.so
 libassuan,libassuan.so.0
-libassuan,libassuan.so.0.7.2
+libassuan,libassuan.so.0.7.3
 libatasmart,libatasmart.so
 libatasmart,libatasmart.so.4
 libatasmart,libatasmart.so.4.0.5
@@ -4844,7 +4844,7 @@ libftdi,libftdipp1.so.2
 libftdi,libftdipp1.so.2.1.0
 libgcrypt,libgcrypt.so
 libgcrypt,libgcrypt.so.20
-libgcrypt,libgcrypt.so.20.0.5
+libgcrypt,libgcrypt.so.20.1.6
 libgdata,libgdata.so
 libgdata,libgdata.so.13
 libgdata,libgdata.so.13.2.0
@@ -4889,7 +4889,7 @@ libgnomeui,libgnomeui-2.so.0
 libgnomeui,libgnomeui-2.so.0.2400.5
 libgpg-error,libgpg-error.so
 libgpg-error,libgpg-error.so.0
-libgpg-error,libgpg-error.so.0.17.0
+libgpg-error,libgpg-error.so.0.22.0
 libgphoto2,README.sonix
 libgphoto2,README.sonydscf1
 libgphoto2,README.soundvision
@@ -5085,7 +5085,7 @@ libkomparediff2,libkomparediff2.so.5
 libkomparediff2,libkomparediff2.so.5.0
 libksba,libksba.so
 libksba,libksba.so.8
-libksba,libksba.so.8.11.4
+libksba,libksba.so.8.11.6
 libkscreen,KSC_Fake.so
 libkscreen,KSC_KWayland.so
 libkscreen,KSC_QScreen.so
@@ -6161,7 +6161,7 @@ networkmanager-qt,libKF5NetworkManagerQt.so.6
 nginx,nginx.so
 npth,libnpth.so
 npth,libnpth.so.0
-npth,libnpth.so.0.0.4
+npth,libnpth.so.0.0.6
 nspr,libnspr4.so
 nspr,libplc4.so
 nspr,libplds4.so

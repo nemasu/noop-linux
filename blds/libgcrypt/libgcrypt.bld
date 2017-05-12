@@ -5,7 +5,7 @@ NAME=libgcrypt
 DESC="General purpose cryptographic library based on the code from GnuPG"
 
 #package version
-VERSION=1.6.5
+VERSION=1.7.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
