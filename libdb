@@ -7256,6 +7256,7 @@ pulseaudio,module-x11-publish.so
 pulseaudio,module-x11-xsmp.so
 pulseaudio,module-zeroconf-discover.so
 pulseaudio,module-zeroconf-publish.so
+purple-facebook,libfacebook.so
 py2cairo,_cairo.so
 pycairo,_cairo.cpython-35m-x86_64-linux-gnu.so
 pygobject2,libpyglib-2.0-python.so

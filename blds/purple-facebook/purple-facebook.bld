@@ -1,0 +1,49 @@
+#package name
+NAME=purple-facebook
+
+#Description
+DESC="Facebook chat plugin for Pidgin"
+
+#package version
+VERSION=0.9.3
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+fullver=`curl -s -L https://github.com/dequis/purple-facebook/releases | egrep "purple-facebook-$VERSION-.*\.tar\.gz" | head -n1 | sed -e 's/.*purple-facebook-\(.*\)\.tar\.gz.*/\1/g'`
+SRC=https://github.com/dequis/purple-facebook/releases/download/v$fullver/purple-facebook-$fullver.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=autotools
+
+# build/package dependancies
+DEPS=('dbus' 'dbus-glib' 'farstream' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'json-glib' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libidn' 'libxml2' 'orc' 'pcre' 'pidgin' 'systemd' 'util-linux' 'xz' 'zlib')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LATEST=`curl -s -L https://github.com/dequis/purple-facebook/releases | egrep "purple-facebook-[0-9\.]+-.*\.tar\.gz" | head -n1 | sed -e 's/.*purple-facebook-\([0-9\.]*\)-.*\.tar\.gz.*/\1/g'`
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}
