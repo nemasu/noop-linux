@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=('glibc' 'libcap2' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

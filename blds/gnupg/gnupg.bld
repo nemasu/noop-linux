@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'gnutls' 'libassuan' 'libgcrypt' 'libgpg-error' 'libksba' 'libusb-compat' 'ncurses' 'npth' 'openldap' 'readline' 'sqlite' 'zlib')
+DEPS=('glibc' 'gnutls' 'libassuan' 'libgcrypt' 'libgpg-error' 'libksba' 'libusb' 'ncurses' 'npth' 'openldap' 'readline' 'sqlite' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

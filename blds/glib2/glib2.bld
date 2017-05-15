@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('elfutils' 'glibc' 'libffi' 'pcre' 'zlib')
+DEPS=('elfutils' 'glibc' 'libffi' 'pcre' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
