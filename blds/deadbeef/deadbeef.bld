@@ -5,8 +5,8 @@ NAME=deadbeef
 DESC="A GTK+ audio player for GNU/Linux."
 
 #package version
-VERSION=0.7.0
-DVERSION=0.7.0
+VERSION=0.7.2
+DVERSION=0.7.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -15,13 +15,13 @@ ISUSR=1
 SRC=http://download.sourceforge.net/deadbeef/deadbeef-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--disable-gtk3 --enable-gtk2"
+EXTRACONF="--enable-gtk3 --disable-gtk2"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('alsa-lib' 'atk' 'cairo' 'cdparanoia' 'curl' 'dbus' 'faad2' 'ffmpeg' 'flac' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'imlib2' 'jansson' 'libcddb' 'libcdio' 'libmad' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'libX11' 'libzip' 'pango' 'pulseaudio' 'zlib')
+DEPS=('alsa-lib' 'atk' 'cairo' 'cdparanoia' 'curl' 'dbus' 'faad2' 'ffmpeg' 'flac' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'imlib2' 'jansson' 'libX11' 'libcddb' 'libcdio' 'libmad' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'libzip' 'pango' 'pulseaudio' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
