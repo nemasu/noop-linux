@@ -6574,7 +6574,6 @@ openvpn,openvpn-plugin-down-root.so
 opus,libopus.so
 opus,libopus.so.0
 opus,libopus.so.0.5.0
-orbit2,Everything_module.so
 orbit2,libORBit-2.so
 orbit2,libORBit-2.so.0
 orbit2,libORBit-2.so.0.1.0

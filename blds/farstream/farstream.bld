@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libffi' 'libnice' 'pcre' 'zlib')
+DEPS=('glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libffi' 'libnice' 'pcre' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=
+        LISTURL=http://freedesktop.org/software/farstream/releases/farstream/
         FILELIST=`GetFileList`
         LATEST=0
 
