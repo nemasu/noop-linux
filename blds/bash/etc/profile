@@ -1,5 +1,5 @@
 #!/bin/bash
-export TERM=xterm
+
 export PATH=$HOME/bin:/usr/bin:/bin
 
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'

@@ -5,8 +5,8 @@ NAME=bash
 DESC="The GNU Bourne Again shell"
 
 #package version
-VERSION=4.3.46
-DVERSION=4.3
+VERSION=4.4
+DVERSION=4.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,10 +35,12 @@ RESTORELIBDB=
 function BuildAndInstall
 {
         #Patching Fun!
-        PATCH_LIST=`curl -s http://ftp.gnu.org/gnu/bash/bash-4.3-patches/ | sed -e '/\.sig/d' | grep -E "bash43-[0-9]*" | sed -e 's/.*\(bash43-[0-9]*\)<.*/\1/g'`
+        PATCH_LIST=`curl -s http://ftp.gnu.org/gnu/bash/bash-4.4-patches/ | sed -e '/\.sig/d' | grep -E "bash44-[0-9]*" | sed -e 's/.*\(bash44-[0-9]*\)<.*/\1/g'`
         for i in ${PATCH_LIST[@]};
         do
-                curl -s http://ftp.gnu.org/gnu/bash/bash-4.3-patches/$i | patch -p0
+            num=`echo $i | sed -e 's/bash[0-9]*-//g'`
+            VERSION=${DVERSION}.$num
+            curl -s http://ftp.gnu.org/gnu/bash/bash-4.4-patches/$i | patch -p0
         done
 
         #Build
