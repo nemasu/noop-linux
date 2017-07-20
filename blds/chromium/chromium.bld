@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=56.0.2924.76
-VERSION=56.0.2924.76
+DVERSION=59.0.3071.115
+VERSION=59.0.3071.115
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -26,13 +26,21 @@ DEPS=('alsa-lib' 'atk' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'g
 function BuildAndInstall
 {
 
-  for i in yasm ninja llvm gperf;
+  for i in yasm ninja llvm gperf nodejs;
   do
           if [ ! -e /var/noop/installed/$i ]; then
                 pkgr -i $i
           fi;
   done
-  
+ 
+  #freetype missing: https://groups.google.com/a/chromium.org/d/msg/chromium-packagers/wuInaKJkosg/kMfIV_7wDgAJ
+  if [ ! -e third_party/freetype/src ]; then
+      pushd third_party/freetype
+      git clone https://chromium.googlesource.com/chromium/src/third_party/freetype2 src
+      pushd src && git checkout 5a3490e054bda8a318ebde482
+      popd; popd
+  fi
+
   for i in `ls $BLDRTMPDIR/*.arm_patch`;
   do
         if [ "${ARCH}" == "armv6l" ]; then
@@ -131,8 +139,14 @@ function BuildAndInstall
         ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
         ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
         ln -s /usr/bin/llvm-symbolizer third_party/llvm-build/Release+Asserts/bin/
+        ln -s /usr/bin/llvm-ar third_party/llvm-build/Release+Asserts/bin/llvm-ar
         # remove unsupported clang option
         sed -i '/-Wno-absolute-value/d' build/common.gypi
+
+        #need node now...
+        mkdir -p third_party/node/linux/node-linux-x64/bin/
+        rm -rf third_party/node/linux/node-linux-x64/bin/*
+        ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
   fi
 
   if [ "${ARCH}" == "armv6l" ];
