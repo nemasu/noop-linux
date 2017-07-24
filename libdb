@@ -981,6 +981,12 @@ folks,telepathy.so
 fontconfig,libfontconfig.so
 fontconfig,libfontconfig.so.1
 fontconfig,libfontconfig.so.1.9.2
+fox,libCHART-1.6.so
+fox,libCHART-1.6.so.0
+fox,libCHART-1.6.so.0.0.54
+fox,libFOX-1.6.so
+fox,libFOX-1.6.so.0
+fox,libFOX-1.6.so.0.0.54
 frameworkintegration,FrameworkIntegrationPlugin.so
 frameworkintegration,libKF5Style.so
 frameworkintegration,libKF5Style.so.5
