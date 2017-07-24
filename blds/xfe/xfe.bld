@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('fontconfig' 'fox' 'freetype2' 'gcc-libs' 'glibc' 'libX11' 'libXft' 'libXrandr' 'libpng')
 
 # 'no' to skip calls to strip
 STRIP=

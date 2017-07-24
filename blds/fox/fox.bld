@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('expat' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXft' 'libXi' 'libXrandr' 'libXrender' 'libXxf86vm' 'libdrm' 'libglu' 'libjpeg' 'libpng' 'libxcb' 'libxshmfence' 'mesalib' 'pcre' 'tiff' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
