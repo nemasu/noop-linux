@@ -405,8 +405,6 @@ check,libcheck.so.0.0.0
 chromaprint,libchromaprint.so
 chromaprint,libchromaprint.so.1
 chromaprint,libchromaprint.so.1.3.0
-chromium,libffmpegsumo.so
-chromium-plugins,libpepflashplayer.so
 colord,libcolord.so
 colord,libcolord.so.1
 colord,libcolord.so.1.0.11

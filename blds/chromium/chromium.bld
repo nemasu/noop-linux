@@ -32,7 +32,10 @@ function BuildAndInstall
                 pkgr -i $i
           fi;
   done
- 
+  if [ -n $BLDR_CONTINUE ]; then
+      cd chromium*
+  fi
+
   #freetype missing: https://groups.google.com/a/chromium.org/d/msg/chromium-packagers/wuInaKJkosg/kMfIV_7wDgAJ
   if [ ! -e third_party/freetype/src ]; then
       pushd third_party/freetype
@@ -192,12 +195,19 @@ function BuildAndInstall
 
         install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
         cp out/Release/libwidevinecdmadapter.so /root/bldr-inst/usr/lib/chromium/
+        
+        cp out/Release/{libEGL.*,libGLESv2.*,libosmesa.*} /root/bldr-inst/usr/lib/chromium/
+        cp -r out/Release/swiftshader /root/bldr-inst/usr/lib/chromium/
+
         mkdir -p /root/bldr-inst/usr/bin/
         ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
 
     # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
         strip /root/bldr-inst/usr/lib/chromium/chromedriver \
-        /root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap}
+        /root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap} \
+        /root/bldr-inst/usr/lib/chromium/{libEGL.so,libGLESv2.so,libosmesa.so} \
+        /root/bldr-inst/usr/lib/chromium/swiftshader/{libEGL.so,libGLESv2.so} \
+        /root/bldr-inst/usr/bin/chromedriver
 
         mkdir -p ../widevine
         pushd ../widevine
