@@ -114,7 +114,9 @@ fi
 
 mount /cdrom/root.sqsh /ro
 mount -t tmpfs tmpfs /rw
-mount -t aufs -o br=/rw:/ro none /newroot
+mkdir /rw/mount
+mkdir /rw/work
+mount -t overlay overlay -o lowerdir=/ro,upperdir=/rw/mount,workdir=/rw/work /newroot
 
 #Check if $init exists and is executable
 if [[ -x "/newroot/${init}" ]] ; then

@@ -41,7 +41,6 @@ LN=`$WHICH ln`
 CURL=`$WHICH curl`
 
 #prereqs
-pkgr -i aufs-utils &> /dev/null
 pkgr -i cpio &> /dev/null
 
 PREFIX=/root/initramfs
@@ -94,8 +93,6 @@ find $PREFIX/lib/modules -name "*.xz" -exec unxz {} \;
 cp /lib/modules/$KERVER/modules* $PREFIX/lib/modules/$KERVER/
 depmod -a -b $PREFIX
 
-cp -v `which mount.aufs` $PREFIX/sbin
-
 PREFIX=$PREFIX pkgr -s
 rm -rf $PREFIX/var/noop/{blds,etc,initramfs,kbldr*,instlr,mkiso,meta,kernel}
 export PKGR_SUPPRESS_P_OUTPUT=1
@@ -112,7 +109,7 @@ rm -rf $PREFIX/var/noop
 
 touch $PREFIX/etc/mtab
 
-cp /var/noop/initramfs/init.aufs $PREFIX/init && $CHMOD +x $PREFIX/init
+cp /var/noop/initramfs/init.live $PREFIX/init && $CHMOD +x $PREFIX/init
 
 cd $PREFIX
 find . | cpio -H newc -o > ../initramfs.cpio

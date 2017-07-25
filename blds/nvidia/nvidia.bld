@@ -2,16 +2,16 @@ NAME=nvidia
 
 #Description
 DESC="NVIDIA drivers for linux"
-VERSION=375.39
-DVERSION=375.39
+VERSION=384.59
+DVERSION=384.59
 ISUSR=1
 
 if [ "${ARCH}" == "x86_64" ];
 then
-        SSRC=ftp://download.nvidia.com/XFree86/Linux-x86_64/${DVERSION}/NVIDIA-Linux-x86_64-${DVERSION}.run
+        SSRC=http://download.nvidia.com/XFree86/Linux-x86_64/${DVERSION}/NVIDIA-Linux-x86_64-${DVERSION}.run
         PKGDEPS=('mesalib' 'lib32-mesalib' 'xorg-server')
 else
-        SSRC=ftp://download.nvidia.com/XFree86/Linux-x86/${DVERSION}/NVIDIA-Linux-x86-${DVERSION}.run
+        SSRC=http://download.nvidia.com/XFree86/Linux-x86/${DVERSION}/NVIDIA-Linux-x86-${DVERSION}.run
         PKGDEPS=('mesalib' 'xorg-server')
 fi
 
@@ -113,7 +113,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LATEST=`curl -L -s ftp://download.nvidia.com/XFree86/Linux-x86_64/latest.txt | awk '{print $1;}'`
+        LATEST=`curl -L -s http://download.nvidia.com/XFree86/Linux-x86_64/latest.txt | awk '{print $1;}'`
 
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];

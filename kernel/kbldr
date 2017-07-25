@@ -1,8 +1,8 @@
 #!/bin/bash
 
-AUFS_BRANCH="aufs`echo $1 | sed 's/.*linux-\([0-9]\.[0-9]\).*/\1/g'`"
-
 set -e
+mkdir -p /root/bldr-done
+
 if [ -z "$1" ];
 then
 	echo "Need a URL for source"
@@ -22,19 +22,6 @@ then
 		wget $1 -O/tmp/linux-$VERSION.tar.xz
 	fi
 	tar xf /tmp/linux-$VERSION.tar.xz
-
-	git clone -b ${AUFS_BRANCH} https://github.com/sfjro/aufs4-standalone.git
-	cd linux-$VERSION
-	patch -Np1 -i ../aufs4-standalone/aufs4-kbuild.patch
-	patch -Np1 -i ../aufs4-standalone/aufs4-base.patch
-	patch -Np1 -i ../aufs4-standalone/aufs4-mmap.patch
-	#patch -Np1 -i ../aufs4-standalone/aufs4-standalone.patch
-	cp -vr ../aufs4-standalone/fs .
-	cp -v ../aufs4-standalone/include/uapi/linux/aufs_type.h include/uapi/linux/
-	echo "header-y += aufs_type.h" >> include/uapi/linux/Kbuild
-	cd ..
-	rm -rf aufs4-standalone
-
 fi
 
 cd linux-$VERSION
@@ -46,27 +33,6 @@ then
         #wget https://raw.githubusercontent.com/nemasu/noop-linux/master/kernel/config64 -O.config
         cp -v /var/noop/kernel/config64 .config
 	fi
-	
-	echo "CONFIG_AUFS_FS=y" >> .config
-	echo "CONFIG_AUFS_BRANCH_MAX_127=y" >> .config
-	echo "# CONFIG_AUFS_BRANCH_MAX_511 is not set" >> .config
-	echo "# CONFIG_AUFS_BRANCH_MAX_1023 is not set" >> .config
-	echo "# CONFIG_AUFS_BRANCH_MAX_32767 is not set" >> .config
-	echo "CONFIG_AUFS_SBILIST=y" >> .config
-	echo "# CONFIG_AUFS_HNOTIFY is not set" >> .config
-	echo "# CONFIG_AUFS_EXPORT is not set" >> .config
-	echo "# CONFIG_AUFS_RDU is not set" >> .config
-	echo "# CONFIG_AUFS_PROC_MAP is not set" >> .config
-	echo "# CONFIG_AUFS_SP_IATTR is not set" >> .config
-	echo "# CONFIG_AUFS_SHWH is not set" >> .config
-	echo "CONFIG_AUFS_BR_RAMFS=y" >> .config
-	echo "# CONFIG_AUFS_BR_FUSE is not set" >> .config
-	echo "# CONFIG_AUFS_BR_HFSPLUS is not set" >> .config
-	echo "CONFIG_AUFS_BDEV_LOOP=y" >> .config
-	echo "# CONFIG_AUFS_DEBUG is not set" >> .config
-	echo "CONFIG AUFS_FHSM=y" >> .config
-
-
 fi
 
 rm -rf /root/noopkern
