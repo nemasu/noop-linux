@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc')
+DEPS=('gcc-libs' 'glibc' 'libffi' 'ncurses' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
