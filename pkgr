@@ -371,7 +371,7 @@ function DoSync() {
                 cp -r noop.bak/* noop/ && rm -rf noop.bak
                 rm -rf $PREFIX/usr/sbin/pkgr
                 ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
-                pushd $PREFIX/var/noop $> /dev/null
+                pushd $PREFIX/var/noop &> /dev/null
                 $echo
         else
                 $echo -e "${Cyan}Syncing ...${LightBlue}"

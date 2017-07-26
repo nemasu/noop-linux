@@ -5,7 +5,7 @@ NAME=rust
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 #package version
-VERSION=1.14.0
+VERSION=1.19.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,9 +33,9 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure --prefix=/usr
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+    cp $BLDRTMPDIR/config.toml config.toml
+    python2 ./x.py build
+    DESTDIR=/root/bldr-inst python2 ./x.py install
 }
 
 #Default HTTP curl new version detection

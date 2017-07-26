@@ -5,7 +5,7 @@ NAME=cargo
 DESC="Package manager for rust"
 
 #package version
-VERSION=0.15.0
+VERSION=0.20.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,17 +33,25 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        if [ -z "$BLDR_CONTINUE" ]; then
-                git clone --recursive https://github.com/rust-lang/cargo.git && cd cargo
-                git checkout $VERSION
-        else
-                cd cargo
-        fi
-        setconf Makefile.in CFG_RELEASE_NUM="$VERSION"
-        ./configure --prefix=/usr --enable-optimize
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
-        rm -f /root/bldr-inst/usr/lib/rustlib/{install.log,manifest-cargo,uninstall.sh}
+    if [ -z "$BLDR_CONTINUE" ]; then
+            git clone --recursive https://github.com/rust-lang/cargo.git && cd cargo
+            git checkout $VERSION
+    else
+            cd cargo
+    fi
+    
+    cargo build --release
+    cargo install --root /root/bldr-inst/usr
+
+    rm /root/bldr-inst/usr/.crates.toml
+
+    install -Dm644 src/etc/cargo.bashcomp.sh \
+        /root/bldr-inst/usr/share/bash-completion/completions/cargo
+
+    install -d /root/bldr-inst/usr/share/man/man1/
+    for f in src/etc/man/*; do
+        cp "$f" /root/bldr-inst/usr/share/man/man1/
+    done
 }
 
 #Default HTTP curl new version detection
