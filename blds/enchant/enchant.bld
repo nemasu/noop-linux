@@ -5,13 +5,14 @@ NAME=enchant
 DESC="A wrapper library for generic spell checking"
 
 #package version
-VERSION=1.6.0
+VERSION=1.6.0-1
+DVERSION=1.6.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.abisource.com/downloads/enchant/${VERSION}/enchant-${VERSION}.tar.gz
+SRC=http://www.abisource.com/downloads/enchant/${DVERSION}/enchant-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--disable-ispell --with-myspell-dir=/usr/share/myspell --disable-static"

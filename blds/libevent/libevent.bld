@@ -5,13 +5,13 @@ NAME=libevent
 DESC="An event notification library"
 
 #package version
-VERSION=2.0.21
+VERSION=2.1.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="https://github.com/downloads/libevent/libevent/libevent-${VERSION}-stable.tar.gz"
+SRC=https://github.com/libevent/libevent/releases/download/release-${VERSION}-stable/libevent-${VERSION}-stable.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,19 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://libevent.org/
-        FILELIST=`GetFileList`
-        LATEST=0
-
-        for i in ${FILELIST[@]};
-        do
-                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-                        vercomp $LATEST $CURVER
-                        if [ $? -eq 2 ];
-                        then
-                                        LATEST=$CURVER
-                        fi
-        done
+        LATEST=`curl -L -s https://github.com/libevent/libevent/releases | egrep "libevent-[0-9\.]+-stable.tar.gz" | head -n1 | sed -e 's/.*libevent-\([0-9\.]*\)-stable.tar.gz.*/\1/g'`
 
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];

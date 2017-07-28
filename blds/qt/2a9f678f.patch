@@ -1,0 +1,32 @@
+From 2a9f678f59ce795581ae5af4a57cef13b9cc14b7 Mon Sep 17 00:00:00 2001
+From: Eike Ziller <eike.ziller@qt.io>
+Date: Mon, 26 Jun 2017 15:52:59 +0200
+Subject: [PATCH] Fix navigation with offline style
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+When the switching to the non-simple offline style is done after
+document load, the navigation to anchors completely breaks. So, do
+the switch without the additional delay.
+
+Task-number: QTCREATORBUG-18448
+Change-Id: I5abbc3bbe1c743d2a5e493bb9e0916c5d092942a
+Reviewed-by: Topi Reiniö <topi.reinio@qt.io>
+---
+ doc/global/qt-html-templates-offline-simple.qdocconf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/doc/global/qt-html-templates-offline-simple.qdocconf b/doc/global/qt-html-templates-offline-simple.qdocconf
+index 4a65cc3c57..1fea752a16 100644
+--- a/qtbase/doc/global/qt-html-templates-offline-simple.qdocconf
++++ b/qtbase/doc/global/qt-html-templates-offline-simple.qdocconf
+@@ -6,7 +6,7 @@ qhp.extraFiles    += style/offline-simple.css
+ HTML.headerstyles  = \
+     "  <link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline-simple.css\" />\n" \
+     "  <script type=\"text/javascript\">\n" \
+-    "    window.onload = function(){document.getElementsByTagName(\"link\").item(0).setAttribute(\"href\", \"style/offline.css\");};\n" \
++    "    document.getElementsByTagName(\"link\").item(0).setAttribute(\"href\", \"style/offline.css\");\n" \
+     "  </script>\n"
+ 
+ HTML.postheader = \

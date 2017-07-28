@@ -5,8 +5,8 @@ NAME=qt
 DESC="A cross-platform application and UI framework"
 
 #package version
-VERSION=5.7.0-1
-DVERSION=5.7.0
+VERSION=5.9.1
+DVERSION=5.9.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -38,24 +38,29 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
  
-  export QTDIR=`pwd`
-  export LD_LIBRARY_PATH=${QTDIR}/qtbase/lib:${QTDIR}/qttools/lib:${LD_LIBRARY_PATH}
-  export QT_PLUGIN_PATH=${QTDIR}/qtbase/plugins
+    if [ "${ARCH}" == "armv6l" ];
+    then
+            CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
+    else
+            CONF=
+    fi
+ # Sets default {C,CXX,LD}FLAGS for projects built using qmake
+  sed -i -e "s|^\(QMAKE_CFLAGS_RELEASE.*\)|\1 ${CFLAGS}|" \
+    qtbase/mkspecs/common/gcc-base.conf
+  sed -i -e "s|^\(QMAKE_LFLAGS_RELEASE.*\)|\1 ${LDFLAGS}|" \
+    qtbase/mkspecs/common/g++-unix.conf
 
-        if [ "${ARCH}" == "armv6l" ];
-        then
-                CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
-        else
-                CONF=
-        fi
+  # Use python2 for Python 2.x
+  find . -name '*.py' -exec sed -i \
+    's|#![ ]*/usr/bin/python$|&2|;s|#![ ]*/usr/bin/env python$|&2|' {} +
 
-  if [ "`readlink /usr/bin/python`" != "python2" ];
-  then
-        echo "Python2 must be linked to /usr/bin/python";
-     exit 1
-  fi
+  # Fix missing private includes https://bugreports.qt.io/browse/QTBUG-37417
+  sed -e '/CMAKE_NO_PRIVATE_INCLUDES\ \=\ true/d' -i qtbase/mkspecs/features/create_cmake.prf
 
-  PYTHON=/usr/bin/python2 ./configure -confirm-license -opensource \
+  echo "INCLUDEPATH += /usr/include/openssl-1.0" >> qtbase/src/network/network.pro
+  export OPENSSL_LIBS='-L/usr/lib/openssl-1.0 -lssl -lcrypto'
+
+  PYTHON=/usr/bin/python2 ./configure -v -confirm-license -opensource \
                 -prefix /usr \
                 -bindir /usr/bin \
                 -docdir /usr/share/doc/qt \
@@ -64,7 +69,7 @@ function BuildAndInstall
                 -datadir /usr/share/qt \
                 -sysconfdir /etc/xdg \
                 -examplesdir /usr/share/doc/qt/examples \
-                -plugin-sql-{psql,mysql,sqlite,odbc,ibase} \
+                -plugin-sql-{mysql,sqlite,odbc,ibase} \
                 -system-sqlite \
                 -openssl-linked \
                 -nomake examples \
@@ -73,7 +78,16 @@ function BuildAndInstall
                 -dbus-linked \
                 -system-harfbuzz \
                 -journald \
+                -no-use-gold-linker \
                 -reduce-relocations ${CONF}
+
+  #make psql plugin manually, configure isn't picking it up for some reason.
+  pushd qtbase/src/plugins/sqldrivers/psql/
+  qmake "INCLUDEPATH+=/usr/include/postgresql" "LIBS+=-L/usr/lib -lpq" psql.pro
+  make
+  make INSTALL_ROOT=/root/bldr-inst install
+  popd
+
   make -j${BLDR_CORES}
 
   #Skip doc install for now
@@ -123,8 +137,8 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        MM=`curl -s http://download.qt-project.org/official_releases/qt/ | grep -E "href=\"[0-9\.][0-9\.]*\/" | sed -e 's/.*href=\"\([0-9\.][0-9\.]*\)\/.*/\1/g' | head -n1`
-        LATEST=`curl -s http://download.qt-project.org/official_releases/qt/$MM/ | grep -E "href=\"[0-9\.][0-9\.]*" | sed -e 's/.*href="\([0-9\.][0-9\.]*\)\/".*/\1/g' | head -n1`
+
+        LATEST=`curl -L -s https://www.qt.io/download-open-source/ | egrep "qt-everywhere-opensource-src-[0-9\.]+.tar.xz" | head -n1 | sed -e 's/.*qt-everywhere-opensource-src-\([0-9\.]*\).tar.xz.*/\1/g'`
 
         vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];

@@ -5,19 +5,19 @@ NAME=hunspell
 DESC="Spell checker and morphological analyzer library and program"
 
 #package version
-VERSION=1.3.3
+VERSION=1.6.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/hunspell/hunspell-${VERSION}.tar.gz
+SRC=https://github.com/hunspell/hunspell/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-readline --with-experimental --with-ui"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=('gcc-libs' 'glibc' 'ncurses')
@@ -31,27 +31,19 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    autoreconf -vfi
+    ./configure --prefix=/usr --with-ui --with-readline  --with-experimental
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://hunspell.sourceforge.net/
-        FILELIST=`GetFileList`
-        LATEST=0
-
-        for i in ${FILELIST[@]};
-        do
-                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-                        vercomp $LATEST $CURVER
-                        if [ $? -eq 2 ];
-                        then
-                                        LATEST=$CURVER
-                        fi
-        done
-
+        LATEST=`curl -L -s https://github.com/hunspell/hunspell/releases | egrep "v[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then

@@ -5,7 +5,7 @@ NAME=memcached
 DESC="A distributed memory object caching system"
 
 #package version
-VERSION=1.4.20
+VERSION=1.5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -44,7 +44,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://www.memcached.org/files/
+        LISTURL=https://memcached.org/
         FILELIST=`GetFileList`
         LATEST=0
 

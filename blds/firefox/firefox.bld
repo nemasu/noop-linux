@@ -40,16 +40,18 @@ function BuildAndInstall
   CXXFLAGS+=" -fno-delete-null-pointer-checks -fno-schedule-insns2"
   export PYTHON="/usr/bin/python2"
 
+#PGO is breaking build https://bugzilla.mozilla.org/show_bug.cgi?id=1332788
   # Enable PGO
-  export DISPLAY=:99
-  Xvfb -nolisten tcp -extension GLX -screen 0 1280x1024x24 $DISPLAY &
+#  export DISPLAY=:99
+#  Xvfb -nolisten tcp -extension GLX -screen 0 1280x1024x24 $DISPLAY &
 
-  if ! make -j1 -f client.mk build MOZ_PGO=1; then
-    kill $!
-    return 1
-  fi
+#  if ! make -f client.mk build MOZ_PGO=1; then
+#    kill $!
+#    return 1
+#  fi
 
-  kill $! || true
+#  kill $! || true
+  make -f client.mk build -j${BLDR_CORES}
 
   make -f client.mk DESTDIR=/root/bldr-inst install
 
@@ -73,10 +75,6 @@ function BuildAndInstall
   ln -s /usr/share/hyphen /root/bldr-inst/usr/lib/firefox-${DVERSION}/hyphenation
 
   ln -sf firefox /root/bldr-inst/usr/lib/firefox-${DVERSION}/firefox-bin
-
-   #Prevent pkgr from pulling in lib32 deps
-   chmod +x /root/bldr-inst/usr/lib/firefox-devel-${DVERSION}/sdk/bin/xpcshell
-
 
 }
 

@@ -5,7 +5,7 @@ NAME=transmission
 DESC="Fast, easy, and free BitTorrent client (CLI tools, daemon and web client)"
 
 #package version
-VERSION=2.84
+VERSION=2.92
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -52,19 +52,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://mirrors.m0k.org/transmission/files/
-        FILELIST=`GetFileList`
-        LATEST=0
-
-        for i in ${FILELIST[@]};
-        do
-                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-                        vercomp $LATEST $CURVER
-                        if [ $? -eq 2 ];
-                        then
-                                        LATEST=$CURVER
-                        fi
-        done
+        LATEST=`curl -L -s https://github.com/transmission/transmission/releases | egrep "transmission-[0-9\.]+.dmg" | head -n1 | sed -e 's/.*transmission-\([0-9\.]*\).dmg.*/\1/g'`
 
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];

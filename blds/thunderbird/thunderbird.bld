@@ -5,8 +5,8 @@ NAME=thunderbird
 DESC="Standalone Mail/News reader"
 
 #package version
-VERSION=52.1.0
-DVERSION=52.1.0
+VERSION=52.2.1
+DVERSION=52.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -34,25 +34,25 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-        mv $BLDRTMPDIR/mozconfig .mozconfig
-        export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/thunderbird"
-        export PYTHON="/usr/bin/python2"
+    mv $BLDRTMPDIR/mozconfig .mozconfig
+    export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/thunderbird"
+    export PYTHON="/usr/bin/python2"
 
-        make -j1 -f client.mk build MOZ_MAKE_FLAGS="$MAKEFLAGS"
+    make -j1 -f client.mk build MOZ_MAKE_FLAGS="$MAKEFLAGS"
 
-        make -j1 -f client.mk DESTDIR=/root/bldr-inst install
+    make -j1 -f client.mk DESTDIR=/root/bldr-inst install
 
-        for i in 16x16 22x22 24x24 32x32 48x48 256x256;
-        do
-        install -Dm644 other-licenses/branding/thunderbird/mailicon${i/x*/}.png \
-          /root/bldr-inst/usr/share/icons/hicolor/$i/apps/thunderbird.png
-        done
+    for i in 16x16 22x22 24x24 32x32 48x48 256x256;
+    do
+    install -Dm644 other-licenses/branding/thunderbird/mailicon${i/x*/}.png \
+      /root/bldr-inst/usr/share/icons/hicolor/$i/apps/thunderbird.png
+    done
 
-        rm -rf /root/bldr-inst/usr/lib/thunderbird-$DVERSION/{dictionaries,hyphenation}
-        ln -sf /usr/share/hunspell /root/bldr-inst/usr/lib/thunderbird-$DVERSION/dictionaries
-        ln -sf /usr/share/hyphen /root/bldr-inst/usr/lib/thunderbird-$DVERSION/hyphenation
+    rm -rf /root/bldr-inst/usr/lib/thunderbird-$DVERSION/{dictionaries,hyphenation}
+    ln -sf /usr/share/hunspell /root/bldr-inst/usr/lib/thunderbird-$DVERSION/dictionaries
+    ln -sf /usr/share/hyphen /root/bldr-inst/usr/lib/thunderbird-$DVERSION/hyphenation
 
-        rm -rf /root/bldr-inst/usr/{include,lib/thunderbird-devel-$DVERSION,share/idl}
+    rm -rf /root/bldr-inst/usr/{include,lib/thunderbird-devel-$DVERSION,share/idl}
 
 }
 

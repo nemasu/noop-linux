@@ -5,13 +5,13 @@ NAME=codeblocks
 DESC="Cross-platform C/C++ IDE"
 
 #package version
-VERSION=13.12
+VERSION=16.01
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://sourceforge.net/projects/codeblocks/files/Sources/${VERSION}/codeblocks_${VERSION}-1.tar.gz
+SRC=http://sourceforge.net/projects/codeblocks/files/Sources/${VERSION}/codeblocks_${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,29 +33,21 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-  export WX_CONFIG_PATH=/usr/bin/wx-config-2.8
-  ./configure --prefix=/usr --with-contrib-plugins=all
-  make -j${BLDR_CORES}
-  make DESTDIR=/root/bldr-inst install
+    export WX_CONFIG_PATH=/usr/bin/wx-config
+    export CPPFLAGS+=" -fno-delete-null-pointer-checks"
+    export CXXFLAGS+=' -std=c++11'
+    ./bootstrap
+    ./configure --prefix=/usr --with-contrib-plugins=all
+    sed -i 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://www.codeblocks.org/downloads/source
-        FILELIST=`GetFileList`
-        LATEST=0
-
-        for i in ${FILELIST[@]};
-        do
-                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-                        vercomp $LATEST $CURVER
-                        if [ $? -eq 2 ];
-                        then
-                                        LATEST=$CURVER
-                        fi
-        done
-
+        LATEST=`curl -L -s "http://www.codeblocks.org/downloads/source" | egrep "codeblocks_[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*codeblocks_\([0-9\.]*\)\.tar\.gz.*/\1/g'`
+        
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then

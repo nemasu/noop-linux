@@ -1,9 +1,17 @@
 . $topsrcdir/browser/config/mozconfig
 
+ac_add_options --enable-application=browser
+
 ac_add_options --prefix=/usr
 ac_add_options --libdir=/usr/lib
+ac_add_options --enable-release
+ac_add_options --enable-gold
+ac_add_options --enable-pie
+ac_add_options --enable-optimize="-O2"
 
 ac_add_options --enable-official-branding
+ac_add_options --enable-update-channel=release
+ac_add_options --with-distribution-id=org.nooplinux
 
 # System libraries
 ac_add_options --with-system-icu
@@ -28,6 +36,8 @@ ac_add_options --enable-pulseaudio
 ac_add_options --disable-crashreporter
 ac_add_options --disable-updater
 ac_add_options --disable-debug-symbols
+
+STRIP_FLAGS="--strip-debug"
 
 # PGO
 mk_add_options PROFILE_GEN_SCRIPT='EXTRA_TEST_ARGS=10 $(MAKE) -C $(MOZ_OBJDIR) pgo-profile-run'
