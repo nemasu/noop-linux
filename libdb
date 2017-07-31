@@ -8693,8 +8693,6 @@ solid,libKF5Solid.so
 solid,libKF5Solid.so.5
 solid,libKF5Solid.so.5.24.0
 solid,libsolidextensionplugin.so
-sonnet,aspell.so
-sonnet,hunspell.so
 sonnet,libKF5SonnetCore.so
 sonnet,libKF5SonnetCore.so.5
 sonnet,libKF5SonnetCore.so.5.24.0

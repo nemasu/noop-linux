@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('aspell' 'gcc-libs' 'glibc' 'hunspell' 'qt')
+DEPS=('aspell' 'gcc-libs' 'glibc' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=
