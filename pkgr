@@ -825,11 +825,17 @@ if [ $1 == "--depcheck-system" ] || [ $1 == "-C" ]; then
         tput civis
         $rm -f /tmp/missinglibs && touch /tmp/missinglibs
         $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
-        if [ "$ARCH" == "x86_64" ]; then
-                $find /usr/lib /usr/lib32 /usr/bin /bin /lib -type f > /tmp/filelist
-        else
-                $find /usr/lib /usr/bin /bin /lib -type f > /tmp/filelist
-        fi
+        $rm -f /tmp/filelist
+
+        $cat /etc/ld.so.conf | $sed -e '/include/d;' > /tmp/ld.dirs;
+        for i in `$cat /etc/ld.so.conf | $sed -ne '/include/p' | $awk '{print $2;}'`; do
+            $cat $i >> /tmp/ld.dirs;
+        done;
+
+        for i in `$cat /tmp/ld.dirs | $sort | $uniq`; do
+           $find $i -type f -regex ".*\/lib[a-zA-Z\.0-9]*so[0-9\.]*" >> /tmp/filelist
+        done
+
         total_lines=`cat /tmp/filelist | wc -l`
         let count=0
         for i in `$cat /tmp/filelist`;

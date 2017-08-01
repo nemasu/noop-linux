@@ -5,7 +5,7 @@ NAME=libva
 DESC="Video Acceleration (VA) API for Linux"
 
 #package version
-VERSION=1.6.0
+VERSION=1.8.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

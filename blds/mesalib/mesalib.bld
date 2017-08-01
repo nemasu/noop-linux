@@ -5,15 +5,15 @@ NAME=mesalib
 DESC="An open-source implementation of the OpenGL specification"
 
 #package version
-VERSION=13.0.4
-DVERSION=13.0.4
+VERSION=17.1.5
+DVERSION=17.1.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 #SRC=ftp://ftp.freedesktop.org/pub/mesa/${VERSION}/MesaLib-${VERSION}.tar.bz2
-SRC=ftp://ftp.freedesktop.org/pub/mesa/${DVERSION}/mesa-${DVERSION}.tar.xz
+SRC=https://mesa.freedesktop.org/archive/mesa-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -51,41 +51,41 @@ function BuildAndInstall
         fi
 
     ./configure \
-                --prefix=/usr \
-                --sysconfdir=/etc \
-                --with-clang-libdir=/usr/lib \
-                --with-gallium-drivers=${GALLIUM_DRIVERS} \
-                --with-dri-drivers=${DRI_DRIVERS} \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --with-clang-libdir=/usr/lib \
+        --with-gallium-drivers=${GALLIUM_DRIVERS} \
+        --with-dri-drivers=${DRI_DRIVERS} \
         --with-egl-platforms=${EGL_PLATFORMS} \
-                --enable-gallium-llvm \
-                --enable-llvm-shared-libs \
-                --enable-egl \
-                --enable-shared-glapi \
-                --enable-gbm \
-                --enable-glx-tls \
-                --enable-xa \
-                --enable-nine \
-                --enable-opencl \
-                --enable-opencl-icd \
-                --enable-dri \
-                --enable-glx \
-                --enable-osmesa \
-                --enable-gles1 \
-                --enable-gles2 \
-                --enable-texture-float \
-                --enable-dri3 \
-                --enable-omx \
-                --enable-vdpau ${ARCHCONF}
-                
-        make -j${BLDR_CORES}
-                make DESTDIR=/root/bldr-inst install
+        --enable-gallium-llvm \
+        --enable-llvm-shared-libs \
+        --enable-egl \
+        --enable-shared-glapi \
+        --enable-gbm \
+        --enable-glx-tls \
+        --enable-xa \
+        --enable-nine \
+        --enable-opencl \
+        --enable-opencl-icd \
+        --enable-dri \
+        --enable-glx \
+        --enable-osmesa \
+        --enable-gles1 \
+        --enable-gles2 \
+        --enable-texture-float \
+        --enable-dri3 \
+        --enable-omx \
+        --enable-vdpau ${ARCHCONF}
+        
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
 
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LATEST=`curl -L -s ftp://ftp.freedesktop.org/pub/mesa/ | awk '{print $9;}' | egrep "[0-9\.]+" | tail -n1`
+        LATEST=`curl -L -s https://mesa.freedesktop.org/archive/ | egrep "mesa-[0-9\.]+\.tar\.xz" | tail -n1 | sed -e 's/.*mesa-\([0-9\.]*\)\.tar\.xz.*/\1/g'`
 
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
