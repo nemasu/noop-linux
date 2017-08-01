@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('expat' 'gcc-libs' 'glibc' 'libdrm' 'libX11' 'libXau' 'libxcb' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libxshmfence' 'libXxf86vm' 'mesalib')
+DEPS=('expat' 'glibc' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXxf86vm' 'libdrm' 'libffi' 'libxcb' 'libxshmfence' 'mesalib' 'wayland')
 
 # 'no' to skip calls to strip
 STRIP=
