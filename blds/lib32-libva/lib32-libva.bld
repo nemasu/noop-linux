@@ -1,23 +1,23 @@
 #package name
-NAME=lib32-harfbuzz
+NAME=lib32-libva
 
 #Description
-DESC="OpenType text shaping engine. (32-bit)"
+DESC="Video Acceleration (VA) API for Linux. 32bit."
 
 #package version
-VERSION=1.3.4
+VERSION=1.8.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-${VERSION}.tar.bz2
+SRC=http://freedesktop.org/software/vaapi/releases/libva/libva-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-glib --with-freetype --with-cairo --with-icu --with-gobject"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=32bit
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,26 +31,22 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#    export CC="gcc -m32"
-#    export CXX="g++ -m32"
-#    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-#    if [ ! -e ./configure ] && [ -e ./autogen.sh ]; then
-#        ./autogen.sh
-#    fi
-#    ./configure --prefix=/usr --libdir=/usr/lib32 ${EXTRACONF}
-#    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-#    make -j${BLDR_CORES}
-#    make DESTDIR=/root/bldr-inst install
-#    rm -rf /root/bldr-inst/{bin,sbin,etc,var,lib}
-#    rm -rf /root/bldr-inst/usr/{bin,sbin,lib,include,man,share}
-#}
+function BuildAndInstall
+{
+    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+    export CC="gcc -m32"
+    export CXX="g++ -m32"
+    autoreconf -fi
+    ./configure --prefix=/usr --libdir=/usr/lib32 --disable-wayland
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+    rm -rf /root/bldr-inst/usr/{lib,share,include,bin,sbin,man}
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://www.freedesktop.org/software/harfbuzz/release/
+        LISTURL=http://freedesktop.org/software/vaapi/releases/libva/
         FILELIST=`GetFileList`
         LATEST=0
 

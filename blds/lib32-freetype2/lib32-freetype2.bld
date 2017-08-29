@@ -5,7 +5,7 @@ NAME=lib32-freetype2
 DESC="TrueType font rendering library (32-bit)"
 
 #package version
-VERSION=2.5.3
+VERSION=2.6.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ SRC=http://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.b
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=32bit
 
 # build/package dependancies
 DEPS=('lib32-bzip2' 'lib32-glib2' 'lib32-glibc' 'lib32-harfbuzz' 'lib32-libpng' 'lib32-zlib')
@@ -31,18 +31,9 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-        export CC="gcc -m32"
-        export CXX="g++ -m32"
-        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-
-        ./configure --prefix=/usr --libdir=/usr/lib32
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
-        rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
-
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect

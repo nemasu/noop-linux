@@ -1,22 +1,22 @@
 #package name
-NAME=lib32-harfbuzz
+NAME=lib32-colord
 
 #Description
-DESC="OpenType text shaping engine. (32-bit)"
+DESC="colord is a system service that makes it easy to manage, install and generate color profiles to accurately color manage input and output devices. 32bit."
 
 #package version
-VERSION=1.3.4
+VERSION=0.1.22
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-${VERSION}.tar.bz2
+SRC=https://www.freedesktop.org/software/colord/releases/colord-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-glib --with-freetype --with-cairo --with-icu --with-gobject"
+EXTRACONF=
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+#autotools, python, perl, cmake, custom
 BUILD=32bit
 
 # build/package dependancies
@@ -33,24 +33,12 @@ RESTORELIBDB=
 
 #function BuildAndInstall
 #{
-#    export CC="gcc -m32"
-#    export CXX="g++ -m32"
-#    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-#    if [ ! -e ./configure ] && [ -e ./autogen.sh ]; then
-#        ./autogen.sh
-#    fi
-#    ./configure --prefix=/usr --libdir=/usr/lib32 ${EXTRACONF}
-#    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-#    make -j${BLDR_CORES}
-#    make DESTDIR=/root/bldr-inst install
-#    rm -rf /root/bldr-inst/{bin,sbin,etc,var,lib}
-#    rm -rf /root/bldr-inst/usr/{bin,sbin,lib,include,man,share}
 #}
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://www.freedesktop.org/software/harfbuzz/release/
+        LISTURL=https://www.freedesktop.org/software/colord/releases/
         FILELIST=`GetFileList`
         LATEST=0
 

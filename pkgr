@@ -881,166 +881,166 @@ if [ $1 == "--depcheck-system" ] || [ $1 == "-C" ]; then
 fi
 
 if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
-        # IMPORTED VAR:
-        #NAME=
-        #VERSION=
-        #ISUSR=
-        #SRC=
-        #EXTRACONF=
-        #BUILD=
-        #DEPS=
-        #STRIP=
-        #PKGDEPS=
+    # IMPORTED VAR:
+    #NAME=
+    #VERSION=
+    #ISUSR=
+    #SRC=
+    #EXTRACONF=
+    #BUILD=
+    #DEPS=
+    #STRIP=
+    #PKGDEPS=
 
-        if [ -z $2 ]; then
-                echo Too few arguments.
-                exit 1;
-        fi
+    if [ -z $2 ]; then
+            echo Too few arguments.
+            exit 1;
+    fi
 
-        ISFILE=`echo $2 | grep ".bldj" | wc -l`
+    ISFILE=`echo $2 | grep ".bldj" | wc -l`
 
-        if [ "$ISFILE" != "0" ] && [ ! -e "$2" ]; then
-                echo "File $2 does not exist."
-                exit 1;
-        fi
+    if [ "$ISFILE" != "0" ] && [ ! -e "$2" ]; then
+            echo "File $2 does not exist."
+            exit 1;
+    fi
 
-        if [ "$ISFILE" == "0" ]; then
-                cd "$PREFIX/var/noop/blds/$2"
-                tar cjf /tmp/file.bldj *
-        else
-                cp `readlink -f $2` /tmp/file.bldj
-        fi
-        FILE="/tmp/file.bldj"
+    if [ "$ISFILE" == "0" ]; then
+            cd "$PREFIX/var/noop/blds/$2"
+            tar cjf /tmp/file.bldj *
+    else
+            cp `readlink -f $2` /tmp/file.bldj
+    fi
+    FILE="/tmp/file.bldj"
 
-        #Called inside of BuildAndInstall
-        #It will grab another source tar and cd into it
-        #Note: do this after installing previous package
+    #Called inside of BuildAndInstall
+    #It will grab another source tar and cd into it
+    #Note: do this after installing previous package
 
-        function GetSource
-        {
-                cd ..
-                rm -rf *
-                wget $1 -Osrc
-                tar xf src
-                rm src
-                cd `ls`
-        }
+    function GetSource
+    {
+            cd ..
+            rm -rf *
+            wget $1 -Osrc
+            tar xf src
+            rm src
+            cd `ls`
+    }
 
-        function PushScripts
-        {
-                if [ -e /tmp/bldr/pkg.install ];
-                then
-                        mv /tmp/bldr/pkg.install /tmp/bldr/pkg.install.p
-                fi
-        }
+    function PushScripts
+    {
+            if [ -e /tmp/bldr/pkg.install ];
+            then
+                    mv /tmp/bldr/pkg.install /tmp/bldr/pkg.install.p
+            fi
+    }
 
 
-        function PopScripts
-        {
-                if [ -e /tmp/bldr/pkg.install.p ];
-                then
-                        mv /tmp/bldr/pkg.install.p /tmp/bldr/pkg.install
-                fi
-        }
+    function PopScripts
+    {
+            if [ -e /tmp/bldr/pkg.install.p ];
+            then
+                    mv /tmp/bldr/pkg.install.p /tmp/bldr/pkg.install
+            fi
+    }
 
-        
-        pushd .
-        
-        rm -rf $BLDRTMPDIR
-        mkdir -p $BLDRTMPDIR
-        
-        cd $BLDRTMPDIR
-        tar xf $FILE
-        rm $FILE
-        
-        set -e
-        
-        source $BLDRTMPDIR/*.bld
-        rm $BLDRTMPDIR/*.bld
+    
+    pushd .
+    
+    rm -rf $BLDRTMPDIR
+    mkdir -p $BLDRTMPDIR
+    
+    cd $BLDRTMPDIR
+    tar xf $FILE
+    rm $FILE
+    
+    set -e
+    
+    source $BLDRTMPDIR/*.bld
+    rm $BLDRTMPDIR/*.bld
 
-        if [ -z "${SKIP_DEP_CHECK}" ];
-        then
-                for i in ${DEPS[@]};
-                do
-                        if [ ! -e $INSTALLEDDIR/$i ];
-                        then
-                                echo "Installing dependency ${i}..."
-                                pkgr -i $i
-                        fi
-                done
-        fi
+    if [ -z "${SKIP_DEP_CHECK}" ];
+    then
+            for i in ${DEPS[@]};
+            do
+                    if [ ! -e $INSTALLEDDIR/$i ];
+                    then
+                            echo "Installing dependency ${i}..."
+                            pkgr -i $i
+                    fi
+            done
+    fi
 
-        STDUSRCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datadir=/usr/share --bindir=/usr/bin --prefix=/usr"
-        STDSYSCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datadir=/usr/share --bindir=/bin --prefix=/"
+    STDUSRCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datadir=/usr/share --bindir=/usr/bin --prefix=/usr"
+    STDSYSCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datadir=/usr/share --bindir=/bin --prefix=/"
 
-        if [ $ISUSR == 1 ]; then
-                CONF=$STDUSRCONF;
-        else
-                CONF=$STDSYSCONF;
-        fi
+    if [ $ISUSR == 1 ]; then
+            CONF=$STDUSRCONF;
+    else
+            CONF=$STDSYSCONF;
+    fi
 
-        if [ -z "$BLDR_CONTINUE" ];
-        then
-                rm -rf ~/bldr-tmp/*
-        fi
-        
-        rm -rf ~/bldr-inst
+    if [ -z "$BLDR_CONTINUE" ];
+    then
+            rm -rf ~/bldr-tmp/*
+    fi
+    
+    rm -rf ~/bldr-inst
 
-        mkdir -p ~/bldr-tmp
-        mkdir -p ~/bldr-inst
-        mkdir -p ~/bldr-done
+    mkdir -p ~/bldr-tmp
+    mkdir -p ~/bldr-inst
+    mkdir -p ~/bldr-done
 
-        cd ~/bldr-tmp
+    cd ~/bldr-tmp
 
-        if [ -n "$SRC" ];
-        then
-                
-                if [ -z "$BLDR_CONTINUE" ];
-                then
-                        wget $SRC -Osrc
-                        tar xf src
-                        rm src
-                fi
-                
-                cd `ls` || true
-        fi
-        for i in `ls $BLDRTMPDIR/*.patch`;
-        do
-                if [ -z "$BLDR_CONTINUE" ];
-                then
-                        patch -Np1 -i $i
-                fi
-                
-                rm $i
-        done
+    if [ -n "$SRC" ];
+    then
+            
+            if [ -z "$BLDR_CONTINUE" ];
+            then
+                    wget $SRC -Osrc
+                    tar xf src
+                    rm src
+            fi
+            
+            cd `ls` || true
+    fi
+    for i in `ls $BLDRTMPDIR/*.patch`;
+    do
+            if [ -z "$BLDR_CONTINUE" ];
+            then
+                    patch -Np1 -i $i
+            fi
+            
+            rm $i
+    done
 
-        if [ -z "$BLDR_DIST" ]; then
-                export CFLAGS="$CFLAGS -march=native"
-                export CXXFLAGS="$CXXFLAGS -march=native"
-        fi
+    if [ -z "$BLDR_DIST" ]; then
+        export CFLAGS="$CFLAGS -march=native"
+        export CXXFLAGS="$CXXFLAGS -march=native"
+    fi
 
-        if [ "$BUILD" == "autotools" ]; then
-                if [ ! -e ./configure ] && [ -e ./autogen.sh ]; then
+    if [ "$BUILD" == "autotools" ]; then
+        if [ ! -e ./configure ] && [ -e ./autogen.sh ]; then
             ./autogen.sh
         fi
         ./configure $CONF $EXTRACNF ${EXTRACONF}
-                make -j${BLDR_CORES}
-                make DESTDIR=/root/bldr-inst install
-        fi
-        if [ "$BUILD" == "cmake" ]; then
-                mkdir -p build && cd build
-                cmake .. \
-                        -DCMAKE_INSTALL_PREFIX=/usr \
-                        -DCMAKE_BUILD_TYPE=Release \
-                        -DBUILD_TESTING=OFF ${EXTRACONF}
-                make -j${BLDR_CORES}
-                make DESTDIR=/root/bldr-inst install
-        fi
-        if [ "$BUILD" == "perl" ]; then
-                perl Makefile.PL INSTALLDIRS=vendor
-                make -j${BLDR_CORES}
-                make DESTDIR=/root/bldr-inst install
-        fi
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+    fi
+    if [ "$BUILD" == "cmake" ]; then
+        mkdir -p build && cd build
+        cmake .. \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DBUILD_TESTING=OFF ${EXTRACONF}
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+    fi
+    if [ "$BUILD" == "perl" ]; then
+        perl Makefile.PL INSTALLDIRS=vendor
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+    fi
     if [ "$BUILD" == "python" ]; then
         cd ..
         DIR=`ls`
@@ -1050,81 +1050,95 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
         cd ../${DIR}-python2
         python2 setup.py install --root=/root/bldr-inst/ --optimize=1
     fi
-        if [ "$BUILD" == "custom" ]; then
-                BuildAndInstall;
-        fi
 
-        cd ~/bldr-inst
-        let XTRA=`find $BLDRTMPDIR | wc -l`
-        if [ $XTRA != 1 ]; then
-                cp -r $BLDRTMPDIR/* .
+    if [ "$BUILD" == "32bit" ]; then
+        export CC="gcc -m32"
+        export CXX="g++ -m32"
+        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+        if [ ! -e ./configure ] && [ -e ./autogen.sh ]; then
+            ./autogen.sh
         fi
-        rm -rf pkg.install
-        echo Ridding any /run, /var/run, or /tmp directories
-        if [ -e ./run ]; then
-                rm -rf run
-        fi
-        if [ -e ./var/run ]; then
-                rm -rf var/run
-        fi
-        if [ -e ./tmp ]; then
-                rm -rf tmp
-        fi
+        ./configure --prefix=/usr --libdir=/usr/lib32 --sysconfdir=/etc ${EXTRACONF}
+        make -j${BLDR_CORES}
+        make DESTDIR=/root/bldr-inst install
+        rm -rf /root/bldr-inst/{bin,sbin,etc,var,lib}
+        rm -rf /root/bldr-inst/usr/{bin,sbin,lib,include,man,share,libexec}
+    fi
+    if [ "$BUILD" == "custom" ]; then
+        BuildAndInstall;
+    fi
 
-        echo Moving any lib64 contents to lib
-        if [ -e ./lib64 ]; then
-                mkdir -p ./lib
-                cp -r ./lib64/* ./lib/
-                rm -rf ./lib64
-        fi
+    cd ~/bldr-inst
+    let XTRA=`find $BLDRTMPDIR | wc -l`
+    if [ $XTRA != 1 ]; then
+            cp -r $BLDRTMPDIR/* .
+    fi
+    rm -rf pkg.install
+    echo Ridding any /run, /var/run, or /tmp directories
+    if [ -e ./run ]; then
+            rm -rf run
+    fi
+    if [ -e ./var/run ]; then
+            rm -rf var/run
+    fi
+    if [ -e ./tmp ]; then
+            rm -rf tmp
+    fi
 
-        if [ -e ./usr/lib64 ]; then
-                mkdir -p ./usr/lib
-                cp -r ./usr/lib64/* ./usr/lib/
-                rm -rf ./usr/lib64
-        fi
-        if [ "no" != "$STRIP" ];
-        then
-                set +e
-                echo "Stripping libs and binaries..."
-                find {,usr/}{bin,lib,sbin} -type f -exec strip --strip-debug '{}' ';'
-                find {,usr/}{bin,sbin} -type f -exec strip --strip-all '{}' ';' 
-        fi
-        set -e
+    echo Moving any lib64 contents to lib
+    if [ -e ./lib64 ]; then
+            mkdir -p ./lib
+            cp -r ./lib64/* ./lib/
+            rm -rf ./lib64
+    fi
 
-        if [ "1" == "$RESTORELIBDB" ];
-        then
-                cp /var/noop/libdb /var/noop/libdb.bak
-                pkgr -genmeta $NAME $VERSION
-                cp /var/noop/libdb.bak /var/noop/libdb
-        else
+    if [ -e ./usr/lib64 ]; then
+            mkdir -p ./usr/lib
+            cp -r ./usr/lib64/* ./usr/lib/
+            rm -rf ./usr/lib64
+    fi
+    if [ "no" != "$STRIP" ];
+    then
+            set +e
+            echo "Stripping libs and binaries..."
+            find {,usr/}{bin,lib,sbin} -type f -exec strip --strip-debug '{}' ';'
+            find {,usr/}{bin,sbin} -type f -exec strip --strip-all '{}' ';' 
+    fi
+    set -e
 
-                pkgr -genmeta $NAME $VERSION
-        fi
+    if [ "1" == "$RESTORELIBDB" ];
+    then
+            cp /var/noop/libdb /var/noop/libdb.bak
+            pkgr -genmeta $NAME $VERSION
+            cp /var/noop/libdb.bak /var/noop/libdb
+    else
+
+            pkgr -genmeta $NAME $VERSION
+    fi
 
 #add package defined deps
-        if [ -n "$PKGDEPS" ];
-        then
-                for i in ${PKGDEPS[@]};
-                do
-                        PDCOUNT=`cat /tmp/noop/meta.tmp | sed -e '/DEPS:/,/SIZE:/ !d; /DEPS:/d; /SIZE:/d' | grep $i | wc -l`
-                        if [ "0" -eq "$PDCOUNT" ];
-                        then
-                                sed -i -e 's/DEPS:/DEPS:\n'"$i"'/' /tmp/noop/meta.tmp;
-                        fi
-                done
-        fi
+    if [ -n "$PKGDEPS" ];
+    then
+            for i in ${PKGDEPS[@]};
+            do
+                    PDCOUNT=`cat /tmp/noop/meta.tmp | sed -e '/DEPS:/,/SIZE:/ !d; /DEPS:/d; /SIZE:/d' | grep $i | wc -l`
+                    if [ "0" -eq "$PDCOUNT" ];
+                    then
+                            sed -i -e 's/DEPS:/DEPS:\n'"$i"'/' /tmp/noop/meta.tmp;
+                    fi
+            done
+    fi
 
 
-        pkgr -genpkg 
-        name=`ls *.pkg`
-        mv *.pkg ~/bldr-done
-        rm -rf *
-        if [ -z "$BLDR_SKIP_INSTALL" ]; then
-            cd ~/bldr-done
-            pkgr -f $name
-            popd
-        fi
+    pkgr -genpkg 
+    name=`ls *.pkg`
+    mv *.pkg ~/bldr-done
+    rm -rf *
+    if [ -z "$BLDR_SKIP_INSTALL" ]; then
+        cd ~/bldr-done
+        pkgr -f $name
+        popd
+    fi
 fi
 
 if [ $1 == "--belongs" ] || [ $1 == "-b" ]; then

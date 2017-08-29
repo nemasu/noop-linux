@@ -1,18 +1,18 @@
 #package name
-NAME=lib32-glib2
+NAME=lib32-atk
 
 #Description
-DESC="Common C routines used by GTK+ 2.4 and other libs (32-bit)"
+DESC="A library providing a set of interfaces for accessibility. 32bit."
 
 #package version
-VERSION=2.52.1
+VERSION=2.16.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/glib-${VERSION}.tar.xz
+MM=`echo $VERSION | sed -e 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
+SRC=ftp://ftp.gnome.org/pub/gnome/sources/atk/$MM/atk-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=32bit
 
 # build/package dependancies
-DEPS=
+DEPS=('glib2' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -39,9 +39,9 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        MAJOR=`curl -s https://developer.gnome.org/glib/ | grep "<strong>" | sed -e 's/.*href="\([0-9\.]*\)\/.*/\1/g'`
-        LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
-
+        MM=`curl -s http://ftp.gnome.org/pub/gnome/sources/atk/ | grep -E "href=\"[0-9]*\.[0-9]*" | tail -n1 | sed -e 's/.*\([0-9][0-9]*\.[0-9][0-9]*\).*/\1/g'`
+        LATEST=`curl -s http://ftp.gnome.org/pub/gnome/sources/atk/$MM/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+        
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then

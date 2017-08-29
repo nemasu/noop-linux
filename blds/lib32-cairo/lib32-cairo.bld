@@ -1,21 +1,20 @@
 #package name
-NAME=lib32-glib2
+NAME=lib32-cairo
 
 #Description
-DESC="Common C routines used by GTK+ 2.4 and other libs (32-bit)"
+DESC="Cairo vector graphics library. 32bit."
 
 #package version
-VERSION=2.52.1
+VERSION=1.14.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/glib-${VERSION}.tar.xz
+SRC=http://cairographics.org/releases/cairo-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--enable-xml --enable-gl --enable-ps --enable-pdf --enable-gobject --enable-tee --enable-xlib-xcb --disable-egl" #--enable-egl
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=32bit
@@ -39,8 +38,19 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        MAJOR=`curl -s https://developer.gnome.org/glib/ | grep "<strong>" | sed -e 's/.*href="\([0-9\.]*\)\/.*/\1/g'`
-        LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+        LISTURL=http://cairographics.org/releases/
+        FILELIST=`GetFileList`
+        LATEST=0
+
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];

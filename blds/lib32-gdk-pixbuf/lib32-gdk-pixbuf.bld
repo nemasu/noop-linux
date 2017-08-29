@@ -1,21 +1,22 @@
 #package name
-NAME=lib32-glib2
+NAME=lib32-gdk-pixbuf
 
 #Description
-DESC="Common C routines used by GTK+ 2.4 and other libs (32-bit)"
+DESC="Image loading and manipulation library. 32bit."
 
 #package version
-VERSION=2.52.1
+VERSION=2.36.0
+DVERSION=2.36.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/glib-${VERSION}.tar.xz
+MM=`echo $DVERSION | sed -e 's/\([0-9]*\.[0-9]*\)\..*/\1/g'`
+SRC=http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/$MM/gdk-pixbuf-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--with-x11 --with-included-loaders=png"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=32bit
@@ -39,8 +40,9 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        MAJOR=`curl -s https://developer.gnome.org/glib/ | grep "<strong>" | sed -e 's/.*href="\([0-9\.]*\)\/.*/\1/g'`
-        LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+
+        MM=`curl -s http://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/ | grep -E "2\.[0-8][0-8]*\/<" | tail -n1 | sed -e "s/.*\(2\.[0-8][0-8]*\)\/<.*/\1/g"`
+    LATEST=`curl -s http://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/$MM/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\).*/\1/g'`
 
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];

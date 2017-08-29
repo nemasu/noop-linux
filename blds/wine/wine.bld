@@ -5,15 +5,15 @@ NAME=wine
 DESC="A compatibility layer for running Windows programs"
 
 #package version
-VERSION=2.0
-DVERSION=2.0
-STAGING_VER=${DVERSION}-rc6
+VERSION=2.15
+DVERSION=2.15
+STAGING_VER=${DVERSION}
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.winehq.org/pub/wine/source/${DVERSION:0:3}/wine-${DVERSION}.tar.bz2
+SRC=http://ftp.winehq.org/pub/wine/source/2.x/wine-${DVERSION}.tar.xz
 
 #xD
 
@@ -37,8 +37,8 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-        cd ..
         if [ -z "$BLDR_CONTINUE" ]; then
+            cd ..
             mv `ls` wine
             mkdir -p {wine32-build,wine64-build}
 

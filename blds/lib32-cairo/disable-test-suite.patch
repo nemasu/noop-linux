@@ -1,0 +1,12 @@
+*** cairo-1.12.16-orig/test/Makefile.am	Tue Aug  5 06:06:24 2014
+--- cairo-1.12.16/test/Makefile.am	Tue Aug  5 06:06:39 2014
+***************
+*** 71,77 ****
+  endif
+  test_sources += $(test)
+  
+- noinst_PROGRAMS = cairo-test-suite$(EXEEXT) # always build
+  noinst_SCRIPTS = check-refs.sh
+  
+  TESTS += cairo-test-suite$(EXEEXT)
+--- 71,76 ----

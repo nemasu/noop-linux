@@ -1,0 +1,83 @@
+#package name
+NAME=lib32-polkit
+
+#Description
+DESC="Application development toolkit for controlling system-wide privileges. 32bit."
+
+#package version
+VERSION=0.113
+DVERSION=0.113
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.freedesktop.org/software/polkit/releases/polkit-$DVERSION.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF="--enable-libsystemd-login=yes --disable-static --with-os-type=redhat --libexecdir=/usr/lib32/polkit-1"
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    export CC='gcc -m32'
+    export CXX='g++ -m32'
+    export PKG_CONFIG_PATH='/usr/lib32/pkgconfig'
+
+    ./configure --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib32 \
+        --localstatedir=/var --libexecdir=/usr/lib32/polkit-1 \
+        --enable-libsystemd-login=yes --disable-static \
+        --with-os-type=redhat
+
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
+    make -C src/polkit polkitenumtypes.h
+    make -C src/polkit libpolkit-gobject-1.la
+    make -C src/polkitagent polkitagentenumtypes.h marshal.stamp
+    make -C src/polkitagent libpolkit-agent-1.la
+
+    make -C src/polkit DESTDIR=/root/bldr-inst \
+        lib_LTLIBRARIES="libpolkit-gobject-1.la" install-libLTLIBRARIES
+    make -C src/polkitagent DESTDIR=/root/bldr-inst \
+        lib_LTLIBRARIES="libpolkit-agent-1.la" install-libLTLIBRARIES
+    make -C data DESTDIR=/root/bldr-inst install-pkgconfigDATA
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LISTURL=http://www.freedesktop.org/software/polkit/releases/
+        FILELIST=`GetFileList`
+        LATEST=0
+
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}

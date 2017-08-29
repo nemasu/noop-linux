@@ -1,18 +1,17 @@
 #package name
-NAME=lib32-glib2
+NAME=lib32-libepoxy
 
 #Description
-DESC="Common C routines used by GTK+ 2.4 and other libs (32-bit)"
+DESC="A library for handling OpenGL function pointer management for you. 32bit."
 
 #package version
-VERSION=2.52.1
+VERSION=1.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MAJOR=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/glib-${VERSION}.tar.xz
+SRC="https://github.com/anholt/libepoxy/archive/v${VERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -21,7 +20,7 @@ EXTRACONF=
 BUILD=32bit
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -39,8 +38,19 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        MAJOR=`curl -s https://developer.gnome.org/glib/ | grep "<strong>" | sed -e 's/.*href="\([0-9\.]*\)\/.*/\1/g'`
-        LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/glib/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
+        LISTURL=https://github.com/anholt/libepoxy/releases
+        FILELIST=`GetFileList`
+        LATEST=0
+
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
 
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
@@ -48,3 +58,4 @@ function Detect
                         echo "$NAME: New Version Available! - $LATEST"
         fi
 }
+

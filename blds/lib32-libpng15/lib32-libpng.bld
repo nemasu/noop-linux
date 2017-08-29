@@ -7,11 +7,11 @@
 # EXTRAFILES
 # ISSPECIAL
 
-NAME=lib32-libpng
+NAME=lib32-libpng15
 
 #Description
-DESC="A collection of routines used to create PNG format graphics files (32-bit)"
-VERSION=1.6.28
+DESC="A collection of routines used to create PNG format graphics files. 32bit."
+VERSION=1.5.12
 ISUSR=1
 SRC=http://prdownloads.sourceforge.net/libpng/libpng-${VERSION}.tar.xz?download
 EXTRACONF=
@@ -28,10 +28,13 @@ function BuildAndInstall
     gunzip libpng-${VERSION}-apng.patch.gz
     patch -Np1 -i libpng-${VERSION}-apng.patch
 
-    ./configure --prefix=/usr --libdir=/usr/lib32 --sysconfdir=/etc  --localstatedir=/var
+    ./configure --prefix=/usr --libdir=/usr/lib32 --sysconfdir=/etc  --localstatedir=/var --disable-static
     make -j${BLDR_CORES}
     make DESTDIR=/root/bldr-inst install
     rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
+    rm /root/bldr-inst/usr/lib32/libpng.la
+    rm /root/bldr-inst/usr/lib32/libpng.so
+    rm /root/bldr-inst/usr/lib32/pkgconfig/libpng.pc
 }
 
 #Default HTTP curl new version detection
