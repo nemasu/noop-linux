@@ -1,27 +1,26 @@
 #package name
-NAME=lib32-util-linux
+NAME=libsamplerate
 
 #Description
-DESC="Miscellaneous system utilities for Linux (32-bit)"
+DESC="Secret Rabbit Code - aka Sample Rate Converter for audio"
 
 #package version
-VERSION=2.27.1
-DVERSION=2.27.1
+VERSION=0.1.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.kernel.org/pub/linux/utils/util-linux/v${DVERSION:0:4}/util-linux-${DVERSION}.tar.xz
+SRC=http://www.mega-nerd.com/SRC/libsamplerate-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+#autotools, python, perl, cmake, custom
+BUILD=autotools
 
 # build/package dependancies
-DEPS=('lib32-glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -32,25 +31,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  ./configure \
-      CC="gcc -m32" \
-      PKG_CONFIG_PATH="/usr/lib32/pkgconfig" \
-      --libdir=/usr/lib32 \
-          --prefix=/usr
-
-  make -j${BLDR_CORES} lib{uuid,blkid,mount,smartcols}.la
-  make DESTDIR=/root/bldr-inst install-usrlib_execLTLIBRARIES install-pkgconfigDATA
-
-  rm -rf /root/bldr-inst/usr/{bin,sbin,share}
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-        BASE=`curl -L -s "https://www.kernel.org/pub/linux/utils/util-linux/" | grep -E "v[0-9\.]*" | tail -n1 | sed -e 's/.*v\([0-9\.]*\)\/.*/\1/g'`
-        LISTURL="https://www.kernel.org/pub/linux/utils/util-linux/v${BASE}/"
+        LISTURL=http://www.mega-nerd.com/SRC/download.html
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -64,7 +52,7 @@ function Detect
                         fi
         done
 
-        vercomp $DVERSION $LATEST
+        vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

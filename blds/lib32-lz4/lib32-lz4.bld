@@ -1,0 +1,51 @@
+#package name
+NAME=lib32-lz4
+
+#Description
+DESC="Very fast lossless compression algorithm. 32bit."
+
+#package version
+VERSION=131
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/Cyan4973/lz4/archive/r${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=('glibc')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    make CC="gcc -m32" -C lib DESTDIR=/root/bldr-inst PREFIX=/usr install
+    rm -rf /root/bldr-inst/usr/include
+    mv /root/bldr-inst/usr/lib /root/bldr-inst/usr/lib32
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LATEST=`curl -L -s https://github.com/Cyan4973/lz4/releases | egrep "r[0-9]+\.tar\.gz" | head -n1  | sed 's/.*archive\/r\([0-9]*\)\.tar\.gz.*/\1/g'`
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}

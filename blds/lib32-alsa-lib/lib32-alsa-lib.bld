@@ -1,18 +1,18 @@
 #package name
-NAME=lib32-util-linux
+NAME=lib32-alsa-lib
 
 #Description
-DESC="Miscellaneous system utilities for Linux (32-bit)"
+DESC="An alternative implementation of Linux sound support. 32bit."
 
 #package version
-VERSION=2.27.1
-DVERSION=2.27.1
+VERSION=1.1.0
+DVERSION=1.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.kernel.org/pub/linux/utils/util-linux/v${DVERSION:0:4}/util-linux-${DVERSION}.tar.xz
+SRC=ftp://ftp.alsa-project.org/pub/lib/alsa-lib-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('lib32-glibc')
+DEPS=('glibc')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -34,23 +34,18 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  ./configure \
-      CC="gcc -m32" \
-      PKG_CONFIG_PATH="/usr/lib32/pkgconfig" \
-      --libdir=/usr/lib32 \
-          --prefix=/usr
-
-  make -j${BLDR_CORES} lib{uuid,blkid,mount,smartcols}.la
-  make DESTDIR=/root/bldr-inst install-usrlib_execLTLIBRARIES install-pkgconfigDATA
-
-  rm -rf /root/bldr-inst/usr/{bin,sbin,share}
+    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+    export CC="gcc -m32"
+    export CXX="g++ -m32"
+    ./configure --prefix=/usr --disable-python --libdir=/usr/lib32
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+    rm -rf /root/bldr-inst/usr/{include,bin,share,sbin,man}
 }
 
-#Default HTTP curl new version detection
 function Detect
 {
-        BASE=`curl -L -s "https://www.kernel.org/pub/linux/utils/util-linux/" | grep -E "v[0-9\.]*" | tail -n1 | sed -e 's/.*v\([0-9\.]*\)\/.*/\1/g'`
-        LISTURL="https://www.kernel.org/pub/linux/utils/util-linux/v${BASE}/"
+        LISTURL=ftp://ftp.alsa-project.org/pub/lib/
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -64,7 +59,7 @@ function Detect
                         fi
         done
 
-        vercomp $DVERSION $LATEST
+        vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

@@ -15,13 +15,13 @@ ISUSR=1
 SRC=http://freedesktop.org/software/pulseaudio/releases/pulseaudio-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-#EXTRACONF="--enable-udev --with-udev-rules-dir=/usr/lib/udev/rules.d --enable-systemd --disable-default-build-tests --with-database=gdbm --disable-tcpwrap --disable-bluez4 --disable-rpath"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=custom
 
 # build/package dependancies
-DEPS=('alsa-lib' 'avahi' 'dbus' 'fftw' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libICE' 'libSM' 'libX11' 'libXtst' 'libcap2' 'libsamplerate' 'libsndfile' 'libtool' 'libxcb' 'openssl' 'orc' 'speex' 'systemd')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -40,10 +40,13 @@ function BuildAndInstall
 	export CXX="g++ -m32"
 	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
-	./configure --prefix=/usr --libdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var $EXTRACONF
+	./configure --prefix=/usr --libdir=/usr/lib32 --sysconfdir=/etc \
+        --localstatedir=/var --enable-udev --with-udev-rules-dir=/usr/lib/udev/rules.d \
+        --disable-avahi --without-fftw --disable-gconf
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
-	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
+	rm -rf /root/bldr-inst/etc
+	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin,lib}
 }
 
 #Default HTTP curl new version detection

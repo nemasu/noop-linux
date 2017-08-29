@@ -1,0 +1,52 @@
+#package name
+NAME=lib32-libcap2
+
+#Description
+DESC="POSIX 1003.1e capabilities. 32bit."
+
+#package version
+VERSION=2.24
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://ftp.de.debian.org/debian/pool/main/libc/libcap2/libcap2_${VERSION}.orig.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+    make -C libcap CC="gcc -m32" prefix=/usr lib=lib32
+    make -C libcap prefix=/usr lib=lib32 DESTDIR=/root/bldr-inst install
+    rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin,lib,lib64}
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LATEST=`curl -s ftp://ftp.de.debian.org/debian/pool/main/libc/libcap2/ | grep "libcap2_[0-9\.]*\.orig\.tar\.xz" | sed 's/.*libcap2_\([0-9\.]*\)\.orig\.tar\.xz.*/\1/g'`
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}

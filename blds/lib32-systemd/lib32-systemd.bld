@@ -1,0 +1,101 @@
+#package name
+NAME=lib32-systemd
+
+#Description
+DESC="system and service manager. 32bit."
+
+#package version
+VERSION=232
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/systemd/systemd/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=('systemd')
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
+
+function BuildAndInstall
+{
+    export CC="gcc -m32"
+    export CXX="g++ -m32"
+    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+
+    ./autogen.sh
+
+    if [ "${ARCH}" == "x86_64" ];
+    then
+        extra_opts="--enable-gnuefi"
+    fi
+
+    ./configure \
+	    --disable-audit \
+        --disable-qrencode \
+        --disable-libcurl \
+        --disable-microhttpd \
+		--disable-tests \
+		--disable-ima \
+		--disable-seccomp \
+		--disable-kmod \
+		--disable-networkd \
+		--disable-blkid \
+		--disable-manpages \
+		--without-python \
+        --includedir=/usr/include \
+        --mandir=/usr/man \
+        --sbindir=/sbin \
+        --libexecdir=/usr/lib32 \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --libdir=/usr/lib32 \
+        --datarootdir=/usr/share \
+        --datadir=/usr/share \
+        --bindir=/bin \
+        --with-pamlibdir=/usr/lib32/security \
+        --enable-split-usr \
+        --with-sysvinit-path= \
+        --with-sysvrcnd-path= \
+        --with-ntp-servers="0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org" ${extra_opts}
+
+    sed -i -e 's/\"\/bin\/loadkeys/\"\/usr\/bin\/loadkeys/g' Makefile Makefile.am Makefile.in
+    sed -i -e 's/\"\/bin\/setfont/\"\/usr\/bin\/setfont/g' Makefile Makefile.am Makefile.in
+    sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
+    sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
+
+    make
+    make DESTDIR=/root/bldr-inst install
+
+    rm -rf /root/bldr-inst/{bin,sbin,etc}
+    rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin,lib}
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LATEST=`curl -L -s https://github.com/systemd/systemd/releases | egrep "v[0-9]*.tar.gz" | head -n1 | sed -e 's/.*v\([0-9]*\).tar.gz.*/\1/g'`
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}

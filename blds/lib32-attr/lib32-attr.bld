@@ -1,0 +1,75 @@
+#package name
+NAME=lib32-attr
+
+#Description
+DESC="Extended attribute support library for ACL support. 32bit."
+
+#package version
+VERSION=2.4.47
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://download.savannah.gnu.org/releases/attr/attr-$VERSION.src.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=('glibc')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+	./configure --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib32 \
+		--sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib32 --datarootdir=/usr/share \
+		--datadir=/usr/share --bindir=/usr/bin --prefix=/usr
+	make
+	export DIST_ROOT=/root/bldr-inst
+	make install
+	make install-lib
+	make install-dev
+	unset DIST_ROOT
+	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin,man}
+}
+
+function Detect
+{
+        LISTURL=http://download.savannah.gnu.org/releases/attr/
+        FILELIST=`curl -s $LISTURL | sed -ne'/'"${NAME}"'-[0-9.]*src.tar.\(gz\|xz\|bz2\)/p' | sed -e 's/.*'"${NAME}"'/'"${NAME}"'/g;s/src.tar.\(gz\|xz\|bz2\).*/src.tar.\1/g' | sort | uniq`
+
+        LATEST=0
+
+        for i in ${FILELIST[@]};
+        do
+                CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/src.tar.*//g'`
+                vercomp $LATEST $CURVER
+                if [ $? -eq 2 ];
+                then
+                        LATEST=$CURVER
+                fi
+        done
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                echo "$NAME: New Version Available! - $LATEST"
+        fi
+}
+
