@@ -53,9 +53,6 @@ function BuildAndInstall
             cd ../../
         fi;
         
-        export CFLAGS="${CFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"
-        export CXXFLAGS="${CXXFLAGS/-D_FORTIFY_SOURCE=2/} -D_FORTIFY_SOURCE=0"
-
         if [[ "${ARCH}" == "x86_64" ]];
         then
 
@@ -68,9 +65,6 @@ function BuildAndInstall
                   --enable-win64
 
                 make -j${BLDR_CORES}
-                make prefix=/root/bldr-inst/usr \
-                libdir=/root/bldr-inst/usr/lib \
-                dlldir=/root/bldr-inst/usr/lib/wine install
 
                 _wine32opts=(
                   --libdir=/usr/lib32
@@ -88,15 +82,13 @@ function BuildAndInstall
     --with-x \
         "${_wine32opts[@]}"
 
-        # These additional CFLAGS solve FS#27560 and FS#23277
-        make -j${BLDR_CORES} CFLAGS+="-mstackrealign -mincoming-stack-boundary=2" CXXFLAGS+="-mstackrealign -mincoming-stack-boundary=2"
+        make -j${BLDR_CORES}
 
         if [[ "${ARCH}" == "i686" ]]; then
-        make prefix=/root/bldr-inst/usr install
+            make DESTDIR=/root/bldr-inst install
         else
-        make prefix=/root/bldr-inst/usr \
-                libdir=/root/bldr-inst/usr/lib32 \
-                dlldir=/root/bldr-inst/usr/lib32/wine install
+            cd ../wine64-build
+            make DESTDIR=/root/bldr-inst install
         fi
 }
 
