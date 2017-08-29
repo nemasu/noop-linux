@@ -22,7 +22,7 @@ EXTRACONF="--with-x11 --with-included-loaders=png"
 BUILD=32bit
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-glib2' 'lib32-glibc' 'lib32-libX11' 'lib32-libXau' 'lib32-libXdmcp' 'lib32-libffi' 'lib32-libjpeg' 'lib32-libpng' 'lib32-libxcb' 'lib32-pcre' 'lib32-tiff' 'lib32-util-linux' 'lib32-zlib')
 
 # 'no' to skip calls to strip
 STRIP=

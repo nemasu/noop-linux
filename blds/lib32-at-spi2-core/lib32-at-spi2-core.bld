@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-dbus' 'lib32-glib2' 'lib32-glibc' 'lib32-libX11' 'lib32-libXau' 'lib32-libXdmcp' 'lib32-libffi' 'lib32-libxcb' 'lib32-pcre')
 
 # 'no' to skip calls to strip
 STRIP=

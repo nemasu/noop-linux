@@ -20,7 +20,7 @@ EXTRACONF="--enable-xml --enable-gl --enable-ps --enable-pdf --enable-gobject --
 BUILD=32bit
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-fontconfig' 'lib32-freetype2' 'lib32-glib2' 'lib32-glibc' 'lib32-libX11' 'lib32-libXext' 'lib32-libXrender' 'lib32-libpng' 'lib32-libxcb' 'lib32-mesalib' 'lib32-pixman' 'lib32-zlib')
 
 # 'no' to skip calls to strip
 STRIP=

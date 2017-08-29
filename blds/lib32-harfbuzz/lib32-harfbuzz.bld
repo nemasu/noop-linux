@@ -20,7 +20,7 @@ EXTRACONF="--with-glib --with-freetype --with-cairo --with-icu --with-gobject"
 BUILD=32bit
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'lib32-freetype2' 'lib32-glib2' 'lib32-glibc' 'lib32-icu4c')
 
 # 'no' to skip calls to strip
 STRIP=

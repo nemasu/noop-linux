@@ -21,7 +21,7 @@ EXTRACONF="--enable-libsystemd-login=yes --disable-static --with-os-type=redhat 
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-glib2' 'lib32-glibc' 'lib32-systemd')
 
 # 'no' to skip calls to strip
 STRIP=

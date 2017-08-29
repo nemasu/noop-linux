@@ -21,7 +21,7 @@ EXTRACONF="--with-cairo"
 BUILD=32bit
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-bzip2' 'lib32-cairo' 'lib32-expat' 'lib32-fontconfig' 'lib32-freetype2' 'lib32-glib2' 'lib32-glibc' 'lib32-harfbuzz' 'lib32-libX11' 'lib32-libXau' 'lib32-libXdmcp' 'lib32-libXext' 'lib32-libXft' 'lib32-libXrender' 'lib32-libffi' 'lib32-libpng' 'lib32-libxcb' 'lib32-pcre' 'lib32-pixman' 'lib32-zlib')
 
 # 'no' to skip calls to strip
 STRIP=

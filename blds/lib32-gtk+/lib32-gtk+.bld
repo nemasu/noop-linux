@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-at-spi2-atk' 'lib32-atk' 'lib32-cairo' 'lib32-colord' 'lib32-cups' 'lib32-fontconfig' 'lib32-gdk-pixbuf' 'lib32-glib2' 'lib32-glibc' 'lib32-libX11' 'lib32-libXcomposite' 'lib32-libXcursor' 'lib32-libXdamage' 'lib32-libXext' 'lib32-libXfixes' 'lib32-libXi' 'lib32-libXinerama' 'lib32-libXrandr' 'lib32-libepoxy' 'lib32-pango')
 
 # 'no' to skip calls to strip
 STRIP=
