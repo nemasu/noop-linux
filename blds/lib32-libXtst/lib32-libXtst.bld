@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libxcb')
+DEPS=('lib32-glibc' 'lib32-libX11' 'lib32-libXau' 'lib32-libXdmcp' 'lib32-libXext' 'lib32-libXi' 'lib32-libxcb')
 
 # 'no' to skip calls to strip
 STRIP=

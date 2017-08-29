@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('systemd' 'gcc-libs' 'lib32-acl' 'lib32-attr' 'lib32-glibc' 'lib32-libcap2' 'lib32-libgcrypt' 'lib32-libgpg-error' 'lib32-libidn' 'lib32-linux-pam' 'lib32-lz4' 'lib32-xz')
 
 # 'no' to skip calls to strip
 STRIP=

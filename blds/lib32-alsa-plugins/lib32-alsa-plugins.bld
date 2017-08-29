@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-alsa-lib' 'lib32-dbus' 'lib32-flac' 'lib32-glibc' 'lib32-json-c' 'lib32-libICE' 'lib32-libSM' 'lib32-libX11' 'lib32-libXau' 'lib32-libXdmcp' 'lib32-libXext' 'lib32-libXi' 'lib32-libXtst' 'lib32-libcap2' 'lib32-libogg' 'lib32-libsamplerate' 'lib32-libsndfile' 'lib32-libvorbis' 'lib32-libxcb' 'lib32-pulseaudio' 'lib32-speex' 'lib32-util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

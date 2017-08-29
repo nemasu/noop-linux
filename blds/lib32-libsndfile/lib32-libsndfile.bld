@@ -20,7 +20,7 @@ EXTRACONF="--disable-sqlite"
 BUILD=custom
 
 # build/package dependancies
-DEPS=('alsa-lib' 'glibc' 'sqlite')
+DEPS=('lib32-flac' 'lib32-glibc' 'lib32-libvorbis')
 
 # 'no' to skip calls to strip
 STRIP=
