@@ -62,6 +62,7 @@ function BuildAndInstall
                   --sysconfdir=/etc \
                   --libdir=/usr/lib \
                   --with-x \
+				  --with-gstreamer \
                   --enable-win64
 
                 make -j${BLDR_CORES}
@@ -80,15 +81,22 @@ function BuildAndInstall
     --prefix=/usr \
     --sysconfdir=/etc \
     --with-x \
+	--with-gstreamer \
         "${_wine32opts[@]}"
 
         make -j${BLDR_CORES}
 
         if [[ "${ARCH}" == "i686" ]]; then
-            make DESTDIR=/root/bldr-inst install
+			make prefix=/root/bldr-inst/usr install
         else
+			make prefix=/root/bldr-inst/usr \
+				libdir=/root/bldr-inst/usr/lib32 \
+				dlldir=/root/bldr-inst/usr/lib32/wine install
+
             cd ../wine64-build
-            make DESTDIR=/root/bldr-inst install
+			make prefix=/root/bldr-inst/usr \
+				libdir=/root/bldr-inst/usr/lib \
+				dlldir=/root/bldr-inst/usr/lib/wine install
         fi
 }
 
