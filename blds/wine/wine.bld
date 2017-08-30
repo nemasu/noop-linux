@@ -89,14 +89,15 @@ function BuildAndInstall
         if [[ "${ARCH}" == "i686" ]]; then
 			make prefix=/root/bldr-inst/usr install
         else
-			make prefix=/root/bldr-inst/usr \
-				libdir=/root/bldr-inst/usr/lib32 \
-				dlldir=/root/bldr-inst/usr/lib32/wine install
+            cd ../wine32-build
+            make prefix=/root/bldr-inst/usr \
+                libdir=/root/bldr-inst/usr/lib32 \
+                dlldir=/root/bldr-inst/usr/lib32/wine install
 
             cd ../wine64-build
-			make prefix=/root/bldr-inst/usr \
-				libdir=/root/bldr-inst/usr/lib \
-				dlldir=/root/bldr-inst/usr/lib/wine install
+            make prefix=/root/bldr-inst/usr \
+                libdir=/root/bldr-inst/usr/lib \
+                dlldir=/root/bldr-inst/usr/lib/wine install
         fi
 }
 

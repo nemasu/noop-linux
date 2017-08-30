@@ -4618,6 +4618,9 @@ lib32-nettle,libhogweed.so.2.1
 lib32-nettle,libnettle.so
 lib32-nettle,libnettle.so.4
 lib32-nettle,libnettle.so.4.3
+lib32-openal,libopenal.so
+lib32-openal,libopenal.so.1
+lib32-openal,libopenal.so.1.16.0
 lib32-openldap,liblber-2.4.so.2
 lib32-openldap,liblber-2.4.so.2.8.5
 lib32-openldap,liblber.so
