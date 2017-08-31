@@ -1101,7 +1101,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     then
             set +e
             echo "Stripping libs and binaries..."
-            find  {,usr/}lib -type f | sed -e '/.*\.so$\|.*\.so.*[0-9]$/!d' | xargs strip --strip-debug
+            find  {,usr/}{lib,lib32} -type f | sed -e '/.*\.so$\|.*\.so.*[0-9]$/!d' | xargs strip --strip-debug
             find {,usr/}{bin,sbin} -type f -exec strip --strip-all --strip-debug '{}' ';' 
     fi
     set -e

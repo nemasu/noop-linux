@@ -2,8 +2,8 @@ NAME=nvidia
 
 #Description
 DESC="NVIDIA drivers for linux"
-VERSION=384.59
-DVERSION=384.59
+VERSION=384.69
+DVERSION=384.69
 ISUSR=1
 
 if [ "${ARCH}" == "x86_64" ];
@@ -31,7 +31,6 @@ function BuildAndInstall
         sh ./out --extract-only
         rm out
         cd `ls`
-
 #mv $BLDRTMPDIR/*.p .
 #for i in `ls *.p`;
 #do
@@ -43,7 +42,8 @@ function BuildAndInstall
         #Module
         pushd kernel
         make SYSSRC=/lib/modules/`uname -r`/build module
-        install -D -m644 nvidia.ko /root/bldr-inst/lib/modules/`uname -r`/misc/nvidia.ko
+        mkdir -p /root/bldr-inst/lib/modules/`uname -r`/misc/
+        cp -v *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
         popd
 
         #libs
