@@ -212,296 +212,295 @@ function ShowProgress
 }
 
 function bininst_install() {
-        BININST_DLFILE=/tmp/noop-${BININST_NAME}
-        IS_ENV_SET=`cat /etc/profile | grep "${BININST_ENV_HOME}" | wc -l`
-        if [ $IS_ENV_SET -gt 0 ]; then
-                echo "Environment variables seem to be set, skipping..."
-        else
-                echo >> /etc/profile
-                echo "export ${BININST_ENV_HOME}=/opt/${BININST_NAME}" >> /etc/profile
-                echo 'export PATH=${'"${BININST_ENV_HOME}"'}'"${BININST_ENV_BINDIR}"':${PATH}' >> /etc/profile
-        fi
+    BININST_DLFILE=/tmp/noop-${BININST_NAME}
+    IS_ENV_SET=`cat /etc/profile | grep "${BININST_ENV_HOME}" | wc -l`
+    if [ $IS_ENV_SET -gt 0 ]; then
+        echo "Environment variables seem to be set, skipping..."
+    else
+        echo >> /etc/profile
+        echo "export ${BININST_ENV_HOME}=/opt/${BININST_NAME}" >> /etc/profile
+        echo 'export PATH=${'"${BININST_ENV_HOME}"'}'"${BININST_ENV_BINDIR}"':${PATH}' >> /etc/profile
+    fi
 
-        wget "${DOWNLOAD_TAR}" -O${BININST_DLFILE}
-        mkdir -p /opt && pushd /opt &> /dev/null
-        
-                
-        if [ "$1" == "deb" ]; then
-                bsdtar -xf "${BININST_DLFILE}"
-                rm control.tar.gz debian-binary
-                tar xf data.tar.gz && rm data.tar.gz
-                NEW_DIR=`ls opt`
-                mv ./opt/* . && rm -r ./opt
-                popd
-        else
-                NEW_DIR=`tar tf "${BININST_DLFILE}" | head -n1 | sed -e 's/\/.*//'`
-                tar xof "${BININST_DLFILE}"
-        fi
+    wget "${DOWNLOAD_TAR}" -O${BININST_DLFILE}
+    mkdir -p /opt && pushd /opt &> /dev/null
+    
+            
+    if [ "$1" == "deb" ]; then
+        bsdtar -xf "${BININST_DLFILE}"
+        rm control.tar.gz debian-binary
+        tar xf data.tar.gz && rm data.tar.gz
+        NEW_DIR=`ls opt`
+        mv ./opt/* . && rm -r ./opt
+        popd
+    else
+        NEW_DIR=`tar tf "${BININST_DLFILE}" | head -n1 | sed -e 's/\/.*//'`
+        tar xof "${BININST_DLFILE}"
+    fi
 
-        if [ "${BININST_NAME}" != "${NEW_DIR}" ];
-        then
-                rm -rf ${BININST_NAME}
-                ln -s ${NEW_DIR} ${BININST_NAME}
-        fi
-        popd &> /dev/null
-        rm "${BININST_DLFILE}"
+    if [ "${BININST_NAME}" != "${NEW_DIR}" ];
+    then
+        rm -rf ${BININST_NAME}
+        ln -s ${NEW_DIR} ${BININST_NAME}
+    fi
+    popd &> /dev/null
+    rm "${BININST_DLFILE}"
 
-        echo
-        echo "Done, source /etc/profile or re-login to gain environment variables."
-        exit
+    echo
+    echo "Done, source /etc/profile or re-login to gain environment variables."
+    exit
 
 }
 
 #1 name
 function get_packagedb_version() {
-        ARCHPOST="_$ARCH"
-        #+ is a valid character in a package name.
-        name=`echo ${1} | sed -e 's|+|\\\+|g'`
-        #Why isnt this working...       
-        #$echo "`$egrep "^${1}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`"
-        echo "`egrep "^${name}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | sed -e 's/\.pkg//g' | sed -e 's/'"$ARCHPOST"'//g'`"
+    ARCHPOST="_$ARCH"
+    #+ is a valid character in a package name.
+    name=`echo ${1} | sed -e 's|+|\\\+|g'`
+    #Why isnt this working...       
+    #$echo "`$egrep "^${1}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | $sed -e 's/\.pkg//g' | $sed -e 's/'"$ARCHPOST"'//g'`"
+    echo "`egrep "^${name}," $PACKAGEDB | perl -pe 's/^.*?-([0-9])/\1/g' | sed -e 's/\.pkg//g' | sed -e 's/'"$ARCHPOST"'//g'`"
 }
 
 #1 name
 function get_installed_version() {
-        #why isnt this working...
-        #$echo `$grep -m1 "VER:" "$INSTALLEDDIR/$1" | $sed -e 's/VER://'`
-        grep -m1 "VER:" "$INSTALLEDDIR/$1" | sed 's/VER://'
+    #why isnt this working...
+    #$echo `$grep -m1 "VER:" "$INSTALLEDDIR/$1" | $sed -e 's/VER://'`
+    grep -m1 "VER:" "$INSTALLEDDIR/$1" | sed 's/VER://'
 }
 
 function DoInstbinList() {
-        echo "jdk8";
-        echo "ant";
-        echo "maven";
-        echo "tuxguitar";
-        echo "chefdk";
-
+    echo "jdk8";
+    echo "ant";
+    echo "maven";
+    echo "tuxguitar";
+    echo "chefdk";
 }
 
 function DoInstbin() {
 
-        name=$1
+    name=$1
 
-        if [ "$name" == "chefdk" ]; then
-                BININST_NAME=chefdk
-                BININST_ENV_HOME=CHEFDK_HOME
-                BININST_ENV_BINDIR=/bin
-                VERSION=`curl -s -L "https://downloads.chef.io/chefdk" | egrep -m1 "https://packages.chef.io/files/stable/chefdk/[0-9\.]+/ubuntu/16.04/chefdk_[0-9\.]+-1_amd64.deb" | sed -e 's|.*https://packages.chef.io/files/stable/chefdk/[0-9\.]*/ubuntu/16.04/chefdk_\([0-9\.]*\)-1_amd64.deb.*|\1|g'`
-                DOWNLOAD_TAR="https://packages.chef.io/files/stable/chefdk/${VERSION}/ubuntu/16.04/chefdk_${VERSION}-1_amd64.deb"
+    if [ "$name" == "chefdk" ]; then
+        BININST_NAME=chefdk
+        BININST_ENV_HOME=CHEFDK_HOME
+        BININST_ENV_BINDIR=/bin
+        VERSION=`curl -s -L "https://downloads.chef.io/chefdk" | egrep -m1 "https://packages.chef.io/files/stable/chefdk/[0-9\.]+/ubuntu/16.04/chefdk_[0-9\.]+-1_amd64.deb" | sed -e 's|.*https://packages.chef.io/files/stable/chefdk/[0-9\.]*/ubuntu/16.04/chefdk_\([0-9\.]*\)-1_amd64.deb.*|\1|g'`
+        DOWNLOAD_TAR="https://packages.chef.io/files/stable/chefdk/${VERSION}/ubuntu/16.04/chefdk_${VERSION}-1_amd64.deb"
 
-                bininst_install deb
-                return 0
-        fi
+        bininst_install deb
+        return 0
+    fi
 
-        if [ "$name" == "maven" ]; then
-                BININST_NAME=maven
-                BININST_ENV_HOME=MAVEN_HOME
-                BININST_ENV_BINDIR=/bin
-                DOWNLOAD_TAR=`curl -s -L http://maven.apache.org/download.cgi | grep "apache-maven-[0-9\.]*-bin.tar.gz" | head -n1 | sed -e 's/.*a href="\(.*\)">apache-maven.*/\1/g'`
+    if [ "$name" == "maven" ]; then
+        BININST_NAME=maven
+        BININST_ENV_HOME=MAVEN_HOME
+        BININST_ENV_BINDIR=/bin
+        DOWNLOAD_TAR=`curl -s -L http://maven.apache.org/download.cgi | grep "apache-maven-[0-9\.]*-bin.tar.gz" | head -n1 | sed -e 's/.*a href="\(.*\)">apache-maven.*/\1/g'`
 
-                bininst_install         
-                return 0
-        fi
-        if [ "$name" == "ant" ]; then
-                BININST_NAME=ant
-                BININST_ENV_HOME=ANT_HOME
-                BININST_ENV_BINDIR=/bin
-                DOWNLOAD_TAR=`curl -s -L http://ant.apache.org/bindownload.cgi | grep "apache-ant-[0-9\.]*-bin.tar.gz" | head -n1 | sed -e 's/.*a href="\(.*\)">apache-ant.*/\1/g'`
+        bininst_install         
+        return 0
+    fi
+    if [ "$name" == "ant" ]; then
+        BININST_NAME=ant
+        BININST_ENV_HOME=ANT_HOME
+        BININST_ENV_BINDIR=/bin
+        DOWNLOAD_TAR=`curl -s -L http://ant.apache.org/bindownload.cgi | grep "apache-ant-[0-9\.]*-bin.tar.gz" | head -n1 | sed -e 's/.*a href="\(.*\)">apache-ant.*/\1/g'`
 
-                bininst_install         
-                return 0
-        fi
-        if [ "$name" == "tuxguitar" ]; then
-                BININST_NAME=tuxguitar
-                BININST_ENV_HOME=TUXGUITAR_HOME
-                BININST_ENV_BINDIR=
-                DOWNLOAD_TAR=`curl -s -L http://tuxguitar.herac.com.ar/download.html | grep "tuxguitar-[0-9\.]*-linux-x86_64.tar.gz" | sed -e 's/.* href="\(.*\)">GNU.*/\1/g'`
-                
-                bininst_install
-                return 0
-        fi
-        if [ "$name" == "jdk8" ]; then
-                echo "Do you accept the Oracle Binary Code License Agreement for Java SE?";
-                echo "Found here: http://www.oracle.com/technetwork/java/javase/terms/license/index.html"
-                echo -n "(yes/no): "
-                read agreement
-                if [ $agreement == "yes" ]; then
-                        IS_ENV_SET=`cat /etc/profile | grep "JAVA_HOME" | wc -l`
-                        if [ $IS_ENV_SET -gt 0 ]; then
-                                echo "Environment variables seem to be set, skipping..."
-                        else
-                                echo >> /etc/profile
-                                echo "export JDK_HOME=/opt/jdk" >> /etc/profile
-                                echo 'export JAVA_HOME=${JDK_HOME}/jre' >> /etc/profile
-                                echo 'export PATH=${JAVA_HOME}/bin:${JDK_HOME}/bin:${PATH}' >> /etc/profile
-                        fi
-                
+        bininst_install         
+        return 0
+    fi
+    if [ "$name" == "tuxguitar" ]; then
+        BININST_NAME=tuxguitar
+        BININST_ENV_HOME=TUXGUITAR_HOME
+        BININST_ENV_BINDIR=
+        DOWNLOAD_TAR=`curl -s -L http://tuxguitar.herac.com.ar/download.html | grep "tuxguitar-[0-9\.]*-linux-x86_64.tar.gz" | sed -e 's/.* href="\(.*\)">GNU.*/\1/g'`
+        
+        bininst_install
+        return 0
+    fi
+    if [ "$name" == "jdk8" ]; then
+        echo "Do you accept the Oracle Binary Code License Agreement for Java SE?";
+        echo "Found here: http://www.oracle.com/technetwork/java/javase/terms/license/index.html"
+        echo -n "(yes/no): "
+        read agreement
+        if [ $agreement == "yes" ]; then
+            IS_ENV_SET=`cat /etc/profile | grep "JAVA_HOME" | wc -l`
+            if [ $IS_ENV_SET -gt 0 ]; then
+                echo "Environment variables seem to be set, skipping..."
+            else
+                echo >> /etc/profile
+                echo "export JDK_HOME=/opt/jdk" >> /etc/profile
+                echo 'export JAVA_HOME=${JDK_HOME}/jre' >> /etc/profile
+                echo 'export PATH=${JAVA_HOME}/bin:${JDK_HOME}/bin:${PATH}' >> /etc/profile
+            fi
+    
 #JAVA8_VER=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/index.html | egrep "name=\"JDK8\">Java SE 8u[0-9]*<\/a>" | sed -e 's/.*name="JDK8">Java SE \(8u[0-9]*\)<\/a>.*/\1/g'`
-                        JAVA8_VER=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/index.html | egrep "8u[0-9]*" | sed 's/.*\(8u[0-9]*\).*/\1/g' | head -n1`
-                        DOWNLOADS_PAGE=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/index.html | grep "jdk8-downloads-" | sed -e 's/.*jdk8-downloads-\([0-9]*\)\.html.*/\1/g' | head -n1`
-                        BVERSION=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-${DOWNLOADS_PAGE}.html | grep "jdk-${JAVA8_VER}-linux-x64.tar.gz" | sed -e 's|.*otn-pub/java/jdk/\(.*\)/jdk-8u.*|\1|g'`
-                        JAVA_TAR=http://download.oracle.com/otn-pub/java/jdk/${BVERSION}/jdk-${JAVA8_VER}-linux-x64.tar.gz
-                        wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" $JAVA_TAR -O/tmp/noop-java8.tar.gz
-                        mkdir -p /opt && pushd /opt &> /dev/null
-                        NEW_JAVA8_DIR=`tar tf /tmp/noop-java8.tar.gz | head -n1 | sed -e 's/\///g'`
-                        tar xf /tmp/noop-java8.tar.gz
-                        rm -rf jdk
-                        ln -s ${NEW_JAVA8_DIR} jdk
-                        popd &> /dev/null
-                        rm /tmp/noop-java8.tar.gz
+            JAVA8_VER=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/index.html | egrep "8u[0-9]*" | sed 's/.*\(8u[0-9]*\).*/\1/g' | head -n1`
+            DOWNLOADS_PAGE=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/index.html | grep "jdk8-downloads-" | sed -e 's/.*jdk8-downloads-\([0-9]*\)\.html.*/\1/g' | head -n1`
+            BVERSION=`curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-${DOWNLOADS_PAGE}.html | grep "jdk-${JAVA8_VER}-linux-x64.tar.gz" | sed -e 's|.*otn-pub/java/jdk/\(.*\)/jdk-8u.*|\1|g'`
+            JAVA_TAR=http://download.oracle.com/otn-pub/java/jdk/${BVERSION}/jdk-${JAVA8_VER}-linux-x64.tar.gz
+            wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" $JAVA_TAR -O/tmp/noop-java8.tar.gz
+            mkdir -p /opt && pushd /opt &> /dev/null
+            NEW_JAVA8_DIR=`tar tf /tmp/noop-java8.tar.gz | head -n1 | sed -e 's/\///g'`
+            tar xf /tmp/noop-java8.tar.gz
+            rm -rf jdk
+            ln -s ${NEW_JAVA8_DIR} jdk
+            popd &> /dev/null
+            rm /tmp/noop-java8.tar.gz
 
-                        echo
-                        echo "Done, source /etc/profile or re-login to gain environment variables."
-                fi
-                return 0
+            echo
+            echo "Done, source /etc/profile or re-login to gain environment variables."
         fi
+        return 0
+    fi
 
-        echo "Error: $name is not a valid option, list available packages with pkgr --instbin -l"
-        exit 1
+    echo "Error: $name is not a valid option, list available packages with pkgr --instbin -l"
+    exit 1
 }
 
 
 function DoSync() {
-        if [ ! -e $PREFIX/var/noop/.git ];
-        then
-                echo "New install detected, initializing repo."
-                cd $PREFIX/var/
-                mv noop noop.bak
-                git clone $GITHOST noop
-                cp -r noop.bak/* noop/ && rm -rf noop.bak
-                rm -rf $PREFIX/usr/sbin/pkgr
-                ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
-                pushd $PREFIX/var/noop &> /dev/null
-                $echo
-        else
-                $echo -e "${Cyan}Syncing ...${LightBlue}"
-                pushd $PREFIX/var/noop &> /dev/null
-                if [ ! `git status -s | wc -l` -eq 0 ]; then
-                        $echo "Local noop repository contains changes, exiting..."
-                        popd &> /dev/null
-                        return 1
-                fi
-                git pull
-                $echo
-                $echo -e "${Green}done.${NoColor}"
+    if [ ! -e $PREFIX/var/noop/.git ];
+    then
+        echo "New install detected, initializing repo."
+        cd $PREFIX/var/
+        mv noop noop.bak
+        git clone $GITHOST noop
+        cp -r noop.bak/* noop/ && rm -rf noop.bak
+        rm -rf $PREFIX/usr/sbin/pkgr
+        ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
+        pushd $PREFIX/var/noop &> /dev/null
+        $echo
+    else
+        $echo -e "${Cyan}Syncing ...${LightBlue}"
+        pushd $PREFIX/var/noop &> /dev/null
+        if [ ! `git status -s | wc -l` -eq 0 ]; then
+                $echo "Local noop repository contains changes, exiting..."
+                popd &> /dev/null
+                return 1
         fi
+        git pull
         $echo
-        $echo -ne "${Cyan}Generating packages list..."
-        curl -s -L $HOST/packages/${ARCH}/ | $grep -E "href=\".+.pkg\"" | $sed 's/.*href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
-        $echo -e "${Green}done."
-        $echo
-        $echo -en "${Cyan}Generating deps list..."
-        rm -rf deps; for i in `cat packages | sed 's/,/ /' | awk '{print $1;}'`; do for j in `grep -m1 "DEPS=" blds/$i/*.bld 2>/dev/null | sed "s/DEPS=//g;s/(//g;s/)//;s/'//g;"`; do echo ${i}:${j} >> deps; done done
         $echo -e "${Green}done.${NoColor}"
-        popd &> /dev/null
+    fi
+    $echo
+    $echo -ne "${Cyan}Generating packages list..."
+    curl -s -L $HOST/packages/${ARCH}/ | $grep -E "href=\".+.pkg\"" | $sed 's/.*href="//g;s/">.*//g;' | perl -pe 's/(^.*?)-([0-9])/\1,\1-\2/g' > $PACKAGEDB
+    $echo -e "${Green}done."
+    $echo
+    $echo -en "${Cyan}Generating deps list..."
+    rm -rf deps; for i in `cat packages | sed 's/,/ /' | awk '{print $1;}'`; do for j in `grep -m1 "DEPS=" blds/$i/*.bld 2>/dev/null | sed "s/DEPS=//g;s/(//g;s/)//;s/'//g;"`; do echo ${i}:${j} >> deps; done done
+    $echo -e "${Green}done.${NoColor}"
+    popd &> /dev/null
 }
 
 function DoDownload() {
-        name=$1
-        dest=$2
-        let PKGEXIST=`$grep "^$name," $PACKAGEDB | $wc -l`
+    name=$1
+    dest=$2
+    let PKGEXIST=`$grep "^$name," $PACKAGEDB | $wc -l`
     if [ 1 -eq $PKGEXIST ]; then
-                PKGNAME=`$grep "^$name," $PACKAGEDB | $sed -e 's/^'"$name"',//g'`;
-                $wget $PKGHOST/$PKGNAME -O$TMPDIR/$PKGNAME
-                if [ $? != 0 ]; then
+        PKGNAME=`$grep "^$name," $PACKAGEDB | $sed -e 's/^'"$name"',//g'`;
+        $wget $PKGHOST/$PKGNAME -O$TMPDIR/$PKGNAME
+        if [ $? != 0 ]; then
             $echo $wget encountered an error.
-                exit 1
-            fi
-                if [ ! -z $dest ]; then
-                        $mv $TMPDIR/$PKGNAME $dest
-                        $echo Location: $dest
-                else
-                        $echo Location: $TMPDIR/$PKGNAME
-                fi
-        else
-                $echo "Error: $name is not a valid package."
-                exit 1
+            exit 1
         fi
+        if [ ! -z $dest ]; then
+                $mv $TMPDIR/$PKGNAME $dest
+                $echo Location: $dest
+        else
+                $echo Location: $TMPDIR/$PKGNAME
+        fi
+    else
+        $echo "Error: $name is not a valid package."
+        exit 1
+    fi
 }
 
 function DoNewconfig() {
         let NUM=`cat $NEWCONF | wc -l`
-        if [ $NUM -gt 0 ]; then
-                echo "You have $NUM files that need updating."
-                echo "What would you like to do?"
-                read -p "Overwrite all old files(a), Quit(q), Wizard(w): " INPUT
-                if [ "$INPUT" == "q" ]; then
-                        exit 0
-                else
-            for i in `cat $NEWCONF`; do
-                if [ -e "$i" ]; then
-                    OLD=`echo "$i" | sed 's/\.new$//g'`
-                    if [ "$INPUT" == "a" ]; then
+    if [ $NUM -gt 0 ]; then
+        echo "You have $NUM files that need updating."
+        echo "What would you like to do?"
+        read -p "Overwrite all old files(a), Quit(q), Wizard(w): " INPUT
+        if [ "$INPUT" == "q" ]; then
+            exit 0
+        else
+        for i in `cat $NEWCONF`; do
+            if [ -e "$i" ]; then
+                OLD=`echo "$i" | sed 's/\.new$//g'`
+                if [ "$INPUT" == "a" ]; then
+                    mv -v "$i" "$OLD"
+                elif [ "$INPUT" == "w" ]; then
+                    git diff "$OLD" "$i"
+                    read -p "(k)eep yours or (r)eplace with new?: " WATDO
+                    if [ "$WATDO" == "k" ]; then
+                        rm -v "$i"
+                    elif [ "$WATDO" == "r" ]; then
                         mv -v "$i" "$OLD"
-                    elif [ "$INPUT" == "w" ]; then
-                        git diff "$OLD" "$i"
-                        read -p "(k)eep yours or (r)eplace with new?: " WATDO
-                        if [ "$WATDO" == "k" ]; then
-                            rm -v "$i"
-                        elif [ "$WATDO" == "r" ]; then
-                            mv -v "$i" "$OLD"
-                        else
-                            echo "Invalid input, exiting..."
-                            exit 1
-                        fi
                     else
                         echo "Invalid input, exiting..."
                         exit 1
                     fi
                 else
-                    echo "$i not found, skipping.."
+                    echo "Invalid input, exiting..."
+                    exit 1
                 fi
-                
-                let LOC=`grep -n "$i" $NEWCONF | sed 's/:/ /;' | awk '{print $1;}'`
-                $sed -i -e "${LOC}d" $NEWCONF
-            done
-        fi
-        else
-                echo "No files need updating."
-        fi
+            else
+                echo "$i not found, skipping.."
+            fi
+            
+            let LOC=`grep -n "$i" $NEWCONF | sed 's/:/ /;' | awk '{print $1;}'`
+            $sed -i -e "${LOC}d" $NEWCONF
+        done
+    fi
+    else
+            echo "No files need updating."
+    fi
 }
 
 function DoVersioncheck() {
-        name=$1
-        if ! [[ $name =~ .*\.bldj ]];
-        then
-                pushd $PREFIX/var/noop/blds/$name &> /dev/null
-        else
-                rm -rf /tmp/noop/verchecktmp
-                mkdir -p /tmp/noop/verchecktmp
-                pushd /tmp/noop/verchecktmp &> /dev/null
-                BLDJFILE=`readlink -f $name`
-                tar xf $BLDJFILE
-        fi
-
-        BLDFILE=`ls *.bld`
-        source ./$BLDFILE
-        Detect
-        popd &> /dev/null
+    name=$1
+    if ! [[ $name =~ .*\.bldj ]];
+    then
+        pushd $PREFIX/var/noop/blds/$name &> /dev/null
+    else
         rm -rf /tmp/noop/verchecktmp
+        mkdir -p /tmp/noop/verchecktmp
+        pushd /tmp/noop/verchecktmp &> /dev/null
+        BLDJFILE=`readlink -f $name`
+        tar xf $BLDJFILE
+    fi
+
+    BLDFILE=`ls *.bld`
+    source ./$BLDFILE
+    Detect
+    popd &> /dev/null
+    rm -rf /tmp/noop/verchecktmp
 }
 
 function DoShowRevdeps() {
-        name=$1
-        if [ -z "$name" ]; then
-                echo "Please provide a package name."
-                exit 1
-        fi
-        $grep ":$name$" $DEPDB | $sed -e 's/:.*//g'
+    name=$1
+    if [ -z "$name" ]; then
+        echo "Please provide a package name."
+        exit 1
+    fi
+    $grep ":$name$" $DEPDB | $sed -e 's/:.*//g'
 }
 
 function DoDepcheckPackages() {
-        name=$1
-        $echo "Scanning machine for missing dependencies"
+    name=$1
+    $echo "Scanning machine for missing dependencies"
     ldconfig &>/dev/null
     tput civis
     $rm -f /tmp/missinglibs && touch /tmp/missinglibs
     $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
 
-        sed -ne '/FILES:/,$p' "$INSTALLEDDIR/$name" | grep -E "/usr/bin|/usr/lib|/bin|/lib" > /tmp/filelist
+    sed -ne '/FILES:/,$p' "$INSTALLEDDIR/$name" | grep -E "/usr/bin|/usr/lib|/bin|/lib" > /tmp/filelist
         
-        #TODO Factorize out these two depcheck functions
-        total_lines=`cat /tmp/filelist | wc -l`
+    #TODO Factorize out these two depcheck functions
+    total_lines=`cat /tmp/filelist | wc -l`
     let count=0
     for i in `$cat /tmp/filelist`;
     do  
@@ -546,236 +545,235 @@ function DoDepcheckPackages() {
 }
 
 function DoCheckIsRequired() {
-        if [ -z $1 ]; then
-                echo "Error: Please provide a package name"
+    if [ -z $1 ]; then
+        echo "Error: Please provide a package name"
+    fi
+
+    let dep_exists=0
+    for i in `pkgr -D $1`; do
+        if [ -e /var/noop/installed/$i ]; then
+            let dep_exists=1
+            echo "$i is installed and depends on ${1}."
         fi
+    done
 
-        let dep_exists=0
-        for i in `pkgr -D $1`; do
-                if [ -e /var/noop/installed/$i ]; then
-                        let dep_exists=1
-                        echo "$i is installed and depends on ${1}."
-                fi
-        done
-
-        if [ $dep_exists -eq 0 ]; then
-                echo "No packages that depend on ${1} were found, it can (probably) safely be removed."
-        fi
-
+    if [ $dep_exists -eq 0 ]; then
+        echo "No packages that depend on ${1} were found, it can (probably) safely be removed."
+    fi
 }
 function genRDepTree() {
-        if [ -z "$1" ]; then
-                return
+    if [ -z "$1" ]; then
+        return
+    fi
+    for i in `pkgr -D $1`; do
+        if [ ${listedPkgs[$i]+_} ]; then #if found
+            continue
+        else
+            listedPkgs[$i]=1
         fi
-        for i in `pkgr -D $1`; do
-                if [ ${listedPkgs[$i]+_} ]; then #if found
-                        continue
-                else
-                        listedPkgs[$i]=1
-                fi
 
-                for (( j=0; j<$2; j++ )) do
-                        echo -n " "
-                done
-        
-                echo "|$i";
-                genRDepTree $i $(($2+1))
+        for (( j=0; j<$2; j++ )) do
+            echo -n " "
         done
+
+        echo "|$i";
+        genRDepTree $i $(($2+1))
+    done
 }
 
 function genDepTree() {
-        if [ -z "$1" ]; then
-                return
+    if [ -z "$1" ]; then
+        return
+    fi
+    for i in `pkgr --jsonmeta $1 | jq -r .deps[]`; do
+        if [ ${listedPkgs[$i]+_} ]; then #if found
+            continue
+        else
+            listedPkgs[$i]=1
         fi
-        for i in `pkgr --jsonmeta $1 | jq -r .deps[]`; do
-                if [ ${listedPkgs[$i]+_} ]; then #if found
-                        continue
-                else
-                        listedPkgs[$i]=1
-                fi
 
-                for (( j=0; j<$2; j++ )) do
-                        echo -n " "
-                done
-        
-                echo "|$i";
-                genDepTree $i $(($2+1))
+        for (( j=0; j<$2; j++ )) do
+            echo -n " "
         done
+
+        echo "|$i";
+        genDepTree $i $(($2+1))
+    done
 }
 
 
 function DoPrintDepTree() {
-        unset listedPkgs
-        declare -A listedPkgs
+    unset listedPkgs
+    declare -A listedPkgs
 
-        genDepTree $1 0
+    genDepTree $1 0
 }
 
 function DoPrintRDepTree() {
-        unset listedPkgs
-        declare -A listedPkgs
+    unset listedPkgs
+    declare -A listedPkgs
 
-        genRDepTree $1 0
+    genRDepTree $1 0
 }
 
 #TODO while loop not called if no parameters are passed
 if [ -z $1 ]; then
-        isold=1
+    isold=1
 fi
 
 while [[ $# > 0 ]]
 do
-        key="$1"
+    key="$1"
 
-        case $key in
-                -s|--sync)
-                        DoSync
-                ;;
-                -d|--download)
-                        shift
-                        DoDownload $@
-                ;;
-                --instbin)
-                        shift
-                        if [ "$1" == "-l" ]; then
-                                DoInstbinList
-                        else
-                                DoInstbin $1
-                        fi
-                ;;
-                -n|--newconfig)
-                        DoNewconfig
-                ;;
-                -V|--version-check)
-                        shift
-                        DoVersioncheck $1
-                ;;
-                -R|--is-required)
-                        shift
-                        DoCheckIsRequired $1;
-                ;;
-                -D|--show-revdeps)
-                        shift
-                        DoShowRevdeps $1
-                ;;
-                -Cp|--depcheck-package)
-                        shift
-                        DoDepcheckPackages $1
-                ;;
-                -pd|--print-dep-tree)
-                        shift
-                        DoPrintDepTree $1
-                ;;
-                -prd|--print-rdep-tree)
-                        shift
-                        DoPrintRDepTree $1
-                ;;
-                *)
+    case $key in
+        -s|--sync)
+            DoSync
+        ;;
+        -d|--download)
+            shift
+            DoDownload $@
+        ;;
+        --instbin)
+            shift
+            if [ "$1" == "-l" ]; then
+                    DoInstbinList
+            else
+                    DoInstbin $1
+            fi
+        ;;
+        -n|--newconfig)
+            DoNewconfig
+        ;;
+        -V|--version-check)
+            shift
+            DoVersioncheck $1
+        ;;
+        -R|--is-required)
+            shift
+            DoCheckIsRequired $1;
+        ;;
+        -D|--show-revdeps)
+            shift
+            DoShowRevdeps $1
+        ;;
+        -Cp|--depcheck-package)
+            shift
+            DoDepcheckPackages $1
+        ;;
+        -pd|--print-dep-tree)
+            shift
+            DoPrintDepTree $1
+        ;;
+        -prd|--print-rdep-tree)
+            shift
+            DoPrintRDepTree $1
+        ;;
+        *)
 #echo "Error: Unknown option: $1"
 #exit 1
-                isold=1
-                break #TODO do this for now till the rest is ported over
-                ;;
-        esac
-        shift # past argument or value
+        isold=1
+        break #TODO do this for now till the rest is ported over
+        ;;
+    esac
+    shift # past argument or value
 done
 
 #TODO Fall through for now
 if [ "$isold" != "1" ]; then
-        exit 0
+    exit 0
 fi
 
 
 if [ -z $1 ] || [ $1 == "-h" ] || [ $1 == "--help" ]; then
-        if [ "$LANG" == "ja_JP.UTF-8" ]; then
-                $echo -e "\npkgr -- noop Linuxのパッケージマナじゃー"
-                $echo -e "\n使用法:"
-                $echo -e "\t-s,\t--sync                        パッケージのデータベースを同期します"
-                $echo -e "\t-d,\t--download pkg                ダウンロードだけ"
-                $echo -e "\t-i,\t--install pkg                 インストール"
-                $echo -e "\t   \t--to-install pkg              Display required dependencies for pkg(s)."
-                $echo -e "\t   \t--instbin name                最新のビルド全、非noopのバイナリはoptと更新プロファイルにインストールします"
-                $echo -e "\t   \t--instbin -l                  上のバイナリインストールをリストします"
-                $echo -e "\t-f,\t--install-file foo.pkg        pkgファイルからインストールします"
-                $echo -e "\t-u,\t--upgrade pkg                 アップグレード"
-                $echo -e "\t-U,\t--upgrade-all                 システムアップグレード"
-                $echo -e "\t-r,\t--remove pkg                  削除します"
-                $echo -e "\t-l,\t--list                        リスト利用可能なパッケージ"
-                $echo -e "\t   \t--list-non-meta               List installed packages that are not required."
-                $echo -e "\t-R,\t--is-required pkg             Check if any packages that require pkg are installed"
-                $echo -e "\t-b,\t--belongs file-path           パッケージのファイルをさがす"
-                $echo -e "\t-pd,\t--print-dep-tree pkg          Print dependency tree for pkg."
-                $echo -e "\t-prd,\t--print-rdep-tree pkg         Print reverse dependency tree for pkg."
-                $echo -e "\t-D,\t--show-revdeps pkg            パッケージの逆依存関係をリストします"
-                $echo -e "\t-c,\t--depcheck dynamic-binary     バイナリの依存関係をチェックします"
-                $echo -e "\t-C,\t--depcheck-system             全システムの依存関係をチェックします"
-                $echo -e "\t-Cp,\t--depcheck-package            パッケージの依存関係をチェックします"
-                $echo -e "\t-Cr,\t--depcheck-revdep             パッケージの逆依存関係の依存関係をチェックします"
-                $echo -e "\t-m,\t--make-bldj foo.bldj or name  パッケージをビルドします（bldjファイルそれと、レポからダウンロードします）"
-                $echo -e "\t-V,\t--version-check name          ビルドのため、新ソースをチェックみて。"
-                $echo -e "\t-n,\t--new-config                  新コンフィグファイルを処理します"
-                $echo -e "\t   \t--mkinitramfs                 Create initramfs"
+    if [ "$LANG" == "ja_JP.UTF-8" ]; then
+        $echo -e "\npkgr -- noop Linuxのパッケージマナじゃー"
+        $echo -e "\n使用法:"
+        $echo -e "\t-s,\t--sync                        パッケージのデータベースを同期します"
+        $echo -e "\t-d,\t--download pkg                ダウンロードだけ"
+        $echo -e "\t-i,\t--install pkg                 インストール"
+        $echo -e "\t   \t--to-install pkg              Display required dependencies for pkg(s)."
+        $echo -e "\t   \t--instbin name                最新のビルド全、非noopのバイナリはoptと更新プロファイルにインストールします"
+        $echo -e "\t   \t--instbin -l                  上のバイナリインストールをリストします"
+        $echo -e "\t-f,\t--install-file foo.pkg        pkgファイルからインストールします"
+        $echo -e "\t-u,\t--upgrade pkg                 アップグレード"
+        $echo -e "\t-U,\t--upgrade-all                 システムアップグレード"
+        $echo -e "\t-r,\t--remove pkg                  削除します"
+        $echo -e "\t-l,\t--list                        リスト利用可能なパッケージ"
+        $echo -e "\t   \t--list-non-meta               List installed packages that are not required."
+        $echo -e "\t-R,\t--is-required pkg             Check if any packages that require pkg are installed"
+        $echo -e "\t-b,\t--belongs file-path           パッケージのファイルをさがす"
+        $echo -e "\t-pd,\t--print-dep-tree pkg          Print dependency tree for pkg."
+        $echo -e "\t-prd,\t--print-rdep-tree pkg         Print reverse dependency tree for pkg."
+        $echo -e "\t-D,\t--show-revdeps pkg            パッケージの逆依存関係をリストします"
+        $echo -e "\t-c,\t--depcheck dynamic-binary     バイナリの依存関係をチェックします"
+        $echo -e "\t-C,\t--depcheck-system             全システムの依存関係をチェックします"
+        $echo -e "\t-Cp,\t--depcheck-package            パッケージの依存関係をチェックします"
+        $echo -e "\t-Cr,\t--depcheck-revdep             パッケージの逆依存関係の依存関係をチェックします"
+        $echo -e "\t-m,\t--make-bldj foo.bldj or name  パッケージをビルドします（bldjファイルそれと、レポからダウンロードします）"
+        $echo -e "\t-V,\t--version-check name          ビルドのため、新ソースをチェックみて。"
+        $echo -e "\t-n,\t--new-config                  新コンフィグファイルを処理します"
+        $echo -e "\t   \t--mkinitramfs                 Create initramfs"
 
-        else
-                $echo -e "\npkgr -- noop Linux package manager"
-                $echo -e "\nUsage:"
+    else
+        $echo -e "\npkgr -- noop Linux package manager"
+        $echo -e "\nUsage:"
         $echo -e "\n---Basic---"
-                $echo -e "\t-s,\t--sync                        Sync packgage database"
-                $echo -e "\t-i,\t--install pkg1 <pkg2...>      Install"
-                $echo -e "\t-ia\t                              Install (show dependencies first)"
-                $echo -e "\t-u,\t--upgrade pkg                 Upgrade"
-                $echo -e "\t-U,\t--upgrade-all                 Upgrade system"
-                $echo -e "\t-r,\t--remove pkg                  Remove"
-                $echo -e "\t-l,\t--list                        List available packages"
-                $echo -e "\n---Dependencies---"
-                $echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
-                $echo -e "\t-Cp,\t--depcheck-package            Check dependencies for given package"
-                $echo -e "\t-Cr,\t--depcheck-revdep             Check dependencies for given packages reverse dependencies"
-                $echo -e "\t-R,\t--is-required pkg             Check if any packages that require pkg are installed"
-                $echo -e "\t-pd,\t--print-dep-tree pkg          Print dependency tree for pkg."
-                $echo -e "\t-prd,\t--print-rdep-tree pkg         Print reverse dependency tree for pkg."
-                $echo -e "\t-D,\t--show-revdeps pkg            List reverse dependencies for a package"
-                $echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
-                $echo -e "\n---System---"
-                $echo -e "\t--mkinitramfs                         Create initramfs"
-                $echo -e "\t-n,\t--new-config                  Process new config files"
-                $echo -e "\t-b,\t--belongs file-path           List package file belongs to"
-                $echo -e "\t--list-non-meta                       List installed packages that are not required."
-                $echo -e "\n---Build---"
-                $echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a package (bldj file or grab it from repo)"
-                $echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building"
+        $echo -e "\t-s,\t--sync                        Sync packgage database"
+        $echo -e "\t-i,\t--install pkg1 <pkg2...>      Install"
+        $echo -e "\t-ia\t                              Install (show dependencies first)"
+        $echo -e "\t-u,\t--upgrade pkg                 Upgrade"
+        $echo -e "\t-U,\t--upgrade-all                 Upgrade system"
+        $echo -e "\t-r,\t--remove pkg                  Remove"
+        $echo -e "\t-l,\t--list                        List available packages"
+        $echo -e "\n---Dependencies---"
+        $echo -e "\t-C,\t--depcheck-system             Check dependencies for entire system"
+        $echo -e "\t-Cp,\t--depcheck-package            Check dependencies for given package"
+        $echo -e "\t-Cr,\t--depcheck-revdep             Check dependencies for given packages reverse dependencies"
+        $echo -e "\t-R,\t--is-required pkg             Check if any packages that require pkg are installed"
+        $echo -e "\t-pd,\t--print-dep-tree pkg          Print dependency tree for pkg."
+        $echo -e "\t-prd,\t--print-rdep-tree pkg         Print reverse dependency tree for pkg."
+        $echo -e "\t-D,\t--show-revdeps pkg            List reverse dependencies for a package"
+        $echo -e "\t-c,\t--depcheck dynamic-binary     Check dependencies for a binary"
+        $echo -e "\n---System---"
+        $echo -e "\t--mkinitramfs                         Create initramfs"
+        $echo -e "\t-n,\t--new-config                  Process new config files"
+        $echo -e "\t-b,\t--belongs file-path           List package file belongs to"
+        $echo -e "\t--list-non-meta                       List installed packages that are not required."
+        $echo -e "\n---Build---"
+        $echo -e "\t-m,\t--make-bldj foo.bldj or name  Build a package (bldj file or grab it from repo)"
+        $echo -e "\t-V,\t--version-check name          Check(try) if new source is available for building"
         $echo -e "\t-genmeta package-name version         Generate meta information using current directory."
-                $echo -e "\t-genpkg <metafile>                    Generate pkg using current directory."
-                $echo -e "\n---Other---"
-                $echo -e "\t-getfiles pkg-file                    Get files from pkg"
-                $echo -e "\t-readmeta pkg-file                    Read meta information from pkg file."
+        $echo -e "\t-genpkg <metafile>                    Generate pkg using current directory."
+        $echo -e "\n---Other---"
+        $echo -e "\t-getfiles pkg-file                    Get files from pkg"
+        $echo -e "\t-readmeta pkg-file                    Read meta information from pkg file."
         $echo -e "\t-d,\t--download pkg                Only download"
-                $echo -e "\t--to-install pkg                      Display required dependencies for pkg(s)."
-                $echo -e "\t--instbin -l                          List available bin installs."
-                $echo -e "\t--instbin name                        Install latest pre-built, non-noop binary to /opt and update profile."
-                $echo -e "\t-f,\t--install-file foo.pkg        Install from .pkg file"
-                $echo -e "\t-libdiff                              Run diff on libdb with git version."
+        $echo -e "\t--to-install pkg                      Display required dependencies for pkg(s)."
+        $echo -e "\t--instbin -l                          List available bin installs."
+        $echo -e "\t--instbin name                        Install latest pre-built, non-noop binary to /opt and update profile."
+        $echo -e "\t-f,\t--install-file foo.pkg        Install from .pkg file"
+        $echo -e "\t-libdiff                              Run diff on libdb with git version."
         $echo
-                $echo -e "Mirrors:\n\tcopy /var/noop/etc/mirrors to /etc/noop/mirrors and uncomment desired mirror."
-        fi
-        $echo -e "\n"
-        exit 0;
+        $echo -e "Mirrors:\n\tcopy /var/noop/etc/mirrors to /etc/noop/mirrors and uncomment desired mirror."
+    fi
+    $echo -e "\n"
+    exit 0;
 fi
 
 if [ $1 == "--depcheck-revdep" ] || [ $1 == "-Cr" ]; then
 
-        $echo "Scanning machine for missing dependencies"
+    $echo "Scanning machine for missing dependencies"
     ldconfig &>/dev/null
     tput civis
     $rm -f /tmp/missinglibs && touch /tmp/missinglibs
     $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
-        for i in `pkgr -D $2`;
-        do
-                sed -ne '/FILES:/,$p' $INSTALLEDDIR/$i | grep -E "/usr/bin|/usr/lib|/bin|/lib" >> /tmp/filelist
-        done
+    for i in `pkgr -D $2`;
+    do
+        sed -ne '/FILES:/,$p' $INSTALLEDDIR/$i | grep -E "/usr/bin|/usr/lib|/bin|/lib" >> /tmp/filelist
+    done
 
-        #TODO Factorize out these two depcheck functions
-        total_lines=`cat /tmp/filelist | wc -l`
+    #TODO Factorize out these two depcheck functions
+    total_lines=`cat /tmp/filelist | wc -l`
     let count=0
     for i in `$cat /tmp/filelist`;
     do  
@@ -820,64 +818,63 @@ if [ $1 == "--depcheck-revdep" ] || [ $1 == "-Cr" ]; then
 fi
 
 if [ $1 == "--depcheck-system" ] || [ $1 == "-C" ]; then
-        echo "Scanning machine for missing dependencies"
-        ldconfig &>/dev/null
-        tput civis
-        $rm -f /tmp/missinglibs && touch /tmp/missinglibs
-        $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
-        $rm -f /tmp/filelist
+    echo "Scanning machine for missing dependencies"
+    ldconfig &>/dev/null
+    tput civis
+    $rm -f /tmp/missinglibs && touch /tmp/missinglibs
+    $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
+    $rm -f /tmp/filelist
 
-        $cat /etc/ld.so.conf | $sed -e '/include/d;' > /tmp/ld.dirs;
-        for i in `$cat /etc/ld.so.conf | $sed -ne '/include/p' | $awk '{print $2;}'`; do
-            $cat $i >> /tmp/ld.dirs;
-        done;
+    $cat /etc/ld.so.conf | $sed -e '/include/d;' > /tmp/ld.dirs;
+    for i in `$cat /etc/ld.so.conf | $sed -ne '/include/p' | $awk '{print $2;}'`; do
+        $cat $i >> /tmp/ld.dirs;
+    done;
 
-        for i in `$cat /tmp/ld.dirs | $sort | $uniq`; do
-           $find $i -type f -regex ".*\/lib[a-zA-Z\.0-9]*so[0-9\.]*" >> /tmp/filelist
-        done
+    for i in `$cat /tmp/ld.dirs | $sort | $uniq`; do
+       $find $i -type f -regex ".*\/lib[a-zA-Z\.0-9]*so[0-9\.]*" >> /tmp/filelist
+    done
 
-        total_lines=`cat /tmp/filelist | wc -l`
-        let count=0
-        for i in `$cat /tmp/filelist`;
+    total_lines=`cat /tmp/filelist | wc -l`
+    let count=0
+    for i in `$cat /tmp/filelist`;
+    do
+        let count=$count+1
+        ShowProgress $count $total_lines
+        MISSINGLIBS=`ldd $i 2>&1 | $grep "not found" | $awk '{print $1;}' | sort | uniq`
+        for j in ${MISSINGLIBS[@]};
         do
-                let count=$count+1
-                ShowProgress $count $total_lines
-                MISSINGLIBS=`ldd $i 2>&1 | $grep "not found" | $awk '{print $1;}' | sort | uniq`
-                for j in ${MISSINGLIBS[@]};
-                do
+            ISDIRECT=`readelf -d $i | $grep NEEDED | $awk '{print $5;}' | grep $j | wc -l`
 
-                        ISDIRECT=`readelf -d $i | $grep NEEDED | $awk '{print $5;}' | grep $j | wc -l`
+            DIRECT="DIRECT"
+            if [ "$ISDIRECT" == "0" ]; then
+                DIRECT="INDIRECT"
+            fi
 
-                        DIRECT="DIRECT"
-                        if [ "$ISDIRECT" == "0" ]; then
-                                DIRECT="INDIRECT"
-                        fi
-
-                        if [ "$DIRECT" != "DIRECT" ];
-                        then
-                                $echo "$i -> $DIRECT $j" >> /tmp/missinglibs
-                        else
-                                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
-                                then
-                                        $echo "$i -> $j $DIRECT" >> /tmp/missinglibs
-                                else
-                                        $echo "$i -> $j $DIRECT File Found! Probably Okay." >> /tmp/missinglibs.found
-                                fi
-                        fi
-                done
+            if [ "$DIRECT" != "DIRECT" ];
+            then
+                $echo "$i -> $DIRECT $j" >> /tmp/missinglibs
+            else
+                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
+                then
+                    $echo "$i -> $j $DIRECT" >> /tmp/missinglibs
+                else
+                    $echo "$i -> $j $DIRECT File Found! Probably Okay." >> /tmp/missinglibs.found
+                fi
+            fi
         done
-        $cat /tmp/missinglibs | sort | uniq > /tmp/missinglibs.sorted
-        $echo ""
-        if [ `cat /tmp/missinglibs.sorted | wc -l` -gt 0 ]; then
-                $echo "Missing Libs ( File -> Missing Library ):"
-        else
-                $echo "Nothing broken found!"
-        fi
-        $cat /tmp/missinglibs.sorted
-        $cp /tmp/missinglibs.sorted /tmp/depcheck.results
-        $echo "Results saved in /tmp/depcheck.results"
-        $rm /tmp/missinglibs /tmp/missinglibs.sorted /tmp/filelist 2>/dev/null
-        tput cnorm
+    done
+    $cat /tmp/missinglibs | sort | uniq > /tmp/missinglibs.sorted
+    $echo ""
+    if [ `cat /tmp/missinglibs.sorted | wc -l` -gt 0 ]; then
+        $echo "Missing Libs ( File -> Missing Library ):"
+    else
+        $echo "Nothing broken found!"
+    fi
+    $cat /tmp/missinglibs.sorted
+    $cp /tmp/missinglibs.sorted /tmp/depcheck.results
+    $echo "Results saved in /tmp/depcheck.results"
+    $rm /tmp/missinglibs /tmp/missinglibs.sorted /tmp/filelist 2>/dev/null
+    tput cnorm
 fi
 
 if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
@@ -893,22 +890,22 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     #PKGDEPS=
 
     if [ -z $2 ]; then
-            echo Too few arguments.
-            exit 1;
+        echo Too few arguments.
+        exit 1;
     fi
 
     ISFILE=`echo $2 | grep ".bldj" | wc -l`
 
     if [ "$ISFILE" != "0" ] && [ ! -e "$2" ]; then
-            echo "File $2 does not exist."
-            exit 1;
+        echo "File $2 does not exist."
+        exit 1;
     fi
 
     if [ "$ISFILE" == "0" ]; then
-            cd "$PREFIX/var/noop/blds/$2"
-            tar cjf /tmp/file.bldj *
+        cd "$PREFIX/var/noop/blds/$2"
+        tar cjf /tmp/file.bldj *
     else
-            cp `readlink -f $2` /tmp/file.bldj
+        cp `readlink -f $2` /tmp/file.bldj
     fi
     FILE="/tmp/file.bldj"
 
@@ -918,29 +915,29 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 
     function GetSource
     {
-            cd ..
-            rm -rf *
-            wget $1 -Osrc
-            tar xf src
-            rm src
-            cd `ls`
+        cd ..
+        rm -rf *
+        wget $1 -Osrc
+        tar xf src
+        rm src
+        cd `ls`
     }
 
     function PushScripts
     {
-            if [ -e /tmp/bldr/pkg.install ];
-            then
-                    mv /tmp/bldr/pkg.install /tmp/bldr/pkg.install.p
-            fi
+        if [ -e /tmp/bldr/pkg.install ];
+        then
+                mv /tmp/bldr/pkg.install /tmp/bldr/pkg.install.p
+        fi
     }
 
 
     function PopScripts
     {
-            if [ -e /tmp/bldr/pkg.install.p ];
-            then
-                    mv /tmp/bldr/pkg.install.p /tmp/bldr/pkg.install
-            fi
+        if [ -e /tmp/bldr/pkg.install.p ];
+        then
+                mv /tmp/bldr/pkg.install.p /tmp/bldr/pkg.install
+        fi
     }
 
     
@@ -960,28 +957,28 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 
     if [ -z "${SKIP_DEP_CHECK}" ];
     then
-            for i in ${DEPS[@]};
-            do
-                    if [ ! -e $INSTALLEDDIR/$i ];
-                    then
-                            echo "Installing dependency ${i}..."
-                            pkgr -i $i
-                    fi
-            done
+        for i in ${DEPS[@]};
+        do
+            if [ ! -e $INSTALLEDDIR/$i ];
+            then
+                echo "Installing dependency ${i}..."
+                pkgr -i $i
+            fi
+        done
     fi
 
     STDUSRCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datadir=/usr/share --bindir=/usr/bin --prefix=/usr"
     STDSYSCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datadir=/usr/share --bindir=/bin --prefix=/"
 
     if [ $ISUSR == 1 ]; then
-            CONF=$STDUSRCONF;
+        CONF=$STDUSRCONF;
     else
-            CONF=$STDSYSCONF;
+        CONF=$STDSYSCONF;
     fi
 
     if [ -z "$BLDR_CONTINUE" ];
     then
-            rm -rf ~/bldr-tmp/*
+        rm -rf ~/bldr-tmp/*
     fi
     
     rm -rf ~/bldr-inst
@@ -994,24 +991,23 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
 
     if [ -n "$SRC" ];
     then
-            
-            if [ -z "$BLDR_CONTINUE" ];
-            then
-                    wget $SRC -Osrc
-                    tar xf src
-                    rm src
-            fi
-            
-            cd `ls` || true
+        if [ -z "$BLDR_CONTINUE" ];
+        then
+            wget $SRC -Osrc
+            tar xf src
+            rm src
+        fi
+        
+        cd `ls` || true
     fi
     for i in `ls $BLDRTMPDIR/*.patch`;
     do
-            if [ -z "$BLDR_CONTINUE" ];
-            then
-                    patch -Np1 -i $i
-            fi
-            
-            rm $i
+        if [ -z "$BLDR_CONTINUE" ];
+        then
+            patch -Np1 -i $i
+        fi
+        
+        rm $i
     done
 
     if [ -z "$BLDR_DIST" ]; then
@@ -1071,62 +1067,61 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     cd ~/bldr-inst
     let XTRA=`find $BLDRTMPDIR | wc -l`
     if [ $XTRA != 1 ]; then
-            cp -r $BLDRTMPDIR/* .
+        cp -r $BLDRTMPDIR/* .
     fi
     rm -rf pkg.install
     echo Ridding any /run, /var/run, or /tmp directories
     if [ -e ./run ]; then
-            rm -rf run
+        rm -rf run
     fi
     if [ -e ./var/run ]; then
-            rm -rf var/run
+        rm -rf var/run
     fi
     if [ -e ./tmp ]; then
-            rm -rf tmp
+        rm -rf tmp
     fi
 
     echo Moving any lib64 contents to lib
     if [ -e ./lib64 ]; then
-            mkdir -p ./lib
-            cp -r ./lib64/* ./lib/
-            rm -rf ./lib64
+        mkdir -p ./lib
+        cp -r ./lib64/* ./lib/
+        rm -rf ./lib64
     fi
 
     if [ -e ./usr/lib64 ]; then
-            mkdir -p ./usr/lib
-            cp -r ./usr/lib64/* ./usr/lib/
-            rm -rf ./usr/lib64
+        mkdir -p ./usr/lib
+        cp -r ./usr/lib64/* ./usr/lib/
+        rm -rf ./usr/lib64
     fi
     if [ "no" != "$STRIP" ];
     then
-            set +e
-            echo "Stripping libs and binaries..."
-            find  {,usr/}{lib,lib32} -type f | sed -e '/.*\.so$\|.*\.so.*[0-9]$/!d' | xargs strip --strip-debug
-            find {,usr/}{bin,sbin} -type f -exec strip --strip-all --strip-debug '{}' ';' 
+        set +e
+        echo "Stripping libs and binaries..."
+        find  {,usr/}{lib,lib32} -type f | sed -e '/.*\.so$\|.*\.so.*[0-9]$/!d' | xargs strip --strip-debug
+        find {,usr/}{bin,sbin} -type f -exec strip --strip-all --strip-debug '{}' ';' 
     fi
     set -e
 
     if [ "1" == "$RESTORELIBDB" ];
     then
-            cp /var/noop/libdb /var/noop/libdb.bak
-            pkgr -genmeta $NAME $VERSION
-            cp /var/noop/libdb.bak /var/noop/libdb
+        cp /var/noop/libdb /var/noop/libdb.bak
+        pkgr -genmeta $NAME $VERSION
+        cp /var/noop/libdb.bak /var/noop/libdb
     else
-
-            pkgr -genmeta $NAME $VERSION
+        pkgr -genmeta $NAME $VERSION
     fi
 
 #add package defined deps
     if [ -n "$PKGDEPS" ];
     then
-            for i in ${PKGDEPS[@]};
-            do
-                    PDCOUNT=`cat /tmp/noop/meta.tmp | sed -e '/DEPS:/,/SIZE:/ !d; /DEPS:/d; /SIZE:/d' | grep $i | wc -l`
-                    if [ "0" -eq "$PDCOUNT" ];
-                    then
-                            sed -i -e 's/DEPS:/DEPS:\n'"$i"'/' /tmp/noop/meta.tmp;
-                    fi
-            done
+        for i in ${PKGDEPS[@]};
+        do
+            PDCOUNT=`cat /tmp/noop/meta.tmp | sed -e '/DEPS:/,/SIZE:/ !d; /DEPS:/d; /SIZE:/d' | grep $i | wc -l`
+            if [ "0" -eq "$PDCOUNT" ];
+            then
+                sed -i -e 's/DEPS:/DEPS:\n'"$i"'/' /tmp/noop/meta.tmp;
+            fi
+        done
     fi
 
 
@@ -1143,151 +1138,133 @@ fi
 
 if [ $1 == "--belongs" ] || [ $1 == "-b" ]; then
 
-        if [ -z $2 ]; then
-                $echo Not enough arguments
-                exit 1
+    if [ -z $2 ]; then
+        $echo Not enough arguments
+        exit 1
+    fi
+    
+    for i in `$ls $INSTALLEDDIR`;
+    do
+        COUNT=`$sed -n -e '/FILES:/,$p' $INSTALLEDDIR/$i | $grep $2 | $wc -l`
+        if [ $COUNT != 0 ]; then
+            $sed -n -e '/FILES:/,$p' $INSTALLEDDIR/$i | $grep $2 | $sed -e 's/^/'"$i"':  &/g'
         fi
-        
-        for i in `$ls $INSTALLEDDIR`;
-        do
-
-                COUNT=`$sed -n -e '/FILES:/,$p' $INSTALLEDDIR/$i | $grep $2 | $wc -l`
-                if [ $COUNT != 0 ]; then
-                        $sed -n -e '/FILES:/,$p' $INSTALLEDDIR/$i | $grep $2 | $sed -e 's/^/'"$i"':  &/g'
-                fi
-        done
-
-        #let COUNT=`$grep "$2" $INSTALLEDDIR/* | $sed -e 's|'"$INSTALLEDDIR/"'||g' | $wc -l`
-        
-        #if [ $COUNT == 0 ]; then
-                #$echo $2 is not found.
-        #else
-                #$grep "$2" $INSTALLEDDIR/* | $sed -e 's|'"$INSTALLEDDIR/"'||g'
-        #fi
-
+    done
 fi
 
 if [ $1 == "--list" ] || [ $1 == "-l" ]; then
-        if [ "$2" == "-nc" ]; then
-                Green=
-                Red=
-                Yellow=
-                NoColor=
+    if [ "$2" == "-nc" ]; then
+        Green=
+        Red=
+        Yellow=
+        NoColor=
+    fi
+    $echo -e "Package List. Legend: ${Green}Installed ${Red}Available ${Yellow}Update Available${NoColor}"
+    for i in `$sed -e 's/,.*//g' $PACKAGEDB`;
+    do
+        echo -n "$i "
+        pkgdb_ver=`get_packagedb_version $i`
+        if [ -e $INSTALLEDDIR/$i ];
+        then
+            inst_ver=`get_installed_version $i`
+            vercomp $pkgdb_ver $inst_ver
+            if [ $? -eq 1 ];
+            then
+                $echo -e "${Green}${inst_ver} ${Yellow}${pkgdb_ver}${NoColor}";
+            else
+                $echo -e "${Green}${inst_ver}${NoColor}";
+            fi
+        else
+            $echo -e "${Red}${pkgdb_ver}"
         fi
-        $echo -e "Package List. Legend: ${Green}Installed ${Red}Available ${Yellow}Update Available${NoColor}"
-        for i in `$sed -e 's/,.*//g' $PACKAGEDB`;
-        do
-                echo -n "$i "
-                pkgdb_ver=`get_packagedb_version $i`
-                if [ -e $INSTALLEDDIR/$i ];
-                then
-                        inst_ver=`get_installed_version $i`
-                        vercomp $pkgdb_ver $inst_ver
-                        if [ $? -eq 1 ];
-                        then
-                                $echo -e "${Green}${inst_ver} ${Yellow}${pkgdb_ver}${NoColor}";
-                        else
-                                $echo -e "${Green}${inst_ver}${NoColor}";
-                        fi
-                else
-                        $echo -e "${Red}${pkgdb_ver}"
-                fi
-                $echo -ne ${NoColor}
-        done
-
+        $echo -ne ${NoColor}
+    done
 fi
 
 if [ $1 == "--remove" ] || [ $1 == "-r" ]; then
 
-        if [ -z $2 ]; then
+    if [ -z $2 ]; then
         $echo Not enough arguments
         exit 1
     fi
 
-        if [ $2 == "xorg-server" ] && [ -e $INSTALLEDDIR/nvidia ];
-        then
-                echo "Please remove nvidia first."
-                exit 1
-        fi
+    if [ $2 == "xorg-server" ] && [ -e $INSTALLEDDIR/nvidia ];
+    then
+        echo "Please remove nvidia first."
+        exit 1
+    fi
 
-        if [ $2 == "mesalib" ] && [ -e $INSTALLEDDIR/nvidia ];
-        then
-                echo "Please remove nvidia first."
-                exit 1
-        fi
+    if [ $2 == "mesalib" ] && [ -e $INSTALLEDDIR/nvidia ];
+    then
+        echo "Please remove nvidia first."
+        exit 1
+    fi
 
-        if [ $2 == "lib32-mesalib" ] && [ -e $INSTALLEDDIR/nvidia ];
-        then
-                echo "Please remove nvidia first."
-                exit 1
-        fi
+    if [ $2 == "lib32-mesalib" ] && [ -e $INSTALLEDDIR/nvidia ];
+    then
+        echo "Please remove nvidia first."
+        exit 1
+    fi
 
-        if [ -e $INSTALLEDDIR/$2 ]; then
-                
-                pkgr -runprerm $2       
+    if [ -e $INSTALLEDDIR/$2 ]; then
         
-                $sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$2 | $sed 's/^/\//g' > /tmp/noop/pkgr-remove-file-list
+        pkgr -runprerm $2       
 
-                #remove cfg files from file list
-                for p in {"cnf","config","conf","cfg","ini"};
-                do
-                        $sed -i -e '/\.'"$p"'/d' /tmp/noop/pkgr-remove-file-list
-                done
+        $sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$2 | $sed 's/^/\//g' > /tmp/noop/pkgr-remove-file-list
 
-                for i in `$cat /tmp/noop/pkgr-remove-file-list`;
-                do
-                        if [ $i != "/usr/lib64" ] && [ $i != "/lib64" ] && [ $i != "//usr/lib64" ] && [ $i != "//lib64" ]; then 
-                                $rm $PREFIX/$i 2>&1 | $sed -e '/directory/d'
-                        fi
-                        
-                done
-                $rm /tmp/noop/pkgr-remove-file-list
-                
-                pkgr -runpostrm $2
-                $rm $INSTALLEDDIR/$2
+        #remove cfg files from file list
+        for p in {"cnf","config","conf","cfg","ini"};
+        do
+            $sed -i -e '/\.'"$p"'/d' /tmp/noop/pkgr-remove-file-list
+        done
 
-                #$echo $2 has been removed.
-
-        else
-                $echo $2 is not installed.
-        fi
+        for i in `$cat /tmp/noop/pkgr-remove-file-list`;
+        do
+            if [ $i != "/usr/lib64" ] && [ $i != "/lib64" ] && [ $i != "//usr/lib64" ] && [ $i != "//lib64" ]; then 
+                $rm $PREFIX/$i 2>&1 | $sed -e '/directory/d'
+            fi
+        done
+        $rm /tmp/noop/pkgr-remove-file-list
         
-        
-        
+        pkgr -runpostrm $2
+        $rm $INSTALLEDDIR/$2
+    else
+        $echo $2 is not installed.
+    fi
 fi
 
 function SetPerms
 {
-        $find . -type f 2> /dev/null | $xargs $chmod 644 &> /dev/null
+    $find . -type f 2> /dev/null | $xargs $chmod 644 &> /dev/null
     $find . -type d 2> /dev/null | $xargs $chmod 755 &> /dev/null
-        $find {bin,lib,sbin,lib32} -type f 2> /dev/null | $xargs $chmod 755 &> /dev/null
+    $find {bin,lib,sbin,lib32} -type f 2> /dev/null | $xargs $chmod 755 &> /dev/null
     $find {usr/bin,usr/lib,usr/sbin,usr/lib32} -type f 2> /dev/null | $xargs $chmod 755 &> /dev/null
 }
 
 function RenameConfigFiles
 {
-        for p in {"cnf","config","conf","cfg"};
+    for p in {"cnf","config","conf","cfg"};
     do
         for i in `$find . -type f -name "*."$p`;
         do
-                        FS_PATH=$PREFIX/`echo $i | $sed 's/^.//g'`
-                        if [ -e $FS_PATH ]
-                        then
-                                $diff $i $FS_PATH &> /dev/null
-                                NEW_DIF="$?"
-                        else
-                                NEW_DIF="0"
-                        fi
-                        
-                        if [ "$NEW_DIF" != "0" ]; then
-                                TGT=`$echo $i | $sed -e 's/\.'"$p"'/\.'"$p"'\.new/g'`;
+            FS_PATH=$PREFIX/`echo $i | $sed 's/^.//g'`
+            if [ -e $FS_PATH ]
+            then
+                $diff $i $FS_PATH &> /dev/null
+                NEW_DIF="$?"
+            else
+                NEW_DIF="0"
+            fi
+            
+            if [ "$NEW_DIF" != "0" ]; then
+                TGT=`$echo $i | $sed -e 's/\.'"$p"'/\.'"$p"'\.new/g'`;
                 $echo "New and old config files differ, new config file will be `$echo $TGT | $sed -e 's/^\.//;'`";
-                    $mv $i $TGT;
-                                $echo $TGT | $sed -e 's/\.//' >> $NEWCONF
+                $mv $i $TGT;
+                $echo $TGT | $sed -e 's/\.//' >> $NEWCONF
 
-                                $cat $NEWCONF | $sort | $uniq > $NEWCONF.sorted
-                                $mv $NEWCONF.sorted $NEWCONF
-                        fi
+                $cat $NEWCONF | $sort | $uniq > $NEWCONF.sorted
+                $mv $NEWCONF.sorted $NEWCONF
+            fi
         done
     done
 }
@@ -1295,209 +1272,201 @@ function RenameConfigFiles
 # $1 = name, $2 = forceinstall? 0 or 1
 function DownloadAndInstallPkg
 {
-
     if [ -e $INSTALLEDDIR/$1  ]; then
-                if [ $2 = 0 ]; then
-                        return 0;
-                fi
-        fi
-
-        local PKGNAME=`$grep "^$1," $PACKAGEDB | $sed -e 's/^'"$1"',//g'`;
-        
-        if [ -e $TMPDIR/$PKGNAME ]; then
+        if [ $2 = 0 ]; then
                 return 0;
         fi
-        
-        $wget $PKGHOST/$PKGNAME -O$TMPDIR/$PKGNAME 
-        if [ $? != 0 ]; then
+    fi
+
+    local PKGNAME=`$grep "^$1," $PACKAGEDB | $sed -e 's/^'"$1"',//g'`;
+    
+    if [ -e $TMPDIR/$PKGNAME ]; then
+        return 0;
+    fi
+    
+    $wget $PKGHOST/$PKGNAME -O$TMPDIR/$PKGNAME 
+    if [ $? != 0 ]; then
         $echo "$wget encountered an error, try syncing first (pkgr -s)."
         exit 1
     fi
-        
-        #execute preinst
-        pkgr -runpreinst $TMPDIR/$PKGNAME
+    
+    #execute preinst
+    pkgr -runpreinst $TMPDIR/$PKGNAME
 
-        if [ -e $INSTALLEDDIR/$1  ]; then
-                if [ $2 != 0 ]; then
-                        pkgr --remove $1
-                fi
+    if [ -e $INSTALLEDDIR/$1  ]; then
+        if [ $2 != 0 ]; then
+            pkgr --remove $1
         fi
+    fi
 
 
-        # get deps
-        # pass through this fn
+    # get deps
+    # pass through this fn
 
-        for i in `pkgr -readmeta $TMPDIR/$PKGNAME | $sed -e '/DEPS:/,/SIZE:/ !d' | $sed '/DEPS:/d' | $sed '/SIZE:/d'`;
-        do
-                DownloadAndInstallPkg $i 0
-                
-        done
+    for i in `pkgr -readmeta $TMPDIR/$PKGNAME | $sed -e '/DEPS:/,/SIZE:/ !d' | $sed '/DEPS:/d' | $sed '/SIZE:/d'`;
+    do
+        DownloadAndInstallPkg $i 0
+    done
 
-        pkgr -getfiles $TMPDIR/$PKGNAME $TMPDIR/pkgtar.tar.bz2
-        $mkdir -p $TMPDIR/pkgfs
-        pushd $TMPDIR/pkgfs &> /dev/null
-        $tar xf $TMPDIR/pkgtar.tar.bz2
-        
-        pkgr -readmeta $TMPDIR/$PKGNAME > $INSTALLEDDIR/$1
-        $echo FILES: >> $INSTALLEDDIR/$1
-        $find * -type f -o -type l | $sed -e 's/^/\/&/g' >> $INSTALLEDDIR/$1
+    pkgr -getfiles $TMPDIR/$PKGNAME $TMPDIR/pkgtar.tar.bz2
+    $mkdir -p $TMPDIR/pkgfs
+    pushd $TMPDIR/pkgfs &> /dev/null
+    $tar xf $TMPDIR/pkgtar.tar.bz2
+    
+    pkgr -readmeta $TMPDIR/$PKGNAME > $INSTALLEDDIR/$1
+    $echo FILES: >> $INSTALLEDDIR/$1
+    $find * -type f -o -type l | $sed -e 's/^/\/&/g' >> $INSTALLEDDIR/$1
 
     RenameConfigFiles
 
-        SetPerms
+    SetPerms
 
-        $cp -pr * $PREFIX/
-        $rm -rf $TMPDIR/pkgfs
+    $cp -pr * $PREFIX/
+    $rm -rf $TMPDIR/pkgfs
 
-        ldconfig &> /dev/null # so anything in postinst will not fail
+    ldconfig &> /dev/null # so anything in postinst will not fail
 
-        popd &> /dev/null
+    popd &> /dev/null
 
-        #execute postinst
-        pkgr -runpostinst $1
-        
+    #execute postinst
+    pkgr -runpostinst $1
 }
 
 #Can take file or name
 if [ $1 == "--upgrade" ] || [ $1 == "-u" ]; then
-
-        if [ -z $2 ]; then
+    if [ -z $2 ]; then
         $echo Not enough arguments
         exit 1
     fi
 
-        if [ `echo $2 | grep -e "\.pkg" | wc -l` -gt 0 ];
-        then
-                ISFILE=1
-                NAME=`pkgr -readmeta $2 | $grep NAME: | $sed -e 's/NAME://g'`
-
-                if [ ! -e $INSTALLEDDIR/$NAME ]; then
-                        echo $2 is not installed.
-                        exit 0
-                fi
-        
-                OLD=`get_installed_version $NAME`
-        else
-                if [ ! -e $INSTALLEDDIR/$2  ]; then
-                        $echo $2 is not installed.
-                        exit 0
-                fi
-                ISFILE=0
-                NAME=`$grep NAME: $INSTALLEDDIR/$2 | $sed -e 's/NAME://g'`
-                OLD=`get_installed_version $NAME`
-        fi
-
-        ARCHPOST="_$ARCH"
-   
-        if [ $ISFILE -eq 1 ];
-        then
-                NEW=`pkgr -readmeta "$2" | $grep -m1 "VER:" | $sed -e 's/VER://g' | $sed -e 's/'"$ARCHPOST"'//g'`
-        else
-                NEW=`get_packagedb_version $NAME`
-        fi
-
-        vercomp $OLD $NEW
-        
-        if [ $? != 2 ]; then
-                $echo "There is no newer package for $NAME"
-                exit 0
-        fi
-
-        if [ $ISFILE -eq 1 ];
+    if [ `echo $2 | grep -e "\.pkg" | wc -l` -gt 0 ];
     then
-                PKGNAME=`echo $2`
-        else
-                PKGNAME=`$grep "^$2," $PACKAGEDB | $sed -e 's/^'"$2"',//g'`;    
+        ISFILE=1
+        NAME=`pkgr -readmeta $2 | $grep NAME: | $sed -e 's/NAME://g'`
+
+        if [ ! -e $INSTALLEDDIR/$NAME ]; then
+            echo $2 is not installed.
+            exit 0
         fi
 
+        OLD=`get_installed_version $NAME`
+    else
+        if [ ! -e $INSTALLEDDIR/$2  ]; then
+            $echo $2 is not installed.
+            exit 0
+        fi
+        ISFILE=0
+        NAME=`$grep NAME: $INSTALLEDDIR/$2 | $sed -e 's/NAME://g'`
+        OLD=`get_installed_version $NAME`
+    fi
 
-        if [ $ISFILE -eq 0 ];
-        then
-                $wget $PKGHOST/$PKGNAME -O$TMPDIR/$PKGNAME
-                if [ $? != 0 ]; then
-                $echo $wget encountered an error.
+    ARCHPOST="_$ARCH"
+
+    if [ $ISFILE -eq 1 ];
+    then
+        NEW=`pkgr -readmeta "$2" | $grep -m1 "VER:" | $sed -e 's/VER://g' | $sed -e 's/'"$ARCHPOST"'//g'`
+    else
+        NEW=`get_packagedb_version $NAME`
+    fi
+
+    vercomp $OLD $NEW
+    
+    if [ $? != 2 ]; then
+        $echo "There is no newer package for $NAME"
+        exit 0
+    fi
+
+    if [ $ISFILE -eq 1 ];
+    then
+        PKGNAME=`echo $2`
+    else
+        PKGNAME=`$grep "^$2," $PACKAGEDB | $sed -e 's/^'"$2"',//g'`;    
+    fi
+
+
+    if [ $ISFILE -eq 0 ];
+    then
+        $wget $PKGHOST/$PKGNAME -O$TMPDIR/$PKGNAME
+        if [ $? != 0 ]; then
+            $echo $wget encountered an error.
             exit 1
-            fi
-        else
-                cp $2 $TMPDIR/
         fi
+    else
+        cp $2 $TMPDIR/
+    fi
 
-        #Check for new deps
-        for i in `pkgr -readmeta $TMPDIR/$PKGNAME | $sed -e '/DEPS:/,/SIZE:/ !d' | $sed '/DEPS:/d' | $sed '/SIZE:/d'`;
+    #Check for new deps
+    for i in `pkgr -readmeta $TMPDIR/$PKGNAME | $sed -e '/DEPS:/,/SIZE:/ !d' | $sed '/DEPS:/d' | $sed '/SIZE:/d'`;
     do
         DownloadAndInstallPkg $i 0
-
     done
-        
-        pkgr -runpreup $TMPDIR/$PKGNAME
+    
+    pkgr -runpreup $TMPDIR/$PKGNAME
 
-        $sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$NAME | $sed 's/^/\//g' > /tmp/noop/pkgr-remove-file-list
+    $sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$NAME | $sed 's/^/\//g' > /tmp/noop/pkgr-remove-file-list
 
-        #remove cfg files from old file list
-        for p in {"cnf","config","conf","cfg"};
+    #remove cfg files from old file list
+    for p in {"cnf","config","conf","cfg"};
+    do
+        $sed -i -e '/\.'"$p"'/d' /tmp/noop/pkgr-remove-file-list
+    done
+
+    #Skip file removal if upgrading bash or busybox
+    if [ "$NAME" != "bash" ] && [ "$NAME" != "busybox" ];
+    then
+        #remove files
+        $echo Removing old package
+        for i in `$cat /tmp/noop/pkgr-remove-file-list`;
         do
-                $sed -i -e '/\.'"$p"'/d' /tmp/noop/pkgr-remove-file-list
+            $rm $i 2>&1 | $sed -e '/directory/d'
         done
+    fi
 
-        #Skip file removal if upgrading bash or busybox
-        if [ "$NAME" != "bash" ] && [ "$NAME" != "busybox" ];
-        then
-
-                #remove files
-                $echo Removing old package
-                for i in `$cat /tmp/noop/pkgr-remove-file-list`;
-                do
-                        $rm $i 2>&1 | $sed -e '/directory/d'
-                done
-        fi
-
-        $rm /tmp/noop/pkgr-remove-file-list 
-        
-        #get new pkg, extract, rename cfg files
-        pkgr -getfiles $TMPDIR/$PKGNAME $TMPDIR/pkgtar.tar.bz2
-        $mkdir -p $TMPDIR/pkgfs
+    $rm /tmp/noop/pkgr-remove-file-list 
+    
+    #get new pkg, extract, rename cfg files
+    pkgr -getfiles $TMPDIR/$PKGNAME $TMPDIR/pkgtar.tar.bz2
+    $mkdir -p $TMPDIR/pkgfs
     cd $TMPDIR/pkgfs
     $tar xf $TMPDIR/pkgtar.tar.bz2
-        
-        pkgr -readmeta $TMPDIR/$PKGNAME > $INSTALLEDDIR/$NAME
+    
+    pkgr -readmeta $TMPDIR/$PKGNAME > $INSTALLEDDIR/$NAME
     $echo FILES: >> $INSTALLEDDIR/$NAME
     $find * -type f -o -type l | $sed -e 's/^/\/&/g' >> $INSTALLEDDIR/$NAME
 
-        RenameConfigFiles
+    RenameConfigFiles
 
-        SetPerms
+    SetPerms
 
-        #install
+    #install
     $cp -pr * $PREFIX/
-        
-        ldconfig &> /dev/null
+    
+    ldconfig &> /dev/null
 
-        pkgr -runpostup $NAME
+    pkgr -runpostup $NAME
 
     $rm -rf $TMPDIR/pkgfs
-
 fi
 
 if [ $1 == "--upgrade-all" ] || [ $1 == "-U" ]; then
-        
-        for i in `$ls $INSTALLEDDIR/` ; 
-        do
-                NAME=$i
-                OLD=`get_installed_version $NAME`
-                NEW=`get_packagedb_version $NAME`
-                vercomp $OLD $NEW
-                if [ $? == 2 ]; then
-                        if [ ${#array[@]} -eq 0 ]; then
-                                array[0]=$NAME
-                        else
-                                array[${#array[@]}+1]=$NAME
-                        fi
-                fi
-        done
+    for i in `$ls $INSTALLEDDIR/` ; 
+    do
+        NAME=$i
+        OLD=`get_installed_version $NAME`
+        NEW=`get_packagedb_version $NAME`
+        vercomp $OLD $NEW
+        if [ $? == 2 ]; then
+            if [ ${#array[@]} -eq 0 ]; then
+                array[0]=$NAME
+            else
+                array[${#array[@]}+1]=$NAME
+            fi
+        fi
+    done
 
-        if [ ${#array[@]} -gt 0 ]; then
-                
-                #Check for kernel upgrade.
+    if [ ${#array[@]} -gt 0 ]; then
+            
+        #Check for kernel upgrade.
         for i in ${array[@]};
         do
             if [ "$i" == "linux-kernel" ];
@@ -1511,45 +1480,41 @@ if [ $1 == "--upgrade-all" ] || [ $1 == "-U" ]; then
                 exit 0
             fi
         done
-        
-                $echo The following are about to be upgraded:
+        $echo The following are about to be upgraded:
 
-                for i in ${array[@]};
-                do
-                        $echo $i
-                done
-
-                read -p "Press [Enter] key to start..."
-
-                for i in ${array[@]};
+        for i in ${array[@]};
         do
-                pkgr -u $i
-                done
-                
+            $echo $i
+        done
 
-        else
-                $echo There are no packages available for upgrade.
-        fi
-        
+        read -p "Press [Enter] key to start..."
+
+        for i in ${array[@]};
+        do
+            pkgr -u $i
+        done
+    else
+        $echo "There are no packages available for upgrade."
+    fi
 fi
 
 if [ $1 = "--install-file" ] || [ $1 == "-f" ]; then
-        if [ -z $2 ]; then
+    if [ -z $2 ]; then
         $echo Not enough arguments
         exit 1
     fi
 
-        PKG=`pkgr -readmeta $2 | $grep NAME: | $sed -e 's/NAME://g'`
+    PKG=`pkgr -readmeta $2 | $grep NAME: | $sed -e 's/NAME://g'`
 
-        if [ -e $INSTALLEDDIR/$PKG  ]; then
-                pkgr --upgrade $2
-                exit 0
+    if [ -e $INSTALLEDDIR/$PKG  ]; then
+        pkgr --upgrade $2
+        exit 0
     fi
 
-        FILENAME=install-from-file.pkg
-        $cp $2 $TMPDIR/$FILENAME
+    FILENAME=install-from-file.pkg
+    $cp $2 $TMPDIR/$FILENAME
         
-        #execute preinst
+    #execute preinst
     pkgr -runpreinst $TMPDIR/$FILENAME
 
     # get deps
@@ -1558,91 +1523,87 @@ if [ $1 = "--install-file" ] || [ $1 == "-f" ]; then
     for i in `pkgr -readmeta $TMPDIR/$FILENAME | $sed -e '/DEPS:/,/SIZE:/ !d' | $sed '/DEPS:/d' | $sed '/SIZE:/d'`;
     do
         DownloadAndInstallPkg $i 0
-
     done
 
     pkgr -getfiles $TMPDIR/$FILENAME $TMPDIR/pkgtar.tar.bz2
-        $mkdir -p $TMPDIR/pkgfs
+    $mkdir -p $TMPDIR/pkgfs
     pushd $TMPDIR/pkgfs &> /dev/null
-        $tar xf $TMPDIR/pkgtar.tar.bz2
+    $tar xf $TMPDIR/pkgtar.tar.bz2
 
-        pkgr -readmeta $TMPDIR/$FILENAME > $INSTALLEDDIR/$PKG
-        $echo FILES: >> $INSTALLEDDIR/$PKG
+    pkgr -readmeta $TMPDIR/$FILENAME > $INSTALLEDDIR/$PKG
+    $echo FILES: >> $INSTALLEDDIR/$PKG
     $find * -type f -o -type l | $sed -e 's/^/\/&/g'>> $INSTALLEDDIR/$PKG
-        
-        RenameConfigFiles
-        
-        SetPerms
-
-        $cp -pr * $PREFIX/
     
-        ldconfig &> /dev/null 
+    RenameConfigFiles
+    
+    SetPerms
 
-        popd &> /dev/null
+    $cp -pr * $PREFIX/
+
+    ldconfig &> /dev/null 
+
+    popd &> /dev/null
 
     #execute postinst
     pkgr -runpostinst $PKG
 
     $rm -rf $TMPDIR/pkgfs $TMPDIR/$FILENAME
-
 fi
 
     
 function InstallPkg
 {
-        local PKG=$1
-        local FORCE=$2
-
-        
-        if [  -e $INSTALLEDDIR/$PKG ] ; then
-                if [ $FORCE == 0 ] ; then
-                                $echo "Warning: $PKG is already installed, use 'pkgr -i --force ${PKG}' to force."
-                fi
+    local PKG=$1
+    local FORCE=$2
+    
+    if [  -e $INSTALLEDDIR/$PKG ] ; then
+        if [ $FORCE == 0 ] ; then
+            $echo "Warning: $PKG is already installed, use 'pkgr -i --force ${PKG}' to force."
         fi
-                
-        DownloadAndInstallPkg $PKG $FORCE
+    fi
+            
+    DownloadAndInstallPkg $PKG $FORCE
 }
 
 function DoesPkgExist
 {
-        PKG=$1
+    PKG=$1
 
-        if [ $PKG != "--force" ]; then 
-
-                let PKGEXIST=`$grep "^$PKG," $PACKAGEDB | $wc -l`
-                if [ 0 -eq $PKGEXIST ]; then
-                        return 1;
-                fi
+    if [ $PKG != "--force" ]; then 
+        let PKGEXIST=`$grep "^$PKG," $PACKAGEDB | $wc -l`
+        if [ 0 -eq $PKGEXIST ]; then
+            return 1;
         fi
-        return 0
+    fi
+    return 0
 }
 
 function FindRequiredDeps() {
 
-        for pkg in $@;
-        do
-                [ "$pkg" == "--to-install" ] && continue
-                
-                DoesPkgExist $pkg
-                [ $? == "1" ] && echo "$pkg does not exist" && exit 1
+    for pkg in $@;
+    do
+        [ "$pkg" == "--to-install" ] && continue
+        
+        DoesPkgExist $pkg
+        [ $? == "1" ] && echo "$pkg does not exist" && exit 1
 
-                for i in `pkgr --jsonmeta $pkg | jq '.deps[]?' | sed -e 's/^"//;s/"$//;'`;
-                do
-                        [ -e $INSTALLEDDIR/$i ] && continue
-                        [ ${reqPkgs[$i]+exists} ] && continue
-                        reqPkgs[$i]=1
-                        FindRequiredDeps $i;
-                done
+        for i in `pkgr --jsonmeta $pkg | jq '.deps[]?' | sed -e 's/^"//;s/"$//;'`;
+        do
+            [ -e $INSTALLEDDIR/$i ] && continue
+            [ ${reqPkgs[$i]+exists} ] && continue
+            reqPkgs[$i]=1
+            FindRequiredDeps $i;
         done
+    done
 }
 
 if [ $1 = "--to-install" ]; then
-        declare -A reqPkgs;
-        FindRequiredDeps $@
-        for i in ${!reqPkgs[@]};
-        do
-                echo $i;
-        done
+    declare -A reqPkgs;
+    FindRequiredDeps $@
+    for i in ${!reqPkgs[@]};
+    do
+        echo $i;
+    done
 fi
 
 if [ "$1" == "-ia" ]; then
@@ -1672,110 +1633,103 @@ fi
 
 if [ $1 = "--install" ] || [ $1 == "-i" ]; then
 
-        if [ -z $2 ]; then
+    if [ -z $2 ]; then
         $echo Not enough arguments
         exit 1
     fi
 
-        if [[ $2 =~ -meta$ ]];
+    if [[ $2 =~ -meta$ ]];
+    then
+        if [ -e $METADIR/$2 ];
         then
-                if [ -e $METADIR/$2 ];
-                then
-                        for i in `cat $METADIR/$2`;
-                        do
-                                pkgr -i $i;
-                        done
-                else
-                        echo "Error: meta package $2 does not exist."
-                        exit 1
-                fi
-                exit 0
+            for i in `cat $METADIR/$2`;
+            do
+                pkgr -i $i;
+            done
+        else
+            echo "Error: meta package $2 does not exist."
+            exit 1
         fi
+        exit 0
+    fi
 
-        ISEXIT=0;
+    ISEXIT=0;
 
-        $rm -f $TMPDIR/*.pkg
-        for ARG in "$@";
+    $rm -f $TMPDIR/*.pkg
+    for ARG in "$@";
     do
 
         if [ $ARG != "-i" ] && [ $ARG != "--install" ]; then
             DoesPkgExist $ARG 
-                        if [ $? == "1" ]; then
-                                $echo ERROR: $ARG does not exist.
-                                ISEXIT=1;
-                        fi
+            if [ $? == "1" ]; then
+                $echo ERROR: $ARG does not exist.
+                ISEXIT=1;
+            fi
         fi
-
     done
 
-        if [ $ISEXIT == 1 ]; then
-                exit 1;
+    if [ $ISEXIT == 1 ]; then
+        exit 1;
+    fi
+
+    if [ $2 != "--force" ]; then
+        let FORCE=0
+    fi
+    if [ $2 == "--force" ]; then
+        let FORCE=1
+        
+        InstallPkg $3 $FORCE
+        exit 0
+    fi
+
+    for ARG in "$@";
+    do
+        if [ $ARG != "-i" ] && [ $ARG != "--install" ]; then
+            InstallPkg $ARG $FORCE
         fi
-
-        if [ $2 != "--force" ]; then
-                let FORCE=0
-        fi
-        if [ $2 == "--force" ]; then
-                let FORCE=1
-                
-                InstallPkg $3 $FORCE
-                exit 0
-        fi
-
-        for ARG in "$@";
-        do
-
-                if [ $ARG != "-i" ] && [ $ARG != "--install" ]; then
-                        InstallPkg $ARG $FORCE
-                fi
-
-        done
+    done
 fi
 
-
-
 if [ $1 = "-genmeta" ]; then
-        
-        if [ -z $2 ] || [ -z $3 ]; then
+    if [ -z $2 ] || [ -z $3 ]; then
         $echo Not enough arguments
         exit 1
     fi
 
-        $rm -rf $TMPLIBFILE;
-        $echo NAME:$2 > $TMPFILE 
-        $echo -e "VER:$3" >> $TMPFILE
-        
-        $echo -e "ARCH:${ARCH}" >> $TMPFILE
+    $rm -rf $TMPLIBFILE;
+    $echo NAME:$2 > $TMPFILE 
+    $echo -e "VER:$3" >> $TMPFILE
+    
+    $echo -e "ARCH:${ARCH}" >> $TMPFILE
 
-        #Update libdb
-        touch $LIBDB
-        $cp $LIBDB $TMPLIBDB
-        $sed -i -e '/^'"$2"',/ d;' $TMPLIBDB
-#$find * -name "*.so*" | $sed -e 's/.*\///g' | $sed -e 's/^/'"$2"',/g' | LC_COLLATE=C sort | uniq >> $TMPLIBDB
-        $find . -type f -or -type l | $sed -e '/.*\.so$\|.*\.so.*[0-9]$/!d' | $sed -e 's/.*\///g' | $sed -e '/^lib.*/!d;' | $sed -e 's/^/'"$2"',/g' | LC_COLLATE=C sort | uniq >> $TMPLIBDB
-        $cat $TMPLIBDB | LC_COLLATE=C sort | uniq > $LIBDB
+    #Update libdb
+    touch $LIBDB
+    $cp $LIBDB $TMPLIBDB
+    $sed -i -e '/^'"$2"',/ d;' $TMPLIBDB
+    $find . -type f -or -type l | $sed -e '/.*\.so$\|.*\.so.*[0-9]$/!d' | $sed -e 's/.*\///g' | $sed -e '/^lib.*/!d;' | $sed -e 's/^/'"$2"',/g' | LC_COLLATE=C sort | uniq >> $TMPLIBDB
+    $cat $TMPLIBDB | LC_COLLATE=C sort | uniq > $LIBDB
 
-        
-        $echo "DEPS:" >> $TMPFILE
+    
+    $echo "DEPS:" >> $TMPFILE
 
-        #generate exec file list
-        $find * -type f > $TMPFILE.list
-        for i in `cat $TMPFILE.list`;
-        do
-                let isNotExec=`ldd $i 2>/dev/null | $grep "not a dynamic executable" | $wc -l`
-                if [ $isNotExec -gt 0 ];
-                then
-                        let lineNumber=`$grep -n "$i" $TMPFILE.list | $sed 's/:.*$//g'`
-                        $sed -i -e "$lineNumber"' d;' $TMPFILE.list
-                        continue
-                fi
-        done
-        
-        
-        #determine if each file is 32-bit or 64-bit
-        for i in `cat $TMPFILE.list`;
-        do
-                for j in `readelf -d $i | grep NEEDED | awk '{print $5;}' | sed -e 's/\[//g;s/\]//g;' | sed -e '/ld-linux-x86-64.so.2/d; /ld-linux-armhf.so.3/d; /ld-linux-aarch64.so.1/d;'`
+    #generate exec file list
+    $find * -type f > $TMPFILE.list
+    for i in `cat $TMPFILE.list`;
+    do
+        let isNotExec=`ldd $i 2>/dev/null | $grep "not a dynamic executable" | $wc -l`
+        if [ $isNotExec -gt 0 ];
+        then
+            let lineNumber=`$grep -n "$i" $TMPFILE.list | $sed 's/:.*$//g'`
+            $sed -i -e "$lineNumber"' d;' $TMPFILE.list
+            continue
+        fi
+    done
+    
+    
+    #determine if each file is 32-bit or 64-bit
+    for i in `cat $TMPFILE.list`;
+    do
+        for j in `readelf -d $i | grep NEEDED | awk '{print $5;}' | sed -e 's/\[//g;s/\]//g;' | sed -e '/ld-linux-x86-64.so.2/d; /ld-linux-armhf.so.3/d; /ld-linux-aarch64.so.1/d;'`
         do
             let is64bit=`ldd $i | $grep "linux-vdso.so.1" | wc -l`
             $cp $LIBDB $LIBDB.tmp
@@ -1806,275 +1760,266 @@ if [ $1 = "-genmeta" ]; then
 
             $rm $LIBDB.tmp
         done
-        done
-        
-        $rm $TMPFILE.list
+    done
+    
+    $rm $TMPFILE.list
 
-        if [ -a $TMPLIBFILE ];
-        then
-                $sed -i -e '/^'"$2"'$/d' $TMPLIBFILE
-                $cat $TMPLIBFILE | LC_COLLATE=C sort | uniq >> $TMPFILE
-        fi
+    if [ -a $TMPLIBFILE ];
+    then
+        $sed -i -e '/^'"$2"'$/d' $TMPLIBFILE
+        $cat $TMPLIBFILE | LC_COLLATE=C sort | uniq >> $TMPFILE
+    fi
 
-        $echo SIZE:`du | tail -n 1 | $sed -e 's/.\.//g'` >> $TMPFILE
+    $echo SIZE:`du | tail -n 1 | $sed -e 's/.\.//g'` >> $TMPFILE
 
-        $echo PKGINSTALL:  >> $TMPFILE
-        if [ -e $BLDRTMPDIR/pkg.install ]; then
-                $cat $BLDRTMPDIR/pkg.install >> $TMPFILE
-                $rm $BLDRTMPDIR/pkg.install
-        fi
-        $echo "#PKGINSTALLEOF" >> $TMPFILE
+    $echo PKGINSTALL:  >> $TMPFILE
+    if [ -e $BLDRTMPDIR/pkg.install ]; then
+        $cat $BLDRTMPDIR/pkg.install >> $TMPFILE
+        $rm $BLDRTMPDIR/pkg.install
+    fi
+    $echo "#PKGINSTALLEOF" >> $TMPFILE
 
-        $cat $TMPFILE
-        $echo Meta file is at $TMPFILE
+    $cat $TMPFILE
+    $echo Meta file is at $TMPFILE
 
-        $rm -rf $TMPLIBDB $TMPLIBFILE
+    $rm -rf $TMPLIBDB $TMPLIBFILE
 fi
 
 if [ $1 = "-genpkg" ] ; then
 
-        # 1 = -genpkg; 2 = meta.tmp
+    # 1 = -genpkg; 2 = meta.tmp
 
-        if [ -z $2 ] ; then
-                MPATH=$TMPFILE
-        else
-                MPATH=$2
-        fi
-        
-                
-        PKGNAME=`$grep -m1 "NAME:" $MPATH | $sed -e 's/NAME://g'`
-        VER=`$grep -m1 "VER:" $MPATH | $sed -e 's/VER://g'`
-        PKGARCH=`$grep -m1 "ARCH:" $MPATH  | $sed -e 's/ARCH://g'`
+    if [ -z $2 ] ; then
+        MPATH=$TMPFILE
+    else
+        MPATH=$2
+    fi
+    
+            
+    PKGNAME=`$grep -m1 "NAME:" $MPATH | $sed -e 's/NAME://g'`
+    VER=`$grep -m1 "VER:" $MPATH | $sed -e 's/VER://g'`
+    PKGARCH=`$grep -m1 "ARCH:" $MPATH  | $sed -e 's/ARCH://g'`
 
-        $tar -cjf /tmp/$PKGNAME *
-        $echo MSIZ:`$ls -al $MPATH | $awk '{printf("%.10d", $5+15);}'` >> $MPATH
-        $cat $MPATH >> /tmp/$PKGNAME
-        $cat $MPATH
+    $tar -cjf /tmp/$PKGNAME *
+    $echo MSIZ:`$ls -al $MPATH | $awk '{printf("%.10d", $5+15);}'` >> $MPATH
+    $cat $MPATH >> /tmp/$PKGNAME
+    $cat $MPATH
 
-        $mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_${PKGARCH}.pkg"
+    $mv /tmp/$PKGNAME ./"${PKGNAME}-${VER}_${PKGARCH}.pkg"
 fi
 
 function fn_exists() {
     if [ "`type -t $1`" == "function" ]; then
-                return 0;
-        fi
-        return 1;
+        return 0;
+    fi
+    return 1;
 }
 
 function get_pkg_install() {
-        is_pkg_file=`echo $1 | $sed -e 's/.*\.\(pkg\)$/\1/g'`
-        if [ "$is_pkg_file" == "pkg" ];
-        then
-                pkgr -readmeta $1 | $sed -e '/PKGINSTALL:/,/#PKGINSTALLEOF/ !d' | $sed -e '/PKGINSTALL/d' > $TMPDIR/run/pkg.install
-        else
-                $cat $INSTALLEDDIR/$1 | $sed -e '/PKGINSTALL:/,/#PKGINSTALLEOF/ !d' | $sed -e '/PKGINSTALL/d' > $TMPDIR/run/pkg.install
-        fi
-        
+    is_pkg_file=`echo $1 | $sed -e 's/.*\.\(pkg\)$/\1/g'`
+    if [ "$is_pkg_file" == "pkg" ];
+    then
+        pkgr -readmeta $1 | $sed -e '/PKGINSTALL:/,/#PKGINSTALLEOF/ !d' | $sed -e '/PKGINSTALL/d' > $TMPDIR/run/pkg.install
+    else
+        $cat $INSTALLEDDIR/$1 | $sed -e '/PKGINSTALL:/,/#PKGINSTALLEOF/ !d' | $sed -e '/PKGINSTALL/d' > $TMPDIR/run/pkg.install
+    fi
 }
 
 #Expecting a package name.
 if [ $1 = "-runpostinst" ]; then
+    if [ ! -e $INSTALLEDDIR/$2 ];
+    then
+        echo "Error: $INSTALLEDDIR/$2 does not exist!"
+        exit 1;
+    fi
 
-        if [ ! -e $INSTALLEDDIR/$2 ];
+    get_pkg_install $2
+    source $TMPDIR/run/pkg.install
+
+    fn_exists postinst
+    if [ $? -eq 0 ];
+    then
+        if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
         then
-                echo "Error: $INSTALLEDDIR/$2 does not exist!"
-                exit 1;
+            postinst &> /dev/null
+        else
+            postinst
         fi
-
-        get_pkg_install $2
-        source $TMPDIR/run/pkg.install
-
-        fn_exists postinst
-        if [ $? -eq 0 ];
-        then
-                if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-                then
-                        postinst &> /dev/null
-                else
-                        postinst
-                fi
-        fi
+    fi
 fi
 
 #Expecting a .pkg
 if [ $1 = "-runpreinst" ]; then
 
-        if [ ! -e $2 ];
-        then
+    if [ ! -e $2 ];
+    then
         echo "Error: $2 does not exist!"
         exit 1;
     fi
 
-        get_pkg_install $2
+    get_pkg_install $2
     source $TMPDIR/run/pkg.install
 
-        fn_exists preinst
-        if [ $? -eq 0 ];
+    fn_exists preinst
+    if [ $? -eq 0 ];
+    then
+        if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
         then
-                if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-                then
-                        preinst &> /dev/null
-                else
-                        preinst
-                fi
+            preinst &> /dev/null
+        else
+            preinst
         fi
+    fi
 fi
 
 #Expecting a package name
 if [ $1 = "-runpostup" ]; then
 
-        if [ ! -e $INSTALLEDDIR/$2 ];
-        then
+    if [ ! -e $INSTALLEDDIR/$2 ];
+    then
         echo "Error: $INSTALLEDDIR/$2 does not exist!"
         exit 1;
     fi
 
-
-        get_pkg_install $2
+    get_pkg_install $2
     source $TMPDIR/run/pkg.install
 
-        fn_exists postup
-        if [ $? -eq 0 ];
+    fn_exists postup
+    if [ $? -eq 0 ];
+    then
+        if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
         then
-                if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-                then
-                        postup &> /dev/null
-                else
-                        postup
-                fi
+            postup &> /dev/null
+        else
+            postup
         fi
+    fi
 fi
 
 #Expecting a .pkg
 if [ $1 = "-runpreup" ]; then
 
-        if [ ! -e $2 ];
-        then
+    if [ ! -e $2 ];
+    then
         echo "Error: $2 does not exist!"
         exit 1;
     fi
 
-        get_pkg_install $2
+    get_pkg_install $2
     source $TMPDIR/run/pkg.install
 
-        fn_exists preup
-        if [ $? -eq 0 ];
+    fn_exists preup
+    if [ $? -eq 0 ];
+    then
+        if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
         then
-                if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-                then
-                        preup &> /dev/null
-                else
-                        preup
-                fi
+            preup &> /dev/null
+        else
+            preup
         fi
+    fi
 fi
 
 #Expecting a package name
 if [ $1 = "-runpostrm" ]; then
         
-        if [ ! -e $INSTALLEDDIR/$2 ];
-        then
+    if [ ! -e $INSTALLEDDIR/$2 ];
+    then
         echo "Error: $INSTALLEDDIR/$2 does not exist!"
         exit 1;
     fi
 
         
-        get_pkg_install $2
-        source $TMPDIR/run/pkg.install
+    get_pkg_install $2
+    source $TMPDIR/run/pkg.install
 
-        fn_exists postrm
-        if [ $? -eq 0 ];
+    fn_exists postrm
+    if [ $? -eq 0 ];
+    then
+        if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
         then
-                if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-                then
-                        postrm &> /dev/null
-                else
-                        postrm
-                fi
+            postrm &> /dev/null
+        else
+            postrm
         fi
+    fi
 fi
 
 #Expecting a package name
 if [ $1 = "-runprerm" ]; then
 
-        if [ ! -e $INSTALLEDDIR/$2 ];
-        then
+    if [ ! -e $INSTALLEDDIR/$2 ];
+    then
         echo "Error: $INSTALLEDDIR/$2 does not exist!"
         exit 1;
     fi
 
-        get_pkg_install $2
-        source $TMPDIR/run/pkg.install
+    get_pkg_install $2
+    source $TMPDIR/run/pkg.install
 
-        fn_exists prerm
-        if [ $? -eq 0 ];
+    fn_exists prerm
+    if [ $? -eq 0 ];
+    then
+        if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
         then
-                if [ -n "$PKGR_SUPPRESS_P_OUTPUT" ];
-                then
-                        prerm &> /dev/null
-                else
-                        prerm
-                fi
+            prerm &> /dev/null
+        else
+            prerm
         fi
+    fi
 fi
 
 if [ $1 = "-getfiles" ] ; then
+    offset=`$ls -al $2 | $awk '{print $5-16;}'`
+    $dd if=$2 skip=$offset bs=1 count=16 2>/dev/null 1>/tmp/dd.log
+    size=`$cat /tmp/dd.log | $sed -e 's/MSIZ://g' | $sed 's/0*//'`
+    filesize=`$ls -al $2 | $awk '{print $5;}'`
 
-        offset=`$ls -al $2 | $awk '{print $5-16;}'`
-        $dd if=$2 skip=$offset bs=1 count=16 2>/dev/null 1>/tmp/dd.log
-        size=`$cat /tmp/dd.log | $sed -e 's/MSIZ://g' | $sed 's/0*//'`
-        filesize=`$ls -al $2 | $awk '{print $5;}'`
+    let newoff=$offset-$size+15;
+    let diff=$filesize-$newoff;
 
-        let newoff=$offset-$size+15;
-        let diff=$filesize-$newoff;
+    $dd if=$2 skip=$newoff bs=1 count=$diff &> /tmp/info.log
+    $sed -i -e '/records/d; /copied,/d' /tmp/info.log
 
-        $dd if=$2 skip=$newoff bs=1 count=$diff &> /tmp/info.log
-        $sed -i -e '/records/d; /copied,/d' /tmp/info.log
-
-
-        
-        newfile=`$echo $2 | $sed -e 's/\.pkg/.tar.bz2/g'`
-        $cp $2 $newfile
-        
-        if [ -e $PREFIX/usr/bin/busybox ];
-        then
-                $PREFIX/usr/bin/busybox truncate -s $newoff $newfile
-        else
-                $dd if=$2 skip=0 of=$newfile bs=1 count=$newoff &> /dev/null
-        fi
-        
-        if [ ! -z $3 ];
-        then
-                $mv $newfile $3
-                newfile=$3
-        else
-                $cat /tmp/info.log
-                $echo -e "File is: $newfile\n"
-        fi
-        
-        $rm -rf /tmp/dd.log
-        $rm -rf /tmp/info.log
-        
+    newfile=`$echo $2 | $sed -e 's/\.pkg/.tar.bz2/g'`
+    $cp $2 $newfile
+    
+    if [ -e $PREFIX/usr/bin/busybox ];
+    then
+        $PREFIX/usr/bin/busybox truncate -s $newoff $newfile
+    else
+        $dd if=$2 skip=0 of=$newfile bs=1 count=$newoff &> /dev/null
+    fi
+    
+    if [ ! -z $3 ];
+    then
+        $mv $newfile $3
+        newfile=$3
+    else
+        $cat /tmp/info.log
+        $echo -e "File is: $newfile\n"
+    fi
+    
+    $rm -rf /tmp/dd.log
+    $rm -rf /tmp/info.log
 fi
 
 if [ $1 = "-readmeta" ] ; then
-                
-        offset=`$ls -al $2 | $awk '{print $5-16;}'`
-        $dd if=$2 skip=$offset bs=1 count=16 2>/dev/null 1>/tmp/dd.log
-        size=`$cat /tmp/dd.log | $sed -e 's/MSIZ://g' | $sed 's/0*//'`
-        filesize=`$ls -al $2 | $awk '{print $5;}'`
+    offset=`$ls -al $2 | $awk '{print $5-16;}'`
+    $dd if=$2 skip=$offset bs=1 count=16 2>/dev/null 1>/tmp/dd.log
+    size=`$cat /tmp/dd.log | $sed -e 's/MSIZ://g' | $sed 's/0*//'`
+    filesize=`$ls -al $2 | $awk '{print $5;}'`
 
-        let newoff=$offset-$size+15;
-        let diff=$filesize-$newoff;
+    let newoff=$offset-$size+15;
+    let diff=$filesize-$newoff;
 
-        $dd if=$2 skip=$newoff bs=1 count=$diff &> /tmp/info.log
-        $sed -i -e '/records/d; /copied,/d' /tmp/info.log
+    $dd if=$2 skip=$newoff bs=1 count=$diff &> /tmp/info.log
+    $sed -i -e '/records/d; /copied,/d' /tmp/info.log
 
-        $cat /tmp/info.log
+    $cat /tmp/info.log
 
-        $rm -rf /tmp/dd.log
-        $rm -rf /tmp/info.log
-
+    $rm -rf /tmp/dd.log
+    $rm -rf /tmp/info.log
 fi
 
 if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
@@ -2084,498 +2029,482 @@ if [ $1 = "-c" ] || [ $1 = "--depcheck" ]; then
     fi
 
     $cp $LIBDB $LIBDB.tmp
-        $rm -rf $TMPLIBFILE $TMPLIBFILE.out
+    $rm -rf $TMPLIBFILE $TMPLIBFILE.out
 
-        let is64bit=`ldd $2 | $grep "linux-vdso.so.1" | wc -l`
+    let is64bit=`ldd $2 | $grep "linux-vdso.so.1" | wc -l`
 
-        if [ $is64bit -gt 0 ] || [ "$ARCH" == "i686" ] || [ "$ARCH" == "armv6l" ];
-        then
-                $sed -i '/^lib32-.*/ d;' $LIBDB.tmp;
-        else
-                $sed -i '/^lib32-.*/ !d;' $LIBDB.tmp;
-        fi
+    if [ $is64bit -gt 0 ] || [ "$ARCH" == "i686" ] || [ "$ARCH" == "armv6l" ];
+    then
+        $sed -i '/^lib32-.*/ d;' $LIBDB.tmp;
+    else
+        $sed -i '/^lib32-.*/ !d;' $LIBDB.tmp;
+    fi
 
     for j in `ldd $2 | $grep "=>" | $sed -e '/linux-gate.*/d' | $sed -e '/linux-vdso.*/d'| $sed -e '/ld-linux-x86-64.so/d; /ld-linux.so.2/d; /ld-linux-armhf.so.3/d; /ld-linux-aarch64.so.1/d; /libgcc/d; /libstdc++/d;' | $awk '{print $1;}' | LC_COLLATE=C sort | uniq`;
     do
-
-                let isFound=`$grep -e ",$j$" $LIBDB.tmp | $sed -e 's/,.*//g' | uniq | wc -l`
-                
-                if [ $isFound -eq 0 ];
-                then
-
-                        $echo -n "No package found in DB for "
-                        if [ $is64bit -eq 0 ] && [ "$ARCH" == "x86_64" ];
-                        then
-                                $echo -n "32-bit "
-                        fi
-                        $echo "library : $j"
-
-                else
-                        $grep -e ",$j$" $LIBDB.tmp | $sed -e 's/,.*//g' | uniq >>$TMPLIBFILE
-                fi
-
-                #$echo "$j =>" `$grep -e ",$j$" $LIBDB.tmp | $sed -e 's/,.*//g' | uniq`
-
-
+        let isFound=`$grep -e ",$j$" $LIBDB.tmp | $sed -e 's/,.*//g' | uniq | wc -l`
+        
+        if [ $isFound -eq 0 ];
+        then
+            $echo -n "No package found in DB for "
+            if [ $is64bit -eq 0 ] && [ "$ARCH" == "x86_64" ];
+            then
+                    $echo -n "32-bit "
+            fi
+            $echo "library : $j"
+        else
+            $grep -e ",$j$" $LIBDB.tmp | $sed -e 's/,.*//g' | uniq >>$TMPLIBFILE
+        fi
     done
 
-        $rm $LIBDB.tmp
+    $rm $LIBDB.tmp
 
-        if [ -e $TMPLIBFILE ];
-        then
-                for j in `cat $TMPLIBFILE`;
-                do
-                        if [ -e $INSTALLEDDIR/$j ];
-                        then
-                                echo -n "Installed     : "  >> $TMPLIBFILE.out
-                        else
-                                echo -n "Not Installed : " >> $TMPLIBFILE.out
-                        fi
-                
-                        echo "$j" >> $TMPLIBFILE.out
-                done
+    if [ -e $TMPLIBFILE ];
+    then
+        for j in `cat $TMPLIBFILE`;
+        do
+            if [ -e $INSTALLEDDIR/$j ];
+            then
+                echo -n "Installed     : "  >> $TMPLIBFILE.out
+            else
+                echo -n "Not Installed : " >> $TMPLIBFILE.out
+            fi
+    
+            echo "$j" >> $TMPLIBFILE.out
+        done
 
-                cat $TMPLIBFILE.out | LC_COLLATE=C sort | uniq
-        fi
+        cat $TMPLIBFILE.out | LC_COLLATE=C sort | uniq
+    fi
 
-        $rm -rf $TMPLIBFILE $TMPLIBFILE.out
+    $rm -rf $TMPLIBFILE $TMPLIBFILE.out
 fi
 
 if [ "$1" == "--list-non-meta" ]; then
-
-        for i in `ls $INSTALLEDDIR`; do
-                c=`pkgr -D $i | wc -l`;
-                m=`grep $i $METADIR/* | wc -l`;
-                if [ $c -eq 0 ] && [ $m -eq 0 ]; then
-                        echo -n "$i ";
-                fi;
-        done;
-        echo;   
+    for i in `ls $INSTALLEDDIR`; do
+        c=`pkgr -D $i | wc -l`;
+        m=`grep $i $METADIR/* | wc -l`;
+        if [ $c -eq 0 ] && [ $m -eq 0 ]; then
+            echo -n "$i ";
+        fi;
+    done;
+    echo;   
 fi
 
 if [ "$1" == "-libdiff" ]; then
-        curl -s -L https://github.com/nemasu/noop-linux/raw/master/libdb > /tmp/libdb.server
-        diff /var/noop/libdb /tmp/libdb.server
-        rm /tmp/libdb.server
+    curl -s -L https://github.com/nemasu/noop-linux/raw/master/libdb > /tmp/libdb.server
+    diff /var/noop/libdb /tmp/libdb.server
+    rm /tmp/libdb.server
 fi
 
 if [ "$1" == "--jsonmeta" ];
 then
+    if [ -z "$2" ]; then
+        exit 1
+    fi
 
-        if [ -z "$2" ]; then
-                exit 1
-        fi
-
-        if [ ! -e /var/noop/installed/$2 ] && [ ! -e /var/noop/blds/$2/$2.bld ];
+    if [ ! -e /var/noop/installed/$2 ] && [ ! -e /var/noop/blds/$2/$2.bld ];
+    then
+        #special case, not installed and no bld. This will be removed.
+        let in_pkg_file=`egrep -m1 "^$2," $PACKAGEDB | wc -l`
+        if [ $in_pkg_file -eq 1 ];
         then
-                #special case, not installed and no bld. This will be removed.
-                let in_pkg_file=`egrep -m1 "^$2," $PACKAGEDB | wc -l`
-                if [ $in_pkg_file -eq 1 ];
-                then
-                        echo "{"
-                    echo "\"name\":\"${2}\","
-                        echo "\"version\":\"`get_packagedb_version $2`\","
-                        echo "\"installed\":\"false\""
-                        echo "}"
-                        exit 0
-                fi
-
-
-                echo "$2 is not a valid package name."
-                exit -1
-        fi
-                
-
-        IFS=$'\n'
-        i=$INSTALLEDDIR/$2
-
-        if [ ! -e "$i" ];
-        then
-                #not installed
-                name=`grep -m1 "NAME=" /var/noop/blds/${2}/${2}.bld | sed 's/NAME=//g'`
-                version=`get_packagedb_version $2`
-        else
-                name=`grep -m1 "^NAME:" $i | sed -e 's/NAME://g;'`
-                version=`get_installed_version $2`
-                size=`grep -m1 "^SIZE:" $i | sed -e 's/SIZE://g;'`
+            echo "{"
+            echo "\"name\":\"${2}\","
+            echo "\"version\":\"`get_packagedb_version $2`\","
+            echo "\"installed\":\"false\""
+            echo "}"
+            exit 0
         fi
 
-        if [ -e /var/noop/blds/$2/${2}.bld ]; then
-                desc=`grep -m1 "^DESC=" /var/noop/blds/$2/${2}.bld | sed -e 's/DESC=//g;'`
-                [[ -z "$desc" ]] && desc="\"\""
-        else
-                desc="\"\""
-        fi
+        echo "$2 is not a valid package name."
+        exit -1
+    fi
 
-        echo "{"
-        echo "\"name\":\"${name}\","
+    IFS=$'\n'
+    i=$INSTALLEDDIR/$2
 
-        echo "\"desc\":${desc},"
+    if [ ! -e "$i" ];
+    then
+        #not installed
+        name=`grep -m1 "NAME=" /var/noop/blds/${2}/${2}.bld | sed 's/NAME=//g'`
+        version=`get_packagedb_version $2`
+    else
+        name=`grep -m1 "^NAME:" $i | sed -e 's/NAME://g;'`
+        version=`get_installed_version $2`
+        size=`grep -m1 "^SIZE:" $i | sed -e 's/SIZE://g;'`
+    fi
 
-        echo "\"version\":\"${version}\","
+    if [ -e /var/noop/blds/$2/${2}.bld ]; then
+        desc=`grep -m1 "^DESC=" /var/noop/blds/$2/${2}.bld | sed -e 's/DESC=//g;'`
+        [[ -z "$desc" ]] && desc="\"\""
+    else
+        desc="\"\""
+    fi
 
-        echo "\"deps\":["
+    echo "{"
+    echo "\"name\":\"${name}\","
 
-        if [ -e "$i" ];
-        then
-                let lines=`sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d' | wc -l`
-                let line=1
-                for dep in `sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d'`;
-                do
-                                if [ $lines -eq $line ];
-                                then
-                                                echo "\"$dep\""
-                                else
-                                                echo "\"$dep\","
-                                fi
-                                let line=$line+1
-                done
-                echo "],"
-        else
-                #uninstalled deps
-                declare -a json_pkg_deps=$(grep -m1 "DEPS" /var/noop/blds/$2/$2.bld | sed -e 's/DEPS=//')
-                let lines=${#json_pkg_deps[@]}
-                let line=1
-                for dep in ${json_pkg_deps[@]};
-                do
-                                if [ $lines -eq $line ];
-                                then
-                                                echo "\"$dep\""
-                                else
-                                                echo "\"$dep\","
-                                fi
-                                let line=$line+1
-                done
-                echo "],"
-        fi
+    echo "\"desc\":${desc},"
 
-        if [ -e "$i" ];
-        then
-                echo "\"size\":${size},"
-                echo "\"files\":["
-                let lines=`sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;' | wc -l`
-                let line=1
-                for file in `sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;'`;
-                do
-                                if [ $lines -eq $line ];
-                        then
-                                                echo "\"$file\""
-                                else
-                                                echo "\"$file\","
-                                fi
-                                let line=$line+1
-                done
+    echo "\"version\":\"${version}\","
 
-                echo "],"
-                echo "\"installed\":\"true\""
-        else
-                echo "\"installed\":\"false\""
-        fi
-        echo "}";
+    echo "\"deps\":["
+
+    if [ -e "$i" ];
+    then
+        let lines=`sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d' | wc -l`
+        let line=1
+        for dep in `sed -ne '/DEPS:/,/SIZE:/p' $i | sed '/^DEPS:$/d;/^SIZE:/d'`;
+        do
+            if [ $lines -eq $line ];
+            then
+                echo "\"$dep\""
+            else
+                echo "\"$dep\","
+            fi
+            let line=$line+1
+        done
+        echo "],"
+    else
+        #uninstalled deps
+        declare -a json_pkg_deps=$(grep -m1 "DEPS" /var/noop/blds/$2/$2.bld | sed -e 's/DEPS=//')
+        let lines=${#json_pkg_deps[@]}
+        let line=1
+        for dep in ${json_pkg_deps[@]};
+        do
+            if [ $lines -eq $line ];
+            then
+                echo "\"$dep\""
+            else
+                echo "\"$dep\","
+            fi
+            let line=$line+1
+        done
+        echo "],"
+    fi
+
+    if [ -e "$i" ];
+    then
+        echo "\"size\":${size},"
+        echo "\"files\":["
+        let lines=`sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;' | wc -l`
+        let line=1
+        for file in `sed -ne '/FILES:/,/$p/p' $i | sed '/^FILES:$/d;'`;
+        do
+            if [ $lines -eq $line ];
+            then
+                echo "\"$file\""
+            else
+                echo "\"$file\","
+            fi
+            let line=$line+1
+        done
+
+        echo "],"
+        echo "\"installed\":\"true\""
+    else
+        echo "\"installed\":\"false\""
+    fi
+    echo "}";
 
 fi
 
 if [ $1 = "--mkinitramfs" ]; then
-        KERVER=`grep -m1 VER: $INSTALLEDDIR/linux-kernel | sed -e 's/VER://g'`
-        function copy_module() {
+    KERVER=`grep -m1 VER: $INSTALLEDDIR/linux-kernel | sed -e 's/VER://g'`
+    function copy_module() {
 
-                if [ -n "$1" ];
-                then
-                        MOD_PATH=`modinfo -k $KERVER $1 | grep -e "^filename:" | awk '{print $2;}'`
-                        name=`echo $MOD_PATH | sed -e 's/^.*\///g'`
-                        if [ ! -e "${INITRAMFS_WORKDIR}${MOD_PATH}" ];
-                        then
-                                install -D -v $MOD_PATH ${INITRAMFS_WORKDIR}${MOD_PATH}
-                                        
-                                for j in `modinfo -k $KERVER $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
-                                do  
-                                        copy_module "$j"
-                                done
-
-                                for k in `modinfo -k $KERVER $1 | grep -e "^firmware:" | awk '{print $2;}'`;
-                                do  
-                                        find /lib/firmware -name "${k}" -exec cp -v {} $INITRAMFS_WORKDIR/lib/firmware/ \;
-                                done
-                        fi  
-                fi  
-        }
-
-        function copy_binary() {
-                if [ ! -e "${2}" ];
-                then
+        if [ -n "$1" ];
+        then
+            MOD_PATH=`modinfo -k $KERVER $1 | grep -e "^filename:" | awk '{print $2;}'`
+            name=`echo $MOD_PATH | sed -e 's/^.*\///g'`
+            if [ ! -e "${INITRAMFS_WORKDIR}${MOD_PATH}" ];
+            then
+                install -D -v $MOD_PATH ${INITRAMFS_WORKDIR}${MOD_PATH}
                         
-                        if [ -e "${1}" ];
-                        then
-                                copy_binary_prefix=
-                                install -D -v ${1} ${2}
-                        elif [ -e "/usr/lib/${1}" ];
-                        then
-                                copy_binary_prefix=/usr/lib
-                                install -D -v /usr/lib/${1} ${2}
-                        elif [ -e "/lib/${1}" ];
-                        then
-                                copy_binary_prefix=/lib
-                                install -D -v /lib/${1} ${2}
-                        fi
-                                
-                        #deps
-                        for j in `ldd ${copy_binary_prefix}/${1} | awk '{print $3;}' | sed '/linux-vdso/d;/ld-linux/d;'`;
-                        do
-                                if [ "$j" != "dynamic" ];
-                                then
-                                        copy_binary "$j" "${INITRAMFS_WORKDIR}/${j}"
-                                fi
-                        done
-                fi 
-        }
+                for j in `modinfo -k $KERVER $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
+                do  
+                    copy_module "$j"
+                done
+
+                for k in `modinfo -k $KERVER $1 | grep -e "^firmware:" | awk '{print $2;}'`;
+                do  
+                    find /lib/firmware -name "${k}" -exec cp -v {} $INITRAMFS_WORKDIR/lib/firmware/ \;
+                done
+            fi  
+        fi  
+    }
+
+    function copy_binary() {
+        if [ ! -e "${2}" ];
+        then
+            
+            if [ -e "${1}" ];
+            then
+                copy_binary_prefix=
+                install -D -v ${1} ${2}
+            elif [ -e "/usr/lib/${1}" ];
+            then
+                copy_binary_prefix=/usr/lib
+                install -D -v /usr/lib/${1} ${2}
+            elif [ -e "/lib/${1}" ];
+            then
+                copy_binary_prefix=/lib
+                install -D -v /lib/${1} ${2}
+            fi
+                    
+            #deps
+            for j in `ldd ${copy_binary_prefix}/${1} | awk '{print $3;}' | sed '/linux-vdso/d;/ld-linux/d;'`;
+            do
+                if [ "$j" != "dynamic" ];
+                then
+                    copy_binary "$j" "${INITRAMFS_WORKDIR}/${j}"
+                fi
+            done
+        fi 
+    }
 
 
-        #Requirements   
-        for i in cpio aufs-utils lvm2 cryptsetup;
+    #Requirements   
+    for i in cpio aufs-utils lvm2 cryptsetup;
+    do
+        pkgr -i $i &> /dev/null
+    done
+
+    INITRAMFS_WORKDIR=/tmp/initramfs-gen
+    rm -rf $INITRAMFS_WORKDIR && mkdir $INITRAMFS_WORKDIR
+
+    pushd $INITRAMFS_WORKDIR &> /dev/null
+    tar xf /var/noop/etc/file-base.tar.bz2
+    ln -s lib lib64
+    cd usr
+    ln -s lib lib64
+    cd ..
+
+    rm -rf $INITRAMFS_WORKDIR/etc/*
+
+    #Modules that need to be in initramfs for some reason, add add needed.
+    mkdir -p $INITRAMFS_WORKDIR/mods
+    mkdir -p $INITRAMFS_WORKDIR/lib/modules/$KERVER/
+    mkdir -p $INITRAMFS_WORKDIR/lib/firmware
+    #Build list (need deps)
+
+    if [ -e /etc/noop/initramfs ];
+    then
+        source /etc/noop/initramfs
+
+        for i in ${MODULES[@]};
         do
-                pkgr -i $i &> /dev/null
+            touch $INITRAMFS_WORKDIR/mods/$i
+            copy_module "$i"
         done
 
-        INITRAMFS_WORKDIR=/tmp/initramfs-gen
-        rm -rf $INITRAMFS_WORKDIR && mkdir $INITRAMFS_WORKDIR
+        cp /lib/modules/$KERVER/modules.order $INITRAMFS_WORKDIR/lib/modules/$KERVER/
+        cp /lib/modules/$KERVER/modules.builtin $INITRAMFS_WORKDIR/lib/modules/$KERVER/
+        depmod -a -b $INITRAMFS_WORKDIR $KERVER
 
-        pushd $INITRAMFS_WORKDIR &> /dev/null
-    tar xf /var/noop/etc/file-base.tar.bz2
-        ln -s lib lib64
-    cd usr
-        ln -s lib lib64
-        cd ..
+        for i in ${BINARIES[@]};
+        do
+            copy_binary "$i" "${INITRAMFS_WORKDIR}/${i}"
+        done
 
-        rm -rf $INITRAMFS_WORKDIR/etc/*
-
-        #Modules that need to be in initramfs for some reason, add add needed.
-        mkdir -p $INITRAMFS_WORKDIR/mods
-        mkdir -p $INITRAMFS_WORKDIR/lib/modules/$KERVER/
-        mkdir -p $INITRAMFS_WORKDIR/lib/firmware
-        #Build list (need deps)
-
-        if [ -e /etc/noop/initramfs ];
-        then
-                source /etc/noop/initramfs
-
-                for i in ${MODULES[@]};
-                do
-                        touch $INITRAMFS_WORKDIR/mods/$i
-                        copy_module "$i"
-                done
-
-                cp /lib/modules/$KERVER/modules.order $INITRAMFS_WORKDIR/lib/modules/$KERVER/
-                cp /lib/modules/$KERVER/modules.builtin $INITRAMFS_WORKDIR/lib/modules/$KERVER/
-                depmod -a -b $INITRAMFS_WORKDIR $KERVER
-
-                for i in ${BINARIES[@]};
-                do
-                        copy_binary "$i" "${INITRAMFS_WORKDIR}/${i}"
-                done
-
-                fn_exists InitramfsCustom
-                if [ $? -eq 0 ]; then
-                        mkdir -p $INITRAMFS_WORKDIR/etc/noop/
-                        cp -v /etc/noop/initramfs $INITRAMFS_WORKDIR/etc/noop/
-                fi
-
-                fn_exists InitramfsExtra
-                if [ $? -eq 0 ]; then
-                    InitramfsExtra
-                fi
-
+        fn_exists InitramfsCustom
+        if [ $? -eq 0 ]; then
+            mkdir -p $INITRAMFS_WORKDIR/etc/noop/
+            cp -v /etc/noop/initramfs $INITRAMFS_WORKDIR/etc/noop/
         fi
+
+        fn_exists InitramfsExtra
+        if [ $? -eq 0 ]; then
+            InitramfsExtra
+        fi
+    fi
 
     copy_binary `which busybox` $INITRAMFS_WORKDIR/usr/bin/busybox
     copy_binary `which bash` $INITRAMFS_WORKDIR/usr/bin/bash
     copy_binary `which mount.aufs` $INITRAMFS_WORKDIR/sbin/mount.aufs
     copy_binary `which lvm` $INITRAMFS_WORKDIR/sbin/lvm
-        copy_binary `which lvmetad` $INITRAMFS_WORKDIR/sbin/lvmetad
+    copy_binary `which lvmetad` $INITRAMFS_WORKDIR/sbin/lvmetad
     copy_binary `which dmsetup` $INITRAMFS_WORKDIR/sbin/dmsetup
     copy_binary `which veritysetup` $INITRAMFS_WORKDIR/bin/veritysetup
     copy_binary `which cryptsetup-reencrypt` $INITRAMFS_WORKDIR/bin/cryptsetup-reencrypt
     copy_binary `which cryptsetup` $INITRAMFS_WORKDIR/bin/cryptsetup
     cp /lib/ld-* $INITRAMFS_WORKDIR/lib/
-   
-        rm -rf $INITRAMFS_WORKDIR/var/noop
-        rm -rf $INITRAMFS_WORKDIR/tmp/*
 
-        touch $INITRAMFS_WORKDIR/etc/mtab
+    rm -rf $INITRAMFS_WORKDIR/var/noop
+    rm -rf $INITRAMFS_WORKDIR/tmp/*
+
+    touch $INITRAMFS_WORKDIR/etc/mtab
     ldconfig -r $INITRAMFS_WORKDIR /usr/lib /lib
 
-        cp /var/noop/initramfs/init.noop $INITRAMFS_WORKDIR/init && chmod +x $INITRAMFS_WORKDIR/init
+    cp /var/noop/initramfs/init.noop $INITRAMFS_WORKDIR/init && chmod +x $INITRAMFS_WORKDIR/init
 
-        cd $INITRAMFS_WORKDIR
-        find . | cpio -H newc -o | gzip > /boot/noop-initramfs.img
+    cd $INITRAMFS_WORKDIR
+    find . | cpio -H newc -o | gzip > /boot/noop-initramfs.img
 
-        popd &> /dev/null && rm -rf $INITRAMFS_WORKDIR
+    popd &> /dev/null && rm -rf $INITRAMFS_WORKDIR
 fi
 
 if [ $1 = "-init" ]; then
-        if [ -z "$2" ];
-        then
-                SET_LOCALE="en_US"
+    if [ -z "$2" ];
+    then
+        SET_LOCALE="en_US"
+    else
+        SET_LOCALE="$2"
+    fi
+    $cp -r /etc/skel/* ~/ &> /dev/null
+    $cp /etc/skel/.* ~/ &> /dev/null
+    $mkdir -p /lib/locale
+    localedef -i ${SET_LOCALE} -f UTF-8 "${SET_LOCALE}.UTF-8"
+    echo "LANG=${SET_LOCALE}.UTF-8" > /etc/locale.conf
+    /usr/bin/systemd-machine-id-setup
+    useradd --system -M messagebus &> /dev/null
+    groupadd lock &> /dev/null
+    groupadd adm &> /dev/null
+    groupadd systemd-journal &> /dev/null
+    
+    for i in `ls $PREFIX/var/noop/installed`; do
+        pkgr -runpostinst $i;
+    done
+    
+    $echo "Enabling Network Manager"
+    systemctl enable NetworkManager.service
+    $chmod +s /bin/su
+    $sed -i 's/yes/no/' /etc/default/useradd
+    KERVER=`$grep -m1 VER: $INSTALLEDDIR/linux-kernel | $sed -e 's/VER://g'`
+    $sed -i -e 's/VERSION/'"$KERVER"'/' /boot/grub/grub.cfg
+
+    if [ -z "$NOOP_ISO_CREATE" ];
+    then
+        echo -n "Generating initramfs..."
+        dracut -q -H initramfs.img &> /dev/null
+        echo "done."
+
+        if [ "$LANG" == "ja_JP.UTF-8" ]; then
+            $echo "rootパスワードを入力してください";
+            passwd
+            $echo ""
+            $echo ""
+            $echo "-------------------------------------------"
+            $echo "ToDoリスト："
+            $echo "/etc/fstabを設定します。"
+            $echo ""
+            $echo "/boot/grub/grub.cfgを編集し、必要に応じてGRUBをインストールします："
+            $echo "grub-install /dev/sda - (多分)"
+            $echo "選択肢："
         else
-                SET_LOCALE="$2"
+            $echo "Enter root password"
+            passwd
+            $echo ""
+            $echo ""
+            $echo "-------------------------------------------"
+            $echo "Your 'todo' list:"
+            $echo "Configure /etc/fstab"
+            $echo ""
+            $echo "Edit /boot/grub/grub.cfg if needed and install grub:"
+            $echo "grub-install /dev/sda - (probably)"
+            $echo "Choices:"
         fi
-        $cp -r /etc/skel/* ~/ &> /dev/null
-        $cp /etc/skel/.* ~/ &> /dev/null
-        $mkdir -p /lib/locale
-        localedef -i ${SET_LOCALE} -f UTF-8 "${SET_LOCALE}.UTF-8"
-        echo "LANG=${SET_LOCALE}.UTF-8" > /etc/locale.conf
-        /usr/bin/systemd-machine-id-setup
-        useradd --system -M messagebus &> /dev/null
-        groupadd lock &> /dev/null
-        groupadd adm &> /dev/null
-        groupadd systemd-journal &> /dev/null
         
-        for i in `ls $PREFIX/var/noop/installed`; do
-                pkgr -runpostinst $i;
+        for i in a b c d e f g h i j k l m n o p q r s t u v w x y z;
+        do
+            $ls /dev/*d$i 2> /dev/null;
         done
+        $echo ""
+        /bin/bash --login 
+    else
+        echo "root:noop" | chpasswd
+        echo noop-live > /etc/hostname
         
-        $echo "Enabling Network Manager"
-        systemctl enable NetworkManager.service
-        $chmod +s /bin/su
-        $sed -i 's/yes/no/' /etc/default/useradd
-        KERVER=`$grep -m1 VER: $INSTALLEDDIR/linux-kernel | $sed -e 's/VER://g'`
-        $sed -i -e 's/VERSION/'"$KERVER"'/' /boot/grub/grub.cfg
+        for i in e2fsprogs btrfs-progs aufs-utils pciutils gptfdisk parted ipw2200-fw dosfstools efibootmgr screen openssh alsa-firmware alsa-lib alsa-utils alsa-plugins;
+        do
+            pkgr -i $i;
+        done
 
-        if [ -z "$NOOP_ISO_CREATE" ];
-        then
-        
-                echo -n "Generating initramfs..."
-                dracut -q -H initramfs.img &> /dev/null
-                echo "done."
+        systemctl enable sshd
 
-                if [ "$LANG" == "ja_JP.UTF-8" ]; then
-                        $echo "rootパスワードを入力してください";
-                        passwd
-                        $echo ""
-                        $echo ""
-                        $echo "-------------------------------------------"
-                        $echo "ToDoリスト："
-                        $echo "/etc/fstabを設定します。"
-                        $echo ""
-                        $echo "/boot/grub/grub.cfgを編集し、必要に応じてGRUBをインストールします："
-                        $echo "grub-install /dev/sda - (多分)"
-                        $echo "選択肢："
-                else
-                        $echo "Enter root password"
-                        passwd
-                        $echo ""
-                        $echo ""
-                        $echo "-------------------------------------------"
-                        $echo "Your 'todo' list:"
-                        $echo "Configure /etc/fstab"
-                        $echo ""
-                        $echo "Edit /boot/grub/grub.cfg if needed and install grub:"
-                        $echo "grub-install /dev/sda - (probably)"
-                        $echo "Choices:"
-                fi
-                
-                for i in a b c d e f g h i j k l m n o p q r s t u v w x y z;
-                do
-                        $ls /dev/*d$i 2> /dev/null;
-                done
-                $echo ""
-                /bin/bash --login 
+        echo "" > /etc/fstab
 
-        else
+        sed -i -e 's/agetty --noclear/agetty -a root --noclear/g' /usr/lib/systemd/system/getty@.service
 
-                echo "root:noop" | chpasswd
-                echo noop-live > /etc/hostname
-                
-                for i in e2fsprogs btrfs-progs aufs-utils pciutils gptfdisk parted ipw2200-fw dosfstools efibootmgr screen openssh alsa-firmware alsa-lib alsa-utils alsa-plugins;
-                do
-                        pkgr -i $i;
-                done
-
-                systemctl enable sshd
-
-                echo "" > /etc/fstab
-
-                sed -i -e 's/agetty --noclear/agetty -a root --noclear/g' /usr/lib/systemd/system/getty@.service
-
-                cd / && ln -s / ro
-                mkdir /cdrom && touch /cdrom/root.sqsh
+        cd / && ln -s / ro
+        mkdir /cdrom && touch /cdrom/root.sqsh
 
         cd /root
-                ln -s /var/noop/instlr
+        ln -s /var/noop/instlr
 
-                if [ "${SET_LOCALE}" == "ja_JP" ];
-                then
-                        for i in ibus fbterm ibus-fbterm ibus-anthy;
-                        do
-                                pkgr -i $i;
-                        done
-                        
-                        sed -i -e '/PROMPT_COMMAND=/d' /etc/profile
-                        sed -i -e 's/TERM=xterm/TERM=fbterm/g;' /etc/profile
-                        echo "export LANG=ja_JP.UTF-8" >> /etc/profile
-                        echo "ibus-fbterm-launch -- /usr/bin/welcome &> /dev/null" >> /root/.bashrc
-                        pushd /usr/bin
-                        ln -s python2 python
-                        popd
+        if [ "${SET_LOCALE}" == "ja_JP" ];
+        then
+            for i in ibus fbterm ibus-fbterm ibus-anthy;
+            do
+                pkgr -i $i;
+            done
+            
+            sed -i -e '/PROMPT_COMMAND=/d' /etc/profile
+            sed -i -e 's/TERM=xterm/TERM=fbterm/g;' /etc/profile
+            echo "export LANG=ja_JP.UTF-8" >> /etc/profile
+            echo "ibus-fbterm-launch -- /usr/bin/welcome &> /dev/null" >> /root/.bashrc
+            pushd /usr/bin
+            ln -s python2 python
+            popd
 
-                        echo "echo \"日本語入力について、\"ibus engine anthy\"を実行して、入力変化するのは<Ctrl>+Spaceを使ってください。\"" >> /usr/bin/welcome 
-                        echo "ibus engine &> /dev/null" >> /usr/bin/welcome 
-                        echo "/usr/bin/bash --login" >> /usr/bin/welcome 
-                        echo "#!/bin/bash" >> /usr/bin/setxkbmap
-                        chmod +x /usr/bin/welcome /usr/bin/setxkbmap
-                fi
-
-                if [ "core" != "$NOOP_ISO_CREATE" ];
-                then
-                        pkgr -i xorg-meta
-
-                        if [ "$NOOP_ISO_CREATE" == "kde" ]; then
-                                for i in kde-framework-meta kde-plasma-meta kde-applications-meta; do
-                                        pkgr -i $i
-                                done
-                        else
-                                pkgr -i ${NOOP_ISO_CREATE}-meta
-                        fi
-                        
-                        for i in gvfs chromium chromium-plugins firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
-                        do
-                                pkgr -i $i;
-                        done
-
-                        useradd -m -g users -G tty,audio,video,lp,wheel,adm livecd
-                        echo "livecd:noop" | chpasswd
-
-                        
-                        if [ "$NOOP_ISO_CREATE" == "mate" ];
-                        then
-                                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/mate-session/g' /etc/lxdm/lxdm.conf
-                        fi
-                        if [ "$NOOP_ISO_CREATE" == "xfce4" ];
-                        then
-                                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startxfce4/g' /etc/lxdm/lxdm.conf
-                        fi
-                        if [ "$NOOP_ISO_CREATE" == "enlightenment" ];
-                        then
-                                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/enlightenment_start/g' /etc/lxdm/lxdm.conf
-                        fi
-                        if [ "$NOOP_ISO_CREATE" == "kde" ];
-                        then
-                                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
-                        fi
-
-                        systemctl enable lxdm.service
-
-                        rm /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache;
-                        gdk-pixbuf-query-loaders --update-cache;
-
-                        pushd /usr/share/icons
-                        for i in `ls -alh | egrep "^d" | awk '{print $9;}' | sed '/[\.][\.]*/d'`;
-                        do
-                                gtk-update-icon-cache -q -t -f /usr/share/icons/$i;
-                        done
-
-                        popd
-                fi
-
-                exit
+            echo "echo \"日本語入力について、\"ibus engine anthy\"を実行して、入力変化するのは<Ctrl>+Spaceを使ってください。\"" >> /usr/bin/welcome 
+            echo "ibus engine &> /dev/null" >> /usr/bin/welcome 
+            echo "/usr/bin/bash --login" >> /usr/bin/welcome 
+            echo "#!/bin/bash" >> /usr/bin/setxkbmap
+            chmod +x /usr/bin/welcome /usr/bin/setxkbmap
         fi
+
+        if [ "core" != "$NOOP_ISO_CREATE" ];
+        then
+            pkgr -i xorg-meta
+
+            if [ "$NOOP_ISO_CREATE" == "kde" ]; then
+                for i in kde-framework-meta kde-plasma-meta kde-applications-meta; do
+                    pkgr -i $i
+                done
+            else
+                pkgr -i ${NOOP_ISO_CREATE}-meta
+            fi
+            
+            for i in gvfs chromium chromium-plugins firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
+            do
+                pkgr -i $i;
+            done
+
+            useradd -m -g users -G tty,audio,video,lp,wheel,adm livecd
+            echo "livecd:noop" | chpasswd
+
+            
+            if [ "$NOOP_ISO_CREATE" == "mate" ];
+            then
+                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/mate-session/g' /etc/lxdm/lxdm.conf
+            fi
+            if [ "$NOOP_ISO_CREATE" == "xfce4" ];
+            then
+                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startxfce4/g' /etc/lxdm/lxdm.conf
+            fi
+            if [ "$NOOP_ISO_CREATE" == "enlightenment" ];
+            then
+                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/enlightenment_start/g' /etc/lxdm/lxdm.conf
+            fi
+            if [ "$NOOP_ISO_CREATE" == "kde" ];
+            then
+                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
+            fi
+
+            systemctl enable lxdm.service
+
+            rm /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache;
+            gdk-pixbuf-query-loaders --update-cache;
+
+            pushd /usr/share/icons
+            for i in `ls -alh | egrep "^d" | awk '{print $9;}' | sed '/[\.][\.]*/d'`;
+            do
+                gtk-update-icon-cache -q -t -f /usr/share/icons/$i;
+            done
+
+            popd
+        fi
+        exit
+    fi
 fi
