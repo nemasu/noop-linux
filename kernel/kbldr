@@ -100,4 +100,4 @@ mv *.pkg /root/bldr-done
 rm -rf /tmp/noopfirmtmp
 cd /root
 rm -rf noopfirm/ noopkern/ noophead/
-echo "Done! Need to recompile bbswitch, virtualbox, and nvidia."
+echo "Done! Need to recompile bbswitch, virtualbox, nvidia, spl, zfs."

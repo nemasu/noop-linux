@@ -1,0 +1,7 @@
+function postinst() {
+    depmod
+}
+
+function postup() {
+    postinst
+}
