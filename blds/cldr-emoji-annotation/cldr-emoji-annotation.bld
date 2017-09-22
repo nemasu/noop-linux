@@ -1,26 +1,26 @@
 #package name
-NAME=ibus-anthy
+NAME=cldr-emoji-annotation
 
 #Description
-DESC="Japanese input method Anthy IMEngine for IBus Framework"
+DESC="Emoji annotation files in CLDR"
 
 #package version
-VERSION=1.5.9
+VERSION=31.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/ibus/ibus-anthy/releases/download/${VERSION}/ibus-anthy-${VERSION}.tar.gz
+SRC="https://github.com/fujiwarat/cldr-emoji-annotation/archive/${VERSION}_1.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+#autotools, python, perl, cmake, custom
+BUILD=autotools
 
 # build/package dependancies
-DEPS=('anthy' 'glib2' 'glibc' 'libffi' 'pcre')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,17 +31,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-    ./autogen.sh --prefix=/usr --libexec=/usr/lib/ibus
-    make -j${BLDR_CORES}
-    make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=https://github.com/ibus/ibus-anthy/releases
+        LISTURL=https://github.com/fujiwarat/cldr-emoji-annotation/releases
         FILELIST=`GetFileList`
         LATEST=0
 

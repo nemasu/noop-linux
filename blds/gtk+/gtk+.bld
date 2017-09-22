@@ -5,7 +5,7 @@ NAME=gtk+
 DESC="GObject-based multi-platform GUI toolkit"
 
 #package version
-VERSION=3.22.9
+VERSION=3.22.21
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'colord' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libepoxy' 'libffi' 'libpng' 'libxcb' 'pango' 'pcre' 'pixman' 'zlib')
+DEPS=('at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'colord' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXxf86vm' 'libcap2' 'libdrm' 'libepoxy' 'libffi' 'libgcrypt' 'libgpg-error' 'libpng' 'libxcb' 'libxkbcommon' 'libxshmfence' 'lz4' 'mesalib' 'pango' 'pcre' 'pixman' 'systemd' 'util-linux' 'wayland' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -34,23 +34,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        CXX=/bin/false ./configure --prefix=/usr \
+    CXX=/bin/false ./configure --prefix=/usr \
         --sysconfdir=/etc \
         --localstatedir=/var \
-        --enable-gtk2-dependency \
         --disable-schemas-compile \
         --enable-x11-backend \
-        --enable-introspection
+        --enable-broadway-backend \
+        --enable-wayland-backend \
+        --disable-gtk-doc
 
-        #https://bugzilla.gnome.org/show_bug.cgi?id=655517
+    #https://bugzilla.gnome.org/show_bug.cgi?id=655517
     sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
     make -j${BLDR_CORES}
 
-        make DESTDIR=/root/bldr-inst install
+    make DESTDIR=/root/bldr-inst install
 
-        #remove colliding files
-        rm /root/bldr-inst/usr/bin/gtk-update-icon-cache
+    #remove colliding files
+    rm /root/bldr-inst/usr/bin/gtk-update-icon-cache
 }
 
 #Default HTTP curl new version detection

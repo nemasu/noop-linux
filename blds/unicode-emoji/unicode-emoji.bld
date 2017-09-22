@@ -1,26 +1,26 @@
 #package name
-NAME=ibus-anthy
+NAME=unicode-emoji
 
 #Description
-DESC="Japanese input method Anthy IMEngine for IBus Framework"
+DESC="Emoji Data Files"
 
 #package version
-VERSION=1.5.9
+VERSION=5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/ibus/ibus-anthy/releases/download/${VERSION}/ibus-anthy-${VERSION}.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+#autotools, python, perl, cmake, custom
 BUILD=custom
 
 # build/package dependancies
-DEPS=('anthy' 'glib2' 'glibc' 'libffi' 'pcre')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,15 +33,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-    ./autogen.sh --prefix=/usr --libexec=/usr/lib/ibus
-    make -j${BLDR_CORES}
-    make DESTDIR=/root/bldr-inst install
+    files=("http://www.unicode.org/Public/emoji/$VERSION/emoji-data.txt"
+        "http://www.unicode.org/Public/emoji/$VERSION/emoji-sequences.txt"
+        "http://www.unicode.org/Public/emoji/$VERSION/emoji-test.txt"
+        "http://www.unicode.org/Public/emoji/$VERSION/emoji-variation-sequences.txt"
+        "http://www.unicode.org/Public/emoji/$VERSION/emoji-zwj-sequences.txt")
+    for f in ${files[@]}; do
+        wget $f
+    done
+
+    for f in data sequences test variation-sequences zwj-sequences; do
+        install -Dm644 emoji-$f.txt "/root/bldr-inst/usr/share/unicode/emoji/emoji-$f.txt"
+    done
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=https://github.com/ibus/ibus-anthy/releases
+        LISTURL=
         FILELIST=`GetFileList`
         LATEST=0
 

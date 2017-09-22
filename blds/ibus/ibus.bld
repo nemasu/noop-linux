@@ -5,8 +5,8 @@ NAME=ibus
 DESC="Next Generation Input Bus for Linux"
 
 #package version
-VERSION=1.5.11-1
-DVERSION=1.5.11
+VERSION=1.5.16
+DVERSION=1.5.16
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -21,13 +21,13 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('ibus-qt' 'pygtk' 'iso-codes' 'pygobject2' 'python-notify' 'python-xdg' 'dbus-python' 'py2cairo' 'pygobject' 'atk' 'cairo' 'dbus' 'dconf' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'gtk+2' 'harfbuzz' 'libffi' 'libnotify' 'libpng' 'libpng15' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXi' 'libXrender' 'pango' 'pcre' 'pixman' 'zlib')
+DEPS=('ibus-qt' 'pygtk' 'iso-codes' 'pygobject2' 'dbus-python' 'py2cairo' 'pygobject' 'atk' 'cairo' 'dbus' 'dconf' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'gtk+2' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXrender' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libnotify' 'libpng' 'libxcb' 'libxkbcommon' 'libxshmfence' 'mesalib' 'pango' 'pcre' 'pixman' 'systemd' 'util-linux' 'wayland' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('pygobject' 'py2cairo' 'dbus-python' 'python-xdg' 'python-notify' 'pygobject2' 'iso-codes' 'pygtk' 'ibus-qt' 'python')
+PKGDEPS=('pygobject' 'py2cairo' 'dbus-python' 'pygobject2' 'iso-codes' 'pygtk' 'ibus-qt' 'python')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -35,18 +35,27 @@ RESTORELIBDB=
 function BuildAndInstall
 {
 
-        ./autogen.sh \
-                --prefix=/usr \
-                --libexecdir=/usr/lib/ibus \
-                --sysconfdir=/etc \
-                --disable-gconf \
-                --enable-dconf \
-                --disable-memconf \
-                --enable-ui \
-                --enable-python-library \
-                --with-python=python3
-  make -j${BLDR_CORES}
-  make DESTDIR=/root/bldr-inst install
+    #make deps
+    for i in cldr-emoji-annotation unicode-emoji; do
+        pkgr -i $i 
+    done
+
+    sed -i 's|$(libibus) $(libibus_emoji_dialog)|$(libibus_emoji_dialog) $(libibus)|' ui/gtk3/Makefile.am
+	./autogen.sh \
+		--prefix=/usr \
+		--libexecdir=/usr/lib/ibus \
+		--sysconfdir=/etc \
+		--disable-gconf \
+		--enable-dconf \
+		--enable-wayland \
+		--disable-gtk-doc \
+		--disable-memconf \
+		--enable-ui \
+		--enable-python-library \
+		--with-python=python3
+
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
