@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=59.0.3071.115
-VERSION=59.0.3071.115
+DVERSION=61.0.3163.91
+VERSION=61.0.3163.91
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 STRIP="no"
 RESTORELIBDB=1
-DEPS=('alsa-lib' 'atk' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libxcb' 'mesalib' 'nspr' 'nss' 'pango' 'pulseaudio')
+DEPS=('alsa-lib' 'atk' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libxcb' 'mesalib' 'nspr' 'nss' 'pango' 'pulseaudio')
 
 
 function BuildAndInstall
@@ -32,7 +32,8 @@ function BuildAndInstall
                 pkgr -i $i
           fi;
   done
-  if [ -n $BLDR_CONTINUE ]; then
+
+  if [ "`pwd`" == "/root/bldr-tmp" ] && [ -n $BLDR_CONTINUE ]; then
       cd chromium*
   fi
 
@@ -117,7 +118,7 @@ function BuildAndInstall
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=false'
+    'use_gtk3=true'
     'use_kerberos=true'
     'use_pulseaudio=true'
     'use_sysroot=false'
@@ -196,7 +197,7 @@ function BuildAndInstall
         install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
         cp out/Release/libwidevinecdmadapter.so /root/bldr-inst/usr/lib/chromium/
         
-        cp out/Release/{libEGL.*,libGLESv2.*,libosmesa.*} /root/bldr-inst/usr/lib/chromium/
+        cp out/Release/lib* /root/bldr-inst/usr/lib/chromium/
         cp -r out/Release/swiftshader /root/bldr-inst/usr/lib/chromium/
 
         mkdir -p /root/bldr-inst/usr/bin/
@@ -205,7 +206,7 @@ function BuildAndInstall
     # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
         strip /root/bldr-inst/usr/lib/chromium/chromedriver \
         /root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap} \
-        /root/bldr-inst/usr/lib/chromium/{libEGL.so,libGLESv2.so,libosmesa.so} \
+        /root/bldr-inst/usr/lib/chromium/lib*.so \
         /root/bldr-inst/usr/lib/chromium/swiftshader/{libEGL.so,libGLESv2.so} \
         /root/bldr-inst/usr/bin/chromedriver
 

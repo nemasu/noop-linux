@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('e2fsprogs' 'glibc' 'util-linux' 'zlib')
+DEPS=('asciidoc' 'e2fsprogs' 'glibc' 'lzo2' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=32bit
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-glib2' 'lib32-glibc' 'lib32-libffi' 'lib32-pcre')
 
 # 'no' to skip calls to strip
 STRIP=

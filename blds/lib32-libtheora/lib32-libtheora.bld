@@ -20,7 +20,7 @@ EXTRACONF="--enable-shared --disable-static --with-pic --disable-asm"
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-glibc' 'lib32-libogg')
 
 # 'no' to skip calls to strip
 STRIP=

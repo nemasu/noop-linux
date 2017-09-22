@@ -20,7 +20,7 @@ EXTRACONF="--enable-experimental --disable-static -disable-static --disable-exam
 BUILD=32bit
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-alsa-lib' 'lib32-cairo' 'lib32-glib2' 'lib32-glibc' 'lib32-gstreamer' 'lib32-libX11' 'lib32-libXext' 'lib32-libXv' 'lib32-libogg' 'lib32-libtheora' 'lib32-libvisual' 'lib32-libvorbis' 'lib32-opus' 'lib32-orc' 'lib32-pango' 'lib32-zlib')
 
 # 'no' to skip calls to strip
 STRIP=
