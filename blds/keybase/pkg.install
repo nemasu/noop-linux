@@ -1,6 +1,7 @@
 function postinst() {
     chmod +x /opt/keybase/{Keybase,*.so,*.sh}
     /opt/keybase/post_install.sh
+    mkdir -p /keybase
     chmod 777 /keybase
 }
 
