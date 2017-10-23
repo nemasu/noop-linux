@@ -917,7 +917,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     {
         cd ..
         rm -rf *
-        wget $1 -Osrc
+        wget --inet4-only  $1 -Osrc
         tar xf src
         rm src
         cd `ls`
@@ -993,7 +993,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     then
         if [ -z "$BLDR_CONTINUE" ];
         then
-            wget $SRC -Osrc
+            wget --inet4-only  $SRC -Osrc
             tar xf src
             rm src
         fi
