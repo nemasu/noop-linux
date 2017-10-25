@@ -5019,6 +5019,12 @@ libbonoboui,libbonobo.so
 libbonoboui,libbonoboui-2.so
 libbonoboui,libbonoboui-2.so.0
 libbonoboui,libbonoboui-2.so.0.0.0
+libc++,libc++.so
+libc++,libc++.so.1
+libc++,libc++.so.1.0
+libc++,libc++abi.so
+libc++,libc++abi.so.1
+libc++,libc++abi.so.1.0
 libcaca,libcaca.so
 libcaca,libcaca.so.0
 libcaca,libcaca.so.0.99.19
