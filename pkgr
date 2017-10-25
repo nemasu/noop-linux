@@ -2265,7 +2265,7 @@ if [ $1 = "--mkinitramfs" ]; then
 
 
     #Requirements   
-    for i in cpio aufs-utils lvm2 cryptsetup;
+    for i in cpio lvm2 cryptsetup;
     do
         pkgr -i $i &> /dev/null
     done
@@ -2321,7 +2321,6 @@ if [ $1 = "--mkinitramfs" ]; then
 
     copy_binary `which busybox` $INITRAMFS_WORKDIR/usr/bin/busybox
     copy_binary `which bash` $INITRAMFS_WORKDIR/usr/bin/bash
-    copy_binary `which mount.aufs` $INITRAMFS_WORKDIR/sbin/mount.aufs
     copy_binary `which lvm` $INITRAMFS_WORKDIR/sbin/lvm
     copy_binary `which lvmetad` $INITRAMFS_WORKDIR/sbin/lvmetad
     copy_binary `which dmsetup` $INITRAMFS_WORKDIR/sbin/dmsetup
@@ -2415,7 +2414,7 @@ if [ $1 = "-init" ]; then
         echo "root:noop" | chpasswd
         echo noop-live > /etc/hostname
         
-        for i in e2fsprogs btrfs-progs aufs-utils pciutils gptfdisk parted ipw2200-fw dosfstools efibootmgr screen openssh alsa-firmware alsa-lib alsa-utils alsa-plugins;
+        for i in e2fsprogs btrfs-progs pciutils gptfdisk parted ipw2200-fw dosfstools efibootmgr screen openssh alsa-firmware alsa-lib alsa-utils alsa-plugins;
         do
             pkgr -i $i;
         done

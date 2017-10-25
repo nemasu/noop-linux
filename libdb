@@ -149,9 +149,6 @@ attica-qt4,libattica.so.0.4.2
 attr,libattr.so
 attr,libattr.so.1
 attr,libattr.so.1.1.0
-aufs-utils,libau.so
-aufs-utils,libau.so.2
-aufs-utils,libau.so.2.7
 augeas,libaugeas.so
 augeas,libaugeas.so.0
 augeas,libaugeas.so.0.20.0
