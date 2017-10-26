@@ -5,8 +5,8 @@ NAME=mate-utils
 DESC="Common MATE utilities for viewing disk usage, logs and fonts, taking screenshots, managing dictionaries and searching files (GTK2 version)"
 
 #package version
-VERSION=1.16.0
-DVERSION=1.16.0
+VERSION=1.18.3
+DVERSION=1.18.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -381,6 +381,7 @@ caja-extensions,libcaja-open-terminal.so
 caja-extensions,libcaja-sendto.so
 caja-extensions,libcaja-share.so
 caja-extensions,libcaja-wallpaper.so
+caja-extensions,libcaja-xattr-tags.so
 caja-extensions,libnstburn.so
 caja-extensions,libnstemailclient.so
 caja-extensions,libnstgajim.so
@@ -5601,6 +5602,16 @@ libpcap,libpcap.so.1.7.2
 libpciaccess,libpciaccess.so
 libpciaccess,libpciaccess.so.0
 libpciaccess,libpciaccess.so.0.11.1
+libpeas,libhelloworld.so
+libpeas,libpeas-1.0.so
+libpeas,libpeas-1.0.so.0
+libpeas,libpeas-1.0.so.0.2200.0
+libpeas,libpeas-gtk-1.0.so
+libpeas,libpeas-gtk-1.0.so.0
+libpeas,libpeas-gtk-1.0.so.0.2200.0
+libpeas,libpython3loader.so
+libpeas,libpythonloader.so
+libpeas,libsecondtime.so
 libpipeline,libpipeline.so
 libpipeline,libpipeline.so.1
 libpipeline,libpipeline.so.1.2.1
@@ -7381,7 +7392,6 @@ plasma-workspace,solidautoeject.so
 plasma-workspace,soliduiserver.so
 plasma-workspace,statusnotifierwatcher.so
 pluma,libchangecase.so
-pluma,libcloader.so
 pluma,libdocinfo.so
 pluma,libfilebrowser.so
 pluma,libmodelines.so

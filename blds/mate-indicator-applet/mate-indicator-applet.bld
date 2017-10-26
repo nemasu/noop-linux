@@ -5,8 +5,8 @@ NAME=mate-indicator-applet
 DESC="Exposes Ayatana Indicators in the MATE Panel"
 
 #package version
-VERSION=1.16.0
-DVERSION=1.16.0
+VERSION=1.18.1
+DVERSION=1.18.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
