@@ -22,7 +22,7 @@ EXTRACONF="--with-gtk=3.0"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libsoup' 'libxml2' 'pango')
+DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXxf86vm' 'libdrm' 'libffi' 'libpng' 'libsoup' 'libxcb' 'libxml2' 'libxshmfence' 'mesalib' 'pango' 'pcre' 'pixman' 'sqlite' 'util-linux' 'wayland' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

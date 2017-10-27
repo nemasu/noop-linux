@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gobject-introspection' 'gtk+' 'pango' 'python' 'python2')
 
 # 'no' to skip calls to strip
 STRIP=

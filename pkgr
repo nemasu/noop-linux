@@ -2465,7 +2465,7 @@ if [ $1 = "-init" ]; then
                 pkgr -i ${NOOP_ISO_CREATE}-meta
             fi
             
-            for i in gvfs chromium chromium-plugins firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
+            for i in gvfs chromium firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
             do
                 pkgr -i $i;
             done

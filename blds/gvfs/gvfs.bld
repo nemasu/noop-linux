@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('acl' 'atk' 'attr' 'avahi' 'cairo' 'dbus' 'elfutils' 'expat' 'fontconfig' 'freetype2' 'fuse' 'gcc-libs' 'gcr' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libarchive' 'libbluray' 'libcap2' 'libexif' 'libffi' 'libgcrypt' 'libgpg-error' 'libgphoto2' 'libgudev' 'libimobiledevice' 'libmtp' 'libplist' 'libpng' 'libsecret' 'libsoup' 'libtool' 'libusb' 'libxcb' 'libxml2' 'lzo2' 'nettle' 'openssl' 'p11-kit' 'pango' 'pcre' 'pixman' 'sqlite' 'systemd' 'udisks' 'usbmuxd' 'xz' 'zlib')
+DEPS=('acl' 'atk' 'attr' 'avahi' 'cairo' 'dbus' 'elfutils' 'expat' 'fontconfig' 'freetype2' 'fuse' 'gcc-libs' 'gcr' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXxf86vm' 'libarchive' 'libbluray' 'libcap2' 'libdrm' 'libexif' 'libffi' 'libgcrypt' 'libgpg-error' 'libgphoto2' 'libgudev' 'libmtp' 'libpng' 'libsecret' 'libsoup' 'libtool' 'libusb' 'libxcb' 'libxml2' 'libxshmfence' 'lz4' 'lzo2' 'mesalib' 'nettle' 'p11-kit' 'pango' 'pcre' 'pixman' 'polkit' 'samba' 'sqlite' 'systemd' 'udisks' 'util-linux' 'wayland' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

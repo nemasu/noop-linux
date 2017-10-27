@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'dbus' 'dbus-glib' 'dconf' 'exempi' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libICE' 'libSM' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXxf86vm' 'libcap2' 'libdrm' 'libepoxy' 'libexif' 'libffi' 'libgcrypt' 'libgpg-error' 'libpng' 'libunique' 'libxcb' 'libxml2' 'libxshmfence' 'lz4' 'mate-desktop' 'mesalib' 'pango' 'pcre' 'pixman' 'startup-notification' 'systemd' 'util-linux' 'wayland' 'xcb-util' 'xz' 'zlib')
+DEPS=('at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'dbus' 'dconf' 'exempi' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libICE' 'libSM' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXxf86vm' 'libcap2' 'libdrm' 'libepoxy' 'libexif' 'libffi' 'libgcrypt' 'libgpg-error' 'libnotify' 'libpng' 'libxcb' 'libxkbcommon' 'libxml2' 'libxshmfence' 'lz4' 'mate-desktop' 'mesalib' 'pango' 'pcre' 'pixman' 'startup-notification' 'systemd' 'util-linux' 'wayland' 'xcb-util' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -5,8 +5,8 @@ NAME=thunderbird
 DESC="Standalone Mail/News reader"
 
 #package version
-VERSION=52.2.1
-DVERSION=52.2.1
+VERSION=52.4.0
+DVERSION=52.4.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
