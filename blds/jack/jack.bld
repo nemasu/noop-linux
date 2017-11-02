@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'db' 'glibc' 'libsamplerate' 'libsndfile' 'ncurses' 'readline')
 
 # 'no' to skip calls to strip
 STRIP=

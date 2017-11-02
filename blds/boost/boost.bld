@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'icu4c' 'openmpi' 'zlib')
+DEPS=('gcc-libs' 'glibc' 'icu4c' 'openmpi' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

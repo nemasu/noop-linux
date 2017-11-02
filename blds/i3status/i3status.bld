@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'confuse' 'glibc' 'libnl' 'pulseaudio' 'yajl')
 
 # 'no' to skip calls to strip
 STRIP=

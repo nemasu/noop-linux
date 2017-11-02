@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc' 'json-glib' 'libffi' 'libsoup' 'libxml2' 'modemmanager' 'networkmanager' 'nspr' 'nss' 'pcre' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
+DEPS=('avahi' 'dbus' 'gcc-libs' 'glib2' 'glibc' 'json-glib' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libsoup' 'libxml2' 'lz4' 'modemmanager' 'pcre' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

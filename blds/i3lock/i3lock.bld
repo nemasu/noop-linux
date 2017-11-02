@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('cairo' 'glibc' 'libev' 'libxcb' 'libxkbcommon' 'linux-pam' 'xcb-util' 'xcb-util-image')
 
 # 'no' to skip calls to strip
 STRIP=

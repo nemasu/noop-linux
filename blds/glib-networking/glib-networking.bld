@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glib2' 'glibc' 'gmp' 'gnutls' 'libffi' 'libidn' 'libtasn1' 'nettle' 'p11-kit' 'pcre' 'zlib')
+DEPS=('glib2' 'glibc' 'gmp' 'gnutls' 'libffi' 'libidn' 'libtasn1' 'nettle' 'p11-kit' 'pcre' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

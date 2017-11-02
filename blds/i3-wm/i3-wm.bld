@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('cairo' 'glib2' 'glibc' 'libev' 'libxcb' 'libxkbcommon' 'pango' 'pcre' 'startup-notification' 'xcb-util' 'xcb-util-cursor' 'xcb-util-keysyms' 'xcb-util-wm' 'xcb-util-xrm' 'yajl')
 
 # 'no' to skip calls to strip
 STRIP=

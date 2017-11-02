@@ -20,7 +20,7 @@ EXTRACONF="--enable-vala-bindings"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'lz4' 'pcre' 'systemd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

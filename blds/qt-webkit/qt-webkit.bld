@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'icu4c' 'libX11' 'libXcomposite' 'libXext' 'libXrender' 'libjpeg' 'libpng' 'libwebp' 'libxml2' 'libxslt' 'mesalib' 'qt' 'sqlite' 'zlib')
+DEPS=('gcc-libs' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'hyphen' 'icu4c' 'libX11' 'libXcomposite' 'libXrender' 'libjpeg' 'libpng' 'libwebp' 'libxml2' 'libxslt' 'qt' 'sqlite' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

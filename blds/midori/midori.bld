@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libnotify' 'libsoup' 'libxml2' 'pango' 'sqlite')
+DEPS=('atk' 'cairo' 'gcr' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libX11' 'libXScrnSaver' 'libsoup' 'libxml2' 'p11-kit' 'pango' 'sqlite' 'webkitgtk' 'zeitgeist')
 
 # 'no' to skip calls to strip
 STRIP=
