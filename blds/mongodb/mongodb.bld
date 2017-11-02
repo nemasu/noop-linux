@@ -5,7 +5,7 @@ NAME=mongodb
 DESC="A high-performance, open source, schema-free document-oriented database"
 
 #package version
-VERSION=3.4.0
+VERSION=3.4.10
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,11 +33,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        args=(--use-system-boost --use-system-pcre --use-system-snappy --use-system-yaml --use-system-zlib --use-sasl-client --ssl --disable-warnings-as-errors --use-system-wiredtiger)
+    
+    pkgr -i scons &> /dev/null
 
-        scons core tools "${args[@]}" -j${BLDR_CORES}
+    args=(--use-system-boost --use-system-pcre --use-system-snappy --use-system-yaml --use-system-zlib --use-sasl-client --ssl --disable-warnings-as-errors --use-system-wiredtiger)
 
-        scons install --prefix=/root/bldr-inst/usr --nostrip "${args[@]}"
+    scons core tools "${args[@]}" -j${BLDR_CORES}
+
+    scons install --prefix=/root/bldr-inst/usr --nostrip "${args[@]}"
 }
 
 #Default HTTP curl new version detection

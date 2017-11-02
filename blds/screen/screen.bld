@@ -5,8 +5,8 @@ NAME=screen
 DESC="Full-screen window manager that multiplexes a physical terminal"
 
 #package version
-VERSION=4.3.1-1
-DVERSION=4.3.1
+VERSION=4.6.2
+DVERSION=4.6.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,7 +5,7 @@ NAME=xscreensaver
 DESC="Screen saver and locker for the X Window System"
 
 #package version
-VERSION=5.33
+VERSION=5.37
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

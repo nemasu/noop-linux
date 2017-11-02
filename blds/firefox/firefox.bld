@@ -2,8 +2,8 @@ NAME=firefox
 
 #Description
 DESC="Standalone web browser from mozilla.org"
-VERSION=54.0.1
-DVERSION=54.0.1
+VERSION=56.0.2
+DVERSION=56.0.2
 ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
@@ -17,7 +17,7 @@ function BuildAndInstall
 {
 
   #build prereqs
-  for i in zip autoconf2.13 rust cargo; do
+  for i in zip autoconf2.13 rust cargo jack; do
           pkgr -i $i;
   done
 
@@ -51,9 +51,13 @@ function BuildAndInstall
 #  fi
 
 #  kill $! || true
-  make -f client.mk build -j${BLDR_CORES}
+#  make -f client.mk build -j${BLDR_CORES}
 
-  make -f client.mk DESTDIR=/root/bldr-inst install
+#  make -f client.mk DESTDIR=/root/bldr-inst install
+
+  ./mach build
+  ./mach buildsymbols
+  DESTDIR=/root/bldr-inst ./mach install
 
   for i in 16 22 24 32 48 256; do
       install -Dm644 browser/branding/official/default$i.png \

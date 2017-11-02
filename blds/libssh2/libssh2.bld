@@ -5,7 +5,7 @@ NAME=libssh2
 DESC="A library implementing the SSH2 protocol as defined by Internet Drafts"
 
 #package version
-VERSION=1.4.3
+VERSION=1.8.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

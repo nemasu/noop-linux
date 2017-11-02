@@ -5,7 +5,7 @@ NAME=krita
 DESC="Digital painting application"
 
 #package version
-VERSION=3.0.1.1
+VERSION=3.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -26,7 +26,7 @@ DEPS=('boost' 'curl' 'exiv2' 'fftw' 'gcc-libs' 'glibc' 'gsl' 'ilmbase' 'karchive
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('vc')
+PKGDEPS=('vc' 'eigen')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=1

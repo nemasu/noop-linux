@@ -5,8 +5,8 @@ NAME=qt
 DESC="A cross-platform application and UI framework"
 
 #package version
-VERSION=5.9.1
-DVERSION=5.9.1
+VERSION=5.9.2
+DVERSION=5.9.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

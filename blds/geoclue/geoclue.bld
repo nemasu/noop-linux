@@ -5,14 +5,13 @@ NAME=geoclue
 DESC="Modular geoinformation service built on the D-Bus messaging system."
 
 #package version
-VERSION=2.1.8
+VERSION=2.4.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $VERSION | sed -e 's/\([0-9].*\.[0-9]*\)\.[0-9]*/\1/'`
-SRC=http://www.freedesktop.org/software/geoclue/releases/$MM/geoclue-${VERSION}.tar.xz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -34,10 +33,27 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure $STDUSRCONF
-        find . -name Makefile | xargs sed -i -e 's/-Werror=missing-prototypes -Werror=implicit-function-declaration -Werror=pointer-arith -Werror=init-self -Werror=format=2 -Werror=missing-include-dirs//g;'
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+
+    if [ -z "$BLDR_CONTINUE" ]; then
+        git clone https://anongit.freedesktop.org/git/geoclue
+        cd geoclue
+        git checkout tags/$VERSION
+        cd ..
+    fi
+    cd geoclue
+
+# Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
+# Note: These are for noop Linux use ONLY. For your own distribution, please
+# get your own set of keys. Feel free to contact nemasu@gmail.com for
+# more information.
+	_google_api_key=AIzaSyB9Q6_d-Yce6g1iFO0rLj4N74ANKqWnrNc
+	sed -e "s/key=YOUR_KEY/key=$_google_api_key/" \
+		-i data/geoclue.conf.in
+	NOCONFIGURE=1 ./autogen.sh
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --libexecdir=/usr/lib/geoclue
+	sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+                #if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
 if [ -e $PREFIX/usr/bin/busybox ];
 then
 
@@ -521,7 +522,9 @@ function DoDepcheckPackages() {
             then
                 $echo "$i -> $DIRECT $j" >> /tmp/missinglibs
             else
-                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
+                #TODO determine if library is 32-bit or not and check accordingly
+                #if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
+                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib -name $j 2>/dev/null | wc -l`" == "0" ];
                 then
                     $echo "$i -> $j $DIRECT" >> /tmp/missinglibs
                 else
@@ -794,7 +797,9 @@ if [ $1 == "--depcheck-revdep" ] || [ $1 == "-Cr" ]; then
             then
                 $echo "$i -> $DIRECT $j" >> /tmp/missinglibs
             else
-                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
+                #TODO determine if library is 32-bit or not and check accordingly
+                #if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
+                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib -name $j 2>/dev/null | wc -l`" == "0" ];
                 then
                     $echo "$i -> $j $DIRECT" >> /tmp/missinglibs
                 else
@@ -854,7 +859,9 @@ if [ $1 == "--depcheck-system" ] || [ $1 == "-C" ]; then
             then
                 $echo "$i -> $DIRECT $j" >> /tmp/missinglibs
             else
-                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
+                #TODO determine if library is 32-bit or not and check accordingly
+                #if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
+                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib -name $j 2>/dev/null | wc -l`" == "0" ];
                 then
                     $echo "$i -> $j $DIRECT" >> /tmp/missinglibs
                 else
@@ -1130,7 +1137,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     mv *.pkg ~/bldr-done
     rm -rf *
     if [ -z "$BLDR_SKIP_INSTALL" ]; then
-        cd ~/bldr-done
+        pushd ~/bldr-done
         pkgr -f $name
         popd
     fi

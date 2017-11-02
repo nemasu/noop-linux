@@ -5,8 +5,8 @@ NAME=dovecot
 DESC="An IMAP and POP3 server written with security primarily in mind"
 
 #package version
-VERSION=2.2.27-1
-DVERSION=2.2.27
+VERSION=2.2.33.2
+DVERSION=2.2.33.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

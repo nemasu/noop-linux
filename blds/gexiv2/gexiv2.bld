@@ -5,7 +5,7 @@ NAME=gexiv2
 DESC="GObject wrapper around the Exiv2 photo metadata library"
 
 #package version
-VERSION=0.10.3
+VERSION=0.10.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

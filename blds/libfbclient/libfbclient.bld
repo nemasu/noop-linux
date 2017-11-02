@@ -5,7 +5,7 @@ NAME=libfbclient
 DESC="Client library for Firebird."
 
 #package version
-VERSION=2.5.6.27020
+VERSION=2.5.6.27020-1
 DVERSION=2.5.6.27020
 
 #directory locations, 99.99% of the time this is 1
@@ -40,7 +40,7 @@ function BuildAndInstall
                 --without-fbsecure-db --with-fbmsg=/usr/share/firebird --without-fblog \
                 --without-fbglock --without-fbplugins
 
-        CXXFLAGS+=" -std=gnu++98 -fno-lifetime-dse" make
+        CXXFLAGS+=" -fno-lifetime-dse" make
 
         mkdir -p /root/bldr-inst/usr/{bin,share/firebird}
         cp -R gen/firebird/{lib,include} /root/bldr-inst/usr

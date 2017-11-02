@@ -1,0 +1,7 @@
+function postinst() {
+      setcap 'CAP_NET_ADMIN=ep' /usr/bin/i3status
+}
+
+function postup() {
+    postinst
+}

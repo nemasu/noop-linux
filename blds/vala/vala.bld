@@ -5,7 +5,7 @@ NAME=vala
 DESC="Compiler for the GObject type system"
 
 #package version
-VERSION=0.34.4
+VERSION=0.38.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

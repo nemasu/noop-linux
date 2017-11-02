@@ -5,8 +5,8 @@ NAME=php
 DESC="A general-purpose scripting language that is especially suited to web development"
 
 #package version
-VERSION=7.1.0
-DVERSION=7.1.0
+VERSION=7.1.10
+DVERSION=7.1.10
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,8 +5,8 @@ NAME=gegl
 DESC="Graph based image processing framework"
 
 #package version
-VERSION=0.3.8-1
-DVERSION=0.3.8
+VERSION=0.3.20
+DVERSION=0.3.20
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

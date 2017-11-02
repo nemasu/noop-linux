@@ -5,13 +5,14 @@ NAME=filelight
 DESC="Filelight allows you to quickly understand exactly where your diskspace is being used by graphically representing your file system."
 
 #package version
-VERSION=16.04.3
+VERSION=16.04.3-1
+DVERSION=16.04.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/filelight-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${DVERSION}/src/filelight-$DVERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +39,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+        LISTURL=http://download.kde.org/stable/applications/${DVERSION}/src/
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -52,7 +53,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

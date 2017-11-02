@@ -5,8 +5,8 @@ NAME=harfbuzz
 DESC="OpenType text shaping engine"
 
 #package version
-VERSION=1.3.4
-DVERSION=1.3.4
+VERSION=1.6.3
+DVERSION=1.6.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

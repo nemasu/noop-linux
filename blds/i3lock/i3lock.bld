@@ -1,0 +1,65 @@
+#package name
+NAME=i3lock
+
+#Description
+DESC="An improved screenlocker based upon XCB and PAM"
+
+#package version
+VERSION=2.9.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="https://i3wm.org/i3lock/i3lock-$VERSION.tar.bz2"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    sed -i -e 's:login:system-auth:' i3lock.pam
+    make -j${BLDR_CORES}
+    gzip i3lock.1
+    make DESTDIR=/root/bldr-inst install
+    install -Dm644 i3lock.1.gz /root/bldr-inst/usr/share/man/man1/i3lock.1.gz
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LISTURL=
+        FILELIST=`GetFileList`
+        LATEST=0
+
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}

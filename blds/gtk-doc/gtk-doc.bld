@@ -1,27 +1,26 @@
 #package name
-NAME=raptor
+NAME=gtk-doc
 
 #Description
-DESC="A C library that parses RDF/XML/N-Triples into RDF triples"
+DESC="Documentation tool for public library API"
 
 #package version
-VERSION=2.0.15
-DVERSION=2.0.15
+VERSION=1.26.10
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://librdf.org/dist/source/raptor2-${DVERSION}.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-yajl=no --with-icu-config=/usr/bin/icu-config"
+EXTRACONF=
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+#autotools, python, perl, cmake, custom
+BUILD=custom
 
 # build/package dependancies
-DEPS=('curl' 'glibc' 'icu4c' 'libxml2' 'libxslt' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -32,15 +31,28 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    if [ -z "$BLDR_CONTINUE" ]; then
+        git clone https://git.gnome.org/browse/gtk-doc
+        cd gtk-doc
+        git checkout 01844e70cae73bfc95a7746fd958c1756a62c340
+        git checkout 1db161bd708cdfb88b362ea0b5d047034d9c3272 -- gtkdoc-common.pl.in
+        cd ..
+    fi
+        
+    cd gtk-doc
+    NOCONFIGURE=1 ./autogen.sh
+    ./configure --prefix=/usr --disable-static
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+    sed 's|@PERL@|/usr/bin/perl|g' gtkdoc-common.pl.in | install -D /dev/stdin /root/bldr-inst/usr/share/gtk-doc/data/gtkdoc-common.pl
+}
 
 #Default HTTP curl new version detection
 function Detect
 {
-        NAME=raptor2
-        LISTURL=http://librdf.org/dist/source/
+        LISTURL=
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -54,7 +66,7 @@ function Detect
                         fi
         done
 
-        vercomp $DVERSION $LATEST
+        vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

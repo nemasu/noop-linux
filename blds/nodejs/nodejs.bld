@@ -5,13 +5,14 @@ NAME=nodejs
 DESC="JavaScript runtime built on Chrome's V8 JavaScript engine."
 
 #package version
-VERSION=8.6.0
+VERSION=8.6.0-1
+DVERSION=8.6.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://nodejs.org/dist/v${VERSION}/node-v${VERSION}.tar.gz
+SRC=https://nodejs.org/dist/v${DVERSION}/node-v${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -71,7 +72,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

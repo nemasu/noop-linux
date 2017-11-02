@@ -5,7 +5,7 @@ NAME=midori
 DESC="Lightweight web browser (GTK3)"
 
 #package version
-VERSION=0.5.8
+VERSION=0.5.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libnotify' 'libsoup' 'libxml2' 'pango' 'sqlite' 'webkitgtk2')
+DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libnotify' 'libsoup' 'libxml2' 'pango' 'sqlite')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,11 +33,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  export PYTHON=/usr/bin/python2
-  ./configure --prefix=/usr --disable-zeitgeist
-  make -j${BLDR_CORES}
-  make DESTDIR=/root/bldr-inst install
+	pkgr -i ninja &> /dev/null
 
+    # The latest release of vala is a bit stricter than the previous one
+    sed 's/protected Tally/public Tally/g' -i midori/midori-notebook.vala
+    sed 's/%d other files/%u other files/g' -i extensions/transfers.vala
+    for f in transfers adblock/widgets apps history-list notes; do
+        sed 's/.remove (iter/.remove (ref iter/g' -i "extensions/$f.vala"
+    done
+
+	mkdir -p build && cd build
+	cmake .. \
+	-DCMAKE_INSTALL_PREFIX=/usr \
+	-DCMAKE_INSTALL_LIBDIR=lib \
+	-DHALF_BRO_INCOM_WEBKIT2=ON \
+	-DCMAKE_C_FLAGS="$CFLAGS -w" \
+	-G Ninja
+	ninja
+	DESTDIR=/root/bldr-inst ninja install
 }
 
 #Default HTTP curl new version detection
