@@ -5,7 +5,7 @@ NAME=tensorflow
 DESC="Computation using data flow graphs for scalable machine learning"
 
 #package version
-VERSION=1.2.0
+VERSION=1.4.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -51,6 +51,9 @@ function BuildAndInstall
     export TF_ENABLE_XLA=0
     export TF_NEED_VERBS=0
     export TF_NEED_MKL=0
+    export TF_NEED_MPI=0
+    export TF_NEED_S3=0
+    export TF_NEED_GDR=0
     ./configure
     bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
     bazel-bin/tensorflow/tools/pip_package/build_pip_package `pwd`/out

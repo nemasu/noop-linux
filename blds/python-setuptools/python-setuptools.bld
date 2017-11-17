@@ -5,13 +5,13 @@ NAME=python-setuptools
 DESC="Easily download, build, install, upgrade, and uninstall Python packages"
 
 #package version
-VERSION=19.1.1
+VERSION=36.7.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://pypi.python.org/packages/source/s/setuptools/setuptools-${VERSION}.tar.gz
+SRC=https://github.com/pypa/setuptools/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,24 +33,27 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        cd ..
-        py2_build=`ls`
-        py3_build=${py2_build}-py3
-        cp -r $py2_build $py3_build
+    
+    cd ..
+    py2_build=`ls`
+    py3_build=${py2_build}-py3
+    cp -r $py2_build $py3_build
 
-        cd $py2_build
-        sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python2|" setuptools/command/easy_install.py
-        python2 setup.py build
-        python2 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
-        rm /root/bldr-inst/usr/bin/easy_install
+    cd $py2_build
+    sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python2|" setuptools/command/easy_install.py
+    python2 bootstrap.py
+    python2 setup.py build
+    python2 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
+    rm /root/bldr-inst/usr/bin/easy_install
 
 
-        cd ../$py3_build
-        sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python3|" setuptools/command/easy_install.py
-        python3 setup.py build
-        python3 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
+    cd ../$py3_build
+    sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python3|" setuptools/command/easy_install.py
+    python2 bootstrap.py
+    python3 setup.py build
+    python3 setup.py install --prefix=/usr --root=/root/bldr-inst --optimize=1 --skip-build
 
-        }
+}
 
 #Default HTTP curl new version detection
 function Detect
