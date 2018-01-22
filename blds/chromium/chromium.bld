@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=61.0.3163.91
-VERSION=61.0.3163.91
+DVERSION=63.0.3239.132
+VERSION=63.0.3239.132
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -45,63 +45,30 @@ function BuildAndInstall
       popd; popd
   fi
 
-  for i in `ls $BLDRTMPDIR/*.arm_patch`;
-  do
-        if [ "${ARCH}" == "armv6l" ]; then
-        patch -Np0 -i $i 
-        fi
-        rm $i;
-  done  
-        
   export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
   # CFLAGS are passed through release_extra_cflags below
   export -n CFLAGS CXXFLAGS
 
-  if [ "${ARCH}" == "armv6l" ]; then
 
-  find . -name "*.gyp" -type f | xargs sed -i -e '/mtune=cortex/d;/march=armv7/d;s/-mfpu=neon//g' 2>/dev/null | true
-  sed -i -e '/mthumb/d' ./third_party/ffmpeg/ffmpeg.gyp
-  
-  export CFLAGS="-march=armv6k -DUSE_EABI_HARDFLOAT $CFLAGS"
- 
-  #TODO update this for arm build 
-  arch_specific_flags="
-                -Dtarget_arch=arm \
-                -Darmv7=0 \
-                -Darmv6=1 \
-                -Darm_version=6 \
-                -Darm_neon=0 \
-                -Darm_fpu=vfp \
-                -Darm_thumb=0 \
-                -Duse_allocator=none \
-                -Darm_float_abi=hard \
-                -Dv8_use_arm_eabi_hardfloat=true \
-                -Dv8_can_use_vfp_instructions=false \
-                -Dv8_can_use_vfp2_instructions=true \
-                -Dsysroot= \
-                -Dclang=0 \
-                -Ddisable_nacl=1"
-  fi
+    # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
+    # Note: These are for noop Linux use ONLY. For your own distribution, please
+    # get your own set of keys. Feel free to contact chromium@nooplinux.org for
+    # more information.
+    _google_api_key=AIzaSyB9Q6_d-Yce6g1iFO0rLj4N74ANKqWnrNc
+    _google_default_client_id=89099530172.apps.googleusercontent.com
+    _google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ
 
-  if [ "${ARCH}" == "x86_64" ]; then
-         local arch_specific_flags=(
-                'is_clang=true'
-                'clang_use_chrome_plugins=false'
-         )
-#'target_arch=x64'
-  fi
+   # Build with clang
+    export CC=clang
+    export CXX=clang++
+    export NM=nm
+    export AR=ar
 
-        # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
-        # Note: These are for noop Linux use ONLY. For your own distribution, please
-        # get your own set of keys. Feel free to contact chromium@nooplinux.org for
-        # more information.
-        _google_api_key=AIzaSyB9Q6_d-Yce6g1iFO0rLj4N74ANKqWnrNc
-        _google_default_client_id=89099530172.apps.googleusercontent.com
-        _google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ
-
-   
   local _flags=(
+    'custom_toolchain="//build/toolchain/linux/unbundle:default"'
+    'host_toolchain="//build/toolchain/linux/unbundle:default"'
+    'is_clang=true'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
     'is_debug=false'
@@ -126,55 +93,38 @@ function BuildAndInstall
     'enable_widevine=true'
     'enable_nacl=true'
     'enable_nacl_nonsfi=true'
+    'use_custom_libcxx=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   ) 
   
- if [ "${ARCH}" != "armv6l" ];
-  then
-        # Prepare NaCL toolchain - this is way easier
-        python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator sync
-        python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator extract
-        
-        # Build with clang
-        mkdir -p third_party/llvm-build/Release+Asserts/bin
-        rm -rf third_party/llvm-build/Release+Asserts/bin/*
-        ln -s /usr/bin/clang third_party/llvm-build/Release+Asserts/bin/
-        ln -s /usr/bin/clang++ third_party/llvm-build/Release+Asserts/bin/
-        ln -s /usr/bin/llvm-symbolizer third_party/llvm-build/Release+Asserts/bin/
-        ln -s /usr/bin/llvm-ar third_party/llvm-build/Release+Asserts/bin/llvm-ar
-        # remove unsupported clang option
-        sed -i '/-Wno-absolute-value/d' build/common.gypi
+    # Prepare NaCL toolchain - this is way easier
+    python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator sync
+    python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator extract
+   
+      # Remove compiler flags not supported by our system clang
+      sed -i \
+        -e '/"-Wno-enum-compare-switch"/d' \
+        -e '/"-Wno-null-pointer-arithmetic"/d' \
+        -e '/"-Wno-tautological-unsigned-zero-compare"/d' \
+        -e '/"-Wno-tautological-unsigned-enum-zero-compare"/d' \
+        build/config/compiler/BUILD.gn
 
-        #need node now...
-        mkdir -p third_party/node/linux/node-linux-x64/bin/
-        rm -rf third_party/node/linux/node-linux-x64/bin/*
-        ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
-  fi
-
-  if [ "${ARCH}" == "armv6l" ];
-  then
-        # Re-configure bundled ffmpeg.
-        pushd third_party/ffmpeg
-        chromium/scripts/build_ffmpeg.sh linux arm "${PWD}" config-only
-        chromium/scripts/copy_config.sh
-        popd
-  fi
+    
+    #need node now...
+    mkdir -p third_party/node/linux/node-linux-x64/bin/
+    rm -rf third_party/node/linux/node-linux-x64/bin/*
+    ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
 
   # https://groups.google.com/a/chromium.org/d/topic/chromium-packagers/9JX1N2nf4PU/discussion
   touch chrome/test/data/webui/i18n_process_css_test.html
 
-  python2 tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]} ${arch_specific_flags[*]}"
-  out/Release/gn gen out/Release --args="${_flags[*]} ${arch_specific_flags[*]}" \
+  python2 tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
+  out/Release/gn gen out/Release --args="${_flags[*]}" \
       --script-executable=/usr/bin/python2
 
-  if [ "${ARCH}" == "armv6l" ];
-  then
-        ninja -C out/Release chrome chrome_sandbox
-  else
-        ninja -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
-  fi
+  ninja -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 
   install -D out/Release/chrome /root/bldr-inst/usr/lib/chromium/chromium
 
@@ -188,37 +138,33 @@ function BuildAndInstall
 
   install -Dm644 out/Release/chrome.1 /root/bldr-inst/usr/share/man/man1/chromium.1
   
-  if [ "${ARCH}" != "armv6l" ];
-  then
+    cp out/Release/nacl_helper{,_bootstrap} out/Release/nacl_irt_*.nexe \
+            /root/bldr-inst/usr/lib/chromium/
 
-        cp out/Release/nacl_helper{,_bootstrap} out/Release/nacl_irt_*.nexe \
-                /root/bldr-inst/usr/lib/chromium/
+    install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
+    cp out/Release/libwidevinecdmadapter.so /root/bldr-inst/usr/lib/chromium/
+    
+    cp out/Release/lib* /root/bldr-inst/usr/lib/chromium/
+    cp -r out/Release/swiftshader /root/bldr-inst/usr/lib/chromium/
 
-        install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
-        cp out/Release/libwidevinecdmadapter.so /root/bldr-inst/usr/lib/chromium/
-        
-        cp out/Release/lib* /root/bldr-inst/usr/lib/chromium/
-        cp -r out/Release/swiftshader /root/bldr-inst/usr/lib/chromium/
+    mkdir -p /root/bldr-inst/usr/bin/
+    ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
 
-        mkdir -p /root/bldr-inst/usr/bin/
-        ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
+# Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
+    strip /root/bldr-inst/usr/lib/chromium/chromedriver \
+    /root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap} \
+    /root/bldr-inst/usr/lib/chromium/lib*.so \
+    /root/bldr-inst/usr/lib/chromium/swiftshader/{libEGL.so,libGLESv2.so} \
+    /root/bldr-inst/usr/bin/chromedriver
 
-    # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
-        strip /root/bldr-inst/usr/lib/chromium/chromedriver \
-        /root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap} \
-        /root/bldr-inst/usr/lib/chromium/lib*.so \
-        /root/bldr-inst/usr/lib/chromium/swiftshader/{libEGL.so,libGLESv2.so} \
-        /root/bldr-inst/usr/bin/chromedriver
+    mkdir -p ../widevine
+    pushd ../widevine
+    wget https://dl.google.com/linux/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION}-1_amd64.deb -Ochrome.deb
+    ar x chrome.deb
+    tar xf data.tar.xz
+    cp opt/google/chrome/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
+    popd
 
-        mkdir -p ../widevine
-        pushd ../widevine
-        wget https://dl.google.com/linux/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION}-1_amd64.deb -Ochrome.deb
-        ar x chrome.deb
-        tar xf data.tar.xz
-        cp opt/google/chrome/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
-        popd
-  fi
-  
   strip /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
 
   for size in 22 24 48 64 128 256; do

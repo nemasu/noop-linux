@@ -9,9 +9,9 @@
 
 NAME=gcc
 DESC="The GNU Compiler Collection"
-VERSION=6.3.0
+VERSION=7.2.0
 ISUSR=1
-SRC=ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-$VERSION.tar.bz2
+SRC=ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-$VERSION.tar.xz
 EXTRACONF=
 BUILD=custom
 DEPS=('gcc-libs' 'glibc' 'gmp' 'lib32-glibc' 'mpc' 'mpfr' 'zlib')
@@ -133,6 +133,9 @@ function BuildAndInstall
         rm -rf gcc-libs-inst/
         
         popd
+
+        #non so files in gcc need to be stripped
+        find  /root/bldr-inst/{,usr/}{lib,lib32} -type f | xargs strip --strip-debug
 
 }
 
