@@ -20,7 +20,7 @@ function BuildAndInstall
 {
 
         if [ -n $BLDR_CONTINUE ]; then
-                cd ../gcc-$VERSION;
+                cd gcc-$VERSION;
         fi
 
         [[ "${ARCH}" == "x86_64" ]] && sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
@@ -134,8 +134,10 @@ function BuildAndInstall
         
         popd
 
+        set +e
         #non so files in gcc need to be stripped
         find  /root/bldr-inst/{,usr/}{lib,lib32} -type f | xargs strip --strip-debug
+        set -e
 
 }
 
