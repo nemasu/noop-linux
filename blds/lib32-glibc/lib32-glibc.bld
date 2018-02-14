@@ -11,7 +11,7 @@ NAME=lib32-glibc
 
 #Description
 DESC="GNU C Library (32-bit)"
-VERSION=2.18
+VERSION=2.27
 ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/glibc/glibc-${VERSION}.tar.xz
 EXTRACONF=
