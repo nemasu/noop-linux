@@ -14,10 +14,10 @@ ISUSR=1
 SRC=https://github.com/musescore/MuseScore/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="-DBUILD_PORTAUDIO=OFF"
+EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=cmake
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,9 +31,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    mkdir -p build && cd build
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_PORTAUDIO=OFF
+    make all
+    make lrelease
+    make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
