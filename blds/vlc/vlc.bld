@@ -5,8 +5,8 @@ NAME=vlc
 DESC="A multi-platform MPEG, VCD/DVD, and DivX player"
 
 #package version
-VERSION=2.2.4
-DVERSION=2.2.4
+VERSION=3.0.0
+DVERSION=3.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -34,20 +34,13 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-
-        autoreconf -fi
-
-        sed -i -e 's:truetype/freefont:TTF:g' modules/text_renderer/freetype.c
-        sed -i -e 's:truetype/ttf-dejavu:TTF:g' modules/visualization/projectm.cpp
-
+        BUILDCC=gcc \
         CFLAGS+=" -I/usr/include/samba-4.0" CPPFLAGS+=" -I/usr/include/samba-4.0" \
         LDFLAGS+=" -L/usr/share/OpenCV/3rdparty/lib" \
                 ./configure --prefix=/usr \
                         --sysconfdir=/etc \
-                        --enable-qt5 \
                         --enable-vlc\
                         --disable-dependency-tracking \
-                        --disable-optimizations \
                         --disable-update-check \
                         --enable-fast-install \
                         --enable-screen \
@@ -58,15 +51,11 @@ function BuildAndInstall
                         --enable-ncurses \
                         --enable-realrtsp \
                         --enable-aa \
-                        --enable-vcdx \
                         --enable-upnp \
                         --enable-opus \
                         --enable-sftp \
                         LUAC=/usr/bin/luac  LUA_LIBS="`pkg-config --libs lua`" \
                         RCC=/usr/bin/rcc-qt4
-
-        #Prevent build from failing
-        find . -name Makefile | xargs sed -i -e 's/-Werror-implicit-function-declaration//g'
 
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install

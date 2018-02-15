@@ -1,8 +1,7 @@
 function postinst() {
-    chown root /usr/lib/enlightenment/modules/cpufreq/linux-gnu-x86_64-ver-serious-0.19/freqset
-    chmod u+s,a+x  /usr/lib/enlightenment/modules/cpufreq/linux-gnu-x86_64-ver-serious-0.19/freqset
+    chown root /usr/lib/enlightenment/modules/cpufreq/linux-gnu-x86_64-0.22/freqset
+    chmod u+s,a+x  /usr/lib/enlightenment/modules/cpufreq/linux-gnu-x86_64-0.22/freqset
 }
 function postup() {
-    chown root /usr/lib/enlightenment/modules/cpufreq/linux-gnu-x86_64-ver-serious-0.19/freqset
-    chmod u+s,a+x  /usr/lib/enlightenment/modules/cpufreq/linux-gnu-x86_64-ver-serious-0.19/freqset
+    postinst
 }

@@ -5,8 +5,8 @@ NAME=enlightenment
 DESC="Enlightenment window manager"
 
 #package version
-VERSION=0.19.4-1
-DVERSION=0.19.4
+VERSION=0.22.1
+DVERSION=0.22.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,13 +5,13 @@ NAME=libebml
 DESC="Extensible Binary Meta Language library"
 
 #package version
-VERSION=1.3.1
+VERSION=1.3.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://dl.matroska.org/downloads/libebml/libebml-${VERSION}.tar.bz2"
+SRC=https://dl.matroska.org/downloads/libebml/libebml-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://dl.matroska.org/downloads/libebml/
+        LISTURL=https://dl.matroska.org/downloads/libebml/
         FILELIST=`GetFileList`
         LATEST=0
 

@@ -11,7 +11,7 @@ VERSION=1.1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.enlightenment.org/rel/apps/econnman/econnman-${VERSION}.tar.gz
+SRC=http://download.enlightenment.org/rel/apps/econnman/econnman-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

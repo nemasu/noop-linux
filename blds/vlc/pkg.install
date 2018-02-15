@@ -1,8 +1,8 @@
 function postinst() {
-    /usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins
+    /usr/lib/vlc/vlc-cache-gen /usr/lib/vlc/plugins
 }
 function postup() {
-    /usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins
+    postinst
 }
 function prerm() {
     rm -f /usr/lib/vlc/plugins/plugins-*.dat

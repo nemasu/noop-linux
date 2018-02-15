@@ -18,9 +18,6 @@ gdk-pixbuf
 gnome-icon-theme
 desktop-file-utils
 efl
-evas_generic_loaders
-emotion_generic_players
-elementary
 enlightenment
 terminology
-enventor
+econnman

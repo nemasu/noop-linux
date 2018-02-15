@@ -1,7 +1,11 @@
 function postinst() {
-        systemctl --global enable pulseaudio.socket
+    systemctl --global enable pulseaudio.socket
 }
 
 function postup() {
-        postinst
+    postinst
+}
+
+function postrm() {
+    systemctl --global disable pulseaudio.socket
 }

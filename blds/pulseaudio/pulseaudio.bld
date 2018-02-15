@@ -5,20 +5,20 @@ NAME=pulseaudio
 DESC="A featureful, general-purpose sound server"
 
 #package version
-VERSION=5.0-1
-DVERSION=5.0
+VERSION=11.1
+DVERSION=11.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://freedesktop.org/software/pulseaudio/releases/pulseaudio-${DVERSION}.tar.xz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-udev --with-udev-rules-dir=/usr/lib/udev/rules.d --enable-systemd --disable-default-build-tests --with-database=gdbm --disable-tcpwrap --disable-bluez4 --disable-rpath"
+EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=('alsa-lib' 'avahi' 'dbus' 'fftw' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libICE' 'libSM' 'libX11' 'libXtst' 'libcap2' 'libsamplerate' 'libsndfile' 'libtool' 'libxcb' 'openssl' 'orc' 'speex' 'systemd')
@@ -34,9 +34,44 @@ RESTORELIBDB=
 
 export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    if [ -z "$BLDR_CONTINUE" ]; then
+        git clone https://anongit.freedesktop.org/git/pulseaudio/pulseaudio
+        cd pulseaudio
+        git checkout f93e372b0b2cb960df04de3f0a8fbea683bb8229 #11.1 check https://cgit.freedesktop.org/pulseaudio/pulseaudio/
+        patch -Np1 -i $BLDRTMPDIR/glibc-104733.to_patch
+        cd ..
+    fi
+   
+    rm $BLDRTMPDIR/glibc-104733.to_patch
+    
+    cd pulseaudio
+    
+    NOCONFIGURE=1 ./bootstrap.sh
+    ./configure $STDUSRCONF --disable-default-build-tests --with-pulsedsp-location='/usr/lib/pulseaudio' --with-udev-rules-dir=/usr/lib/udev/rules.d DATADIRNAME=share
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+
+    pushd /root/bldr-inst
+# Assumes that any volume adjustment is intended by the user, who can control
+# each app's volume. Misbehaving clients can trigger earsplitting volume
+# jumps. App volumes can diverge wildly and cause apps without their own
+# volume control to fall below sink volume; a sink-only volume control will
+# suddenly be unable to make such an app loud enough.
+    sed -e '/flat-volumes/iflat-volumes = no' -i etc/pulse/daemon.conf
+
+# Superseded by socket activation
+    sed -e '/autospawn/iautospawn = no' -i etc/pulse/client.conf
+
+# Disable cork-request module, can result in e.g. media players unpausing
+# when there's a Skype call incoming
+    sed -e 's|/usr/bin/pactl load-module module-x11-cork-request|#&|' -i usr/bin/start-pulseaudio-x11
+
+    rm etc/dbus-1/system.d/pulseaudio-system.conf
+    popd
+}
 
 #Default HTTP curl new version detection
 function Detect
