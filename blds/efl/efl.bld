@@ -15,13 +15,13 @@ ISUSR=1
 SRC=http://download.enlightenment.org/rel/libs/efl/efl-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-systemd"
+EXTRACONF="--disable-tslib --enable-fb --enable-xinput22 --enable-multisense --enable-systemd --enable-image-loader-webp --enable-harfbuzz --enable-wayland --enable-liblz4 --enable-drm --enable-elput --enable-egl --with-opengl=es"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('printproto' 'bullet' 'cairo' 'dbus' 'elementary' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'giflib' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'harfbuzz' 'ibus' 'libX11' 'libXScrnSaver' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXtst' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libraw' 'librsvg' 'libspectre' 'libunwind' 'libxcb' 'libxshmfence' 'luajit' 'lz4' 'mesalib' 'openjpeg' 'openssl' 'orc' 'pcre' 'poppler' 'systemd' 'tiff' 'util-linux' 'xz' 'zlib')
+DEPS=('printproto' 'bullet' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'giflib' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'harfbuzz' 'ibus' 'libX11' 'libXScrnSaver' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXtst' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libjpeg' 'libpng' 'libraw' 'librsvg' 'libspectre' 'libunwind' 'libxcb' 'libxshmfence' 'luajit' 'lz4' 'mesalib' 'openjpeg' 'openssl' 'orc' 'pcre' 'poppler' 'systemd' 'tiff' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

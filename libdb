@@ -589,9 +589,15 @@ efl,libecore_avahi.so.1.20.6
 efl,libecore_con.so
 efl,libecore_con.so.1
 efl,libecore_con.so.1.20.6
+efl,libecore_drm2.so
+efl,libecore_drm2.so.1
+efl,libecore_drm2.so.1.20.6
 efl,libecore_evas.so
 efl,libecore_evas.so.1
 efl,libecore_evas.so.1.20.6
+efl,libecore_fb.so
+efl,libecore_fb.so.1
+efl,libecore_fb.so.1.20.6
 efl,libecore_file.so
 efl,libecore_file.so.1
 efl,libecore_file.so.1.20.6
@@ -610,6 +616,9 @@ efl,libecore_input_evas.so.1.20.6
 efl,libecore_ipc.so
 efl,libecore_ipc.so.1
 efl,libecore_ipc.so.1.20.6
+efl,libecore_wl2.so
+efl,libecore_wl2.so.1
+efl,libecore_wl2.so.1.20.6
 efl,libecore_x.so
 efl,libecore_x.so.1
 efl,libecore_x.so.1.20.6
@@ -628,6 +637,9 @@ efl,libeeze.so.1.20.6
 efl,libefl.so
 efl,libefl.so.1
 efl,libefl.so.1.20.6
+efl,libefl_wl.so
+efl,libefl_wl.so.1
+efl,libefl_wl.so.1.20.6
 efl,libefreet.so
 efl,libefreet.so.1
 efl,libefreet.so.1.20.6
@@ -652,6 +664,9 @@ efl,libelementary.so.1.20.6
 efl,libelocation.so
 efl,libelocation.so.1
 efl,libelocation.so.1.20.6
+efl,libelput.so
+efl,libelput.so.1
+efl,libelput.so.1.20.6
 efl,libelua.so
 efl,libelua.so.1
 efl,libelua.so.1.20.6
