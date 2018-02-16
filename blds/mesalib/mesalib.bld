@@ -5,8 +5,8 @@ NAME=mesalib
 DESC="An open-source implementation of the OpenGL specification"
 
 #package version
-VERSION=17.1.5
-DVERSION=17.1.5
+VERSION=17.3.4
+DVERSION=17.3.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -57,7 +57,7 @@ function BuildAndInstall
         --with-gallium-drivers=${GALLIUM_DRIVERS} \
         --with-dri-drivers=${DRI_DRIVERS} \
         --with-egl-platforms=${EGL_PLATFORMS} \
-        --enable-gallium-llvm \
+        --enable-llvm \
         --enable-llvm-shared-libs \
         --enable-egl \
         --enable-shared-glapi \
@@ -74,7 +74,7 @@ function BuildAndInstall
         --enable-gles2 \
         --enable-texture-float \
         --enable-dri3 \
-        --enable-omx \
+        --enable-omx-bellagio \
         --enable-vdpau ${ARCHCONF}
         
     make -j${BLDR_CORES}
