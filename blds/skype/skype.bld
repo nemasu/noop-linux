@@ -5,13 +5,13 @@ NAME=skype
 DESC="P2P software for high-quality voice communication"
 
 #package version
-VERSION=4.3.0.37
+VERSION=8.16.0.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.skype.com/linux/skype-${VERSION}.tar.bz2
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'lib32-glibc' 'lib32-libX11' 'lib32-libXScrnSaver' 'lib32-libXext' 'lib32-libXv' 'lib32-qt4')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -29,46 +29,26 @@ STRIP=
 PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
-RESTORELIBDB=
+RESTORELIBDB=1
 
 function BuildAndInstall
 {
-
-  mkdir -p /root/bldr-inst/usr/bin
-  # Executable
-  cp skype /root/bldr-inst/usr/bin/skype
-
-  # Data
-  mkdir -p /root/bldr-inst/usr/share/skype/{avatars,lang,sounds}
-  install -m 644 avatars/* /root/bldr-inst/usr/share/skype/avatars
-  install -m 644 lang/*    /root/bldr-inst/usr/share/skype/lang
-  install -m 644 sounds/*  /root/bldr-inst/usr/share/skype/sounds
-
-  # DBus Service
-  install -Dm 644 skype.conf \
-    /root/bldr-inst/etc/dbus-1/system.d/skype.conf
-
-  # Icons
-  for _i in 16 32 48; do
-    install -Dm 644 icons/SkypeBlue_${_i}x${_i}.png \
-      /root/bldr-inst/usr/share/icons/hicolor/${_i}x${_i}/apps/skype.png
-  done
-  install -Dm 644 icons/SkypeBlue_48x48.png \
-    /root/bldr-inst/usr/share/pixmaps/skype.png
-
-  # Desktop file
-  install -Dm 644 skype.desktop \
-    /root/bldr-inst/usr/share/applications/skype.desktop
+	wget -4 https://repo.skype.com/deb/pool/main/s/skypeforlinux/skypeforlinux_${VERSION}_amd64.deb -Opkg.deb
+	ar x pkg.deb && rm pkg.deb
+	mkdir d && cd d
+	tar xf ../data.tar.xz
+	rm -rf opt
+	cp -r * /root/bldr-inst/
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LASTEST=`curl -s -I -L http://www.skype.com/go/getskype-linux-beta-dynamic | grep -E "skype-[0-9\.]*\.tar\.bz2" | sed 's/.*skype-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+	LASTEST=`curl -s -L https://repo.skype.com/deb/pool/main/s/skypeforlinux/ | egrep "skypeforlinux_[0-9\.]+_amd64.deb" | tail -n1 | sed -e 's/.*skypeforlinux_\([0-9\.]*\)_amd64.deb.*/\1/g'`
 
-        vercomp $VERSION $LATEST
-        if [ $? -eq 2 ];
-        then
-                echo "$NAME: New Version Available! - $LATEST"
-        fi
+	vercomp $VERSION $LATEST
+	if [ $? -eq 2 ];
+	then
+			echo "$NAME: New Version Available! - $LATEST"
+	fi
 }
