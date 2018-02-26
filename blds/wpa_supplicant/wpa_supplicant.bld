@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('dbus' 'glibc' 'libnl' 'ncurses' 'openssl' 'readline')
+DEPS=('dbus' 'glibc' 'libnl' 'ncurses' 'openssl1.0' 'readline')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libcanberra' 'libffi' 'libnotify' 'libogg' 'libpng15' 'libtool' 'libvorbis' 'libxcb' 'openssl' 'pango' 'pciutils' 'pcre' 'perl' 'pixman' 'python2' 'tdb' 'zlib')
+DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXrender' 'libcanberra' 'libffi' 'libnotify' 'libogg' 'libpng15' 'libtool' 'libvorbis' 'libxcb' 'openssl1.0' 'pango' 'pciutils' 'pcre' 'perl' 'pixman' 'python2' 'tdb' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

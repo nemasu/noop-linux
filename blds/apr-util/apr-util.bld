@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('apr' 'db' 'expat' 'freetds' 'gdbm' 'glibc' 'libtool' 'nspr' 'nss' 'openldap' 'openssl' 'postgresql-libs' 'sasl' 'sqlite' 'unixodbc' 'util-linux')
+DEPS=('apr' 'db' 'expat' 'freetds' 'gdbm' 'glibc' 'libtool' 'nspr' 'nss' 'openldap' 'openssl1.0' 'postgresql-libs' 'sasl' 'sqlite' 'unixodbc' 'util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

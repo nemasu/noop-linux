@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('e2fsprogs' 'glibc' 'openldap' 'openssl')
+DEPS=('e2fsprogs' 'glibc' 'openldap' 'openssl1.0')
 
 # 'no' to skip calls to strip
 STRIP=

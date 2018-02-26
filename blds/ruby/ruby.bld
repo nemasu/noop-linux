@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('db' 'gdbm' 'glibc' 'gmp' 'libffi' 'ncurses' 'openssl' 'readline' 'zlib')
+DEPS=('db' 'gdbm' 'glibc' 'gmp' 'libffi' 'ncurses' 'openssl1.0' 'readline' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

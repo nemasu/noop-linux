@@ -20,7 +20,7 @@ EXTRACONF="--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'gmp' 'gnutls' 'libffi' 'libidn' 'libssh2' 'libtasn1' 'libxml2' 'nettle' 'openssl' 'p11-kit' 'sqlite' 'xz' 'zlib')
+DEPS=('gcc-libs' 'glibc' 'gmp' 'gnutls' 'libffi' 'libidn' 'libssh2' 'libtasn1' 'libxml2' 'nettle' 'openssl1.0' 'p11-kit' 'sqlite' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

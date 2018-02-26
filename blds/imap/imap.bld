@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'linux-pam' 'openssl')
+DEPS=('glibc' 'linux-pam' 'openssl1.0')
 
 # 'no' to skip calls to strip
 STRIP=

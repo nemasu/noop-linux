@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc' 'openssl')
+DEPS=('glibc' 'openssl1.0')
 
 # 'no' to skip calls to strip
 STRIP=

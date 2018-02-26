@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libcap2' 'libgcrypt' 'libgpg-error' 'linux-pam' 'lzo2' 'openssl' 'systemd' 'xz')
+DEPS=('glibc' 'libcap2' 'libgcrypt' 'libgpg-error' 'linux-pam' 'lzo2' 'openssl1.0' 'systemd' 'xz')
 
 # 'no' to skip calls to strip
 STRIP=

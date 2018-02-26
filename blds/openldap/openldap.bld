@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('db' 'glibc' 'libtool' 'openssl' 'sasl' 'util-linux')
+DEPS=('db' 'glibc' 'libtool' 'openssl1.0' 'sasl' 'util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

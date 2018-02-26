@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('alsa-lib' 'avahi' 'dbus' 'fftw' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libICE' 'libSM' 'libX11' 'libXtst' 'libcap2' 'libsamplerate' 'libsndfile' 'libtool' 'libxcb' 'openssl' 'orc' 'speex' 'systemd')
+DEPS=('alsa-lib' 'avahi' 'dbus' 'fftw' 'gconf' 'gdbm' 'glib2' 'glibc' 'json-c' 'libICE' 'libSM' 'libX11' 'libXtst' 'libcap2' 'libsamplerate' 'libsndfile' 'libtool' 'libxcb' 'openssl1.0' 'orc' 'speex' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

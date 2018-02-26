@@ -1,11 +1,11 @@
 #package name
-NAME=openssl
+NAME=openssl1.0
 
 #Description
-DESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security."
+DESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security. Version 1.0.x"
 
 #package version
-VERSION=1.1.0g
+VERSION=1.0.2n
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -44,14 +44,28 @@ function BuildAndInstall
                 optflags=''
         fi
 
-		./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib \
-			shared no-ssl3-method ${optflags} \
-			"${openssltarget}" \
-			"-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}" 
+        ./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib/openssl-1.0 \
+            shared no-ssl3-method ${optflags} \
+            "${openssltarget}" \
+            "-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
 
         make depend
         make -j${BLDR_CORES}
-		make DESTDIR=/root/bldr-inst MANDIR=/usr/share/man MANSUFFIX=ssl install_sw install_ssldirs install_man_docs
+        make INSTALL_PREFIX=/root/bldr-inst install_sw
+
+        # Move some files around
+        install -m755 -d /root/bldr-inst/usr/include/openssl-1.0
+        mv /root/bldr-inst/usr/include/openssl /root/bldr-inst/usr/include/openssl-1.0/
+        mv /root/bldr-inst/usr/lib/openssl-1.0/libcrypto.so.1.0.0 /root/bldr-inst/usr/lib/
+        mv /root/bldr-inst/usr/lib/openssl-1.0/libssl.so.1.0.0 /root/bldr-inst/usr/lib/
+        ln -sf ../libssl.so.1.0.0 /root/bldr-inst/usr/lib/openssl-1.0/libssl.so
+        ln -sf ../libcrypto.so.1.0.0 /root/bldr-inst/usr/lib/openssl-1.0/libcrypto.so
+        mv /root/bldr-inst/usr/bin/openssl /root/bldr-inst/usr/bin/openssl-1.0
+
+        # Update includedir in .pc files
+        sed -e 's|/include$|/include/openssl-1.0|' -i /root/bldr-inst/usr/lib/openssl-1.0/pkgconfig/*.pc
+
+        rm -rf /root/bldr-inst/{etc,usr/bin/c_rehash}
 }
 
 function Detect

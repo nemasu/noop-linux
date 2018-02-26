@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('db' 'glibc' 'icu4c' 'mariadb-libs' 'openldap' 'openssl' 'pcre' 'postgresql-libs' 'sasl' 'sqlite' 'tinycdb' 'zlib')
+DEPS=('db' 'glibc' 'icu4c' 'mariadb-libs' 'openldap' 'openssl1.0' 'pcre' 'postgresql-libs' 'sasl' 'sqlite' 'tinycdb' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

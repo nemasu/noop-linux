@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('tk' 'perl-term-readkey' 'perl-error' 'subversion' 'curl' 'expat' 'glibc' 'openssl' 'zlib')
+DEPS=('tk' 'perl-term-readkey' 'perl-error' 'subversion' 'curl' 'expat' 'glibc' 'openssl1.0' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

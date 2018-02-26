@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'libgcrypt' 'libgpg-error' 'nspr' 'nss' 'openssl' 'qt' 'qt4' 'sasl')
+DEPS=('gcc-libs' 'glibc' 'libgcrypt' 'libgpg-error' 'nspr' 'nss' 'openssl1.0' 'qt' 'qt4' 'sasl')
 
 # 'no' to skip calls to strip
 STRIP=

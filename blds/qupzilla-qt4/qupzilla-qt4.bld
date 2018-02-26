@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'libX11' 'openssl' 'qt4')
+DEPS=('gcc-libs' 'glibc' 'libX11' 'openssl1.0' 'qt4')
 
 # 'no' to skip calls to strip
 STRIP=

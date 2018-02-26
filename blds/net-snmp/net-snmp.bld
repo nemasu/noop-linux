@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('elfutils' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgudev' 'libnl' 'networkmanager' 'nspr' 'nss' 'openssl' 'pciutils' 'pcre' 'perl' 'systemd' 'util-linux' 'zlib')
+DEPS=('elfutils' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgudev' 'libnl' 'networkmanager' 'nspr' 'nss' 'openssl1.0' 'pciutils' 'pcre' 'perl' 'systemd' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

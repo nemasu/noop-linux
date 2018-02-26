@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'ncurses' 'openssl' 'unixodbc' 'zlib')
+DEPS=('glibc' 'ncurses' 'openssl1.0' 'unixodbc' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

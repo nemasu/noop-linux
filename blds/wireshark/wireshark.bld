@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('e2fsprogs' 'gcc-libs' 'glib2' 'glibc' 'krb5' 'libcap2' 'libgcrypt' 'libgpg-error' 'libnl' 'libpcap' 'lua' 'openssl' 'pcre' 'qt' 'zlib')
+DEPS=('e2fsprogs' 'gcc-libs' 'glib2' 'glibc' 'krb5' 'libcap2' 'libgcrypt' 'libgpg-error' 'libnl' 'libpcap' 'lua' 'openssl1.0' 'pcre' 'qt' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

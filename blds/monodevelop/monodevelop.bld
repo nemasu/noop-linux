@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('curl' 'glibc' 'gnome-sharp' 'libssh2' 'mono' 'mono-addins' 'openssl' 'zlib')
+DEPS=('curl' 'glibc' 'gnome-sharp' 'libssh2' 'mono' 'mono-addins' 'openssl1.0' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

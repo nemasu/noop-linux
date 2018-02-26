@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('curl' 'gcc-libs' 'glibc' 'json-c' 'libxml2' 'ncurses' 'openssl' 'sqlite')
+DEPS=('curl' 'gcc-libs' 'glibc' 'json-c' 'libxml2' 'ncurses' 'openssl1.0' 'sqlite')
 
 # 'no' to skip calls to strip
 STRIP=
