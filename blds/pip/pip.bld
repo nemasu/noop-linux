@@ -5,13 +5,14 @@ NAME=pip
 DESC="Package management for Python applications"
 
 #package version
-VERSION=9.0.1
+VERSION=9.0.1-1
+DVERSION=9.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://pypi.io/packages/source/p/pip/pip-${VERSION}.tar.gz
+SRC=https://pypi.io/packages/source/p/pip/pip-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -52,7 +53,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"
