@@ -5,7 +5,7 @@ NAME=python
 DESC="Next generation of the python high-level scripting language"
 
 #package version
-VERSION=3.5.1
+VERSION=3.6.4
 _pybasever=${VERSION:0:3}
 
 #directory locations, 99.99% of the time this is 1
@@ -55,14 +55,9 @@ function BuildAndInstall
         ln -s pydoc3                /root/bldr-inst/usr/bin/pydoc
         ln -s python${_pybasever}.1 /root/bldr-inst/usr/share/man/man1/python.1
 
-        ln -sf ../../libpython${_pybasever}m.so "/root/bldr-inst/usr/lib/python${_pybasever}/config-${_pybasever}m/libpython${_pybasever}m.so"
-
         install -dm755 /root/bldr-inst/usr/lib/python${_pybasever}/Tools/{i18n,scripts}
         install -m755 Tools/i18n/{msgfmt,pygettext}.py /root/bldr-inst/usr/lib/python${_pybasever}/Tools/i18n/
         install -m755 Tools/scripts/{README,*py} /root/bldr-inst/usr/lib/python${_pybasever}/Tools/scripts/
-
-        sed -i "s|/root/bldr-tmp/Python-${VERSION}:||" "/root/bldr-inst/usr/lib/python${_pybasever}/config-${_pybasever}m/Makefile"
-
 }
 
 #Default HTTP curl new version detection
