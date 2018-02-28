@@ -5,7 +5,7 @@ NAME=tensorflow
 DESC="Computation using data flow graphs for scalable machine learning"
 
 #package version
-VERSION=1.4.0
+VERSION=1.5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -41,7 +41,7 @@ function BuildAndInstall
     mkdir -p out
 
     export PYTHON_BIN_PATH=/usr/bin/python3
-    export PYTHON_LIB_PATH='/usr/lib/python3.5/site-packages'
+    export USE_DEFAULT_PYTHON_LIB_PATH=1
     export CC_OPT_FLAGS='-march=native'
     export TF_NEED_JEMALLOC=1
     export TF_NEED_CUDA=0
@@ -54,6 +54,13 @@ function BuildAndInstall
     export TF_NEED_MPI=0
     export TF_NEED_S3=0
     export TF_NEED_GDR=0
+    export TF_NEED_OPENCL_SYCL=0
+    #export TF_SET_ANDROID_WORKSPACE=0
+
+    # Trick tensorflow into not building Android. The env var
+    # TF_SET_ANDROID_WORKSPACE does not work for some reason.
+    sed -i "s/if workspace_has_any_android_rule()/if True/g" configure.py
+
     ./configure
     bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
     bazel-bin/tensorflow/tools/pip_package/build_pip_package `pwd`/out
