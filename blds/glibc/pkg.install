@@ -1,17 +1,33 @@
 function genLocales() {
         echo "Generating Locales..."
-        for i in `ls /usr/share/i18n/locales | sed -e '/translit/d;/@/d;/iso/d;/i18n/d;/LC/d;/POSIX/d;'`;
-        do
-                echo "${i}.UTF-8"; localedef -i "${i}" -f UTF-8 "${i}.UTF-8";
-        done
+        if [ ! -e /etc/noop/locales ]; then
+            echo "en_US.UTF-8"
+            localedef -i "en_US" -f UTF-8 "en_US.UTF-8"
+        else
+            IFS=$'\n'
+            for i in `cat /etc/noop/locales`; do
+                l=`echo $i | awk '{print $1;}'`
+                c=`echo $i | awk '{print $2;}'`
+                echo "${l}.${c}"; localedef -i "${l}" -f ${c} "${l}.${c}";
+            done
+        fi
         echo "done."
 }
 
 function postinst() {
     mkdir -p /lib/locale
-        genLocales
+    if [ -e /etc/noop/locales.bak ]; then
+        mv /etc/noop/locales.bak /etc/noop/locales
+    fi
+    genLocales
 }
 
 function postup() {
-        postinst
+    postinst
+}
+
+function preup() {
+    if [ -e /etc/noop/locales ]; then
+        mv /etc/noop/locales /etc/noop/locales.bak
+    fi
 }

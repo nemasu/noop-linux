@@ -5,13 +5,13 @@ NAME=valgrind
 DESC="A tool to help find memory-management problems in programs"
 
 #package version
-VERSION=3.10.1
+VERSION=3.13.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://valgrind.org/downloads/valgrind-${VERSION}.tar.bz2
+SRC=ftp://sourceware.org/pub/valgrind/valgrind-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
