@@ -8421,7 +8421,7 @@ sdl,libSDL-1.2.so.0
 sdl,libSDL-1.2.so.0.11.4
 sdl,libSDL.so
 sdl2,libSDL2-2.0.so.0
-sdl2,libSDL2-2.0.so.0.2.1
+sdl2,libSDL2-2.0.so.0.8.0
 sdl2,libSDL2.so
 serf,libserf-1.so
 serf,libserf-1.so.1

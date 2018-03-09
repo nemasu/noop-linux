@@ -5,7 +5,7 @@ NAME=sdl2
 DESC="A library for portable low-level access to a video framebuffer, audio output, mouse, and keyboard (Version 2)"
 
 #package version
-VERSION=2.0.3
+VERSION=2.0.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
