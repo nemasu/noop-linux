@@ -5,13 +5,13 @@ NAME=mesa-demos
 DESC="Mesa demos and tools"
 
 #package version
-VERSION=8.2.0
+VERSION=8.4.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="ftp://ftp.freedesktop.org/pub/mesa/demos/${VERSION}/mesa-demos-${VERSION}.tar.bz2"
+SRC=ftp://ftp.freedesktop.org/pub/mesa/demos/mesa-demos-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--with-system-data-files=/usr/share/mesa-demos"

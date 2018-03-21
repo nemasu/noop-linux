@@ -1,26 +1,26 @@
 #package name
-NAME=gnutls
+NAME=usbmuxd
 
 #Description
-DESC="A library which provides a secure layer over a reliable transport layer"
+DESC="USB Multiplex Daemon"
 
 #package version
-VERSION=3.5.18
+VERSION=1.0.10
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-${VERSION}.tar.xz
+SRC=https://github.com/libimobiledevice/usbmuxd/archive/1.1.0.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-included-unistring"
+EXTRACONF="--without-preflight"
 
-#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+#autotools, python, perl, cmake, custom
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'gmp' 'libffi' 'libidn' 'libtasn1' 'nettle' 'p11-kit' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/
+        LISTURL=
         FILELIST=`GetFileList`
         LATEST=0
 

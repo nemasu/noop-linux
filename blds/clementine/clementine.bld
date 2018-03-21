@@ -5,7 +5,7 @@ NAME=clementine
 DESC="A modern music player and library organizer"
 
 #package version
-VERSION=1.3.1
+VERSION=1.3.1-1
 DVERSION=1.3.1
 
 #directory locations, 99.99% of the time this is 1
@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('chromaprint' 'crypto++' 'fftw' 'gcc-libs' 'gdk-pixbuf' 'glew' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libX11' 'libcdio' 'libechonest' 'libglu' 'libgpod' 'libimobiledevice' 'liblastfm' 'libmtp' 'libplist' 'libusb' 'mesalib' 'openssl1.0' 'protobuf' 'pulseaudio' 'qjson' 'qt4' 'sqlite' 'taglib' 'usbmuxd' 'zlib')
+DEPS=('chromaprint' 'crypto++' 'fftw' 'gcc-libs' 'gdk-pixbuf' 'glew' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libX11' 'libcdio' 'libechonest' 'libglu' 'libgpod' 'liblastfm' 'libmtp' 'libplist' 'libusb' 'mesalib' 'openssl1.0' 'protobuf' 'pulseaudio' 'qjson' 'qt4' 'sqlite' 'taglib' 'usbmuxd' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -46,6 +46,7 @@ function BuildAndInstall
         mkdir -p build && cd build
         cmake .. \
                 -DCMAKE_INSTALL_PREFIX='/usr' \
+				-DBUILD_WERROR=off \
                 -DCMAKE_BUILD_TYPE='Release'
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install

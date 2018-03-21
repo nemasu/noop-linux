@@ -1,0 +1,70 @@
+#package name
+NAME=ppsspp
+
+#Description
+DESC="A PSP emulator for Android, Windows, Mac and Linux, written in C++."
+
+#package version
+VERSION=1.5.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	if [ ! -e ./ppsspp ]; then
+		git clone --recursive https://github.com/hrydgard/ppsspp.git
+		cd ppsspp
+		git checkout v${VERSION}
+		cd ..
+	fi
+
+	cd ppsspp
+
+	mkdir -p build && cd build
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DUSING_QT_UI=ON \
+		-DBUILD_TESTING=OFF
+	make -j${BLDR_CORES}
+
+	install -dm 755 /root/bldr-inst/{opt/ppsspp,usr/{bin,share/{applications,icons,pixmaps}}}
+	install -m 755 PPSSPPQt /root/bldr-inst/opt/ppsspp/
+	cp -dr --no-preserve='ownership' assets /root/bldr-inst/opt/ppsspp/
+	cp -dr --no-preserve='ownership' ../icons/hicolor /root/bldr-inst/usr/share/icons/
+	install -m 644 ../icons/icon-512.svg /root/bldr-inst/usr/share/pixmaps/ppsspp.svg
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LATEST=`curl -s -L https://github.com/hrydgard/ppsspp/releases | egrep "v[0-9\.]*.tar.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\).tar.gz.*/\1/g'`
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}

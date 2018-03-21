@@ -5,13 +5,14 @@ NAME=projectm
 DESC="Music visualizer which uses 3D accelerated iterative image based rendering"
 
 #package version
-VERSION=2.1.0
+VERSION=2.1.0-1
+DVERSION=2.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/projectm/projectM-complete-${VERSION}-Source.tar.gz
+SRC=http://downloads.sourceforge.net/projectm/projectM-complete-${DVERSION}-Source.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,16 +34,17 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        mkdir -p build
-        cd build
+	sed 's/projectM_isnan/std::isnan/g' -i src/libprojectM/Renderer/BeatDetect.cpp 
+	mkdir -p build
+	cd build
 
-        cmake .. \
-                -Wno-dev \
-                -DCMAKE_INSTALL_PREFIX=/usr \
-                -DCMAKE_BUILD_TYPE=Release
+	cmake .. \
+			-Wno-dev \
+			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DCMAKE_BUILD_TYPE=Release
 
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
@@ -50,7 +52,7 @@ function Detect
 {
         LATEST=`curl -L -s http://sourceforge.net/projects/projectm/files/ | grep "projectM-complete-[0-9\.]*-Source.tar.gz" | head -n1 | sed 's/.*projectM-complete-\([0-9\.]*\)-Source.tar.gz.*/\1/g'`
         
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

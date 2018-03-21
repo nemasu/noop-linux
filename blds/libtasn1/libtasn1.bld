@@ -5,7 +5,7 @@ NAME=libtasn1
 DESC="The ASN.1 library used in GNUTLS"
 
 #package version
-VERSION=4.7
+VERSION=4.13
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
