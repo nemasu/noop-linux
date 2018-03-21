@@ -5,7 +5,7 @@ NAME=zfs
 DESC="ZFS on Linux - the official OpenZFS implementation for Linux."
 
 #package version
-VERSION=0.7.1
+VERSION=0.7.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ SRC=https://github.com/zfsonlinux/zfs/archive/zfs-${VERSION}.tar.gz
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=('spl' 'glibc' 'libcap2' 'libgssglue' 'libtirpc' 'systemd' 'util-linux' 'zlib')
@@ -31,9 +31,13 @@ PKGDEPS=('spl')
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	./autogen.sh
+	./configure $STDUSRCONF
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect

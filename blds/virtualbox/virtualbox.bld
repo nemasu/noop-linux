@@ -5,8 +5,8 @@ NAME=virtualbox
 DESC="Powerful x86 virtualization for enterprise as well as home use"
 
 #package version
-VERSION=5.1.24
-DVERSION=5.1.24
+VERSION=5.2.8
+DVERSION=5.2.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,25 +35,25 @@ RESTORELIBDB=1
 function BuildAndInstall
 {
 
-        pkgr -i "${PKGDEPS[@]}"
+	pkgr -i "${PKGDEPS[@]}"
 
 
-        mv $BLDRTMPDIR/LocalConfig.kmk .
-        sed -i 's/^check_gcc$/#check_gcc/' configure
-        ./configure \
-        --disable-docs \
-        --enable-webservice \
-        --enable-vde \
-        --enable-vnc \
-        --with-makeself=/usr/bin/echo
-        source ./env.sh
+	mv $BLDRTMPDIR/LocalConfig.kmk .
+	sed -i 's/^check_gcc$/#check_gcc/' configure
+	./configure \
+		--disable-docs \
+		--enable-webservice \
+		--enable-vde \
+		--enable-vnc \
+		--with-makeself=/usr/bin/echo
+	source ./env.sh
         
     #Note: Kernel source needs patches as of kernel 4.9.x
     #See https://bugs.gentoo.org/show_bug.cgi?id=603472
 
-    kmk KBUILD_VERBOSE=2 CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
-        kmk -C src/VBox/RDP/client-1.8.3 KBUILD_VERBOSE=2  CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
-    kmk -C src/VBox/ExtPacks/VNC packing KBUILD_VERBOSE=2 CXXFLAGS="-fpermissive -D__builtin_types_compatible_p\(x,y\)=1"
+    kmk
+    kmk -C src/VBox/RDP/client-1.8.3
+    kmk -C src/VBox/ExtPacks/VNC packing
 
         PushScripts
 
@@ -66,7 +66,7 @@ function BuildAndInstall
         pushd src/VBox/Additions/linux
         rm -rf build_dir
         mkdir build_dir
-        ./export_modules mod_src.tar.gz
+        ./export_modules.sh mod_src.tar.gz
         cd build_dir
         tar xf ../mod_src.tar.gz
         sed -i -e '/# error/d' vboxguest/include/VBox/version.h
@@ -104,8 +104,8 @@ function BuildAndInstall
         /root/bldr-inst/usr/bin/VBoxClient-all
     install -m755 -D ../../../../../src/VBox/Additions/x11/Installer/vboxclient.desktop \
         /root/bldr-inst/etc/xdg/autostart/vboxclient.desktop
-    install -D vboxvideo_drv_system.so \
-        /root/bldr-inst/usr/lib/xorg/modules/drivers/vboxvideo.so
+#    install -D vboxvideo_drv_system.so \
+#        /root/bldr-inst/usr/lib/xorg/modules/drivers/vboxvideo.so
     install -d /root/bldr-inst/usr/lib/xorg/modules/dri
     install -m755 VBoxOGL*.so /root/bldr-inst/usr/lib
     ln -s /usr/lib/VBoxOGL.so /root/bldr-inst/usr/lib/xorg/modules/dri/vboxvideo_dri.so

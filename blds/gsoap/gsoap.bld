@@ -5,7 +5,8 @@ NAME=gsoap
 DESC="Offers an XML language binding to ease the development of SOAP/XML Web services in C and C/C++"
 
 #package version
-VERSION=2.8.22
+VERSION=2.8.63
+DVERSION=2.8.63
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,10 +34,12 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        wget http://prdownloads.sourceforge.net/gsoap2/gsoap_${VERSION}.zip
+        wget http://prdownloads.sourceforge.net/gsoap2/gsoap_${DVERSION}.zip
         unzip *.zip
         rm *.zip
         cd `ls`
+
+		patch -Np1 -i $BLDRTMPDIR/*.patch_ && rm $BLDRTMPDIR/*.patch_
         
         export CFLAGS+=" -fPIC"
         export CXXFLAGS+=" -fPIC"
@@ -66,7 +69,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

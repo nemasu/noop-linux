@@ -504,7 +504,7 @@ cups-filters,libfontembed.so.1
 cups-filters,libfontembed.so.1.0.0
 curl,libcurl.so
 curl,libcurl.so.4
-curl,libcurl.so.4.3.0
+curl,libcurl.so.4.5.0
 db,libdb-5.3.so
 db,libdb-5.so
 db,libdb.so
