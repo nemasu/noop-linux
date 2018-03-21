@@ -15,6 +15,7 @@ findutils
 curl
 gawk
 procps
+psmisc
 tar
 bzip2
 gzip
