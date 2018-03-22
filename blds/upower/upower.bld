@@ -5,7 +5,7 @@ NAME=upower
 DESC="Abstraction for enumerating power devices, listening to device events and querying history and statistics"
 
 #package version
-VERSION=0.99.3
+VERSION=0.99.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
