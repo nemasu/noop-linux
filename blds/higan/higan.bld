@@ -1,0 +1,73 @@
+#package name
+NAME=higan
+
+#Description
+DESC="Emulator for various Nintendo consoles."
+
+#package version
+VERSION=106
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://gitlab.com/higan/higan/repository/v${VERSION}/archive.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	make -C higan
+	make -C icarus
+
+	install -Dm 755 higan/out/higan -t /root/bldr-inst/usr/bin/
+	install -Dm 644 higan/data/higan.desktop -t /root/bldr-inst/usr/share/applications/
+	install -Dm 644 higan/data/higan.png -t /root/bldr-inst/usr/share/pixmaps/
+	cp -dr --no-preserve='ownership' higan/systems /root/bldr-inst/usr/share/higan
+
+	install -Dm 755 icarus/out/icarus -t /root/bldr-inst/usr/bin/
+	install -Dm 644 icarus/data/icarus.desktop -t /root/bldr-inst/usr/share/applications/
+	install -Dm 644 icarus/data/icarus.png -t /root/bldr-inst/usr/share/pixmaps/
+	install -dm 755 /root/bldr-inst/usr/share/icarus
+	cp -dr --no-preserve='ownership' icarus/Database /root/bldr-inst/usr/share/icarus/
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LISTURL=
+        FILELIST=`GetFileList`
+        LATEST=0
+
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}
