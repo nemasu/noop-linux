@@ -5,7 +5,7 @@ NAME=python2
 DESC="A high-level scripting language"
 
 #package version
-VERSION=2.7.11
+VERSION=2.7.14
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
