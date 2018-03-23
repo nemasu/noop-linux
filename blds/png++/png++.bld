@@ -1,23 +1,23 @@
 #package name
-NAME=
+NAME=png++
 
 #Description
-DESC=
+DESC="C++ wrapper for libpng"
 
 #package version
-VERSION=
+VERSION=0.2.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC=https://download.savannah.gnu.org/releases/pngpp/png++-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,9 +31,10 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    make PREFIX=/root/bldr-inst/usr install
+}
 
 function Detect() {
     LISTURL=

@@ -1,23 +1,23 @@
 #package name
-NAME=
+NAME=lib32-portaudio
 
 #Description
-DESC=
+DESC="Audio I/O library (32-bit)"
 
 #package version
-VERSION=
+VERSION=190600_20161030
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC=http://www.portaudio.com/archives/pa_stable_v$VERSION.tgz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--enable-cxx"
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,9 +31,24 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    export CC="gcc -m32"
+    export CXX="g++ -m32"
+    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+    ./configure --prefix=/usr \
+        --libdir=/usr/lib32 \
+        --libexecdir=/usr/lib32 \
+        --sysconfdir=/etc \
+        --localstatedir=/var
+
+    make
+    make DESTDIR=/root/bldr-inst install
+
+    rm -rf /root/bldr-inst/usr/{bin,include,share}
+
+}
 
 function Detect() {
     LISTURL=

@@ -1,23 +1,23 @@
 #package name
-NAME=
+NAME=libaio
 
 #Description
-DESC=
+DESC="The Linux-native asynchronous I/O facility (aio) library"
 
 #package version
-VERSION=
+VERSION=0.3.110
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC=http://ftp.de.debian.org/debian/pool/main/liba/libaio/libaio_${VERSION}.orig.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,9 +31,12 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    CFLAGS="-march=${CARCH/_/-} -mtune=generic -O2 -pipe"
+    make -j${BLDR_CORES}
+    make prefix=/root/bldr-inst/usr install
+}
 
 function Detect() {
     LISTURL=

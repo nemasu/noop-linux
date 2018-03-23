@@ -1,0 +1,73 @@
+#package name
+NAME=lib32-db
+
+#Description
+DESC="The Berkeley DB embedded database system (32-bit)"
+
+#package version
+VERSION=5.3.28
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://download.oracle.com/berkeley-db/db-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+
+    export CC="gcc -m32"
+    export CXX="g++ -m32"
+    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+    ./dist/configure --prefix=/usr --enable-sql --enable-cxx --enable-compat185  --enable-shared --enable-static --enable-cxx --enable-dbm --libdir=/usr/lib32 --libexecdir=/usr/lib32
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+    
+    #Waaay too many docs
+    rm -rf /root/bldr-inst/usr/docs
+
+    rm -rf /root/bldr-inst/usr/{bin,include,share}
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LISTURL=http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html
+        FILELIST=`GetFileList`
+        LATEST=0
+
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}

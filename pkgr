@@ -182,15 +182,19 @@ function vercomp ()
     return 0 # =
 }
 
-function GetFileList
-{
-        curl -L -s $LISTURL | sed -ne'/'"${NAME}"'-[0-9.]*.tar.\(gz\|xz\|bz2\)/p' | sed -e 's/.*'"${NAME}"'/'"${NAME}"'/g;s/.tar.\(gz\|xz\|bz2\).*/.tar.\1/g' | sort | uniq
+function GetFileList() {
+    curl -L -s $LISTURL | sed -ne'/'"${NAME}"'-[0-9.]*.tar.\(gz\|xz\|bz2\)/p' | sed -e 's/.*'"${NAME}"'/'"${NAME}"'/g;s/.tar.\(gz\|xz\|bz2\).*/.tar.\1/g' | sort | uniq
 }
+
+function LatestVersionGitHub() {
+    curl -s -L  $1 | egrep "v[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'
+}
+
 
 function ShowProgress
 {
 #tput civis
-        let amount=25
+    let amount=25
     let n=$1
     let d=$2
     draw=`echo "($n * $amount) / $d" | bc`

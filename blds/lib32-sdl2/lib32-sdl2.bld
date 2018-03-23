@@ -1,23 +1,23 @@
 #package name
-NAME=
+NAME=lib32-sdl2
 
 #Description
-DESC=
+DESC="A library for portable low-level access to a video framebuffer, audio output, mouse, and keyboard (Version 2) (32-bit)"
 
 #package version
-VERSION=
+VERSION=2.0.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC="http://www.libsdl.org/release/SDL2-${VERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#autotools, python, perl, cmake, custom
-BUILD=autotools
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,12 +31,28 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    export CC="gcc -m32"
+    export CXX="g++ -m32"
+    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
-function Detect() {
-    LISTURL=
+    mkdir build && cd build
+    ../configure --prefix=/usr \
+        --libdir=/usr/lib32 \
+        --libexecdir=/usr/lib32 \
+        --enable-sdl-dlopen \
+        --enable-alsa --enable-pulseaudio-shared
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+    rm -rf /root/bldr-inst/usr/{bin,include,share}
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+    LISTURL=http://ftp.gnu.org/gnu/gnutls/
     FILELIST=`GetFileList`
     LATEST=0
 

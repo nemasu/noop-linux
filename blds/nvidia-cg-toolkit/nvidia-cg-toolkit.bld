@@ -1,11 +1,11 @@
 #package name
-NAME=
+NAME=nvidia-cg-toolkit
 
 #Description
-DESC=
+DESC="NVIDIA Cg libraries"
 
 #package version
-VERSION=
+VERSION=3.1_April2012
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ SRC=
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,9 +31,22 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+
+    wget http://developer.download.nvidia.com/cg/Cg_${VERSION:0:3}/Cg-${VERSION}_x86.tgz -Ox86.tgz
+    wget https://developer.download.nvidia.com/cg/Cg_${VERSION:0:3}/Cg-${VERSION}_x86_64.tgz -Ox86_64.tgz
+    tar xf x86.tgz && tar xf x86_64.tgz && rm *.tgz
+
+    install -Dm755 ./usr/bin/cgc /root/bldr-inst/usr/bin/cgc
+    install -dm755 /root/bldr-inst/usr/include/Cg
+    install -m644 ./usr/include/Cg/* /root/bldr-inst/usr/include/Cg
+    install -dm755 /root/bldr-inst/usr/lib
+    install -dm755 /root/bldr-inst/usr/lib32
+    install -m644 ./usr/lib/* /root/bldr-inst/usr/lib32
+    install -m644 ./usr/lib64/* /root/bldr-inst/usr/lib
+    #cp -r ./usr/local/Cg /root/bldr-inst/usr/share/
+}
 
 function Detect() {
     LISTURL=

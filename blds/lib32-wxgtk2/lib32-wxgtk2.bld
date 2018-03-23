@@ -1,0 +1,60 @@
+#package name
+NAME=lib32-wxgtk2
+
+#Description
+DESC="GTK+ implementation of wxWidgets API for GUI (GTK2) (32-bit)"
+
+#package version
+VERSION=3.0.3.1
+DVERSION=3.0.3.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/wxWidgets/wxWidgets/releases/download/v${DVERSION}/wxWidgets-${DVERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    export CC="gcc -m32"
+    export CXX="g++ -m32"
+    export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+    ./autogen.sh
+    ./configure --prefix=/usr --libdir=/usr/lib32  --libexecdir=/usr/lib32 \
+        --with-gtk=2 --with-opengl --enable-unicode \
+        --enable-graphics_ctx --enable-mediactrl --with-regex=builtin \
+        --with-libpng=sys --with-libxpm=sys --with-libjpeg=sys --with-libtiff=sys \
+        --disable-precomp-headers
+    make -j${BLDR_CORES}
+    make -C locale allmo -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+
+    rm -rf /root/bldr-inst/usr/{bin/{wx-config,wxrc},include,share}
+    mv /root/bldr-inst/usr/bin/wxrc{,32}-3.0
+    ln -s /usr/bin/wxrc32-3.0 /root/bldr-inst/usr/bin/wxrc32
+    ln -s /usr/lib32/wx/config/gtk2-unicode-3.0 /root/bldr-inst/usr/bin/wx-config32
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        echo $NAME: Too Old
+}

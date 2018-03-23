@@ -1,0 +1,77 @@
+#package name
+NAME=lib32-jack
+
+#Description
+DESC="A low-latency audio server (32-bit)"
+
+#package version
+VERSION=0.125.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="http://jackaudio.org/downloads/jack-audio-connection-kit-${VERSION}.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+	./configure --prefix=/usr \
+		--libdir=/usr/lib32 \
+		--libexecdir=/usr/lib32 \
+		--sysconfdir=/etc \
+		--localstatedir=/var
+
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+	rm -rf /root/bldr-inst/usr/{bin,include,share}
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+    NAME=jack-audio-connection-kit
+    LISTURL=http://jackaudio.org/downloads/
+    FILELIST=`GetFileList`
+    NAME=jack
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+                    CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                    vercomp $LATEST $CURVER
+                    if [ $? -eq 2 ];
+                    then
+                                    LATEST=$CURVER
+                    fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+                    echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

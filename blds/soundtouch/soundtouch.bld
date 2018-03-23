@@ -1,23 +1,23 @@
 #package name
-NAME=
+NAME=soundtouch
 
 #Description
-DESC=
+DESC="An audio processing library"
 
 #package version
-VERSION=
+VERSION=2.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC=http://www.surina.net/soundtouch/soundtouch-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=
@@ -31,9 +31,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    sed -i 's/AM_CONFIG_HEADER/AC_CONFIG_HEADER/' configure.ac
+    ./bootstrap
+    ./configure --prefix=/usr --enable-shared --with-pic
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst pkgdocdir=/usr/share/doc/soundtouch install
+}
 
 function Detect() {
     LISTURL=
