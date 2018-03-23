@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('alsa-lib' 'atk' 'bluez' 'cairo' 'curl' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gnutls' 'gtk+2' 'libX11' 'libXext' 'libaio' 'libcap-ng' 'libcap2' 'libdrm' 'libepoxy' 'libjpeg' 'libpng' 'libseccomp' 'libssh2' 'libusb' 'lzo2' 'mesalib' 'ncurses' 'nettle' 'pango' 'pixman' 'pulseaudio' 'sasl' 'sdl' 'snappy' 'vte2' 'zlib')
+DEPS=('alsa-lib' 'atk' 'bluez' 'cairo' 'curl' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gnutls' 'gtk+' 'libX11' 'libaio' 'libcap-ng' 'libcap2' 'libdrm' 'libepoxy' 'libjpeg' 'libpng' 'libseccomp' 'libssh2' 'libusb' 'libxkbcommon' 'lzo2' 'mesalib' 'ncurses' 'nettle' 'pango' 'pcre2' 'pixman' 'pulseaudio' 'sasl' 'sdl' 'snappy' 'vte' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'gcc-libs' 'glibc' 'libogg' 'libsndfile' 'libvorbis' 'pulseaudio' 'qt' 'qt-webkit' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

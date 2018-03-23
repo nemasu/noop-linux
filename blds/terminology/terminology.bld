@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('efl' 'elementary' 'glibc')
+DEPS=('efl' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=

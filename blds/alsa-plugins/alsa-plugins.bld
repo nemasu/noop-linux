@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('alsa-lib' 'dbus' 'ffmpeg' 'gdbm' 'glibc' 'json-c' 'libcap2' 'libgcrypt' 'libgpg-error' 'libICE' 'libsamplerate' 'libSM' 'libsndfile' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXi' 'libXtst' 'pulseaudio' 'speex' 'systemd' 'util-linux' 'xz')
+DEPS=('alsa-lib' 'db' 'dbus' 'ffmpeg' 'glibc' 'jack' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libXtst' 'libcap2' 'libgcrypt' 'libgpg-error' 'libsamplerate' 'libsndfile' 'libxcb' 'lz4' 'pulseaudio' 'systemd' 'util-linux' 'xz')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF="--enable-wifi --enable-openal CC=clang CXX=clang++"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libglu' 'mesalib' 'openal' 'pango' 'sdl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

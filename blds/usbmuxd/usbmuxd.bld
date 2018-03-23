@@ -20,7 +20,7 @@ EXTRACONF="--without-preflight"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'libcap2' 'libplist' 'libusb' 'libxml2' 'systemd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

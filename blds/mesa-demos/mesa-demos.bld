@@ -20,7 +20,7 @@ EXTRACONF="--with-system-data-files=/usr/share/mesa-demos"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('expat' 'freeglut' 'gcc-libs' 'glew' 'glibc' 'libdrm' 'libglu' 'libX11' 'libXau' 'libxcb' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libxshmfence' 'libXxf86vm' 'mesalib')
+DEPS=('expat' 'freeglut' 'gcc-libs' 'glew' 'glibc' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXxf86vm' 'libdrm' 'libffi' 'libglu' 'libxcb' 'libxshmfence' 'mesalib' 'wayland' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

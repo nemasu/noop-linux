@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'atk' 'cairo' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'gtksourceview2' 'libX11' 'libXext' 'libXv' 'libao' 'mesalib' 'openal' 'pango' 'pulseaudio' 'sdl' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

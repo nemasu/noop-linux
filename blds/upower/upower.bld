@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc' 'libffi' 'libgudev' 'libimobiledevice' 'libplist' 'libusb' 'pcre' 'zlib')
+DEPS=('glib2' 'glibc' 'libffi' 'libgudev' 'libimobiledevice' 'libplist' 'libusb' 'pcre' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'fftw' 'fltk' 'fluidsynth' 'fontconfig' 'gcc-libs' 'glibc' 'lame' 'lib32-glibc' 'libXcursor' 'libXext' 'libXfixes' 'libXft' 'libXinerama' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'pulseaudio' 'qt4' 'sdl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
