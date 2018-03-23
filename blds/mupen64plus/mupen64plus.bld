@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('boost' 'freetype2' 'gcc-libs' 'glibc' 'libglu' 'libpng' 'libsamplerate' 'mesalib' 'sdl2' 'speex' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

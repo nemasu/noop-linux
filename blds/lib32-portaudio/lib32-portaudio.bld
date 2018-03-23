@@ -20,7 +20,7 @@ EXTRACONF="--enable-cxx"
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-alsa-lib' 'lib32-glibc' 'lib32-jack')
 
 # 'no' to skip calls to strip
 STRIP=

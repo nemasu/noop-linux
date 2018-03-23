@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'lib32-alsa-lib' 'lib32-atk' 'lib32-bzip2' 'lib32-cairo' 'lib32-gdk-pixbuf' 'lib32-glew' 'lib32-glib2' 'lib32-glibc' 'lib32-gtk+2' 'lib32-libICE' 'lib32-libSM' 'lib32-libX11' 'lib32-libXext' 'lib32-libaio' 'lib32-libglu' 'lib32-libjpeg' 'lib32-libpng' 'lib32-mesalib' 'lib32-pango' 'lib32-portaudio' 'lib32-sdl2' 'lib32-soundtouch' 'lib32-wxgtk2' 'lib32-xz' 'lib32-zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -29,7 +29,7 @@ STRIP=
 PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
-RESTORELIBDB=
+RESTORELIBDB=1
 
 function BuildAndInstall
 {

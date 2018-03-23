@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-glibc' 'lib32-libX11' 'lib32-mesalib')
 
 # 'no' to skip calls to strip
 STRIP=

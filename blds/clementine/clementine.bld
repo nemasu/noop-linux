@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('chromaprint' 'crypto++' 'fftw' 'gcc-libs' 'gdk-pixbuf' 'glew' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libX11' 'libcdio' 'libechonest' 'libglu' 'libgpod' 'liblastfm' 'libmtp' 'libplist' 'libusb' 'mesalib' 'openssl1.0' 'protobuf' 'pulseaudio' 'qjson' 'qt4' 'sqlite' 'taglib' 'usbmuxd' 'zlib')
+DEPS=('chromaprint' 'crypto++' 'fftw' 'gcc-libs' 'gdk-pixbuf' 'glew' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libX11' 'libcdio' 'libechonest' 'libglu' 'libgpod' 'libimobiledevice' 'liblastfm' 'libmtp' 'libplist' 'libusb' 'mesalib' 'protobuf' 'pulseaudio' 'qjson' 'qt4' 'sqlite' 'taglib' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

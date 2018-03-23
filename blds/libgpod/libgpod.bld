@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('gdk-pixbuf' 'glib2' 'glibc' 'gmp' 'gnutls' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libidn' 'libimobiledevice' 'libplist' 'libpng' 'libtasn1' 'libusb' 'libusbmuxd' 'libxml2' 'nettle' 'openssl' 'p11-kit' 'pcre' 'sg3_utils' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

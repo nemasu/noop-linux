@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-e2fsprogs' 'lib32-glib2' 'lib32-glibc' 'lib32-krb5' 'lib32-libxml2' 'lib32-sqlite')
 
 # 'no' to skip calls to strip
 STRIP=

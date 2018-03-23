@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-glib2' 'lib32-glibc' 'lib32-gmp' 'lib32-gnutls' 'lib32-libffi' 'lib32-libtasn1' 'lib32-nettle' 'lib32-p11-kit' 'lib32-pcre' 'lib32-util-linux' 'lib32-zlib')
 
 # 'no' to skip calls to strip
 STRIP=

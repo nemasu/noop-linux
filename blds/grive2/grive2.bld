@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('binutils' 'boost' 'curl' 'expat' 'gcc-libs' 'glibc' 'libgcrypt' 'libgpg-error' 'yajl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

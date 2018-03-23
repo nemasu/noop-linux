@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('docbook-xml' 'docbook-xsl' 'libxslt' 'gnu-efi' 'gperf' 'acl' 'attr' 'curl' 'elfutils' 'glibc' 'gnutls' 'iptables' 'kmod' 'libcap2' 'libgcrypt' 'libgpg-error' 'libidn' 'libmicrohttpd' 'linux-pam' 'lz4' 'qrencode' 'util-linux' 'xz' 'zlib')
+DEPS=('docbook-xml' 'docbook-xsl' 'libxslt' 'gnu-efi' 'gperf' 'acl' 'attr' 'curl' 'elfutils' 'glibc' 'iptables' 'kmod' 'libcap2' 'libgcrypt' 'libgpg-error' 'libidn' 'linux-pam' 'lz4' 'qrencode' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'dbus' 'dbus-glib' 'elfutils' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libgudev' 'libnotify' 'libpng' 'libsecret' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXrender' 'modemmanager' 'networkmanager' 'nspr' 'nss' 'pango' 'pcre' 'pixman' 'systemd' 'util-linux' 'zlib')
+DEPS=('atk' 'cairo' 'elfutils' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXxf86vm' 'libcap2' 'libdrm' 'libffi' 'libgcrypt' 'libgpg-error' 'libgudev' 'libnotify' 'libpng' 'libsecret' 'libxcb' 'libxshmfence' 'mesalib' 'modemmanager' 'networkmanager' 'nspr' 'nss' 'pango' 'pcre' 'pixman' 'systemd' 'util-linux' 'wayland' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('lib32-alsa-lib' 'lib32-db' 'lib32-glibc' 'lib32-libsamplerate')
 
 # 'no' to skip calls to strip
 STRIP=

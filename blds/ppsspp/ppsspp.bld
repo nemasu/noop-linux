@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glew' 'glibc' 'libglu' 'mesalib' 'qt' 'sdl2' 'snappy' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

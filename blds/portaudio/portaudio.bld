@@ -20,7 +20,7 @@ EXTRACONF="--enable-cxx"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'gcc-libs' 'glibc' 'jack')
 
 # 'no' to skip calls to strip
 STRIP=

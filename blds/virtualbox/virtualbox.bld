@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('virtualbox-modules' 'curl' 'gcc-libs' 'glibc' 'libpng' 'libvpx' 'libX11' 'libXcursor' 'libXext' 'libXinerama' 'libxml2' 'libXmu' 'libXt' 'mesalib' 'openssl1.0' 'python2' 'qt4' 'sdl' 'zlib')
+DEPS=('libvncserver' 'gsoap' 'libidl' 'iasl' 'cdrkit' 'virtualbox-modules' 'curl' 'gcc-libs' 'glibc' 'libX11' 'libXcursor' 'libXext' 'libXinerama' 'libXmu' 'libXt' 'libpng' 'libxcb' 'libxml2' 'mesalib' 'openssl' 'python' 'python2' 'qt' 'sdl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
