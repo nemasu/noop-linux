@@ -1,0 +1,8 @@
+function postinst() {
+    chown 0:40 /etc/named.conf
+    chown -R 0:40 /var/named
+}
+
+function postup() {
+    postinst
+}

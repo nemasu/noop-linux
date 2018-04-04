@@ -5,7 +5,7 @@ NAME=libcanberra
 DESC="A small and lightweight implementation of the XDG Sound Theme Specification"
 
 #package version
-VERSION=0.30-3
+VERSION=0.30-4
 DVERSION=0.30
 
 #directory locations, 99.99% of the time this is 1

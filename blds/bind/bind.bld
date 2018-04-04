@@ -1,0 +1,60 @@
+#package name
+NAME=bind
+
+#Description
+DESC="DNS Server"
+
+#package version
+VERSION=9.12.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://ftp.isc.org/isc/bind9/${VERSION}/bind-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF="--enable-ipv6 --enable-fixed-rrset --enable-seccomp --enable-full-report --with-python=/usr/bin/python --with-geoip --with-idn --with-openssl --with-libjson --with-libxml2 --with-libtool"
+
+#autotools, python, perl, cmake, custom
+BUILD=autotools
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#TODO update root.hint from https://www.internic.net/zones/named.root
+
+#function BuildAndInstall
+#{
+#}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

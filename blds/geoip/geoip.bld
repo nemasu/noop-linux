@@ -1,0 +1,55 @@
+#package name
+NAME=geoip
+
+#Description
+DESC="Non-DNS IP-to-country resolver C library & utils"
+
+#package version
+VERSION=1.6.11
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/maxmind/geoip-api-c/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall {
+ 
+    ./bootstrap
+    ./configure \
+        --prefix=/usr \
+        --mandir=/usr/share/man \
+        --sysconfdir=/etc/geoip
+    make -j${BLDR_CORES}
+
+    make DESTDIR=/root/bldr-inst install
+}
+
+function Detect() {
+    LATEST=`LatestVersionGitHub https://github.com/maxmind/geoip-api-c/releases`
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
+

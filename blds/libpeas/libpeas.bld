@@ -5,13 +5,14 @@ NAME=libpeas
 DESC="A GObject plugins library"
 
 #package version
-VERSION=1.22.0
+VERSION=1.22.0-1
+DVERSION=1.22.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://download.gnome.org/sources/libpeas/${VERSION:0:4}/libpeas-${VERSION}.tar.xz
+SRC=https://download.gnome.org/sources/libpeas/${DVERSION:0:4}/libpeas-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -52,7 +53,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

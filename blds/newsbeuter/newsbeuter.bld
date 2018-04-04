@@ -5,7 +5,7 @@ NAME=newsbeuter
 DESC="A RSS feed reader for the text console with special Podcast support"
 
 #package version
-VERSION=20161201
+VERSION=20180328
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,7 +33,9 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+    if [ ! -e ./newsbeuter ]; then
         git clone https://github.com/akrennmair/newsbeuter.git
+    fi
         cd newsbeuter
         make prefix=/usr -j${BLDR_CORES}
         make prefix=/usr DESTDIR=/root/bldr-inst install
