@@ -5,8 +5,8 @@ NAME=libreoffice
 DESC="Office suite"
 
 #package version
-VERSION=5.2.3.3
-DVERSION=5.2.3.3
+VERSION=6.0.2.1
+DVERSION=6.0.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -58,16 +58,16 @@ function BuildAndInstall
                 --disable-gtk3 \
                 --with-system-zlib --with-system-openssl --with-system-jpeg \
                 --with-system-expat --with-system-lcms2 --with-system-libxml \
-                --without-system-icu --with-system-firebird \
-                --with-system-libpng --with-gssapi --without-java --without-doxygen \
-                --with-system-cairo --without-system-boost \
+                --without-system-icu --with-system-libpng --with-gssapi --without-java \
+                --without-doxygen --with-system-cairo --without-system-boost \
                 --with-system-headers --with-alloc=system --enable-split-app-modules \
-                --without-system-mdds --without-system-sane \
+                --without-system-mdds --without-system-sane --with-system-postgresql \
                 --enable-release-build=yes --with-system-nss --with-parallelism=${BLDR_CORES} \
-                --with-system-neon \
+                --with-system-neon --enable-openssl \
                 --with-gdrive-client-id=${_google_default_client_id} \
                 --with-gdrive-client-secret=${_google_default_client_secret}
 
+        sed -i -e 's|bootstrap: check-if-root compilerplugins|bootstrap: compilerplugins|' Makefile
         make build
         make DESTDIR=/root/bldr-inst distro-pack-install
 
