@@ -5,13 +5,13 @@ NAME=anki
 DESC="Helps you remember facts (like words/phrases in a foreign language) efficiently"
 
 #package version
-VERSION=2.0.33
+VERSION=2.0.50
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ankisrs.net/download/mirror/anki-${VERSION}.tgz
+SRC=https://apps.ankiweb.net/downloads/current/anki-${VERSION}-source.tgz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -34,8 +34,8 @@ RESTORELIBDB=1
 function BuildAndInstall
 {
 
-        DESTDIR=/root/bldr-inst
-        PREFIX=/usr
+	DESTDIR=/root/bldr-inst
+	PREFIX=/usr
     mkdir -p ${DESTDIR}${PREFIX}/bin
     mkdir -p ${DESTDIR}${PREFIX}/share/man/man1
     mkdir -p ${DESTDIR}${PREFIX}/share/applications
@@ -50,8 +50,7 @@ function BuildAndInstall
     mv anki.desktop ${DESTDIR}${PREFIX}/share/applications/
     mv anki.1 ${DESTDIR}${PREFIX}/share/man/man1/
 
-        sed -i -e 's/python/python2/g' /root/bldr-inst/usr/bin/anki
-    
+	sed -i -e 's/python/python2/g' /root/bldr-inst/usr/bin/anki
 }
 
 #Default HTTP curl new version detection

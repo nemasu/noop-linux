@@ -5,14 +5,14 @@ NAME=pyqt4
 DESC="Common PyQt files shared between python-pyqt4 and python2-pyqt4"
 
 #package version
-VERSION=4.11.4-1
-DVERSION=4.11.4
+VERSION=4.12.1
+DVERSION=4.12.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/pyqt/PyQt-x11-gpl-${DVERSION}.tar.gz
+SRC=https://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-${DVERSION}/PyQt4_gpl_x11-${DVERSION}.tar.gz/download
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -41,6 +41,7 @@ function BuildAndInstall
         cp -r py2 py3
 
         cd py3
+		sed -i -e 's|target_config.pydbus_module_dir = dbus.mainloop.__path__\[0\]|target_config.pydbus_module_dir = list(dbus.mainloop.__path__)[0]|' configure-ng.py
         python3 configure-ng.py \
                 --confirm-license \
                 --no-sip-files \
@@ -53,6 +54,7 @@ function BuildAndInstall
         make DESTDIR=/root/bldr-inst INSTALL_ROOT=/root/bldr-inst install
 
         cd ../py2
+		sed -i -e 's|target_config.pydbus_module_dir = dbus.mainloop.__path__\[0\]|target_config.pydbus_module_dir = list(dbus.mainloop.__path__)[0]|' configure-ng.py
         python2 configure-ng.py \
                 --confirm-license \
                 --no-sip-files \
