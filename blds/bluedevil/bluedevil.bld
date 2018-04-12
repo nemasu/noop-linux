@@ -5,7 +5,7 @@ NAME=bluedevil
 DESC="Bluedevil is a project which intends to integrate the Bluetooth technology within KDE workspace and applications."
 
 #package version
-VERSION=5.7.3
+VERSION=5.12.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

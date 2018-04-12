@@ -5,7 +5,7 @@ NAME=polkit-kde-agent-1
 DESC="Daemon providing a polkit authentication UI for KDE."
 
 #package version
-VERSION=5.7.3
+VERSION=5.12.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

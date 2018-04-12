@@ -5,7 +5,7 @@ NAME=oxygen
 DESC="Unnamed repository; edit this file DESC=#039;descriptionDESC=#039; to name the repository."
 
 #package version
-VERSION=5.7.3
+VERSION=5.12.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

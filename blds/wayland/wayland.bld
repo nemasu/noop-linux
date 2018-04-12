@@ -5,7 +5,7 @@ NAME=wayland
 DESC="A computer display server protocol"
 
 #package version
-VERSION=1.12.92
+VERSION=1.15.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

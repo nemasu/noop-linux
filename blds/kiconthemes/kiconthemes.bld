@@ -5,7 +5,7 @@ NAME=kiconthemes
 DESC="Support for icon themes"
 
 #package version
-VERSION=5.24.0
+VERSION=5.44.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

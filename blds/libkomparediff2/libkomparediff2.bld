@@ -5,7 +5,7 @@ NAME=libkomparediff2
 DESC="Library to compare files and strings, used in Kompare and KDevelop"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

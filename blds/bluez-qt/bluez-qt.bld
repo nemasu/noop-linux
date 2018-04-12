@@ -5,7 +5,7 @@ NAME=bluez-qt
 DESC="Qt wrapper for BlueZ 5 DBus API"
 
 #package version
-VERSION=5.24.0
+VERSION=5.44.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

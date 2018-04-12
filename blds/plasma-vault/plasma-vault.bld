@@ -1,17 +1,17 @@
 #package name
-NAME=gpgmepp
+NAME=plasma-vault
 
 #Description
-DESC="C++ wrapper for GPG"
+DESC="Plasma applet and services for creating encrypted vaults"
 
 #package version
-VERSION=16.04.3
+VERSION=5.12.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/$VERSION/src/gpgmepp-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/plasma/${VERSION}/$NAME-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'gpgme' 'libassuan' 'libgpg-error' 'qt')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
+        LISTURL=http://download.kde.org/stable/plasma/${VERSION}/
         FILELIST=`GetFileList`
         LATEST=0
 

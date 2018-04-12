@@ -5,13 +5,13 @@ NAME=kholidays
 DESC="Holidays library for KDE"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/$VERSION/src/kholidays-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/frameworks/${VERSION:0:4}/kholidays-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

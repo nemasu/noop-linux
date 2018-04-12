@@ -5,7 +5,7 @@ NAME=deadbeef
 DESC="A GTK+ audio player for GNU/Linux."
 
 #package version
-VERSION=0.7.2
+VERSION=0.7.2-1
 DVERSION=0.7.2
 
 #directory locations, 99.99% of the time this is 1

@@ -5,8 +5,8 @@ NAME=filelight
 DESC="Filelight allows you to quickly understand exactly where your diskspace is being used by graphically representing your file system."
 
 #package version
-VERSION=16.04.3-1
-DVERSION=16.04.3
+VERSION=17.12.3
+DVERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

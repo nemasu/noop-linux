@@ -5,8 +5,8 @@ NAME=postgresql
 DESC="Libraries for use with PostgreSQL"
 
 #package version
-VERSION=9.6.3
-DVERSION=9.6.3
+VERSION=10.3
+DVERSION=10.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -34,52 +34,54 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        if [ "$ARCH" = "armv6l" ];
-        then
-                EXTRACONF="--disable-thread-safety"
-        else
-                EXTRACONF="--enable-thread-safety"
-        fi
-        
-        ./configure --prefix=/usr \
-                        --mandir=/usr/share/man \
-                        --datadir=/usr/share/postgresql \
-                        --with-krb5 \
-                        --with-libxml \
-                        --with-openssl \
-                        --with-perl \
-                        --with-tcl \
-                        --with-pam \
-                        --with-system-tzdata=/usr/share/zoneinfo \
-                        --with-python PYTHON=/usr/bin/python2 \
-                        --enable-nls ${EXTRACONF}
+    if [ "$ARCH" = "armv6l" ];
+    then
+            EXTRACONF="--disable-thread-safety"
+    else
+            EXTRACONF="--enable-thread-safety"
+    fi
+    
+    ./configure --prefix=/usr \
+                    --mandir=/usr/share/man \
+                    --datadir=/usr/share/postgresql \
+                    --with-krb5 \
+                    --with-libxml \
+                    --with-openssl \
+                    --with-tcl \
+                    --with-pam \
+                    --with-system-tzdata=/usr/share/zoneinfo \
+                    --with-python PYTHON=/usr/bin/python2 \
+                    --with-uuid=e2fs \
+                    --with-gssapi \
+                    --enable-nls ${EXTRACONF}
+#                    --with-perl \
 
-        make -j${BLDR_CORES} world
+    make -j${BLDR_CORES} world
         
     make DESTDIR=/root/bldr-inst install
-        make -C contrib DESTDIR=/root/bldr-inst install
+    make -C contrib DESTDIR=/root/bldr-inst install
     make -C doc/src/sgml DESTDIR=/root/bldr-inst install
 
     #Get them libs
-        mkdir -p /root/noop-bldr-postgresql-libs/usr/lib/postgresql/
-        for i in `find /root/bldr-inst/usr/lib/postgresql -name "*.so*"`;
-        do
-                mv -v $i /root/noop-bldr-postgresql-libs/usr/lib/postgresql/
+    mkdir -p /root/noop-bldr-postgresql-libs/usr/lib/postgresql/
+    for i in `find /root/bldr-inst/usr/lib/postgresql -name "*.so*"`;
+    do
+        mv -v $i /root/noop-bldr-postgresql-libs/usr/lib/postgresql/
     done
 
-        for i in `find /root/bldr-inst/usr/lib/ -name "*.so*"`;
-        do
-                mv -v $i /root/noop-bldr-postgresql-libs/usr/lib/
+    for i in `find /root/bldr-inst/usr/lib/ -name "*.so*"`;
+    do
+        mv -v $i /root/noop-bldr-postgresql-libs/usr/lib/
     done
 
-        pushd /root/noop-bldr-postgresql-libs/
-        PushScripts
-        pkgr -genmeta postgresql-libs ${DVERSION}
-        pkgr -genpkg
-        PopScripts
-        mv *.pkg /root/bldr-done/
-        popd
-        rm -rf /root/noop-bldr-postgresql-libs/
+    pushd /root/noop-bldr-postgresql-libs/
+    PushScripts
+    pkgr -genmeta postgresql-libs ${DVERSION}
+    pkgr -genpkg
+    PopScripts
+    mv *.pkg /root/bldr-done/
+    popd
+    rm -rf /root/noop-bldr-postgresql-libs/
 }
 
 #Default HTTP curl new version detection

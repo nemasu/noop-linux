@@ -1,26 +1,26 @@
 #package name
-NAME=prison-frameworks
+NAME=akonadi-notes
 
 #Description
-DESC="Barcode API for QRCode and DataMatrix"
+DESC="Library that bridges the type-agnostic API of the Akonadi client libraries and the domain-specific KMime library"
 
 #package version
-VERSION=1.2.1.20150831
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC=http://download.kde.org/stable/applications/${VERSION}/src/akonadi-notes-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, perl, cmake, custom
-BUILD=custom
+BUILD=cmake
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'libdmtx' 'qrencode' 'qt')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,24 +31,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-        git clone git://anongit.kde.org/prison.git || true
-        cd prison
-        git checkout 84724fa132b983266d8cd2b036d5a0f75a78ca46
-        mkdir -p build && cd build
-        cmake .. \
-                -DCMAKE_BUILD_TYPE=Release \
-                -DCMAKE_INSTALL_PREFIX=/usr \
-                -DKDE_INSTALL_LIBDIR=lib
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=
+        LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
         FILELIST=`GetFileList`
         LATEST=0
 

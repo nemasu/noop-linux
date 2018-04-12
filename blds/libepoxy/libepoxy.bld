@@ -5,13 +5,13 @@ NAME=libepoxy
 DESC="A library for handling OpenGL function pointer management for you"
 
 #package version
-VERSION=1.2
+VERSION=1.5.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="https://github.com/anholt/libepoxy/archive/v${VERSION}.tar.gz"
+SRC="https://github.com/anholt/libepoxy/archive/${VERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,7 +33,6 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  
   ./autogen.sh --prefix=/usr
   make -j${BLDR_CORES}
   make DESTDIR=/root/bldr-inst install

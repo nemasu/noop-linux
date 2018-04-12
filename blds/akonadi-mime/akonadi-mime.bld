@@ -1,17 +1,17 @@
 #package name
-NAME=kdgantt2
+NAME=akonadi-mime
 
 #Description
-DESC="KDE gantt library"
+DESC="Libraries and daemons for basic email handling"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/$VERSION/src/kdgantt2-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${VERSION}/src/akonadi-mime-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'qt')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
+        LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
         FILELIST=`GetFileList`
         LATEST=0
 

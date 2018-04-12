@@ -5,15 +5,14 @@ NAME=sonnet
 DESC="Support for spellchecking"
 
 #package version
-VERSION=5.24.0-1
-DVERSION=5.24.0
+VERSION=5.44.0
+DVERSION=5.44.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://pkgs.fedoraproject.org/repo/pkgs/kf5-sonnet/sonnet-5.24.0.tar.xz/2b6d47648a14410eb236d5fe2923600d/sonnet-5.24.0.tar.xz
-#SRC=http://download.kde.org/stable/frameworks/${DVERSION:0:4}/sonnet-${DVERSION}.tar.xz
+SRC=http://download.kde.org/stable/frameworks/${DVERSION:0:4}/sonnet-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

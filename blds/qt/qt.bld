@@ -5,15 +5,14 @@ NAME=qt
 DESC="A cross-platform application and UI framework"
 
 #package version
-VERSION=5.9.2
-DVERSION=5.9.2
+VERSION=5.10.1
+DVERSION=5.10.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-MM=`echo $DVERSION | sed -e 's/\([0-9]\.[0-9]\)\.[0-9\.]*/\1/g'`
-SRC="http://download.qt-project.org/official_releases/qt/$MM/${DVERSION}/single/qt-everywhere-opensource-src-${DVERSION}.tar.xz"
+SRC="http://download.qt-project.org/official_releases/qt/${DVERSION:0:4}/${DVERSION}/single/qt-everywhere-src-${DVERSION}.tar.xz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -57,9 +56,6 @@ function BuildAndInstall
   # Fix missing private includes https://bugreports.qt.io/browse/QTBUG-37417
   sed -e '/CMAKE_NO_PRIVATE_INCLUDES\ \=\ true/d' -i qtbase/mkspecs/features/create_cmake.prf
 
-  echo "INCLUDEPATH += /usr/include/openssl-1.0" >> qtbase/src/network/network.pro
-  export OPENSSL_LIBS='-L/usr/lib/openssl-1.0 -lssl -lcrypto'
-
   PYTHON=/usr/bin/python2 ./configure -v -confirm-license -opensource \
                 -prefix /usr \
                 -bindir /usr/bin \
@@ -80,13 +76,6 @@ function BuildAndInstall
                 -journald \
                 -no-use-gold-linker \
                 -reduce-relocations ${CONF}
-
-  #make psql plugin manually, configure isn't picking it up for some reason.
-  pushd qtbase/src/plugins/sqldrivers/psql/
-  qmake "INCLUDEPATH+=/usr/include/postgresql" "LIBS+=-L/usr/lib -lpq" psql.pro
-  make
-  make INSTALL_ROOT=/root/bldr-inst install
-  popd
 
   make -j${BLDR_CORES}
 

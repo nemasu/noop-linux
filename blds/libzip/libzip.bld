@@ -5,22 +5,22 @@ NAME=libzip
 DESC="A C library for reading, creating, and modifying zip archives"
 
 #package version
-VERSION=0.11.2
+VERSION=1.5.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://www.nih.at/libzip/libzip-${VERSION}.tar.xz"
+SRC="https://libzip.org/download/libzip-${VERSION}.tar.xz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+BUILD=cmake
 
 # build/package dependancies
-DEPS=('glibc' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://www.nih.at/libzip/
+        LISTURL=https://libzip.org/download/
         FILELIST=`GetFileList`
         LATEST=0
 

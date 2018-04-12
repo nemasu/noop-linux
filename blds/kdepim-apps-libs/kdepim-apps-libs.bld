@@ -5,7 +5,7 @@ NAME=kdepim-apps-libs
 DESC="KDE PIM library for apps"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('akonadi' 'gcc-libs' 'glibc' 'gpgme' 'gpgmepp' 'grantlee' 'grantleetheme' 'kauth' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kdepimlibs' 'kdewebkit' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kjobwidgets' 'kpimtextedit' 'kservice' 'ktextwidgets' 'kwidgetsaddons' 'kxmlgui' 'libassuan' 'libgpg-error' 'libkleo' 'pimcommon' 'qt' 'qt-webkit' 'sonnet')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=

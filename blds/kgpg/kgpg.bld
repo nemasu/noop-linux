@@ -1,17 +1,17 @@
 #package name
-NAME=kdepim
+NAME=kgpg
 
 #Description
-DESC="KDE personal information management"
+DESC="KDE GPG"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/$VERSION/src/kdepim-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/$VERSION/src/kgpg-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('akonadi' 'akonadi-calendar' 'akonadi-search' 'attica' 'calendarsupport' 'eventviews' 'gcc-libs' 'glibc' 'gpgme' 'gpgmepp' 'grantlee' 'grantleetheme' 'incidenceeditor' 'kalarmcal' 'karchive' 'kauth' 'kblog' 'kbookmarks' 'kcalcore' 'kcalutils' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kcrash' 'kdbusaddons' 'kdelibs4support' 'kdepim-apps-libs' 'kdepimlibs' 'kdewebkit' 'kdgantt2' 'kdnssd' 'kglobalaccel' 'kguiaddons' 'kholidays' 'ki18n' 'kiconthemes' 'kidentitymanagement' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kldap' 'kmailtransport' 'kmime' 'knewstuff' 'knotifications' 'knotifyconfig' 'kontactinterface' 'kparts' 'kpimtextedit' 'kross' 'kservice' 'ktexteditor' 'ktextwidgets' 'ktnef' 'kunitconversion' 'kwallet' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libICE' 'libSM' 'libX11' 'libXext' 'libassuan' 'libgpg-error' 'libgravatar' 'libical' 'libkdepim' 'libkleo' 'libksieve' 'mailcommon' 'mailimporter' 'messagelib' 'phonon' 'pimcommon' 'prison-frameworks' 'qt' 'qt-webkit' 'solid' 'sonnet' 'syndication')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=

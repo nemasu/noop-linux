@@ -5,7 +5,7 @@ NAME=kdecoration
 DESC="Plugin based library to create window decorations"
 
 #package version
-VERSION=5.7.3
+VERSION=5.12.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

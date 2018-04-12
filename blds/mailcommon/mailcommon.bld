@@ -5,7 +5,7 @@ NAME=mailcommon
 DESC="KDE PIM library providing support for mail applications"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('akonadi' 'gcc-libs' 'glibc' 'gpgme' 'gpgmepp' 'karchive' 'kauth' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kdepimlibs' 'ki18n' 'kiconthemes' 'kidentitymanagement' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kldap' 'kmailtransport' 'kmime' 'kpimtextedit' 'kservice' 'ktextwidgets' 'kwallet' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libassuan' 'libgpg-error' 'libkdepim' 'libkleo' 'mailimporter' 'messagelib' 'phonon' 'pimcommon' 'qt' 'sonnet')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=

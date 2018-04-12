@@ -5,7 +5,7 @@ NAME=kde-cli-tools
 DESC="Tools based on KDE Frameworks 5 to better interact with the system."
 
 #package version
-VERSION=5.7.3
+VERSION=5.12.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

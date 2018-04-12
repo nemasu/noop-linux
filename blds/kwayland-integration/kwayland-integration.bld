@@ -1,17 +1,17 @@
 #package name
-NAME=plasma-mediacenter
+NAME=kwayland-integration
 
 #Description
-DESC="h3. Plasma Media Center is designed to provide an easy and comfortable way to watch your videos, browse your photo collection and listen to your music, all in one place. This release brings many refinements and a host of new features, making consuming media even easier and more fun."
+DESC="Wayland integration for KDE"
 
 #package version
-VERSION=5.7.3
+VERSION=5.12.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/plasma/${VERSION}/plasma-mediacenter-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/plasma/${VERSION}/$NAME-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('baloo' 'gcc-libs' 'glibc' 'kactivities' 'kcompletion' 'kconfig' 'kcoreaddons' 'kfilemetadata' 'kguiaddons' 'ki18n' 'kio' 'kjobwidgets' 'kservice' 'kwidgetsaddons' 'qt' 'taglib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=

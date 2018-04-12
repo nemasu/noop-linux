@@ -5,8 +5,8 @@ NAME=kdoctools
 DESC="Documentation generation from docbook"
 
 #package version
-VERSION=5.24.0-1
-DVERSION=5.24.0
+VERSION=5.44.0
+DVERSION=5.44.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

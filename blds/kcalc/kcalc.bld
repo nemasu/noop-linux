@@ -5,7 +5,7 @@ NAME=kcalc
 DESC="KCalc is a calculator which offers many more mathematical functions than meet the eye on a first glance."
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,7 +5,7 @@ NAME=libgravatar
 DESC="KDE PIM gravatar support"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

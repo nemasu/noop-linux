@@ -5,7 +5,7 @@ NAME=libkleo
 DESC="KDE PIM cryptographic library"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'gpgme' 'gpgmepp' 'kcompletion' 'kconfig' 'kcoreaddons' 'ki18n' 'kpimtextedit' 'ktextwidgets' 'kwidgetsaddons' 'kwindowsystem' 'libassuan' 'libgpg-error' 'qt' 'sonnet')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=

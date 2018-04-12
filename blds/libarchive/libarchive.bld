@@ -5,7 +5,7 @@ NAME=libarchive
 DESC="library that can create and read several streaming archive formats"
 
 #package version
-VERSION=3.1.2
+VERSION=3.3.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
