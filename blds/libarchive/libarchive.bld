@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('acl' 'attr' 'glibc' 'libxml2' 'lzo2' 'nettle' 'xz' 'zlib')
+DEPS=('acl' 'attr' 'glibc' 'libxml2' 'lz4' 'nettle' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

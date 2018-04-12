@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'openssl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

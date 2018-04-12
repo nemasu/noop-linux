@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('acl' 'aspell' 'attica-qt4' 'attr' 'e2fsprogs' 'enchant' 'gamin' 'gcc-libs' 'giflib' 'glibc' 'jasper' 'krb5' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXau' 'libXcursor' 'libXdmcp' 'libXext' 'libXfixes' 'libXft' 'libXpm' 'libXrender' 'libXtst' 'libdbusmenu-qt' 'libjpeg' 'libpng' 'libutempter' 'libxml2' 'libxslt' 'pcre' 'phonon' 'polkit-qt' 'qca' 'qt4' 'strigi' 'systemd' 'xz' 'zlib')
+DEPS=('acl' 'aspell' 'attica-qt4' 'attr' 'e2fsprogs' 'enchant' 'gcc-libs' 'giflib' 'glibc' 'jasper' 'krb5' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXau' 'libXcursor' 'libXdmcp' 'libXext' 'libXfixes' 'libXft' 'libXpm' 'libXrender' 'libXtst' 'libdbusmenu-qt' 'libjpeg' 'libpng' 'libutempter' 'libxml2' 'libxslt' 'openssl' 'pcre' 'phonon' 'polkit-qt' 'qca' 'qt4' 'strigi' 'systemd' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('freetype2' 'gcc-libs' 'glibc' 'kdelibs' 'libjpeg' 'phonon' 'poppler' 'qca' 'qimageblitz' 'qt4' 'tiff' 'zlib')
+DEPS=('freetype2' 'gcc-libs' 'glibc' 'kactivities' 'karchive' 'kauth' 'kbookmarks' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'ki18n' 'kiconthemes' 'kio' 'kitemviews' 'kjobwidgets' 'kjs' 'kparts' 'kpty' 'kservice' 'ktextwidgets' 'kwallet' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libjpeg' 'libkexiv2' 'libspectre' 'phonon' 'poppler' 'qca' 'qt' 'solid' 'sonnet' 'threadweaver' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

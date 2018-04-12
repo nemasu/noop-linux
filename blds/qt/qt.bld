@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('alsa-lib' 'atk' 'bluez' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'freetds' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-bad' 'gst-plugins-base' 'gstreamer' 'gtk+' 'harfbuzz' 'hunspell' 'icu4c' 'jasper' 'lib32-glib2' 'lib32-glibc' 'lib32-systemd' 'lib32-zlib' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libdrm' 'libevent' 'libfbclient' 'libinput' 'libjpeg' 'libmng' 'libpng' 'libwebp' 'libxcb' 'libxkbcommon' 'mariadb-libs' 'mesalib' 'mtdev' 'nspr' 'nss' 'openssl1.0' 'opus' 'pango' 'pcre2' 'postgresql-libs' 'pulseaudio' 'snappy' 'sqlite' 'systemd' 'tiff' 'unixodbc' 'wayland' 'xcb-util-image' 'xcb-util-keysyms' 'xcb-util-renderutil' 'xcb-util-wm' 'zlib')
+DEPS=('alsa-lib' 'atk' 'bluez' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'freetds' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-bad' 'gst-plugins-base' 'gstreamer' 'gtk+' 'harfbuzz' 'hunspell' 'icu4c' 'jasper' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libdrm' 'libevent' 'libfbclient' 'libinput' 'libjpeg' 'libmng' 'libpng' 'libwebp' 'libxcb' 'libxkbcommon' 'mariadb-libs' 'mesalib' 'mtdev' 'nspr' 'nss' 'openssl' 'opus' 'pango' 'pciutils' 'pcre2' 'postgresql-libs' 'pulseaudio' 'sdl2' 'snappy' 'sqlite' 'systemd' 'tiff' 'unixodbc' 'wayland' 'xcb-util-image' 'xcb-util-keysyms' 'xcb-util-renderutil' 'xcb-util-wm' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

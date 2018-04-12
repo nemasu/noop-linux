@@ -20,7 +20,7 @@ EXTRACONF="--disable-documentation"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('expat' 'glibc' 'libffi' 'libxml2')
+DEPS=('expat' 'glibc' 'libffi' 'libxml2' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

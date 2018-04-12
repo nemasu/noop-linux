@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('akonadi' 'akonadi-contacts' 'akonadi-mime' 'akonadi-search' 'gcc-libs' 'glibc' 'gpgme' 'grantlee' 'grantleetheme' 'karchive' 'kauth' 'kbookmarks' 'kcalcore' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kdepim-apps-libs' 'ki18n' 'kiconthemes' 'kidentitymanagement' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kmailtransport' 'kmbox' 'kmime' 'kpimtextedit' 'kservice' 'ktextwidgets' 'kwallet' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libassuan' 'libgpg-error' 'libgravatar' 'libkdepim' 'libkleo' 'pimcommon' 'qt' 'solid' 'sonnet' 'syntax-highlighting')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'libdmtx' 'qrencode' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=

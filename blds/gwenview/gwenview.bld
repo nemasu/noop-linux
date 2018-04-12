@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('baloo' 'exiv2' 'gcc-libs' 'glibc' 'kactivities' 'kauth' 'kbookmarks' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdelibs4support' 'kfilemetadata' 'kguiaddons' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'knotifications' 'kparts' 'kservice' 'ktextwidgets' 'kunitconversion' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'lcms2' 'libX11' 'libjpeg' 'libpng' 'phonon' 'qt' 'solid' 'sonnet' 'zlib')
+DEPS=('baloo' 'exiv2' 'gcc-libs' 'glibc' 'kactivities' 'kauth' 'kbookmarks' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kfilemetadata' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'knotifications' 'kparts' 'kservice' 'ktextwidgets' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'lcms2' 'libX11' 'libjpeg' 'libpng' 'phonon' 'qt' 'solid' 'sonnet' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

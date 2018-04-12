@@ -22,7 +22,7 @@ EXTRACONF="--prefix=/usr  --with-sdl --with-openexr --with-librsvg --with-libavf
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('babl' 'cairo' 'exiv2' 'ffmpeg' 'gcc-libs' 'gdk-pixbuf' 'gexiv2' 'glib2' 'glibc' 'ilmbase' 'jasper' 'json-glib' 'lcms2' 'libffi' 'libjpeg' 'libpng' 'libraw' 'librsvg' 'libwebp' 'openexr' 'pango' 'pcre' 'sdl' 'tiff' 'zlib')
+DEPS=('babl' 'cairo' 'ffmpeg' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'ilmbase' 'jasper' 'libjpeg' 'libpng' 'librsvg' 'openexr' 'pango' 'sdl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'kauth' 'kbookmarks' 'kcalcore' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kcrash' 'kdelibs4support' 'kguiaddons' 'ki18n' 'kiconthemes' 'kio' 'kitemviews' 'kjobwidgets' 'knotifications' 'kparts' 'kservice' 'ktextwidgets' 'kunitconversion' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libical' 'qt' 'qt-webkit' 'solid' 'sonnet')
+DEPS=('gcc-libs' 'glibc' 'kcalcore' 'kcompletion' 'kconfig' 'kcontacts' 'kcoreaddons' 'kio' 'kjobwidgets' 'kservice' 'kwidgetsaddons' 'kwindowsystem' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=
