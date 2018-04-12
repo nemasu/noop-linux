@@ -5,14 +5,15 @@ NAME=imap
 DESC="X.Org imake program and related utilities"
 
 #package version
-VERSION=20076
+VERSION=20076-1
 DVERSION=2007f
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.cac.washington.edu/imap/imap-${DVERSION}.tar.gz
+#SRC=ftp://ftp.cac.washington.edu/imap/imap-${DVERSION}.tar.gz
+SRC=http://ftp.ntua.gr/pub/net/mail/imap/imap-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -21,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'linux-pam' 'openssl1.0')
+DEPS=('glibc' 'linux-pam' 'openssl')
 
 # 'no' to skip calls to strip
 STRIP=

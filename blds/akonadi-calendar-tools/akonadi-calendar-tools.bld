@@ -1,8 +1,8 @@
 #package name
-NAME=kdepim-addons
+NAME=akonadi-calendar-tools
 
 #Description
-DESC="KDE PIM extensions"
+DESC="Akonadi calendar tools"
 
 #package version
 VERSION=17.12.3
@@ -11,7 +11,7 @@ VERSION=17.12.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/$VERSION/src/kdepim-addons-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${VERSION}/src/akonadi-calendar-tools-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('akonadi' 'akonadi-calendar' 'akonadi-contacts' 'akonadi-import-wizard' 'akonadi-mime' 'akonadi-notes' 'calendarsupport' 'eventviews' 'gcc-libs' 'glibc' 'gpgme' 'grantlee' 'grantleetheme' 'incidenceeditor' 'karchive' 'kauth' 'kcalcore' 'kcalutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kdeclarative' 'kdepim-apps-libs' 'ki18n' 'kiconthemes' 'kidentitymanagement' 'kimap' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kmailtransport' 'kmime' 'kpimtextedit' 'kservice' 'ktextwidgets' 'ktnef' 'kwallet' 'kwidgetsaddons' 'kxmlgui' 'libassuan' 'libgpg-error' 'libgravatar' 'libkdepim' 'libkleo' 'libksieve' 'mailcommon' 'mailimporter' 'messagelib' 'pimcommon' 'prison' 'qt' 'sonnet' 'syntax-highlighting')
+DEPS=('akonadi' 'akonadi-calendar' 'calendarsupport' 'gcc-libs' 'glibc' 'kauth' 'kbookmarks' 'kcalcore' 'kcalutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdelibs4support' 'kguiaddons' 'ki18n' 'kiconthemes' 'kidentitymanagement' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kmime' 'knotifications' 'kparts' 'kpimtextedit' 'kservice' 'ktextwidgets' 'kunitconversion' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libkdepim' 'qt' 'solid' 'sonnet')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
+        LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
         FILELIST=`GetFileList`
         LATEST=0
 

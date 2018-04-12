@@ -1,17 +1,17 @@
 #package name
-NAME=kaccounts-integration
+NAME=kontact
 
 #Description
-DESC="Small system to administer web accounts for the sites and services across the KDE desktop, including: Google, Facebook, Owncloud, IMAP, Jabber and others"
+DESC="KDE contact management"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/kaccounts-integration-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${VERSION}/src/kontact-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('akonadi' 'gcc-libs' 'glibc' 'grantleetheme' 'kauth' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdepim-apps-libs' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kjobwidgets' 'kontactinterface' 'kparts' 'kservice' 'ktextwidgets' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libkdepim' 'qt' 'sonnet')
 
 # 'no' to skip calls to strip
 STRIP=

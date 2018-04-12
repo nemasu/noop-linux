@@ -1,17 +1,17 @@
 #package name
-NAME=kaccounts-providers
+NAME=akonadiconsole
 
 #Description
-DESC="KDE Accounts Providers"
+DESC="Akonadi Console"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/kaccounts-providers-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${VERSION}/src/akonadiconsole-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('akonadi' 'akonadi-calendar' 'akonadi-contacts' 'akonadi-mime' 'akonadi-search' 'calendarsupport' 'gcc-libs' 'glibc' 'gpgme' 'kauth' 'kcalcore' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kcrash' 'kdbusaddons' 'ki18n' 'kidentitymanagement' 'kio' 'kitemmodels' 'kitemviews' 'kmime' 'kpimtextedit' 'kservice' 'ktextwidgets' 'kwidgetsaddons' 'kxmlgui' 'libassuan' 'libgpg-error' 'libkdepim' 'libkleo' 'messagelib' 'pimcommon' 'qt' 'sonnet' 'xapian-core')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -29,6 +29,9 @@ akonadi-contacts,libKF5AkonadiContact.so.5.7.3
 akonadi-contacts,libKF5ContactEditor.so
 akonadi-contacts,libKF5ContactEditor.so.5
 akonadi-contacts,libKF5ContactEditor.so.5.7.3
+akonadi-import-wizard,libKPimImportWizard.so
+akonadi-import-wizard,libKPimImportWizard.so.5
+akonadi-import-wizard,libKPimImportWizard.so.5.7.3
 akonadi-mime,libKF5AkonadiMime.so
 akonadi-mime,libKF5AkonadiMime.so.5
 akonadi-mime,libKF5AkonadiMime.so.5.7.3
@@ -47,6 +50,8 @@ akonadi-search,libKF5AkonadiSearchPIM.so.5.7.3
 akonadi-search,libKF5AkonadiSearchXapian.so
 akonadi-search,libKF5AkonadiSearchXapian.so.5
 akonadi-search,libKF5AkonadiSearchXapian.so.5.7.3
+akonadiconsole,libakonadiconsole.so.5
+akonadiconsole,libakonadiconsole.so.5.7.3
 alsa-lib,libasound.so
 alsa-lib,libasound.so.2
 alsa-lib,libasound.so.2.0.0
@@ -2244,6 +2249,8 @@ kactivities-stats,libKF5ActivitiesStats.so
 kactivities-stats,libKF5ActivitiesStats.so.1
 kactivities-stats,libKF5ActivitiesStats.so.5.44.0
 kactivitymanagerd,libkactivitymanagerd_plugin.so
+kaddressbook,libkaddressbookprivate.so.5
+kaddressbook,libkaddressbookprivate.so.5.7.3
 kalarmcal,libKF5AlarmCalendar.so
 kalarmcal,libKF5AlarmCalendar.so.5
 kalarmcal,libKF5AlarmCalendar.so.5.7.3
@@ -2665,6 +2672,8 @@ kjsembed,libKF5JsEmbed.so.5.44.0
 kldap,libKF5Ldap.so
 kldap,libKF5Ldap.so.5
 kldap,libKF5Ldap.so.5.7.3
+kmail,libkmailprivate.so.5
+kmail,libkmailprivate.so.5.7.3
 kmailtransport,libKF5MailTransport.so
 kmailtransport,libKF5MailTransport.so.5
 kmailtransport,libKF5MailTransport.so.5.7.3
@@ -2703,9 +2712,19 @@ kompare,libkompareinterface.so.5
 konsole,libkdeinit5_konsole.so
 konsole,libkonsoleprivate.so.17
 konsole,libkonsoleprivate.so.17.12.3
+kontact,libkontactprivate.so.5
+kontact,libkontactprivate.so.5.7.3
 kontactinterface,libKF5KontactInterface.so
 kontactinterface,libKF5KontactInterface.so.5
 kontactinterface,libKF5KontactInterface.so.5.7.3
+korganizer,libkorganizer_core.so
+korganizer,libkorganizer_core.so.5
+korganizer,libkorganizer_core.so.5.7.3
+korganizer,libkorganizer_interfaces.so
+korganizer,libkorganizer_interfaces.so.5
+korganizer,libkorganizer_interfaces.so.5.7.3
+korganizer,libkorganizerprivate.so.5
+korganizer,libkorganizerprivate.so.5.7.3
 kpackage,libKF5Package.so
 kpackage,libKF5Package.so.5
 kpackage,libKF5Package.so.5.44.0

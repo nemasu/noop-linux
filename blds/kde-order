@@ -150,6 +150,7 @@ ktnef
 kimap
 akonadi-contacts
 akonadi-calendar
+akonadi-calendar-tools
 syndication
 kgpg
 kontactinterface
@@ -172,5 +173,11 @@ libksieve
 libkgapi
 kdav
 akonadi-notes
+akonadi-import-wizard
 kdepim-runtime
 kdepim-addons
+akonadiconsole
+kontact
+kmail
+korganizer
+kaddressbook

@@ -1,3 +1,4 @@
+mariadb
 kdelibs
 kdegraphics-thumbnailers                
 kio-extras
@@ -16,7 +17,12 @@ dolphin-plugins
 filelight
 kmime
 akonadi
+akonadiconsole
 libkomparediff2
 kompare
 kdepim-runtime
 kdepim-addons
+kmail
+kontact
+korganizer
+kaddressbook
