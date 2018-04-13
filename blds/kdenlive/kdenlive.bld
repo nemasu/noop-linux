@@ -5,13 +5,13 @@ NAME=kdenlive
 DESC="Video Editor"
 
 #package version
-VERSION=16.04.3
+VERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/16.04.3/src/kdenlive-16.04.3.tar.xz
+SRC=http://download.kde.org/stable/applications/${VERSION}/src/kdenlive-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('attica' 'gcc-libs' 'glibc' 'karchive' 'kauth' 'kbookmarks' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdbusaddons' 'kfilemetadata' 'kguiaddons' 'ki18n' 'kiconthemes' 'kio' 'kitemviews' 'kjobwidgets' 'knewstuff' 'knotifications' 'knotifyconfig' 'kplotting' 'kservice' 'ktextwidgets' 'kwidgetsaddons' 'kxmlgui' 'libglu' 'mesalib' 'mlt' 'qt' 'solid' 'sonnet' 'v4l-utils')
+DEPS=('attica' 'gcc-libs' 'glibc' 'karchive' 'kauth' 'kbookmarks' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdbusaddons' 'kfilemetadata' 'kguiaddons' 'ki18n' 'kiconthemes' 'kio' 'kitemviews' 'kjobwidgets' 'knewstuff' 'knotifications' 'knotifyconfig' 'kservice' 'ktextwidgets' 'kwidgetsaddons' 'kxmlgui' 'libglu' 'mesalib' 'mlt' 'qt' 'qt-webkit' 'solid' 'sonnet' 'v4l-utils')
 
 # 'no' to skip calls to strip
 STRIP=

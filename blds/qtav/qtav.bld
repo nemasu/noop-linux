@@ -1,0 +1,58 @@
+#package name
+NAME=qtav
+
+#Description
+DESC="A cross-platform multimedia playback framework based on Qt and FFmpeg"
+
+#package version
+VERSION=1.12.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=('ffmpeg' 'gcc-libs' 'glibc' 'libX11' 'libva' 'portaudio' 'pulseaudio' 'qt')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    if [ ! -e ./QtAV ]; then
+        git clone --recursive https://github.com/wang-bin/QtAV.git
+        cd QtAV
+        git checkout v${VERSION}
+        cd ..
+    fi
+
+    cd QtAV
+    mkdir -p build && cd build
+    cmake ..  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+}
+
+function Detect() {
+    LATEST=`LatestVersionGitHub https://github.com/wang-bin/QtAV/releases`
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

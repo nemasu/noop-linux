@@ -5,13 +5,13 @@ NAME=exiv2
 DESC="Exif, Iptc and XMP metadata manipulation library and tools"
 
 #package version
-VERSION=0.25
+VERSION=0.26
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.exiv2.org/exiv2-${VERSION}.tar.gz
+SRC=http://www.exiv2.org/builds/exiv2-${VERSION}-trunk.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-video"

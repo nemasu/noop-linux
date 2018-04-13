@@ -5,7 +5,7 @@ NAME=digikam
 DESC="Advanced digital photo management application"
 
 #package version
-VERSION=5.5.0
+VERSION=5.9.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('exiv2' 'expat' 'gcc-libs' 'glibc' 'jasper' 'kauth' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kfilemetadata' 'ki18n' 'kiconthemes' 'kio' 'kjobwidgets' 'knotifications' 'knotifyconfig' 'kservice' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libglu' 'libgphoto2' 'libjpeg' 'libpng' 'libusb' 'mesalib' 'opencv' 'qt' 'qt-webkit' 'solid' 'threadweaver' 'tiff' 'zlib')
+DEPS=('akonadi' 'akonadi-contacts' 'exiv2' 'expat' 'gcc-libs' 'glib2' 'glibc' 'jasper' 'karchive' 'kauth' 'kbookmarks' 'kcalcore' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kfilemetadata' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'knotifications' 'knotifyconfig' 'kservice' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libglu' 'libgphoto2' 'libjpeg' 'libkipi' 'liblqr' 'libpng' 'libusb' 'libxml2' 'libxslt' 'mesalib' 'opencv' 'qt' 'qt-webkit' 'qtav' 'solid' 'threadweaver' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

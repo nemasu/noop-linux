@@ -5,8 +5,8 @@ NAME=amarok
 DESC="The powerful music player for KDE"
 
 #package version
-VERSION=2.8.90
-DVERSION=2.8.90
+VERSION=2.9.0
+DVERSION=2.9.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('qtscriptgenerator' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'kdelibs' 'libX11' 'libgpod' 'liblastfm' 'libmtp' 'libmygpo-qt' 'mariadb-libs' 'mesalib' 'phonon' 'qca' 'qjson' 'qt4' 'taglib')
+DEPS=('qtscriptgenerator' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'kdelibs' 'libX11' 'libgpod' 'liblastfm' 'libmtp' 'libmygpo-qt' 'mariadb-libs' 'mesalib' 'openssl' 'phonon' 'qca' 'qjson' 'qt4' 'taglib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -41,7 +41,13 @@ function BuildAndInstall
                 -DKDE4_BUILD_TESTS=OFF \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DWITH_NepomukCore=OFF \
-                -DWITH_Soprano=OFF
+                -DWITH_Soprano=OFF \
+                -DWITH_QTWEBKIT=OFF
+
+
+        #libgpod include not getting picked up for some reason
+        sed -i -e 's/\(^CXX_INCLUDES.*\)/\1 -I\/usr\/include\/gpod-1.0/g' src/core-impl/collections/ipodcollection/CMakeFiles/amarok_collection-ipodcollection.dir/flags.make
+
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 

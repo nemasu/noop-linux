@@ -17,10 +17,10 @@ SRC=https://downloads.sourceforge.net/sourceforge/gtkpod/libgpod-${VERSION}.tar.
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
-DEPS=('gdk-pixbuf' 'glib2' 'glibc' 'gmp' 'gnutls' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libidn' 'libimobiledevice' 'libplist' 'libpng' 'libtasn1' 'libusb' 'libusbmuxd' 'libxml2' 'nettle' 'openssl' 'p11-kit' 'pcre' 'sg3_utils' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
+DEPS=('gdk-pixbuf' 'glib2' 'glibc' 'libcap2' 'libffi' 'libplist' 'libpng' 'libusb' 'libxml2' 'pcre' 'sg3_utils' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,9 +31,14 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    ./configure --prefix=/usr --with-udev-dir=/usr/lib/udev \
+        --enable-udev --with-python=/usr/bin/python2
+    make PREFIX=/usr
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    make PREFIX=/usr DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
