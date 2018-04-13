@@ -41,7 +41,8 @@ function BuildAndInstall
                 -DKDE4_BUILD_TESTS=OFF \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DWITH_NepomukCore=OFF \
-                -DWITH_Soprano=OFF
+                -DWITH_Soprano=OFF \
+                -DWITH_QTWEBKIT=OFF
 
 
         #libgpod include not getting picked up for some reason
