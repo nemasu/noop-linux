@@ -5,7 +5,7 @@ NAME=krita
 DESC="Digital painting application"
 
 #package version
-VERSION=3.3.1
+VERSION=4.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('eigen' 'vc' 'boost' 'exiv2' 'fftw' 'gcc-libs' 'glibc' 'gsl' 'karchive' 'kcompletion' 'kconfig' 'kcoreaddons' 'kcrash' 'kguiaddons' 'ki18n' 'kio' 'kitemviews' 'kservice' 'kwidgetsaddons' 'kwindowsystem' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libXi' 'libjpeg' 'libpng' 'libraw' 'libxcb' 'poppler' 'qt' 'tiff' 'xcb-util' 'zlib')
+DEPS=('eigen' 'vc' 'boost' 'exiv2' 'fftw' 'gcc-libs' 'giflib' 'glibc' 'gsl' 'karchive' 'kcompletion' 'kconfig' 'kcoreaddons' 'kcrash' 'kguiaddons' 'ki18n' 'kio' 'kitemviews' 'kservice' 'kwidgetsaddons' 'kwindowsystem' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libXi' 'libjpeg' 'libpng' 'libraw' 'libxcb' 'poppler' 'qt' 'tiff' 'xcb-util' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
