@@ -5,13 +5,14 @@ NAME=libkexiv2
 DESC=""
 
 #package version
-VERSION=17.12.3
+VERSION=17.12.3-1
+DVERSION=17.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/libkexiv2-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${DVERSION}/src/libkexiv2-$DVERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +39,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+        LISTURL=http://download.kde.org/stable/applications/${DVERSION}/src/
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -52,7 +53,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"
