@@ -1,0 +1,68 @@
+#package name
+NAME=intel-ucode
+
+#Description
+DESC="Microcode update files for Intel CPUs"
+
+#package version
+VERSION=20180312
+urlid=27591
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="https://downloadmirror.intel.com/$urlid/eng/microcode-${VERSION}.tgz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    mv $BLDRTMPDIR/*.c .
+    gcc -Wall ${CFLAGS} -o intel-microcode2ucode intel-microcode2ucode.c
+    chmod +x intel-microcode2ucode
+    ./intel-microcode2ucode ./microcode.dat
+
+    mkdir -p /root/bldr-inst/boot
+    mkdir -p kernel/x86/microcode
+    mv microcode.bin kernel/x86/microcode/GenuineIntel.bin
+    echo kernel/x86/microcode/GenuineIntel.bin | bsdcpio -o -H newc -R 0:0 > /root/bldr-inst/boot/intel-ucode.img
+}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
