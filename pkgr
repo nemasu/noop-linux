@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-                #if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
+
 if [ -e $PREFIX/usr/bin/busybox ];
 then
 
