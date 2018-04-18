@@ -1,0 +1,65 @@
+#package name
+NAME=cudnn
+
+#Description
+DESC="NVIDIA CUDA Deep Neural Network library"
+
+#package version
+VERSION=7.1.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://developer.download.nvidia.com/compute/redist/cudnn/v${VERSION}/cudnn-9.1-linux-x64-v7.1.tgz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=1
+
+function BuildAndInstall
+{
+    mkdir -p /root/bldr-inst/opt
+    mkdir -p /root/bldr-inst/etc
+
+    cp -r cuda /root/bldr-inst/opt
+
+    install -d /root/bldr-inst/etc/ld.so.conf.d
+    echo "/opt/cuda/lib64/" > /root/bldr-inst/etc/ld.so.conf.d/cudnn.conf
+}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
