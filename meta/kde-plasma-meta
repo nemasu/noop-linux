@@ -22,7 +22,7 @@ milou
 plasma-nm
 plasma-pa
 plasma-workspace-wallpapers
-polkit-kde-agent-1
+polkit-kde-agent
 powerdevil
 plasma-desktop
 kdeplasma-addons
@@ -35,3 +35,5 @@ user-manager
 discover
 kactivitymanagerd
 plasma-integration
+kirigami2
+plasma-vault

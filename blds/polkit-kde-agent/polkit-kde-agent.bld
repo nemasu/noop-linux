@@ -1,5 +1,5 @@
 #package name
-NAME=polkit-kde-agent-1
+NAME=polkit-kde-agent
 
 #Description
 DESC="Daemon providing a polkit authentication UI for KDE."
