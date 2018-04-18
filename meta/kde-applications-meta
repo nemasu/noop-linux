@@ -1,17 +1,17 @@
 mariadb
 kdelibs
-kdegraphics-thumbnailers                
+kdegraphics-thumbnailers
 kio-extras
 ark
 kate
-konsole                                 
+konsole
 libkexiv2
 okular
 gwenview
 juk
-dragon                                  
+dragon
 kcalc
-kwalletmanager                          
+kwalletmanager
 dolphin
 dolphin-plugins
 filelight
@@ -27,3 +27,4 @@ kmail-account-wizard
 kontact
 korganizer
 kaddressbook
+kirigami2
