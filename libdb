@@ -8231,14 +8231,13 @@ systemd,libnss_resolve.so.2
 systemd,libnss_resolve.so.2.8
 systemd,libnss_systemd.so.2
 systemd,libnss_systemd.so.2.8
-systemd,libsystemd-shared-232.so
-systemd,libsystemd-shared.so
+systemd,libsystemd-shared-238.so
 systemd,libsystemd.so
 systemd,libsystemd.so.0
-systemd,libsystemd.so.0.17.0
+systemd,libsystemd.so.0.22.0
 systemd,libudev.so
 systemd,libudev.so.1
-systemd,libudev.so.1.6.5
+systemd,libudev.so.1.6.10
 systemsettings,libsystemsettingsview.so
 systemsettings,libsystemsettingsview.so.3
 taglib,libtag.so

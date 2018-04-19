@@ -1058,6 +1058,10 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
         python2 setup.py install --root=/root/bldr-inst/ --optimize=1
     fi
 
+    if [ "$BUILD" == "python3" ]; then
+        python3 setup.py install --root=/root/bldr-inst/ --optimize=1
+    fi
+
     if [ "$BUILD" == "32bit" ]; then
         export CC="gcc -m32"
         export CXX="g++ -m32"

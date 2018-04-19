@@ -5,7 +5,7 @@ NAME=systemd
 DESC="system and service manager"
 
 #package version
-VERSION=232
+VERSION=238
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,37 +35,43 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
 
 function BuildAndInstall
 {
-        ./autogen.sh
+#    pkgr -i meson ninja
+    meson setup \
+        --prefix         /usr \
+        --libdir         /usr/lib \
+        --libexecdir     /usr/lib \
+        --bindir         /usr/bin \
+        --sbindir        /usr/bin \
+        --includedir     /usr/include \
+        --datadir        /usr/share \
+        --mandir         /usr/share/man \
+        --infodir        /usr/share/info \
+        --localedir      /usr/share/locale \
+        --sysconfdir     /etc \
+        --localstatedir  /var \
+        --sharedstatedir /var/lib \
+        --buildtype      release \
+        --wrap-mode      nofallback \
+        -Daudit=false \
+        -Defi=true \
+        -Dima=false \
+        -Dlz4=true \
+        . build \
+        -Dsplit-bin=true \
+        -Dsplit-usr=false \
+        -Ddbuspolicydir=/usr/share/dbus-1/system.d \
+        -Ddefault-dnssec=no \
+        -Ddefault-hierarchy=hybrid \
+        -Ddefault-kill-user-processes=false \
+        -Dfallback-hostname='noop' \
+        -Dntp-servers="0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org" \
+        -Drpmmacrosdir=no \
+        -Dsysvinit-path= \
+        -Dsysvrcnd-path= \
+        -Db_lto=true
 
-        if [ "${ARCH}" == "x86_64" ];
-        then
-                extra_opts="--enable-gnuefi"
-        fi
-        
-        ./configure \
-                   --includedir=/usr/include \
-                   --mandir=/usr/man \
-                   --sbindir=/sbin \
-                   --libexecdir=/usr/lib \
-                   --sysconfdir=/etc \
-                   --localstatedir=/var \
-                   --libdir=/lib \
-                   --datarootdir=/usr/share \
-                   --datadir=/usr/share \
-                   --bindir=/bin \
-                   --with-pamlibdir=/usr/lib/security \
-                   --enable-split-usr \
-                   --with-sysvinit-path= \
-                   --with-sysvrcnd-path= \
-                   --with-ntp-servers="0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org" ${extra_opts}
-
-    sed -i -e 's/\"\/bin\/loadkeys/\"\/usr\/bin\/loadkeys/g' Makefile Makefile.am Makefile.in
-        sed -i -e 's/\"\/bin\/setfont/\"\/usr\/bin\/setfont/g' Makefile Makefile.am Makefile.in
-        sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
-        sed -i -e 's/latarcyrheb-sun16/LatArCyrHeb-16/g' Makefile Makefile.am Makefile.in
-
-        make
-        make DESTDIR=/root/bldr-inst install
+    ninja -C build
+    DESTDIR=/root/bldr-inst ninja -C build install
 }
 
 #Default HTTP curl new version detection
