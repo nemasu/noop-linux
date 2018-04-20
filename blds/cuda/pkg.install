@@ -1,0 +1,8 @@
+function postinst() {
+	chmod +x /opt/cuda/bin/*
+	chmod +x /opt/cuda/nvvm/bin/*
+}
+
+function postup() {
+	postinst
+}

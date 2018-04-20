@@ -35,8 +35,9 @@ function BuildAndInstall
 {
     mkdir -p /root/bldr-inst/opt
     mkdir -p /root/bldr-inst/etc
-
-    cp -r cuda /root/bldr-inst/opt
+	
+	cd ..
+	cp -r cuda /root/bldr-inst/opt
 
     install -d /root/bldr-inst/etc/ld.so.conf.d
     echo "/opt/cuda/lib64/" > /root/bldr-inst/etc/ld.so.conf.d/cudnn.conf

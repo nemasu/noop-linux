@@ -31,6 +31,8 @@ PKGDEPS=('python-numpy')
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+#NOTE: If you're using GCC 7 with CUDA please see this: https://carterturn.com/h/Guides/NVIDIA%20CUDA%209.1%20with%20GCC%207.2
+
 function BuildAndInstall
 {
     #build deps
@@ -44,7 +46,6 @@ function BuildAndInstall
     export USE_DEFAULT_PYTHON_LIB_PATH=1
     export CC_OPT_FLAGS='-march=native'
     export TF_NEED_JEMALLOC=1
-    export TF_NEED_CUDA=0
     export TF_NEED_OPENCL=0
     export TF_NEED_GCP=0
     export TF_NEED_HDFS=0
@@ -61,10 +62,24 @@ function BuildAndInstall
     # TF_SET_ANDROID_WORKSPACE does not work for some reason.
     sed -i "s/if workspace_has_any_android_rule()/if True/g" configure.py
 
-    ./configure
-    bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
-    bazel-bin/tensorflow/tools/pip_package/build_pip_package `pwd`/out
-    pip3 install -I --root=/root/bldr-inst ./out/*.whl
+
+	if [ ! -e /opt/cuda ]; then
+	    export TF_NEED_CUDA=0
+		./configure
+		bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
+	else
+	    export TF_NEED_CUDA=1
+		export CUDA_TOOLKIT_PATH=/opt/cuda
+		export TF_CUDA_VERSION=$($CUDA_TOOLKIT_PATH/bin/nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')
+		export CUDNN_INSTALL_PATH=/opt/cuda
+		export TF_CUDNN_VERSION=$(sed -n 's/^#define CUDNN_MAJOR\s*\(.*\).*/\1/p' $CUDNN_INSTALL_PATH/include/cudnn.h)
+		export TF_CUDA_COMPUTE_CAPABILITIES=3.0,3.5,5.2,6.1,6.2
+		./configure
+		bazel build --cxxopt="-I/opt/cuda/include/crt" --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
+	fi
+
+	bazel-bin/tensorflow/tools/pip_package/build_pip_package `pwd`/out
+	pip3 install -I --root=/root/bldr-inst ./out/*.whl
 }
 
 #Default HTTP curl new version detection
