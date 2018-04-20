@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('freeglut' 'gcc-libs' 'glibc' 'lib32-ncurses' 'libX11' 'libXext' 'libglu' 'mesalib')
 
 # 'no' to skip calls to strip
 STRIP=
