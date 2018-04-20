@@ -3,6 +3,9 @@
 set -e
 mkdir -p /root/bldr-done
 
+let BLDR_CORES=`grep "processor" /proc/cpuinfo | wc -l`
+let BLDR_CORES=${BLDR_CORES}+1
+
 if [ -z "$1" ];
 then
 	echo "Need a URL for source"
@@ -40,7 +43,7 @@ mkdir -p /root/noopkern/boot
 mkdir -p /root/noopfirm
 mkdir -p /root/noophead/usr
 
-make -j3
+make -j${BLDR_CORES}
 cp -v arch/x86/boot/bzImage /root/noopkern/boot/vmlinuz
 
 make INSTALL_MOD_PATH=/root/noopkern modules_install

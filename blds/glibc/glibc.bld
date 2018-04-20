@@ -89,6 +89,10 @@ function BuildAndInstall
                             lib/lib{dl,m,nsl,resolv,rt,util}-${pkgver}.so \
                             lib/lib{memusage,pcprofile,SegFault}.so \
                             lib/{audit,gconv}/*.so lib/libmvec-*.so || true
+
+		#For ZFS
+		cd lib
+		ln -s libnsl-2.27.so libnsl.so
 }
 
 #Default HTTP curl new version detection

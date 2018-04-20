@@ -5,8 +5,8 @@ NAME=virtualbox
 DESC="Powerful x86 virtualization for enterprise as well as home use"
 
 #package version
-VERSION=5.2.8
-DVERSION=5.2.8
+VERSION=5.2.10
+DVERSION=5.2.10
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -48,9 +48,6 @@ function BuildAndInstall
 		--with-makeself=/usr/bin/echo
 	source ./env.sh
         
-    #Note: Kernel source needs patches as of kernel 4.9.x
-    #See https://bugs.gentoo.org/show_bug.cgi?id=603472
-
     kmk
     kmk -C src/VBox/RDP/client-1.8.3
     kmk -C src/VBox/ExtPacks/VNC packing
@@ -66,12 +63,20 @@ function BuildAndInstall
         pushd src/VBox/Additions/linux
         rm -rf build_dir
         mkdir build_dir
-        ./export_modules.sh mod_src.tar.gz
+#        ./export_modules.sh mod_src.tar.gz
         cd build_dir
-        tar xf ../mod_src.tar.gz
-        sed -i -e '/# error/d' vboxguest/include/VBox/version.h
-        make
-        mv *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
+#        tar xf ../mod_src.tar.gz
+		#vboxguest and vboxvideo are included in the kernel, so we'll just take vboxsf.
+
+		#Current vboxsf module is broken, so we need one from elsewhere
+		git clone https://github.com/jwrdegoede/vboxsf
+		cd vboxsf
+		git checkout 6a782003ad95a383c8b19b570a532271f090ad35
+		cd ..
+
+		make -C vboxsf
+        mv vboxsf/*.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
+
         popd
         echo "function postinst() {" > /tmp/bldr/pkg.install
         echo "depmod"                >>/tmp/bldr/pkg.install
