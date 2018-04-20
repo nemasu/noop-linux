@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('pyqt4' 'sip' 'glibc' 'lib32-glibc')
+DEPS=('pyqt4' 'sip' 'glibc' 'lib32-glibc' 'lib32-portaudio' 'portaudio')
 
 # 'no' to skip calls to strip
 STRIP=
