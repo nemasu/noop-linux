@@ -8326,8 +8326,6 @@ unixodbc,libodbcinst.so
 unixodbc,libodbcinst.so.2
 unixodbc,libodbcinst.so.2.0.0
 unrar,libunrar.so
-unrar,libunrar.so.4
-unrar,libunrar.so.4.2.4
 upower,libupower-glib.so
 upower,libupower-glib.so.3
 upower,libupower-glib.so.3.0.1

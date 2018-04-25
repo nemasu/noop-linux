@@ -1,0 +1,68 @@
+#package name
+NAME=unrar
+
+#Description
+DESC="Decompresion for RAR files."
+
+#package version
+VERSION=5.6.3
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://www.rarlab.com/rar/unrarsrc-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    cd ..
+    dirname=`ls`
+    cp -r $dirname ${dirname}-lib
+    
+    make -j${BLDR_CORES} -C ${dirname}-lib lib
+    make -j${BLDR_CORES} -C ${dirname}
+
+   install -Dm755 ${dirname}-lib/libunrar.so /root/bldr-inst/usr/lib/libunrar.so
+   install -Dm644 ${dirname}-lib/dll.hpp /root/bldr-inst/usr/include/unrar/dll.hppa
+   install -Dm755 ${dirname}/unrar /root/bldr-inst/usr/bin/unrar
+}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
