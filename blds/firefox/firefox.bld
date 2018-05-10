@@ -2,8 +2,8 @@ NAME=firefox
 
 #Description
 DESC="Standalone web browser from mozilla.org"
-VERSION=57.0.1
-DVERSION=57.0.1
+VERSION=60.0
+DVERSION=60.0
 ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
@@ -17,7 +17,7 @@ function BuildAndInstall
 {
 
   #build prereqs
-  for i in zip autoconf2.13 rust cargo jack; do
+  for i in zip autoconf2.13 rust jack unzip wayland-protocols; do
           pkgr -i $i;
   done
 
@@ -64,22 +64,16 @@ function BuildAndInstall
         /root/bldr-inst/usr/share/icons/hicolor/${i}x${i}/apps/firefox.png
   done
 
-  install -Dm644 browser/branding/official/content/icon64.png \
-    /root/bldr-inst/usr/share/icons/hicolor/64x64/apps/firefox.png
-  install -Dm644 browser/branding/official/mozicon128.png \
-    /root/bldr-inst/usr/share/icons/hicolor/128x128/apps/firefox.png
-  install -Dm644 browser/branding/official/content/about-logo.png \
-    /root/bldr-inst/usr/share/icons/hicolor/192x192/apps/firefox.png
-  install -Dm644 browser/branding/official/content/about-logo@2x.png \
-    /root/bldr-inst/usr/share/icons/hicolor/384x384/apps/firefox.png
+
+	install -Dm644 browser/branding/official/content/about-logo.png \
+		/root/bldr-inst/usr/share/icons/hicolor/192x192/apps/firefox.png
+	install -Dm644 browser/branding/official/content/about-logo@2x.png \
+    	/root/bldr-inst/usr/share/icons/hicolor/384x384/apps/firefox.png
 
   # Use system-provided dictionaries
-  rm -rf /root/bldr-inst/usr/lib/firefox-${DVERSION}/{dictionaries,hyphenation}
-  ln -s /usr/share/hunspell /root/bldr-inst/usr/lib/firefox-${DVERSION}/dictionaries
-  ln -s /usr/share/hyphen /root/bldr-inst/usr/lib/firefox-${DVERSION}/hyphenation
-
-  ln -sf firefox /root/bldr-inst/usr/lib/firefox-${DVERSION}/firefox-bin
-
+  rm -rf /root/bldr-inst/usr/lib/firefox/{dictionaries,hyphenation}
+  ln -s /usr/share/hunspell /root/bldr-inst/usr/lib/firefox/dictionaries
+  ln -s /usr/share/hyphen /root/bldr-inst/usr/lib/firefox/hyphenation
 }
 
 #Default HTTP curl new version detection

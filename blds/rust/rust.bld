@@ -5,7 +5,7 @@ NAME=rust
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 #package version
-VERSION=1.21.0
+VERSION=1.25.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,8 +33,9 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-    mv $BLDRTMPDIR/config.toml config.toml
-    python2 ./x.py build
+	pkgr -i ninja
+	mv $BLDRTMPDIR/config.toml config.toml
+	python2 ./x.py build
     DESTDIR=/root/bldr-inst python2 ./x.py install
 }
 

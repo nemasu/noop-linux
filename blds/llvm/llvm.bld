@@ -5,8 +5,8 @@ NAME=llvm
 DESC="Low Level Virtual Machine"
 
 #package version
-VERSION=5.0.1
-DVERSION=5.0.1
+VERSION=6.0.0
+DVERSION=6.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
