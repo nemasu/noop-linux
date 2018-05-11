@@ -5,15 +5,16 @@ NAME=networkmanager
 DESC="Network Management daemon"
 
 #package version
-VERSION=1.6.2
-DVERSION=1.6.2
+VERSION=1.10.4
+DVERSION=1.10.4
 _pppver=2.4.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://download.gnome.org/sources/NetworkManager/${DVERSION:0:3}/NetworkManager-${DVERSION}.tar.xz
+#SRC=https://download.gnome.org/sources/NetworkManager/${DVERSION:0:4}/NetworkManager-${DVERSION}.tar.xz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -37,40 +38,83 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
-        sed -i -e '/gtkdocize/d' autogen.sh
-        NOCONFIGURE=1 ./autogen.sh
+	if [ ! -e NetworkManager ]; then
+		git clone https://anongit.freedesktop.org/git/NetworkManager/NetworkManager
+		cd NetworkManager
+		git checkout dd8cf21cea13fa1bbee11fd3e0e7519e4b4ba712  # tags/1.10.6^0
+		git cherry-pick -n 4d1f090aedf05c0e2955d431638e311d1e18a52f
+		cd ..
+	fi
 
-         ./configure --prefix=/usr \
-                --sysconfdir=/etc \
-                --localstatedir=/var \
-                --sbindir=/usr/bin \
-                --libexecdir=/usr/lib/networkmanager \
-                --with-crypto=nss \
-                --with-dhclient=/usr/bin/dhclient \
-                --without-dhcpcd \
-                --with-dnsmasq=/usr/bin/dnsmasq \
-                --with-iptables=/usr/bin/iptables \
-                --with-systemdsystemunitdir=/usr/lib/systemd/system \
-                --with-udev-dir=/usr/lib/udev \
-                --with-resolvconf=/usr/bin/resolvconf \
-                --with-pppd=/usr/bin/pppd \
-                --with-pppd-plugin-dir=/usr/lib/pppd/$_pppver \
-                --with-pppoe=/usr/bin/pppoe \
-                --with-kernel-firmware-dir=/lib/firmware \
-                --with-session-tracking=systemd \
-                --with-modem-manager-1 \
-                --disable-static \
-                --enable-more-warnings=no \
-                --disable-wimax \
-                --enable-modify-system \
-                --disable-doc \
-				--disable-json-validation \
-				--disable-introspection \
-				--without-consolekit \
-				--without-libaudit \
-				--without-netconfig \
-				--without-ofono \
-				--without-selinux
+	cd NetworkManager
+		
+	sed -i -e '/gtkdocize/d' autogen.sh
+	cp -a /usr/share/gtk-doc/data/gtk-doc.make .
+	NOCONFIGURE=1 ./autogen.sh
+
+	  ./configure --prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		runstatedir=/run \
+		--sbindir=/usr/bin \
+		--libexecdir=/usr/lib \
+		--disable-ifcfg-rh \
+		--disable-ifcfg-suse \
+		--disable-ifnet \
+		--disable-ifupdown \
+		--disable-lto \
+		--disable-more-logging \
+		--disable-more-warnings \
+		--disable-static \
+		--enable-concheck \
+		--enable-config-plugin-ibft \
+		--enable-introspection \
+		--disable-gtk-doc \
+		--enable-json-validation \
+		--enable-ld-gc \
+		--enable-modify-system \
+		--enable-polkit \
+		--enable-polkit-agent \
+		--enable-wifi \
+		--with-config-dhcp-default=internal \
+		--with-config-dns-rc-manager-default=symlink \
+		--with-config-logging-backend-default=journal \
+		--with-config-plugins-default=keyfile,ibft \
+		--with-crypto=nss \
+		--with-dbus-sys-dir=/usr/share/dbus-1/system.d \
+		--with-dhclient=/usr/bin/dhclient \
+		--with-dhcpcd-supports-ipv6 \
+		--with-dhcpcd=/usr/bin/dhcpcd \
+		--with-dnsmasq=/usr/bin/dnsmasq \
+		--with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script \
+		--with-hostname-persist=default \
+		--with-iptables=/usr/bin/iptables \
+		--with-kernel-firmware-dir=/lib/firmware \
+		--with-libnm-glib \
+		--with-modem-manager-1 \
+		--with-nmcli \
+		--with-pppd-plugin-dir=/usr/lib/pppd/$_pppver \
+		--with-pppd=/usr/bin/pppd \
+		--with-resolvconf=/usr/bin/resolvconf \
+		--with-session-tracking=systemd \
+		--with-suspend-resume=systemd \
+		--with-system-ca-path=/etc/ssl/certs \
+		--with-systemd-journal \
+		--with-systemd-logind \
+		--with-systemdsystemunitdir=/usr/lib/systemd/system \
+		--with-udev-dir=/usr/lib/udev \
+		--with-wext \
+		--without-consolekit \
+		--without-libaudit \
+		--without-more-asserts \
+		--without-netconfig \
+		--without-ofono \
+		--without-selinux
+
+#TODO enable these later
+#		--enable-teamdctl \
+#		--enable-bluez5-dun \
+#		--with-nmtui \
 
   sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 

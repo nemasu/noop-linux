@@ -531,7 +531,7 @@ db,libdb_sql-5.so
 db,libdb_sql.so
 dbus,libdbus-1.so
 dbus,libdbus-1.so.3
-dbus,libdbus-1.so.3.15.2
+dbus,libdbus-1.so.3.23.0
 dbus-glib,libdbus-glib-1.so
 dbus-glib,libdbus-glib-1.so.2
 dbus-glib,libdbus-glib-1.so.2.2.2
@@ -1359,7 +1359,6 @@ gnutls,libgnutls.so.30.14.10
 gnutls,libgnutlsxx.so
 gnutls,libgnutlsxx.so.28
 gnutls,libgnutlsxx.so.28.1.0
-gobject-introspection,_giscanner.so
 gobject-introspection,libgirepository-1.0.so
 gobject-introspection,libgirepository-1.0.so.1
 gobject-introspection,libgirepository-1.0.so.1.0.0
@@ -5016,7 +5015,7 @@ libtirpc,libtirpc.so.1
 libtirpc,libtirpc.so.1.0.10
 libtool,libltdl.so
 libtool,libltdl.so.7
-libtool,libltdl.so.7.3.0
+libtool,libltdl.so.7.3.1
 libunique,libunique-3.0.so
 libunique,libunique-3.0.so.0
 libunique,libunique-3.0.so.0.0.2
@@ -5850,6 +5849,7 @@ networkmanagement,plasma_engine_networkmanagement.so
 networkmanagement,solid_networkmanager09.so
 networkmanager,libnm-device-plugin-adsl.so
 networkmanager,libnm-device-plugin-bluetooth.so
+networkmanager,libnm-device-plugin-ovs.so
 networkmanager,libnm-device-plugin-wifi.so
 networkmanager,libnm-device-plugin-wwan.so
 networkmanager,libnm-glib-vpn.so

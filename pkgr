@@ -2244,7 +2244,11 @@ if [ $1 = "--mkinitramfs" ]; then
 
                 for k in `modinfo -k $KERVER $1 | grep -e "^firmware:" | awk '{print $2;}'`;
                 do  
-                    find /lib/firmware -name "${k}" -exec cp -v {} $INITRAMFS_WORKDIR/lib/firmware/ \;
+					if [ -e /lib/firmware/$k ]; then
+						install -vD /lib/firmware/$k $INITRAMFS_WORKDIR/lib/firmware/$k
+					else
+	                    find /lib/firmware -name "${k}" -exec cp -v {} $INITRAMFS_WORKDIR/lib/firmware/ \;
+					fi
                 done
             fi  
         fi  

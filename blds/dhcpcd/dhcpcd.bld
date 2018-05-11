@@ -5,7 +5,7 @@ NAME=dhcpcd
 DESC="RFC2131 compliant DHCP client daemon"
 
 #package version
-VERSION=6.9.4
+VERSION=7.0.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,10 +17,10 @@ SRC=http://roy.marples.name/downloads/dhcpcd/dhcpcd-${VERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,9 +33,18 @@ RESTORELIBDB=
 
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+  ./configure \
+	  --prefix=/usr \
+	  --sysconfdir=/etc \
+	  --sbindir=/usr/bin \
+	  --libexecdir=/usr/lib/dhcpcd \
+	  --dbdir=/var/lib/dhcpcd \
+	  --rundir=/run
+  make
+  make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect

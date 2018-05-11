@@ -5,7 +5,7 @@ NAME=gobject-introspection
 DESC="Introspection system for GObject-based libraries - runtime files"
 
 #package version
-VERSION=1.42.0
+VERSION=1.54.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
