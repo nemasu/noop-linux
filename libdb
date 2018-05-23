@@ -79,6 +79,9 @@ alsa-plugins,libasound_module_rate_samplerate_order.so
 alsa-plugins,libasound_module_rate_speexrate.so
 alsa-plugins,libasound_module_rate_speexrate_best.so
 alsa-plugins,libasound_module_rate_speexrate_medium.so
+alsa-tools,liblo10k1.so
+alsa-tools,liblo10k1.so.0
+alsa-tools,liblo10k1.so.0.0.0
 anthy,libanthy.so
 anthy,libanthy.so.0
 anthy,libanthy.so.0.1.0

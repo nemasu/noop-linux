@@ -1,0 +1,74 @@
+#package name
+NAME=alsa-tools
+
+#Description
+DESC="Advanced tools for ALSA"
+
+#package version
+VERSION=1.1.5
+DVERSION=1.1.5
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=ftp://ftp.alsa-project.org/pub/tools/alsa-tools-${DVERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=('glibc')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	tools=("as10k1" "echomixer" "envy24control" "hdajackretask" "hda-verb"
+        "hdspconf" "hdsploader" "hdspmixer" "ld10k1" "mixartloader"
+        "pcxhrloader" "rmedigicontrol" "sb16_csp" "seq/sbiload" "sscape_ctl"
+        "us428control" "usx2yloader" "vxloader")
+
+	for i in ${tools[@]}; do
+		pushd $i
+		./configure --prefix=/usr --sbindir=/usr/bin
+		make -j${BLDR_CORES}
+		make DESTDIR=/root/bldr-inst install
+		popd
+	done
+
+
+}
+
+function Detect
+{
+        LISTURL=ftp://ftp.alsa-project.org/pub/lib/
+        FILELIST=`GetFileList`
+        LATEST=0
+
+        for i in ${FILELIST[@]};
+        do
+                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+                        vercomp $LATEST $CURVER
+                        if [ $? -eq 2 ];
+                        then
+                                        LATEST=$CURVER
+                        fi
+        done
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}
