@@ -1,3 +1,8 @@
 function postinst() {
     chmod +s /bin/su &> /dev/null
+    chmod +s /usr/bin/passwd &> /dev/null
+}
+
+function postup() {
+	postinst
 }

@@ -5,7 +5,7 @@ NAME=tevent
 DESC="An event system based on the talloc memory management library"
 
 #package version
-VERSION=0.9.29
+VERSION=0.9.36
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

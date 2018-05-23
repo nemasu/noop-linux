@@ -5,7 +5,7 @@ NAME=ldb
 DESC="A schema-less, ldap like, API and database"
 
 #package version
-VERSION=1.1.27
+VERSION=1.3.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

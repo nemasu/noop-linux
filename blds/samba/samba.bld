@@ -5,8 +5,8 @@ NAME=samba
 DESC="Samba winbind client library"
 
 #package version
-VERSION=4.4.5
-DVERSION=4.4.5
+VERSION=4.8.2
+DVERSION=4.8.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -64,7 +64,7 @@ _samba4_auth_modules=auth_unix,auth_wbc,auth_server,auth_netlogond,auth_script,a
 
   install -m755 source3/script/smbtar /root/bldr-inst/usr/bin/
 
-  install -m644 packaging/LSB/smb.conf /root/bldr-inst/etc/samba/smb.conf.default
+  install -m644 examples/smb.conf.default  /root/bldr-inst/etc/samba/smb.conf.default
 
   # fix logrotate
   sed -i -e 's|log.%m|%m.log|g' /root/bldr-inst/etc/samba/smb.conf.default
