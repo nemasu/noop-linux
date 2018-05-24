@@ -1,20 +1,34 @@
 [Unit]
 Description=PostgreSQL database server
+After=network.target
 
 [Service]
+Type=notify
+NotifyAccess=all
+TimeoutSec=120
 User=postgres
 Group=postgres
 
-Type=oneshot
-RemainAfterExit=true
+Environment=PGROOT=/var/lib/postgres
+
 SyslogIdentifier=postgres
 PIDFile=/var/lib/postgres/data/postmaster.pid
-ExecStart=/usr/bin/pg_ctl -s -D /var/lib/postgres/data start
-ExecStop=/usr/bin/pg_ctl -s -D /var/lib/postgres/data stop -m fast
+RuntimeDirectory=postgresql
+RuntimeDirectoryMode=755
+
+ExecStart=/usr/bin/postgres -D ${PGROOT}/data
+ExecReload=/bin/kill -HUP ${MAINPID}
+KillMode=mixed
+KillSignal=SIGINT
 
 # Due to PostgreSQL's use of shared memory, OOM killer is often overzealous in
-# killing Postgres
+# killing Postgres, so adjust it downward
 OOMScoreAdjust=-200
+
+# Additional security-related features
+ProtectHome=true
+ProtectSystem=full
+NoNewPrivileges=true
 
 [Install]
 WantedBy=multi-user.target

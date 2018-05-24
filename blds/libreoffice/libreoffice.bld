@@ -5,8 +5,8 @@ NAME=libreoffice
 DESC="Office suite"
 
 #package version
-VERSION=6.0.2.1
-DVERSION=6.0.2.1
+VERSION=6.0.4.2
+DVERSION=6.0.4.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -47,6 +47,7 @@ function BuildAndInstall
         #Make sure tests dont fail
         # Start virtual X 
         # Needs to be 24 bit, otherwise emf tests fail 
+		killall Xvfb || true
         Xvfb :3 -screen 0 1280x1024x24 & 
         X_PID=$! 
         OLD_DISPLAY=$DISPLAY
@@ -54,7 +55,7 @@ function BuildAndInstall
 
         export PYTHON=python2
         export PTHREAD_LIBS="-pthread"
-        ./autogen.sh --prefix=/usr \
+        ./configure --prefix=/usr \
                 --disable-gtk3 \
                 --with-system-zlib --with-system-openssl --with-system-jpeg \
                 --with-system-expat --with-system-lcms2 --with-system-libxml \
@@ -63,7 +64,7 @@ function BuildAndInstall
                 --with-system-headers --with-alloc=system --enable-split-app-modules \
                 --without-system-mdds --without-system-sane --with-system-postgresql \
                 --enable-release-build=yes --with-system-nss --with-parallelism=${BLDR_CORES} \
-                --with-system-neon --enable-openssl \
+                --with-system-neon --enable-openssl --with-system-mariadb \
                 --with-gdrive-client-id=${_google_default_client_id} \
                 --with-gdrive-client-secret=${_google_default_client_secret}
 

@@ -5,8 +5,8 @@ NAME=postgresql
 DESC="Libraries for use with PostgreSQL"
 
 #package version
-VERSION=10.3
-DVERSION=10.3
+VERSION=10.4
+DVERSION=10.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -34,17 +34,16 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-    if [ "$ARCH" = "armv6l" ];
+    if [ "$ARCH" = "x86_64" ];
     then
-            EXTRACONF="--disable-thread-safety"
-    else
             EXTRACONF="--enable-thread-safety"
+    else
+            EXTRACONF="--disable-thread-safety"
     fi
     
     ./configure --prefix=/usr \
                     --mandir=/usr/share/man \
                     --datadir=/usr/share/postgresql \
-                    --with-krb5 \
                     --with-libxml \
                     --with-openssl \
                     --with-tcl \
@@ -53,6 +52,7 @@ function BuildAndInstall
                     --with-python PYTHON=/usr/bin/python2 \
                     --with-uuid=e2fs \
                     --with-gssapi \
+					--with-systemd \
                     --enable-nls ${EXTRACONF}
 #                    --with-perl \
 

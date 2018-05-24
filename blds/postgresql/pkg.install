@@ -3,7 +3,7 @@ function postinst() {
         mkdir -p /var/lib/postgres
     fi
     getent group postgres >/dev/null || groupadd -g 88 postgres
-    getent passwd postgres >/dev/null || useradd --system -c 'PostgreSQL user' -u 88 -g postgres -d '/var/lib/postgres' -s /sbin/nologin postgres
+    getent passwd postgres >/dev/null || useradd --system -c 'PostgreSQL user' -u 88 -g postgres -d '/var/lib/postgres' -s /usr/bin/bash postgres
     passwd -l postgres >/dev/null
     
     PGROOT=/var/lib/postgres
