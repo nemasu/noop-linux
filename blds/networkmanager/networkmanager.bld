@@ -23,7 +23,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('dnsmasq' 'dhcp' 'ppp' 'dbus' 'dbus-glib' 'elfutils' 'expat' 'glib2' 'glibc' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libgudev' 'libndp' 'libnl' 'libsoup' 'libxml2' 'lz4' 'modemmanager' 'ncurses' 'nspr' 'nss' 'pcre' 'polkit' 'readline' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
+DEPS=('dnsmasq' 'dhcp' 'ppp' 'curl' 'dbus' 'dbus-glib' 'e2fsprogs' 'expat' 'glib2' 'glibc' 'jansson' 'krb5' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libndp' 'libnl' 'modemmanager' 'ncurses' 'nspr' 'nss' 'openldap' 'openssl' 'pcre' 'polkit' 'readline' 'rtmpdump' 'sasl' 'systemd' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

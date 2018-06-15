@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libxml2' 'linux-pam' 'ncurses' 'openssl' 'postgresql-libs' 'readline' 'zlib')
+DEPS=('glibc' 'krb5' 'libxml2' 'linux-pam' 'ncurses' 'openssl' 'postgresql-libs' 'readline' 'systemd' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

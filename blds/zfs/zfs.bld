@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('spl' 'glibc' 'libcap2' 'libgssglue' 'libtirpc' 'systemd' 'util-linux' 'zlib')
+DEPS=('spl' 'glibc' 'libaio' 'libgssglue' 'libtirpc' 'systemd' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('acl' 'avahi' 'cups' 'dbus' 'gamin' 'glibc' 'gnutls' 'krb5' 'ldb' 'libaio' 'libarchive' 'libcap2' 'libtirpc' 'linux-pam' 'ncurses' 'openldap' 'popt' 'python2' 'systemd' 'talloc' 'tdb' 'tevent' 'zlib')
+DEPS=('acl' 'avahi' 'cups' 'dbus' 'gamin' 'glibc' 'gnutls' 'gpgme' 'jansson' 'krb5' 'ldb' 'libarchive' 'libcap2' 'libtirpc' 'linux-pam' 'ncurses' 'openldap' 'openssl' 'popt' 'python2' 'systemd' 'talloc' 'tdb' 'tevent' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
