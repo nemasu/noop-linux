@@ -5,8 +5,8 @@ NAME=virtualbox
 DESC="Powerful x86 virtualization for enterprise as well as home use"
 
 #package version
-VERSION=5.2.10
-DVERSION=5.2.10
+VERSION=5.2.12
+DVERSION=5.2.12
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
