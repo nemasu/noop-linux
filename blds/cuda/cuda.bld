@@ -5,7 +5,7 @@ NAME=cuda
 DESC="NVIDIA's GPU programming toolkit"
 
 #package version
-VERSION=9.1.85.2
+VERSION=9.2.88_396.26
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,19 +33,15 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-    if [ ! -e cuda_${VERSION:0:6}_387.26_linux ]; then
-        wget https://developer.nvidia.com/compute/cuda/9.1/Prod/local_installers/cuda_${VERSION:0:6}_387.26_linux
+    if [ ! -e cuda_${VERSION}_linux ]; then
+        wget https://developer.nvidia.com/compute/cuda/${VERSION:0:3}/Prod/local_installers/cuda_${VERSION}_linux
     fi
 
-    if [ ! -e cuda_9.1.85.1_linux ]; then
-        wget https://developer.nvidia.com/compute/cuda/9.1/Prod/patches/1/cuda_9.1.85.1_linux
+    if [ ! -e cuda_${VERSION:0:6}.1_linux ]; then
+        wget https://developer.nvidia.com/compute/cuda/${VERSION:0:3}/Prod/patches/1/cuda_${VERSION:0:6}.1_linux
     fi
 
-    if [ ! -e cuda_9.1.85.2_linux ]; then
-        wget https://developer.nvidia.com/compute/cuda/9.1/Prod/patches/2/cuda_9.1.85.2_linux
-    fi
-
-    sh cuda_${VERSION:0:6}_387.26_linux --extract=`pwd` --override
+    sh cuda_${VERSION}_linux --extract=`pwd` --override
     ./cuda-*.run --noexec --keep
     ./cuda-samples*.run --noexec --keep
 
@@ -73,8 +69,7 @@ function BuildAndInstall
     export PERL5LIB=.
     perl install-linux.pl -prefix="/root/bldr-inst/opt/cuda" -noprompt
     perl install-sdk-linux.pl -cudaprefix="/root/bldr-inst/opt/cuda" -prefix="/root/bldr-inst/opt/cuda/samples" -noprompt
-    sh ../cuda_9.1.85.1_linux --silent --accept-eula --installdir=/root/bldr-inst/opt/cuda
-    sh ../cuda_9.1.85.2_linux --silent --accept-eula --installdir=/root/bldr-inst/opt/cuda
+    sh ../cuda_${VERSION:0:6}.1_linux --silent --accept-eula --installdir=/root/bldr-inst/opt/cuda
 
 # Hack we need because of glibc 2.26 (https://bugs.archlinux.org/task/55580)
 # without which we couldn't compile anything at all.

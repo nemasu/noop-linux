@@ -5,13 +5,13 @@ NAME=python-setuptools
 DESC="Easily download, build, install, upgrade, and uninstall Python packages"
 
 #package version
-VERSION=38.2.5
+VERSION=39.2.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/pypa/setuptools/archive/${VERSION}.tar.gz
+SRC=https://github.com/pypa/setuptools/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
