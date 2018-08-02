@@ -5,7 +5,7 @@ NAME=meld
 DESC="Visual diff and merge tool"
 
 #package version
-VERSION=3.12.0
+VERSION=3.19.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,21 +20,21 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gtksourceview')
+DEPS=('pycairo' 'gtksourceview')
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('gtksourceview')
+PKGDEPS=('gtksourceview' 'pycairo')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
 function BuildAndInstall
 {
-  python2 setup.py build
-  python2 setup.py --no-update-icon-cache --no-compile-schemas \
+  python setup.py build
+  python setup.py --no-update-icon-cache --no-compile-schemas \
     install --prefix=/usr --root=/root/bldr-inst --optimize=1
 }
 
