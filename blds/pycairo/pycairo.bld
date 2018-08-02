@@ -5,23 +5,23 @@ NAME=pycairo
 DESC="Set of Python 3 bindings for the cairo graphics library"
 
 #package version
-VERSION=1.10.0-1
-DVERSION=1.10.0
+VERSION=1.17.1
+DVERSION=1.17.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://cairographics.org/releases/pycairo-${DVERSION}.tar.bz2
+SRC=https://github.com/pygobject/pycairo/releases/download/v${VERSION}/pycairo-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=python
 
 # build/package dependancies
-DEPS=('cairo' 'glibc' 'python')
+DEPS=('cairo' 'glibc' 'python' 'python2')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -32,24 +32,9 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-        _waf_version=1.7.15
-
-        #use newer waf
-        cd ..
-        curdir=`ls`
-        wget http://waf.googlecode.com/files/waf-${_waf_version}.tar.bz2
-        tar xf waf-${_waf_version}.tar.bz2
-        cd $curdir
-        
-        cp "../waf-$_waf_version/waf" ./
-        sed -e "s/ctx.\(tool_options\|check_tool\)(/ctx.load(/" -i wscript
-        python3 ./waf --version
-        ./waf configure --prefix=/usr
-        ./waf build
-        ./waf install --destdir=/root/bldr-inst
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect

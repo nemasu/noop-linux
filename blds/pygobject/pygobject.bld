@@ -5,8 +5,8 @@ NAME=pygobject
 DESC="Python 3 bindings for GObject"
 
 #package version
-VERSION=3.13.91-1
-DVERSION=3.13.91
+VERSION=3.28.3
+DVERSION=3.28.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -19,10 +19,10 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/pygobject/$MAJOR/pygobject-${DVERSION
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=python
 
 # build/package dependancies
-DEPS=('cairo' 'expat' 'fontconfig' 'freetype2' 'glib2' 'glibc' 'gobject-introspection' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXxf86vm' 'libdrm' 'libffi' 'libpng' 'libxcb' 'libxshmfence' 'mesalib' 'pcre' 'pixman' 'wayland' 'zlib')
+DEPS=('cairo' 'glib2' 'glibc' 'gobject-introspection' 'libffi' 'python' 'python2')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,21 +33,9 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  mkdir -p build-py2 build-py3
-
-  cd build-py2
-  ../autogen.sh --prefix=/usr --with-python=/usr/bin/python2
-  make -j${BLDR_CORES}
-  make DESTDIR=/root/bldr-inst install
-
-  cd ../build-py3
-  sed -i '/Werror=format/d' ../configure # gcc 4.8
-  ../configure --prefix=/usr
-  make -j${BLDR_CORES}
-  make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
