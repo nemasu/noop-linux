@@ -506,6 +506,7 @@ coreutils,libstdbuf.so
 cracklib,libcrack.so
 cracklib,libcrack.so.2
 cracklib,libcrack.so.2.9.0
+crda,libreg.so
 crypto++,libcryptopp.so
 cups,libcups.so
 cups,libcups.so.2

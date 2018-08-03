@@ -1,0 +1,74 @@
+#package name
+NAME=wireless-regdb
+
+#Description
+DESC="Central Regulatory Domain Database"
+
+#package version
+VERSION="2018.05.31"
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://mirrors.edge.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	install -D -m644 regulatory.bin /root/bldr-inst/usr/lib/crda/regulatory.bin
+	
+	install -D -m644 sforshee.key.pub.pem "${pkgdir}"/usr/lib/crda/pubkeys/sforshee.key.pub.pem
+	install -D -m644 regulatory.bin.5 "${pkgdir}"/usr/share/man/man5/regulatory.bin.5
+	install -D -m644 regulatory.db "${pkgdir}"/usr/lib/firmware/regulatory.db
+	install -D -m644 regulatory.db.p7s "${pkgdir}"/usr/lib/firmware/regulatory.db.p7s
+	install -D -m644 regulatory.db.5 "${pkgdir}"/usr/share/man/man5/regulatory.db.5
+
+	mkdir -p /root/bldr-inst/etc/conf.d/
+	touch /root/bldr-inst/etc/conf.d/wireless-regdom
+
+	for dom in $(grep ^country db.txt | cut -d' ' -f2 | sed 's|:||g'); do
+		echo "#WIRELESS_REGDOM=\"${dom}\"" >> /root/bldr-inst/etc/conf.d/wireless-regdom.tmp
+	done
+	sort -u /root/bldr-inst/etc/conf.d/wireless-regdom.tmp >> /root/bldr-inst/etc/conf.d/wireless-regdom
+	rm /root/bldr-inst/etc/conf.d/wireless-regdom.tmp
+}
+
+function Detect() {
+    LISTURL=https://mirrors.edge.kernel.org/pub/software/network/wireless-regdb/
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
