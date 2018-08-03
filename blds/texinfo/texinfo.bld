@@ -5,7 +5,7 @@ NAME=texinfo
 DESC="GNU documentation system for on-line information and printed output"
 
 #package version
-VERSION=6.0
+VERSION=6.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

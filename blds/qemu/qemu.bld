@@ -5,7 +5,7 @@ NAME=qemu
 DESC="A generic and open source processor emulator which achieves a good emulation speed by using dynamic translation"
 
 #package version
-VERSION=2.11.0
+VERSION=2.12.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,7 +35,7 @@ function BuildAndInstall
 {
          ./configure --prefix=/usr --sysconfdir=/etc --audio-drv-list='pa alsa sdl' \
                   --python=/usr/bin/python2 --smbd=/usr/bin/smbd \
-                  --enable-docs --libexecdir=/usr/lib/qemu \
+                  --libexecdir=/usr/lib/qemu \
                   --disable-gtk --enable-linux-aio --enable-seccomp \
                   --localstatedir=/var --enable-tpm 
         make -j${BLDR_CORES}
