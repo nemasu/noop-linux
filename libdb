@@ -5890,8 +5890,8 @@ nss,libssl3.so
 nss-pam-ldapd,libnss_ldap.so.2
 nss-pam-ldapd,pam_ldap.so
 ntfs_3g,libntfs-3g.so
-ntfs_3g,libntfs-3g.so.83
-ntfs_3g,libntfs-3g.so.83.0.0
+ntfs_3g,libntfs-3g.so.88
+ntfs_3g,libntfs-3g.so.88.0.0
 nvidia-cg-toolkit,libCg.so
 nvidia-cg-toolkit,libCgGL.so
 okular,libOkular5Core.so
