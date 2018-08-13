@@ -391,6 +391,8 @@ caja-extensions,libnstupnp.so
 calendarsupport,libKF5CalendarSupport.so
 calendarsupport,libKF5CalendarSupport.so.5
 calendarsupport,libKF5CalendarSupport.so.5.7.3
+ccid,libccid.so
+ccid,libccidtwin.so
 cdparanoia,libcdda_interface.so
 cdparanoia,libcdda_interface.so.0
 cdparanoia,libcdda_interface.so.0.10.2
