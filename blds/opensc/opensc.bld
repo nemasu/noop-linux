@@ -1,0 +1,76 @@
+#package name
+NAME=opensc
+
+#Description
+DESC='Tools and libraries for smart cards'
+
+#package version
+VERSION=0.18.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/OpenSC/OpenSC/releases/download/${VERSION}/opensc-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	_sheetdir=(/usr/share/xml/docbook/xsl-stylesheets-*)
+	./bootstrap
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--enable-man \
+		--enable-doc \
+		--enable-readline \
+		--enable-openssl \
+		--enable-pcsc \
+		--enable-zlib \
+		--enable-sm \
+		--with-xsl-stylesheetsdir="$_sheetdir"
+	sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+	make -j${BLDR_CORES}
+	mkdir -p /root/bldr-inst/etc/
+	cp etc/opensc.conf /root/bldr-inst/etc/
+	make DESTDIR=/root/bldr-inst install
+}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

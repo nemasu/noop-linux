@@ -5913,6 +5913,10 @@ opencore-amr,libopencore-amrnb.so.0.0.3
 opencore-amr,libopencore-amrwb.so
 opencore-amr,libopencore-amrwb.so.0
 opencore-amr,libopencore-amrwb.so.0.0.3
+openct,libopenct.so
+openct,libopenct.so.1
+openct,libopenct.so.1.0.0
+openct,libopenctapi.so
 opencv,libopencv_aruco.so
 opencv,libopencv_aruco.so.3.2
 opencv,libopencv_aruco.so.3.2.0
@@ -6287,6 +6291,12 @@ openmpi,mca_state_staged_orted.so
 openmpi,mca_state_tool.so
 openmpi,mca_topo_basic.so
 openmpi,mca_vprotocol_pessimist.so
+opensc,libopensc.so
+opensc,libopensc.so.6
+opensc,libopensc.so.6.0.0
+opensc,libsmm-local.so
+opensc,libsmm-local.so.6
+opensc,libsmm-local.so.6.0.0
 openslp,libslp.so
 openslp,libslp.so.1
 openslp,libslp.so.1.0.1

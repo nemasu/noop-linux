@@ -1,0 +1,76 @@
+#package name
+NAME=openct
+
+#Description
+DESC="OpenCT implements drivers for several smart card readers"
+
+#package version
+VERSION=0.6.20
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/OpenSC/openct/archive/openct-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./bootstrap
+	./configure --prefix=/usr \
+		--sbindir=/usr/bin \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--with-udev=/usr/lib/udev \
+		--enable-usb \
+		--enable-pcsc
+
+	#skip doxygen build
+	rm -rf doc/*
+	echo -e "all:\n\ninstall:\n\ndistclean:" > doc/Makefile
+
+	make -j${BLDR_CORES}
+	mkdir /root/bldr-inst/etc
+	make DESTDIR=/root/bldr-inst install
+
+	install -D etc/openct.udev /root/bldr-inst/usr/lib/udev/rules.d/95-openct.rules
+}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
