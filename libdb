@@ -6402,6 +6402,12 @@ pcre2,libpcre2-8.so.0.5.0
 pcre2,libpcre2-posix.so
 pcre2,libpcre2-posix.so.1
 pcre2,libpcre2-posix.so.1.0.1
+pcsclite,libpcsclite.so
+pcsclite,libpcsclite.so.1
+pcsclite,libpcsclite.so.1.0.0
+pcsclite,libpcscspy.so
+pcsclite,libpcscspy.so.0
+pcsclite,libpcscspy.so.0.0.0
 perl,B.so
 perl,Base64.so
 perl,Byte.so
