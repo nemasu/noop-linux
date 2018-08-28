@@ -2508,6 +2508,7 @@ if [ $1 = "-init" ]; then
             fi
             if [ "$NOOP_ISO_CREATE" == "kde" ];
             then
+				pkgr -i kdenlive
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
             fi
 

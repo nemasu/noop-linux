@@ -5,14 +5,13 @@ NAME=sonnet
 DESC="Support for spellchecking"
 
 #package version
-VERSION=5.44.0
-DVERSION=5.44.0
+VERSION=5.49.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/frameworks/${DVERSION:0:4}/sonnet-${DVERSION}.tar.xz
+SRC=http://download.kde.org/stable/frameworks/${VERSION:0:4}/sonnet-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -39,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/frameworks/${DVERSION:0:4}
+        LISTURL=http://download.kde.org/stable/frameworks/${VERSION:0:4}
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -53,7 +52,7 @@ function Detect
                         fi
         done
 
-        vercomp $DVERSION $LATEST
+        vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

@@ -5,14 +5,13 @@ NAME=kdoctools
 DESC="Documentation generation from docbook"
 
 #package version
-VERSION=5.44.0
-DVERSION=5.44.0
+VERSION=5.49.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/frameworks/${DVERSION:0:4}/kdoctools-${DVERSION}.tar.xz
+SRC=http://download.kde.org/stable/frameworks/${VERSION:0:4}/kdoctools-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="-DDocBookXSL_DIR=/usr/share/xml/docbook/xsl-stylesheets-1.79.1"
@@ -27,7 +26,7 @@ DEPS=('gcc-libs' 'glibc' 'karchive' 'libxml2' 'libxslt' 'qt')
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('perl-uri')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -39,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/frameworks/${DVERSION:0:4}
+        LISTURL=http://download.kde.org/stable/frameworks/${VERSION:0:4}
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -53,7 +52,7 @@ function Detect
                         fi
         done
 
-        vercomp $DVERSION $LATEST
+        vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

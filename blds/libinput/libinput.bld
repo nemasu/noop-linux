@@ -5,7 +5,7 @@ NAME=libinput
 DESC="Library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
 
 #package version
-VERSION=1.6.1
+VERSION=1.11.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -14,10 +14,10 @@ ISUSR=1
 SRC=https://www.freedesktop.org/software/libinput/libinput-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--disable-libwacom"
+EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glibc' 'libcap2' 'libevdev' 'mtdev' 'systemd')
@@ -26,16 +26,39 @@ DEPS=('glibc' 'libcap2' 'libevdev' 'mtdev' 'systemd')
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('check')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/lib/pkgconfig
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    meson setup \
+        --prefix         /usr \
+        --libdir         /usr/lib \
+        --libexecdir     /usr/lib \
+        --bindir         /usr/bin \
+        --sbindir        /usr/bin \
+        --includedir     /usr/include \
+        --datadir        /usr/share \
+        --mandir         /usr/share/man \
+        --infodir        /usr/share/info \
+        --localedir      /usr/share/locale \
+        --sysconfdir     /etc \
+        --localstatedir  /var \
+        --sharedstatedir /var/lib \
+        --buildtype      release \
+        --wrap-mode      nofallback \
+		-Dlibwacom=False \
+		-Ddocumentation=false \
+        . build 
+
+    ninja -C build
+    DESTDIR=/root/bldr-inst ninja -C build install
+
+}
 
 #Default HTTP curl new version detection
 function Detect

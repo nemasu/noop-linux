@@ -5,7 +5,7 @@ NAME=kholidays
 DESC="Holidays library for KDE"
 
 #package version
-VERSION=17.12.3
+VERSION=5.49.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/applications/$VERSION/src/
+        LISTURL=http://download.kde.org/stable/frameworks/$VERSION/src/
         FILELIST=`GetFileList`
         LATEST=0
 

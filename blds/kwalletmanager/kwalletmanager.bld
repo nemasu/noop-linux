@@ -5,7 +5,7 @@ NAME=kwalletmanager
 DESC="KDE Wallet Manager is a tool to manage the passwords on your KDE system."
 
 #package version
-VERSION=17.12.3
+VERSION=18.08.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,7 +5,7 @@ NAME=kpackage
 DESC="Library to load and install packages of non binary files as they were a plugin"
 
 #package version
-VERSION=5.44.0
+VERSION=5.49.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

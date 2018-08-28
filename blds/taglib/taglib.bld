@@ -5,7 +5,7 @@ NAME=taglib
 DESC="A Library for reading and editing the meta-data of several popular audio formats"
 
 #package version
-VERSION=1.9.1
+VERSION=1.11.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -39,7 +39,8 @@ function BuildAndInstall
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_BUILD_TYPE=Release \
         -DWITH_MP4=ON \
-        -DWITH_ASF=ON
+        -DWITH_ASF=ON \
+		-DBUILD_SHARED_LIBS=ON
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }

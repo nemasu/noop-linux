@@ -5,7 +5,7 @@ NAME=ark
 DESC="Ark is KDEDESC=#039;s file archiver, part of the kdeutils module."
 
 #package version
-VERSION=17.12.3
+VERSION=18.08.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

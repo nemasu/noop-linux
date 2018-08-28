@@ -5,7 +5,7 @@ NAME=kactivities
 DESC="Runtime and library to organize the user work in separate activities"
 
 #package version
-VERSION=5.44.0
+VERSION=5.49.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -26,7 +26,7 @@ DEPS=('gcc-libs' 'glibc' 'kconfig' 'kcoreaddons' 'qt')
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('boost')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=

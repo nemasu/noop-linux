@@ -5,7 +5,7 @@ NAME=kactivitymanagerd
 DESC="System service to manage userDESC=#039;s activities, track the usage patterns etc."
 
 #package version
-VERSION=5.12.4
+VERSION=5.13.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

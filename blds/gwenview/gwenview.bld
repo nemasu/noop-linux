@@ -5,14 +5,13 @@ NAME=gwenview
 DESC="Image viewer for KDE"
 
 #package version
-VERSION=17.12.3-1
-DVERSION=17.12.3
+VERSION=18.08.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${DVERSION}/src/gwenview-$DVERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${VERSION}/src/gwenview-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -39,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/applications/${DVERSION}/src/
+        LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -53,7 +52,7 @@ function Detect
                         fi
         done
 
-        vercomp $DVERSION $LATEST
+        vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

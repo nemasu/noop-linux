@@ -5,7 +5,7 @@ NAME=kmailtransport
 DESC="KDE mail transport library."
 
 #package version
-VERSION=17.12.3
+VERSION=18.08.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('akonadi' 'akonadi-mime' 'gcc-libs' 'glibc' 'kauth' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kdepimlibs' 'ki18n' 'kio' 'kitemmodels' 'kjobwidgets' 'kmime' 'kservice' 'ksmtp' 'kwallet' 'kwidgetsaddons' 'qt')
+DEPS=('akonadi' 'akonadi-mime' 'gcc-libs' 'glibc' 'kauth' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'ki18n' 'kio' 'kitemmodels' 'kjobwidgets' 'kmime' 'kservice' 'ksmtp' 'kwallet' 'kwidgetsaddons' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=

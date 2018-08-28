@@ -5,7 +5,7 @@ NAME=kirigami2
 DESC="QtQuick components at the moment targeted for mobile use (in the future desktop as well) targeting both Plasma Mobile and Android."
 
 #package version
-VERSION=5.44.0
+VERSION=5.49.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
