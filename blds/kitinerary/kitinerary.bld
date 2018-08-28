@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'kcalcore' 'kcontacts' 'kcoreaddons' 'ki18n' 'kmime' 'kpkpass' 'poppler' 'qt' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('akonadi' 'akonadi-calendar' 'akonadi-contacts' 'akonadi-mime' 'akonadi-notes' 'gcc-libs' 'glibc' 'kalarmcal' 'kauth' 'kbookmarks' 'kcalcore' 'kcalutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kcrash' 'kdav' 'kdbusaddons' 'kdelibs4support' 'kguiaddons' 'kholidays' 'ki18n' 'kiconthemes' 'kidentitymanagement' 'kimap' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kmailtransport' 'kmbox' 'kmime' 'knotifications' 'knotifyconfig' 'kparts' 'kpimtextedit' 'kservice' 'ktextwidgets' 'kunitconversion' 'kwallet' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libkgapi' 'pimcommon' 'qt' 'sasl' 'solid' 'sonnet')
+DEPS=('akonadi' 'akonadi-calendar' 'akonadi-contacts' 'akonadi-mime' 'akonadi-notes' 'gcc-libs' 'glibc' 'kalarmcal' 'kauth' 'kbookmarks' 'kcalcore' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kdav' 'kdbusaddons' 'kholidays' 'ki18n' 'kiconthemes' 'kidentitymanagement' 'kimap' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kmailtransport' 'kmbox' 'kmime' 'knotifications' 'knotifyconfig' 'kpimtextedit' 'kservice' 'ktextwidgets' 'kwallet' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libkgapi' 'pimcommon' 'qt' 'sasl' 'solid' 'sonnet')
 
 # 'no' to skip calls to strip
 STRIP=

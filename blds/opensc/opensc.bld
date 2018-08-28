@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('glib2' 'glibc' 'libffi' 'ncurses' 'openssl' 'pcre' 'readline' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

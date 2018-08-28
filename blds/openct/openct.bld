@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'libcap2' 'libtool' 'libusb' 'libusb-compat' 'pcsclite' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libcap2' 'libevdev' 'mtdev' 'systemd')
+DEPS=('check' 'cairo' 'glib2' 'glibc' 'gtk+' 'libevdev' 'mtdev' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=
