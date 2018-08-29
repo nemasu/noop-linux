@@ -11,7 +11,7 @@ VERSION=1.0.3
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/font/font-adobe-100dpi-${VERSION}.tar.bz2
+SRC=http://x.org/releases/individual/font/font-adobe-100dpi-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -39,7 +39,7 @@ function BuildAndInstall
         cd ..
         rm -rf *
 
-        wget http://xorg.freedesktop.org/releases/individual/font/font-adobe-utopia-100dpi-1.0.4.tar.bz2
+        wget http://x.org/releases/individual/font/font-adobe-utopia-100dpi-1.0.4.tar.bz2
         tar xf *.bz2
         rm *.bz2
         cd `ls`
@@ -49,7 +49,7 @@ function BuildAndInstall
         cd ..
         rm -rf *
 
-        wget http://xorg.freedesktop.org/releases/individual/font/font-bh-100dpi-1.0.3.tar.bz2
+        wget http://x.org/releases/individual/font/font-bh-100dpi-1.0.3.tar.bz2
         tar xf *.bz2
         rm *.bz2
         cd `ls`
@@ -59,7 +59,7 @@ function BuildAndInstall
         cd ..
         rm -rf *
 
-        wget http://xorg.freedesktop.org/releases/individual/font/font-bh-lucidatypewriter-100dpi-1.0.3.tar.bz2
+        wget http://x.org/releases/individual/font/font-bh-lucidatypewriter-100dpi-1.0.3.tar.bz2
         tar xf *.bz2
         rm *.bz2
         cd `ls`
@@ -69,7 +69,7 @@ function BuildAndInstall
         cd ..
         rm -rf *
 
-        wget http://xorg.freedesktop.org/releases/individual/font/font-bitstream-100dpi-1.0.3.tar.bz2
+        wget http://x.org/releases/individual/font/font-bitstream-100dpi-1.0.3.tar.bz2
         tar xf *.bz2
         rm *.bz2
         cd `ls`
@@ -87,7 +87,7 @@ function BuildAndInstall
 function Detect
 {
         NAME=font-adobe-100dpi
-        LISTURL=http://xorg.freedesktop.org/releases/individual/font/
+        LISTURL=http://x.org/releases/individual/font/
         FILELIST=`GetFileList`
         LATEST=0
 

@@ -5,13 +5,13 @@ NAME=xorg-server
 DESC="X Windows server"
 
 #package version
-VERSION=1.18.4
+VERSION=1.20.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/xserver/xorg-server-${VERSION}.tar.bz2
+SRC=http://x.org/releases/individual/xserver/xorg-server-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,48 +35,61 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
-        [[ "${ARCH}" == "armv6l" ]] || [[ "${ARCH}" == "armv7l" ]] || [[ "${ARCH}" == "aarch64" ]] && CONFIG="--disable-glx --disable-dri --disable-dri2"
-        [[ "${ARCH}" == "x86_64" ]] && CONFIG="--enable-ipv6 \
-                                                                                          --enable-dri \
-                                                                                          --enable-dri2 \
-                                                                                          --enable-dmx \
-                                                                                          --enable-xvfb \
-                                                                                          --enable-xnest \
-                                                                                          --enable-composite \
-                                                                                          --enable-xcsecurity \
-                                                                                          --enable-libunwind \
-                                                                                          --enable-xorg \
-                                                                                          --enable-xephyr \
-                                                                                          --enable-glamor \
-                                                                                          --enable-glx-tls \
-                                                                                          --enable-kdrive \
-                                                                                          --enable-kdrive-evdev \
-                                                                                          --enable-kdrive-kbd \
-                                                                                          --enable-kdrive-mouse \
-                                                                                          --enable-config-udev \
-                                                                                          --enable-systemd-logind \
-                                                                                          --enable-suid-wrapper \
-                                                                                          --disable-install-setuid \
-                                                                                          --enable-record \
-                                                                                          --disable-xfbdev \
-                                                                                          --disable-xfake \
-                                                                                          --disable-static \
-                                                                                          --libexecdir=/usr/lib/xorg-server \
-                                                                                          --sysconfdir=/etc \
-                                                                                          --localstatedir=/var \
-                                                                                          --with-fontrootdir=/usr/share/fonts \
-                                                                                          --with-sha1=libgcrypt \
-                                                  --enable-xwayland"
+	pkgr -i meson
 
-        ./configure $STDUSRCONF $CONFIG
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+	cd include
+	curl "https://cgit.freedesktop.org/xorg/xserver/plain/include/xwayland-config.h.meson.in?id=xorg-server-1.20.0" > xwayland-config.h.meson.in
+	cd ..
+
+	meson setup \
+		--prefix         /usr \
+		--libdir         /usr/lib \
+		--libexecdir     /usr/lib \
+		--bindir         /usr/bin \
+		--sbindir        /usr/bin \
+		--includedir     /usr/include \
+		--datadir        /usr/share \
+		--mandir         /usr/share/man \
+		--infodir        /usr/share/info \
+		--localedir      /usr/share/locale \
+		--sysconfdir     /etc \
+		--localstatedir  /var \
+		--sharedstatedir /var/lib \
+		--buildtype      release \
+		--wrap-mode      nofallback \
+		-Daudit=false \
+		-Defi=true \
+		-Dima=false \
+		-Dlz4=true \
+		. build \
+		-D os_vendor="noop Linux" \
+		-D ipv6=true \
+		-D dmx=true \
+		-D xvfb=true \
+		-D xnest=true \
+		-D xcsecurity=true \
+		-D xorg=true \
+		-D xephyr=true \
+		-D xwayland=true \
+		-D xwayland_eglstream=true \
+		-D glamor=true \
+		-D udev=true \
+		-D systemd_logind=true \
+		-D suid_wrapper=true \
+		-D xkb_dir=/usr/share/X11/xkb \
+		-D xkb_output_dir=/var/lib/xkb
+
+# Print config
+	meson configure build
+	ninja -C build
+
+	DESTDIR=/root/bldr-inst ninja -C build install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://xorg.freedesktop.org/releases/individual/xserver/
+        LISTURL=http://x.org/releases/individual/xserver/
         FILELIST=`GetFileList`
         LATEST=0
 

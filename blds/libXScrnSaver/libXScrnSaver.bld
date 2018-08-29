@@ -2,13 +2,13 @@
 NAME=libXScrnSaver
 
 #package version
-VERSION=1.2.2
+VERSION=1.2.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/lib/libXScrnSaver-${VERSION}.tar.bz2
+SRC=http://x.org/releases/individual/lib/libXScrnSaver-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,7 +35,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://xorg.freedesktop.org/releases/individual/lib/
+        LISTURL=http://x.org/releases/individual/lib/
         FILELIST=`GetFileList`
         LATEST=0
 

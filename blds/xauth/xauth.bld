@@ -5,13 +5,13 @@ NAME=xauth
 DESC="X authority file utility"
 
 #package version
-VERSION=1.0.9
+VERSION=1.0.10
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/app/xauth-${VERSION}.tar.bz2
+SRC=http://x.org/releases/individual/app/xauth-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://xorg.freedesktop.org/releases/individual/app/
+        LISTURL=http://x.org/releases/individual/app/
         FILELIST=`GetFileList`
         LATEST=0
 

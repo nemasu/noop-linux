@@ -11,7 +11,7 @@ VERSION=1.0.7
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/util/imake-${VERSION}.tar.bz2
+SRC=http://x.org/releases/individual/util/imake-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -40,7 +40,7 @@ function BuildAndInstall
         cd ..
         rm -rf *
 
-        wget http://xorg.freedesktop.org/releases/individual/util/gccmakedep-1.0.3.tar.bz2
+        wget http://x.org/releases/individual/util/gccmakedep-1.0.3.tar.bz2
         tar xf `ls`
         rm *.bz2
         cd `ls`
@@ -50,7 +50,7 @@ function BuildAndInstall
         cd ..
         rm -rf *
 
-        wget http://xorg.freedesktop.org/releases/individual/util/lndir-1.0.3.tar.bz2
+        wget http://x.org/releases/individual/util/lndir-1.0.3.tar.bz2
         tar xf `ls`
         rm *.bz2
         cd `ls`
@@ -60,7 +60,7 @@ function BuildAndInstall
         cd ..
         rm -rf *
 
-        wget http://xorg.freedesktop.org/releases/individual/util/makedepend-1.0.5.tar.bz2
+        wget http://x.org/releases/individual/util/makedepend-1.0.5.tar.bz2
         tar xf `ls`
         rm *.bz2
         cd `ls`
@@ -70,7 +70,7 @@ function BuildAndInstall
         cd ..
         rm -rf *
 
-        wget http://xorg.freedesktop.org/releases/individual/util/xorg-cf-files-1.0.5.tar.bz2
+        wget http://x.org/releases/individual/util/xorg-cf-files-1.0.5.tar.bz2
         tar xf `ls`
         rm *.bz2
         cd `ls`
@@ -87,7 +87,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://xorg.freedesktop.org/releases/individual/util/
+        LISTURL=http://x.org/releases/individual/util/
         FILELIST=`GetFileList`
         LATEST=0
 

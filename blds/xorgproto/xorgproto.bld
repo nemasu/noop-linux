@@ -1,0 +1,84 @@
+#package name
+NAME=xorgproto
+
+#Description
+DESC="X.Org proto headers"
+
+#package version
+VERSION=2018.4
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://x.org/archive/individual/proto/xorgproto-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	meson setup \
+		--prefix         /usr \
+		--libdir         /usr/lib \
+		--libexecdir     /usr/lib \
+		--bindir         /usr/bin \
+		--sbindir        /usr/bin \
+		--includedir     /usr/include \
+		--datadir        /usr/share \
+		--mandir         /usr/share/man \
+		--infodir        /usr/share/info \
+		--localedir      /usr/share/locale \
+		--sysconfdir     /etc \
+		--localstatedir  /var \
+		--sharedstatedir /var/lib \
+		--buildtype      release \
+		--wrap-mode      nofallback \
+		. build \
+		-Dlegacy=true
+
+	ninja -C build
+	DESTDIR=/root/bldr-inst ninja -C build install
+
+	rm -f /root/bldr-inst/usr/include/X11/extensions/{apple,windows}*
+	rm -f /root/bldr-inst/usr/share/licenses/${pkgname}/COPYING-{apple,windows}wmproto
+	rm -f /root/bldr-inst/usr/share/pkgconfig/{apple,windows}wmproto.pc
+
+}
+
+function Detect() {
+    LISTURL=https://x.org/archive/individual/proto/
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

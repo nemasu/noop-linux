@@ -5,7 +5,7 @@ NAME=xdg-user-dirs
 DESC="Manage user directories like ~/Desktop and ~/Music"
 
 #package version
-VERSION=0.15
+VERSION=0.17
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

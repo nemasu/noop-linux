@@ -37,6 +37,7 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
+#	pkgr -i python-mako
 
 	if [ "${ARCH}" == "armv6l" ];
 	then

@@ -5,13 +5,14 @@ NAME=xorg-fonts-cyrillic
 DESC="X.org cyrillic fonts"
 
 #package version
-VERSION=1.0.1
+VERSION=1.0.3-1
+DVERSION=1.0.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/font/font-cronyx-cyrillic-${VERSION}.tar.bz2
+SRC=http://x.org/releases/individual/font/font-cronyx-cyrillic-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--prefix=/usr --with-fontdir=/usr/share/fonts/cyrillic"
@@ -37,17 +38,17 @@ function BuildAndInstall
         make
         make DESTDIR=/root/bldr-inst install
 
-        GetSource http://xorg.freedesktop.org/releases/individual/font/font-misc-cyrillic-${VERSION}.tar.bz2
+        GetSource http://x.org/releases/individual/font/font-misc-cyrillic-${DVERSION}.tar.bz2
         ./configure $EXTRACONF
         make
         make DESTDIR=/root/bldr-inst install
 
-        GetSource http://xorg.freedesktop.org/releases/individual/font/font-screen-cyrillic-1.0.2.tar.bz2
+        GetSource http://x.org/releases/individual/font/font-screen-cyrillic-1.0.4.tar.bz2
         ./configure $EXTRACONF
         make
         make DESTDIR=/root/bldr-inst install
 
-        GetSource http://xorg.freedesktop.org/releases/individual/font/font-winitzki-cyrillic-${VERSION}.tar.bz2
+        GetSource http://x.org/releases/individual/font/font-winitzki-cyrillic-${DVERSION}.tar.bz2
         ./configure $EXTRACONF
         make
         make DESTDIR=/root/bldr-inst install
@@ -60,7 +61,7 @@ function BuildAndInstall
 function Detect
 {
         NAME=font-cronyx-cyrillic
-        LISTURL=http://xorg.freedesktop.org/releases/individual/font/
+        LISTURL=http://x.org/releases/individual/font/
         FILELIST=`GetFileList`
         LATEST=0
         NAME=xorg-fonts-cyrillic

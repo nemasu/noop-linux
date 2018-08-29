@@ -5,13 +5,13 @@ NAME=libxcb
 DESC="X11 client-side library"
 
 #package version
-VERSION=1.12
+VERSION=1.13
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/xcb/libxcb-${VERSION}.tar.bz2
+SRC=http://x.org/releases/individual/xcb/libxcb-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-xinput --enable-xkb"
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://xorg.freedesktop.org/releases/individual/xcb/
+        LISTURL=http://x.org/releases/individual/xcb/
         FILELIST=`GetFileList`
         LATEST=0
 

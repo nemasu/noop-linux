@@ -182,6 +182,26 @@ function vercomp ()
     return 0 # =
 }
 
+function meson-wrap() {
+meson setup \
+	--prefix         /usr \
+	--libdir         /usr/lib \
+	--libexecdir     /usr/lib \
+	--bindir         /usr/bin \
+	--sbindir        /usr/bin \
+	--includedir     /usr/include \
+	--datadir        /usr/share \
+	--mandir         /usr/share/man \
+	--infodir        /usr/share/info \
+	--localedir      /usr/share/locale \
+	--sysconfdir     /etc \
+	--localstatedir  /var \
+	--sharedstatedir /var/lib \
+	--buildtype      release \
+	--wrap-mode      nofallback \
+	"$@"
+}
+
 function GetFileList() {
     curl -L -s $LISTURL | sed -ne'/'"${NAME}"'-[0-9.]*.tar.\(gz\|xz\|bz2\)/p' | sed -e 's/.*'"${NAME}"'/'"${NAME}"'/g;s/.tar.\(gz\|xz\|bz2\).*/.tar.\1/g' | sort | uniq
 }

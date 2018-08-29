@@ -5,13 +5,13 @@ NAME=libXfixes
 DESC="X11 miscellaneous 'fixes' extension library"
 
 #package version
-VERSION=5.0.2
+VERSION=5.0.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/lib/libXfixes-${VERSION}.tar.bz2
+SRC=http://x.org/releases/individual/lib/libXfixes-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://xorg.freedesktop.org/releases/individual/lib/
+        LISTURL=http://x.org/releases/individual/lib/
         FILELIST=`GetFileList`
         LATEST=0
 

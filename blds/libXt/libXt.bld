@@ -11,7 +11,7 @@ VERSION=1.1.5
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://xorg.freedesktop.org/releases/individual/lib/libXt-${VERSION}.tar.bz2
+SRC=http://x.org/releases/individual/lib/libXt-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://xorg.freedesktop.org/releases/individual/lib/
+        LISTURL=http://x.org/releases/individual/lib/
         FILELIST=`GetFileList`
         LATEST=0
 
