@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXv' 'libXvMC' 'libdrm' 'libxcb')
+DEPS=('glibc' 'libX11' 'libXext' 'libXv' 'libXvMC' 'libdrm' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

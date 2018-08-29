@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc' 'libXau' 'libXdmcp' 'libxcb')
+DEPS=('glibc' 'libxcb')
 
 # 'no' to skip calls to strip
 STRIP=

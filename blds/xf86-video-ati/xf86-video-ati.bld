@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc' 'libdrm' 'libpciaccess')
+DEPS=('glibc' 'libdrm' 'libpciaccess' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

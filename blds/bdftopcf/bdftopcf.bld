@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc' 'libXfont')
+DEPS=('glibc')
 
 # 'no' to skip calls to strip
 STRIP=

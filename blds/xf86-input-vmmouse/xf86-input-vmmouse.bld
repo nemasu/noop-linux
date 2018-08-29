@@ -21,7 +21,7 @@ EXTRACONF="--with-udev-rules-dir=/usr/lib/udev/rules.d"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc' 'libcap2' 'systemd')
+DEPS=('glibc' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

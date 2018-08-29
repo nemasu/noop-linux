@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('freetype2' 'glibc' 'libfontenc' 'zlib')
+DEPS=('glibc' 'lib32-freetype2' 'libfontenc' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

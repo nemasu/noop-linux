@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libX11' 'libXScrnSaver' 'libXau' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXtst' 'libXv' 'libXvMC' 'libdrm' 'libpciaccess' 'libxcb' 'libxshmfence' 'pixman' 'xcb-util')
+DEPS=('glibc' 'libX11' 'libXScrnSaver' 'libXau' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXtst' 'libXv' 'libXvMC' 'libdrm' 'libpciaccess' 'libxcb' 'libxshmfence' 'pixman' 'systemd' 'xcb-util')
 
 # 'no' to skip calls to strip
 STRIP=

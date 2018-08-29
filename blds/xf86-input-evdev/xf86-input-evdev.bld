@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc' 'libcap2' 'libevdev' 'mtdev' 'systemd')
+DEPS=('glibc' 'libevdev' 'mtdev' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

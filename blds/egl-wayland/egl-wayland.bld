@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'wayland')
 
 # 'no' to skip calls to strip
 STRIP=
