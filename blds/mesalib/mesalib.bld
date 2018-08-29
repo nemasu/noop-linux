@@ -5,8 +5,8 @@ NAME=mesalib
 DESC="An open-source implementation of the OpenGL specification"
 
 #package version
-VERSION=18.0.3
-DVERSION=18.0.3
+VERSION=18.1.7
+DVERSION=18.1.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -28,7 +28,7 @@ DEPS=('libclc' 'elfutils' 'expat' 'gcc-libs' 'glibc' 'libX11' 'libXau' 'libXdama
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('libclc')
+PKGDEPS=('libclc' 'libglvnd')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
@@ -38,48 +38,70 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
 
-        if [ "${ARCH}" == "armv6l" ];
-        then
-                GALLIUM_DRIVERS=swrast
-                DRI_DRIVERS=swrast
-        EGL_PLATFORMS=
-        else
-                GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,svga,swrast,virgl" 
-                DRI_DRIVERS="i915,i965,r200,radeon,nouveau,swrast"
-        EGL_PLATFORMS="x11,wayland,drm"
-                ARCHCONF="--enable-opencl --enable-opencl-icd --enable-xa"
-        fi
+	if [ "${ARCH}" == "armv6l" ];
+	then
+		GALLIUM_DRIVERS=swrast
+		DRI_DRIVERS=swrast
+		PLATFORMS=
+		VULKAN_DRIVERS=
+		SWR_ARCHES=
+	else
+		GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,swrast,swr"
+		DRI_DRIVERS="i915,i965,r100,r200,nouveau"
+		PLATFORMS="x11,wayland,drm,surfaceless"
+		VULKAN_DRIVERS="amd,intel"
+		SWR_ARCHES="avx,avx2"
+	fi
 
-    ./configure \
-        --prefix=/usr \
-        --sysconfdir=/etc \
-        --with-clang-libdir=/usr/lib \
-        --with-gallium-drivers=${GALLIUM_DRIVERS} \
-        --with-dri-drivers=${DRI_DRIVERS} \
-        --with-egl-platforms=${EGL_PLATFORMS} \
-        --enable-llvm \
-        --enable-llvm-shared-libs \
-        --enable-egl \
-        --enable-shared-glapi \
-        --enable-gbm \
-        --enable-glx-tls \
-        --enable-xa \
-        --enable-nine \
-        --enable-opencl \
-        --enable-opencl-icd \
-        --enable-dri \
-        --enable-glx \
-        --enable-osmesa \
-        --enable-gles1 \
-        --enable-gles2 \
-        --enable-texture-float \
-        --enable-dri3 \
-        --enable-omx-bellagio \
-        --enable-vdpau ${ARCHCONF}
-        
-    make -j${BLDR_CORES}
-    make DESTDIR=/root/bldr-inst install
-
+	meson setup \
+		--prefix         /usr \
+        --libdir         /usr/lib \
+        --libexecdir     /usr/lib \
+        --bindir         /usr/bin \
+        --sbindir        /usr/bin \
+        --includedir     /usr/include \
+        --datadir        /usr/share \
+        --mandir         /usr/share/man \
+        --infodir        /usr/share/info \
+        --localedir      /usr/share/locale \
+        --sysconfdir     /etc \
+        --localstatedir  /var \
+        --sharedstatedir /var/lib \
+        --buildtype      release \
+        --wrap-mode      nofallback \
+        . build \
+		-D b_lto=false \
+		-D b_ndebug=true \
+		-D platforms=${PLATFORMS} \
+		-D dri-drivers=${DRI_DRIVERS} \
+		-D gallium-drivers=${GALLIUM_DRIVERS} \
+		-D vulkan-drivers=${VULKAN_DRIVERS} \
+		-D swr-arches=${SWR_ARCHES} \
+		-D dri3=true \
+		-D egl=true \
+		-D gallium-extra-hud=true \
+		-D gallium-nine=true \
+		-D gallium-omx=bellagio \
+		-D gallium-opencl=icd \
+		-D gallium-va=true \
+		-D gallium-vdpau=true \
+		-D gallium-xa=true \
+		-D gallium-xvmc=false \
+		-D gbm=true \
+		-D gles1=true \
+		-D gles2=true \
+		-D glvnd=true \
+		-D glx=dri \
+		-D libunwind=true \
+		-D llvm=true \
+		-D lmsensors=true \
+		-D osmesa=gallium \
+		-D shared-glapi=true \
+		-D texture-float=true \
+		-D valgrind=false
+                                                                                                                                                                                 
+    ninja -C build                                                                                                                                                               
+    DESTDIR=/root/bldr-inst ninja -C build install              
 }
 
 #Default HTTP curl new version detection
