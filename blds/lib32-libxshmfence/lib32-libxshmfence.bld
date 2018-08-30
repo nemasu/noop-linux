@@ -1,17 +1,17 @@
 #package name
-NAME=libunwind
+NAME=lib32-libxshmfence
 
 #Description
-DESC="Portable and efficient C programming interface (API) to determine the call-chain of a program"
+DESC="a library that exposes a event API on top of Linux futexes (32-bit)."
 
 #package version
-VERSION=1.2.1
+VERSION=1.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://download.savannah.gnu.org/releases/libunwind/libunwind-${VERSION}.tar.gz"
+SRC=http://x.org/releases/individual/lib/libxshmfence-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'xz')
+DEPS=('glibc')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,15 +33,20 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  ./configure CFLAGS="$CFLAGS -U_FORTIFY_SOURCE" --prefix=/usr
-  make -j${BLDR_CORES}
-  make DESTDIR=/root/bldr-inst/ install
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+
+	./configure --prefix=/usr --libexecdir=/usr/lib32 --libdir=/usr/lib32 --sysconfdir=/etc --localstatedir=/var --disable-static
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+	rm -rf /root/bldr-inst/usr/{share,doc,include,bin,sbin}
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.savannah.gnu.org/releases/libunwind/
+        LISTURL=http://x.org/releases/individual/lib/
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -61,4 +66,3 @@ function Detect
                         echo "$NAME: New Version Available! - $LATEST"
         fi
 }
-

@@ -1,0 +1,149 @@
+#package name
+NAME=lib32-llvm
+
+#Description
+DESC="Low Level Virtual Machine (32-bit)."
+
+#package version
+VERSION=6.0.0
+DVERSION=6.0.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=http://llvm.org/releases/${DVERSION}/llvm-${DVERSION}.src.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=('libffi' 'gcc-libs' 'glibc' 'libxml2' 'llvm-libs' 'ncurses' 'python2' 'zlib')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=( 'gcc-libs' 'glibc' 'libffi' 'libxml2' 'ncurses' 'zlib' )
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+
+function BuildAndInstall
+{
+    if [ ! -e tools/clang ]; then
+        wget http://llvm.org/releases/${DVERSION}/cfe-${DVERSION}.src.tar.xz
+        tar xf cfe-${DVERSION}.src.tar.xz
+        mv cfe-${DVERSION}.src tools/clang
+    fi
+
+#    if [ ! -e projects/compiler-rt ]; then
+#        wget http://llvm.org/releases/${DVERSION}/compiler-rt-${DVERSION}.src.tar.xz
+#        tar xf compiler-rt-${DVERSION}.src.tar.xz
+#        mv compiler-rt-${DVERSION}.src projects/compiler-rt
+#    fi
+#
+#    if [ ! -e tools/clang/tools/extra ]; then
+#        wget http://llvm.org/releases/${DVERSION}/clang-tools-extra-${DVERSION}.src.tar.xz
+#        tar xf clang-tools-extra-${DVERSION}.src.tar.xz
+#        mv clang-tools-extra-${DVERSION}.src tools/clang/tools/extra
+#    fi
+#
+#    if [ ! -e tools/lld ]; then
+#        wget http://releases.llvm.org/${DVERSION}/lld-${DVERSION}.src.tar.xz
+#        tar xf lld-${DVERSION}.src.tar.xz
+#        mv lld-${DVERSION}.src tools/lld
+#    fi
+#
+#    if [ ! -e tools/lldb ]; then
+#        wget http://llvm.org/releases/${DVERSION}/lldb-${DVERSION}.src.tar.xz
+#        tar xf lldb-${DVERSION}.src.tar.xz
+#        mv lldb-${DVERSION}.src tools/lldb
+#    fi
+
+
+    mkdir -p build && cd build
+
+    [ ! -e ./Makefile ] && cmake -G Ninja .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLLVM_LIBDIR_SUFFIX=32 \
+		-DCMAKE_C_FLAGS:STRING=-m32 \
+		-DCMAKE_CXX_FLAGS:STRING=-m32 \
+		-DLLVM_TARGET_ARCH:STRING=i686 \
+		-DLLVM_HOST_TRIPLE="x86_64-pc-linux-gnu" \
+		-DLLVM_DEFAULT_TARGET_TRIPLE="i686-pc-linux-gnu" \
+		-DLLVM_BUILD_LLVM_DYLIB=ON \
+		-DLLVM_LINK_LLVM_DYLIB=ON \
+		-DLLVM_ENABLE_RTTI=ON \
+		-DLLVM_ENABLE_FFI=ON \
+		-DLLVM_BUILD_DOCS=OFF \
+		-DLLVM_ENABLE_SPHINX=OFF \
+		-DLLVM_ENABLE_DOXYGEN=OFF \
+		-DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi) \
+		-DLLVM_BINUTILS_INCDIR=/usr/include
+
+
+	ninja all
+	DESTDIR=/root/bldr-inst ninja install
+
+#	ninja -C tools/clang DESTDIR=/root/bldr-inst install
+#    ninja -C tools/lld DESTDIR=/root/bldr-inst install
+#    ninja -C tools/lldb DESTDIR=/root/bldr-inst install
+#    ninja -C projects/compiler-rt DESTDIR=/root/bldr-inst install
+#    ninja -C tools/clang/tools/extra DESTDIR=/root/bldr-inst install
+
+    #llvm-libs package
+    PushScripts
+    rm -rf /root/llvm-lib-install && mkdir -p /root/llvm-lib-install/usr/lib32/
+    pushd /root/llvm-lib-install
+
+    find /root/bldr-inst/usr/lib32 -regextype sed -regex ".*so[0-9\.]*" -exec mv -v {} /root/llvm-lib-install/usr/lib32/ \;
+
+    set +e
+    find {,usr/}{bin,lib,sbin} -type f -exec strip --strip-debug '{}' ';'
+    find {,usr/}{bin,sbin} -type f -exec strip --strip-all '{}' ';'
+    set -e
+
+    # Symlink LLVMgold.so from /usr/lib/bfd-plugins
+    mkdir -p usr/lib32/bfd-plugins
+    ln -s ../LLVMgold.so usr/lib32/bfd-plugins/LLVMgold.so
+    
+    pkgr -genmeta lib32-llvm-libs $VERSION
+    pkgr -genpkg
+    mv *.pkg /root/bldr-done/
+
+    popd
+    rm -rf /root/llvm-lib-install
+    PopScripts
+
+
+	mv /root/bldr-inst/usr/bin/llvm-config /root/bldr-inst/usr/lib32/llvm-config
+	mv /root/bldr-inst/usr/include/llvm/Config/llvm-config.h \
+	/root/bldr-inst/usr/lib32/llvm-config-32.h
+
+	rm -rf /root/bldr-inst/usr/{bin,include,share}
+
+	install -d /root/bldr-inst/usr/include/llvm/Config
+	mv /root/bldr-inst/usr/lib32/llvm-config-32.h /root/bldr-inst/usr/include/llvm/Config/
+
+	mkdir /root/bldr-inst/usr/bin
+	mv /root/bldr-inst/usr/lib32/llvm-config /root/bldr-inst/usr/bin/llvm-config32
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LATEST=`curl -L -s http://llvm.org/releases/download.html | egrep "llvm-[0-9\.]*src" | head -n1 | sed 's/.*llvm-\([0-9\.]*\)\.src\.tar\.xz.*/\1/g'`
+
+                vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}
+

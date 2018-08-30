@@ -1,0 +1,55 @@
+#package name
+NAME=lib32-libglvnd
+
+#Description
+DESC="The GL Vendor-Neutral Dispatch library (32-bit)."
+
+#package version
+VERSION=1.1.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/NVIDIA/libglvnd/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=('glibc' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libxcb')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	export CC='gcc -m32'
+	export CXX='g++ -m32'
+	export PKG_CONFIG_PATH='/usr/lib32/pkgconfig'
+	./autogen.sh
+	./configure --prefix=/usr --libdir=/usr/lib32/ --build=i686-unknown-linux-gnu
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+
+	rm -rf /root/bldr-inst/usr/include
+}
+
+function Detect() {
+    LATEST=`LatestVersionGitHub https://github.com/NVIDIA/libglvnd/releases`
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

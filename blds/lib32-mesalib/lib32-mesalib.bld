@@ -1,0 +1,120 @@
+#package name
+NAME=lib32-mesalib
+
+#Description
+DESC="An open-source implementation of the OpenGL specification"
+
+#package version
+VERSION=18.1.7
+DVERSION=18.1.7
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+#SRC=ftp://ftp.freedesktop.org/pub/mesa/${VERSION}/MesaLib-${VERSION}.tar.bz2
+SRC=https://mesa.freedesktop.org/archive/mesa-${DVERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=('libglvnd' 'libclc' 'elfutils' 'expat' 'gcc-libs' 'glibc' 'libX11' 'libXdamage' 'libXext' 'libXfixes' 'libdrm' 'libomxil-bellagio' 'libxcb' 'libxshmfence' 'llvm-libs' 'lm_sensors' 'wayland' 'zlib')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=('libclc' 'libglvnd')
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+
+function BuildAndInstall
+{
+#	pkgr -i python-mako
+	GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,swrast,swr"
+	DRI_DRIVERS="i915,i965,r100,r200,nouveau"
+	PLATFORMS="x11,drm,surfaceless" #no 32-bit wayland for now
+	VULKAN_DRIVERS="amd,intel"
+	SWR_ARCHES="avx,avx2"
+
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+	export LLVM_CONFIG="/usr/bin/llvm-config32"
+
+	#for some reason it's picking up 64bit clang libs
+	sed -i -e "s|llvm_libdir = dep_llvm.get_configtool_variable('libdir')|llvm_libdir = '/usr/lib32'|" src/gallium/targets/opencl/meson.build
+
+	meson setup \
+		--prefix         /usr \
+		--libdir         /usr/lib32 \
+        --libexecdir     /usr/lib \
+        --bindir         /usr/bin \
+        --sbindir        /usr/bin \
+        --includedir     /usr/include \
+        --datadir        /usr/share \
+        --mandir         /usr/share/man \
+        --infodir        /usr/share/info \
+        --localedir      /usr/share/locale \
+        --sysconfdir     /etc \
+        --localstatedir  /var \
+        --sharedstatedir /var/lib \
+        --buildtype      release \
+        --wrap-mode      nofallback \
+        . build \
+		-D b_lto=false \
+		-D b_ndebug=true \
+		-D platforms=${PLATFORMS} \
+		-D dri-drivers=${DRI_DRIVERS} \
+		-D gallium-drivers=${GALLIUM_DRIVERS} \
+		-D vulkan-drivers=${VULKAN_DRIVERS} \
+		-D swr-arches=${SWR_ARCHES} \
+		-D dri3=true \
+		-D egl=true \
+		-D gallium-extra-hud=true \
+		-D gallium-nine=true \
+		-D gallium-omx=bellagio \
+		-D gallium-opencl=icd \
+		-D gallium-va=true \
+		-D gallium-vdpau=true \
+		-D gallium-xa=true \
+		-D gallium-xvmc=false \
+		-D gbm=true \
+		-D gles1=true \
+		-D gles2=true \
+		-D glvnd=true \
+		-D glx=dri \
+		-D libunwind=true \
+		-D llvm=true \
+		-D lmsensors=true \
+		-D osmesa=gallium \
+		-D shared-glapi=true \
+		-D texture-float=true \
+		-D valgrind=false
+                                                                                                                                                                                 
+    ninja -C build                                                                                                                                                               
+    DESTDIR=/root/bldr-inst ninja -C build install
+	rm -rf /root/bldr-inst/etc
+	rm -rf /root/bldr-inst/usr/include
+	rm -rf /root/bldr-inst/usr/share
+
+}
+
+#Default HTTP curl new version detection
+function Detect
+{
+        LATEST=`curl -L -s https://mesa.freedesktop.org/archive/ | egrep "mesa-[0-9\.]+\.tar\.xz" | tail -n1 | sed -e 's/.*mesa-\([0-9\.]*\)\.tar\.xz.*/\1/g'`
+
+        vercomp $VERSION $LATEST
+        if [ $? -eq 2 ];
+        then
+                        echo "$NAME: New Version Available! - $LATEST"
+        fi
+}
