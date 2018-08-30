@@ -8805,6 +8805,9 @@ vte2,libvte.so
 vte2,libvte.so.9
 vte2,libvte.so.9.2800.2
 vte2,vtemodule.so
+vulkan-loader,libvulkan.so
+vulkan-loader,libvulkan.so.1
+vulkan-loader,libvulkan.so.1.1.82
 wayland,libwayland-client.so
 wayland,libwayland-client.so.0
 wayland,libwayland-client.so.0.3.0

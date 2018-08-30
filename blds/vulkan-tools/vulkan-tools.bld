@@ -1,0 +1,48 @@
+#package name
+NAME=vulkan-tools
+
+#Description
+DESC="Vulkan Tools"
+
+#package version
+VERSION=1.1.82.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/KhronosGroup/Vulkan-Tools/archive/sdk-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF="-DCMAKE_SKIP_RPATH=True -DBUILD_WSI_XCB_SUPPORT=On -DBUILD_WSI_XLIB_SUPPORT=On -DBUILD_WSI_WAYLAND_SUPPORT=On -DBUILD_WSI_MIR_SUPPORT=Off -DBUILD_CUBE=ON -DBUILD_VULKANINFO=ON -DBUILD_ICD=OFF"
+
+#autotools, python, perl, cmake, custom
+BUILD=cmake
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=`LatestVersionGitHub https://github.com/KhronosGroup/Vulkan-Tools/releases`
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
