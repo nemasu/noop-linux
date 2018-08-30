@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libpciaccess')
+DEPS=('lib32-glibc' 'lib32-libpciaccess')
 
 # 'no' to skip calls to strip
 STRIP=

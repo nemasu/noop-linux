@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'xz' 'zlib')
+DEPS=('lib32-bzip2' 'lib32-glibc' 'lib32-xz' 'lib32-zlib')
 
 # 'no' to skip calls to strip
 STRIP=
