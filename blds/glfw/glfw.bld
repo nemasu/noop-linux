@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libX11' 'libXcursor' 'libXi' 'libXinerama' 'libXrandr' 'libXxf86vm' 'mesalib')
+DEPS=('glibc' 'libX11' 'libXcursor' 'libXinerama' 'libXrandr' 'libXxf86vm')
 
 # 'no' to skip calls to strip
 STRIP=
