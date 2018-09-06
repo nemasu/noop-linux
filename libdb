@@ -2703,7 +2703,7 @@ kmime,libKF5Mime.so.5
 kmime,libKF5Mime.so.5.9.0
 kmod,libkmod.so
 kmod,libkmod.so.2
-kmod,libkmod.so.2.2.9
+kmod,libkmod.so.2.3.3
 knewstuff,libKF5NewStuff.so
 knewstuff,libKF5NewStuff.so.5
 knewstuff,libKF5NewStuff.so.5.49.0

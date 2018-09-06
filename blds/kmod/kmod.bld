@@ -5,13 +5,13 @@ NAME=kmod
 DESC="Linux kernel module management tools and library"
 
 #package version
-VERSION=19
+VERSION=25
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.kernel.org/pub/linux/utils/kernel/kmod/kmod-${VERSION}.tar.xz
+SRC=http://kernel.org/pub/linux/utils/kernel/kmod/kmod-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -51,7 +51,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=ftp://ftp.kernel.org/pub/linux/utils/kernel/kmod/
+        LISTURL=https://kernel.org/pub/linux/utils/kernel/kmod/
         FILELIST=`GetFileList`
         LATEST=0
 
