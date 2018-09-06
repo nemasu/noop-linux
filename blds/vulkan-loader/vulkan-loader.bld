@@ -20,7 +20,7 @@ EXTRACONF="-DCMAKE_SKIP_RPATH=True -DBUILD_TESTS=Off -DBUILD_WSI_XCB_SUPPORT=On 
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc')
 
 # 'no' to skip calls to strip
 STRIP=

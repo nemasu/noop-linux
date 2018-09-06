@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('boost' 'gcc-libs' 'glibc' 'libglvnd' 'libtorrent-rasterbar' 'qt' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
