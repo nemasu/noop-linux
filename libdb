@@ -6078,7 +6078,7 @@ okular,libOkular5Core.so.9.0.0
 okular,libokularplugin.so
 openal,libopenal.so
 openal,libopenal.so.1
-openal,libopenal.so.1.16.0
+openal,libopenal.so.1.18.2
 openbox,libobrender.so
 openbox,libobrender.so.27
 openbox,libobrender.so.27.0.1

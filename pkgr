@@ -2497,7 +2497,7 @@ if [ $1 = "-init" ]; then
         then
             pkgr -i xorg-meta
 
-            if [ "$NOOP_ISO_CREATE" == "kde" ]; then
+            if [ "$NOOP_ISO_CREATE" == "kde" ] || [ "$NOOP_ISO_CREATE" == "everything" ]; then
                 for i in kde-framework-meta kde-plasma-meta kde-applications-meta; do
                     pkgr -i $i
                 done
@@ -2530,6 +2530,14 @@ if [ $1 = "-init" ]; then
             then
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
             fi
+
+            if [ "$NOOP_ISO_CREATE" == "everything" ];
+            then
+                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
+				pkgr -i dev-meta
+				pkgr -i mono monodevelop geany qtcreator rust erlang go nodejs wine playonlinux desmume mednafen mupen64plus pcsx2 steam lutris kdenlive krita clementine vlc gimp deadbeef digikam inkscape musescore blender firefox chromium virtualbox virtualbox-modules virtualbox-guest-additions qemu dosbox gparted hexchat k3b nvidia openvpn pidgin qupzilla transmission qbittorrent ttf-sazanami ttf-noto otf-ipafont network-manager-applet
+            fi
+
 
             systemctl enable lxdm.service
 

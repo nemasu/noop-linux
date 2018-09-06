@@ -27,87 +27,171 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-        wget $SSRC -Oout
-        sh ./out --extract-only
-        rm out
-        cd `ls`
-#mv $BLDRTMPDIR/*.p .
-#for i in `ls *.p`;
-#do
-#patch -Np1 -i "$i"
-#rm "$i"
-#done
+	if [ -z "$BLDR_CONTINUE" ]; then
+		wget $SSRC -Oout
+		sh ./out --extract-only
+		rm out
+		cd `ls`
+		tar xf nvidia-persistenced-init.tar.bz2
+		cd ..
+	fi
+	cd `ls`
+
+	#Module
+	pushd kernel
+	make SYSSRC=/lib/modules/`uname -r`/build module
+	mkdir -p /root/bldr-inst/lib/modules/`uname -r`/misc/
+	cp -v *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
+	popd
+
+	#libs
+	mkdir -p /root/bldr-inst/usr/lib/nvidia
+
+# OpenCL
+    install -D -m644 nvidia.icd /root/bldr-inst/etc/OpenCL/vendors/nvidia.icd
+    install -D -m755 libnvidia-compiler.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-compiler.so.${VERSION}
+    install -D -m755 libnvidia-opencl.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-opencl.so.${VERSION}
+
+# X driver
+	install -D -m755 nvidia_drv.so /root/bldr-inst/usr/lib/xorg/modules/drivers/nvidia_drv.so
+
+# GLX extension module for X
+	install -D -m755 libglx.so.${VERSION} /root/bldr-inst/usr/lib/nvidia/xorg/libglx.so.${VERSION}
+	ln -s libglx.so.${VERSION} /root/bldr-inst/usr/lib/nvidia/xorg/libglx.so.1
+	ln -s libglx.so.${VERSION} /root/bldr-inst/usr/lib/nvidia/xorg/libglx.so
+
+	install -D -m755 libGLX_nvidia.so.${VERSION} /root/bldr-inst/usr/lib/libGLX_nvidia.so.${VERSION}
+# now in mesa driver
+#ln -s libGLX_nvidia.so.${VERSION} /root/bldr-inst/usr/lib/libGLX_indirect.so.0
+
+# OpenGL libraries
+	install -D -m755 libEGL_nvidia.so.${VERSION} /root/bldr-inst/usr/lib/libEGL_nvidia.so.${VERSION}
+	install -D -m755 libGLESv1_CM_nvidia.so.${VERSION} /root/bldr-inst/usr/lib/libGLESv1_CM_nvidia.so.${VERSION}
+	install -D -m755 libGLESv2_nvidia.so.${VERSION} /root/bldr-inst/usr/lib/libGLESv2_nvidia.so.${VERSION}
+	install -D -m644 10_nvidia.json /root/bldr-inst/usr/share/glvnd/egl_vendor.d/10_nvidia.json
+
+# OpenGL core library
+	install -D -m755 libnvidia-glcore.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-glcore.so.${VERSION}
+	install -D -m755 libnvidia-eglcore.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-eglcore.so.${VERSION}
+	install -D -m755 libnvidia-glsi.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-glsi.so.${VERSION}
+
+# misc
+	install -D -m755 libnvidia-ifr.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-ifr.so.${VERSION}
+	install -D -m755 libnvidia-fbc.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-fbc.so.${VERSION}
+	install -D -m755 libnvidia-encode.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-encode.so.${VERSION}
+	install -D -m755 libnvidia-cfg.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-cfg.so.${VERSION}
+	install -D -m755 libnvidia-ml.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-ml.so.${VERSION}
+	install -D -m755 libnvidia-wfb.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-wfb.so.${VERSION}
+	install -D -m755 libnvidia-glvkspirv.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-glvkspirv.so.${VERSION}
+
+# Vulkan ICD
+	install -D -m644 nvidia_icd.json.template /root/bldr-inst/usr/share/vulkan/icd.d/nvidia_icd.json
+
+# VDPAU
+	install -D -m755 libvdpau_nvidia.so.${VERSION} /root/bldr-inst/usr/lib/vdpau/libvdpau_nvidia.so.${VERSION}
+
+# nvidia-tls library
+	install -D -m755 libnvidia-tls.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-tls.so.${VERSION}
+	install -D -m755 tls/libnvidia-tls.so.${VERSION} /root/bldr-inst/usr/lib/tls/libnvidia-tls.so.${VERSION}
+
+# CUDA
+	install -D -m755 libcuda.so.${VERSION} /root/bldr-inst/usr/lib/libcuda.so.${VERSION}
+	install -D -m755 libnvcuvid.so.${VERSION} /root/bldr-inst/usr/lib/libnvcuvid.so.${VERSION}
+
+# PTX JIT Compiler (Parallel Thread Execution (PTX) is a pseudo-assembly language for CUDA)
+	install -D -m755 libnvidia-ptxjitcompiler.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-ptxjitcompiler.so.${VERSION}
+
+# Fat (multiarchitecture) binary loader
+	install -D -m755 libnvidia-fatbinaryloader.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-fatbinaryloader.so.${VERSION}
+
+# DEBUG
+	install -D -m755 nvidia-debugdump /root/bldr-inst/usr/bin/nvidia-debugdump
+
+# nvidia-xconfig
+	install -D -m755 nvidia-xconfig /root/bldr-inst/usr/bin/nvidia-xconfig
+	install -D -m644 nvidia-xconfig.1.gz /root/bldr-inst/usr/share/man/man1/nvidia-xconfig.1.gz
+
+# nvidia-bug-report
+	install -D -m755 nvidia-bug-report.sh /root/bldr-inst/usr/bin/nvidia-bug-report.sh
+
+# nvidia-smi
+	install -D -m755 nvidia-smi /root/bldr-inst/usr/bin/nvidia-smi
+	install -D -m644 nvidia-smi.1.gz /root/bldr-inst/usr/share/man/man1/nvidia-smi.1.gz
+
+# nvidia-cuda-mps
+	install -D -m755 nvidia-cuda-mps-server /root/bldr-inst/usr/bin/nvidia-cuda-mps-server
+	install -D -m755 nvidia-cuda-mps-control /root/bldr-inst/usr/bin/nvidia-cuda-mps-control
+	install -D -m644 nvidia-cuda-mps-control.1.gz /root/bldr-inst/usr/share/man/man1/nvidia-cuda-mps-control.1.gz
+
+# nvidia-modprobe
+# This should be removed if nvidia fixed their uvm module!
+#	install -D -m4755 nvidia-modprobe /root/bldr-inst/usr/bin/nvidia-modprobe
+#	install -D -m644 nvidia-modprobe.1.gz /root/bldr-inst/usr/share/man/man1/nvidia-modprobe.1.gz
+
+# nvidia-persistenced
+	install -D -m755 nvidia-persistenced /root/bldr-inst/usr/bin/nvidia-persistenced
+	install -D -m644 nvidia-persistenced.1.gz /root/bldr-inst/usr/share/man/man1/nvidia-persistenced.1.gz
+	install -D -m644 nvidia-persistenced-init/systemd/nvidia-persistenced.service.template /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
+	sed -i 's/__USER__/nvidia-persistenced/' /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
+
+# application profiles
+	install -D -m644 nvidia-application-profiles-${VERSION}-rc /root/bldr-inst/usr/share/nvidia/nvidia-application-profiles-${VERSION}-rc
+	install -D -m644 nvidia-application-profiles-${VERSION}-key-documentation /root/bldr-inst/usr/share/nvidia/nvidia-application-profiles-${VERSION}-key-documentation
+
+	mkdir -p /root/bldr-inst/usr/share/doc/nvidia/
+	cp -r html /root/bldr-inst/usr/share/doc/nvidia/
+	ln -s nvidia /root/bldr-inst/usr/share/doc/nvidia-utils
 
 
-        #Module
-        pushd kernel
-        make SYSSRC=/lib/modules/`uname -r`/build module
-        mkdir -p /root/bldr-inst/lib/modules/`uname -r`/misc/
-        cp -v *.ko /root/bldr-inst/lib/modules/`uname -r`/misc/
-        popd
+	#32-bit libs
+	mkdir -p /root/bldr-inst/usr/lib32/nvidia
+	cd 32
 
-        #libs
-        mkdir -p /root/bldr-inst/usr/lib/nvidia
-        rm *.la
-        mv lib* /root/bldr-inst/usr/lib/
-        mv tls/lib* /root/bldr-inst/usr/lib/
-        mv /root/bldr-inst/usr/lib/libG* /root/bldr-inst/usr/lib/nvidia/
-        mv /root/bldr-inst/usr/lib/libE* /root/bldr-inst/usr/lib/nvidia/
+	# OpenGL libraries
+    install -D -m755 libEGL_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/libEGL_nvidia.so.${VERSION}
+    install -D -m755 libGLESv1_CM_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/libGLESv1_CM_nvidia.so.${VERSION}
+    install -D -m755 libGLESv2_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/libGLESv2_nvidia.so.${VERSION}
 
-        #X driver
-        mkdir -p /root/bldr-inst/usr/lib/xorg/modules/drivers/
-        mv nvidia_drv.so /root/bldr-inst/usr/lib/xorg/modules/drivers/
+    # OpenGL core library
+    install -D -m755 libnvidia-glcore.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-glcore.so.${VERSION}
+    install -D -m755 libnvidia-eglcore.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-eglcore.so.${VERSION}
+    install -D -m755 libnvidia-glsi.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-glsi.so.${VERSION}
 
-        #glx
-        mkdir -p /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions
-        mv /root/bldr-inst/usr/lib/libglx* /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions
-        
-        #Application profiles
-        mkdir -p /root/bldr-inst/usr/share/nvidia/
-        mv nvidia-application-profiles* /root/bldr-inst/usr/share/nvidia/
+    # misc
+    install -D -m755 libnvidia-ifr.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-ifr.so.${VERSION}
+    install -D -m755 libnvidia-fbc.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-fbc.so.${VERSION}
+    install -D -m755 libnvidia-encode.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-encode.so.${VERSION}
+    install -D -m755 libnvidia-ml.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-ml.so.${VERSION}
+    install -D -m755 libnvidia-glvkspirv.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-glvkspirv.so.${VERSION}
 
-        #Binaries
-        mkdir -p /root/bldr-inst/usr/bin/ 
-        mv nvidia-cuda-mps-control nvidia-cuda-mps-server nvidia-debugdump nvidia-modprobe nvidia-persistenced nvidia-settings nvidia-smi nvidia-xconfig nvidia-bug-report.sh /root/bldr-inst/usr/bin/
+    # VDPAU
+    install -D -m755 libvdpau_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/vdpau/libvdpau_nvidia.so.${VERSION}
 
-        #OpenCL icd
-        mkdir -p /root/bldr-inst/etc/OpenCL/vendors/
-        mv *.icd /root/bldr-inst/etc/OpenCL/vendors/
+    # nvidia-tls library
+    install -D -m755 libnvidia-tls.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-tls.so.${VERSION}
+    install -D -m755 tls/libnvidia-tls.so.${VERSION} /root/bldr-inst/usr/lib32/tls/libnvidia-tls.so.${VERSION}
 
-        #Desktop files
-        mkdir -p /root/bldr-inst/usr/share/applications/
-        mkdir -p /root/bldr-inst/usr/share/pixmaps/
-        sed -e 's:__UTILS_PATH__:/usr/bin:' -e 's:__PIXMAP_PATH__:/usr/share/pixmaps:' -i *.desktop
-        mv *.desktop /root/bldr-inst/usr/share/applications/
-        mv *.png /root/bldr-inst/usr/share/pixmaps/
+    # CUDA
+    install -D -m755 libcuda.so.${VERSION} /root/bldr-inst/usr/lib32/libcuda.so.${VERSION}
+    install -D -m755 libnvcuvid.so.${VERSION} /root/bldr-inst/usr/lib32/libnvcuvid.so.${VERSION}
 
-        #persistenced systemd
-        tar xf nvidia-persistenced-init.tar.bz2
-        mkdir -p /root/bldr-inst/usr/lib/systemd/system/
-        mv nvidia-persistenced-init/systemd/nvidia-persistenced.service.template /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
-        sed -i -e 's/__USER__/persistenced/g' /root/bldr-inst/usr/lib/systemd/system/nvidia-persistenced.service
+    # PTX JIT Compiler (Parallel Thread Execution (PTX) is a pseudo-assembly language for CUDA)
+    install -D -m755 libnvidia-ptxjitcompiler.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-ptxjitcompiler.so.${VERSION}
 
-        #32-bit libs
-        mkdir -p /root/bldr-inst/usr/lib32/nvidia
-        cd 32
-		rm *.la
-		mv lib* /root/bldr-inst/usr/lib32/
-		mv tls/lib* /root/bldr-inst/usr/lib32/
-        mv /root/bldr-inst/usr/lib32/libG* /root/bldr-inst/usr/lib32/nvidia/
-        mv /root/bldr-inst/usr/lib32/libE* /root/bldr-inst/usr/lib32/nvidia/
-        cd ..
+    # Fat (multiarchitecture) binary loader
+    install -D -m755 libnvidia-fatbinaryloader.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-fatbinaryloader.so.${VERSION}
 
-        #Symlinks
-        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so.1
-        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/libGL.so
-        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/libGL.so.1
-        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/libGL.so
-        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so.1
-        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/libGL.so
-        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/nvidia/libGL.so.1
-        ln -s libGL.so.${DVERSION} /root/bldr-inst/usr/lib32/nvidia/libGL.so
-        ln -s libglx.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions/libglx.so.1
-        ln -s libglx.so.${DVERSION} /root/bldr-inst/usr/lib/nvidia/xorg/modules/extensions/libglx.so
+	cd ..
+
+
+	#Symlinks
+	# create soname links, thanks Arch!
+    for _lib in $(find /root/bldr-inst -name '*.so*' | grep -v 'xorg/'); do
+        _soname=$(dirname "${_lib}")/$(readelf -d "${_lib}" | grep -Po 'SONAME.*: \[\K[^]]*' || true)
+        _base=$(echo ${_soname} | sed -r 's/(.*).so.*/\1.so/')
+        [[ -e "${_soname}" ]] || ln -s $(basename "${_lib}") "${_soname}"
+        [[ -e "${_base}" ]] || ln -s $(basename "${_soname}") "${_base}"
+    done	
 }
 
 #Default HTTP curl new version detection

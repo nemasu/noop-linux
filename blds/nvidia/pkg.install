@@ -1,13 +1,3 @@
-function preinst() {
-    rm /usr/lib/libGL.so
-    rm /usr/lib/libGL.so.1
-    if [ "`uname -m`" == "x86_64" ];
-    then
-        rm /usr/lib32/libGL.so
-        rm /usr/lib32/libGL.so.1
-    fi
-    mv /usr/lib/xorg/modules/extensions/libglx.so /usr/lib/xorg/modules/extensions/libglx.so.xorg
-}
 function postinst() {
     getent group persistenced &>/dev/null || groupadd -g 143 persistenced
     getent passwd persistenced &>/dev/null || useradd --system -c 'NVIDIA Persistence Daemon' -u 143 -g persistenced -d '/' -s /sbin/nologin persistenced
@@ -19,15 +9,4 @@ function postup() {
 }
 function postrm() {
     rm -rf /etc/modprobe.d/nvidia.conf
-    MESAGL=`grep -e "libGL.so\..\." /var/noop/installed/mesalib | sed -e 's/.*\///'`
-    cd /usr/lib
-    ln -s $MESAGL libGL.so
-    ln -s $MESAGL libGL.so.1
-    if [ "`uname -m`" == "x86_64" ];
-    then
-        cd /usr/lib32
-        ln -s $MESAGL libGL.so
-        ln -s $MESAGL libGL.so.1
-    fi
-    mv /usr/lib/xorg/modules/extensions/libglx.so.xorg /usr/lib/xorg/modules/extensions/libglx.so
 }

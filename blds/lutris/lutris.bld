@@ -1,0 +1,49 @@
+#package name
+NAME=lutris
+
+#Description
+DESC="Lutris client - Open Source gaming platform for GNU/Linux"
+
+#package version
+VERSION=0.4.19
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/lutris/lutris/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  python3 setup.py build
+  python3 setup.py install --root=/root/bldr-inst --optimize=1 --skip-build
+}
+
+function Detect() {
+    LATEST=`LatestVersionGitHub https://github.com/lutris/lutris/releases`
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
+

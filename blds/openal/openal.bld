@@ -5,7 +5,7 @@ NAME=openal
 DESC="Cross-platform 3D audio library, software implementation"
 
 #package version
-VERSION=1.16.0
+VERSION=1.18.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,15 +33,15 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        mkdir -p build && cd build
-        cmake .. \
-                -DCMAKE_INSTALL_PREFIX=/usr \
-                -DCMAKE_BUILD_TYPE=Release
-        
-    make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
-        install -t /root/bldr-inst/usr/share/openal ../env-vars.txt ../hrtf.txt
+	mkdir -p build && cd build
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release
 
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+	cp ../docs/env-vars.txt /root/bldr-inst/usr/share/openal
+	cp ../docs/env-vars.txt /root/bldr-inst/usr/share/openal
 }
 
 #Default HTTP curl new version detection
