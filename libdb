@@ -1250,7 +1250,7 @@ glew,libGLEW.so.2.1
 glew,libGLEW.so.2.1.0
 glfw,libglfw.so
 glfw,libglfw.so.3
-glfw,libglfw.so.3.1
+glfw,libglfw.so.3.2
 glib-networking,libgiognomeproxy.so
 glib-networking,libgiognutls.so
 glib2,libgio-2.0.so
