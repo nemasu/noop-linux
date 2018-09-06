@@ -147,6 +147,10 @@ function BuildAndInstall
 	mkdir -p /root/bldr-inst/usr/lib32/nvidia
 	cd 32
 
+
+	install -D -m755 libGLX_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/libGLX_nvidia.so.${VERSION}
+
+
 	# OpenGL libraries
     install -D -m755 libEGL_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/libEGL_nvidia.so.${VERSION}
     install -D -m755 libGLESv1_CM_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/libGLESv1_CM_nvidia.so.${VERSION}

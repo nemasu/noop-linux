@@ -33,19 +33,21 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-        git clone git://github.com/amonakov/primus.git
-        cd `ls`
+	git clone git://github.com/amonakov/primus.git
+	cd `ls`
 
-        make
+	patch -Np1 -i $BLDRTMPDIR/*.patch.git && rm $BLDRTMPDIR/*.patch.git
 
-        install -D lib/libGL.so.1 /root/bldr-inst/usr/lib/primus/libGL.so.1
-        sed -e "s#^PRIMUS_libGL=.*#PRIMUS_libGL='/usr/\$LIB/primus'#" primusrun > primusrun.dist
-        install -D "primusrun.dist" /root/bldr-inst/usr/bin/primusrun
+	make
 
-        install -D "primus.bash-completion" /root/bldr-inst/etc/bash_completion.d/primusrun
+	sed -e '/^PRIMUS_libGL=/cPRIMUS_libGL=/usr/$LIB/primus' \
+		-e '/^exec/iexport __GLVND_DISALLOW_PATCHING=1' \
+		primusrun | install -D /dev/stdin /root/bldr-inst/usr/bin/primusrun
 
-        gzip -9 "primusrun.1"
-        install -D "primusrun.1.gz" /root/bldr-inst/usr/share/man/man1/primusrun.1.gz
+	install -D lib/libGL.so.1 /root/bldr-inst/usr/lib/primus/libGL.so.1
+	install -D primus.bash-completion /root/bldr-inst/usr/share/bash-completion/completions/primusrun
+	install -D primusrun.1 /root/bldr-inst/usr/share/man/man1/primusrun.1
+
 }
 
 #Default HTTP curl new version detection

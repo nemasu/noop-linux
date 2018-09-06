@@ -5,8 +5,8 @@ NAME=iptables
 DESC="Linux kernel packet control tool"
 
 #package version
-VERSION=1.4.21-1
-DVERSION=1.4.21
+VERSION=1.8.0
+DVERSION=1.8.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
