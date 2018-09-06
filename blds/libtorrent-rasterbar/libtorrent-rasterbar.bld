@@ -1,0 +1,46 @@
+#package name
+NAME=libtorrent-rasterbar
+
+#Description
+DESC="Torrent library"
+
+#package version
+VERSION="1.1.9"
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/arvidn/libtorrent/releases/download/libtorrent-${VERSION//./_}/libtorrent-rasterbar-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=autotools
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+function Detect() {
+    LATEST=`LatestVersionGitHub https://github.com/arvidn/libtorrent/releases`
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
