@@ -2535,7 +2535,9 @@ if [ $1 = "-init" ]; then
             then
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
 				pkgr -i dev-meta
-				pkgr -i mono monodevelop geany qtcreator rust erlang go nodejs wine playonlinux desmume mednafen mupen64plus pcsx2 steam lutris kdenlive krita clementine deadbeef digikam musescore blender virtualbox qemu dosbox hexchat k3b nvidia openvpn qupzilla-qt4 transmission qbittorrent
+				pkgr -i geany qtcreator rust go nodejs wine playonlinux desmume mednafen mupen64plus pcsx2 steam lutris kdenlive clementine musescore blender virtualbox qemu dosbox hexchat k3b nvidia openvpn transmission qbittorrent
+				pkgr -r firefox
+				pkgr -r juk
             fi
 
 
