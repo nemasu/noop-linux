@@ -1,0 +1,79 @@
+#package name
+NAME=pypy3
+
+#Description
+DESC="A Python3 implementation written in Python, JIT enabled"
+
+#package version
+VERSION=6.0.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC="https://bitbucket.org/pypy/pypy/downloads/pypy3-v${VERSION}-src.tar.bz2"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    cd pypy/goal
+    python2 ../../rpython/bin/rpython -Ojit --shared targetpypystandalone
+# Compile binary modules
+    PYTHONPATH=../.. ./pypy3-c ../tool/build_cffi_imports.py
+
+# Prepare installation
+    cd ../..
+    python2 pypy/tool/release/package.py --archive-name pypy --targetdir .
+    mkdir unpacked
+    tar xf pypy.tar.bz2 -C unpacked
+
+# Install pypy
+    cd unpacked
+    install -Dm755 pypy/bin/pypy3 /root/bldr-inst/opt/pypy3/bin/pypy3
+    install -Dm755 pypy/bin/libpypy3-c.so /root/bldr-inst/opt/pypy3/bin/libpypy3-c.so
+    cp -r pypy/include pypy/lib_pypy pypy/lib-python pypy/site-packages /root/bldr-inst/opt/pypy3
+
+# Install symlinks
+    mkdir -p /root/bldr-inst/usr/bin /root/bldr-inst/usr/lib
+    ln -s /opt/pypy3/bin/pypy3 /root/bldr-inst/usr/bin/pypy3
+    ln -s /opt/pypy3/bin/libpypy3-c.so /root/bldr-inst/usr/lib/libpypy3-c.so
+}
+
+function Detect() {
+    LISTURL=https://pypy.org/download.html
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
