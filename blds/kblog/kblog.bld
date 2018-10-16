@@ -5,7 +5,7 @@ NAME=kblog
 DESC="A blogging library for KDE"
 
 #package version
-VERSION=18.08.0
+VERSION=18.08.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

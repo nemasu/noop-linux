@@ -5,7 +5,7 @@ NAME=breeze
 DESC="Artwork, styles and assets for the Breeze visual style for the Plasma Desktop"
 
 #package version
-VERSION=5.13.4
+VERSION=5.14.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

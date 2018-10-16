@@ -5,7 +5,7 @@ NAME=lib32-openal
 DESC="Cross-platform 3D audio library, software implementation. 32bit."
 
 #package version
-VERSION=1.16.0
+VERSION=1.18.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

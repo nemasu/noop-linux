@@ -5,7 +5,7 @@ NAME=kwin
 DESC="KWin is an easy to use, but flexible, composited Window Manger for Xorg windowing systems on Linux. Its primary usage is in conjunction with a Shell (e.g. KDE Plasma Desktop). KWin is designed to go out of the way; users should not notice that they use a window manager at all. Nevertheless KWin provides a steep learning curve for advanced features, which are available, if they do not conflict with the primary mission. KWin does not have a dedicated targeted user group, but follows the targeted user group of the Desktop Shell using KWin as itDESC=#039;s Window Manager."
 
 #package version
-VERSION=5.13.4
+VERSION=5.14.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

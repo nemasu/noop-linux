@@ -5,15 +5,15 @@ NAME=mesalib
 DESC="An open-source implementation of the OpenGL specification"
 
 #package version
-VERSION=18.1.7
-DVERSION=18.1.7
+VERSION=18.2.2
+DVERSION=18.2.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-#SRC=ftp://ftp.freedesktop.org/pub/mesa/${VERSION}/MesaLib-${VERSION}.tar.bz2
-SRC=https://mesa.freedesktop.org/archive/mesa-${DVERSION}.tar.xz
+#SRC=https://mesa.freedesktop.org/archive/mesa-${DVERSION}.tar.xz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -37,7 +37,17 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
-#	pkgr -i python-mako
+	#Build bug, checkout from git
+	#https://bugs.freedesktop.org/show_bug.cgi?id=107865
+	#https://bugs.freedesktop.org/show_bug.cgi?id=107146
+	if [ ! -e mesa ]; then
+		git clone https://gitlab.freedesktop.org/mesa/mesa
+		cd mesa
+		git checkout mesa-${DVERSION}
+		NOCONFIGURE=1 ./autogen.sh
+		cd ..
+	fi
+	cd mesa
 
 	if [ "${ARCH}" == "armv6l" ];
 	then

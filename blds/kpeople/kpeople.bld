@@ -5,7 +5,7 @@ NAME=kpeople
 DESC="Provides access to all contacts and the people who hold them"
 
 #package version
-VERSION=5.49.0
+VERSION=5.51.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,13 +5,13 @@ NAME=cmake
 DESC="A cross-platform open-source make system"
 
 #package version
-VERSION=3.7.0
+VERSION=3.12.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://cmake.org/files/v${VERSION:0:3}/cmake-${VERSION}.tar.gz
+SRC=http://cmake.org/files/v${VERSION:0:4}/cmake-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,7 +33,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure --prefix=/usr --datadir=/share --docdir=/share/doc --mandir=/share/man --system-libs --qt-gui
+        ./configure --prefix=/usr --datadir=/share --docdir=/share/doc --mandir=/share/man --qt-gui
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }
