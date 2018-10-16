@@ -20,7 +20,7 @@ EXTRACONF="-DBUILD_TESTING=OFF"
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'karchive' 'qt')
+DEPS=('gcc-libs' 'glibc' 'ilmbase' 'karchive' 'openexr' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=

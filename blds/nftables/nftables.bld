@@ -20,7 +20,7 @@ EXTRACONF="--disable-man-doc --without-cli" #disable CLI till we get readline up
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('libmnl' 'libnftnl' 'gmp' 'readline' 'ncurses')
+DEPS=('glibc' 'gmp' 'libmnl' 'libnftnl')
 
 # 'no' to skip calls to strip
 STRIP=

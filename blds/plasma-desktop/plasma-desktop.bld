@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('attica' 'baloo' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'ibus' 'kactivities' 'kactivities-stats' 'karchive' 'kauth' 'kbookmarks' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdbusaddons' 'kdeclarative' 'kdelibs4support' 'kemoticons' 'kfilemetadata' 'kglobalaccel' 'kguiaddons' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'knewstuff' 'knotifications' 'knotifyconfig' 'kpackage' 'kparts' 'kpeople' 'krunner' 'kservice' 'ktextwidgets' 'kunitconversion' 'kwallet' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libICE' 'libSM' 'libX11' 'libXcursor' 'libXext' 'libXfixes' 'libXft' 'libXi' 'libcanberra' 'libxcb' 'libxkbfile' 'phonon' 'plasma-framework' 'plasma-workspace' 'pulseaudio' 'qt' 'solid' 'sonnet' 'xcb-util-image' 'xcb-util-keysyms')
+DEPS=('attica' 'baloo' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'ibus' 'kactivities' 'kactivities-stats' 'karchive' 'kauth' 'kbookmarks' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdbusaddons' 'kdeclarative' 'kdelibs4support' 'kemoticons' 'kfilemetadata' 'kglobalaccel' 'kguiaddons' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'knewstuff' 'knotifications' 'knotifyconfig' 'kpackage' 'kparts' 'kpeople' 'krunner' 'kservice' 'ktextwidgets' 'kunitconversion' 'kwallet' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libICE' 'libSM' 'libX11' 'libXcursor' 'libXext' 'libXfixes' 'libXft' 'libXi' 'libxcb' 'libxkbfile' 'phonon' 'plasma-framework' 'plasma-workspace' 'qt' 'solid' 'sonnet' 'xcb-util-image' 'xcb-util-keysyms')
 
 # 'no' to skip calls to strip
 STRIP=

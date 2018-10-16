@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc')
+DEPS=('glibc' 'libmnl' 'libnftnl')
 
 # 'no' to skip calls to strip
 STRIP=

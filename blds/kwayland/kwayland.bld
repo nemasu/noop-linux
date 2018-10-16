@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'mesalib' 'qt' 'wayland')
+DEPS=('gcc-libs' 'glibc' 'libglvnd' 'qt' 'wayland')
 
 # 'no' to skip calls to strip
 STRIP=

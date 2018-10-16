@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'kauth' 'kcodecs' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kdbusaddons' 'kdeclarative' 'kglobalaccel' 'ki18n' 'kpackage' 'kwidgetsaddons' 'kxmlgui' 'libkscreen' 'qt')
+DEPS=('gcc-libs' 'glibc' 'kauth' 'kcodecs' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kdbusaddons' 'kdeclarative' 'kglobalaccel' 'ki18n' 'kpackage' 'kservice' 'kwidgetsaddons' 'kxmlgui' 'libkscreen' 'plasma-framework' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'qt4')
+DEPS=('ffmpeg' 'gcc-libs' 'glibc' 'qt' 'sdl2' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

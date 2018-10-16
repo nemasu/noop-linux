@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'icu4c' 'libuv' 'openssl1.0' 'zlib')
+DEPS=('gcc-libs' 'glibc' 'icu4c' 'libuv' 'openssl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

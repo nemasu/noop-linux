@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'lib32-glibc')
+DEPS=('gcc-libs' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=no
