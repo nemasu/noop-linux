@@ -5,7 +5,7 @@ NAME=json-glib
 DESC="JSON library built on GLib"
 
 #package version
-VERSION=1.0.2
+VERSION=1.1.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

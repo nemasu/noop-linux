@@ -1,26 +1,26 @@
 #package name
-NAME=gpgme
+NAME=appstream-glib
 
 #Description
-DESC="A C wrapper library for GnuPG"
+DESC="Objects and methods for reading and writing AppStream metadata"
 
 #package version
-VERSION=1.12.0
+VERSION=0.7.14
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-${VERSION}.tar.bz2
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'libassuan' 'libgpg-error' 'python' 'python2' 'qt')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,10 +31,23 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	if [ ! -e appstream-glib ]; then
+		git clone --recursive https://github.com/hughsie/appstream-glib
+		cd appstream-glib
+		git checkout appstream_glib_${VERSION//./_}
+		cd ..
+	fi
+	cd appstream-glib
+	
+	meson-wrap . build \
+		-D gtk-doc=false \
+		-D rpm=false
 
+	ninja -C build
+	DESTDIR=/root/bldr-inst ninja -C build install
+}
 function Detect() {
     LISTURL=
     FILELIST=`GetFileList`
@@ -56,3 +69,4 @@ function Detect() {
         echo "$NAME: New Version Available! - $LATEST"
     fi
 }
+

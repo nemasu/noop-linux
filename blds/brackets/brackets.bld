@@ -1,26 +1,26 @@
 #package name
-NAME=gpgme
+NAME=brackets
 
 #Description
-DESC="A C wrapper library for GnuPG"
+DESC="An open source code editor for the web, written in JavaScript, HTML and CSS."
 
 #package version
-VERSION=1.12.0
+VERSION=1.13
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-${VERSION}.tar.bz2
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'libassuan' 'libgpg-error' 'python' 'python2' 'qt')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,9 +31,16 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	#Repackaging for now, can't get it to build.
+	wget https://github.com/adobe/brackets/releases/download/release-${VERSION}/Brackets.Release.${VERSION}.64-bit.deb
+	ar x *.deb
+	rm *.deb
+	tar xf data.tar.xz
+	mv opt /root/bldr-inst/
+	mv usr /root/bldr-inst/
+}
 
 function Detect() {
     LISTURL=

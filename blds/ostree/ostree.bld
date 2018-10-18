@@ -1,26 +1,26 @@
 #package name
-NAME=gpgme
+NAME=ostree
 
 #Description
-DESC="A C wrapper library for GnuPG"
+DESC="Operating system and container binary deployment and upgrades"
 
 #package version
-VERSION=1.12.0
+VERSION=2018.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-${VERSION}.tar.bz2
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'libassuan' 'libgpg-error' 'python' 'python2' 'qt')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -31,9 +31,26 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	if [ ! -e ostree ]; then
+		git clone --recursive https://github.com/ostreedev/ostree.git
+		cd ostree
+		git checkout v$VERSION
+		cd ..
+	fi
+	cd ostree
+	NOCONFIGURE=1 ./autogen.sh
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--sbindir=/usr/bin \
+		--libexecdir=/usr/lib \
+		--disable-static
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+}
 
 function Detect() {
     LISTURL=

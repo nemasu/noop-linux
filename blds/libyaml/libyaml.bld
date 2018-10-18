@@ -1,17 +1,17 @@
 #package name
-NAME=gpgme
+NAME=libyaml
 
 #Description
-DESC="A C wrapper library for GnuPG"
+DESC="YAML library"
 
 #package version
-VERSION=1.12.0
+VERSION=0.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-${VERSION}.tar.bz2
+SRC="http://pyyaml.org/download/libyaml/yaml-${VERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'libassuan' 'libgpg-error' 'python' 'python2' 'qt')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
