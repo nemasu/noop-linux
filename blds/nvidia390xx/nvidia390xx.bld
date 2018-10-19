@@ -152,6 +152,8 @@ function BuildAndInstall
     install -D -m755 libGLESv1_CM_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/libGLESv1_CM_nvidia.so.${VERSION}
     install -D -m755 libGLESv2_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/libGLESv2_nvidia.so.${VERSION}
 
+	install -D -m755 libGLX_nvidia.so.${VERSION} /root/bldr-inst/usr/lib32/libGLX_nvidia.so.${VERSION}
+
     # OpenGL core library
     install -D -m755 libnvidia-glcore.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-glcore.so.${VERSION}
     install -D -m755 libnvidia-eglcore.so.${VERSION} /root/bldr-inst/usr/lib32/libnvidia-eglcore.so.${VERSION}
