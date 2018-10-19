@@ -5,8 +5,8 @@ NAME=pip
 DESC="Package management for Python applications"
 
 #package version
-VERSION=9.0.1-1
-DVERSION=9.0.1
+VERSION=18.1
+DVERSION=18.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
