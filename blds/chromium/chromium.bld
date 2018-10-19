@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=69.0.3497.100
-VERSION=69.0.3497.100
+DVERSION=70.0.3538.67
+VERSION=70.0.3538.67
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -82,7 +82,6 @@ function BuildAndInstall
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
     'use_cups=true'
-    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=true'
