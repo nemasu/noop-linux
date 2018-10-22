@@ -1,0 +1,81 @@
+#package name
+NAME=libcurl-gnutls
+
+#Description
+DESC="Curl linked against GNU TLS"
+
+#package version
+VERSION=7.61.1
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://curl.haxx.se/download/curl-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	./configure \
+		--prefix='/usr' \
+		--disable-ldap \
+		--disable-ldaps \
+		--disable-manual \
+		--disable-versioned-symbols \
+		--enable-ipv6 \
+		--enable-threaded-resolver \
+		--without-gssapi \
+		--with-libssh2 \
+		--without-libidn \
+		--without-ssl \
+		--with-gnutls='/usr' \
+		--with-random='/dev/urandom' \
+		--with-ca-bundle='/etc/ssl/certs/ca-certificates.crt'
+
+	make -C lib -j${BLDR_CORES}
+	make -C lib DESTDIR=/root/bldr-inst install
+
+	mv /root/bldr-inst/usr/lib/libcurl{,-gnutls}.so.4.5.0
+	rm /root/bldr-inst/usr/lib/libcurl.{a,so}*
+	ln -s libcurl-gnutls.so.4.5.0 /root/bldr-inst/usr/lib/libcurl-gnutls.so.4
+	ln -s libcurl-gnutls.so.4.5.0 /root/bldr-inst/usr/lib/libcurl-gnutls.so
+}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

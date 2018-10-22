@@ -4562,6 +4562,9 @@ libconfig,libconfig.so.9.1.3
 libcroco,libcroco-0.6.so
 libcroco,libcroco-0.6.so.3
 libcroco,libcroco-0.6.so.3.0.1
+libcurl-gnutls,libcurl-gnutls.so
+libcurl-gnutls,libcurl-gnutls.so.4
+libcurl-gnutls,libcurl-gnutls.so.4.5.0
 libdaemon,libdaemon.so
 libdaemon,libdaemon.so.0
 libdaemon,libdaemon.so.0.5.0

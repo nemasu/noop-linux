@@ -1,0 +1,78 @@
+#package name
+NAME=spotify-client
+
+#Description
+DESC="Spotify Client"
+
+#package version
+VERSION=1.0.89
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=1
+
+function BuildAndInstall
+{
+	if [ ! -e sc.deb ]; then
+		wget http://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.0.89.313.g34a58dea-5_amd64.deb -Osc.deb
+	fi
+	ar x sc.deb
+	tar xf data.tar.gz
+	mv usr /root/bldr-inst
+
+	install -D /root/bldr-inst/usr/share/spotify/spotify.desktop /root/bldr-inst/usr/share/applications/spotify.desktop
+	install -D /root/bldr-inst/usr/share/spotify/icons/spotify-linux-512.png /root/bldr-inst/usr/share/pixmaps/spotify-client.png
+
+	for size in 22 24 32 48 64 128 256 512; do
+		install -D /root/bldr-inst/usr/share/spotify/icons/spotify-linux-$size.png \
+			/root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/spotify.png
+	done
+
+	chmod -R go-w /root/bldr-inst/usr
+
+	cd /root/bldr-inst/usr/bin
+	#libcurl-gnutls isn't being picked up by ldconfig for some reason, so need to do this......
+	rm spotify
+}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

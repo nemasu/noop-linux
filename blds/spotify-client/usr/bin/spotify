@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+LD_LIBRARY_PATH=/usr/lib /usr/share/spotify/spotify

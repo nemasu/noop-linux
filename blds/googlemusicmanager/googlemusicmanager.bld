@@ -5,7 +5,7 @@ NAME=googlemusicmanager
 DESC="Google Music Manager"
 
 #package version
-VERSION=20150327
+VERSION=20181022
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -45,7 +45,7 @@ function BuildAndInstall
         ar x out
         rm out
         rm control* debian*
-        tar xf data.tar.lzma && rm data.tar.lzma
+        tar xf data.tar.xz && rm data.tar.xz
 
         rm -rf etc
         mv opt lib
