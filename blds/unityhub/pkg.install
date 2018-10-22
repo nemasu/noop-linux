@@ -1,0 +1,6 @@
+function postinst() {
+	chmod +x /opt/unityhub/unityhub	
+}
+function postup() {
+	postinst
+}

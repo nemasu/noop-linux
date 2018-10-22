@@ -1,0 +1,85 @@
+#package name
+NAME=unityhub
+
+#Description
+DESC="Streamlines the way you find, download, and manage your Unity Projects and installations."
+
+#package version
+VERSION=1.1.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=1
+
+function BuildAndInstall
+{
+	if [ ! -e ./squashfs-root ]; then
+		wget https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.AppImage && chmod +x UnityHubSetup.AppImage
+		./UnityHubSetup.AppImage --appimage-extract
+		sed -i "/^Exec=/cExec=unityhub" squashfs-root/unityhub.desktop
+		sed -i "s/^X-AppImage-Version=/Version=/" squashfs-root/unityhub.desktop
+		sed -i "/^X-AppImage/d" squashfs-root/unityhub.desktop
+	fi
+
+	install -d /root/bldr-inst/usr/share
+	install -D ./squashfs-root/*.desktop /root/bldr-inst/usr/share/applications/unityhub.desktop
+	install -D ./squashfs-root/usr/share/icons/hicolor/48x48/apps/unityhub.png \
+		 /root/bldr-inst/usr/share/pixmaps/unityhub.png
+
+	install -d /root/bldr-inst/usr/share/licenses/unityhub
+	cp --no-preserve=all \
+	./squashfs-root/eula.txt \
+	./squashfs-root/LICENSE* \
+	/root/bldr-inst/usr/share/licenses/unityhub
+
+	rm -r ./squashfs-root/AppRun \
+	./squashfs-root/unityhub.desktop \
+	./squashfs-root/usr/share \
+	./squashfs-root/eula.txt \
+	./squashfs-root/LICENSE*
+
+	install -d /root/bldr-inst/opt/unityhub
+	cp -r --no-preserve=all ./squashfs-root/* /root/bldr-inst/opt/unityhub
+}
+
+function Detect() {
+    LISTURL=
+    FILELIST=`GetFileList`
+    LATEST=0
+
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
+        if [ $? -eq 2 ];
+        then
+                        LATEST=$CURVER
+        fi
+    done
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
