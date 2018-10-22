@@ -1,0 +1,7 @@
+function postinst() {
+	chmod +x /opt/brackets/{Brackets,Brackets-node,brackets}
+}
+
+function postup() {
+	postinst
+}

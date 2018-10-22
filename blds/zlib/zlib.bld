@@ -5,7 +5,7 @@ NAME=zlib
 DESC="Compression library implementing the deflate compression method found in gzip and PKZIP"
 
 #package version
-VERSION=1.2.8
+VERSION=1.2.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

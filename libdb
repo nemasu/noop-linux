@@ -336,7 +336,6 @@ boost,libboost_wave.so
 boost,libboost_wave.so.1.65.1
 boost,libboost_wserialization.so
 boost,libboost_wserialization.so.1.65.1
-brackets,libcef.so
 breeze,libbreezecommon5.so.5
 breeze,libbreezecommon5.so.5.14.0
 bullet,libBullet2FileLoader.so
@@ -9147,7 +9146,7 @@ zfs,libzpool.so.2
 zfs,libzpool.so.2.0.0
 zlib,libz.so
 zlib,libz.so.1
-zlib,libz.so.1.2.8
+zlib,libz.so.1.2.11
 zsh,attr.so
 zsh,cap.so
 zsh,clone.so

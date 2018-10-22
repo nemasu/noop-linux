@@ -29,7 +29,7 @@ STRIP=
 PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
-RESTORELIBDB=
+RESTORELIBDB=1
 
 function BuildAndInstall
 {
@@ -40,6 +40,8 @@ function BuildAndInstall
 	tar xf data.tar.xz
 	mv opt /root/bldr-inst/
 	mv usr /root/bldr-inst/
+	cd /root/bldr-inst/opt/brackets
+	wget https://nooplinux.org/dist/brackets-sqlite3.so.0 -Olibsqlite3.so.0
 }
 
 function Detect() {
