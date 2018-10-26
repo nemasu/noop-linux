@@ -2505,10 +2505,12 @@ if [ $1 = "-init" ]; then
                 pkgr -i ${NOOP_ISO_CREATE}-meta
             fi
             
-            for i in gvfs chromium firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
-            do
-                pkgr -i $i;
-            done
+            if [ "$NOOP_ISO_CREATE" != "everything" ]; then
+				for i in gvfs chromium firefox thunderbird inkscape pidgin libreoffice alsa-utils alsa-plugins pulseaudio vlc gparted ntfs_3g samba cifs-utils nfs-utils tigervnc x11vnc filezilla gimp otf-ipafont ttf-sazanami ttf-noto virtualbox-guest-additions virtualbox-modules gnome-keyring network-manager-applet lxdm;
+				do
+					pkgr -i $i;
+				done
+			fi
 
             useradd -m -g users -G tty,audio,video,lp,wheel,adm livecd
             echo "livecd:noop" | chpasswd
@@ -2535,8 +2537,7 @@ if [ $1 = "-init" ]; then
             then
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
 				pkgr -i dev-meta
-				pkgr -i geany qtcreator rust go nodejs wine playonlinux desmume mednafen mupen64plus pcsx2 steam lutris kdenlive clementine musescore blender virtualbox qemu dosbox hexchat k3b nvidia openvpn transmission qbittorrent
-				pkgr -r firefox
+				pkgr -i geany qtcreator nodejs brackets unityhub code playonlinux desmume mednafen mupen64plus pcsx2 steam lutris discord kdenlive clementine vlc gimp inkscape musescore blender googlemusicmanager spotify-client chromium virtualbox qemu gparted hexchat nvidia openvpn pidgin qbittorrent ttf-sazanami ttf-noto otf-ipafont ttf-liberation network-manager-applet gamehub
 				pkgr -r juk
             fi
 

@@ -5,7 +5,7 @@ NAME=gtk+
 DESC="GObject-based multi-platform GUI toolkit"
 
 #package version
-VERSION=3.22.21
+VERSION=3.24.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

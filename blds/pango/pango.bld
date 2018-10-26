@@ -4,8 +4,8 @@ NAME=pango
 #Description
 DESC="A library for layout and rendering of text"
 
-VERSION=1.39.0
-DVERSION=1.39.0
+VERSION=1.42.4
+DVERSION=1.42.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

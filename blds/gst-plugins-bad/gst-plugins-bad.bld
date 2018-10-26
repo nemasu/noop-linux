@@ -5,7 +5,7 @@ NAME=gst-plugins-bad
 DESC="GStreamer Multimedia Framework Bad Plugins"
 
 #package version
-VERSION=1.8.2
+VERSION=1.14.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,7 +33,6 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  export CXXFLAGS=-std=c++11
   
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
     --disable-static --enable-experimental  --disable-wayland \
@@ -44,8 +43,6 @@ function BuildAndInstall
   sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
   
   make -j${BLDR_CORES}
-  
-  sed -e 's/^SUBDIRS_EXT =.*/SUBDIRS_EXT =/' -i Makefile
   
   make DESTDIR=/root/bldr-inst install
 }

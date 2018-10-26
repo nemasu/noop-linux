@@ -5,7 +5,7 @@ NAME=libgee
 DESC="GObject collection library"
 
 #package version
-VERSION=0.18.0
+VERSION=0.20.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

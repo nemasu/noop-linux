@@ -5,7 +5,7 @@ NAME=gst-plugins-ugly
 DESC="GStreamer Multimedia Framework Ugly Plugins"
 
 #package version
-VERSION=1.8.2
+VERSION=1.14.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,20 +33,17 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  
-  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
-    --disable-static --enable-experimental \
-    --with-package-name="GStreamer Ugly Plugins (noop Linux)" \
-    --with-package-origin="http://www.nooplinux.org/"
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+		--disable-static --enable-experimental \
+		--with-package-name="GStreamer Ugly Plugins (noop Linux)" \
+		--with-package-origin="http://www.nooplinux.org/"
 
-  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
-  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-  
-  make -j${BLDR_CORES}
-  
-  sed -e 's/^SUBDIRS_EXT =.*/SUBDIRS_EXT =/' -i Makefile
-  
-  make DESTDIR=/root/bldr-inst install
+# https://bugzilla.gnome.org/show_bug.cgi?id=655517
+	sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
+	make -j${BLDR_CORES}
+
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

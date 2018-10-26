@@ -5,7 +5,7 @@ NAME=gst-plugins-base
 DESC="GStreamer Multimedia Framework Base Plugins"
 
 #package version
-VERSION=1.8.2
+VERSION=1.14.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
