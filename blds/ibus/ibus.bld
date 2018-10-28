@@ -5,8 +5,8 @@ NAME=ibus
 DESC="Next Generation Input Bus for Linux"
 
 #package version
-VERSION=1.5.16
-DVERSION=1.5.16
+VERSION=1.5.19
+DVERSION=1.5.19
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -36,11 +36,10 @@ function BuildAndInstall
 {
 
     #make deps
-    for i in cldr-emoji-annotation unicode-emoji; do
+    for i in cldr-emoji-annotation unicode-emoji gnome-common unicode-character-database; do
         pkgr -i $i 
     done
 
-    sed -i 's|$(libibus) $(libibus_emoji_dialog)|$(libibus_emoji_dialog) $(libibus)|' ui/gtk3/Makefile.am
 	./autogen.sh \
 		--prefix=/usr \
 		--libexecdir=/usr/lib/ibus \
@@ -48,11 +47,12 @@ function BuildAndInstall
 		--disable-gconf \
 		--enable-dconf \
 		--enable-wayland \
-		--disable-gtk-doc \
+		--enable-gtk-doc \
 		--disable-memconf \
 		--enable-ui \
 		--enable-python-library \
-		--with-python=python3
+		--with-python=python3 \
+		--with-ucd-dir=/usr/share/unicode/
 
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
