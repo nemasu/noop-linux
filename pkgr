@@ -2515,7 +2515,14 @@ if [ $1 = "-init" ]; then
             useradd -m -g users -G tty,audio,video,lp,wheel,adm livecd
             echo "livecd:noop" | chpasswd
 
-            
+            if [ "$NOOP_ISO_CREATE" == "everything" ];
+            then
+				pkgr -i dev-meta
+				pkgr -i geany qtcreator nodejs brackets unityhub code playonlinux desmume mednafen mupen64plus pcsx2 steam lutris discord kdenlive clementine vlc gimp inkscape musescore blender googlemusicmanager spotify-client chromium virtualbox qemu gparted hexchat nvidia openvpn pidgin qbittorrent ttf-sazanami ttf-noto otf-ipafont ttf-liberation network-manager-applet gamehub lxdm
+				pkgr -r juk
+                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
+            fi
+
             if [ "$NOOP_ISO_CREATE" == "mate" ];
             then
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/mate-session/g' /etc/lxdm/lxdm.conf
@@ -2532,15 +2539,6 @@ if [ $1 = "-init" ]; then
             then
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
             fi
-
-            if [ "$NOOP_ISO_CREATE" == "everything" ];
-            then
-                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
-				pkgr -i dev-meta
-				pkgr -i geany qtcreator nodejs brackets unityhub code playonlinux desmume mednafen mupen64plus pcsx2 steam lutris discord kdenlive clementine vlc gimp inkscape musescore blender googlemusicmanager spotify-client chromium virtualbox qemu gparted hexchat nvidia openvpn pidgin qbittorrent ttf-sazanami ttf-noto otf-ipafont ttf-liberation network-manager-applet gamehub
-				pkgr -r juk
-            fi
-
 
             systemctl enable lxdm.service
 
