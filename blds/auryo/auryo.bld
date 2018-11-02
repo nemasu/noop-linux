@@ -1,0 +1,45 @@
+#package name
+NAME=auryo
+
+#Description
+DESC="A SoundCloud client for your desktop"
+
+#package version
+VERSION=2.1.2
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=
+DEB_SRC=https://github.com/Superjo149/auryo/releases/download/v${VERSION}/auryo_${VERSION}_amd64.deb
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#1 if BuildAndInstall should be called instead of ./configure && make && make install method
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=1
+
+function BuildAndInstall
+{
+	wget $DEB_SRC -O out
+	
+	ar x out && rm out
+	rm control* debian*
+	tar xf data.tar.xz
+	rm *.xz
+
+	cp -r * /root/bldr-inst/
+}

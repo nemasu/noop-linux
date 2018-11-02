@@ -1,0 +1,6 @@
+function postinst() {
+	chmod +x /opt/Auryo/auryo
+}
+function postup() {
+	postinst
+}
