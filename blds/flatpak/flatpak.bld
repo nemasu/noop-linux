@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('acl' 'appstream-glib' 'attr' 'avahi' 'dbus' 'e2fsprogs' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gpgme' 'json-glib' 'krb5' 'libXau' 'libarchive' 'libassuan' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libpng' 'libseccomp' 'libsoup' 'libxml2' 'lz4' 'nettle' 'ostree' 'pcre' 'polkit' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

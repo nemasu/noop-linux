@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('cairo' 'flac' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libX11' 'libXdamage' 'libXext' 'libXfixes' 'libcaca' 'libgudev' 'libjpeg' 'libpng' 'libshout' 'libvpx' 'orc' 'pulseaudio' 'speex' 'taglib' 'v4l-utils' 'zlib')
+DEPS=('cairo' 'flac' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gst-plugins-bad' 'gst-plugins-base' 'gstreamer' 'gtk+' 'jack' 'lame' 'libX11' 'libXdamage' 'libXext' 'libXfixes' 'libcaca' 'libgudev' 'libjpeg' 'libpng' 'libshout' 'libsoup' 'libvpx' 'orc' 'pulseaudio' 'qt' 'speex' 'taglib' 'twolame' 'v4l-utils' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

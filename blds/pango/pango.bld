@@ -21,7 +21,7 @@ EXTRACONF="--with-cairo"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('cairo' 'expat' 'fontconfig' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libffi' 'libpng' 'libX11' 'libXau' 'libxcb' 'libXdmcp' 'libXext' 'libXft' 'libXrender' 'pcre' 'pixman' 'zlib')
+DEPS=('cairo' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXft' 'libXrender' 'libXxf86vm' 'libdrm' 'libffi' 'libglvnd' 'libpng' 'libxcb' 'libxshmfence' 'mesalib' 'pcre' 'pixman' 'util-linux' 'wayland' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glib2' 'glibc' 'libcap2')
+DEPS=('elfutils' 'glib2' 'glibc' 'libcap2' 'libunwind')
 
 # 'no' to skip calls to strip
 STRIP=

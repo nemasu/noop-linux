@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libgee' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=

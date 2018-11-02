@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('a52dec' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'lame' 'libcdio' 'libdvdread' 'libmad' 'libmpeg2' 'libx264' 'opencore-amr' 'orc' 'twolame')
+DEPS=('a52dec' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libcdio' 'libdvdread' 'libmpeg2' 'libx264' 'opencore-amr' 'orc')
 
 # 'no' to skip calls to strip
 STRIP=

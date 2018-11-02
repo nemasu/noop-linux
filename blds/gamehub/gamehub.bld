@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'granite' 'gtk+' 'json-glib' 'libgee' 'libsoup' 'libxml2' 'sqlite' 'webkitgtk')
 
 # 'no' to skip calls to strip
 STRIP=

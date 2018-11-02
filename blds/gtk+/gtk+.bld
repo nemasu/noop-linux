@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'colord' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXxf86vm' 'libcap2' 'libdrm' 'libepoxy' 'libffi' 'libgcrypt' 'libgpg-error' 'libpng' 'libxcb' 'libxkbcommon' 'libxshmfence' 'lz4' 'mesalib' 'pango' 'pcre' 'pixman' 'systemd' 'util-linux' 'wayland' 'xz' 'zlib')
+DEPS=('at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'colord' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXxf86vm' 'libdrm' 'libepoxy' 'libffi' 'libglvnd' 'libpng' 'libxcb' 'libxkbcommon' 'libxshmfence' 'mesalib' 'pango' 'pcre' 'pixman' 'systemd' 'util-linux' 'wayland' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
