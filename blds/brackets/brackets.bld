@@ -42,6 +42,10 @@ function BuildAndInstall
 	mv usr /root/bldr-inst/
 	cd /root/bldr-inst/opt/brackets
 	wget https://nooplinux.org/dist/brackets-sqlite3.so.0 -Olibsqlite3.so.0
+	cd /root/bldr-inst
+	mkdir -p usr/share/applications
+	cd usr/share/applications
+	ln -s /opt/brackets/brackets.desktop
 }
 
 function Detect() {
