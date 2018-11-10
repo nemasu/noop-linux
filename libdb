@@ -5118,7 +5118,7 @@ libofa,libofa.so.0
 libofa,libofa.so.0.0.0
 libogg,libogg.so
 libogg,libogg.so.0
-libogg,libogg.so.0.8.2
+libogg,libogg.so.0.8.3
 libomxil-bellagio,libomxaudio_effects.so
 libomxil-bellagio,libomxaudio_effects.so.0
 libomxil-bellagio,libomxaudio_effects.so.0.0.0
@@ -6916,6 +6916,9 @@ portaudio,libportaudio.so.2.0.0
 portaudio,libportaudiocpp.so
 portaudio,libportaudiocpp.so.0
 portaudio,libportaudiocpp.so.0.0.12
+portmidi,libpmjni.so
+portmidi,libportmidi.so
+portmidi,libporttime.so
 postgresql-libs,libecpg.so
 postgresql-libs,libecpg.so.6
 postgresql-libs,libecpg.so.6.10

@@ -5,13 +5,13 @@ NAME=musescore
 DESC="Music notation software"
 
 #package version
-VERSION=2.1.0
+VERSION=2.3.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/musescore/MuseScore/archive/v${VERSION}.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,11 +33,13 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-    mkdir -p build && cd build
-    cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_PORTAUDIO=OFF
-    make all
-    make lrelease
-    make DESTDIR=/root/bldr-inst install
+	if [ ! -e MuseScore ]; then
+		git clone --recursive https://github.com/musescore/MuseScore.git
+		cd MuseScore && git checkout v${VERSION} && cd ..
+	fi
+
+	make -j${BLDR_CORES} PREFIX='/usr' -C MuseScore release
+	make DESTDIR=/root/bldr-inst -C MuseScore/build.release install
 }
 
 #Default HTTP curl new version detection

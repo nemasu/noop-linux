@@ -5,7 +5,7 @@ NAME=libogg
 DESC="Ogg bitstream and framing library"
 
 #package version
-VERSION=1.3.2
+VERSION=1.3.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

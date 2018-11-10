@@ -1024,8 +1024,12 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     then
         if [ -z "$BLDR_CONTINUE" ];
         then
-            wget --inet4-only  $SRC -Osrc
-            tar xf src
+            wget --inet4-only $SRC -Osrc
+            if [[ $SRC =~ .*zip$ ]]; then
+				unzip src
+			else
+				tar xf src
+			fi
             rm src
         fi
         
