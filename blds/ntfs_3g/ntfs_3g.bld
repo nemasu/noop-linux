@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('fuse2' 'glibc' 'util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'gnutls' 'libssh2' 'nettle' 'rtmpdump' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

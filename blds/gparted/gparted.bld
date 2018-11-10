@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('atk' 'atkmm' 'cairo' 'cairomm' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'glibmm' 'gtk+2' 'gtkmm2' 'libsigc++' 'pango' 'pangomm' 'parted' 'util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('expat' 'flac' 'gcc-libs' 'glibc' 'libidn' 'libvorbis' 'qt4')
+DEPS=('expat' 'flac' 'gcc-libs' 'glibc' 'libidn' 'libvorbis' 'qt' 'qt-webkit')
 
 # 'no' to skip calls to strip
 STRIP=
