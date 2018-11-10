@@ -5,7 +5,7 @@ NAME=skype
 DESC="P2P software for high-quality voice communication"
 
 #package version
-VERSION=8.16.0.4
+VERSION=8.33.0.41
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('alsa-lib' 'atk' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gconf' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libsecret' 'libxcb' 'libxkbfile' 'nspr' 'nss' 'pango' 'v4l-utils')
+DEPS=('alsa-lib' 'atk' 'cairo' 'cups' 'dbus' 'expat' 'fontconfig' 'gcc-libs' 'gconf' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libsecret' 'libxcb' 'libxkbfile' 'nspr' 'nss' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=
