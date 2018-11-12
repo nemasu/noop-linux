@@ -2467,7 +2467,7 @@ if [ $1 = "-init" ]; then
 
         echo "" > /etc/fstab
 
-        sed -i -e 's|/sbin/agetty|/sbin/agetty -a root|' /usr/lib/systemd/system/getty@.service
+        sed -i -e 's|/sbin/agetty.*|/sbin/agetty -a root --noclear %I $TERM|' /usr/lib/systemd/system/getty@.service
 
         cd / && ln -s / ro
         mkdir /cdrom && touch /cdrom/root.sqsh
