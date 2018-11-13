@@ -18,17 +18,12 @@ DEPS=('gcc-libs' 'glibc' 'gmp' 'lib32-glibc' 'mpc' 'mpfr' 'zlib')
 
 function BuildAndInstall
 {
-
-        if [ -n $BLDR_CONTINUE ]; then
-                cd gcc-$VERSION;
-        fi
-
         [[ "${ARCH}" == "x86_64" ]] && sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
 
         # Do not run fixincludes
         if [ -z $BLDR_CONTINUE ];
         then
-                sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+			sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
         fi
 
         cd ..
