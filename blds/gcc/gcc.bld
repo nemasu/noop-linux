@@ -9,7 +9,7 @@
 
 NAME=gcc
 DESC="The GNU Compiler Collection"
-VERSION=7.2.0
+VERSION=8.2.0
 ISUSR=1
 SRC=ftp://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-$VERSION.tar.xz
 EXTRACONF=
