@@ -5,13 +5,14 @@ NAME=strigi
 DESC="Fast crawling desktop search engine with Qt GUI"
 
 #package version
-VERSION=0.7.8
+VERSION=0.7.8-1
+DVERSION=0.7.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.vandenoever.info/software/strigi/strigi-${VERSION}.tar.bz2
+SRC=http://www.vandenoever.info/software/strigi/strigi-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -67,7 +68,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

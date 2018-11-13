@@ -5,7 +5,7 @@ NAME=go
 DESC="Compiler and tools for the Go programming language from Google"
 
 #package version
-VERSION=1.11
+VERSION=1.11.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

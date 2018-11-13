@@ -5,7 +5,7 @@ NAME=valgrind
 DESC="A tool to help find memory-management problems in programs"
 
 #package version
-VERSION=3.13.0
+VERSION=3.14.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -14,13 +14,13 @@ ISUSR=1
 SRC=ftp://sourceware.org/pub/valgrind/valgrind-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--without-mpicc" #openmpi 4 not supported, disable for now
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc' 'lib32-glibc' 'openmpi')
+DEPS=('glibc' 'lib32-glibc')
 
 # 'no' to skip calls to strip
 STRIP=

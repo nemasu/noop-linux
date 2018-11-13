@@ -5,16 +5,17 @@ NAME=blender
 DESC="3D graphics suite."
 
 #package version
-VERSION=2.79b
+VERSION=2.79b-1
+DVERSION=2.79b
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.blender.org/source/blender-${VERSION}.tar.gz
+SRC=http://download.blender.org/source/blender-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="-DPYTHON_VERSION=3.6 -DPYTHON_LIBPATH=/usr/lib -DPYTHON_LIBRARY=python3.6m -DPYTHON_INCLUDE_DIRS=/usr/include/python3.6m -DWITH_CYCLES=OFF -DWITH_FFTW3=ON -DWITH_INSTALL_PORTABLE=OFF -DWITH_PYTHON_INSTALL=OFF -DWITH_LLVM=ON"
+EXTRACONF="-DPYTHON_DVERSION=3.6 -DPYTHON_LIBPATH=/usr/lib -DPYTHON_LIBRARY=python3.6m -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DWITH_CYCLES=OFF -DWITH_FFTW3=ON -DWITH_INSTALL_PORTABLE=OFF -DWITH_PYTHON_INSTALL=OFF -DWITH_LLVM=ON"
 
 #autotools, python, perl, cmake, custom
 BUILD=cmake
@@ -50,7 +51,7 @@ function Detect() {
         fi
     done
 
-    vercomp $VERSION $LATEST
+    vercomp $DVERSION $LATEST
     if [ $? -eq 2 ];
     then
         echo "$NAME: New Version Available! - $LATEST"

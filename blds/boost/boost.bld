@@ -5,7 +5,7 @@ NAME=boost
 DESC="Free peer-reviewed portable C++ source libraries - development headers"
 
 #package version
-VERSION=1.65.1
+VERSION=1.65.1-1
 DVERSION=1.65.1
 
 #directory locations, 99.99% of the time this is 1
