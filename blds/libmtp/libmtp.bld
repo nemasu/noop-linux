@@ -5,7 +5,7 @@ NAME=libmtp
 DESC="Library implementation of the Media Transfer Protocol"
 
 #package version
-VERSION=1.1.8
+VERSION=1.1.16
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -36,10 +36,7 @@ function BuildAndInstall
   
   ./configure --prefix=/usr --with-udev=/usr/lib/udev
   make -j${BLDR_CORES}
-  
   make DESTDIR=/root/bldr-inst install
-  # fix broken udev rule
-  sed -i '/^Unable to open/d' /root/bldr-inst/usr/lib/udev/rules.d/69-libmtp.rules
 }
 
 #Default HTTP curl new version detection

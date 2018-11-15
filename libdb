@@ -2692,7 +2692,7 @@ kio-extras,libkioarchive.so.5
 kio-extras,libkioarchive.so.5.97.0
 kio-extras,libkmanpart.so
 kio-extras,libmolletnetwork5.so.18
-kio-extras,libmolletnetwork5.so.18.08.2
+kio-extras,libmolletnetwork5.so.18.08.3
 kirigami2,libKF5Kirigami2.so
 kirigami2,libKF5Kirigami2.so.5
 kirigami2,libKF5Kirigami2.so.5.51.0
@@ -5058,7 +5058,7 @@ libmpeg2,libmpeg2convert.so.0
 libmpeg2,libmpeg2convert.so.0.0.0
 libmtp,libmtp.so
 libmtp,libmtp.so.9
-libmtp,libmtp.so.9.2.0
+libmtp,libmtp.so.9.4.0
 libmusicbrainz3,libmusicbrainz3.so
 libmusicbrainz3,libmusicbrainz3.so.6
 libmusicbrainz3,libmusicbrainz3.so.6.3.0
