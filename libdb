@@ -246,12 +246,9 @@ binutils,libbfd.so
 binutils,libopcodes-2.29.1.so
 binutils,libopcodes.so
 bluedevil,libbluetoothplugin.so
-bluez,libasound_module_ctl_bluetooth.so
-bluez,libasound_module_pcm_bluetooth.so
 bluez,libbluetooth.so
 bluez,libbluetooth.so.3
-bluez,libbluetooth.so.3.12.0
-bluez,libgstbluetooth.so
+bluez,libbluetooth.so.3.18.16
 bluez-qt,libKF5BluezQt.so
 bluez-qt,libKF5BluezQt.so.5.51.0
 bluez-qt,libKF5BluezQt.so.6
@@ -768,6 +765,9 @@ elfutils,libebl_x86_64.so
 elfutils,libelf-0.173.so
 elfutils,libelf.so
 elfutils,libelf.so.1
+ell,libell.so
+ell,libell.so.0
+ell,libell.so.0.0.1
 emovix,iso.sort
 enca,libenca.so
 enca,libenca.so.0
