@@ -37,12 +37,12 @@ function BuildAndInstall
 	fi
 	cd `ls`
 
-	if [ -z "$BLDR_CONTINUE" ]; then
-		for i in `ls $BLDRTMPDIR/*.p`; do
+	for i in `ls $BLDRTMPDIR/*.p`; do
+		if [ -z "$BLDR_CONTINUE" ]; then
 			patch -Np1 -i $i
-			rm -v $i
-		done
-	fi
+		fi
+		rm -v $i
+	done
 
 	#Module
 	pushd kernel
