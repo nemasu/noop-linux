@@ -5,8 +5,8 @@ NAME=virtualbox
 DESC="Powerful x86 virtualization for enterprise as well as home use"
 
 #package version
-VERSION=5.2.18
-DVERSION=5.2.18
+VERSION=6.0.2
+DVERSION=6.0.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -49,7 +49,7 @@ function BuildAndInstall
 	source ./env.sh
         
     kmk
-    kmk -C src/VBox/RDP/client-1.8.3
+    kmk -C src/VBox/RDP/client-1.8.4
     kmk -C src/VBox/ExtPacks/VNC packing
 
         PushScripts
@@ -140,8 +140,8 @@ function BuildAndInstall
         rm -rf /root/bldr-inst/*
 
 
-        #Main app
-        cd out/linux.amd64/release/bin
+	#Main app
+	cd out/linux.amd64/release/bin
 
     # binaries
     install -dm755 /root/bldr-inst/usr/bin
@@ -157,10 +157,12 @@ function BuildAndInstall
     install -dm755 /root/bldr-inst/usr/lib/virtualbox
     install -m755 *.so /root/bldr-inst/usr/lib/virtualbox
     install -m644 *.rc *.r0 VBoxEFI*.fd /root/bldr-inst/usr/lib/virtualbox
-        #suid stuff
-        install -m4755 VBoxSDL VirtualBox VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl VBoxNetNAT -t /root/bldr-inst/usr/lib/virtualbox
-        # other binaries
-    install -m755 VBoxManage VBoxSVC VBoxExtPackHelperApp VBoxXPCOMIPCD VBoxTestOGL VBoxBalloonCtrl vboxwebsrv webtest -t /root/bldr-inst/usr/lib/virtualbox
+
+	#suid stuff, NOTE this needs to be done in postinst/up script
+	#install -m4755 VBoxSDL VirtualBoxVM VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl VBoxNetNAT -t /root/bldr-inst/usr/lib/virtualbox
+
+	# other binaries
+    install -m755 VirtualBox VBoxManage VBoxSVC VBoxExtPackHelperApp VBoxXPCOMIPCD VBoxTestOGL VBoxBalloonCtrl vboxwebsrv webtest -t /root/bldr-inst/usr/lib/virtualbox
 
     # components
     install -dm755 /root/bldr-inst/usr/lib/virtualbox/components
@@ -170,8 +172,8 @@ function BuildAndInstall
         #TODO ?
     install -dm755 /root/bldr-inst/usr/lib/virtualbox/ExtensionPacks
 
-        mkdir -p /root/bldr-inst/usr/share/virtualbox/extensions/
-        cp ../packages/VNC-*.vbox-extpack /root/bldr-inst/usr/share/virtualbox/extensions/
+	mkdir -p /root/bldr-inst/usr/share/virtualbox/extensions/
+	cp ../packages/VNC-*.vbox-extpack /root/bldr-inst/usr/share/virtualbox/extensions/
 
     # languages
     install -dm755 /root/bldr-inst/usr/share/virtualbox/nls
@@ -204,13 +206,13 @@ function BuildAndInstall
 
     #systemd
     mkdir -p /root/bldr-inst/usr/lib/udev/rules.d/
-        mkdir -p /root/bldr-inst/usr/lib/systemd/system/
-        mkdir -p /root/bldr-inst/usr/lib/sysusers.d/
-        mv $BLDRTMPDIR/60-vboxdrv.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxdrv.rules
+	mkdir -p /root/bldr-inst/usr/lib/systemd/system/
+	mkdir -p /root/bldr-inst/usr/lib/sysusers.d/
+	mv $BLDRTMPDIR/60-vboxdrv.rules /root/bldr-inst/usr/lib/udev/rules.d/60-vboxdrv.rules
     mv $BLDRTMPDIR/vboxweb.service /root/bldr-inst/usr/lib/systemd/system/vboxweb.service
     mv $BLDRTMPDIR/virtualbox.sysusers /root/bldr-inst/usr/lib/sysusers.d/virtualbox.conf
         
-        PopScripts
+	PopScripts
 }
 
 #Default HTTP curl new version detection

@@ -5,8 +5,8 @@ NAME=spl
 DESC="A shim layer which adds the core interfaces required for OpenZFS."
 
 #package version
-VERSION=0.7.9-1
-DVERSION=0.7.9
+VERSION=0.7.12
+DVERSION=0.7.12
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

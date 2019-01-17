@@ -1,13 +1,9 @@
 function postinst() {
-        systemd-sysusers virtualbox.conf
-        pushd /usr/lib/virtualbox &> /dev/null
-        for i in VBoxSDL VirtualBox VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl VBoxNetNAT;
-        do
-                chmod 4755 $i;
-        done
-        chmod +x /usr/share/virtualbox/*.sh
-        systemctl restart systemd-modules-load
+	systemd-sysusers virtualbox.conf
+	chmod +x /usr/share/virtualbox/*.sh
+	chmod +s /usr/lib/virtualbox/{VBoxSDL,VirtualBoxVM,VBoxHeadless,VBoxNetDHCP,VBoxNetAdpCtl,VBoxNetNAT}
+	systemctl restart systemd-modules-load
 }
 function postup() {
-        postinst
+	postinst
 }
