@@ -1,7 +1,8 @@
 function postinst() {
-        depmod
+    KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
+    depmod $KERVER
 }
 
 function postup() {
-        postinst
+    postinst
 }

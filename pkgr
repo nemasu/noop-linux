@@ -1506,20 +1506,6 @@ if [ $1 == "--upgrade-all" ] || [ $1 == "-U" ]; then
 
     if [ ${#array[@]} -gt 0 ]; then
             
-        #Check for kernel upgrade.
-        for i in ${array[@]};
-        do
-            if [ "$i" == "linux-kernel" ];
-            then
-                echo 'There is a kernel update.'
-                read -p 'Press [Enter] to update kernel, a reboot after is recommended. <Ctrl + C> to cancel.'
-                pkgr -u linux-firmware; pkgr -u linux-kernel;
-                echo
-                echo
-                echo "Please Reboot, and run update again."
-                exit 0
-            fi
-        done
         $echo The following are about to be upgraded:
 
         for i in ${array[@]};
@@ -1536,6 +1522,22 @@ if [ $1 == "--upgrade-all" ] || [ $1 == "-U" ]; then
     else
         $echo "There are no packages available for upgrade."
     fi
+
+	
+	KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
+	if [ "$KERVER" != "`uname -r`" ]; then
+        #If using dracut
+        if [ -e /boot/dracut-initramfs.img ]; then
+			mv /boot/dracut-initramfs.img /boot/dracut-initramfs.img.old
+			dracut -q /boot/dracut-initramfs.img ${KERVER}
+        fi
+
+        #if using pkgr's
+        if [ -e /boot/noop-initramfs.img ]; then
+			mv /boot/noop-initramfs.img /boot/noop-initramfs.img.old
+			pkgr --mkinitramfs
+        fi
+	fi
 fi
 
 if [ $1 = "--install-file" ] || [ $1 == "-f" ]; then

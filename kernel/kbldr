@@ -62,9 +62,6 @@ else
 	depmod -F /usr/src/linux-${VERSION}/System.map -a -b /root/noopkern -E /usr/src/linux-${VERSION}/Module.symvers ${VERSION}
 fi
 
-#wget https://raw.githubusercontent.com/nemasu/noop-linux/master/kernel/kbldr-pkg.install -O$BLDRTMPDIR/pkg.install
-cp -v /var/noop/kernel/kbldr-pkg.install $BLDRTMPDIR/pkg.install
-
 pkgr -genmeta linux-kernel ${VERSION}
 pkgr -genpkg
 
