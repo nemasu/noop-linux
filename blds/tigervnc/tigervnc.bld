@@ -5,8 +5,8 @@ NAME=tigervnc
 DESC="Suite of VNC servers and clients. Based on the VNC 4 branch of TightVNC."
 
 #package version
-VERSION=1.6.0
-XORGVERSION=1.18.1
+VERSION=1.9.0
+XORGVERSION=1.20.1
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
@@ -35,19 +35,16 @@ function BuildAndInstall
 {
   CURDIR=`pwd`
   cd ..
-  wget ftp://ftp.freedesktop.org/pub/xorg/individual/xserver/xorg-server-${XORGVERSION}.tar.bz2
+  wget -4 ftp://ftp.freedesktop.org/pub/xorg/individual/xserver/xorg-server-${XORGVERSION}.tar.bz2
   tar xf xorg-server-${XORGVERSION}.tar.bz2
   cd $CURDIR
   cp -r ../xorg-server-$XORGVERSION/* unix/xserver
- 
-  #xver=`echo $XORGVERSION | sed -e 's/\([0-9]\.[0-9]*\)\..*/\1/g;s/\.//'`
-  xver=117
 
-  patch -Np1 -i $BLDRTMPDIR/xorg118.xorg_patch && rm $BLDRTMPDIR/xorg118.xorg_patch
   pushd unix/xserver
-#wget https://github.com/TigerVNC/tigervnc/raw/master/unix/xserver${xver}.patch
-  patch -Np1 -i ../xserver${xver}.patch
+  patch -Np1 -i $BLDRTMPDIR/xserver120.xpatch && rm $BLDRTMPDIR/xserver120.xpatch
+  patch -Np1 -i $BLDRTMPDIR/xserver120-drmfourcc.xpatch && rm $BLDRTMPDIR/xserver120-drmfourcc.xpatch
   popd
+
 
   cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr
   make -j${BLDR_CORES}
@@ -56,20 +53,20 @@ function BuildAndInstall
   CONFIG="--enable-dri2 --enable-glx"
   [[ ${ARCH} == "armv6l" ]] && CONFIG="--disable-glx --disable-dri2"
 
-        cd unix/xserver
-        autoreconf -fiv
-        ./configure --prefix=/usr \
-                --disable-static --disable-xinerama --without-dtrace \
-                --disable-xorg --disable-xnest --disable-xvfb --disable-dmx \
-                --disable-xwin --disable-xephyr --disable-kdrive --disable-xwayland \
-                --disable-config-hal --disable-config-udev --with-pic \
-                --disable-unit-tests --disable-devel-docs --disable-selective-werror \
-                --disable-dri --enable-dri3 ${CONFIG}
-        make -j${BLDR_CORES}
-        cd hw/vnc
-        make DESTDIR=/root/bldr-inst install
-        
-        sed -i 's/iconic/nowin/' /root/bldr-inst/usr/bin/vncserver
+	cd unix/xserver
+	autoreconf -fiv
+	./configure --prefix=/usr \
+			--disable-static --disable-xinerama --without-dtrace \
+			--disable-xorg --disable-xnest --disable-xvfb --disable-dmx \
+			--disable-xwin --disable-xephyr --disable-kdrive --disable-xwayland \
+			--disable-config-hal --disable-config-udev --with-pic \
+			--disable-unit-tests --disable-devel-docs --disable-selective-werror \
+			--disable-dri --enable-dri3 ${CONFIG}
+	make -j${BLDR_CORES}
+	cd hw/vnc
+	make DESTDIR=/root/bldr-inst install
+	
+	sed -i 's/iconic/nowin/' /root/bldr-inst/usr/bin/vncserver
 }
 #Default HTTP curl new version detection
 function Detect
