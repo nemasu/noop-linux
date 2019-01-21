@@ -5,7 +5,7 @@ NAME=lib32-freetype2
 DESC="TrueType font rendering library (32-bit)"
 
 #package version
-VERSION=2.6.2
+VERSION=2.9.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

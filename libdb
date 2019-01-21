@@ -3117,10 +3117,10 @@ lib32-flac,libFLAC.so.8
 lib32-flac,libFLAC.so.8.3.0
 lib32-fontconfig,libfontconfig.so
 lib32-fontconfig,libfontconfig.so.1
-lib32-fontconfig,libfontconfig.so.1.8.0
+lib32-fontconfig,libfontconfig.so.1.12.0
 lib32-freetype2,libfreetype.so
 lib32-freetype2,libfreetype.so.6
-lib32-freetype2,libfreetype.so.6.11.2
+lib32-freetype2,libfreetype.so.6.16.1
 lib32-gdk-pixbuf,libgdk_pixbuf-2.0.so
 lib32-gdk-pixbuf,libgdk_pixbuf-2.0.so.0
 lib32-gdk-pixbuf,libgdk_pixbuf-2.0.so.0.3600.0
