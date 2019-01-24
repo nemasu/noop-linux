@@ -395,6 +395,11 @@ function DoSync() {
         cp -r noop.bak/* noop/ && rm -rf noop.bak
         rm -rf $PREFIX/usr/sbin/pkgr
         ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
+		#Use current mirror
+		if [ -e /etc/noop/mirrors ]; then
+			mkdir -p $PREFIX/etc/noop/
+			cp /etc/noop/mirrors $PREFIX/etc/noop/
+		fi
         pushd $PREFIX/var/noop &> /dev/null
         $echo
     else
