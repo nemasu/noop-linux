@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'jansson' 'jemalloc' 'libev' 'libxml2' 'openssl' 'systemd' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

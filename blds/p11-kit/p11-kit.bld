@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libffi' 'libtasn1')
+DEPS=('glibc' 'libffi' 'libtasn1' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -20,7 +20,7 @@ EXTRACONF="--with-dbusconfdir=/usr/share --enable-btpclient --enable-midi --enab
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'dbus' 'glib2' 'glibc' 'icu4c' 'json-c' 'libical' 'ncurses' 'readline' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=
