@@ -1,0 +1,48 @@
+#package name
+NAME=cbindgen
+
+#Description
+DESC="A project for generating C bindings from Rust code"
+
+#package version
+VERSION=0.7.0
+
+#directory locations, 99.99% of the time this is 1
+ISUSR=1
+
+#source location (used by wget)
+SRC=https://github.com/eqrion/cbindgen/archive/v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, python, perl, cmake, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	cargo build --release
+	mkdir -p /root/bldr-inst/usr/bin
+	cp target/release/cbindgen /root/bldr-inst/usr/bin
+}
+
+function Detect() {
+    LATEST=`LatestVersionGitHub https://github.com/eqrion/cbindgen/releases`
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

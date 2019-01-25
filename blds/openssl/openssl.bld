@@ -5,7 +5,7 @@ NAME=openssl
 DESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security."
 
 #package version
-VERSION=1.1.0g
+VERSION=1.1.1a
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,9 +5,9 @@ NAME=sqlite
 DESC="A C library that implements an SQL database engine"
 
 #package version
-VERSION=3230100
-DVERSION=3230100
-tcl_dir=/usr/lib/sqlite3.23.1
+VERSION=3260000
+DVERSION=3260000
+tcl_dir=/usr/lib/sqlite3.26.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
