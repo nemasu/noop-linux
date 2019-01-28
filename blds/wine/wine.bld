@@ -5,15 +5,15 @@ NAME=wine
 DESC="A compatibility layer for running Windows programs"
 
 #package version
-VERSION=3.3
-DVERSION=3.3
+VERSION=4.0
+DVERSION=4.0
 STAGING_VER=${DVERSION}
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.winehq.org/pub/wine/source/3.x/wine-${DVERSION}.tar.xz
+SRC=http://ftp.winehq.org/pub/wine/source/${DVERSION}/wine-${DVERSION}.tar.xz
 
 #xD
 
