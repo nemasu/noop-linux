@@ -5,7 +5,7 @@ NAME=pkg-config
 DESC="A system for managing library compile/link flags"
 
 #package version
-VERSION=0.26
+VERSION=0.29.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

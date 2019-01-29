@@ -5,7 +5,7 @@ NAME=m4
 DESC="The GNU macro processor"
 
 #package version
-VERSION=1.4.17
+VERSION=1.4.18
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

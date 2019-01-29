@@ -5194,7 +5194,7 @@ libsamplerate,libsamplerate.so.0
 libsamplerate,libsamplerate.so.0.1.8
 libseccomp,libseccomp.so
 libseccomp,libseccomp.so.2
-libseccomp,libseccomp.so.2.1.1
+libseccomp,libseccomp.so.2.3.3
 libsecret,libsecret-1.so
 libsecret,libsecret-1.so.0
 libsecret,libsecret-1.so.0.0.0
@@ -6475,9 +6475,7 @@ oxygen,liboxygenstyleconfig5.so.5
 oxygen,liboxygenstyleconfig5.so.5.14.0
 p11-kit,libp11-kit.so
 p11-kit,libp11-kit.so.0
-p11-kit,libp11-kit.so.0.1.0
-p11-kit,p11-kit-proxy.so
-p11-kit,p11-kit-trust.so
+p11-kit,libp11-kit.so.0.3.0
 p7zip,7z.so
 p7zip,Rar29.so
 pango,libpango-1.0.so

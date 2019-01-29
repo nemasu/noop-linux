@@ -5,7 +5,7 @@ NAME=qemu-static
 DESC="Static build of qemu"
 
 #package version
-VERSION=2.12.1
+VERSION=3.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,27 +35,61 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
-               --static --python=/usr/bin/python2 --disable-werror \
-              --disable-docs --disable-gtk --disable-vnc --disable-kvm --disable-libssh2 \
-              --enable-user --disable-system --disable-fdt
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst libexecdir=/usr/lib/qemu install
-        
-        # remove conflicting /var/run directory
-        rm -rf /root/bldr-inst/var
-        
-        # add sample config
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--libexecdir=/usr/lib/qemu \
+		--enable-linux-user \
+		--disable-debug-info \
+		--disable-bsd-user \
+		--disable-werror \
+		--disable-system \
+		--disable-tools \
+		--disable-docs \
+		--disable-gtk \
+		--disable-gnutls \
+		--disable-nettle \
+		--disable-gcrypt \
+		--disable-glusterfs \
+		--disable-libnfs \
+		--disable-libiscsi \
+		--disable-vnc \
+		--disable-kvm \
+		--disable-libssh2 \
+		--disable-libxml2 \
+		--disable-vde \
+		--disable-sdl \
+		--disable-opengl \
+		--disable-xen \
+		--disable-kvm \
+		--disable-fdt \
+		--disable-vhost-net \
+		--disable-vhost-crypto \
+		--disable-vhost-user \
+		--disable-vhost-vsock \
+		--disable-vhost-scsi \
+		--disable-tpm \
+		--disable-qom-cast-debug \
+		--disable-capstone \
+		--static
+		
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst libexecdir=/usr/lib/qemu install
+	
+	# remove conflicting /var/run directory
+	rm -rf /root/bldr-inst/var
+	
+	# add sample config
 #mkdir -p /root/bldr-inst/etc/qemu/
 #echo "allow br0" > /root/bldr-inst/etc/qemu/bridge.conf.sample
-        cd /root/bldr-inst/usr/bin/
-        for f in `ls -1`;
-        do
-                mv "$f" "$f-static"
-        done
+	cd /root/bldr-inst/usr/bin/
+	for f in `ls -1`;
+	do
+		mv "$f" "$f-static"
+	done
 
-        rm -rf /root/bldr-inst/usr/{share,lib} /root/bldr-inst/etc
-        
+	rm -rf /root/bldr-inst/usr/{share,lib} /root/bldr-inst/etc
 }
 
 #Default HTTP curl new version detection

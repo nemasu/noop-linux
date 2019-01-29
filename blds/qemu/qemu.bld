@@ -5,7 +5,7 @@ NAME=qemu
 DESC="A generic and open source processor emulator which achieves a good emulation speed by using dynamic translation"
 
 #package version
-VERSION=2.12.1
+VERSION=3.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

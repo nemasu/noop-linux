@@ -5,13 +5,13 @@ NAME=p11-kit
 DESC="Library to work with PKCS#11 modules"
 
 #package version
-VERSION=0.23.2
+VERSION=0.23.15
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://p11-glue.freedesktop.org/releases/p11-kit-${VERSION}.tar.gz
+SRC=https://github.com/p11-glue/p11-kit/archive/${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,9 +33,10 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure --prefix=/usr
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+	./autogen.sh
+	./configure --prefix=/usr
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
