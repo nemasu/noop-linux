@@ -5,8 +5,8 @@ NAME=libreoffice
 DESC="Office suite"
 
 #package version
-VERSION=6.0.4.2
-DVERSION=6.0.4.2
+VERSION=6.1.4.2
+DVERSION=6.1.4.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
