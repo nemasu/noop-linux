@@ -5,7 +5,7 @@ NAME=nspr
 DESC="Netscape Portable Runtime"
 
 #package version
-VERSION=4.17
+VERSION=4.20
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
