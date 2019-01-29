@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('lib32-primus' 'primus' 'bbswitch' 'lib32-virtualgl' 'virtualgl' 'lib32-mesalib' 'mesalib' 'glib2' 'glibc' 'libX11')
+DEPS=('lib32-primus' 'primus' 'bbswitch' 'lib32-virtualgl' 'virtualgl' 'nvidia' 'lib32-mesalib' 'mesalib' 'glib2' 'glibc' 'libX11')
 
 # 'no' to skip calls to strip
 STRIP=
