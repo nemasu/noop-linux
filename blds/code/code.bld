@@ -5,7 +5,7 @@ NAME=code
 DESC="Visual Studio Code"
 
 #package version
-VERSION=1.28.2
+VERSION=1.31.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -45,20 +45,7 @@ function BuildAndInstall
 }
 
 function Detect() {
-    LISTURL=
-    FILELIST=`GetFileList`
-    LATEST=0
-
-    for i in ${FILELIST[@]};
-    do
-        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-        vercomp $LATEST $CURVER
-        if [ $? -eq 2 ];
-        then
-                        LATEST=$CURVER
-        fi
-    done
-
+    LATEST=`curl -L -s https://code.visualstudio.com/updates | grep "linux-x64" | head -n1 | sed -e 's/.*visualstudio.com\/\(.*\)\/linux-x64\/stable.*/\1/g'`
     vercomp $VERSION $LATEST
     if [ $? -eq 2 ];
     then
