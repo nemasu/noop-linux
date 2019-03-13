@@ -4510,6 +4510,7 @@ libatasmart,libatasmart.so
 libatasmart,libatasmart.so.4
 libatasmart,libatasmart.so.4.0.5
 libbluray,libbluray.so
+libbluray,libbluray.so.1
 libbluray,libbluray.so.2
 libbluray,libbluray.so.2.1.0
 libbonobo,libbonobo-2.so
@@ -8438,11 +8439,11 @@ vlc,libdolby_surround_decoder_plugin.so
 vlc,libdtv_plugin.so
 vlc,libdummy_plugin.so
 vlc,libdvbsub_plugin.so
+vlc,libdvdnav_plugin.so
 vlc,libdvdread_plugin.so
 vlc,libdynamicoverlay_plugin.so
 vlc,libedgedetection_plugin.so
 vlc,libedummy_plugin.so
-vlc,libegl_wl_plugin.so
 vlc,libegl_x11_plugin.so
 vlc,libequalizer_plugin.so
 vlc,liberase_plugin.so
@@ -8524,6 +8525,7 @@ vlc,libmagnify_plugin.so
 vlc,libmarq_plugin.so
 vlc,libmediadirs_plugin.so
 vlc,libmemory_keystore_plugin.so
+vlc,libmicrodns_plugin.so
 vlc,libmirror_plugin.so
 vlc,libmjpeg_plugin.so
 vlc,libmkv_plugin.so
@@ -8547,6 +8549,7 @@ vlc,libmux_ps_plugin.so
 vlc,libmux_wav_plugin.so
 vlc,libncurses_plugin.so
 vlc,libnetsync_plugin.so
+vlc,libnfs_plugin.so
 vlc,libnormvol_plugin.so
 vlc,libnoseek_plugin.so
 vlc,libnotify_plugin.so
@@ -8561,6 +8564,7 @@ vlc,libopencv_example_plugin.so
 vlc,libopencv_wrapper_plugin.so
 vlc,libopus_plugin.so
 vlc,libpacketizer_a52_plugin.so
+vlc,libpacketizer_av1_plugin.so
 vlc,libpacketizer_avparser_plugin.so
 vlc,libpacketizer_copy_plugin.so
 vlc,libpacketizer_dirac_plugin.so
@@ -8615,6 +8619,7 @@ vlc,libscene_plugin.so
 vlc,libschroedinger_plugin.so
 vlc,libscte18_plugin.so
 vlc,libscte27_plugin.so
+vlc,libsd_journal_plugin.so
 vlc,libsdp_plugin.so
 vlc,libsecret_plugin.so
 vlc,libsepia_plugin.so
@@ -8679,6 +8684,7 @@ vlc,libtta_plugin.so
 vlc,libttml_plugin.so
 vlc,libtwolame_plugin.so
 vlc,libty_plugin.so
+vlc,libudev_plugin.so
 vlc,libudp_plugin.so
 vlc,libugly_resampler_plugin.so
 vlc,libuleaddvaudio_plugin.so
@@ -8725,8 +8731,6 @@ vlc,libwall_plugin.so
 vlc,libwav_plugin.so
 vlc,libwave_plugin.so
 vlc,libwebvtt_plugin.so
-vlc,libwl_shell_plugin.so
-vlc,libwl_shm_plugin.so
 vlc,libx264_plugin.so
 vlc,libx265_plugin.so
 vlc,libxa_plugin.so
@@ -8737,7 +8741,6 @@ vlc,libxcb_window_plugin.so
 vlc,libxcb_x11_plugin.so
 vlc,libxcb_xv_plugin.so
 vlc,libxdg_screensaver_plugin.so
-vlc,libxdg_shell_plugin.so
 vlc,libxml_plugin.so
 vlc,libxwd_plugin.so
 vlc,libyuv_plugin.so

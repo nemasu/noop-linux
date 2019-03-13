@@ -1,24 +1,23 @@
 #package name
-NAME=intel-ucode
+NAME=iucode-tool
 
 #Description
-DESC="Microcode update files for Intel CPUs"
+DESC="Tool to manipulate Intel® IA-32/X86-64 microcode bundles"
 
 #package version
-VERSION=20180807.a
-urlid=28087
+VERSION=2.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://downloadmirror.intel.com/${urlid}/eng/microcode-${VERSION/./}.tgz
+SRC="https://gitlab.com/iucode-tool/releases/raw/master/iucode-tool_${VERSION}.tar.xz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=custom
+BUILD=autotools
 
 # build/package dependancies
 DEPS=
@@ -32,17 +31,9 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-	rm -f intel-ucode{,-with-caveats}/list
-	mkdir -p kernel/x86/microcode
-	iucode_tool -w kernel/x86/microcode/GenuineIntel.bin intel-ucode{,-with-caveats}/
-	# Make intel-ucode.img reproducible
-	[ ! -z $SOURCE_DATE_EPOCH ] && touch -d @$SOURCE_DATE_EPOCH kernel/x86/microcode/GenuineIntel.bin
-	echo kernel/x86/microcode/GenuineIntel.bin | bsdcpio -o -H newc -R 0:0 > intel-ucode.img
-
-	install -D -m0644 intel-ucode.img /root/bldr-inst/boot/intel-ucode.img
-}
+#function BuildAndInstall
+#{
+#}
 
 function Detect() {
     LISTURL=
