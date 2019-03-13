@@ -5,7 +5,7 @@ NAME=libbluray
 DESC="Library to access Blu-Ray disks for video playback"
 
 #package version
-VERSION=0.8.1
+VERSION=1.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -14,7 +14,7 @@ ISUSR=1
 SRC=ftp://ftp.videolan.org/pub/videolan/libbluray/${VERSION}/libbluray-${VERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--disable-bdjava-jar"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=autotools
