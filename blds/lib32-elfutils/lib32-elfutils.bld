@@ -5,7 +5,7 @@ NAME=lib32-elfutils
 DESC="Utilities to handle ELF object files and DWARF debugging information (32-bit)."
 
 #package version
-VERSION=0.173
+VERSION=0.176
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
