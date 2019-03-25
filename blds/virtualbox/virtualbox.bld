@@ -5,8 +5,8 @@ NAME=virtualbox
 DESC="Powerful x86 virtualization for enterprise as well as home use"
 
 #package version
-VERSION=6.0.2
-DVERSION=6.0.2
+VERSION=6.0.4
+DVERSION=6.0.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -160,7 +160,7 @@ function BuildAndInstall
     install -m644 *.rc *.r0 VBoxEFI*.fd /root/bldr-inst/usr/lib/virtualbox
 
 	#suid stuff, NOTE this needs to be done in postinst/up script
-	#install -m4755 VBoxSDL VirtualBoxVM VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl VBoxNetNAT -t /root/bldr-inst/usr/lib/virtualbox
+    install -m4755 VBoxSDL VirtualBoxVM VBoxHeadless VBoxNetDHCP VBoxNetAdpCtl VBoxNetNAT -t /root/bldr-inst/usr/lib/virtualbox
 
 	# other binaries
     install -m755 VirtualBox VBoxManage VBoxSVC VBoxExtPackHelperApp VBoxXPCOMIPCD VBoxTestOGL VBoxBalloonCtrl vboxwebsrv webtest -t /root/bldr-inst/usr/lib/virtualbox
