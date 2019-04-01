@@ -42,23 +42,10 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=
-        FILELIST=`GetFileList`
-        LATEST=0
-
-        for i in ${FILELIST[@]};
-        do
-                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-                        vercomp $LATEST $CURVER
-                        if [ $? -eq 2 ];
-                        then
-                                        LATEST=$CURVER
-                        fi
-        done
-
-        vercomp $VERSION $LATEST
-        if [ $? -eq 2 ];
-        then
-                        echo "$NAME: New Version Available! - $LATEST"
-        fi
+    LATEST=`curl -s "http://www.libimobiledevice.org/" | grep "Latest Release" | sed -e 's/.*Latest Release: \(.*\)<.*/\1/g'`
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
 }

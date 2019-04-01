@@ -36,20 +36,7 @@ RESTORELIBDB=
 #}
 
 function Detect() {
-    LISTURL=
-    FILELIST=`GetFileList`
-    LATEST=0
-
-    for i in ${FILELIST[@]};
-    do
-        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-        vercomp $LATEST $CURVER
-        if [ $? -eq 2 ];
-        then
-                        LATEST=$CURVER
-        fi
-    done
-
+    LATEST=`curl -s "http://www.portaudio.com/archives/" | grep "pa_stable_v" | sed -e 's/.*pa_stable_v//g;s/\.tgz.*//g' | tail -n1`
     vercomp $VERSION $LATEST
     if [ $? -eq 2 ];
     then

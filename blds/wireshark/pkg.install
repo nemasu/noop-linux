@@ -3,6 +3,7 @@ function postinst() {
     setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' /usr/bin/dumpcap
     chgrp 150 /usr/bin/dumpcap
     chmod 754 /usr/bin/dumpcap
+    chmod +s /usr/bin/dumpcap
     echo "NOTE: To run wireshark as normal user you have to add yourself into wireshark group"
 }
 function postup() {
@@ -10,6 +11,7 @@ function postup() {
     setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' /usr/bin/dumpcap
     chgrp 150 /usr/bin/dumpcap
     chmod 754 /usr/bin/dumpcap
+    chmod +s /usr/bin/dumpcap
 }
 function postrm() {
     if getent group wireshark >/dev/null 2>&1;

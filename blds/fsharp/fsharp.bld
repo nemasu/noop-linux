@@ -5,7 +5,7 @@ NAME=fsharp
 DESC="The Open Edition of the F# compiler, core library and tools"
 
 #package version
-VERSION=4.0.1.20
+VERSION=10.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,13 +17,13 @@ SRC=https://github.com/fsharp/fsharp/archive/${VERSION}.tar.gz
 EXTRACONF=
 
 #autotools, python, perl, cmake, custom
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=
 
 # 'no' to skip calls to strip
-STRIP=
+STRIP=no
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
 PKGDEPS=
@@ -31,9 +31,11 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+    make
+    make DESTDIR=/root/bldr-inst install
+}
 
 #Default HTTP curl new version detection
 function Detect
