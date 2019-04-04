@@ -5,13 +5,13 @@ NAME=monodevelop
 DESC="MonoDevelop is a cross platform IDE mostly aimed at Mono/.NET developers"
 
 #package version
-VERSION=7.8.1.8
+VERSION=7.6.9.22
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC=https://download.mono-project.com/repo/ubuntu/pool/main/m/monodevelop/monodevelop_${VERSION}.orig.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -29,19 +29,29 @@ STRIP=
 PKGDEPS=('gnome-sharp' 'mono' 'mono-addins' 'gtk-sharp2' 'msbuild' 'nuget')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
-RESTORELIBDB=
+RESTORELIBDB=1
 
 function BuildAndInstall
 {
-    if [ ! -e "./monodevelop" ]; then
-        git clone --recursive https://github.com/mono/monodevelop.git
-    fi
-    cd monodevelop
-    git checkout monodevelop-$VERSION
-    ./configure --prefix=/usr --profile=stable --enable-release
+    ./configure --enable-release --prefix=/usr --disable-git
+    
+    #Git support not building currently, disable for now
+    echo "exit 0" > src/addins/VersionControl/MonoDevelop.VersionControl.Git/build_libgit2.sh
+
+    #This version is failing to download, so lets try a different one
+    sed -i -e 's|ExtCore (0.8.46)|ExtCore (0.8.45)|g' external/fsharpbinding/paket.lock
+    
     make
     make DESTDIR=/root/bldr-inst install
-    install -Dm755 main/external/nuget-binary/NuGet.exe /root/bldr-inst/usr/lib/monodevelop/AddIns/MonoDevelop.PackageManagement/NuGet.exe
+#    if [ ! -e "./monodevelop" ]; then
+#        git clone --recursive https://github.com/mono/monodevelop.git
+#    fi
+#    cd monodevelop
+#    git checkout monodevelop-$VERSION
+#    ./configure --prefix=/usr --profile=stable --enable-release
+#    make
+#    make DESTDIR=/root/bldr-inst install
+#    install -Dm755 main/external/nuget-binary/NuGet.exe /root/bldr-inst/usr/lib/monodevelop/AddIns/MonoDevelop.PackageManagement/NuGet.exe
 }
 
 #Default HTTP curl new version detection
