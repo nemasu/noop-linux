@@ -2,8 +2,8 @@ NAME=firefox
 
 #Description
 DESC="Standalone web browser from mozilla.org"
-VERSION=64.0.2
-DVERSION=64.0.2
+VERSION=66.0.2
+DVERSION=66.0.2
 ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
@@ -17,7 +17,7 @@ function BuildAndInstall
 {
 
   #build prereqs
-  for i in zip autoconf2.13 rust jack unzip wayland-protocols; do
+  for i in zip autoconf2.13 rust jack unzip wayland-protocols nasm; do
           pkgr -i $i;
   done
 
@@ -31,7 +31,8 @@ function BuildAndInstall
   mv $BLDRTMPDIR/mozconfig .mozconfig
 
   echo -n "$_google_api_key" >google-api-key
-  echo "ac_add_options --with-google-api-keyfile=\"$PWD/google-api-key\"" >>.mozconfig
+  echo "ac_add_options --with-google-location-service-api-keyfile=\"$PWD/google-api-key\"" >>.mozconfig
+  echo "ac_add_options --with-google-safebrowsing-api-keyfile=\"$PWD/google-api-key\"" >>.mozconfig
 
 #echo -n "$_mozilla_api_key" >mozilla-api-key
 #echo "ac_add_options --with-mozilla-api-keyfile=\"$PWD/mozilla-api-key\"" >>.mozconfig

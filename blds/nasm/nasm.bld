@@ -5,13 +5,13 @@ NAME=nasm
 DESC="An 80x86 assembler designed for portability and modularity"
 
 #package version
-VERSION=2.10.01
+VERSION=2.14.02
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.nasm.us/pub/nasm/releasebuilds/2.10.01/nasm-2.10.01.tar.xz
+SRC=http://www.nasm.us/pub/nasm/releasebuilds/${VERSION}/nasm-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
