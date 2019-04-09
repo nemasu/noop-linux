@@ -5,13 +5,14 @@ NAME=okular
 DESC="KDE document viewer"
 
 #package version
-VERSION=18.08.2
+VERSION=18.08.2-1
+DVERSION=18.08.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/applications/${VERSION}/src/okular-$VERSION.tar.xz
+SRC=http://download.kde.org/stable/applications/${DVERSION}/src/okular-$DVERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +39,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/applications/${VERSION}/src/
+        LISTURL=http://download.kde.org/stable/applications/${DVERSION}/src/
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -52,7 +53,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

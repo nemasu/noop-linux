@@ -1470,6 +1470,9 @@ graphviz,libgvplugin_xlib.so.6.0.0
 graphviz,libgvpr.so
 graphviz,libgvpr.so.2
 graphviz,libgvpr.so.2.0.0
+graphviz,liblab_gamut.so
+graphviz,liblab_gamut.so.1
+graphviz,liblab_gamut.so.1.0.0
 graphviz,libpathplan.so
 graphviz,libpathplan.so.4
 graphviz,libpathplan.so.4.0.0
@@ -1482,9 +1485,6 @@ graphviz,libtcldot_builtin.so.0.0.0
 graphviz,libtclplan.so
 graphviz,libtclplan.so.0
 graphviz,libtclplan.so.0.0.0
-graphviz,libtkspline.so
-graphviz,libtkspline.so.0
-graphviz,libtkspline.so.0.0.0
 graphviz,libxdot.so
 graphviz,libxdot.so.4
 graphviz,libxdot.so.4.0.0
@@ -2119,8 +2119,6 @@ imlib2,zlib.so
 incidenceeditor,libKF5IncidenceEditor.so
 incidenceeditor,libKF5IncidenceEditor.so.5
 incidenceeditor,libKF5IncidenceEditor.so.5.9.2
-iproute2,m_ipt.so
-iproute2,m_xt.so
 iptables,libarpt_mangle.so
 iptables,libebt_802_3.so
 iptables,libebt_arp.so

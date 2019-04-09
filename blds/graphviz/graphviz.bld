@@ -5,14 +5,14 @@ NAME=graphviz
 DESC="Graph visualization software"
 
 #package version
-VERSION=2.38.0-1
-DVERSION=2.38.0
+VERSION=2.40.1
+DVERSION=2.40.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.graphviz.org/pub/graphviz/stable/SOURCES/graphviz-${DVERSION}.tar.gz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -34,19 +34,24 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        export LIBPOSTFIX=/
-        export PYTHON=python2
+    if [ -z "$BLDR_CONTINUE" ]; then
+        git clone --recursive https://gitlab.com/graphviz/graphviz.git
+        cd graphviz
+        git checkout stable_release_$DVERSION
+        cd ..
+    fi
+    cd graphviz
+    NOCONFIG=1 ./autogen.sh
+    ./configure --prefix=/usr --enable-sharp=no --enable-swig=no --enable-java=no --enable-lua=no --enable-php=no --enable-ruby=no --enable-python=no
+    make -j${BLDR_CORES}
 
-        ./configure --prefix=/usr --enable-sharp=no --enable-swig=no --enable-java=no --enable-lua=no --enable-php=no --enable-ruby=no --enable-python=no
-        make -j${BLDR_CORES}
-
-        make DESTDIR=/root/bldr-inst install
+    make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://www.graphviz.org/pub/graphviz/stable/SOURCES
+        LISTURL=https://graphviz.gitlab.io/_pages/Download/Download_source.html
         FILELIST=`GetFileList`
         LATEST=0
 
