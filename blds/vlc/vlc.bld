@@ -35,17 +35,16 @@ RESTORELIBDB=
 function BuildAndInstall
 {
     export BUILDCC=gcc
-    export CFLAGS+=" -I/usr/include/samba-4.0"
-    export CPPFLAGS+=" -I/usr/include/samba-4.0"
-    export CXXFLAGS+=" -std=c++11"
-    export LUAC=/usr/bin/luac
-    export LUA_LIBS="$(pkg-config --libs lua)"
-
+    sed -e "/test.*build.*host/s/\$(host)/nothanks/" \
+            -i Makefile.am -i bin/Makefile.am
+    autoreconf -fi
     ./configure --prefix=/usr \
 				--sysconfdir=/etc \
-				--enable-vlc\
+				--enable-vlc \
+                --with-kde-solid=/usr/share/solid/actions/ \
 				--disable-dependency-tracking \
 				--disable-update-check \
+                --disable-optimizations \
 				--enable-fast-install \
 				--enable-screen \
 				--disable-rpath \

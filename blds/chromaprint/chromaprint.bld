@@ -5,13 +5,14 @@ NAME=chromaprint
 DESC="Library that implements a custom algorithm for extracting fingerprints from any audio source"
 
 #package version
-VERSION=1.3.1
+VERSION=1.3.1-1
+DVERSION=1.3.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="https://bitbucket.org/acoustid/chromaprint/downloads/chromaprint-${VERSION}.tar.gz"
+SRC="https://bitbucket.org/acoustid/chromaprint/downloads/chromaprint-${DVERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -62,7 +63,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

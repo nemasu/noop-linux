@@ -5,7 +5,7 @@ NAME=glibc
 DESC="GNU C Library"
 
 #package version
-VERSION=2.27
+VERSION=2.29
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -80,9 +80,10 @@ function BuildAndInstall
                               usr/lib/getconf/*
 
         strip --strip-debug lib/lib{anl,BrokenLocale,c{,_nonshared},crypt}.a \
-                            lib/lib{dl,g,mcheck,pthread{,_nonshared}}.a \
+                            lib/lib{dl,g,mcheck,pthread}.a \
                             lib/lib{resolv,rpcsvc,rt,util}.a \
                             lib/lib{m-${VERSION},mvec{,_nonshared}}.a
+#                            lib/lib{dl,g,mcheck,pthread{,_nonshared}}.a \
 
         strip --strip-debug --strip-unneeded lib/lib{anl,BrokenLocale,cidn,crypt}-${pkgver}.so \
                             lib/libnss_{compat,db,dns,files,hesiod,nis,nisplus}-*.so \

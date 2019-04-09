@@ -5,7 +5,7 @@ NAME=zfs
 DESC="ZFS on Linux - the official OpenZFS implementation for Linux."
 
 #package version
-VERSION=0.7.12
+VERSION=0.7.12-1
 DVERSION=0.7.12
 
 #directory locations, 99.99% of the time this is 1

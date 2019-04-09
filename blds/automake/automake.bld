@@ -5,7 +5,7 @@ NAME=automake
 DESC="A GNU tool for automatically creating Makefiles"
 
 #package version
-VERSION=1.15
+VERSION=1.15.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,14 +5,14 @@ NAME=gimp
 DESC="GNU Image Manipulation Program"
 
 #package version
-VERSION=2.8.22
-DVERSION=2.8.22
+VERSION=2.10.10
+DVERSION=2.10.10
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://download.gimp.org/mirror/pub/gimp/v${DVERSION:0:3}/gimp-${DVERSION}.tar.bz2
+SRC=https://download.gimp.org/mirror/pub/gimp/v${DVERSION:0:4}/gimp-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

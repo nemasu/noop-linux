@@ -5,7 +5,7 @@ NAME=tevent
 DESC="An event system based on the talloc memory management library"
 
 #package version
-VERSION=0.9.36
+VERSION=0.10.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,8 +33,6 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        export PYTHON=/usr/bin/python2
-        sed -i -e 's#python#python2#g' buildtools/bin/waf
         ./configure --prefix=/usr \
            --localstatedir=/var \
            --sysconfdir=/etc/samba

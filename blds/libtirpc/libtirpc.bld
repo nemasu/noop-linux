@@ -5,7 +5,7 @@ NAME=libtirpc
 DESC="Transport Independent RPC library (SunRPC replacement)"
 
 #package version
-VERSION=0.2.2
+VERSION=1.1.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -37,10 +37,7 @@ function BuildAndInstall
         autoreconf -fisv
         ./configure --prefix=/usr --enable-gss CFLAGS="-fPIC"
         make
-
         make DESTDIR=/root/bldr-inst install
-        install -D -m644 doc/etc_netconfig /root/bldr-inst/etc/netconfig
-
 }
 
 function Detect

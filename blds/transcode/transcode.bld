@@ -5,7 +5,7 @@ NAME=transcode
 DESC="A video/DVD ripper and encoder for the terminal/console"
 
 #package version
-VERSION=1.1.7-4
+VERSION=1.1.7-5
 DVERSION=1.1.7
 
 #directory locations, 99.99% of the time this is 1
@@ -35,24 +35,31 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  wget http://downloads.sourceforge.net/sourceforge/subtitleripper/subtitleripper-0.3-4.tgz
-  tar xf subtitleripper-0.3-4.tgz
+  if [ -z "$BLDR_CONTINUE" ]; then
+      wget http://downloads.sourceforge.net/sourceforge/subtitleripper/subtitleripper-0.3-4.tgz
+      tar xf subtitleripper-0.3-4.tgz
 
-  mv $BLDRTMPDIR/*.patch2 .
-  patch -Np1 -i  subtitleripper-0.3.4-linkingorder.patch2 && rm subtitleripper-0.3.4-linkingorder.patch2
-  patch -Np1 -i  subtitleripper-0.3.4-respect-ldflags.patch2 && rm subtitleripper-0.3.4-respect-ldflags.patch2
+      mv $BLDRTMPDIR/*.patch2 .
+      patch -Np1 -i  001-subtitleripper-0.3.4-linkingorder.patch2 && rm 001-subtitleripper-0.3.4-linkingorder.patch2
+      patch -Np1 -i  002-subtitleripper-0.3.4-respect-ldflags.patch2 && rm 002-subtitleripper-0.3.4-respect-ldflags.patch2
+    
+      sed -i "s:av_close_input_file:avformat_close_input:g" \
+              import/probe_ffmpeg.c
+
+      sed -e 's|freetype/ftglyph.h|freetype2/freetype/ftglyph.h|' -i filter/subtitler/load_font.c
+
+      ./configure --prefix=/usr \
+        --disable-sse --disable-sse2 --disable-altivec --enable-mmx \
+        --enable-lame --enable-ogg --enable-vorbis --enable-theora \
+        --enable-libdv --enable-libxml2 --enable-v4l \
+        --enable-imagemagick --enable-libjpeg --enable-lzo --enable-mjpegtools \
+        --enable-sdl --enable-freetype2 --enable-a52 --enable-libpostproc \
+        --enable-xvid --enable-x264 --enable-alsa --enable-libmpeg2 --enable-libmpeg2convert
+      sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+
+  fi
         
-  sed -i "s:av_close_input_file:avformat_close_input:g" \
-          import/probe_ffmpeg.c
-
-  ./configure --prefix=/usr \
-    --disable-sse --disable-sse2 --disable-altivec --enable-mmx \
-    --enable-lame --enable-ogg --enable-vorbis --enable-theora \
-    --enable-libdv --enable-libxml2 --enable-v4l \
-    --enable-imagemagick --enable-libjpeg --enable-lzo --enable-mjpegtools \
-    --enable-sdl --enable-freetype2 --enable-a52 --enable-libpostproc \
-    --enable-xvid --enable-x264 --enable-alsa --enable-libmpeg2 --enable-libmpeg2convert
-  make
+  make -j${BLDR_CORES}
   
   make DESTDIR=/root/bldr-inst install
 
@@ -62,7 +69,7 @@ function BuildAndInstall
       -e 's|^\(.*D_HAVE_LIB_PPM.*\)$|#\1|' \
       -e 's/DEFINES :=/DEFINES = -DHAVE_GETLINE/' \
       -i Makefile
-  make
+  make -j${BLDR_CORES}
   
   install -m 755 pgm2txt /root/bldr-inst/usr/bin/
   install -m 755 srttool /root/bldr-inst/usr/bin/

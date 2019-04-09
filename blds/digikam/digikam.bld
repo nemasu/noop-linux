@@ -5,13 +5,14 @@ NAME=digikam
 DESC="Advanced digital photo management application"
 
 #package version
-VERSION=5.9.0
+VERSION=6.0.0
+DVERSION=6.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/digikam/digikam-${VERSION}.tar.xz
+SRC=http://download.kde.org/stable/digikam/6.0.0/digikam-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -69,7 +70,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

@@ -5,7 +5,7 @@ NAME=libx264
 DESC="Library for encoding H264/AVC video streams"
 
 #package version
-VERSION=20160223
+VERSION=20190409
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

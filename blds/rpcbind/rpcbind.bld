@@ -5,13 +5,14 @@ NAME=rpcbind
 DESC="portmap replacement which supports RPC over various protocols"
 
 #package version
-VERSION=0.2.0
+VERSION=1.2.5
+DVERSION=1.2.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC=https://downloads.sourceforge.net/sourceforge/rpcbind/rpcbind-$DVERSION.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-warmstarts --with-statedir=/run"
@@ -52,7 +53,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

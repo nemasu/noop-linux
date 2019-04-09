@@ -5,13 +5,14 @@ NAME=linux-pam
 DESC="PAM (Pluggable Authentication Modules) library"
 
 #package version
-VERSION=1.3.0
+VERSION=1.3.0-1
+DVERSION=1.3.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://linux-pam.org/library/Linux-PAM-${VERSION}.tar.bz2
+SRC=http://linux-pam.org/library/Linux-PAM-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -47,8 +48,8 @@ function BuildAndInstall
         mv $BLDRTMPDIR/pam_unix2-glibc216.p .
         patch -Np1 -i pam_unix2-glibc216.p
         ./configure \
-      CFLAGS="$CFLAGS -I/root/bldr-tmp/Linux-PAM-${VERSION}/libpam/include/" \
-      LDFLAGS="$LDFLAGS -L/root/bldr-tmp/Linux-PAM-${VERSION}/libpam/.libs/" \
+      CFLAGS="$CFLAGS -I/root/bldr-tmp/Linux-PAM-${DVERSION}/libpam/include/" \
+      LDFLAGS="$LDFLAGS -L/root/bldr-tmp/Linux-PAM-${DVERSION}/libpam/.libs/" \
       --libdir=/usr/lib \
       --sbindir=/usr/bin
         make -j${BLDR_CORES}
@@ -71,7 +72,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

@@ -5,13 +5,14 @@ NAME=nfs-utils
 DESC="Support programs for Network File Systems"
 
 #package version
-VERSION=2.1.1
+VERSION=2.3.3
+DVERSION=2.3.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/nfs/nfs-utils-${VERSION}.tar.bz2
+SRC=http://downloads.sourceforge.net/nfs/nfs-utils-${DVERSION}.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,13 +34,11 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-    ./autogen.sh
     export LDFLAGS="-pthread"
     ./configure --prefix=/usr --sbindir=/usr/bin --enable-nfsv4 --enable-nfsv41 --enable-gss \
         --without-tcp-wrappers --with-statedir=/var/lib/nfs \
         --enable-ipv6 --sysconfdir=/etc --enable-libmount-mount \
-        --with-gssglue \
-        --enable-mountconfig --with-start-statd=/usr/bin/start-statd
+        --with-gssglue --enable-mountconfig --with-start-statd=/usr/bin/start-statd
 
     make -j${BLDR_CORES}
     mkdir /root/bldr-inst/sbin
@@ -73,7 +72,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

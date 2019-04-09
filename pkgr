@@ -521,7 +521,7 @@ function DoShowRevdeps() {
 
 function DoDepcheckPackages() {
     name=$1
-    $echo "Scanning machine for missing dependencies"
+    $echo "Scanning package for missing dependencies"
     ldconfig &>/dev/null
     tput civis
     $rm -f /tmp/missinglibs && touch /tmp/missinglibs
@@ -529,7 +529,6 @@ function DoDepcheckPackages() {
 
     sed -ne '/FILES:/,$p' "$INSTALLEDDIR/$name" | grep -E "/usr/bin|/usr/lib|/bin|/lib" > /tmp/filelist
         
-    #TODO Factorize out these two depcheck functions
     total_lines=`cat /tmp/filelist | wc -l`
     let count=0
     for i in `$cat /tmp/filelist`;
@@ -566,14 +565,17 @@ function DoDepcheckPackages() {
     $echo ""
     if [ `cat /tmp/missinglibs.sorted | wc -l` -gt 0 ]; then
         $echo "Missing Libs ( File -> Missing Library ):"
+        r=1
     else
         $echo "Nothing broken found!"
+        r=0
     fi
     $cat /tmp/missinglibs.sorted
     $cp /tmp/missinglibs.sorted /tmp/depcheck.results
     $echo "Results saved in /tmp/depcheck.results"
     $rm /tmp/missinglibs /tmp/missinglibs.sorted /tmp/filelist 2>/dev/null
     tput cnorm
+    exit $r
 }
 
 function DoCheckIsRequired() {
@@ -852,65 +854,20 @@ if [ $1 == "--depcheck-revdep" ] || [ $1 == "-Cr" ]; then
 fi
 
 if [ $1 == "--depcheck-system" ] || [ $1 == "-C" ]; then
-    echo "Scanning machine for missing dependencies"
-    ldconfig &>/dev/null
-    tput civis
-    $rm -f /tmp/missinglibs && touch /tmp/missinglibs
-    $rm -f /tmp/missinglibs.found && touch /tmp/missinglibs.found
-    $rm -f /tmp/filelist
-
-    $cat /etc/ld.so.conf | $sed -e '/include/d;' > /tmp/ld.dirs;
-    for i in `$cat /etc/ld.so.conf | $sed -ne '/include/p' | $awk '{print $2;}'`; do
-        $cat $i >> /tmp/ld.dirs;
-    done;
-
-    for i in `$cat /tmp/ld.dirs | $sort | $uniq`; do
-       $find $i -type f -regex ".*\/lib[a-zA-Z\.0-9]*so[0-9\.]*" >> /tmp/filelist
+    echo "Scanning machine for missing dependencies (this will take a while)."
+    let tot=`ls /var/noop/installed | wc -l`
+    let c=0
+    for i in `ls /var/noop/installed`; do
+        let c=$c+1
+        ShowProgress $c $tot
+        pkgr -Cp $i &> /dev/null
+        if [ $? -ne 0 ]; then
+            echo
+            echo $i
+            cat /tmp/depcheck.results
+            echo
+        fi
     done
-
-    total_lines=`cat /tmp/filelist | wc -l`
-    let count=0
-    for i in `$cat /tmp/filelist`;
-    do
-        let count=$count+1
-        ShowProgress $count $total_lines
-        MISSINGLIBS=`ldd $i 2>&1 | $grep "not found" | $awk '{print $1;}' | sort | uniq`
-        for j in ${MISSINGLIBS[@]};
-        do
-            ISDIRECT=`readelf -d $i | $grep NEEDED | $awk '{print $5;}' | grep $j | wc -l`
-
-            DIRECT="DIRECT"
-            if [ "$ISDIRECT" == "0" ]; then
-                DIRECT="INDIRECT"
-            fi
-
-            if [ "$DIRECT" != "DIRECT" ];
-            then
-                $echo "$i -> $DIRECT $j" >> /tmp/missinglibs
-            else
-                #TODO determine if library is 32-bit or not and check accordingly
-                #if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
-                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib -name $j 2>/dev/null | wc -l`" == "0" ];
-                then
-                    $echo "$i -> $j $DIRECT" >> /tmp/missinglibs
-                else
-                    $echo "$i -> $j $DIRECT File Found! Probably Okay." >> /tmp/missinglibs.found
-                fi
-            fi
-        done
-    done
-    $cat /tmp/missinglibs | sort | uniq > /tmp/missinglibs.sorted
-    $echo ""
-    if [ `cat /tmp/missinglibs.sorted | wc -l` -gt 0 ]; then
-        $echo "Missing Libs ( File -> Missing Library ):"
-    else
-        $echo "Nothing broken found!"
-    fi
-    $cat /tmp/missinglibs.sorted
-    $cp /tmp/missinglibs.sorted /tmp/depcheck.results
-    $echo "Results saved in /tmp/depcheck.results"
-    $rm /tmp/missinglibs /tmp/missinglibs.sorted /tmp/filelist 2>/dev/null
-    tput cnorm
 fi
 
 if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then

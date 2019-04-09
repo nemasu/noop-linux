@@ -5,8 +5,8 @@ NAME=opencv
 DESC="Open Source Computer Vision Library"
 
 #package version
-VERSION=3.2.0
-DVERSION=3.2.0
+VERSION=4.1.0
+DVERSION=4.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -51,6 +51,7 @@ function BuildAndInstall
                 -DWITH_TBB=ON \
                 -DWITH_XINE=ON \
                 -DWITH_GSTREAMER=OFF \
+                -DWITH_EIGEN=ON \
                 -DBUILD_WITH_DEBUG_INFO=OFF \
                 -DBUILD_TESTS=OFF \
                 -DBUILD_PERF_TESTS=OFF \
@@ -59,9 +60,8 @@ function BuildAndInstall
                 -DINSTALL_PYTHON_EXAMPLES=ON \
                 -DCMAKE_BUILD_TYPE=Release \
                 -DCMAKE_INSTALL_PREFIX=/usr \
-                -DCMAKE_SKIP_RPATH=ON \
-                -DCMAKE_CXX_FLAGS=-I/usr/include/eigen3
-        make -j3
+                -DCMAKE_SKIP_RPATH=ON
+        make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }
 

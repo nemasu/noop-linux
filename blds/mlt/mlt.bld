@@ -5,13 +5,14 @@ NAME=mlt
 DESC="Multimedia Framework"
 
 #package version
-VERSION=6.6.0
+VERSION=6.6.0-1
+DVERSION=6.6.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/mltframework/mlt/archive/v${VERSION}.tar.gz
+SRC=https://github.com/mltframework/mlt/archive/v${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-gpl --enable-gpl3 --avformat-swscale --qt-libdir=/usr/lib --qt-includedir=/usr/include/qt"
@@ -52,7 +53,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

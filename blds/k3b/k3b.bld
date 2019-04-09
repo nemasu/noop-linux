@@ -5,14 +5,14 @@ NAME=k3b
 DESC="Feature-rich and easy to handle CD burning application"
 
 #package version
-VERSION=2.0.3
-DVERSION=2.0.3a
+VERSION=18.08.2
+DVERSION=18.08.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/k3b/k3b-${DVERSION}.tar.xz
+SRC=https://download.kde.org/stable/applications/$VERSION/src/k3b-$VERSION.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
