@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'iptables')
+DEPS=('db' 'elfutils' 'glibc' 'iptables' 'libcap2' 'libmnl')
 
 # 'no' to skip calls to strip
 STRIP=
