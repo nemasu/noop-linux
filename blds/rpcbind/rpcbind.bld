@@ -21,7 +21,7 @@ EXTRACONF="--enable-warmstarts --with-statedir=/run"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glibc' 'libgssglue' 'libtirpc')
+DEPS=('glibc' 'libtirpc' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

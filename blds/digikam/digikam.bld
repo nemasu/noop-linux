@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('akonadi' 'akonadi-contacts' 'exiv2' 'expat' 'gcc-libs' 'glib2' 'glibc' 'jasper' 'karchive' 'kauth' 'kbookmarks' 'kcalcore' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kfilemetadata' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'knotifications' 'knotifyconfig' 'kservice' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libglu' 'libgphoto2' 'libjpeg' 'libkipi' 'liblqr' 'libpng' 'libusb' 'libxml2' 'libxslt' 'mesalib' 'opencv' 'qt' 'qt-webkit' 'qtav' 'solid' 'threadweaver' 'tiff' 'zlib')
+DEPS=('akonadi' 'akonadi-contacts' 'exiv2' 'expat' 'ffmpeg' 'gcc-libs' 'glib2' 'glibc' 'jasper' 'kauth' 'kcalcore' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcontacts' 'kcoreaddons' 'kfilemetadata' 'ki18n' 'kiconthemes' 'kio' 'kitemmodels' 'kjobwidgets' 'knotifications' 'knotifyconfig' 'kservice' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXext' 'libglu' 'libglvnd' 'libgphoto2' 'libjpeg' 'liblqr' 'libpng' 'libusb' 'libxml2' 'libxslt' 'opencv' 'qt' 'qt-webkit' 'qtav' 'solid' 'threadweaver' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

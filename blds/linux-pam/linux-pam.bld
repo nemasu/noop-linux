@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('cracklib' 'glibc' 'libgssglue' 'libtirpc' 'zlib')
+DEPS=('cracklib' 'e2fsprogs' 'glibc' 'krb5' 'libnsl' 'libtirpc' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

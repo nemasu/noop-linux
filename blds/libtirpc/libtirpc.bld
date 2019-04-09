@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'libgssglue')
+DEPS=('e2fsprogs' 'glibc' 'krb5')
 
 # 'no' to skip calls to strip
 STRIP=

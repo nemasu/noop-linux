@@ -21,7 +21,7 @@ EXTRACONF="--enable-gpl --enable-gpl3 --avformat-swscale --qt-libdir=/usr/lib --
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('alsa-lib' 'ffmpeg' 'fftw' 'fontconfig' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libexif' 'libsamplerate' 'libxml2' 'opencv' 'pango' 'pulseaudio' 'qt' 'sdl' 'sdl2')
+DEPS=('alsa-lib' 'ffmpeg' 'fftw' 'fontconfig' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libexif' 'libsamplerate' 'libxml2' 'pango' 'pulseaudio' 'qt' 'sdl' 'sdl2')
 
 # 'no' to skip calls to strip
 STRIP=

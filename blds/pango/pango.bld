@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('cairo' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXft' 'libXrender' 'libXxf86vm' 'libdrm' 'libffi' 'libglvnd' 'libpng' 'libxcb' 'libxshmfence' 'mesalib' 'pcre' 'pixman' 'util-linux' 'wayland' 'zlib')
+DEPS=('cairo' 'fontconfig' 'freetype2' 'fribidi' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXft' 'libXrender')
 
 # 'no' to skip calls to strip
 STRIP=

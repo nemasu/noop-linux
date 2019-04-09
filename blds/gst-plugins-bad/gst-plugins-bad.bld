@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('cairo' 'chromaprint' 'curl' 'faad2' 'fluidsynth' 'gcc-libs' 'glib2' 'glibc' 'gsm' 'gst-plugins-base' 'gstreamer' 'ilmbase' 'lcms2' 'libX11' 'libass' 'libdrm' 'libgudev' 'libkate' 'libmodplug' 'libmpcdec' 'librsvg' 'libsndfile' 'libusb' 'libvdpau' 'libwebp' 'libxcb' 'libxml2' 'neon' 'nettle' 'opencv' 'openexr' 'openjpeg' 'openssl' 'opus' 'orc' 'pango' 'rtmpdump' 'vulkan-loader' 'x265')
+DEPS=('cairo' 'chromaprint' 'curl' 'faad2' 'fluidsynth' 'gcc-libs' 'glib2' 'glibc' 'gsm' 'gst-plugins-base' 'gstreamer' 'ilmbase' 'lcms2' 'libX11' 'libass' 'libdrm' 'libdvdnav' 'libdvdread' 'libgudev' 'libkate' 'libmodplug' 'libmpcdec' 'librsvg' 'libsndfile' 'libusb' 'libvdpau' 'libwebp' 'libxcb' 'libxml2' 'mjpegtools' 'neon' 'nettle' 'openal' 'openexr' 'openjpeg2' 'openssl' 'opus' 'orc' 'pango' 'rtmpdump' 'vulkan-loader' 'x265')
 
 # 'no' to skip calls to strip
 STRIP=

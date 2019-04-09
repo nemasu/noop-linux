@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('e2fsprogs' 'glibc' 'krb5' 'libtirpc')
 
 # 'no' to skip calls to strip
 STRIP=

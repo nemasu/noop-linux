@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('attr' 'glibc' 'python2' 'talloc')
+DEPS=('glibc' 'python' 'talloc')
 
 # 'no' to skip calls to strip
 STRIP=

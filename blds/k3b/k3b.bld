@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('ffmpeg' 'flac' 'gcc-libs' 'glibc' 'kdelibs' 'lame' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXft' 'libXpm' 'libdvdread' 'libkcddb' 'libmad' 'libmpcdec' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'qt4' 'taglib')
+DEPS=('attica' 'ffmpeg' 'flac' 'gcc-libs' 'glibc' 'karchive' 'kauth' 'kbookmarks' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kfilemetadata' 'ki18n' 'kiconthemes' 'kio' 'kitemviews' 'kjobwidgets' 'knewstuff' 'knotifications' 'knotifyconfig' 'kservice' 'kwidgetsaddons' 'kxmlgui' 'lame' 'libdvdread' 'libkcddb' 'libmad' 'libmpcdec' 'libogg' 'libsamplerate' 'libsndfile' 'libvorbis' 'qt' 'qt-webkit' 'solid' 'taglib')
 
 # 'no' to skip calls to strip
 STRIP=

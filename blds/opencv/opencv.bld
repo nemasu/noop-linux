@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'ffmpeg' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'jasper' 'libexif' 'libgphoto2' 'libjpeg' 'libpng' 'libwebp' 'pango' 'tiff' 'zlib')
+DEPS=('atk' 'cairo' 'ffmpeg' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'ilmbase' 'jasper' 'libjpeg' 'libpng' 'libwebp' 'openexr' 'pango' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

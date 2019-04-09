@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('e2fsprogs' 'glibc' 'krb5' 'libcap2' 'libevent' 'libgssglue' 'libnfsidmap' 'libtirpc' 'lvm2' 'openssl1.0' 'sqlite' 'util-linux')
+DEPS=('e2fsprogs' 'glibc' 'keyutils' 'krb5' 'libcap2' 'libevent' 'libgssglue' 'libtirpc' 'lvm2' 'openldap' 'openssl' 'sasl' 'sqlite' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

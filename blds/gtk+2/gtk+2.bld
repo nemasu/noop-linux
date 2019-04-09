@@ -27,7 +27,7 @@ then
 fi
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'cups' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libffi' 'libpng' 'libxcb' 'pango' 'pcre' 'pixman' 'zlib')
+DEPS=('atk' 'cairo' 'cups' 'expat' 'fontconfig' 'freetype2' 'gdk-pixbuf' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libffi' 'libglvnd' 'libpng' 'libxcb' 'pango' 'pcre' 'pixman' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

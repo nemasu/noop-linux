@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('a52dec' 'alsa-lib' 'ffmpeg' 'freetype2' 'gcc-libs' 'glibc' 'imagemagick' 'lame' 'libICE' 'libSM' 'libX11' 'libXaw' 'libXext' 'libXpm' 'libXt' 'libXv' 'libdv' 'libdvdread' 'libjpeg' 'libmpeg2' 'libogg' 'libpng' 'libtheora' 'libvorbis' 'libxml2' 'lzo2' 'mjpegtools' 'sdl' 'zlib')
+DEPS=('a52dec' 'alsa-lib' 'ffmpeg' 'freetype2' 'gcc-libs' 'glibc' 'imagemagick' 'lame' 'libICE' 'libSM' 'libX11' 'libXaw' 'libXext' 'libXt' 'libXv' 'libdv' 'libdvdread' 'libjpeg' 'libmpeg2' 'libogg' 'libpng' 'libtheora' 'libvorbis' 'libxml2' 'lzo2' 'mjpegtools' 'sdl' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
