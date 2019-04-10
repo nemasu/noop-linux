@@ -2,8 +2,8 @@ NAME=nvidia390xx
 
 #Description
 DESC="NVIDIA 390.xx legacy drivers for linux"
-VERSION=390.87-1
-DVERSION=390.87
+VERSION=390.116
+DVERSION=390.116
 ISUSR=1
 
 if [ "${ARCH}" == "x86_64" ];
