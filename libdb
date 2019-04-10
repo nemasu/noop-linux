@@ -5760,7 +5760,7 @@ mesalib,libvulkan_intel.so
 mesalib,libvulkan_radeon.so
 mesalib,libxatracker.so
 mesalib,libxatracker.so.2
-mesalib,libxatracker.so.2.4.0
+mesalib,libxatracker.so.2.5.0
 messagelib,libKF5MessageComposer.so
 messagelib,libKF5MessageComposer.so.5
 messagelib,libKF5MessageComposer.so.5.9.2
