@@ -5,13 +5,13 @@ NAME=vulkan-headers
 DESC="Vulkan API headers."
 
 #package version
-VERSION=1.1.82
+VERSION=1.1.100
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="https://github.com/KhronosGroup/Vulkan-Headers/archive/sdk-${VERSION}.tar.gz"
+SRC=https://github.com/KhronosGroup/Vulkan-Headers/archive/v$VERSION.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

@@ -8718,7 +8718,12 @@ vte2,libvte.so.9.2800.2
 vte2,vtemodule.so
 vulkan-loader,libvulkan.so
 vulkan-loader,libvulkan.so.1
-vulkan-loader,libvulkan.so.1.1.82
+vulkan-loader,libvulkan.so.1.1.100
+vulkan-validation-layers,libVkLayer_core_validation.so
+vulkan-validation-layers,libVkLayer_object_lifetimes.so
+vulkan-validation-layers,libVkLayer_stateless_validation.so
+vulkan-validation-layers,libVkLayer_thread_safety.so
+vulkan-validation-layers,libVkLayer_unique_objects.so
 wayland,libwayland-client.so
 wayland,libwayland-client.so.0
 wayland,libwayland-client.so.0.3.0

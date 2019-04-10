@@ -5,13 +5,13 @@ NAME=vulkan-tools
 DESC="Vulkan Tools"
 
 #package version
-VERSION=1.1.82.0
+VERSION=1.1.100
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/KhronosGroup/Vulkan-Tools/archive/sdk-${VERSION}.tar.gz
+SRC=https://github.com/KhronosGroup/Vulkan-Tools/archive/v$VERSION.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="-DCMAKE_SKIP_RPATH=True -DBUILD_WSI_XCB_SUPPORT=On -DBUILD_WSI_XLIB_SUPPORT=On -DBUILD_WSI_WAYLAND_SUPPORT=On -DBUILD_WSI_MIR_SUPPORT=Off -DBUILD_CUBE=ON -DBUILD_VULKANINFO=ON -DBUILD_ICD=OFF"
