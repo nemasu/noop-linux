@@ -874,7 +874,6 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     # IMPORTED VAR:
     #NAME=
     #VERSION=
-    #ISUSR=
     #SRC=
     #EXTRACONF=
     #BUILD=
@@ -960,14 +959,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
         done
     fi
 
-    STDUSRCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datadir=/usr/share --bindir=/usr/bin --prefix=/usr"
-    STDSYSCONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/lib --datadir=/usr/share --bindir=/bin --prefix=/"
-
-    if [ $ISUSR == 1 ]; then
-        CONF=$STDUSRCONF;
-    else
-        CONF=$STDSYSCONF;
-    fi
+    CONF="--enable-static --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datadir=/usr/share --bindir=/usr/bin --prefix=/usr"
 
     if [ -z "$BLDR_CONTINUE" ];
     then
@@ -1215,9 +1207,9 @@ if [ $1 == "--remove" ] || [ $1 == "-r" ]; then
         $sed -e '/NAME:/,/FILES:/d' $INSTALLEDDIR/$2 | $sed 's/^/\//g' > /tmp/noop/pkgr-remove-file-list
 
         #remove cfg files from file list
-        for p in {"cnf","config","conf","cfg","ini"};
+        for p in {"\.cnf","\.config","\.conf","\.cfg","\.ini","_config"};
         do
-            $sed -i -e '/\.'"$p"'/d' /tmp/noop/pkgr-remove-file-list
+            $sed -i -e '/'"$p"'/d' /tmp/noop/pkgr-remove-file-list
         done
 
         for i in `$cat /tmp/noop/pkgr-remove-file-list`;
@@ -1245,9 +1237,9 @@ function SetPerms
 
 function RenameConfigFiles
 {
-    for p in {"cnf","config","conf","cfg"};
+    for p in {".cnf",".config",".conf",".cfg","_config",".ini"};
     do
-        for i in `$find . -type f -name "*."$p`;
+        for i in `$find . -type f -name "*${p}"`;
         do
             FS_PATH=$PREFIX/`echo $i | $sed 's/^.//g'`
             if [ -e $FS_PATH ]
@@ -1259,7 +1251,7 @@ function RenameConfigFiles
             fi
             
             if [ "$NEW_DIF" != "0" ]; then
-                TGT=`$echo $i | $sed -e 's/\.'"$p"'/\.'"$p"'\.new/g'`;
+                TGT=`$echo $i | $sed -e 's/'"$p"'/'"$p"'\.new/g'`;
                 $echo "New and old config files differ, new config file will be `$echo $TGT | $sed -e 's/^\.//;'`";
                 $mv $i $TGT;
                 $echo $TGT | $sed -e 's/\.//' >> $NEWCONF

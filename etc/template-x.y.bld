@@ -7,16 +7,13 @@ DESC=
 #package version
 VERSION=
 
-#directory locations, 99.99% of the time this is 1
-ISUSR=1
-
 #source location (used by wget)
 SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#autotools, python, perl, cmake, custom
+#autotools, cmake, perl, python, python3, 32bit, custom
 BUILD=autotools
 
 # build/package dependancies
@@ -35,20 +32,8 @@ RESTORELIBDB=
 #{
 #}
 
-function Detect() {
-    LISTURL=
-    FILELIST=`GetFileList`
+function Detect() { #LatestVersionGitHub, GetFileList
     LATEST=0
-
-    for i in ${FILELIST[@]};
-    do
-        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-        vercomp $LATEST $CURVER
-        if [ $? -eq 2 ];
-        then
-                        LATEST=$CURVER
-        fi
-    done
 
     vercomp $VERSION $LATEST
     if [ $? -eq 2 ];
