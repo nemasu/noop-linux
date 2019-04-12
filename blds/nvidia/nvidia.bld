@@ -2,8 +2,8 @@ NAME=nvidia
 
 #Description
 DESC="NVIDIA drivers for linux"
-VERSION=415.25
-DVERSION=415.25
+VERSION=418.56
+DVERSION=418.56
 ISUSR=1
 
 if [ "${ARCH}" == "x86_64" ];
@@ -68,9 +68,6 @@ function BuildAndInstall
     ln -s libglxserver_nvidia.so.${VERSION} /root/bldr-inst/usr/lib/nvidia/xorg/libglxserver_nvidia.so.1
     ln -s libglxserver_nvidia.so.${VERSION} /root/bldr-inst/usr/lib/nvidia/xorg/libglxserver_nvidia.so
 
-# X wrapped software rendering
-    install -D -m755 libnvidia-wfb.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-wfb.so.${VERSION}
-    
 	install -D -m755 libGLX_nvidia.so.${VERSION} /root/bldr-inst/usr/lib/libGLX_nvidia.so.${VERSION}
 
 # OpenGL libraries
@@ -90,7 +87,6 @@ function BuildAndInstall
 	install -D -m755 libnvidia-encode.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-encode.so.${VERSION}
 	install -D -m755 libnvidia-cfg.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-cfg.so.${VERSION}
 	install -D -m755 libnvidia-ml.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-ml.so.${VERSION}
-	install -D -m755 libnvidia-wfb.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-wfb.so.${VERSION}
 	install -D -m755 libnvidia-glvkspirv.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-glvkspirv.so.${VERSION}
 
 # Vulkan ICD
