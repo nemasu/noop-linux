@@ -1,6 +1,9 @@
 a52dec,liba52.so
 a52dec,liba52.so.0
 a52dec,liba52.so.0.0.0
+accountsservice,libaccountsservice.so
+accountsservice,libaccountsservice.so.0
+accountsservice,libaccountsservice.so.0.0.0
 acl,libacl.so
 acl,libacl.so.1
 acl,libacl.so.1.1.0
@@ -2278,7 +2281,8 @@ jemalloc,libjemalloc.so.2
 jq,libjq.so
 jq,libjq.so.1
 jq,libjq.so.1.0.4
-js17,libmozjs-17.0.so
+js52,libmozjs-52.so
+js52,libmozjs-52.so.0
 json-c,libjson-c.so
 json-c,libjson-c.so.3
 json-c,libjson-c.so.3.0.1

@@ -1,19 +1,18 @@
 #package name
-NAME=js17
+NAME=js52
 
 #Description
 DESC="JavaScript interpreter and libraries (legacy)"
 
 #package version
-VERSION=17.0.0-1
-DVERSION=17.0.0
+VERSION=52.9.0
+DVERSION=52.9.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-#SRC=http://ftp.mozilla.org/pub/js/mozjs17.0.0.tar.gz
-SRC=http://nooplinux.org/dist/m17.tar.xz
+SRC=https://hg.mozilla.org/mozilla-unified/archive/755067c14b06.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -35,16 +34,35 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-  cd js/src  
-  # Fix incompatibility with Perl 5.22
-  sed -i 's/(defined\((@TEMPLATE_FILE)\))/\1/' config/milestone.pl
+     local configure_args=(
+    --prefix=/usr
+    --disable-debug
+    --disable-debug-symbols
+    --disable-strip
+    --enable-gold
+    --enable-optimize="-O2"
+    --enable-pie
+    --enable-posix-nspr-emulation
+    --enable-readline
+    --enable-release
+    --enable-shared-js
+    --enable-tests
+    --with-intl-api
+    --with-system-zlib
+    --without-system-icu
+  )
+
   unset CPPFLAGS
-  sed -i -e 's/\-lreadline/\-lreadline \-lncurses/g' configure
-  ./configure --prefix=/usr --with-system-nspr --with-system-ffi \
-     --enable-readline --enable-threadsafe
+  CFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp'
+  CXXFLAGS+=' -fno-delete-null-pointer-checks -fno-strict-aliasing -fno-tree-vrp'
+  export CC=gcc CXX=g++ PYTHON=/usr/bin/python2
+
+  mkdir -p build && cd build
+  sh ../js/src/configure "${configure_args[@]}"
   make -j${BLDR_CORES}
-  
+
   make DESTDIR=/root/bldr-inst install
+  rm /root/bldr-inst/usr/lib/*.ajs
 }
 
 #Default HTTP curl new version detection
