@@ -90,6 +90,7 @@ function BuildAndInstall
 	install -D -m755 libnvidia-glvkspirv.so.${VERSION} /root/bldr-inst/usr/lib/libnvidia-glvkspirv.so.${VERSION}
 
 # Vulkan ICD
+    sed -i 's/__NV_VK_ICD__/libGLX_nvidia.so.0/' nvidia_icd.json.template
 	install -D -m644 nvidia_icd.json.template /root/bldr-inst/usr/share/vulkan/icd.d/nvidia_icd.json
 
 # VDPAU
@@ -114,6 +115,10 @@ function BuildAndInstall
 # nvidia-xconfig
 	install -D -m755 nvidia-xconfig /root/bldr-inst/usr/bin/nvidia-xconfig
 	install -D -m644 nvidia-xconfig.1.gz /root/bldr-inst/usr/share/man/man1/nvidia-xconfig.1.gz
+
+#nvidia-settings	
+    install -D -m755 nvidia-settings /root/bldr-inst/usr/bin/nvidia-settings
+    cp libnvidia-gtk* /root/bldr-inst/usr/lib/   
 
 # nvidia-bug-report
 	install -D -m755 nvidia-bug-report.sh /root/bldr-inst/usr/bin/nvidia-bug-report.sh
