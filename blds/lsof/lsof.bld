@@ -1,0 +1,50 @@
+#package name
+NAME=lsof
+
+#Description
+DESC="Utility for listing files being used"
+
+#package version
+VERSION=4.91
+
+#source location (used by wget)
+SRC=ftp://ftp.fu-berlin.de/pub/unix/tools/lsof/lsof_$VERSION.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	tar xf lsof_${VERSION}_src.tar
+	cd lsof_${VERSION}_src
+	sed -i 's|/\* #define\tHASSECURITY\t1 \*/|#define\tHASSECURITY\t1|' dialects/linux/machine.h
+	./Configure -n linux
+	make
+	install -Dm0755 lsof /root/bldr-inst/usr/bin/lsof 
+	install -Dm0644 lsof.8 /root/bldr-inst/usr/share/man/man8/lsof.8 
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
