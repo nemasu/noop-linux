@@ -35,8 +35,7 @@ function BuildAndInstall
 {
         ./configure --includedir=/usr/include --mandir=/usr/man --sbindir=/usr/sbin --libexecdir=/usr/lib --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --datarootdir=/usr/share --datadir=/usr/share --bindir=/usr/bin --prefix=/usr
         make -j${BLDR_CORES}
-        INSTALLROOT=/root/bldr-inst make install
-
+        make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
