@@ -5,8 +5,8 @@ NAME=wine
 DESC="A compatibility layer for running Windows programs"
 
 #package version
-VERSION=4.5
-DVERSION=4.5
+VERSION=4.6
+DVERSION=4.6
 STAGING_VER=${DVERSION}
 
 #directory locations, 99.99% of the time this is 1
