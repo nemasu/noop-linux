@@ -33,13 +33,13 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-    ./configure --enable-release --prefix=/usr --disable-git
+    ./configure --enable-release --prefix=/usr
     
-    #Git support not building currently, disable for now
-    echo "exit 0" > src/addins/VersionControl/MonoDevelop.VersionControl.Git/build_libgit2.sh
-
     #This version is failing to download, so lets try a different one
     sed -i -e 's|ExtCore (0.8.46)|ExtCore (0.8.45)|g' external/fsharpbinding/paket.lock
+
+    #libgit2 fails with new openssl, use 1.0
+    sed -i -e 's|-DCMAKE_SKIP_RPATH=TRUE|-DCMAKE_SKIP_RPATH=TRUE -DOPENSSL_ROOT_DIR=/usr/lib/openssl-1.0 -DOPENSSL_INCLUDE_DIR=/usr/include/openssl-1.0|g' ./src/addins/VersionControl/MonoDevelop.VersionControl.Git/build_libgit2.sh
     
     make
     make DESTDIR=/root/bldr-inst install
