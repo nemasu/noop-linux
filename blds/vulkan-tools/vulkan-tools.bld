@@ -20,7 +20,7 @@ EXTRACONF="-DCMAKE_SKIP_RPATH=True -DBUILD_WSI_XCB_SUPPORT=On -DBUILD_WSI_XLIB_S
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'libxcb' 'vulkan-loader')
+DEPS=('gcc-libs' 'glibc' 'libICE' 'libSM' 'libX11' 'libXext' 'libxcb' 'vulkan-loader' 'wayland')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('expat' 'glib2' 'glibc' 'js17' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'linux-pam' 'pcre' 'systemd' 'xz' 'zlib')
+DEPS=('expat' 'gcc-libs' 'glib2' 'glibc' 'js52' 'libffi' 'linux-pam' 'pcre' 'systemd' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
