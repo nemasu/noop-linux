@@ -5,13 +5,13 @@ NAME=lib32-gnutls
 DESC="A library which provides a secure layer over a reliable transport layer (32-bit)"
 
 #package version
-VERSION=3.0.20
+VERSION=3.5.18
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://ftp.gnu.org/gnu/gnutls/gnutls-${VERSION}.tar.xz
+SRC=ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -43,7 +43,8 @@ function BuildAndInstall
                 --without-idn \
                 --disable-guile \
                 --disable-valgrind-tests \
-                --disable-hardware-acceleration
+                --disable-hardware-acceleration \
+				--with-included-unistring
 
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install

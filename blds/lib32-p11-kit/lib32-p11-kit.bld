@@ -5,13 +5,13 @@ NAME=lib32-p11-kit
 DESC="Library to work with PKCS#11 modules (32-bit)"
 
 #package version
-VERSION=0.21.1
+VERSION=0.23.15
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://p11-glue.freedesktop.org/releases/p11-kit-${VERSION}.tar.gz
+SRC=https://github.com/p11-glue/p11-kit/archive/${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,15 +33,16 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        export CC="gcc -m32"
-        export CXX="g++ -m32"
-        export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+	export CC="gcc -m32"
+	export CXX="g++ -m32"
+	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 
-        ./configure --libdir=/usr/lib32 --prefix=/usr ${EXTRACONF}
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
-        rm -rf /root/bldr-inst/usr/{bin,include,share}
-
+	./autogen.sh
+	./configure --libdir=/usr/lib32 --prefix=/usr ${EXTRACONF}
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
+	rm -rf /root/bldr-inst/usr/{bin,include,share,libexec,lib}
+	rm -rf /root/bldr-inst/etc
 }
 
 #Default HTTP curl new version detection
