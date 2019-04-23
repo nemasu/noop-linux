@@ -5,14 +5,14 @@ NAME=openssh
 DESC="Free version of the SSH connectivity tools"
 
 #package version
-VERSION=7.9-1
+VERSION=8.0p1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 DVERSION=`echo $VERSION | sed -e 's/-/p/g'`
-SRC=http://www.ftp.ne.jp/OpenBSD/OpenSSH/portable/openssh-${DVERSION}.tar.gz
+SRC=https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -34,10 +34,26 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure $STDUSRCONF --with-pam --with-kerberos5=/usr --with-xauth=/usr/bin/xauth --with-mantype=man --with-md5-passwords --with-pid-dir=/run
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
-        sed -e '/^#ChallengeResponseAuthentication yes$/c ChallengeResponseAuthentication no' -e '/^#UsePAM no$/c UsePAM yes' -i /root/bldr-inst/etc/sshd_config
+    ./configure \
+		--prefix=/usr \
+		--sbindir=/usr/bin \
+		--libexecdir=/usr/lib/ssh \
+		--sysconfdir=/etc/ssh \
+		--with-ssl-engine \
+		--with-pam \
+		--with-privsep-user=nobody \
+		--with-kerberos5=/usr \
+		--with-xauth=/usr/bin/xauth \
+		--with-md5-passwords \
+		--with-pid-dir=/run \
+		--with-default-path='/usr/sbin:/usr/bin:/bin:/sbin'
+
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+    sed -i -e '/^#ChallengeResponseAuthentication yes$/c ChallengeResponseAuthentication no' \
+		-e '/^#PrintMotd yes$/c PrintMotd no' \
+		-e '/^#UsePAM no$/c UsePAM yes' \
+		/root/bldr-inst/etc/ssh/sshd_config
 }
 
 #Default HTTP curl new version detection
