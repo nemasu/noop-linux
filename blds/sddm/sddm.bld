@@ -5,7 +5,7 @@ NAME=sddm
 DESC="QML based X11 display manager"
 
 #package version
-VERSION=0.18.0
+VERSION=0.18.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -14,7 +14,7 @@ ISUSR=1
 SRC=https://github.com/sddm/sddm/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="-DCMAKE_INSTALL_LIBEXECDIR=/usr/lib/sddm -DBUILD_MAN_PAGES=OFF -DDBUS_CONFIG_FILENAME=sddm_org.freedesktop.DisplayManager.conf"
+EXTRACONF="-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib/sddm -DDBUS_CONFIG_DIR=/usr/share/dbus-1/system.d -DDBUS_CONFIG_FILENAME=sddm_org.freedesktop.DisplayManager.conf -DBUILD_MAN_PAGES=OFF"
 
 #autotools, perl, cmake, custom
 BUILD=cmake
@@ -30,8 +30,6 @@ PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
-
-export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 #function BuildAndInstall
 #{
