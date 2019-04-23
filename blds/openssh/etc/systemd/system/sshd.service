@@ -3,7 +3,7 @@ Description=OpenSSH daemon
 After=network.target
 
 [Service]
-ExecStart=/usr/sbin/sshd -D
+ExecStart=/usr/bin/sshd -D
 KillMode=process
 Restart=always
 
