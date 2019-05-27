@@ -5,7 +5,7 @@ NAME=ttf-noto
 DESC="Fonts support all languages/characters in Unicode"
 
 #package version
-VERSION=20160601
+VERSION=20190527
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
