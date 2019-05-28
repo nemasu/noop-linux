@@ -5,7 +5,7 @@ NAME=cbindgen
 DESC="A project for generating C bindings from Rust code"
 
 #package version
-VERSION=0.7.0
+VERSION=0.8.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
