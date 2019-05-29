@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=71.0.3578.98
-VERSION=71.0.3578.98
+DVERSION=74.0.3729.169
+VERSION=74.0.3729.169
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -65,6 +65,7 @@ function BuildAndInstall
     export NM=nm
     export AR=ar
 
+#nacl disabled from version 74 onward, it's not buliding anymore and it's a dying breed anyways.
   local _flags=(
     'custom_toolchain="//build/toolchain/linux/unbundle:default"'
     'host_toolchain="//build/toolchain/linux/unbundle:default"'
@@ -84,24 +85,18 @@ function BuildAndInstall
     'use_cups=true'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=true'
     'use_kerberos=true'
     'use_pulseaudio=true'
     'use_sysroot=false'
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
-    'enable_nacl=true'
-    'enable_nacl_nonsfi=true'
+    'enable_nacl=false'
     'use_custom_libcxx=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   ) 
   
-    # Prepare NaCL toolchain - this is way easier
-    python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator sync
-    python2 ./build/download_nacl_toolchains.py --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator extract
-
       # Remove compiler flags not supported by our system clang
       sed -i \
         -e '/"-Wno-enum-compare-switch"/d' \
@@ -116,7 +111,6 @@ function BuildAndInstall
     rm -rf third_party/node/linux/node-linux-x64/bin/*
     ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
 
-    #needed for nacl build
     mkdir -p third_party/llvm-build/Release+Asserts/bin/
     pushd third_party/llvm-build/Release+Asserts/bin/ &> /dev/null
     rm -rf *
@@ -144,9 +138,6 @@ function BuildAndInstall
          out/Release/gen/content/content_resources.pak \
          /root/bldr-inst/usr/lib/chromium/
 
-    cp out/Release/nacl_helper{,_bootstrap} out/Release/nacl_irt_*.nexe \
-            /root/bldr-inst/usr/lib/chromium/
-
     install -D out/Release/chromedriver /root/bldr-inst/usr/lib/chromium/chromedriver
     
     cp out/Release/lib* /root/bldr-inst/usr/lib/chromium/
@@ -157,7 +148,6 @@ function BuildAndInstall
 
 # Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
     strip /root/bldr-inst/usr/lib/chromium/chromedriver \
-    /root/bldr-inst/usr/lib/chromium/nacl_helper{,_bootstrap} \
     /root/bldr-inst/usr/lib/chromium/lib*.so \
     /root/bldr-inst/usr/lib/chromium/swiftshader/{libEGL.so,libGLESv2.so} \
     /root/bldr-inst/usr/bin/chromedriver
