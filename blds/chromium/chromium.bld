@@ -18,7 +18,7 @@ ISUSR=1
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
 EXTRACONF=
 BUILD=custom
-STRIP="no"
+STRIP="yes"
 RESTORELIBDB=1
 DEPS=('alsa-lib' 'at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'cups' 'dbus' 'expat' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libglvnd' 'libxcb' 'mesalib' 'nspr' 'nss' 'pango' 'pulseaudio' 'util-linux')
 
@@ -26,114 +26,103 @@ DEPS=('alsa-lib' 'at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'cups' 'dbus' 'expat
 function BuildAndInstall
 {
 
-  for i in yasm ninja llvm gperf nodejs;
-  do
-          if [ ! -e /var/noop/installed/$i ]; then
-                pkgr -i $i
-          fi;
-  done
+    for i in yasm ninja llvm gperf nodejs;
+    do
+      if [ ! -e /var/noop/installed/$i ]; then
+            pkgr -i $i
+      fi;
+    done
 
-  if [ "`pwd`" == "/root/bldr-tmp" ] && [ -n $BLDR_CONTINUE ]; then
+    if [ "`pwd`" == "/root/bldr-tmp" ] && [ -n $BLDR_CONTINUE ]; then
       cd chromium*
-  fi
+    fi
 
-  #freetype missing: https://groups.google.com/a/chromium.org/d/msg/chromium-packagers/wuInaKJkosg/kMfIV_7wDgAJ
-  if [ ! -e third_party/freetype/src ]; then
-      pushd third_party/freetype
-      git clone https://chromium.googlesource.com/chromium/src/third_party/freetype2 src
-      pushd src && git checkout 5a3490e054bda8a318ebde482
-      popd; popd
-  fi
+    export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
-  export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
+# CFLAGS are passed through release_extra_cflags below
+    export -n CFLAGS CXXFLAGS
 
-  # CFLAGS are passed through release_extra_cflags below
-  export -n CFLAGS CXXFLAGS
+# Force script incompatible with Python 3 to use /usr/bin/python2
+    sed -i '1s|python$|&2|' third_party/dom_distiller_js/protoc_plugins/*.py
+
+    mkdir -p third_party/node/linux/node-linux-x64/bin
+    if [ ! -e third_party/node/linux/node-linux-x64/bin/node ]; then
+      ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
+    fi
 
 
-    # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
-    # Note: These are for noop Linux use ONLY. For your own distribution, please
-    # get your own set of keys. Feel free to contact chromium@nooplinux.org for
-    # more information.
+# Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
+# Note: These are for noop Linux use ONLY. For your own distribution, please
+# get your own set of keys. Feel free to contact chromium@nooplinux.org for
+# more information.
     _google_api_key=AIzaSyB9Q6_d-Yce6g1iFO0rLj4N74ANKqWnrNc
     _google_default_client_id=89099530172.apps.googleusercontent.com
     _google_default_client_secret=edER2v0My77GhaBaUcdj7dQQ
 
-   # Build with clang
+# Build with clang
     export CC=clang
     export CXX=clang++
     export NM=nm
     export AR=ar
 
 #nacl disabled from version 74 onward, it's not buliding anymore and it's a dying breed anyways.
-  local _flags=(
-    'custom_toolchain="//build/toolchain/linux/unbundle:default"'
-    'host_toolchain="//build/toolchain/linux/unbundle:default"'
-    'is_clang=true'
-    'clang_use_chrome_plugins=false'
-    'symbol_level=0'
-    'is_debug=false'
-    'fatal_linker_warnings=false'
-    'treat_warnings_as_errors=false'
-    'fieldtrial_testing_like_official_build=true'
-    'remove_webcore_debug_symbols=true'
-    'ffmpeg_branding="Chrome"'
-    'proprietary_codecs=true'
-    'link_pulseaudio=true'
-    'linux_use_bundled_binutils=false'
-    'use_allocator="none"'
-    'use_cups=true'
-    'use_gnome_keyring=false'
-    'use_gold=false'
-    'use_kerberos=true'
-    'use_pulseaudio=true'
-    'use_sysroot=false'
-    'enable_hangout_services_extension=true'
-    'enable_widevine=true'
-    'enable_nacl=false'
-    'use_custom_libcxx=false'
-    "google_api_key=\"${_google_api_key}\""
-    "google_default_client_id=\"${_google_default_client_id}\""
-    "google_default_client_secret=\"${_google_default_client_secret}\""
-  ) 
-  
-      # Remove compiler flags not supported by our system clang
-      sed -i \
-        -e '/"-Wno-enum-compare-switch"/d' \
-        -e '/"-Wno-null-pointer-arithmetic"/d' \
-        -e '/"-Wno-tautological-unsigned-zero-compare"/d' \
-        -e '/"-Wno-tautological-unsigned-enum-zero-compare"/d' \
-        build/config/compiler/BUILD.gn
+    local _flags=(
+        'custom_toolchain="//build/toolchain/linux/unbundle:default"'
+        'host_toolchain="//build/toolchain/linux/unbundle:default"'
+        'is_clang=true'
+        'clang_use_chrome_plugins=false'
+        'is_official_build=true'
+        'symbol_level=0'
+        'is_debug=false'
+        'fatal_linker_warnings=false'
+        'treat_warnings_as_errors=false'
+        'fieldtrial_testing_like_official_build=true'
+        'remove_webcore_debug_symbols=true'
+        'ffmpeg_branding="Chrome"'
+        'proprietary_codecs=true'
+        'link_pulseaudio=true'
+        'linux_use_bundled_binutils=false'
+        'use_allocator="none"'
+        'use_cups=true'
+        'use_gnome_keyring=false'
+        'use_gold=false'
+        'use_kerberos=true'
+        'use_pulseaudio=true'
+        'use_sysroot=false'
+        'enable_hangout_services_extension=true'
+        'enable_widevine=true'
+        'enable_nacl=false'
+        'use_custom_libcxx=false'
+        "google_api_key=\"${_google_api_key}\""
+        "google_default_client_id=\"${_google_default_client_id}\""
+        "google_default_client_secret=\"${_google_default_client_secret}\""
+    ) 
 
-    
-    #need node now...
-    mkdir -p third_party/node/linux/node-linux-x64/bin/
-    rm -rf third_party/node/linux/node-linux-x64/bin/*
-    ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
+  # Remove compiler flags not supported by our system clang
+  sed -i \
+    -e '/"-Wno-enum-compare-switch"/d' \
+    -e '/"-Wno-null-pointer-arithmetic"/d' \
+    -e '/"-Wno-tautological-unsigned-zero-compare"/d' \
+    -e '/"-Wno-tautological-unsigned-enum-zero-compare"/d' \
+    build/config/compiler/BUILD.gn
 
-    mkdir -p third_party/llvm-build/Release+Asserts/bin/
-    pushd third_party/llvm-build/Release+Asserts/bin/ &> /dev/null
-    rm -rf *
-    ln -s /usr/bin/clang
-    ln -s /usr/bin/clang++
-    ln -s /usr/bin/llvm-ar
-    popd &> /dev/null
+    CFLAGS+='   -Wno-builtin-macro-redefined'
+    CXXFLAGS+=' -Wno-builtin-macro-redefined'
+    CPPFLAGS+=' -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__='
+    CFLAGS+='   -fno-unwind-tables -fno-asynchronous-unwind-tables'
+    CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+    CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
-  # https://groups.google.com/a/chromium.org/d/topic/chromium-packagers/9JX1N2nf4PU/discussion
-  touch chrome/test/data/webui/i18n_process_css_test.html
+    gn gen out/Release --args="${_flags[*]}" --script-executable=/usr/bin/python2
+    ninja -C out/Release chrome chrome_sandbox chromedriver
 
-#  python2 tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
-#  out/Release/gn gen out/Release --args="${_flags[*]}" \
-#      --script-executable=/usr/bin/python2
-  gn gen out/Release --args="${_flags[*]}" --script-executable=/usr/bin/python2
-  ninja -C out/Release chrome chrome_sandbox chromedriver
+    #Install
+    install -D out/Release/chrome /root/bldr-inst/usr/lib/chromium/chromium
 
-  install -D out/Release/chrome /root/bldr-inst/usr/lib/chromium/chromium
-
-  install -Dm4755 -o root -g root out/Release/chrome_sandbox \
+    install -Dm4755 -o root -g root out/Release/chrome_sandbox \
     /root/bldr-inst/usr/lib/chromium/chrome-sandbox
 
-  cp -a out/Release/{*.pak,*.bin,icudtl.dat} \
+    cp -a out/Release/{*.pak,*.bin,icudtl.dat} \
      out/Release/locales \
          out/Release/gen/content/content_resources.pak \
          /root/bldr-inst/usr/lib/chromium/
@@ -146,12 +135,6 @@ function BuildAndInstall
     mkdir -p /root/bldr-inst/usr/bin/
     ln -s /usr/lib/chromium/chromedriver /root/bldr-inst/usr/bin/chromedriver
 
-# Manually strip binaries so that 'nacl_irt_*.nexe' is left intact
-    strip /root/bldr-inst/usr/lib/chromium/chromedriver \
-    /root/bldr-inst/usr/lib/chromium/lib*.so \
-    /root/bldr-inst/usr/lib/chromium/swiftshader/{libEGL.so,libGLESv2.so} \
-    /root/bldr-inst/usr/bin/chromedriver
-
     mkdir -p ../widevine
     pushd ../widevine
     wget https://dl.google.com/linux/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION}-1_amd64.deb -Ochrome.deb
@@ -160,17 +143,17 @@ function BuildAndInstall
     cp opt/google/chrome/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
     popd
 
-  strip /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox} 
+    for size in 22 24 48 64 128 256; do
+        install -Dm644 "chrome/app/theme/chromium/product_logo_$size.png" \
+          /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
+    done
 
-  for size in 22 24 48 64 128 256; do
-    install -Dm644 "chrome/app/theme/chromium/product_logo_$size.png" \
-      /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
-  done
+    for size in 16 32; do
+        install -Dm644 "chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
+          /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
+    done
 
-  for size in 16 32; do
-    install -Dm644 "chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
-      /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
-  done
+    strip --strip-all --strip-debug /root/bldr-inst/usr/lib/chromium/{chromium,chrome-sandbox,chromedriver}
 }
 
 #Default HTTP curl new version detection
