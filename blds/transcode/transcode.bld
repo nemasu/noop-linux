@@ -56,7 +56,8 @@ function BuildAndInstall
         --enable-sdl --enable-freetype2 --enable-a52 --enable-libpostproc \
         --enable-xvid --enable-x264 --enable-alsa --enable-libmpeg2 --enable-libmpeg2convert
       sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-
+  else
+    rm $BLDRTMPDIR/*.patch2
   fi
         
   make -j${BLDR_CORES}
