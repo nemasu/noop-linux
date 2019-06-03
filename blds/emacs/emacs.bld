@@ -5,8 +5,8 @@ NAME=emacs
 DESC="The extensible, customizable, self-documenting real-time display editor"
 
 #package version
-VERSION=25.1
-DVERSION=25.1
+VERSION=26.2
+DVERSION=26.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,12 +35,10 @@ RESTORELIBDB=
 function BuildAndInstall
 {
         ac_cv_lib_gif_EGifPutExtensionLast=yes ./configure \
-                --prefix=/usr \
-                --sysconfdir=/etc \
-                --libexecdir=/usr/lib \
-                --localstatedir=/var \
-                --with-x-toolkit=gtk2 \
-                --with-xft
+        	--prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib \
+			--localstatedir=/var --with-x-toolkit=gtk3 --with-xft \
+			--with-modules --with-imagemagick
+
 
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
