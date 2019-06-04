@@ -18,7 +18,7 @@ fi
 SRC=
 EXTRACONF=
 BUILD=custom
-DEPS=('xorg-server' 'lib32-mesalib' 'mesalib' 'glibc' 'lib32-glibc' 'lib32-libX11' 'lib32-libXext' 'lib32-libglvnd' 'libX11' 'libXext' 'libglvnd')
+DEPS=('xorg-server' 'lib32-mesalib' 'mesalib' 'atk' 'cairo' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'gtk+2' 'lib32-glibc' 'lib32-libX11' 'lib32-libXext' 'lib32-libglvnd' 'libX11' 'libXext' 'libglvnd' 'pango')
 STRIP="no"
 RESTORELIBDB=1
 
