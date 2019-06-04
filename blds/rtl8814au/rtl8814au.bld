@@ -1,0 +1,50 @@
+#package name
+NAME=rtl8814au
+
+#Description
+DESC="Realtek RTL8814AU USB Wi-Fi driver"
+
+#package version
+VERSION=20190604
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    git clone https://github.com/zebulon2/rtl8814au.git
+    cd rtl*
+    make -j${BLDR_CORES}
+
+    KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
+    mkdir -p /root/bldr-inst/lib/modules/$(KERVER)/kernel/drivers/net/wireless/
+    cp -v *.ko /root/bldr-inst/lib/modules/$(KERVER)/kernel/drivers/net/wireless/
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

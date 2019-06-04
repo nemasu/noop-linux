@@ -5,8 +5,8 @@ NAME=zfs
 DESC="ZFS on Linux - the official OpenZFS implementation for Linux."
 
 #package version
-VERSION=0.7.12-1
-DVERSION=0.7.12
+VERSION=0.8.0
+DVERSION=0.8.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -21,13 +21,13 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('spl' 'e2fsprogs' 'glibc' 'krb5' 'libaio' 'libtirpc' 'systemd' 'util-linux' 'zlib')
+DEPS=('e2fsprogs' 'glibc' 'krb5' 'libaio' 'libtirpc' 'systemd' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=('spl')
+PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=

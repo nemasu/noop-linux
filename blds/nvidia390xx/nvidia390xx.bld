@@ -2,7 +2,7 @@ NAME=nvidia390xx
 
 #Description
 DESC="NVIDIA 390.xx legacy drivers for linux"
-VERSION=390.116
+VERSION=390.116-1
 DVERSION=390.116
 ISUSR=1
 

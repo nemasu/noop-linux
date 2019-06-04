@@ -5,8 +5,8 @@ NAME=virtualbox
 DESC="Powerful x86 virtualization for enterprise as well as home use"
 
 #package version
-VERSION=6.0.4
-DVERSION=6.0.4
+VERSION=6.0.8
+DVERSION=6.0.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -69,9 +69,10 @@ function BuildAndInstall
 	#vboxguest and vboxvideo are included in the kernel, so we'll just take vboxsf.
 
 	#Current vboxsf module is broken, so we need one from elsewhere
+    rm -rf vboxsf
 	git clone https://github.com/jwrdegoede/vboxsf
 	cd vboxsf
-	git checkout 9451f61e6787e95aa51e42b6381db6b059bc49da
+	git checkout 87b9015c57dd7f226c768131bf8b4c0249de9835
 	cd ..
 
 	make -C vboxsf
