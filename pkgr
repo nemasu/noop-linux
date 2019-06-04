@@ -1462,16 +1462,26 @@ if [ $1 == "--upgrade-all" ] || [ $1 == "-U" ]; then
             
         $echo The following are about to be upgraded:
 
+        let kernelup=0
         for i in ${array[@]};
         do
+            if [ "$i" == "linux-kernel" ]; then
+                let kernelup=1
+            fi
             $echo $i
         done
 
         read -p "Press [Enter] key to start..."
 
+        if [ $kernelup -eq 1 ]; then
+            pkgr -u linux-kernel
+        fi
+
         for i in ${array[@]};
         do
-            pkgr -u $i
+            if [ "$i" != "linux-kernel" ]; then
+                pkgr -u $i
+            fi
         done
     else
         $echo "There are no packages available for upgrade."
