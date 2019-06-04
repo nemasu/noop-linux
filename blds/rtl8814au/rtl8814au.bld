@@ -35,8 +35,8 @@ function BuildAndInstall
     make -j${BLDR_CORES}
 
     KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
-    mkdir -p /root/bldr-inst/lib/modules/$(KERVER)/kernel/drivers/net/wireless/
-    cp -v *.ko /root/bldr-inst/lib/modules/$(KERVER)/kernel/drivers/net/wireless/
+    mkdir -p /root/bldr-inst/lib/modules/${KERVER}/kernel/drivers/net/wireless/
+    cp -v *.ko /root/bldr-inst/lib/modules/${KERVER}/kernel/drivers/net/wireless/
 }
 
 function Detect() { #LatestVersionGitHub, GetFileList
