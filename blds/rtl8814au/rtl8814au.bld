@@ -2,7 +2,7 @@
 NAME=rtl8814au
 
 #Description
-DESC="Realtek RTL8814AU USB Wi-Fi driver"
+DESC="Realtek RTL8812AU/21AU and RTL8814AU USB Wi-Fi driver with monitor mode and frame injection."
 
 #package version
 VERSION=20190604
@@ -30,8 +30,9 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-    git clone https://github.com/zebulon2/rtl8814au.git
+    git clone https://github.com/aircrack-ng/rtl8812au.git
     cd rtl*
+    git checkout v5.3.4
     make -j${BLDR_CORES}
 
     KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
