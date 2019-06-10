@@ -1,0 +1,54 @@
+#package name
+NAME=neovim
+
+#Description
+DESC="Vim-fork focused on extensibility and usability"
+
+#package version
+VERSION=0.3.7
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    if [ -z "$BLDR_CONTINUE" ]; then
+        git clone --recursive https://github.com/neovim/neovim.git
+        cd neovim
+        git checkout v${VERSION}
+        cd ..
+    fi
+
+    cd neovim
+    rm -rf build
+    make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=/usr"
+    make DESTDIR=/root/bldr-inst install
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
