@@ -5,7 +5,7 @@ NAME=spotify-client
 DESC="Spotify Client"
 
 #package version
-VERSION=1.0.89
+VERSION=1.1.5.153.gf614956d-16
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('alsa-lib' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libcurl-gnutls' 'libglvnd' 'libxcb' 'mesalib' 'nspr' 'nss' 'pango' 'zlib')
+DEPS=('alsa-lib' 'at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'dbus' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+2' 'libX11' 'libXScrnSaver' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libcurl-gnutls' 'libglvnd' 'libxcb' 'mesalib' 'nspr' 'nss' 'pango' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -34,7 +34,7 @@ RESTORELIBDB=1
 function BuildAndInstall
 {
 	if [ ! -e sc.deb ]; then
-		wget http://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.0.89.313.g34a58dea-5_amd64.deb -Osc.deb
+		wget http://repository-origin.spotify.com/pool/non-free/s/spotify-client/spotify-client_${VERSION}_amd64.deb -Osc.deb
 	fi
 	ar x sc.deb
 	tar xf data.tar.gz
@@ -56,19 +56,7 @@ function BuildAndInstall
 }
 
 function Detect() {
-    LISTURL=
-    FILELIST=`GetFileList`
-    LATEST=0
-
-    for i in ${FILELIST[@]};
-    do
-        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-        vercomp $LATEST $CURVER
-        if [ $? -eq 2 ];
-        then
-                        LATEST=$CURVER
-        fi
-    done
+    LATEST=`curl -s http://repository-origin.spotify.com/pool/non-free/s/spotify-client/ | grep amd64 | sed -e 's/.*spotify-client_\(.*\)_amd64.*/\1/g'`
 
     vercomp $VERSION $LATEST
     if [ $? -eq 2 ];
