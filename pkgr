@@ -552,7 +552,8 @@ function DoDepcheckPackages() {
             else
                 #TODO determine if library is 32-bit or not and check accordingly
                 #if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib /usr/lib32 -name $j 2>/dev/null | wc -l`" == "0" ];
-                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib -name $j 2>/dev/null | wc -l`" == "0" ];
+                extra_dir=$(dirname `readlink -f "$i"`)
+                if [ "$DIRECT" == "DIRECT" ] && [ "`find /usr/lib $extra_dir -name $j 2>/dev/null | wc -l`" == "0" ];
                 then
                     $echo "$i -> $j $DIRECT" >> /tmp/missinglibs
                 else
