@@ -21,7 +21,7 @@ EXTRACONF="-DPYTHON_DVERSION=3.6 -DPYTHON_LIBPATH=/usr/lib -DPYTHON_LIBRARY=pyth
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('boost' 'fftw' 'freetype2' 'gcc-libs' 'glew' 'glibc' 'ilmbase' 'jemalloc' 'libX11' 'libXfixes' 'libXi' 'libXrender' 'libXxf86vm' 'libglu' 'libglvnd' 'libjpeg' 'libpng' 'llvm-libs' 'openexr' 'python' 'tiff' 'zlib')
+DEPS=('boost' 'fftw' 'freetype2' 'gcc-libs' 'glew' 'glibc' 'ilmbase' 'jemalloc' 'libX11' 'libXfixes' 'libXi' 'libXrender' 'libXxf86vm' 'libglu' 'libglvnd' 'libjpeg' 'libpng' 'llvm-libs' 'openal' 'openexr' 'openimageio' 'python' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

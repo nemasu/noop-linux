@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('freeglut' 'gcc-libs' 'glibc' 'lib32-ncurses' 'libglu' 'mesalib')
+DEPS=('alsa-lib' 'dbus' 'expat' 'fontconfig' 'freeglut' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'hyphen' 'lib32-glibc' 'lib32-ncurses' 'libICE' 'libSM' 'libX11' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXext' 'libXfixes' 'libXi' 'libXrandr' 'libXrender' 'libXtst' 'libglu' 'libglvnd' 'libjpeg' 'libxcb' 'libxml2' 'nspr' 'nss' 'openssl1.0' 'protobuf' 'pulseaudio' 'qt' 'qt-webkit' 'sqlite' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
