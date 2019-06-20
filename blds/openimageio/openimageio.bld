@@ -1,0 +1,65 @@
+#package name
+NAME=openimageio
+
+#Description
+DESC="A library for reading and writing images, including classes, utilities, and applications."
+
+#package version
+VERSION=1.8.17
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    if [ -z "$BLDR_CONTINUE" ]; then
+        git clone https://github.com/OpenImageIO/oiio.git
+        cd oiio
+        git checkout Release-${VERSION}
+        cd ..
+    fi
+
+    cd oiio
+    mkdir -p build && cd build
+
+    cmake .. \
+      -DUSE_PYTHON=ON \
+      -DPYTHON_VERSION=3.6 \
+      -DUSE_OPENSSL=ON \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_INSTALL_LIBDIR=lib \
+      -DOIIO_BUILD_TESTS=OFF \
+      -DOIIO_BUILD_TOOLS=ON \
+      -DSTOP_ON_WARNING=OFF
+    make -j${BLDR_CORES}
+
+    make DESTDIR=/root/bldr-inst install
+}
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
+

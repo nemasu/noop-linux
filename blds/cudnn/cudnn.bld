@@ -5,13 +5,14 @@ NAME=cudnn
 DESC="NVIDIA CUDA Deep Neural Network library"
 
 #package version
-VERSION=7.1.2
+VERSION=7.6.0.64
+_cudaver=10.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://developer.download.nvidia.com/compute/redist/cudnn/v${VERSION}/cudnn-9.1-linux-x64-v7.1.tgz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,14 +34,30 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-    mkdir -p /root/bldr-inst/opt
-    mkdir -p /root/bldr-inst/etc
-	
-	cd ..
-	cp -r cuda /root/bldr-inst/opt
+    wget https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libcudnn7-dev_${VERSION}-1+cuda${_cudaver}_amd64.deb
+    wget https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libcudnn7_${VERSION}-1+cuda${_cudaver}_amd64.deb
 
-    install -d /root/bldr-inst/etc/ld.so.conf.d
-    echo "/opt/cuda/lib64/" > /root/bldr-inst/etc/ld.so.conf.d/cudnn.conf
+    mkdir -p /root/bldr-inst/usr/{lib,include}
+
+    mkdir libcudnn7-dev
+    cd libcudnn7-dev
+    ar xv ../libcudnn7-dev_${VERSION}-1+cuda${_cudaver}_amd64.deb
+    tar xf data.tar.xz
+    cp -a usr/include/x86_64-linux-gnu/* /root/bldr-inst/usr/include/
+    cp -a usr/lib/x86_64-linux-gnu/* /root/bldr-inst/usr/lib/
+
+    cd ..
+    mkdir libcudnn7
+    cd libcudnn7
+    ar xv ../libcudnn7_${VERSION}-1+cuda${_cudaver}_amd64.deb
+    tar xf data.tar.xz
+    cp -a usr/lib/x86_64-linux-gnu/* /root/bldr-inst/usr/lib/
+
+# Get rid of some Ubuntu-isms but at the same time still allow for them to
+# work because nobody is ever quite sure what the right names are.
+    ln -s cudnn_v7.h /root/bldr-inst/usr/include/cudnn.h
+    ln -s libcudnn.so.7 /root/bldr-inst/usr/lib/libcudnn.so
+    ln -s libcudnn_static_v7.a /root/bldr-inst/usr/lib/libcudnn_static.a
 }
 
 function Detect() {

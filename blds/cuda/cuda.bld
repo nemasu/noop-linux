@@ -5,7 +5,8 @@ NAME=cuda
 DESC="NVIDIA's GPU programming toolkit"
 
 #package version
-VERSION=9.2.88_396.26
+VERSION=10.1.168_418.67
+VERSION2=10.1.105_418.39
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,72 +34,59 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
-    if [ ! -e cuda_${VERSION}_linux ]; then
-        wget https://developer.nvidia.com/compute/cuda/${VERSION:0:3}/Prod/local_installers/cuda_${VERSION}_linux
+    if [ -z "$BLDR_CONTINUE" ]; then
+        if [ ! -e cuda_${VERSION}_linux.run ]; then
+            wget https://developer.nvidia.com/compute/cuda/${VERSION:0:4}/Prod/local_installers/cuda_${VERSION}_linux.run
+        fi
+
+        if [ ! -e cuda_${VERSION2}_linux.run ]; then
+            wget https://developer.nvidia.com/compute/cuda/${VERSION:0:4}/Prod/local_installers/cuda_${VERSION2}_linux.run
+        fi
+
     fi
+    sh cuda_${VERSION}_linux.run --extract=`pwd` --override
+    sh cuda_${VERSION2}_linux.run --extract=`pwd` --override
 
-    if [ ! -e cuda_${VERSION:0:6}.1_linux ]; then
-        wget https://developer.nvidia.com/compute/cuda/${VERSION:0:3}/Prod/patches/1/cuda_${VERSION:0:6}.1_linux
-    fi
-
-    sh cuda_${VERSION}_linux --extract=`pwd` --override
-    ./cuda-*.run --noexec --keep
-    ./cuda-samples*.run --noexec --keep
-
-# 1rd sed line: sets right path to install man files
-# 2rd sed line: hack to lie installer, now detect launch script by root
-# 3rd sed line: sets right path in .desktop files and other .desktop stuff (warnings by desktop-file-validate)
-    sed -e "s|/usr/share|/root/bldr-tmp/pkg/cuda/usr/share|g" \
-      -e 's|can_add_for_all_users;|1;|g' \
-      -e 's|=\\"$prefix\\\"|=/opt/cuda|g' -e 's|Terminal=No|Terminal=false|g' -e 's|ParallelComputing|ParallelComputing;|g' \
-      -i pkg/install-linux.pl
-
-# set right path in Samples Makefiles
-    sed 's|\$cudaprefix\\|\\/opt\\/cuda\\|g' -i pkg/install-sdk-linux.pl
-
-# use python2
-    find pkg -name '*.py' | xargs sed -i -e 's|env python|env python2|g' -e 's|bin/python|bin/python2|g'
-
-# Fix up samples tht use findgllib_mk
-    for f in pkg/samples/*/*/findgllib.mk; do
+    for f in cuda-samples/*/*/findgllib.mk; do
         patch $f $BLDRTMPDIR/cuda-findgllib_mk.diff
     done
-    rm $BLDRTMPDIR/cuda-findgllib_mk.diff
 
-    cd pkg
-    export PERL5LIB=.
-    perl install-linux.pl -prefix="/root/bldr-inst/opt/cuda" -noprompt
-    perl install-sdk-linux.pl -cudaprefix="/root/bldr-inst/opt/cuda" -prefix="/root/bldr-inst/opt/cuda/samples" -noprompt
-    sh ../cuda_${VERSION:0:6}.1_linux --silent --accept-eula --installdir=/root/bldr-inst/opt/cuda
+    mkdir -p /root/bldr-inst/opt/
+    cp -r cuda-toolkit /root/bldr-inst/opt/cuda
+    cp -r cublas/include/* /root/bldr-inst/opt/cuda/include/
+    cp -r cublas/lib64/* /root/bldr-inst/opt/cuda/lib64/
+    cp -r cuda-samples /root/bldr-inst/opt/cuda/samples
+    ln -s /opt/cuda/targets/x86_64-linux/lib /root/bldr-inst/opt/cuda/lib
+    ln -s /opt/cuda/nvvm/lib64 /root/bldr-inst/opt/cuda/nvvm/lib
 
-# Hack we need because of glibc 2.26 (https://bugs.archlinux.org/task/55580)
-# without which we couldn't compile anything at all.
-# Super dirty hack. I really hope it doesn't break other stuff!
-# Hopefully we can remove this for later version of cuda.
-    sed -i "1 i#define _BITS_FLOATN_H" /root/bldr-inst/opt/cuda/include/host_defines.h
+# Use GCC 8
+    ln -s /usr/bin/gcc /root/bldr-inst/opt/cuda/bin/gcc
+    ln -s /usr/bin/g++ /root/bldr-inst/opt/cuda/bin/g++
+
+# Create soname links.
+# We have to be weird about this since for some reason the ELF SONAME is incorrect or at least partially incorrect for some libs.
+# Best we can do is create all symlinks and hope for the best.
+# Their installer used to perform this for us but now it's all manual and I think this is what we'll be stuck with for now.
+    find cuda-toolkit/targets -type f -name '*.so*' ! -path '*stubs/*' -print0 | while read -rd $'\0' _lib; do
+        _base=${_lib%.so.*}
+        _current_soname=$(basename ${_lib%.*})
+        while [[ $_current_soname != $(basename $_base) ]]; do
+          ln -sf ${_lib##*/} /root/bldr-inst/opt/cuda/lib64/$_current_soname
+          _current_soname=${_current_soname%.*}
+        done
+    done
 
 # Install profile and ld.so.config files
-    mkdir -p /root/bldr-inst/etc/{profile.d,ld.so.conf.d}
-    mv ${BLDRTMPDIR}/cuda.sh /root/bldr-inst/etc/profile.d/cuda.sh
-    mv ${BLDRTMPDIR}/cuda.conf /root/bldr-inst/etc/ld.so.conf.d/cuda.conf
+    install -Dm755 $BLDRTMPDIR/cuda.sh /root/bldr-inst/etc/profile.d/cuda.sh
+    install -Dm644 $BLDRTMPDIR/cuda.conf /root/bldr-inst/etc/ld.so.conf.d/cuda.conf
 
-# Remove redundant man and samples
-    rm -fr /root/bldr-inst/opt/cuda/doc/man
-    rm -fr /root/bldr-inst/opt/cuda/cuda-samples
-    rm -fr /root/bldr-inst/usr/share/man/man3/deprecated.3*
-
-# Remove included copy of java and link to system java
+# Remove included copy of java and link to system java 8
     rm -fr  /root/bldr-inst/opt/cuda/jre
-    sed 's|../jre/bin/java|/usr/bin/java|g' \
-    -i /root/bldr-inst/opt/cuda/libnsight/nsight.ini \
-    -i /root/bldr-inst/opt/cuda/libnvvp/nvvp.ini
+    sed 's|../jre/bin/java|/usr/lib/jvm/java-8-openjdk/jre/bin/java|g' \
+        -i /root/bldr-inst/opt/cuda/libnsight/nsight.ini \
+        -i /root/bldr-inst/opt/cuda/libnvvp/nvvp.ini
 
-# Remove unused files
-    rm -fr /root/bldr-inst/opt/cuda/{bin,samples}/.uninstall_manifest_do_not_delete.txt
-    rm -fr /root/bldr-inst/opt/cuda/samples/uninstall_cuda_samples_8.0.pl
-    rm -fr /root/bldr-inst/opt/cuda/bin/cuda-install-samples-8.0.sh
-    rm -fr /root/bldr-inst/opt/cuda/bin/uninstall_cuda_toolkit_8.0.pl
-
+    rm $BLDRTMPDIR/cuda.sh $BLDRTMPDIR/cuda.conf $BLDRTMPDIR/cuda-findgllib_mk.diff
 }
 
 function Detect() {

@@ -1,22 +1,26 @@
---- ./opt/cuda/samples/3_Imaging/bicubicTexture/findgllib.mk	2017-09-28 09:07:30.310563874 +0200
-+++ findgllib.mk	2017-09-28 14:40:50.638930881 +0200
-@@ -60,6 +60,7 @@
-     RHEL   = $(shell echo $(DISTRO) | grep -i 'red\|rhel' >/dev/null 2>&1; echo $$?)
-     CENTOS = $(shell echo $(DISTRO) | grep -i centos      >/dev/null 2>&1; echo $$?)
-     SUSE   = $(shell echo $(DISTRO) | grep -i suse        >/dev/null 2>&1; echo $$?)
-+    ARCHLX = $(shell echo $(DISTRO) | grep -i arch        >/dev/null 2>&1; echo $$?)
-     ifeq ("$(UBUNTU)","0")
-       ifeq ($(HOST_ARCH)-$(TARGET_ARCH),x86_64-armv7l)
-         GLPATH := /usr/arm-linux-gnueabihf/lib
-@@ -100,6 +101,11 @@
-       GLPATH    ?= /usr/lib64/nvidia
-       GLLINK    ?= -L/usr/lib64/nvidia
-       DFLT_PATH ?= /usr/lib64
-+    endif
-+    ifeq ("$(ARCHLX)","0")
-+      GLPATH    ?= /usr/lib64/nvidia
-+      GLLINK    ?= -L/usr/lib64/nvidia
-+      DFLT_PATH ?= /usr/lib64
-     endif
-   
-   # find libGL, libGLU, libXi, 
+*** cuda-samples/2_Graphics/bindlessTexture/findgllib.mk.orig	2019-06-18 16:24:50.655912306 +0900
+--- cuda-samples/2_Graphics/bindlessTexture/findgllib.mk	2019-06-18 16:35:58.769028343 +0900
+***************
+*** 60,65 ****
+--- 60,66 ----
+      RHEL   = $(shell echo $(DISTRO) | grep -i 'red\|rhel' >/dev/null 2>&1; echo $$?)
+      CENTOS = $(shell echo $(DISTRO) | grep -i centos      >/dev/null 2>&1; echo $$?)
+      SUSE   = $(shell echo $(DISTRO) | grep -i 'suse\|sles' >/dev/null 2>&1; echo $$?)
++     NOOP   = $(shell echo $(DISTRO) | grep -i noop        >/dev/null 2>&1; echo $$?)
+      ifeq ("$(UBUNTU)","0")
+        ifeq ($(HOST_ARCH)-$(TARGET_ARCH),x86_64-armv7l)
+          GLPATH := /usr/arm-linux-gnueabihf/lib
+***************
+*** 108,113 ****
+--- 109,119 ----
+        GLPATH    ?= /usr/lib64/nvidia
+        GLLINK    ?= -L/usr/lib64/nvidia
+        DFLT_PATH ?= /usr/lib64
++     endif
++     ifeq ("$(NOOP)","0")
++       GLPATH    ?= /usr/lib64/nvidia
++       GLLINK    ?= -L/usr/lib64/nvidia
++       DFLT_PATH ?= /usr/lib64
+      endif
+    
+    # find libGL, libGLU 

@@ -5,13 +5,14 @@ NAME=portmidi
 DESC="Real-time MIDI input/output library"
 
 #package version
-VERSION=217
+VERSION=217-1
+DVERSION=217
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/project/portmedia/portmidi/${VERSION}/portmidi-src-${VERSION}.zip
+SRC=http://downloads.sourceforge.net/project/portmedia/portmidi/${DVERSION}/portmidi-src-${DVERSION}.zip
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -64,7 +65,7 @@ function Detect() {
         fi
     done
 
-    vercomp $VERSION $LATEST
+    vercomp $DVERSION $LATEST
     if [ $? -eq 2 ];
     then
         echo "$NAME: New Version Available! - $LATEST"

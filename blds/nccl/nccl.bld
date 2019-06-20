@@ -1,0 +1,56 @@
+#package name
+NAME=nccl
+
+#Description
+DESC="Library for NVIDIA multi-GPU and multi-node collective communication primitives"
+
+#package version
+VERSION=2.4.7
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    if [ -z "$BLDR_CONTINUE" ]; then
+        git clone https://github.com/NVIDIA/nccl.git
+        cd nccl
+        git checkout v${VERSION}-1
+        cd ..
+    fi
+    cd nccl
+    make -j${BLDR_CORES} CUDA_HOME='/opt/cuda' src.build
+
+    cd build
+    install -Dm644 include/nccl.h /root/bldr-inst/usr/include/nccl.h
+    mkdir -p /root/bldr-inst/usr/lib
+    cp -a lib/* /root/bldr-inst/usr/lib
+}
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
+
