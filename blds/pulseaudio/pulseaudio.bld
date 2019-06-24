@@ -49,7 +49,7 @@ function BuildAndInstall
     cd pulseaudio
     
     NOCONFIGURE=1 ./bootstrap.sh
-    ./configure $STDUSRCONF --disable-default-build-tests --with-pulsedsp-location='/usr/lib/pulseaudio' --with-udev-rules-dir=/usr/lib/udev/rules.d DATADIRNAME=share
+    ./configure $AT_BLDR_CONF --disable-default-build-tests --with-pulsedsp-location='/usr/lib/pulseaudio' --with-udev-rules-dir=/usr/lib/udev/rules.d DATADIRNAME=share
     sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
     make -j${BLDR_CORES}
     make DESTDIR=/root/bldr-inst install

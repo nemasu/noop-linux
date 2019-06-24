@@ -40,7 +40,7 @@ function BuildAndInstall
         PATH=`pwd`:$PATH
         popd
         
-        ./configure $STDUSRCONF
+        ./configure $AT_BLDR_CONF
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
         

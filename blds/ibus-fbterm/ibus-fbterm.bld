@@ -37,7 +37,7 @@ function BuildAndInstall
         git clone https://github.com/fujiwarat/ibus-fbterm.git
         cd ibus-fbterm
         autoconf
-        ./configure $STDUSRCONF
+        ./configure $AT_BLDR_CONF
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }

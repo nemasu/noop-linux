@@ -33,7 +33,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure $STDUSRCONF --with-x --with-appresdir=/usr/share/X11/app-defaults
+        ./configure $AT_BLDR_CONF --with-x --with-appresdir=/usr/share/X11/app-defaults
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
         ln -s eqn /root/bldr-inst/usr/bin/geqn

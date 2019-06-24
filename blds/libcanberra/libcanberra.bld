@@ -36,7 +36,7 @@ function BuildAndInstall
 {
         export PKG_CONFIG_PATH=/usr/lib/pkconfig:/lib/pkgconfig
         ./autogen.sh
-        ./configure $STDUSRCONF --disable-oss
+        ./configure $AT_BLDR_CONF --disable-oss
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }

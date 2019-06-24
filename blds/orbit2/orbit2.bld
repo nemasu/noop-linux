@@ -36,7 +36,7 @@ function BuildAndInstall
 {
     find . -type f | xargs sed -i -e 's|-Werror-implicit-function-declaration||g'
     find . -type f | xargs sed -i -e 's|-DG_DISABLE_DEPRECATED||g'
-    ./configure $STDUSRCONF
+    ./configure $AT_BLDR_CONF
     make -j${BLDR_CORES}
     make DESTDIR=/root/bldr-inst install
 }

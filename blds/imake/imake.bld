@@ -33,7 +33,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure $STDUSRCONF
+        ./configure $AT_BLDR_CONF
         make
         make DESTDIR=/root/bldr-inst install
 
@@ -44,7 +44,7 @@ function BuildAndInstall
         tar xf `ls`
         rm *.bz2
         cd `ls`
-        ./configure $STDUSRCONF
+        ./configure $AT_BLDR_CONF
         make
         make DESTDIR=/root/bldr-inst install
         cd ..
@@ -54,7 +54,7 @@ function BuildAndInstall
         tar xf `ls`
         rm *.bz2
         cd `ls`
-        ./configure $STDUSRCONF
+        ./configure $AT_BLDR_CONF
         make
         make DESTDIR=/root/bldr-inst install
         cd ..
@@ -64,7 +64,7 @@ function BuildAndInstall
         tar xf `ls`
         rm *.bz2
         cd `ls`
-        ./configure $STDUSRCONF
+        ./configure $AT_BLDR_CONF
         make
         make DESTDIR=/root/bldr-inst install
         cd ..
@@ -77,7 +77,7 @@ function BuildAndInstall
         mv $BLDRTMPDIR/cf-patch .
         patch -Np1 -i cf-patch
         rm cf-patch
-        ./configure $STDUSRCONF
+        ./configure $AT_BLDR_CONF
         make
         make DESTDIR=/root/bldr-inst install
         cd ..

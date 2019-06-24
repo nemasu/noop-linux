@@ -37,7 +37,7 @@ function BuildAndInstall
         aclocal -I config-scripts
         autoconf -I config-scripts
 
-        ./configure $STDUSRCONF --with-systemd=/usr/lib/systemd/system --without-perl --without-php --enable-avahi --enable-threads --enable-raw-printing --with-dbusdir=/etc/dbus-1 --enable-ssl=yes --enable-gnutls --enable-pam=yes --with-logdir=/var/log/cups --with-cups-user=daemon --with-cups-group=lp --with-system_groups="sys root" --with-optim="$CFLAGS"
+        ./configure $AT_BLDR_CONF --with-systemd=/usr/lib/systemd/system --without-perl --without-php --enable-avahi --enable-threads --enable-raw-printing --with-dbusdir=/etc/dbus-1 --enable-ssl=yes --enable-gnutls --enable-pam=yes --with-logdir=/var/log/cups --with-cups-user=daemon --with-cups-group=lp --with-system_groups="sys root" --with-optim="$CFLAGS"
 
         make -j${BLDR_CORES}
         make BUILDROOT=/root/bldr-inst install

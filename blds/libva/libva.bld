@@ -34,7 +34,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
         autoreconf -fi
-        ./configure $STDUSRCONF --disable-wayland
+        ./configure $AT_BLDR_CONF --disable-wayland
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }

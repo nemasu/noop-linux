@@ -33,7 +33,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure $STDUSRCONF $EXTRACONF
+        ./configure $AT_BLDR_CONF $EXTRACONF
         make -j${BLDR_CORES}
         install -Dm644 terminfo/fbterm /root/bldr-inst/usr/share/terminfo/f/fbterm
         make DESTDIR=/root/bldr-inst TERMINFO=/root/bldr-inst/usr/share/terminfo install

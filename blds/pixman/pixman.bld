@@ -37,7 +37,7 @@ function BuildAndInstall
         [[ "${ARCH}" == "armv6l" ]] && CONFIG="--disable-arm-simd --disable-arm-neon --disable-arm-iwmmxt"
         [[ "${ARCH}" == "armv7l" ]] && CONFIG="--disable-arm-neon --disable-arm-iwmmxt"
 
-        ./configure $STDUSRCONF $CONFIG
+        ./configure $AT_BLDR_CONF $CONFIG
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }

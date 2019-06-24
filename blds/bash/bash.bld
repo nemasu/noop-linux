@@ -44,7 +44,7 @@ function BuildAndInstall
         done
 
         #Build
-        ./configure $STDUSRCONF --enable-static-link --without-bash-malloc --disable-nls
+        ./configure $AT_BLDR_CONF --enable-static-link --without-bash-malloc --disable-nls
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }

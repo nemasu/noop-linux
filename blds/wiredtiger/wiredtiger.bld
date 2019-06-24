@@ -34,7 +34,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
         ./autogen.sh
-        ./configure $STDUSRCONF \
+        ./configure $AT_BLDR_CONF \
                 --enable-leveldb \
         --enable-bzip2 \
                 --enable-lz4 \

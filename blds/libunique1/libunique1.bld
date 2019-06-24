@@ -34,7 +34,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure $STDUSRCONF
+        ./configure $AT_BLDR_CONF
         find . -name Makefile | xargs sed -i -e 's/-Werror//g'
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install

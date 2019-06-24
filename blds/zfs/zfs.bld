@@ -36,7 +36,7 @@ function BuildAndInstall
 {
 	./autogen.sh
 	export LDFLAGS=-L/lib
-	./configure $STDUSRCONF
+	./configure $AT_BLDR_CONF
 	make -j${BLDR_CORES}
 	make DESTDIR=/root/bldr-inst install
 }

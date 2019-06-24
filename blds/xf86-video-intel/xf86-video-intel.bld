@@ -43,7 +43,7 @@ function BuildAndInstall
 		cd ..
     fi
 	cd xf86-video-intel
-    ./configure $STDUSRCONF --with-default-dri=3
+    ./configure $AT_BLDR_CONF --with-default-dri=3
     make -j${BLDR_CORES}
     make DESTDIR=/root/bldr-inst install
 }

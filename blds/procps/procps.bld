@@ -37,7 +37,7 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
         sed 's:<ncursesw/:<:g' -i watch.c
-        ./configure $STDUSRCONF $EXTRACONF
+        ./configure $AT_BLDR_CONF $EXTRACONF
         make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }

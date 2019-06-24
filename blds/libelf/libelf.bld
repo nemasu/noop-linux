@@ -33,7 +33,7 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure $STDUSRCONF --enable-shared
+        ./configure $AT_BLDR_CONF --enable-shared
         make -j${BLDR_CORES}
         make instroot=/root/bldr-inst install
 }
