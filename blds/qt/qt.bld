@@ -39,9 +39,9 @@ function BuildAndInstall
  
     if [ "${ARCH}" == "armv6l" ];
     then
-            CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
+        CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
     else
-            CONF=
+        CONF=
     fi
  # Sets default {C,CXX,LD}FLAGS for projects built using qmake
   sed -i -e "s|^\(QMAKE_CFLAGS_RELEASE.*\)|\1 ${CFLAGS}|" \
@@ -83,41 +83,53 @@ function BuildAndInstall
   
   make INSTALL_ROOT=/root/bldr-inst install
  
-  #From Arch, cheating
-  pkgdir=/root/bldr-inst
-
-    # Drop QMAKE_PRL_BUILD_DIR because reference the build dir
-  find "${pkgdir}/usr/lib" -type f -name '*.prl' \
+  # Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+  find /root/bldr-inst/usr/lib -type f -name '*.prl' \
     -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
 
   # Fix wrong qmake path in pri file
-  sed -i "s|${srcdir}/${_pkgfqn}/qtbase|/usr|" \
-    "${pkgdir}"/usr/lib/qt/mkspecs/modules/qt_lib_bootstrap_private.pri
+  sed -i s|/root/bldr-tmp/qt-everywhere-src-${VERSION}/qtbase|/usr| \
+    /root/bldr-inst/usr/lib/qt/mkspecs/modules/qt_lib_bootstrap_private.pri
 
   # install missing icons and desktop files
   pushd qttools
   for icon in src/linguist/linguist/images/icons/linguist-*-32.png ; do
     size=$(echo $(basename ${icon}) | cut -d- -f2)
     install -p -D -m644 ${icon} \
-      "${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/linguist.png"
+      /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/linguist.png
   done
 
   install -D -m644 src/assistant/assistant/images/assistant.png \
-    "${pkgdir}/usr/share/icons/hicolor/32x32/apps/assistant.png"
+    /root/bldr-inst/usr/share/icons/hicolor/32x32/apps/assistant.png
   install -D -m644 src/assistant/assistant/images/assistant-128.png \
-    "${pkgdir}/usr/share/icons/hicolor/128x128/apps/assistant.png"
+    /root/bldr-inst/usr/share/icons/hicolor/128x128/apps/assistant.png
   install -D -m644 src/designer/src/designer/images/designer.png \
-    "${pkgdir}/usr/share/icons/hicolor/128x128/apps/QtProject-designer.png"
+    /root/bldr-inst/usr/share/icons/hicolor/128x128/apps/QtProject-designer.png
   install -D -m644 src/qdbus/qdbusviewer/images/qdbusviewer.png \
-    "${pkgdir}/usr/share/icons/hicolor/32x32/apps/qdbusviewer.png"
+    /root/bldr-inst/usr/share/icons/hicolor/32x32/apps/qdbusviewer.png
   install -D -m644 src/qdbus/qdbusviewer/images/qdbusviewer-128.png \
-    "${pkgdir}/usr/share/icons/hicolor/128x128/apps/qdbusviewer.png"
-  install -d "${pkgdir}/usr/share/applications"
+    /root/bldr-inst/usr/share/icons/hicolor/128x128/apps/qdbusviewer.png
+  install -d /root/bldr-inst/usr/share/applications
 
   popd
 
   # Fix wrong path in pc file
-  perl -pi -e "s, -L/root/bldr-tmp/?\S+,,g" "${pkgdir}"/usr/lib/pkgconfig/Qt5WebKit.pc
+  perl -pi -e s, -L/root/bldr-tmp/?\S+,,g /root/bldr-inst/usr/lib/pkgconfig/Qt5WebKit.pc
+
+  #la files are weird.
+  for i in `find /root/bldr-inst/usr/lib -name "libQt5*.la"`; do
+    a=`grep "dependency_libs" "$i" | sed -e 's/dependency_libs=//g' | sed -e ";s/'//g"`
+    n=""
+    for j in $a; do
+        if [ `echo $j | egrep "\.a$" | wc -l` -eq 1 ]; then
+            n="`echo $j | sed -e 's|/|/usr/lib/|g'` $n"
+        else
+            n="`echo $j | sed -e 's|/lib\(Qt5.*\).so|-l\1|g'` $n"
+        fi
+    done
+    n="'$n'"
+    sed -i -e 's|dependency_libs.*|dependency_libs='"$n"'|g' $i
+  done
 }
 
 #Default HTTP curl new version detection
