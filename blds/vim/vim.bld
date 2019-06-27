@@ -5,7 +5,7 @@ NAME=vim
 DESC="Amazing text editor"
 
 #package version
-VERSION=8.1.1518
+VERSION=8.1.1601
 
 
 #directory locations, 99.99% of the time this is 1
@@ -15,7 +15,7 @@ ISUSR=1
 SRC=https://github.com/vim/vim/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--with-features=huge --enable-gpm --enable-acl --with-x=no --disable-gui --enable-multibyte --enable-cscope --disable-netbeans --disable-pythoninterp --disable-python3interp --disable-rubyinterp --disable-luainterp --enable-perlinterp"
+EXTRACONF="--with-features=huge --enable-gpm --enable-acl --with-x=no --disable-gui --enable-multibyte --enable-cscope --disable-netbeans --disable-pythoninterp --disable-python3interp --disable-rubyinterp --disable-luainterp --enable-perlinterp --disable-canberra"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=autotools
