@@ -420,7 +420,7 @@ function DoSync() {
     $echo -e "${Green}done."
     $echo
     $echo -en "${Cyan}Generating deps list..."
-    rm -rf deps; for i in `cat packages | sed 's/,/ /' | awk '{print $1;}'`; do for j in `grep -m1 "DEPS=" blds/$i/*.bld 2>/dev/null | sed "s/DEPS=//g;s/(//g;s/)//;s/'//g;"`; do echo ${i}:${j} >> deps; done done
+    rm -rf deps; for i in `cat packages | sed 's/,/ /' | awk '{print $1;}'`; do for j in `grep -m1 "^DEPS=" blds/$i/*.bld 2>/dev/null | sed "s/DEPS=//g;s/(//g;s/)//;s/'//g;"`; do echo ${i}:${j} >> deps; done done
     $echo -e "${Green}done.${NoColor}"
     popd &> /dev/null
 }
