@@ -2174,7 +2174,7 @@ then
         echo "],"
     else
         #uninstalled deps
-        declare -a json_pkg_deps=$(grep -m1 "DEPS" /var/noop/blds/$2/$2.bld | sed -e 's/DEPS=//')
+        declare -a json_pkg_deps=$(grep -m1 "^DEPS" /var/noop/blds/$2/$2.bld | sed -e 's/DEPS=//')
         let lines=${#json_pkg_deps[@]}
         let line=1
         for dep in ${json_pkg_deps[@]};
