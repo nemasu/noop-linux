@@ -5,13 +5,14 @@ NAME=tevent
 DESC="An event system based on the talloc memory management library"
 
 #package version
-VERSION=0.10.0
+VERSION=0.10.0-1
+DVERSION=0.10.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.samba.org/ftp/tevent/tevent-${VERSION}.tar.gz
+SRC=http://www.samba.org/ftp/tevent/tevent-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -58,7 +59,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

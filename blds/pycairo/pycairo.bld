@@ -5,14 +5,14 @@ NAME=pycairo
 DESC="Set of Python 3 bindings for the cairo graphics library"
 
 #package version
-VERSION=1.17.1
+VERSION=1.17.1-1
 DVERSION=1.17.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/pygobject/pycairo/releases/download/v${VERSION}/pycairo-${VERSION}.tar.gz
+SRC=https://github.com/pygobject/pycairo/releases/download/v${DVERSION}/pycairo-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

@@ -5,7 +5,7 @@ NAME=gpgme
 DESC="A C wrapper library for GnuPG"
 
 #package version
-VERSION=1.12.0
+VERSION=1.13.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -36,7 +36,7 @@ RESTORELIBDB=
 #}
 
 function Detect() {
-    LISTURL=
+    LISTURL=https://www.gnupg.org/ftp/gcrypt/gpgme/
     FILELIST=`GetFileList`
     LATEST=0
 

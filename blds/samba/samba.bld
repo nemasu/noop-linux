@@ -5,8 +5,8 @@ NAME=samba
 DESC="Samba winbind client library"
 
 #package version
-VERSION=4.10.1
-DVERSION=4.10.1
+VERSION=4.10.6
+DVERSION=4.10.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

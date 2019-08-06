@@ -5,7 +5,7 @@ NAME=llvm
 DESC="Low Level Virtual Machine"
 
 #package version
-VERSION=8.0.0
+VERSION=8.0.0-1
 DVERSION=8.0.0
 
 #directory locations, 99.99% of the time this is 1

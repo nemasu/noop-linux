@@ -5,7 +5,8 @@ NAME=openimageio
 DESC="A library for reading and writing images, including classes, utilities, and applications."
 
 #package version
-VERSION=1.8.17
+VERSION=1.8.17-1
+DVERSION=1.8.17
 
 #source location (used by wget)
 SRC=
@@ -33,7 +34,7 @@ function BuildAndInstall
     if [ -z "$BLDR_CONTINUE" ]; then
         git clone https://github.com/OpenImageIO/oiio.git
         cd oiio
-        git checkout Release-${VERSION}
+        git checkout Release-${DVERSION}
         cd ..
     fi
 
@@ -42,7 +43,7 @@ function BuildAndInstall
 
     cmake .. \
       -DUSE_PYTHON=ON \
-      -DPYTHON_VERSION=3.6 \
+      -DPYTHON_DVERSION=3.6 \
       -DUSE_OPENSSL=ON \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_INSTALL_LIBDIR=lib \
@@ -56,7 +57,7 @@ function BuildAndInstall
 function Detect() { #LatestVersionGitHub, GetFileList
     LATEST=0
 
-    vercomp $VERSION $LATEST
+    vercomp $DVERSION $LATEST
     if [ $? -eq 2 ];
     then
         echo "$NAME: New Version Available! - $LATEST"

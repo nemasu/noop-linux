@@ -5,7 +5,7 @@ NAME=python-setuptools
 DESC="Easily download, build, install, upgrade, and uninstall Python packages"
 
 #package version
-VERSION=39.2.0
+VERSION=41.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

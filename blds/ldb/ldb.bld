@@ -5,13 +5,14 @@ NAME=ldb
 DESC="A schema-less, ldap like, API and database"
 
 #package version
-VERSION=1.5.4
+VERSION=1.5.5
+DVERSION=1.5.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.samba.org/ftp/ldb/ldb-${VERSION}.tar.gz
+SRC=http://www.samba.org/ftp/ldb/ldb-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -61,7 +62,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

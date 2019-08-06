@@ -5,13 +5,14 @@ NAME=tensorflow
 DESC="Computation using data flow graphs for scalable machine learning"
 
 #package version
-VERSION=1.14.0
+VERSION=1.14.0-1
+DVERSION=1.14.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/tensorflow/tensorflow/archive/v${VERSION}.tar.gz
+SRC=https://github.com/tensorflow/tensorflow/archive/v${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -74,7 +75,12 @@ function BuildAndInstall
 	if [ ! -e /opt/cuda ]; then
 	    export TF_NEED_CUDA=0
 		./configure
-		bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
+        bazel build --config=opt --incompatible_no_support_tools_in_action_inputs=false \
+                  //tensorflow:libtensorflow.so \
+                  //tensorflow:libtensorflow_cc.so \
+                  //tensorflow:install_headers \
+                  //tensorflow/tools/pip_package:build_pip_package
+
 	else
         export NCCL_INSTALL_PATH=/usr
         export TF_NCCL_VERSION=2.4
@@ -95,6 +101,11 @@ function BuildAndInstall
 
 	bazel-bin/tensorflow/tools/pip_package/build_pip_package `pwd`/out
 	pip3 install -I --root=/root/bldr-inst ./out/*.whl
+
+    cd /root/bldr-inst
+    for i in numpy wheel six setuptools keras_preprocessing Keras_Preprocessing keras_applications Keras_Applications h5py; do
+        rm -rf usr/lib/python*/site-packages/${i}*
+    done
 }
 
 #Default HTTP curl new version detection
@@ -102,7 +113,7 @@ function Detect
 {
         LATEST=`curl -L -s https://github.com/tensorflow/tensorflow/releases | egrep "v[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*v\([0-9\.]*\)\.tar\.gz.*/\1/g'`
         
-    vercomp $VERSION $LATEST
+    vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

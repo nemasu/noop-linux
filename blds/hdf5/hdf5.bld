@@ -1,0 +1,72 @@
+#package name
+NAME=hdf5
+
+#Description
+DESC="General purpose library and file format for storing scientific data"
+
+#package version
+VERSION=1.10.5
+
+#source location (used by wget)
+SRC="https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${VERSION:0:4}/hdf5-${VERSION/_/-}/src/hdf5-${VERSION/_/-}.tar.bz2"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    # Crazy workaround: run CMake to generate pkg-config file
+    mkdir -p build && cd build
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DHDF5_BUILD_HL_LIB=ON \
+        -DHDF5_BUILD_CPP_LIB=ON \
+        -DHDF5_BUILD_FORTRAN=ON \
+        -DHDF5_ENABLE_Z_LIB_SUPPORT=ON
+    # But don’t build with it, it’s quite broken
+    cd ..
+    ./configure \
+        --prefix=/usr \
+        --docdir=/usr/share/doc/hdf5/ \
+        --enable-static \
+        --disable-sharedlib-rpath \
+        --enable-build-mode=production \
+        --enable-hl \
+        --enable-cxx \
+        --enable-fortran \
+        --with-pic \
+        --with-zlib \
+        --with-szlib
+    make -j${BLDR_CORES}
+    
+    make DESTDIR=/root/bldr-inst install
+    # Install pkg-config files from CMake tree
+    install -Dm644 build/CMakeFiles/hdf5{,_hl}{,_cpp}-${VERSION}.pc -t /root/bldr-inst/usr/lib/pkgconfig/
+}
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
+

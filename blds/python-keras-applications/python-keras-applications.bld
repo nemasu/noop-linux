@@ -1,27 +1,23 @@
 #package name
-NAME=meson
+NAME=python-keras-applications
 
 #Description
-DESC='High productivity build system'
+DESC=
 
 #package version
-VERSION=0.50.0-1
-DVERSION=0.50.0
-
-#directory locations, 99.99% of the time this is 1
-ISUSR=1
+VERSION=1.0.8
 
 #source location (used by wget)
-SRC=https://github.com/mesonbuild/meson/releases/download/${DVERSION}/meson-${DVERSION}.tar.gz
+SRC="https://files.pythonhosted.org/packages/source/K/Keras_Applications/Keras_Applications-${VERSION}.tar.gz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
-#autotools, python, perl, cmake, custom
+#autotools, cmake, perl, python, python3, 32bit, custom
 BUILD=python3
 
 # build/package dependancies
-DEPS=
+DEPS=('python' 'python-setuptools' 'python-numpy')
 
 # 'no' to skip calls to strip
 STRIP=
@@ -33,13 +29,11 @@ PKGDEPS=
 RESTORELIBDB=
 
 #function BuildAndInstall
-#{
-#}
 
-function Detect() {
-    LATEST=`LatestVersionGitHub https://github.com/mesonbuild/meson/releases`
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
 
-    vercomp $DVERSION $LATEST
+    vercomp $VERSION $LATEST
     if [ $? -eq 2 ];
     then
         echo "$NAME: New Version Available! - $LATEST"

@@ -5,13 +5,14 @@ NAME=python-m2crypto
 DESC="Crypto & SSL toolkit for Python"
 
 #package version
-VERSION=0.30.1
+VERSION=0.30.1-1
+DVERSION=0.30.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://gitlab.com/m2crypto/m2crypto/repository/${VERSION}/archive.tar.gz
+SRC=https://gitlab.com/m2crypto/m2crypto/repository/${DVERSION}/archive.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -50,7 +51,7 @@ function Detect() {
         fi
     done
 
-    vercomp $VERSION $LATEST
+    vercomp $DVERSION $LATEST
     if [ $? -eq 2 ];
     then
         echo "$NAME: New Version Available! - $LATEST"

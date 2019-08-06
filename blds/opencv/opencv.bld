@@ -5,7 +5,7 @@ NAME=opencv
 DESC="Open Source Computer Vision Library"
 
 #package version
-VERSION=4.1.0
+VERSION=4.1.0-1
 DVERSION=4.1.0
 
 #directory locations, 99.99% of the time this is 1

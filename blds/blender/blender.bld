@@ -5,8 +5,8 @@ NAME=blender
 DESC="3D graphics suite."
 
 #package version
-VERSION=2.79b-2
-DVERSION=2.79b
+VERSION=2.80
+DVERSION=2.80
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -15,7 +15,7 @@ ISUSR=1
 SRC=http://download.blender.org/source/blender-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="-DPYTHON_DVERSION=3.6 -DPYTHON_LIBPATH=/usr/lib -DPYTHON_LIBRARY=python3.6m -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DWITH_CYCLES=ON -DWITH_FFTW3=ON -DWITH_INSTALL_PORTABLE=OFF -DWITH_PYTHON_INSTALL=OFF -DWITH_LLVM=ON"
+EXTRACONF="-DPYTHON_DVERSION=3.7 -DPYTHON_LIBPATH=/usr/lib -DPYTHON_LIBRARY=python3.7m -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m -DWITH_CYCLES=ON -DWITH_FFTW3=ON -DWITH_INSTALL_PORTABLE=OFF -DWITH_PYTHON_INSTALL=OFF -DWITH_LLVM=ON"
 
 #autotools, python, perl, cmake, custom
 BUILD=cmake

@@ -5,7 +5,7 @@ NAME=python
 DESC="Next generation of the python high-level scripting language"
 
 #package version
-VERSION=3.6.4
+VERSION=3.7.4
 _pybasever=${VERSION:0:3}
 
 #directory locations, 99.99% of the time this is 1

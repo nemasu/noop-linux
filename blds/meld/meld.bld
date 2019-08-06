@@ -5,13 +5,14 @@ NAME=meld
 DESC="Visual diff and merge tool"
 
 #package version
-VERSION=3.19.0
+VERSION=3.19.0-1
+DVERSION=3.19.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://ftp.gnome.org/pub/gnome/sources/meld/${VERSION%.*}/meld-${VERSION}.tar.xz"
+SRC="http://ftp.gnome.org/pub/gnome/sources/meld/${DVERSION%.*}/meld-${DVERSION}.tar.xz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -44,7 +45,7 @@ function Detect
         MAJOR=`curl -s http://ftp.gnome.org/pub/GNOME/sources/meld/| grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
         LATEST=`curl -s http://ftp.gnome.org/pub/GNOME/sources/meld/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"
