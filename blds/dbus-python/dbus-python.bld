@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=python
 
 # build/package dependancies
-DEPS=('dbus' 'dbus-glib' 'glib2' 'glibc')
+DEPS=('dbus' 'glib2' 'glibc' 'pcre' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

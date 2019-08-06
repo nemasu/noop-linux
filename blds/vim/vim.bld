@@ -21,7 +21,7 @@ EXTRACONF="--with-features=huge --enable-gpm --enable-acl --with-x=no --disable-
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('acl' 'glibc' 'libcanberra' 'ncurses' 'perl')
+DEPS=('acl' 'glibc' 'ncurses' 'perl')
 
 # 'no' to skip calls to strip
 STRIP=
