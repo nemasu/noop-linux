@@ -2,10 +2,10 @@
 NAME=python-lxml
 
 #Description
-DESC="Python2 binding for the libxml2 and libxslt libraries"
+DESC="Python binding for the libxml2 and libxslt libraries"
 
 #package version
-VERSION=3.5.0
+VERSION=4.4.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ SRC=http://pypi.python.org/packages/source/l/lxml/lxml-${VERSION}.tar.gz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=python
 
 # build/package dependancies
 DEPS=('glibc' 'libxml2' 'libxslt' 'python' 'python2' 'zlib')
@@ -31,19 +31,9 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-        cd ..
-        DIR=`ls`
-        cp -r $DIR ${DIR}-python2
-
-        cd $DIR
-        python3 setup.py install --root=/root/bldr-inst/ --optimize=1
-
-        cd ../${DIR}-python2
-        python2 setup.py install --root=/root/bldr-inst/ --optimize=1
-
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect

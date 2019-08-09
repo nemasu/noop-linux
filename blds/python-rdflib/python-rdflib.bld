@@ -5,13 +5,14 @@ NAME=python-rdflib
 DESC="A Python library for working with RDF, a simple yet powerful language for representing information"
 
 #package version
-VERSION=4.2.2
+VERSION=4.2.2-1
+DVERSION=4.2.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/RDFLib/rdflib/archive/${VERSION}.tar.gz
+SRC=https://github.com/RDFLib/rdflib/archive/${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -40,7 +41,7 @@ function Detect
 {
         LATEST=`curl -s -L https://github.com/RDFLib/rdflib/releases | egrep "/[0-9\.]+\.tar\.gz" | head -n1 | sed -e 's/.*\/\([0-9\.]*\)\.tar\.gz.*/\1/g'`
         
-    vercomp $VERSION $LATEST
+    vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

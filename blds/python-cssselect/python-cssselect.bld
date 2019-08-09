@@ -2,11 +2,11 @@
 NAME=python-cssselect
 
 #Description
-DESC="A Python3 library that parses CSS3 Selectors and translates them to XPath 1.0"
+DESC="A Python library that parses CSS3 Selectors and translates them to XPath 1.0"
 
 #package version
-VERSION=0.9.1-1
-DVERSION=0.9.1
+VERSION=1.0.3
+DVERSION=1.0.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -18,7 +18,7 @@ SRC=https://pypi.python.org/packages/source/c/cssselect/cssselect-${DVERSION}.ta
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=python
 
 # build/package dependancies
 DEPS=
@@ -32,21 +32,9 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-        cd ..
-        DIR=`ls`
-        cp -r $DIR ${DIR}-python2
-
-        cd $DIR
-        sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' cssselect/tests.py
-        python3 setup.py install --root=/root/bldr-inst/ --optimize=1
-
-        cd ../${DIR}-python2
-        sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python2|' cssselect/tests.py
-        python2 setup.py install --root=/root/bldr-inst/ --optimize=1
-
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect

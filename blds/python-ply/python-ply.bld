@@ -5,13 +5,14 @@ NAME=python-ply
 DESC="Lex and yacc parsing tools"
 
 #package version
-VERSION=3.11
+VERSION=3.11-1
+DVERSION=3.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://www.dabeaz.com/ply/ply-${VERSION}.tar.gz
+SRC=http://www.dabeaz.com/ply/ply-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -50,7 +51,7 @@ function Detect() {
         fi
     done
 
-    vercomp $VERSION $LATEST
+    vercomp $DVERSION $LATEST
     if [ $? -eq 2 ];
     then
         echo "$NAME: New Version Available! - $LATEST"

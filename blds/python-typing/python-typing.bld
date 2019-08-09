@@ -5,13 +5,13 @@ NAME=python-typing
 DESC="Typing backport for versions older than 3.5"
 
 #package version
-VERSION=3.6.4
+VERSION=3.7.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://files.pythonhosted.org/packages/ec/cc/28444132a25c113149cec54618abc909596f0b272a74c55bab9593f8876c/typing-${VERSION}.tar.gz
+SRC=https://pypi.python.org/packages/source/t/typing/typing-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

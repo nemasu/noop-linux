@@ -6891,10 +6891,6 @@ python,libpython3.7m.so.1.0
 python,libpython3.so
 python-caja,libcaja-python.so
 python-cheetah,_namemapper.so
-python-lxml,etree.cpython-35m-x86_64-linux-gnu.so
-python-lxml,etree.so
-python-lxml,objectify.cpython-35m-x86_64-linux-gnu.so
-python-lxml,objectify.so
 python-notify,_pynotify.so
 python2,libpython2.7.so
 python2,libpython2.7.so.1.0
