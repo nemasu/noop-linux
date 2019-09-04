@@ -5,7 +5,7 @@ NAME=rust
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 #package version
-VERSION=1.35.0
+VERSION=1.37.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -31,12 +31,27 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
+_llvm_ver=8.0.1
+
 function BuildAndInstall
 {
 	pkgr -i ninja
+
+    if [ ! -e ../compiler-rt-${_llvm_ver}.src ]; then
+        cd ..
+        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-$_llvm_ver/compiler-rt-$_llvm_ver.src.tar.xz
+        tar xf compiler-rt-$_llvm_ver.src.tar.xz
+        rm *.xz
+        cd ../rustc-${VERSION}-src
+    else
+        cd rustc-${VERSION}-src
+    fi
+
+    export RUST_COMPILER_RT_ROOT=/root/bldr-tmp/compiler-rt-8.0.1.src
+
 	mv $BLDRTMPDIR/config.toml config.toml
-	python2 ./x.py build
-    DESTDIR=/root/bldr-inst python2 ./x.py install
+	python ./x.py build
+    DESTDIR=/root/bldr-inst python ./x.py install
 }
 
 #Default HTTP curl new version detection

@@ -2,8 +2,8 @@ NAME=firefox
 
 #Description
 DESC="Standalone web browser from mozilla.org"
-VERSION=67.0
-DVERSION=67.0
+VERSION=69.0
+DVERSION=69.0
 ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=
@@ -18,7 +18,7 @@ function BuildAndInstall
 
   #build prereqs
   for i in zip autoconf2.13 rust jack unzip wayland-protocols nasm; do
-          pkgr -i $i;
+      pkgr -i $i;
   done
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
@@ -37,9 +37,6 @@ function BuildAndInstall
 #echo -n "$_mozilla_api_key" >mozilla-api-key
 #echo "ac_add_options --with-mozilla-api-keyfile=\"$PWD/mozilla-api-key\"" >>.mozconfig
 
-   # GCC 6
-  CXXFLAGS+=" -fno-delete-null-pointer-checks -fno-schedule-insns2"
-  export PYTHON="/usr/bin/python2"
 
 #PGO is breaking build https://bugzilla.mozilla.org/show_bug.cgi?id=1332788
   # Enable PGO

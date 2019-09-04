@@ -5,14 +5,14 @@ NAME=llvm
 DESC="Low Level Virtual Machine"
 
 #package version
-VERSION=8.0.0-1
-DVERSION=8.0.0
+VERSION=8.0.1
+DVERSION=8.0.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://llvm.org/releases/${DVERSION}/llvm-${DVERSION}.src.tar.xz
+SRC=https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/llvm-${DVERSION}.src.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -37,31 +37,31 @@ function BuildAndInstall
 {
     pkgr -i swig
     if [ ! -e tools/clang ]; then
-        wget http://llvm.org/releases/${DVERSION}/cfe-${DVERSION}.src.tar.xz
+        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-8.0.1/cfe-8.0.1.src.tar.xz
         tar xf cfe-${DVERSION}.src.tar.xz
         mv cfe-${DVERSION}.src tools/clang
     fi
 
     if [ ! -e projects/compiler-rt ]; then
-        wget http://llvm.org/releases/${DVERSION}/compiler-rt-${DVERSION}.src.tar.xz
+        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/compiler-rt-${DVERSION}.src.tar.xz
         tar xf compiler-rt-${DVERSION}.src.tar.xz
         mv compiler-rt-${DVERSION}.src projects/compiler-rt
     fi
 
     if [ ! -e tools/clang/tools/extra ]; then
-        wget http://llvm.org/releases/${DVERSION}/clang-tools-extra-${DVERSION}.src.tar.xz
+        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/clang-tools-extra-${DVERSION}.src.tar.xz
         tar xf clang-tools-extra-${DVERSION}.src.tar.xz
         mv clang-tools-extra-${DVERSION}.src tools/clang/tools/extra
     fi
 
     if [ ! -e tools/lld ]; then
-        wget http://releases.llvm.org/${DVERSION}/lld-${DVERSION}.src.tar.xz
+        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/lld-${DVERSION}.src.tar.xz
         tar xf lld-${DVERSION}.src.tar.xz
         mv lld-${DVERSION}.src tools/lld
     fi
 
     if [ ! -e tools/lldb ]; then
-        wget http://llvm.org/releases/${DVERSION}/lldb-${DVERSION}.src.tar.xz
+        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/lldb-${DVERSION}.src.tar.xz
         tar xf lldb-${DVERSION}.src.tar.xz
         mv lldb-${DVERSION}.src tools/lldb
     fi
