@@ -17,7 +17,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('alsa-lib' 'dbus' 'ffmpeg' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=
