@@ -1,0 +1,47 @@
+#package name
+NAME=hfsprogs
+
+#Description
+DESC='User space utils for create and check Apple HFS/HFS+ filesystem'
+
+#package version
+VERSION=540.1
+
+#source location (used by wget)
+SRC=http://cavan.codon.org.uk/~mjg59/diskdev_cmds/diskdev_cmds-${VERSION}.linux3.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    make -j${BLDR_CORES}
+    install -m 755 -d /root/bldr-inst/usr/bin
+    install -m 755 newfs_hfs.tproj/newfs_hfs /root/bldr-inst/usr/bin/mkfs.hfsplus
+    install -m 755 fsck_hfs.tproj/fsck_hfs /root/bldr-inst/usr/bin/fsck.hfsplus
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

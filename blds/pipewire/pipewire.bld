@@ -1,0 +1,47 @@
+#package name
+NAME=pipewire
+
+#Description
+DESC='Server and user space API to deal with multimedia pipelines'
+
+#package version
+VERSION=0.2.6
+
+#source location (used by wget)
+SRC=https://github.com/PipeWire/pipewire/archive/${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    mkdir -p build
+    meson-wrap build -D docs=true -D man=true
+    ninja -C build
+    DESTDIR=/root/bldr-inst meson install -C build
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

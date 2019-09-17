@@ -1,0 +1,7 @@
+function postinst() {
+    systemctl --global enable pipewire.socket
+}
+
+function postrm() {
+    systemctl --global disable pipewire.socket
+}

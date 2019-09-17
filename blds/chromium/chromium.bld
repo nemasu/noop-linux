@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=74.0.3729.169
-VERSION=74.0.3729.169
+DVERSION=77.0.3865.75
+VERSION=77.0.3865.75
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -77,12 +77,11 @@ function BuildAndInstall
         'fatal_linker_warnings=false'
         'treat_warnings_as_errors=false'
         'fieldtrial_testing_like_official_build=true'
-        'remove_webcore_debug_symbols=true'
         'ffmpeg_branding="Chrome"'
         'proprietary_codecs=true'
+        'rtc_use_pipewire=true'
         'link_pulseaudio=true'
         'linux_use_bundled_binutils=false'
-        'use_allocator="none"'
         'use_cups=true'
         'use_gnome_keyring=false'
         'use_gold=false'
@@ -98,21 +97,21 @@ function BuildAndInstall
         "google_default_client_secret=\"${_google_default_client_secret}\""
     ) 
 
-  # Remove compiler flags not supported by our system clang
-  sed -i \
-    -e '/"-Wno-enum-compare-switch"/d' \
-    -e '/"-Wno-null-pointer-arithmetic"/d' \
-    -e '/"-Wno-tautological-unsigned-zero-compare"/d' \
-    -e '/"-Wno-tautological-unsigned-enum-zero-compare"/d' \
-    build/config/compiler/BUILD.gn
-
-    CFLAGS+='   -Wno-builtin-macro-redefined'
-    CXXFLAGS+=' -Wno-builtin-macro-redefined'
-    CPPFLAGS+=' -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__='
-    CFLAGS+='   -fno-unwind-tables -fno-asynchronous-unwind-tables'
-    CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
-    CPPFLAGS+=' -DNO_UNWIND_TABLES'
-
+#  # Remove compiler flags not supported by our system clang
+#  sed -i \
+#    -e '/"-Wno-enum-compare-switch"/d' \
+#    -e '/"-Wno-null-pointer-arithmetic"/d' \
+#    -e '/"-Wno-tautological-unsigned-zero-compare"/d' \
+#    -e '/"-Wno-tautological-unsigned-enum-zero-compare"/d' \
+#    build/config/compiler/BUILD.gn
+#
+#    CFLAGS+='   -Wno-builtin-macro-redefined'
+#    CXXFLAGS+=' -Wno-builtin-macro-redefined'
+#    CPPFLAGS+=' -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__='
+#    CFLAGS+='   -fno-unwind-tables -fno-asynchronous-unwind-tables'
+#    CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+#    CPPFLAGS+=' -DNO_UNWIND_TABLES'
+#
     gn gen out/Release --args="${_flags[*]}" --script-executable=/usr/bin/python2
     ninja -C out/Release chrome chrome_sandbox chromedriver
 
@@ -143,7 +142,7 @@ function BuildAndInstall
     cp opt/google/chrome/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
     popd
 
-    for size in 22 24 48 64 128 256; do
+    for size in 24 48 64 128 256; do
         install -Dm644 "chrome/app/theme/chromium/product_logo_$size.png" \
           /root/bldr-inst/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png
     done
