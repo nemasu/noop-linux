@@ -5,7 +5,8 @@ NAME=rtl8814au
 DESC="Realtek RTL8812AU/21AU and RTL8814AU USB Wi-Fi driver with monitor mode and frame injection."
 
 #package version
-VERSION=20190604
+VERSION=5.3.4
+DVERSION=5.3.4
 
 #source location (used by wget)
 SRC=
@@ -32,7 +33,7 @@ function BuildAndInstall
 {
     git clone https://github.com/aircrack-ng/rtl8812au.git
     cd rtl*
-    git checkout v5.3.4
+    git checkout v${DVERSION}
     make -j${BLDR_CORES}
 
     KERVER=`grep -m1 VER: /var/noop/installed/linux-kernel | sed -e 's/VER://g'`
@@ -43,7 +44,7 @@ function BuildAndInstall
 function Detect() { #LatestVersionGitHub, GetFileList
     LATEST=0
 
-    vercomp $VERSION $LATEST
+    vercomp $DVERSION $LATEST
     if [ $? -eq 2 ];
     then
         echo "$NAME: New Version Available! - $LATEST"

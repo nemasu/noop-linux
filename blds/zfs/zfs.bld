@@ -5,8 +5,8 @@ NAME=zfs
 DESC="ZFS on Linux - the official OpenZFS implementation for Linux."
 
 #package version
-VERSION=0.8.0
-DVERSION=0.8.0
+VERSION=0.8.2
+DVERSION=0.8.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
