@@ -17,7 +17,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'htmlcxx' 'libX11' 'qt' 'taglib' 'vlc')
 
 # 'no' to skip calls to strip
 STRIP=
