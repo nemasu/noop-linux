@@ -2054,6 +2054,15 @@ hplip,libhpmud.so
 hplip,libhpmud.so.0
 hplip,libhpmud.so.0.0.6
 hplip,pcardext.so
+htmlcxx,libcss_parser.so
+htmlcxx,libcss_parser.so.0
+htmlcxx,libcss_parser.so.0.0.0
+htmlcxx,libcss_parser_pp.so
+htmlcxx,libcss_parser_pp.so.0
+htmlcxx,libcss_parser_pp.so.0.0.0
+htmlcxx,libhtmlcxx.so
+htmlcxx,libhtmlcxx.so.3
+htmlcxx,libhtmlcxx.so.3.1.0
 hunspell,libhunspell-1.6.so
 hunspell,libhunspell-1.6.so.0
 hunspell,libhunspell-1.6.so.0.0.1
@@ -9071,6 +9080,7 @@ yajl,libyajl.so.2.1.0
 yaml-cpp,libyaml-cpp.so
 yaml-cpp,libyaml-cpp.so.0.5
 yaml-cpp,libyaml-cpp.so.0.5.3
+yarock,libenginevlc.so
 zeitgeist,libzeitgeist-2.0.so
 zeitgeist,libzeitgeist-2.0.so.0
 zeitgeist,libzeitgeist-2.0.so.0.0.0
