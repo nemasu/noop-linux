@@ -5,8 +5,8 @@ NAME=inkscape
 DESC="Professional vector graphics editor"
 
 #package version
-VERSION=0.91-2
-DVERSION=0.91
+VERSION=0.92.4
+DVERSION=0.92.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -18,7 +18,7 @@ SRC=https://inkscape.global.ssl.fastly.net/dl/resources/file/inkscape-${DVERSION
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+BUILD=cmake
 
 # build/package dependancies
 DEPS=('aspell' 'atk' 'atkmm' 'cairo' 'cairomm' 'fontconfig' 'freetype2' 'gc' 'gcc-libs' 'gconf' 'gdk-pixbuf' 'glib2' 'glibc' 'glibmm' 'gnome-vfs' 'gsl' 'gtk+2' 'gtkmm2' 'imagemagick' 'lcms2' 'libX11' 'libexif' 'libjpeg' 'libpng' 'libsigc++' 'libxml2' 'libxslt' 'pango' 'pangomm' 'poppler' 'popt' 'zlib')
@@ -31,8 +31,6 @@ PKGDEPS=
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
-
-export CXXFLAGS+=' -std=c++11 -O2 -w'
 
 #function BuildAndInstall
 #{

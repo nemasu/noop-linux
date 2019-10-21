@@ -5,13 +5,13 @@ NAME=libsigc++
 DESC="Libsigc++ implements a full callback system for use in widget libraries - V2"
 
 #package version
-VERSION=2.6.2
+VERSION=2.10.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="http://ftp.gnome.org/pub/GNOME/sources/libsigc++/${VERSION:0:3}/libsigc++-${VERSION}.tar.xz"
+SRC="http://ftp.gnome.org/pub/GNOME/sources/libsigc++/${VERSION:0:4}/libsigc++-${VERSION}.tar.xz"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

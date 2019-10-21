@@ -5,7 +5,7 @@ NAME=krita
 DESC="Digital painting application"
 
 #package version
-VERSION=4.0.1
+VERSION=4.2.7.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
