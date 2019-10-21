@@ -20,13 +20,13 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('acl' 'appstream-glib' 'attr' 'avahi' 'dbus' 'e2fsprogs' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gpgme' 'json-glib' 'krb5' 'libXau' 'libarchive' 'libassuan' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libpng' 'libseccomp' 'libsoup' 'libxml2' 'lz4' 'nettle' 'ostree' 'pcre' 'polkit' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
+DEPS=('gnupg' 'glib-networking' 'acl' 'appstream-glib' 'attr' 'avahi' 'dbus' 'e2fsprogs' 'expat' 'fuse2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gpgme' 'json-glib' 'krb5' 'libXau' 'libarchive' 'libassuan' 'libcap2' 'libffi' 'libgpg-error' 'libpng' 'libseccomp' 'libsoup' 'libxml2' 'lz4' 'nettle' 'ostree' 'pcre' 'polkit' 'sqlite' 'systemd' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
 
 #array of deps to add to package (ones that are not automatically picked up by pkgr)
-PKGDEPS=
+PKGDEPS=('glib-networking' 'gnupg')
 
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=

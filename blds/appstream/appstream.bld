@@ -17,7 +17,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glib2' 'glibc' 'libxml2' 'libyaml' 'lmdb' 'qt' 'snowball')
 
 # 'no' to skip calls to strip
 STRIP=
