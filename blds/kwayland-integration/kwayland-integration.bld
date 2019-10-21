@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'kidletime' 'kwayland' 'kwindowsystem' 'qt')
+DEPS=('gcc-libs' 'glibc' 'kguiaddons' 'kidletime' 'kwayland' 'kwindowsystem' 'qt')
 
 # 'no' to skip calls to strip
 STRIP=

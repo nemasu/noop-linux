@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('attica' 'fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'kactivities' 'kauth' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdeclarative' 'kdecoration' 'kglobalaccel' 'ki18n' 'kiconthemes' 'kidletime' 'kio' 'kjobwidgets' 'knewstuff' 'knotifications' 'kpackage' 'kscreenlocker' 'kservice' 'ktextwidgets' 'kwayland' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libICE' 'libSM' 'libX11' 'libXext' 'libXi' 'libcap2' 'libdrm' 'libepoxy' 'libinput' 'libxcb' 'libxkbcommon' 'mesalib' 'plasma-framework' 'qt' 'sonnet' 'systemd' 'wayland' 'xcb-util-cursor' 'xcb-util-image' 'xcb-util-keysyms' 'xcb-util-wm')
+DEPS=('attica' 'fontconfig' 'freetype2' 'gcc-libs' 'glibc' 'kactivities' 'kauth' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdeclarative' 'kdecoration' 'kglobalaccel' 'ki18n' 'kiconthemes' 'kidletime' 'kio' 'kjobwidgets' 'knewstuff' 'knotifications' 'kpackage' 'kscreenlocker' 'kservice' 'ktextwidgets' 'kwayland' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libICE' 'libSM' 'libX11' 'libXext' 'libXi' 'libcap2' 'libdrm' 'libepoxy' 'libglvnd' 'libinput' 'libxcb' 'libxkbcommon' 'mesalib' 'plasma-framework' 'qt' 'sonnet' 'systemd' 'wayland' 'xcb-util-cursor' 'xcb-util-image' 'xcb-util-keysyms' 'xcb-util-wm')
 
 # 'no' to skip calls to strip
 STRIP=

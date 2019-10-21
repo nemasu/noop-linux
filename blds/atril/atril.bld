@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gtk-doc' 'itstool' 'gobject-introspection' 'mate-icon-theme' 'at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'caja' 'dbus' 'e2fsprogs' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'gdk-pixbuf' 'ghostscript' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'krb5' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXxf86vm' 'libdrm' 'libepoxy' 'libffi' 'libgcrypt' 'libglvnd' 'libgpg-error' 'libjpeg' 'libpng' 'libsecret' 'libsoup' 'libspectre' 'libxcb' 'libxkbcommon' 'libxml2' 'libxshmfence' 'mesalib' 'nspr' 'nss' 'openjpeg2' 'pango' 'pcre' 'pixman' 'poppler' 'sqlite' 'systemd' 'tiff' 'util-linux' 'wayland' 'webkitgtk' 'xz' 'zlib')
+DEPS=('gtk-doc' 'itstool' 'gobject-introspection' 'mate-icon-theme' 'at-spi2-atk' 'at-spi2-core' 'atk' 'cairo' 'caja' 'dbus' 'e2fsprogs' 'expat' 'fontconfig' 'freetype2' 'fribidi' 'gcc-libs' 'gdk-pixbuf' 'ghostscript' 'glib2' 'glibc' 'gtk+' 'harfbuzz' 'krb5' 'libICE' 'libSM' 'libX11' 'libXau' 'libXcomposite' 'libXcursor' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXi' 'libXinerama' 'libXrandr' 'libXrender' 'libXxf86vm' 'libdrm' 'libepoxy' 'libffi' 'libgcrypt' 'libglvnd' 'libgpg-error' 'libjpeg' 'libpng' 'libsecret' 'libsoup' 'libspectre' 'libxcb' 'libxkbcommon' 'libxml2' 'libxshmfence' 'mesalib' 'pango' 'pcre' 'pixman' 'poppler' 'sqlite' 'systemd' 'tiff' 'util-linux' 'wayland' 'webkitgtk' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

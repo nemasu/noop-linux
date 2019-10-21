@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('exiv2' 'ffmpeg' 'gcc-libs' 'glibc' 'karchive' 'ki18n' 'poppler' 'qt' 'taglib')
+DEPS=('exiv2' 'ffmpeg' 'gcc-libs' 'glibc' 'karchive' 'kcoreaddons' 'ki18n' 'poppler' 'qt' 'taglib')
 
 # 'no' to skip calls to strip
 STRIP=

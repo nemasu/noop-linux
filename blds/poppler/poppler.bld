@@ -21,7 +21,7 @@ EXTRACONF="-DENABLE_UNSTABLE_API_ABI_HEADERS=ON"
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'lcms2' 'libjpeg' 'libpng' 'nspr' 'nss' 'openjpeg2' 'pango' 'qt' 'qt4' 'tiff' 'zlib')
+DEPS=('cairo' 'curl' 'fontconfig' 'freetype2' 'gcc-libs' 'glib2' 'glibc' 'lcms2' 'libjpeg' 'libpng' 'nspr' 'nss' 'openjpeg2' 'qt' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

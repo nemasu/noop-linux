@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=('attica' 'baloo' 'gcc-libs' 'glibc' 'kactivities' 'kauth' 'kbookmarks' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdbusaddons' 'kdeclarative' 'kdelibs4support' 'kfilemetadata' 'kglobalaccel' 'kguiaddons' 'kholidays' 'ki18n' 'kiconthemes' 'kidletime' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'kjs' 'kjsembed' 'knewstuff' 'knotifications' 'knotifyconfig' 'kpackage' 'kparts' 'krunner' 'kscreenlocker' 'kservice' 'ktexteditor' 'ktextwidgets' 'kunitconversion' 'kwallet' 'kwayland' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libICE' 'libSM' 'libX11' 'libXau' 'libXext' 'libXfixes' 'libXrender' 'libXtst' 'libksysguard' 'libxcb' 'networkmanager-qt' 'phonon' 'plasma-framework' 'prison' 'qt' 'solid' 'sonnet' 'xcb-util' 'xcb-util-image' 'zlib')
+DEPS=('attica' 'baloo' 'gcc-libs' 'glibc' 'kactivities' 'kactivities-stats' 'kauth' 'kbookmarks' 'kcmutils' 'kcodecs' 'kcompletion' 'kconfig' 'kconfigwidgets' 'kcoreaddons' 'kcrash' 'kdbusaddons' 'kdeclarative' 'kdelibs4support' 'kfilemetadata' 'kglobalaccel' 'kguiaddons' 'kholidays' 'ki18n' 'kiconthemes' 'kidletime' 'kio' 'kitemmodels' 'kitemviews' 'kjobwidgets' 'knewstuff' 'knotifications' 'knotifyconfig' 'kpackage' 'kparts' 'kpeople' 'krunner' 'kscreenlocker' 'kservice' 'ktexteditor' 'ktextwidgets' 'kunitconversion' 'kwallet' 'kwayland' 'kwidgetsaddons' 'kwindowsystem' 'kxmlgui' 'libICE' 'libSM' 'libX11' 'libXau' 'libXext' 'libXfixes' 'libXrender' 'libXtst' 'libkscreen' 'libksysguard' 'libxcb' 'networkmanager-qt' 'phonon' 'plasma-framework' 'prison' 'qt' 'solid' 'sonnet' 'xcb-util' 'xcb-util-image' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
