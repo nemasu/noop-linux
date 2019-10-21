@@ -1,0 +1,33 @@
+From da9f330dfd0a585ec2d319c0878f7f9da0838200 Mon Sep 17 00:00:00 2001
+From: Matthias Klumpp <matthias@tenstral.net>
+Date: Tue, 24 Sep 2019 23:32:45 +0200
+Subject: [PATCH] Fix double-free error when trying to dump bad XML
+
+This resolves #255
+---
+ src/as-xml.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/src/as-xml.c b/src/as-xml.c
+index 8b7a5aa3..e763357f 100644
+--- a/src/as-xml.c
++++ b/src/as-xml.c
+@@ -128,16 +128,14 @@ as_xml_dump_node_content (xmlNode *node)
+ 	if (!as_xml_dump_node (node, &content, &len))
+ 		return NULL;
+ 
+-	/* remove the encosing root node from the string */
++	/* remove the enclosing root node from the string */
+ 	tmp = g_strrstr_len (content, len, "<");
+ 	if (tmp != NULL)
+ 		tmp[0] = '\0';
+ 
+ 	tmp = g_strstr_len (content, -1, ">");
+-	if (tmp == NULL) {
+-		g_free (content);
++	if (tmp == NULL)
+ 		return NULL;
+-	}
+ 
+ 	return g_strdup (tmp + 1);
+ }

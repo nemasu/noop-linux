@@ -94,6 +94,12 @@ anthy,libanthydic.so.0.1.0
 anthy,libanthyinput.so
 anthy,libanthyinput.so.0
 anthy,libanthyinput.so.0.0.0
+appstream,libAppStreamQt.so
+appstream,libAppStreamQt.so.0.12.9
+appstream,libAppStreamQt.so.2
+appstream,libappstream.so
+appstream,libappstream.so.0.12.9
+appstream,libappstream.so.4
 appstream-glib,libappstream-builder.so
 appstream-glib,libappstream-builder.so.8
 appstream-glib,libappstream-builder.so.8.0.10
@@ -960,7 +966,7 @@ flac,libFLAC.so.8
 flac,libFLAC.so.8.3.0
 flatpak,libflatpak.so
 flatpak,libflatpak.so.0
-flatpak,libflatpak.so.0.10004.0
+flatpak,libflatpak.so.0.10500.0
 flex,libfl.so
 flex,libfl.so.2
 flex,libfl.so.2.0.0

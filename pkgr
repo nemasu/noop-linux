@@ -2507,7 +2507,19 @@ if [ $1 = "-init" ]; then
             fi
             if [ "$NOOP_ISO_CREATE" == "kde" ];
             then
-                sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
+                mkdir -p /etc/sddm.conf.d/
+                f=/etc/sddm.conf.d/kde_settings.conf
+                echo "[Autologin]" > $f
+                echo "Relogin=false" >> $f
+                echo "Session=plasma" >> $f
+                echo "User=livecd" >> $f
+                echo "" >> $f
+                echo "[General]" >> $f
+                echo "HaltCommand=systemctl poweroff" >> $f
+                echo "RebootCommand=systemctl reboot" >> $f
+                echo "" >> $f
+                echo "[Theme]" >> $f
+                echo "Current=breeze" >> $f
             fi
 
             systemctl enable lxdm.service

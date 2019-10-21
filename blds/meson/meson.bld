@@ -5,8 +5,8 @@ NAME=meson
 DESC='High productivity build system'
 
 #package version
-VERSION=0.50.0-1
-DVERSION=0.50.0
+VERSION=0.52.0
+DVERSION=0.52.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

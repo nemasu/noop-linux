@@ -1,0 +1,50 @@
+#package name
+NAME=appstream
+
+#Description
+DESC="Provides a standard for creating app stores across distributions"
+
+#package version
+VERSION=0.12.9
+
+#source location (used by wget)
+SRC="https://www.freedesktop.org/software/appstream/releases/AppStream-${VERSION}.tar.xz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    export CXX=clang++
+    export CC=clang
+
+    mkdir -p build && cd build
+    meson-wrap -Dqt=true -Dvapi=true ..
+    ninja
+    DESTDIR=/root/bldr-inst ninja install
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
