@@ -2491,19 +2491,23 @@ if [ $1 = "-init" ]; then
 				pkgr -i geany qtcreator nodejs brackets unityhub code desmume mednafen mupen64plus pcsx2 steam lutris discord kdenlive auryo vlc gimp inkscape musescore blender googlemusicmanager spotify-client chromium virtualbox qemu gparted hexchat nvidia openvpn pidgin qbittorrent ttf-sazanami ttf-noto otf-ipafont ttf-liberation network-manager-applet gamehub lxdm
 				pkgr -r juk
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startkde/g' /etc/lxdm/lxdm.conf
+                systemctl enable lxdm.service
             fi
 
             if [ "$NOOP_ISO_CREATE" == "mate" ];
             then
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/mate-session/g' /etc/lxdm/lxdm.conf
+                systemctl enable lxdm.service
             fi
             if [ "$NOOP_ISO_CREATE" == "xfce4" ];
             then
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/startxfce4/g' /etc/lxdm/lxdm.conf
+                systemctl enable lxdm.service
             fi
             if [ "$NOOP_ISO_CREATE" == "enlightenment" ];
             then
                 sed -i -e 's/# autologin=dgod/autologin=livecd/g; s/# session=\/usr\/bin\/startlxde/session=\/usr\/bin\/enlightenment_start/g' /etc/lxdm/lxdm.conf
+                systemctl enable lxdm.service
             fi
             if [ "$NOOP_ISO_CREATE" == "kde" ];
             then
@@ -2520,9 +2524,8 @@ if [ $1 = "-init" ]; then
                 echo "" >> $f
                 echo "[Theme]" >> $f
                 echo "Current=breeze" >> $f
+                systemctl enable sddm.service
             fi
-
-            systemctl enable lxdm.service
 
             rm /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache;
             gdk-pixbuf-query-loaders --update-cache;
