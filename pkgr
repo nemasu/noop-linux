@@ -2466,6 +2466,7 @@ if [ $1 = "-init" ]; then
         if [ "core" != "$NOOP_ISO_CREATE" ];
         then
             pkgr -i xorg-meta
+            pkgr -i mime-types shared-mime-info
 
             if [ "$NOOP_ISO_CREATE" == "kde" ] || [ "$NOOP_ISO_CREATE" == "everything" ]; then
                 for i in kde-framework-meta kde-plasma-meta kde-applications-meta; do
