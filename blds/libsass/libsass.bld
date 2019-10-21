@@ -1,0 +1,43 @@
+#package name
+NAME=libsass
+
+#Description
+DESC="C implementation of Sass CSS preprocessor (library)."
+
+#package version
+VERSION=3.5.5
+
+#source location (used by wget)
+SRC=https://github.com/sass/libsass/archive/$VERSION.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=autotools
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

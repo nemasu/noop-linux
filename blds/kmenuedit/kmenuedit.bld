@@ -5,7 +5,7 @@ NAME=kmenuedit
 DESC="Unnamed repository; edit this file DESC=#039;descriptionDESC=#039; to name the repository."
 
 #package version
-VERSION=5.14.0
+VERSION=5.17.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

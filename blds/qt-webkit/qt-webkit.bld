@@ -5,15 +5,14 @@ NAME=qt-webkit
 DESC="WebKit2 for Qt5"
 
 #package version
-VERSION=5.212.0-2
-DVERSION=5.212.0-alpha2
+VERSION=5.212.0-3
+DVERSION=5.212.0-alpha3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-#SRC=http://download.qt.io/community_releases/${DVERSION:0:3}/${DVERSION}/qtwebkit-opensource-src-${DVERSION}.tar.xz
-SRC=https://github.com/annulen/webkit/releases/download/qtwebkit-${DVERSION}/qtwebkit-${DVERSION}.tar.xz
+SRC=https://github.com/qtwebkit/qtwebkit/releases/download/qtwebkit-${DVERSION}/qtwebkit-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -44,12 +43,6 @@ function BuildAndInstall
     make -j${BLDR_CORES}
     make DESTDIR=/root/bldr-inst install
     
-    # Fix pkgconfig files
-    sed -e 's|qt/Qt5WebKit|qt/QtWebKit|' -i /root/bldr-inst/usr/lib/pkgconfig/Qt5WebKit.pc
-    sed -e 's|qt/Qt5WebKitWidgets|qt/QtWebKitWidgets|' -i /root/bldr-inst/usr/lib/pkgconfig/Qt5WebKitWidgets.pc
-    sed -e '/Name/a Description: Qt WebKit module' -i /root/bldr-inst/usr/lib/pkgconfig/Qt5WebKit.pc
-    sed -e '/Name/a Description: Qt WebKitWidgets module' -i /root/bldr-inst/usr/lib/pkgconfig/Qt5WebKitWidgets.pc
-
 }
 
 #Default HTTP curl new version detection

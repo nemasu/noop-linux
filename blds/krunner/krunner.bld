@@ -5,7 +5,7 @@ NAME=krunner
 DESC="Parallelized query system"
 
 #package version
-VERSION=5.51.0
+VERSION=5.63.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

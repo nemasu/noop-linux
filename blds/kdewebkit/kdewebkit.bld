@@ -5,16 +5,16 @@ NAME=kdewebkit
 DESC="KDE Integration for QtWebKit"
 
 #package version
-VERSION=5.51.0
+VERSION=5.63.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/frameworks/${VERSION:0:4}/kdewebkit-${VERSION}.tar.xz
+SRC=http://download.kde.org/stable/frameworks/${VERSION:0:4}/portingAids/kdewebkit-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="-DBUILD_TESTING=OFF"
 
 #autotools, cmake, custom
 BUILD=cmake

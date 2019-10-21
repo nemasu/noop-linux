@@ -5,8 +5,8 @@ NAME=kfilemetadata
 DESC="A file metadata and text extraction library"
 
 #package version
-VERSION=5.51.0-2
-DVERSION=5.51.0
+VERSION=5.63.0
+DVERSION=5.63.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

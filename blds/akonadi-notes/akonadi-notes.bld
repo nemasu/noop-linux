@@ -5,7 +5,7 @@ NAME=akonadi-notes
 DESC="Library that bridges the type-agnostic API of the Akonadi client libraries and the domain-specific KMime library"
 
 #package version
-VERSION=18.08.2
+VERSION=19.08.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

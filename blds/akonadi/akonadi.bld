@@ -5,7 +5,7 @@ NAME=akonadi
 DESC="Akonadi Server. A cross-desktop storage service for PIM data and meta data providing concurrent read, write, and query access."
 
 #package version
-VERSION=18.08.2
+VERSION=19.08.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

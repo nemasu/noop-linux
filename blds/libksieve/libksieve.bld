@@ -5,7 +5,7 @@ NAME=libksieve
 DESC="KDE PIM library for managing sieves"
 
 #package version
-VERSION=18.08.2
+VERSION=19.08.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
