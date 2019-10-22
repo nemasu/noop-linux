@@ -5,8 +5,8 @@ NAME=rtl8814au
 DESC="Realtek RTL8812AU/21AU and RTL8814AU USB Wi-Fi driver with monitor mode and frame injection."
 
 #package version
-VERSION=5.3.4
-DVERSION=5.3.4
+VERSION=5.6.4.1
+DVERSION=5.6.4.1
 
 #source location (used by wget)
 SRC=
