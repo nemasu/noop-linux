@@ -2231,7 +2231,7 @@ if [ $1 = "--mkinitramfs" ]; then
             then
                 install -D -v $MOD_PATH ${INITRAMFS_WORKDIR}${MOD_PATH}
                         
-                for j in `modinfo -k $KERVER $1 |  grep -e "^depends:" | awk '{print $2;}' | sed -e 's/,/ /g'`;
+                for j in `modprobe -S $KERVER $1 -D | awk '{print $2;}' | sed -e 's/.*\///g;s/.ko[.xz]*//g;'`;
                 do  
                     copy_module "$j"
                 done
@@ -2302,6 +2302,10 @@ if [ $1 = "--mkinitramfs" ]; then
     mkdir -p $INITRAMFS_WORKDIR/lib/firmware
     #Build list (need deps)
 
+    if [ -e /etc/modprobe.d ]; then
+        cp -rv /etc/modprobe.d $INITRAMFS_WORKDIR/etc/
+    fi
+
     if [ -e /etc/noop/initramfs ];
     then
         source /etc/noop/initramfs
@@ -2341,6 +2345,9 @@ if [ $1 = "--mkinitramfs" ]; then
     copy_binary `which veritysetup` $INITRAMFS_WORKDIR/bin/veritysetup
     copy_binary `which cryptsetup-reencrypt` $INITRAMFS_WORKDIR/bin/cryptsetup-reencrypt
     copy_binary `which cryptsetup` $INITRAMFS_WORKDIR/bin/cryptsetup
+    copy_binary `which kmod` $INITRAMFS_WORKDIR/bin/kmod
+    ln -vs kmod $INITRAMFS_WORKDIR/bin/modprobe
+
     cp /lib/ld-* $INITRAMFS_WORKDIR/lib/
 
     rm -rf $INITRAMFS_WORKDIR/var/noop

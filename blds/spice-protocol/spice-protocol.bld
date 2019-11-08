@@ -1,0 +1,48 @@
+#package name
+NAME=spice-protocol
+
+#Description
+DESC='Headers for SPICE protocol'
+
+#package version
+VERSION=0.14.0
+
+#source location (used by wget)
+SRC=https://gitlab.freedesktop.org/spice/spice-protocol/-/archive/v${VERSION}/spice-protocol-v${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    mkdir -p build
+    meson-wrap build
+    ninja -v -C build
+    DESTDIR=/root/bldr-inst ninja -C build install
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
+

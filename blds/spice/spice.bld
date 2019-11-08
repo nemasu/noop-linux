@@ -1,0 +1,46 @@
+#package name
+NAME=spice
+
+#Description
+DESC='SPICE server'
+
+#package version
+VERSION=0.14.2
+
+#source location (used by wget)
+SRC=https://www.spice-space.org/download/releases/spice-server/spice-${VERSION}.tar.bz2
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    PYTHON=python2 ./configure --prefix=/usr --disable-static --enable-client --disable-werror
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

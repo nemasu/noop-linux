@@ -8196,6 +8196,9 @@ speex,libspeex.so.1.5.0
 speex,libspeexdsp.so
 speex,libspeexdsp.so.1
 speex,libspeexdsp.so.1.5.0
+spice,libspice-server.so
+spice,libspice-server.so.1
+spice,libspice-server.so.1.13.0
 sqlite,libsqlite3.so
 sqlite,libsqlite3.so.0
 sqlite,libsqlite3.so.0.8.6
