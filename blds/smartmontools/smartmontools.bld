@@ -1,0 +1,43 @@
+#package name
+NAME=smartmontools
+
+#Description
+DESC='Control and monitor S.M.A.R.T. enabled ATA and SCSI Hard Drives'
+
+#package version
+VERSION=7.0
+
+#source location (used by wget)
+SRC="https://downloads.sourceforge.net/sourceforge/smartmontools/smartmontools-${VERSION}.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF="--with-drivedbdir --with-libcap-ng=yes --with-systemdsystemunitdir=/usr/lib/systemd/system --with-smartdscriptdir=/usr/share/smartmontools --with-smartdplugindir=/usr/share/smartmontools/smartd_warning.d"
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=autotools
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
