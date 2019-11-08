@@ -56,7 +56,6 @@ function BuildAndInstall
 		--disable-libiscsi \
 		--disable-vnc \
 		--disable-kvm \
-		--disable-libssh2 \
 		--disable-libxml2 \
 		--disable-vde \
 		--disable-sdl \

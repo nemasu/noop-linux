@@ -35,7 +35,7 @@ RESTORELIBDB=
 function BuildAndInstall
 {
     mkdir -p build && cd build
-    meson-wrap ..
+    meson-wrap -Ddefault_library=both ..
     ninja
     DESTDIR=/root/bldr-inst ninja install
 }
