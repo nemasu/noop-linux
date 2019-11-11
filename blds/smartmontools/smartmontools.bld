@@ -17,7 +17,7 @@ EXTRACONF="--with-drivedbdir --with-libcap-ng=yes --with-systemdsystemunitdir=/u
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'libcap-ng' 'systemd')
 
 # 'no' to skip calls to strip
 STRIP=

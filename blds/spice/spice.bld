@@ -17,7 +17,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('elfutils' 'gcc-libs' 'glib2' 'glibc' 'gst-plugins-base' 'gstreamer' 'libffi' 'libjpeg' 'libunwind' 'lz4' 'openssl' 'opus' 'orc' 'pcre' 'pixman' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
