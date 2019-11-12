@@ -2535,12 +2535,6 @@ if [ $1 = "-init" ]; then
                 systemctl enable sddm.service
             fi
 
-            if [ -e /tmp/noop_to_install ]; then
-                for i in `cat /tmp/noop_to_install`; do
-                    pkgr -i $i;
-                done
-            fi
-
             rm /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache;
             gdk-pixbuf-query-loaders --update-cache;
 
@@ -2551,6 +2545,13 @@ if [ $1 = "-init" ]; then
             done
 
             popd
+        fi
+        if [ -e /tmp/noop_to_install ]; then
+            echo "Custom package list found, installing..."
+            for i in `cat /tmp/noop_to_install`; do
+                pkgr -i $i;
+            done
+            rm /tmp/noop_to_install
         fi
         #Remove any custom mirror
         if [ -e /etc/noop/mirrors ]; then
