@@ -2535,6 +2535,12 @@ if [ $1 = "-init" ]; then
                 systemctl enable sddm.service
             fi
 
+            if [ -e /tmp/noop_to_install ]; then
+                for i in `cat /tmp/noop_to_install`; do
+                    pkgr -i $i;
+                done
+            fi
+
             rm /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache;
             gdk-pixbuf-query-loaders --update-cache;
 

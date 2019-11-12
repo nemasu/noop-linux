@@ -64,6 +64,10 @@ then
 	read internetormedia;
 else
 	internetormedia=internet
+    if [ -e "$NOOP_ISO_CREATE" ]; then
+        cp -v $NOOP_ISO_CREATE $PREFIX/tmp/noop_to_install
+        export NOOP_ISO_CREATE=core
+    fi
 fi
 
 if [ "$internetormedia" == "internet" ];
