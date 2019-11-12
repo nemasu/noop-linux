@@ -391,7 +391,7 @@ function DoSync() {
         echo "New install detected, initializing repo."
         cd $PREFIX/var/
         mv noop noop.bak
-        git clone $GITHOST noop
+        git clone --depth=1 $GITHOST noop
         cp -r noop.bak/* noop/ && rm -rf noop.bak
         rm -rf $PREFIX/usr/sbin/pkgr
         ln -s /var/noop/pkgr $PREFIX/usr/sbin/pkgr
