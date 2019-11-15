@@ -103,6 +103,12 @@ grub-mkimage \
 
 NAME_DATE=`date +%Y%m%d`
 
+if [ -e "$1" ]; then
+    iso_name=custom
+else
+    iso_name=$1
+fi
+
 xorriso -as mkisofs \
 	-graft-points \
 	-b boot/grub/i386-pc/eltorito.img \
@@ -116,7 +122,7 @@ xorriso -as mkisofs \
 	-efi-boot-part \
 	--efi-boot-image \
 	--protective-msdos-label \
-	-o "noop-${1}-${NAME_DATE}${2}.iso" \
+	-o "noop-${iso_name}-${NAME_DATE}${2}.iso" \
 	-rational-rock \
 	--sort-weight 0 / --sort-weight 1 /boot \
 	iso
