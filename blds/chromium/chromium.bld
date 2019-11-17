@@ -11,8 +11,8 @@ NAME=chromium
 
 #Description
 DESC="The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser"
-DVERSION=77.0.3865.75
-VERSION=77.0.3865.75
+DVERSION=78.0.3904.97
+VERSION=78.0.3904.97
 ISUSR=1
 #SRC=http://commondatastorage.googleapis.com/chromium-browser-official/chromium-${VERSION}.tar.bz2
 SRC=http://gsdview.appspot.com/chromium-browser-official/chromium-${DVERSION}.tar.xz
@@ -139,7 +139,7 @@ function BuildAndInstall
     wget https://dl.google.com/linux/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION}-1_amd64.deb -Ochrome.deb
     ar x chrome.deb
     tar xf data.tar.xz
-    cp opt/google/chrome/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
+	cp opt/google/chrome/WidevineCdm/_platform_specific/linux_x64/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
     popd
 
     for size in 24 48 64 128 256; do

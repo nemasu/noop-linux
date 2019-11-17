@@ -2,8 +2,8 @@ NAME=firefox
 
 #Description
 DESC="Standalone web browser from mozilla.org"
-VERSION=69.0.3
-DVERSION=69.0.3
+VERSION=70.0.1
+DVERSION=70.0.1
 ISUSR=1
 SRC=https://ftp.mozilla.org/pub/firefox/releases/${DVERSION}/source/firefox-${DVERSION}.source.tar.xz
 EXTRACONF=

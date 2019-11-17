@@ -5,14 +5,15 @@ NAME=llvm
 DESC="Low Level Virtual Machine"
 
 #package version
-VERSION=8.0.1
-DVERSION=8.0.1
+VERSION=9.0.0
+DVERSION=9.0.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/llvm-${DVERSION}.src.tar.xz
+src_host=https://releases.llvm.org/${DVERSION}
+SRC=$src_host/llvm-${DVERSION}.src.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -37,52 +38,56 @@ function BuildAndInstall
 {
     pkgr -i swig
     if [ ! -e tools/clang ]; then
-        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-8.0.1/cfe-8.0.1.src.tar.xz
+        wget $src_host/cfe-${DVERSION}.src.tar.xz
         tar xf cfe-${DVERSION}.src.tar.xz
         mv cfe-${DVERSION}.src tools/clang
     fi
 
     if [ ! -e projects/compiler-rt ]; then
-        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/compiler-rt-${DVERSION}.src.tar.xz
+        wget $src_host/compiler-rt-${DVERSION}.src.tar.xz
         tar xf compiler-rt-${DVERSION}.src.tar.xz
         mv compiler-rt-${DVERSION}.src projects/compiler-rt
     fi
 
     if [ ! -e tools/clang/tools/extra ]; then
-        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/clang-tools-extra-${DVERSION}.src.tar.xz
+        wget $src_host/clang-tools-extra-${DVERSION}.src.tar.xz
         tar xf clang-tools-extra-${DVERSION}.src.tar.xz
         mv clang-tools-extra-${DVERSION}.src tools/clang/tools/extra
     fi
 
     if [ ! -e tools/lld ]; then
-        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/lld-${DVERSION}.src.tar.xz
+        wget $src_host/lld-${DVERSION}.src.tar.xz
         tar xf lld-${DVERSION}.src.tar.xz
         mv lld-${DVERSION}.src tools/lld
     fi
 
     if [ ! -e tools/lldb ]; then
-        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${DVERSION}/lldb-${DVERSION}.src.tar.xz
+        wget $src_host/lldb-${DVERSION}.src.tar.xz
         tar xf lldb-${DVERSION}.src.tar.xz
         mv lldb-${DVERSION}.src tools/lldb
     fi
+
+	if [ -z "$BLDR_CONTINUE" ]; then
+		pushd tools/clang
+		for patch in `ls $BLDRTMPDIR/*.clang_patch`; do
+			patch -Np1 -i $patch && rm $patch
+		done
+		popd
+	fi
 
     mkdir -p build && cd build
 
     [ ! -e ./Makefile ] && cmake .. \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_INSTALL_PREFIX=/usr \
-            -DLLVM_BUILD_LLVM_DYLIB=ON \
-            -DLLVM_DYLIB_EXPORT_ALL=ON \
-            -DLLVM_LINK_LLVM_DYLIB=ON \
+			-DBUILD_SHARED_LIBS=ON \
+			-DLLVM_ENABLE_EH=ON \
             -DLLVM_ENABLE_RTTI=ON \
-            -DLLVM_ENABLE_FFI=ON \
             -DLLVM_BUILD_TESTS=OFF \
             -DLLVM_BUILD_DOCS=OFF \
             -DLLVM_ENABLE_SPHINX=OFF \
             -DLLVM_ENABLE_DOXYGEN=OFF \
             -DLLDB_DISABLE_LIBEDIT=1 \
-            -DSPHINX_WARNINGS_AS_ERRORS=OFF \
-            -DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi) \
             -DLLVM_BINUTILS_INCDIR=/usr/include \
             -DLLVM_INSTALL_UTILS=ON
 
