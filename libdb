@@ -6511,6 +6511,9 @@ nghttp2,libnghttp2.so
 nghttp2,libnghttp2.so.14
 nghttp2,libnghttp2.so.14.17.1
 nginx,nginx.so
+ngspice,libngspice.so
+ngspice,libngspice.so.0
+ngspice,libngspice.so.0.0.0
 npth,libnpth.so
 npth,libnpth.so.0
 npth,libnpth.so.0.0.6

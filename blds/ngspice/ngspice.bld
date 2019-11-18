@@ -14,7 +14,7 @@ ISUSR=1
 SRC=http://downloads.sourceforge.net/ngspice/ngspice-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF=
+EXTRACONF="--with-ngshared"
 
 #autotools, perl, cmake, custom
 BUILD=autotools
