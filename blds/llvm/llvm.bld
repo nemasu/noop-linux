@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('libffi' 'gcc-libs' 'glibc' 'libxml2' 'llvm-libs' 'ncurses' 'python2' 'zlib')
+DEPS=('zlib' 'libffi' 'gcc-libs' 'glibc' 'libxml2' 'llvm-libs' 'ncurses')
 
 # 'no' to skip calls to strip
 STRIP=

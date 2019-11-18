@@ -20,7 +20,7 @@ EXTRACONF="--with-ngshared"
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('fftw' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=

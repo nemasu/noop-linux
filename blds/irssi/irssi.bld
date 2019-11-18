@@ -20,7 +20,7 @@ EXTRACONF="--enable-ipv6 --with-proxy --with-perl-lib=vendor --with-bot --with-s
 BUILD=autotools
 
 # build/package dependancies
-DEPS=('glib2' 'glibc' 'ncurses' 'openssl1.0' 'pcre' 'perl')
+DEPS=('e2fsprogs' 'glib2' 'glibc' 'krb5' 'libffi' 'libnsl' 'libtirpc' 'ncurses' 'networkmanager' 'nspr' 'nss' 'openssl' 'pcre' 'perl' 'systemd' 'util-linux' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
