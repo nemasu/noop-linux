@@ -998,7 +998,7 @@ freetds,libct.so.4
 freetds,libct.so.4.0.0
 freetds,libsybdb.so
 freetds,libsybdb.so.5
-freetds,libsybdb.so.5.0.0
+freetds,libsybdb.so.5.1.0
 freetds,libtdsodbc.so
 freetds,libtdsodbc.so.0
 freetds,libtdsodbc.so.0.0.0

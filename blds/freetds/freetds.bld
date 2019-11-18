@@ -5,8 +5,8 @@ NAME=freetds
 DESC="Library for accessing Sybase and MS SQL Server databases"
 
 #package version
-VERSION=0.91-1
-DVERSION=0.91
+VERSION=1.00.100
+DVERSION=1.00.100
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
