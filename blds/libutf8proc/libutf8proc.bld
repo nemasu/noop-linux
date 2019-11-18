@@ -1,0 +1,61 @@
+#package name
+NAME=libutf8proc
+
+#Description
+DESC="C library for processing UTF8 strings."
+
+#package version
+VERSION=2.4.0
+
+#source location (used by wget)
+SRC=
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+	if [ ! -e utf8proc ]; then
+		git clone https://github.com/JuliaStrings/utf8proc
+		cd utf8proc
+		git checkout v${VERSION}
+		cd ..
+	fi
+	
+	cd utf8proc
+	mkdir -p build
+	cd build
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DBUILD_SHARED_LIBS=ON \
+		-G Ninja
+	ninja
+
+	sed -i -e 's|prefix=/usr/local|prefix=/usr|;' ../Makefile
+	make DESTDIR=/root/bldr-inst -C .. install
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

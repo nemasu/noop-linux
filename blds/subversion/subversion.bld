@@ -5,8 +5,8 @@ NAME=subversion
 DESC="A Modern Concurrent Version Control System"
 
 #package version
-VERSION=1.9.5
-DVERSION=1.9.5
+VERSION=1.13.0
+DVERSION=1.13.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

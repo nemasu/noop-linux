@@ -5293,6 +5293,9 @@ libusbmuxd,libusbmuxd.so.4.0.0
 libutempter,libutempter.so
 libutempter,libutempter.so.0
 libutempter,libutempter.so.1.1.6
+libutf8proc,libutf8proc.so
+libutf8proc,libutf8proc.so.2
+libutf8proc,libutf8proc.so.2.3.1
 libuv,libuv.so
 libuv,libuv.so.1
 libuv,libuv.so.1.0.0
