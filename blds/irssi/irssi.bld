@@ -5,16 +5,16 @@ NAME=irssi
 DESC="Modular text mode IRC client with Perl scripting"
 
 #package version
-VERSION=0.8.17
+VERSION=1.2.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=https://github.com/irssi-import/irssi/releases/download/${VERSION}/irssi-${VERSION}.tar.bz2
+SRC=https://github.com/irssi-import/irssi/releases/download/${VERSION}/irssi-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-ipv6 --with-proxy --with-perl-lib=vendor"
+EXTRACONF="--enable-ipv6 --with-proxy --with-perl-lib=vendor --with-bot --with-socks --enable-true-color"
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
 BUILD=autotools

@@ -2287,10 +2287,6 @@ iptables,libxt_udp.so
 iptables,libxtables.so
 iptables,libxtables.so.12
 iptables,libxtables.so.12.0.0
-irssi,Irc.so
-irssi,Irssi.so
-irssi,TextUI.so
-irssi,UI.so
 irssi,libirc_proxy.so
 jack,libjack.so
 jack,libjack.so.0
