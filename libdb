@@ -115,7 +115,7 @@ appstream-glib,libasb_plugin_icon.so
 appstream-glib,libasb_plugin_shell_extension.so
 apr,libapr-1.so
 apr,libapr-1.so.0
-apr,libapr-1.so.0.5.2
+apr,libapr-1.so.0.7.0
 apr-util,apr_crypto_nss-1.so
 apr-util,apr_crypto_nss.so
 apr-util,apr_crypto_openssl-1.so

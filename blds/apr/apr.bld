@@ -5,7 +5,7 @@ NAME=apr
 DESC="The Apache Portable Runtime"
 
 #package version
-VERSION=1.5.2
+VERSION=1.7.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
