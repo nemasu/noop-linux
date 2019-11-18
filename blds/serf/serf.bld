@@ -5,7 +5,7 @@ NAME=serf
 DESC="High-performance asynchronous HTTP client library"
 
 #package version
-VERSION=1.3.8
+VERSION=1.3.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -41,7 +41,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://serf.apache.org/
+        LISTURL=https://archive.apache.org/dist/serf/
         FILELIST=`GetFileList`
         LATEST=0
 
