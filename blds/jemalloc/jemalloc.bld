@@ -2,7 +2,7 @@
 NAME=jemalloc
 
 #Description
-DESC='General-purpose scalable concurrent malloc implementation'
+DESC="General-purpose scalable concurrent malloc implementation"
 
 #package version
 VERSION=5.0.1
