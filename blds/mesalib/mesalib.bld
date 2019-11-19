@@ -48,7 +48,7 @@ function BuildAndInstall
 	fi
 	cd mesa
 
-	if [ "${ARCH}" == "armv6l" ];
+	if [ "${ARCH}" == "aarch64" ];
 	then
 		GALLIUM_DRIVERS=swrast
 		DRI_DRIVERS=swrast
