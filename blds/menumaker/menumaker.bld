@@ -5,7 +5,7 @@ NAME=menumaker
 DESC="Generate Menus for various WM"
 
 #package version
-VERSION="0.99.9"
+VERSION=0.99.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -2,15 +2,9 @@ NAME=dosfstools
 
 #Description
 DESC="DOS filesystem utilities"
-VERSION=3.0.26
+VERSION=4.1
 ISUSR=1
-SRC=http://ftp.de.debian.org/debian/pool/main/d/dosfstools/dosfstools_3.0.26.orig.tar.xz
+SRC=https://github.com/dosfstools/dosfstools/archive/v${VERSION}.tar.gz
 EXTRACONF=
-BUILD=custom
+BUILD=autotools
 DEPS=('glibc')
-
-function BuildAndInstall
-{
-        make
-        make PREFIX=/root/bldr-inst MANDIR=/root/bldr-inst/usr/share/man DOCDIR=/root/bldr-inst/usr/share/doc install
-}

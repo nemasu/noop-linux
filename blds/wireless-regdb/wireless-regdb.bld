@@ -5,7 +5,7 @@ NAME=wireless-regdb
 DESC="Central Regulatory Domain Database"
 
 #package version
-VERSION="2018.05.31"
+VERSION=2018.05.31
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

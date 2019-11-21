@@ -5,7 +5,7 @@ NAME=libtorrent-rasterbar
 DESC="Torrent library"
 
 #package version
-VERSION="1.1.9"
+VERSION=1.1.9
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

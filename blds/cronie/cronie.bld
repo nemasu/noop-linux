@@ -5,13 +5,13 @@ NAME=cronie
 DESC="Daemon that runs specified programs at scheduled times and related tools"
 
 #package version
-VERSION=1.4.11
+VERSION=1.5.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC="https://fedorahosted.org/releases/c/r/${NAME}/${NAME}-${VERSION}.tar.gz"
+SRC=https://github.com/cronie-crond/cronie/archive/cronie-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -33,21 +33,22 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-   ./configure \
-                        --prefix=/usr \
-                        --sysconfdir=/etc \
-                        --localstatedir=/var \
-                        --enable-anacron \
-                        --with-inotify \
-                        --with-pam
+	./autogen.sh
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--enable-anacron \
+		--with-inotify \
+		--with-pam
 
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
 
-        install -Dm644 crond.sysconfig /root/bldr-inst/etc/conf.d/crond
-        install -Dm644 contrib/anacrontab /root/bldr-inst/etc/anacrontab
-        install -Dm644 contrib/0hourly /root/bldr-inst/etc/cron.d/0hourly
-        install -Dm755 contrib/0anacron /root/bldr-inst/etc/cron.hourly/0anacron
+	install -Dm644 crond.sysconfig /root/bldr-inst/etc/conf.d/crond
+	install -Dm644 contrib/anacrontab /root/bldr-inst/etc/anacrontab
+	install -Dm644 contrib/0hourly /root/bldr-inst/etc/cron.d/0hourly
+	install -Dm755 contrib/0anacron /root/bldr-inst/etc/cron.hourly/0anacron
 }
 
 #Default HTTP curl new version detection
