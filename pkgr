@@ -769,16 +769,6 @@ if [ $1 == "--depcheck-system" ] || [ $1 == "-C" ]; then
 fi
 
 if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
-    # IMPORTED VAR:
-    #NAME=
-    #VERSION=
-    #SRC=
-    #EXTRACONF=
-    #BUILD=
-    #DEPS=
-    #STRIP=
-    #PKGDEPS=
-
     if [ -z $2 ]; then
         echo Too few arguments.
         exit 1;
@@ -792,6 +782,10 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     fi
 
     if [ "$ISFILE" == "0" ]; then
+		if [ ! -e "$PREFIX/var/noop/blds/$2" ]; then
+			echo "Error: $PREFIX/var/noop/blds/$2 does not exist"
+			exit 1
+		fi
         cd "$PREFIX/var/noop/blds/$2"
         tar cjf /tmp/file.bldj *
     else

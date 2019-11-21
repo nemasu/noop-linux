@@ -33,9 +33,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure --prefix=/usr --datadir=/share --docdir=/share/doc --mandir=/share/man --qt-gui
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+	if [ "${ARCH}" == "aarch64" ]; then
+		EXTRA=
+	else
+		EXTRA="--qt-gui"
+	fi
+	./configure --prefix=/usr --datadir=/share --docdir=/share/doc --mandir=/share/man ${EXTRA}
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

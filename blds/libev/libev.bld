@@ -5,7 +5,7 @@ NAME=libev
 DESC="A full-featured and high-performance event loop"
 
 #package version
-VERSION=4.24
+VERSION=4.27
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

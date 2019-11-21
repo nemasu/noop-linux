@@ -5,7 +5,7 @@ NAME=gnu-efi
 DESC="Library for developing EFI applications"
 
 #package version
-VERSION=3.0.2
+VERSION=3.0.11
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -36,8 +36,9 @@ function BuildAndInstall
         make lib gnuefi inc apps
         make INSTALLROOT=/root/bldr-inst PREFIX="/usr" LIBDIR="/usr/lib" install
 
-        install -d /root/bldr-inst/usr/share/gnu-efi/apps/x86_64/
-        install -D -m0644 x86_64/apps/*.efi /root/bldr-inst/usr/share/gnu-efi/apps/x86_64/
+		machine=`uname -m`
+        install -d /root/bldr-inst/usr/share/gnu-efi/apps/$machine/
+        install -D -m0644 $machine/apps/*.efi /root/bldr-inst/usr/share/gnu-efi/apps/$machine/
 }
 
 #Default HTTP curl new version detection

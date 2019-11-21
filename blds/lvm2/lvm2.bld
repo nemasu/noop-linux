@@ -5,7 +5,7 @@ NAME=lvm2
 DESC="Device mapper userspace library and tools"
 
 #package version
-VERSION=2.2.02.138
+VERSION=2.2.02.182
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -34,20 +34,17 @@ RESTORELIBDB=
 export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
-        autoreconf -fi 
-        sed -i 's|use_lvmetad = 0|use_lvmetad = 1|' conf/example.conf.in
-
-        ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --sbindir=/usr/bin \
-      --with-udev-prefix=/usr --with-systemdsystemunitdir=/usr/lib/systemd/system \
-      --with-default-pid-dir=/run --with-default-dm-run-dir=/run --with-default-run-dir=/run/lvm \
-      --enable-pkgconfig --enable-readline --enable-dmeventd --enable-cmdlib --enable-applib \
-      --enable-udev_sync --enable-udev_rules --with-default-locking-dir=/run/lock/lvm \
-      --enable-lvmetad --with-thin=internal --with-cache=internal --enable-udev-systemd-background-jobs
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --sbindir=/usr/bin \
+		--with-udev-prefix=/usr --with-systemdsystemunitdir=/usr/lib/systemd/system \
+		--with-default-pid-dir=/run --with-default-dm-run-dir=/run --with-default-run-dir=/run/lvm \
+		--enable-pkgconfig --enable-readline --enable-dmeventd --enable-cmdlib --enable-applib \
+		--enable-udev_sync --enable-udev_rules --with-default-locking-dir=/run/lock/lvm \
+		--enable-lvmetad --with-thin=internal --with-cache=internal --enable-udev-systemd-background-jobs
 
 
-        CFLAGS="-pthread" make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install_device-mapper install_lvm2 install_systemd_units install_systemd_generators
-        make -C liblvm DESTDIR=/root/bldr-inst install
+	CFLAGS="-pthread" make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install_device-mapper install_lvm2 install_systemd_units install_systemd_generators
+	make -C liblvm DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

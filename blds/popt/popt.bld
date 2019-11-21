@@ -11,7 +11,7 @@ VERSION=1.16
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://rpm5.org/files/popt/popt-${VERSION}.tar.gz
+SRC=http://nooplinux.org/dist//popt-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

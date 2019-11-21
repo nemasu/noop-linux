@@ -5,13 +5,13 @@ NAME=pcre2
 DESC="A library that implements Perl 5-style regular expressions, version 2."
 
 #package version
-VERSION=10.23
+VERSION=10.33
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre2-${VERSION}.tar.bz2
+SRC=https://ftp.pcre.org/pub/pcre/pcre2-$VERSION.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-unicode-properties --enable-pcre2-16 --enable-pcre2-32 --enable-jit -enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline"

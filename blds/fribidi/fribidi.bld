@@ -5,19 +5,19 @@ NAME=fribidi
 DESC="A Free Implementation of the Unicode Bidirectional Algorithm"
 
 #package version
-VERSION=0.19.7
+VERSION=1.0.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://fribidi.org/download/fribidi-${VERSION}.tar.bz2
+SRC=https://github.com/fribidi/fribidi/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+BUILD=custom
 
 # build/package dependancies
 DEPS=('glib2' 'glibc' 'pcre')
@@ -31,9 +31,13 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-#function BuildAndInstall
-#{
-#}
+function BuildAndInstall
+{
+	mkdir -p build
+	meson-wrap build -D docs=false
+	ninja -C build
+	DESTDIR=/root/bldr-inst meson install -C build
+}
 
 #Default HTTP curl new version detection
 function Detect

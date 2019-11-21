@@ -5,13 +5,13 @@ NAME=tiff
 DESC="Library for manipulation of TIFF images"
 
 #package version
-VERSION=4.0.2
+VERSION=4.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=ftp://ftp.remotesensing.org/pub/libtiff/tiff-4.0.2.tar.gz
+SRC=https://download.osgeo.org/libtiff/tiff-${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +38,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=ftp://ftp.remotesensing.org/pub/libtiff/
+        LISTURL=https://download.osgeo.org/libtiff/
         FILELIST=`GetFileList`
         LATEST=0
 

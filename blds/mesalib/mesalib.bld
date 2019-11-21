@@ -50,17 +50,19 @@ function BuildAndInstall
 
 	if [ "${ARCH}" == "aarch64" ];
 	then
-		GALLIUM_DRIVERS=swrast
-		DRI_DRIVERS=swrast
-		PLATFORMS=
+		GALLIUM_DRIVERS="freedreno,nouveau,swrast,virgl,kmsro,lima,panfrost,v3d,vc4"
+		DRI_DRIVERS=
+		PLATFORMS="x11,drm,surfaceless"
 		VULKAN_DRIVERS=
 		SWR_ARCHES=
+		EXTRA="-D libunwind=false -D gallium-xa=false -D asm=false"
 	else
-		GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,swrast,swr"
+		GALLIUM_DRIVERS="r300,r600,radeonsi,nouveau,virgl,svga,swrast,swr,freedreno"
 		DRI_DRIVERS="i915,i965,r100,r200,nouveau"
 		PLATFORMS="x11,wayland,drm,surfaceless"
 		VULKAN_DRIVERS="amd,intel"
 		SWR_ARCHES="avx,avx2"
+		EXTRA="-D libunwind=true -D gallium-xa=true -D gallium-opencl=icd"
 	fi
 
 	meson setup \
@@ -92,23 +94,20 @@ function BuildAndInstall
 		-D gallium-extra-hud=true \
 		-D gallium-nine=true \
 		-D gallium-omx=bellagio \
-		-D gallium-opencl=icd \
 		-D gallium-va=true \
 		-D gallium-vdpau=true \
-		-D gallium-xa=true \
 		-D gallium-xvmc=false \
 		-D gbm=true \
-		-D gles1=true \
+		-D gles1=false \
 		-D gles2=true \
 		-D glvnd=true \
 		-D glx=dri \
-		-D libunwind=true \
 		-D llvm=true \
 		-D lmsensors=true \
 		-D osmesa=gallium \
 		-D shared-glapi=true \
 		-D texture-float=true \
-		-D valgrind=false
+		-D valgrind=false ${EXTRA}
                                                                                                                                                                                  
     ninja -C build                                                                                                                                                               
     DESTDIR=/root/bldr-inst ninja -C build install              

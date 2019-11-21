@@ -37,11 +37,11 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 function BuildAndInstall
 {
  
-    if [ "${ARCH}" == "armv6l" ];
+    if [ "${ARCH}" == "aarch64" ];
     then
-        CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-neon"
+        CONF="-no-openvg -no-mmx -no-3dnow -no-sse -no-sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx"
     else
-        CONF=
+        CONF="-reduce-relocations -plugin-sql-mysql -plugin-sql-ibase"
     fi
  # Sets default {C,CXX,LD}FLAGS for projects built using qmake
   sed -i -e "s|^\(QMAKE_CFLAGS_RELEASE.*\)|\1 ${CFLAGS}|" \
@@ -62,7 +62,7 @@ function BuildAndInstall
                 -datadir /usr/share/qt \
                 -sysconfdir /etc/xdg \
                 -examplesdir /usr/share/doc/qt/examples \
-                -plugin-sql-{mysql,sqlite,odbc,ibase} \
+                -plugin-sql-{sqlite,odbc} \
                 -system-sqlite \
                 -openssl-linked \
                 -nomake examples \
@@ -71,8 +71,7 @@ function BuildAndInstall
                 -dbus-linked \
                 -system-harfbuzz \
                 -journald \
-                -no-use-gold-linker \
-                -reduce-relocations ${CONF}
+                -no-use-gold-linker ${CONF}
 
   make -j${BLDR_CORES}
 

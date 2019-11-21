@@ -5,13 +5,13 @@ NAME=cairo
 DESC="Cairo vector graphics library"
 
 #package version
-VERSION=1.16.0
+VERSION=1.17.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://cairographics.org/releases/cairo-${VERSION}.tar.xz
+SRC=
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -31,24 +31,39 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
-
 function BuildAndInstall
 {
-        ./configure --prefix=/usr \
-        --sysconfdir=/etc \
-        --localstatedir=/var \
-        --enable-xml \
-        --enable-gl \
-        --enable-egl \
-        --enable-ps \
-        --enable-pdf \
-        --enable-gobject \
-        --enable-tee \
-        --enable-xlib-xcb
+	if [ ! -e cairo ]; then
+		git clone https://gitlab.freedesktop.org/cairo/cairo.git
+		cd cairo
+		git checkout ${VERSION}
 
-        make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+		for i in `ls  $BLDRTMPDIR/*.p`; do
+			patch -Np1 -i $BLDRTMPDIR/*.p
+		done
+		
+		# Fix typo
+		sed -i 's/have_png/use_png/g' configure.ac
+		cd ..
+	fi
+	rm -v $BLDRTMPDIR/*.p
+	cd cairo
+
+	NOCONFIGURE=1 ./autogen.sh
+	./configure --prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--enable-xml \
+		--enable-gl \
+		--enable-egl \
+		--enable-ps \
+		--enable-pdf \
+		--enable-gobject \
+		--enable-tee \
+		--enable-xlib-xcb
+	sed -i 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+	make -j${BLDR_CORES}
+	make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection
