@@ -5,7 +5,7 @@ NAME=atk
 DESC="A library providing a set of interfaces for accessibility"
 
 #package version
-VERSION=2.16.0
+VERSION=2.34.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -18,7 +18,7 @@ SRC=ftp://ftp.gnome.org/pub/gnome/sources/atk/$MM/atk-${VERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=autotools
+BUILD=meson
 
 # build/package dependancies
 DEPS=('glib2' 'glibc')

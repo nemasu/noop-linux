@@ -5,8 +5,8 @@ NAME=qt
 DESC="A cross-platform application and UI framework"
 
 #package version
-VERSION=5.13.0
-DVERSION=5.13.0
+VERSION=5.13.2
+DVERSION=5.13.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -87,8 +87,8 @@ function BuildAndInstall
     -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
 
   # Fix wrong qmake path in pri file
-  sed -i s|/root/bldr-tmp/qt-everywhere-src-${VERSION}/qtbase|/usr| \
-    /root/bldr-inst/usr/lib/qt/mkspecs/modules/qt_lib_bootstrap_private.pri
+  sed -i 's|/root/bldr-tmp/qt-everywhere-src-${VERSION}/qtbase|/usr|' \
+      /root/bldr-inst/usr/lib/qt/mkspecs/modules/qt_lib_bootstrap_private.pri
 
   # install missing icons and desktop files
   pushd qttools

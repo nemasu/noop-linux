@@ -5,7 +5,7 @@ NAME=at-spi2-atk
 DESC="A GTK+ module that bridges ATK to D-Bus at-spi"
 
 #package version
-VERSION=2.12.1
+VERSION=2.34.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -18,7 +18,7 @@ SRC=http://download.gnome.org/sources/at-spi2-atk/$MM/at-spi2-atk-${VERSION}.tar
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=meson
 
 # build/package dependancies
 DEPS=('at-spi2-core' 'atk' 'dbus' 'glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libffi' 'libxcb' 'pcre')
@@ -32,17 +32,9 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  
-  sed -i -e '/AC_PATH_XTRA/d' configure.ac
-  autoreconf --force --install
-  ./configure --prefix=/usr --sysconfdir=/etc \
-    --disable-schemas-compile
-  make -j${BLDR_CORES}
-  
-  make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect

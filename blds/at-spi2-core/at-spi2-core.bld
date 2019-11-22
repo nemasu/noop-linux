@@ -5,7 +5,7 @@ NAME=at-spi2-core
 DESC="Protocol definitions and daemon for D-Bus at-spi"
 
 #package version
-VERSION=2.12.0
+VERSION=2.34.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -18,7 +18,7 @@ SRC=http://download.gnome.org/sources/at-spi2-core/$MM/at-spi2-core-${VERSION}.t
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=meson
 
 # build/package dependancies
 DEPS=('dbus' 'glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libXtst' 'libffi' 'libxcb' 'pcre' 'zlib')
@@ -32,27 +32,19 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  
-  sed -i -e '/AC_PATH_XTRA/d' configure.ac
-  autoreconf --force --install
-  ./configure --prefix=/usr --sysconfdir=/etc \
-    --libexecdir=/usr/lib/at-spi2-core --disable-xevie
-  make -j${BLDR_CORES}
-  
-  make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 function Detect
 {
-         MAJOR=`curl -s http://download.gnome.org/sources/at-spi2-core/ | grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
+    MAJOR=`curl -s http://download.gnome.org/sources/at-spi2-core/ | grep -E '"[0-9\.]*/' | sed -e 's/.*"\([0-9\.]*\)\/.*/\1/g' | tail -n1`
     LATEST=`curl -s http://download.gnome.org/sources/at-spi2-core/$MAJOR/ | grep "LATEST-IS-" | sed -e 's/.*LATEST-IS-\([0-9\.]*\)<.*/\1/g'`
 
-        vercomp $VERSION $LATEST
-        if [ $? -eq 2 ];
-        then
-                        echo "$NAME: New Version Available! - $LATEST"
-        fi
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
 }
 

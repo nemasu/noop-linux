@@ -892,6 +892,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     done
 
     if [ -z "$BLDR_DIST" ]; then
+        echo "NOTE: BLDR_DIST is not set, building using march=native"
         export CFLAGS="$CFLAGS -march=native"
         export CXXFLAGS="$CXXFLAGS -march=native"
     fi
@@ -947,6 +948,12 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
         make DESTDIR=/root/bldr-inst install
         rm -rf /root/bldr-inst/{bin,sbin,etc,var,lib}
         rm -rf /root/bldr-inst/usr/{bin,sbin,lib,include,man,share,libexec}
+    fi
+    if [ "$BUILD" == "meson" ]; then
+        mkdir -p build
+        meson-wrap build
+        ninja -C build
+        DESTDIR=/root/bldr-inst ninja -C build install
     fi
     if [ "$BUILD" == "custom" ]; then
         BuildAndInstall;

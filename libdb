@@ -136,7 +136,7 @@ at-spi2-core,libatspi.so.0
 at-spi2-core,libatspi.so.0.0.1
 atk,libatk-1.0.so
 atk,libatk-1.0.so.0
-atk,libatk-1.0.so.0.21609.1
+atk,libatk-1.0.so.0.23410.1
 atkmm,libatkmm-1.6.so
 atkmm,libatkmm-1.6.so.1
 atkmm,libatkmm-1.6.so.1.1.0
