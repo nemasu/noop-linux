@@ -113,22 +113,22 @@ function BuildAndInstall
   popd
 
   # Fix wrong path in pc file
-  perl -pi -e s, -L/root/bldr-tmp/?\S+,,g /root/bldr-inst/usr/lib/pkgconfig/Qt5WebKit.pc
+  perl -pi -e 's, -L/root/bldr-tmp/?\S+,,g' /root/bldr-inst/usr/lib/pkgconfig/Qt5WebKit.pc
 
   #la files are weird.
-  for i in `find /root/bldr-inst/usr/lib -name "libQt5*.la"`; do
-    a=`grep "dependency_libs" "$i" | sed -e 's/dependency_libs=//g' | sed -e ";s/'//g"`
-    n=""
-    for j in $a; do
-        if [ `echo $j | egrep "\.a$" | wc -l` -eq 1 ]; then
-            n="`echo $j | sed -e 's|/|/usr/lib/|g'` $n"
-        else
-            n="`echo $j | sed -e 's|/lib\(Qt5.*\).so|-l\1|g'` $n"
-        fi
-    done
-    n="'$n'"
-    sed -i -e 's|dependency_libs.*|dependency_libs='"$n"'|g' $i
-  done
+#  for i in `find /root/bldr-inst/usr/lib -name "libQt5*.la"`; do
+#    a=`grep "dependency_libs" "$i" | sed -e 's/dependency_libs=//g' | sed -e ";s/'//g"`
+#    n=""
+#    for j in $a; do
+#        if [ `echo $j | egrep "\.a$" | wc -l` -eq 1 ]; then
+#            n="`echo $j | sed -e 's|/|/usr/lib/|g'` $n"
+#        else
+#            n="`echo $j | sed -e 's|/lib\(Qt5.*\).so|-l\1|g'` $n"
+#        fi
+#    done
+#    n="'$n'"
+#    sed -i -e 's|dependency_libs.*|dependency_libs='"$n"'|g' $i
+#  done
 }
 
 #Default HTTP curl new version detection
