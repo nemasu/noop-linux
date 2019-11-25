@@ -5,15 +5,14 @@ NAME=mesalib
 DESC="An open-source implementation of the OpenGL specification"
 
 #package version
-VERSION=19.1.6
-DVERSION=19.1.6
+VERSION=19.2.6
+DVERSION=19.2.6
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-#SRC=https://mesa.freedesktop.org/archive/mesa-${DVERSION}.tar.xz
-SRC=
+SRC=https://mesa.freedesktop.org/archive/mesa-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -37,17 +36,6 @@ export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
 
 function BuildAndInstall
 {
-	#Build bug, checkout from git
-	#https://bugs.freedesktop.org/show_bug.cgi?id=107865
-	#https://bugs.freedesktop.org/show_bug.cgi?id=107146
-	if [ ! -e mesa ]; then
-		git clone https://gitlab.freedesktop.org/mesa/mesa
-		cd mesa
-		git checkout mesa-${DVERSION}
-		cd ..
-	fi
-	cd mesa
-
 	if [ "${ARCH}" == "aarch64" ];
 	then
 		GALLIUM_DRIVERS="freedreno,nouveau,swrast,virgl,kmsro,lima,panfrost,v3d,vc4"

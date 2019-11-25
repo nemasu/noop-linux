@@ -5,7 +5,7 @@ NAME=rust
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 #package version
-VERSION=1.38.0
+VERSION=1.39.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -31,23 +31,21 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-_llvm_ver=8.0.1
+_llvm_ver=`pkgr --jsonmeta llvm | jq -r .version`
 
 function BuildAndInstall
 {
 	pkgr -i ninja
-
-    if [ ! -e ../compiler-rt-${_llvm_ver}.src ]; then
-        cd ..
-        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-$_llvm_ver/compiler-rt-$_llvm_ver.src.tar.xz
+    cd /root/bldr-tmp
+    if [ ! -e compiler-rt-$_llvm_ver.src ]; then
+#        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-$_llvm_ver/compiler-rt-$_llvm_ver.src.tar.xz
+        wget https://releases.llvm.org/$_llvm_ver/compiler-rt-$_llvm_ver.src.tar.xz
         tar xf compiler-rt-$_llvm_ver.src.tar.xz
         rm *.xz
-        cd ../rustc-${VERSION}-src
-    else
-        cd rustc-${VERSION}-src
     fi
-
-    export RUST_COMPILER_RT_ROOT=/root/bldr-tmp/compiler-rt-8.0.1.src
+    cd /root/bldr-tmp/rustc-${VERSION}-src
+    
+    export RUST_COMPILER_RT_ROOT=/root/bldr-tmp/compiler-rt-$_llvm_ver.src
 
 	mv $BLDRTMPDIR/config.toml config.toml
 	python ./x.py build
@@ -57,7 +55,7 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LATEST=`curl -s -L "https://www.rust-lang.org/en-US/other-installers.html" | egrep "rustc-[0-9\.]+-src.tar.gz" | sed -e 's/.*rustc-\([0-9\.]*\)-src.tar.gz.*/\1/g'`
+        LATEST=`curl -s https://forge.rust-lang.org/infra/other-installation-methods.html | egrep -m1 "rustc-[0-9\.]+-src.tar.gz" | sed -e 's/.*rustc-\([0-9\.]*\)-src.tar.gz.*/\1/g'`
 
         vercomp $VERSION $LATEST
         if [ $? -eq 2 ];

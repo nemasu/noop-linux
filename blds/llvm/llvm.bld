@@ -80,18 +80,22 @@ function BuildAndInstall
     [ ! -e ./Makefile ] && cmake .. \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_INSTALL_PREFIX=/usr \
-			-DBUILD_SHARED_LIBS=ON \
+            -DLLVM_BUILD_LLVM_DYLIB=ON \
+            -DLLVM_LINK_LLVM_DYLIB=ON \
+            -DLLVM_ENABLE_FFI=ON \
+            -DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi) \
+            -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=AVR \
 			-DLLVM_ENABLE_EH=ON \
             -DLLVM_ENABLE_RTTI=ON \
             -DLLVM_BUILD_TESTS=OFF \
             -DLLVM_BUILD_DOCS=OFF \
             -DLLVM_ENABLE_SPHINX=OFF \
             -DLLVM_ENABLE_DOXYGEN=OFF \
-            -DLLDB_DISABLE_LIBEDIT=1 \
             -DLLVM_BINUTILS_INCDIR=/usr/include \
-            -DLLVM_INSTALL_UTILS=ON
+            -DLLVM_INSTALL_UTILS=ON \
+            -DLLDB_DISABLE_LIBEDIT=1
 
-    make -j${BLDR_CORES}
+    make -j${BLDR_CORES} all
     make DESTDIR=/root/bldr-inst install
 
     make -C tools/clang DESTDIR=/root/bldr-inst install
