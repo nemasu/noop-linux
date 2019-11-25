@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=meson
 
 # build/package dependancies
-DEPS=('at-spi2-core' 'atk' 'dbus' 'glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libffi' 'libxcb' 'pcre')
+DEPS=('at-spi2-core' 'atk' 'dbus' 'glib2' 'glibc')
 
 # 'no' to skip calls to strip
 STRIP=

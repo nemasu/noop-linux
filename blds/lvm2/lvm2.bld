@@ -20,7 +20,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('glibc' 'ncurses' 'readline' 'systemd' 'util-linux')
+DEPS=('glibc' 'libaio' 'ncurses' 'readline' 'systemd' 'util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

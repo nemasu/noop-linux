@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'json-c' 'lvm2' 'openssl' 'popt' 'util-linux')
 
 # 'no' to skip calls to strip
 STRIP=

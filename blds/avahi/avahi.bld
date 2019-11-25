@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=
+DEPS=('dbus-python' 'pygtk' 'atk' 'cairo' 'dbus' 'expat' 'gcc-libs' 'gdbm' 'gdk-pixbuf' 'glib2' 'glibc' 'gtk+' 'gtk+2' 'libcap2' 'libdaemon' 'pango')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -7,4 +7,4 @@ ISUSR=1
 SRC=https://github.com/dosfstools/dosfstools/archive/v${VERSION}.tar.gz
 EXTRACONF=
 BUILD=autotools
-DEPS=('glibc')
+DEPS=('glibc' 'systemd')

@@ -17,7 +17,7 @@ EXTRACONF=
 BUILD=autotools
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glibc' 'pcre' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

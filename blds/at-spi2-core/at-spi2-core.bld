@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=meson
 
 # build/package dependancies
-DEPS=('dbus' 'glib2' 'glibc' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libXtst' 'libffi' 'libxcb' 'pcre' 'zlib')
+DEPS=('dbus' 'glib2' 'glibc' 'libX11' 'libXtst')
 
 # 'no' to skip calls to strip
 STRIP=
