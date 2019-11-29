@@ -5,7 +5,7 @@ NAME=libpng
 DESC="A collection of routines used to create PNG format graphics files"
 
 #package version
-VERSION=1.6.34
+VERSION=1.6.37
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -42,7 +42,7 @@ function BuildAndInstall
         make DESTDIR=/root//bldr-inst install
 
         cd contrib/pngminus
-        make PNGLIB="-L/root/bldr-inst/usr/lib -lpng" -f makefile.std png2pnm pnm2png
+        make PNGLIB="-L/root/bldr-inst/usr/lib -lpng" png2pnm pnm2png
         install -m755 png2pnm pnm2png /root/bldr-inst/usr/bin/
 
 }

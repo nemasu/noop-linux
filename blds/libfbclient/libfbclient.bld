@@ -5,14 +5,15 @@ NAME=libfbclient
 DESC="Client library for Firebird."
 
 #package version
-VERSION=2.5.6.27020-1
-DVERSION=2.5.6.27020
+mm=3_0_4
+VERSION=${mm//_/.}.33054
+DVERSION=${mm//_/.}.33054
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://downloads.sourceforge.net/firebird/Firebird-${DVERSION}-0.tar.bz2
+SRC=https://github.com/FirebirdSQL/firebird/releases/download/R$mm/Firebird-$DVERSION-0.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -40,13 +41,13 @@ function BuildAndInstall
                 --without-fbsecure-db --with-fbmsg=/usr/share/firebird --without-fblog \
                 --without-fbglock --without-fbplugins
 
-        CXXFLAGS+=" -fno-lifetime-dse" make
+        CXXFLAGS+=" -fno-lifetime-dse" make -j${BLDR_CORES}
 
         mkdir -p /root/bldr-inst/usr/{bin,share/firebird}
-        cp -R gen/firebird/{lib,include} /root/bldr-inst/usr
+        cp -R gen/Release/firebird/{lib,include} /root/bldr-inst/usr
         rm -f /root/bldr-inst/usr/lib/libedit.a
-        cp gen/firebird/*.msg /root/bldr-inst/usr/share/firebird
-        cp gen/firebird/bin/fb_config /root/bldr-inst/usr/bin
+        cp gen/Release/firebird/*.msg /root/bldr-inst/usr/share/firebird
+        cp gen/Release/firebird/bin/fb_config /root/bldr-inst/usr/bin
         
         cd /root/bldr-inst/usr/lib
         ln -s libfbclient.so libgds.so.0

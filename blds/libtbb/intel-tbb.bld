@@ -1,0 +1,54 @@
+#package name
+NAME=libtbb
+
+#Description
+DESC="Threading library."
+
+#package version
+VERSION=2019.9
+
+#source location (used by wget)
+SRC=https://github.com/01org/tbb/archive/${VERSION/./_U}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+  
+  make -j${BLDR_CORES}
+  
+  install -d /root/bldr-inst/usr/lib
+  install -m755 build/linux_*/*.so* /root/bldr-inst/usr/lib
+  install -d /root/bldr-inst/usr/include
+  cp -a include/tbb /root/bldr-inst/usr/include
+  cmake \
+    -DINSTALL_DIR=/root/bldr-inst/usr/lib/cmake/TBB \
+    -DSYSTEM_NAME=Linux -DTBB_VERSION_FILE=/root/bldr-inst/usr/include/tbb/tbb_stddef.h \
+    -P cmake/tbb_config_installer.cmake
+}
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
+

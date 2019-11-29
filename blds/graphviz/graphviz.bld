@@ -5,8 +5,8 @@ NAME=graphviz
 DESC="Graph visualization software"
 
 #package version
-VERSION=2.40.1
-DVERSION=2.40.1
+VERSION=2.42.2
+DVERSION=2.42.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -41,8 +41,9 @@ function BuildAndInstall
         cd ..
     fi
     cd graphviz
-    NOCONFIG=1 ./autogen.sh
-    ./configure --prefix=/usr --enable-sharp=no --enable-swig=no --enable-java=no --enable-lua=no --enable-php=no --enable-ruby=no --enable-python=no
+    export QMAKE=qmake
+    ./autogen.sh
+    ./configure --prefix=/usr
     make -j${BLDR_CORES}
 
     make DESTDIR=/root/bldr-inst install

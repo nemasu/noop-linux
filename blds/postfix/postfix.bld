@@ -5,8 +5,8 @@ NAME=postfix
 DESC="Fast, easy to administer, secure mail server"
 
 #package version
-VERSION=3.2.3
-DVERSION=3.2.3
+VERSION=3.4.8
+DVERSION=3.4.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

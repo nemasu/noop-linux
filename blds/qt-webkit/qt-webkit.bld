@@ -5,7 +5,7 @@ NAME=qt-webkit
 DESC="WebKit2 for Qt5"
 
 #package version
-VERSION=5.212.0-3
+VERSION=5.212.0-4
 DVERSION=5.212.0-alpha3
 
 #directory locations, 99.99% of the time this is 1

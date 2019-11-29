@@ -5,8 +5,8 @@ NAME=gst-plugins-bad
 DESC="GStreamer Multimedia Framework Bad Plugins"
 
 #package version
-VERSION=1.14.4-1
-DVERSION=1.14.4
+VERSION=1.16.1
+DVERSION=1.16.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -37,6 +37,7 @@ function BuildAndInstall
   
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
     --disable-static --enable-experimental  --disable-wayland \
+    --disable-nvenc --disable-nvdec \
     --with-package-name="GStreamer Bad Plugins (noop Linux)" \
     --with-package-origin="http://www.nooplinux.org/"
 

@@ -5,13 +5,13 @@ NAME=krita
 DESC="Digital painting application"
 
 #package version
-VERSION=4.2.7.1
+VERSION=4.2.8.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/krita/${VERSION}/krita-${VERSION}.tar.gz
+SRC=http://download.kde.org/stable/krita/${VERSION:0:5}/krita-${VERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

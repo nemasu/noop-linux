@@ -5,7 +5,7 @@ NAME=qt
 DESC="A cross-platform application and UI framework"
 
 #package version
-VERSION=5.13.2
+VERSION=5.13.2-1
 DVERSION=5.13.2
 
 #directory locations, 99.99% of the time this is 1
@@ -111,9 +111,6 @@ function BuildAndInstall
   install -d /root/bldr-inst/usr/share/applications
 
   popd
-
-  # Fix wrong path in pc file
-  perl -pi -e 's, -L/root/bldr-tmp/?\S+,,g' /root/bldr-inst/usr/lib/pkgconfig/Qt5WebKit.pc
 
   #la files are weird.
 #  for i in `find /root/bldr-inst/usr/lib -name "libQt5*.la"`; do

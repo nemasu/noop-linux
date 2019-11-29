@@ -80,8 +80,10 @@ then
         source $USER_OVERRIDES
 fi
 
-let BLDR_CORES=`$grep "processor" /proc/cpuinfo | $wc -l`
-let BLDR_CORES=${BLDR_CORES}+1
+if [ -z "$BLDR_CORES" ]; then
+    let BLDR_CORES=`$grep "processor" /proc/cpuinfo | $wc -l`
+    let BLDR_CORES=${BLDR_CORES}+1
+fi
 
 PKGHOST=$HOST/packages/$ARCH
 

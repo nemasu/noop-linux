@@ -5,8 +5,8 @@ NAME=thunderbird
 DESC="Standalone Mail/News reader"
 
 #package version
-VERSION=52.4.0-1
-DVERSION=52.4.0
+VERSION=68.2.2
+DVERSION=68.2.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,22 +35,23 @@ RESTORELIBDB=1
 function BuildAndInstall
 {
     mv $BLDRTMPDIR/mozconfig .mozconfig
-    export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/thunderbird"
-    export PYTHON="/usr/bin/python2"
 
-    make -j1 -f client.mk build MOZ_MAKE_FLAGS="$MAKEFLAGS"
+    ./mach configure
+    ./mach build
+    ./mach buildsymbols
+    DESTDIR=/root/bldr-inst ./mach install
 
-    make -j1 -f client.mk DESTDIR=/root/bldr-inst install
-
-    for i in 16x16 22x22 24x24 32x32 48x48 256x256;
-    do
-    install -Dm644 other-licenses/branding/thunderbird/mailicon${i/x*/}.png \
-      /root/bldr-inst/usr/share/icons/hicolor/$i/apps/thunderbird.png
+    for i in 16 22 24 32 48 64 128 256; do
+        install -Dm644 comm/mail/branding/thunderbird/default${i}.png \
+            /root/bldr-inst/usr/share/icons/hicolor/${i}x${i}/apps/thunderbird.png
     done
 
-    rm -rf /root/bldr-inst/usr/lib/thunderbird-$DVERSION/{dictionaries,hyphenation}
-    ln -sf /usr/share/hunspell /root/bldr-inst/usr/lib/thunderbird-$DVERSION/dictionaries
-    ln -sf /usr/share/hyphen /root/bldr-inst/usr/lib/thunderbird-$DVERSION/hyphenation
+    install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
+        /root/bldr-inst/usr/share/icons/hicolor/symbolic/apps/thunderbird-symbolic.svg
+
+    rm -rf /root/bldr-inst/usr/lib/thunderbird/{dictionaries,hyphenation}
+    ln -sf /usr/share/hunspell /root/bldr-inst/usr/lib/thunderbird/dictionaries
+    ln -sf /usr/share/hyphen /root/bldr-inst/usr/lib/thunderbird/hyphenation
 
     rm -rf /root/bldr-inst/usr/{include,lib/thunderbird-devel-$DVERSION,share/idl}
 
@@ -59,12 +60,10 @@ function BuildAndInstall
 #Default HTTP curl new version detection
 function Detect
 {
-        LATEST=`curl -L -s "https://www.mozilla.org/en-US/thunderbird/all/?q=English+%28US%29" | egrep "thunderbird-[0-9\.]+-SSL" | head -n1 | sed -e 's/.*thunderbird-\([0-9\.]*\)-SSL.*/\1/g'`
+    LATEST=`curl -L -s "https://www.mozilla.org/en-US/thunderbird/all/?q=English+%28US%29" | egrep "thunderbird-[0-9\.]+-SSL" | head -n1 | sed -e 's/.*thunderbird-\([0-9\.]*\)-SSL.*/\1/g'`
 
-
-        vercomp $DVERSION $LATEST
-        if [ $? -eq 2 ];
-        then
-                        echo "$NAME: New Version Available! - $LATEST"
-        fi
+    vercomp $DVERSION $LATEST
+    if [ $? -eq 2 ]; then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
 }

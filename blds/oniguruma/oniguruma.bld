@@ -1,0 +1,43 @@
+#package name
+NAME=oniguruma
+
+#Description
+DESC="RegEx library"
+
+#package version
+VERSION=6.9.3
+
+#source location (used by wget)
+SRC="https://github.com/kkos/oniguruma/releases/download/v${VERSION}/onig-${VERSION}.tar.gz"
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=autotools
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

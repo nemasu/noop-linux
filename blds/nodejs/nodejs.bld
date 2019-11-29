@@ -5,8 +5,8 @@ NAME=nodejs
 DESC="JavaScript runtime built on Chrome's V8 JavaScript engine."
 
 #package version
-VERSION=10.10.0
-DVERSION=10.10.0
+VERSION=13.2.0
+DVERSION=13.2.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

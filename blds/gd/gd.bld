@@ -5,8 +5,8 @@ NAME=gd
 DESC="Library for the dynamic creation of images by programmers"
 
 #package version
-VERSION=2.1.1-1
-DVERSION=2.1.1
+VERSION=2.2.5
+DVERSION=2.2.5
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

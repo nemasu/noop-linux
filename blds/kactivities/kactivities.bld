@@ -5,13 +5,14 @@ NAME=kactivities
 DESC="Runtime and library to organize the user work in separate activities"
 
 #package version
-VERSION=5.63.0
+VERSION=5.63.0-1
+DVERSION=5.63.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.kde.org/stable/frameworks/${VERSION:0:4}/kactivities-${VERSION}.tar.xz
+SRC=http://download.kde.org/stable/frameworks/${DVERSION:0:4}/kactivities-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
@@ -38,7 +39,7 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://download.kde.org/stable/frameworks/${VERSION:0:4}
+        LISTURL=http://download.kde.org/stable/frameworks/${DVERSION:0:4}
         FILELIST=`GetFileList`
         LATEST=0
 
@@ -52,7 +53,7 @@ function Detect
                         fi
         done
 
-        vercomp $VERSION $LATEST
+        vercomp $DVERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"

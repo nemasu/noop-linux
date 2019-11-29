@@ -5,7 +5,7 @@ NAME=scons
 DESC="Extensible Python-based build utility"
 
 #package version
-VERSION=2.3.0
+VERSION=3.1.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -17,7 +17,7 @@ SRC="http://downloads.sourceforge.net/sourceforge/scons/scons-${VERSION}.tar.gz"
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=python
 
 # build/package dependancies
 DEPS=
@@ -31,18 +31,9 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-  
-  python2 setup.py install --standard-lib \
-                           --prefix=/usr \
-                           --install-data=/usr/share \
-                           --optimize=1 \
-                           --root=/root/bldr-inst
-  # fix for python 2.7
-  sed -i 's:^#!.*bin/env python:#!/usr/bin/env python2:' \
-    /root/bldr-inst/usr/bin/*
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect

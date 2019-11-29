@@ -5,14 +5,14 @@ NAME=blender
 DESC="3D graphics suite."
 
 #package version
-VERSION=2.80
-DVERSION=2.80
+VERSION=2.81
+DVERSION=2.81
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.blender.org/source/blender-${DVERSION}.tar.gz
+SRC=http://download.blender.org/source/blender-${DVERSION}.tar.xz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="-DPYTHON_DVERSION=3.7 -DPYTHON_LIBPATH=/usr/lib -DPYTHON_LIBRARY=python3.7m -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m -DWITH_CYCLES=ON -DWITH_FFTW3=ON -DWITH_INSTALL_PORTABLE=OFF -DWITH_PYTHON_INSTALL=OFF -DWITH_LLVM=ON"

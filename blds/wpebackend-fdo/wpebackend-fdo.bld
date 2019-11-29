@@ -1,0 +1,43 @@
+#package name
+NAME=wpebackend-fdo
+
+#Description
+DESC="Freedesktop backend for WPE WebKit"
+
+#package version
+VERSION=1.4.0
+
+#source location (used by wget)
+SRC=https://wpewebkit.org/releases/wpebackend-fdo-${VERSION}.tar.xz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=cmake
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+#function BuildAndInstall
+#{
+#}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

@@ -5,14 +5,14 @@ NAME=dovecot
 DESC="An IMAP and POP3 server written with security primarily in mind"
 
 #package version
-VERSION=2.2.33.2
-DVERSION=2.2.33.2
+VERSION=2.3.8
+DVERSION=2.3.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://dovecot.org/releases/2.2/dovecot-${DVERSION}.tar.gz
+SRC=http://dovecot.org/releases/2.3/dovecot-${DVERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

@@ -5,8 +5,8 @@ NAME=vlc
 DESC="A multi-platform MPEG, VCD/DVD, and DivX player"
 
 #package version
-VERSION=3.0.7.1
-DVERSION=3.0.7.1
+VERSION=3.0.8
+DVERSION=3.0.8
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

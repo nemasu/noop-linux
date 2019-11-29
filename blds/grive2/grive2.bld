@@ -5,7 +5,7 @@ NAME=grive2
 DESC="Google Drive client with support for new Drive REST API and partial sync"
 
 #package version
-VERSION=0.5.0
+VERSION=0.5.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

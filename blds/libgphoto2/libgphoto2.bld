@@ -5,8 +5,8 @@ NAME=libgphoto2
 DESC="The core library of gphoto2, designed to allow access to digital camera by external programs."
 
 #package version
-VERSION=2.5.8-1
-DVERSION=2.5.8
+VERSION=2.5.23
+DVERSION=2.5.23
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

@@ -5,13 +5,13 @@ NAME=libvpx
 DESC="VP8 and VP9 codec"
 
 #package version
-VERSION=1.5.0
+VERSION=1.8.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://storage.googleapis.com/downloads.webmproject.org/releases/webm/libvpx-${VERSION}.tar.bz2
+SRC=https://github.com/webmproject/libvpx/archive/v${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=

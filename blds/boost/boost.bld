@@ -5,15 +5,15 @@ NAME=boost
 DESC="Free peer-reviewed portable C++ source libraries - development headers"
 
 #package version
-VERSION=1.65.1-1
-DVERSION=1.65.1
+VERSION=1.71.0
+DVERSION=1.71.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
 MM=`echo $DVERSION | sed -e 's/\./_/g;'`
-SRC=http://downloads.sourceforge.net/boost/boost_${MM}.tar.gz
+SRC=https://dl.bintray.com/boostorg/release/$DVERSION/source/boost_$MM.tar.bz2
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
