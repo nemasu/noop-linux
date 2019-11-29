@@ -21,7 +21,7 @@ EXTRACONF="--disable-rpath --with-vpx=/usr --with-tiff=/usr"
 BUILD=custom
 
 # build/package dependancies
-DEPS=('expat' 'fontconfig' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXpm' 'libjpeg' 'libpng' 'libvpx' 'libxcb' 'pcre' 'tiff' 'xz' 'zlib')
+DEPS=('expat' 'fontconfig' 'freetype2' 'glib2' 'glibc' 'harfbuzz' 'libX11' 'libXau' 'libXdmcp' 'libXpm' 'libjpeg' 'libpng' 'libwebp' 'libxcb' 'pcre' 'tiff' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

@@ -17,7 +17,7 @@ EXTRACONF=
 BUILD=cmake
 
 # build/package dependancies
-DEPS=
+DEPS=('gcc-libs' 'glib2' 'glibc' 'libglvnd' 'libwpe' 'libxkbcommon' 'wayland')
 
 # 'no' to skip calls to strip
 STRIP=

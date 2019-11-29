@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=python
 
 # build/package dependancies
-DEPS=
+DEPS=('glibc' 'python' 'python2')
 
 # 'no' to skip calls to strip
 STRIP=

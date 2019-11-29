@@ -18,7 +18,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('boost' 'ffmpeg' 'freetype2' 'gcc-libs' 'giflib' 'glibc' 'ilmbase' 'libglu' 'libglvnd' 'libjpeg' 'libpng' 'libwebp' 'openexr' 'openjpeg2' 'openssl' 'python2' 'qt' 'tiff' 'zlib')
+DEPS=('boost' 'ffmpeg' 'freetype2' 'gcc-libs' 'giflib' 'glibc' 'ilmbase' 'libglu' 'libglvnd' 'libjpeg' 'libpng' 'libraw' 'libwebp' 'openexr' 'openjpeg2' 'openssl' 'python2' 'qt' 'tiff' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=

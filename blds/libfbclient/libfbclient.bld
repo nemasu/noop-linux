@@ -22,7 +22,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('gcc-libs' 'glibc' 'icu4c' 'ncurses')
+DEPS=('gcc-libs' 'glibc' 'libtommath' 'ncurses')
 
 # 'no' to skip calls to strip
 STRIP=

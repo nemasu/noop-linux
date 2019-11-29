@@ -21,7 +21,7 @@ EXTRACONF=
 BUILD=custom
 
 # build/package dependancies
-DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gd' 'gdk-pixbuf' 'ghostscript' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'lcms2' 'libICE' 'libSM' 'libX11' 'libXau' 'libXaw' 'libXdmcp' 'libXext' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libcroco' 'libffi' 'libglvnd' 'libjpeg' 'libpng' 'librsvg' 'libtool' 'libvpx' 'libxcb' 'libxml2' 'nspr' 'nss' 'openjpeg2' 'pango' 'pcre' 'pixman' 'poppler' 'qt4' 'tiff' 'util-linux' 'xz' 'zlib')
+DEPS=('atk' 'cairo' 'e2fsprogs' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gd' 'gdk-pixbuf' 'ghostscript' 'glib2' 'glibc' 'gtk+2' 'harfbuzz' 'krb5' 'libICE' 'libSM' 'libX11' 'libXau' 'libXaw' 'libXdmcp' 'libXext' 'libXmu' 'libXpm' 'libXrender' 'libXt' 'libcroco' 'libffi' 'libglvnd' 'libjpeg' 'libnsl' 'libpng' 'librsvg' 'libtirpc' 'libtool' 'libwebp' 'libxcb' 'libxml2' 'lua' 'ncurses' 'networkmanager' 'nspr' 'nss' 'oniguruma' 'openssl' 'pango' 'pcre' 'perl' 'pixman' 'poppler' 'python' 'python2' 'qt' 'readline' 'systemd' 'tiff' 'util-linux' 'xz' 'zlib')
 
 # 'no' to skip calls to strip
 STRIP=
