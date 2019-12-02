@@ -5,7 +5,7 @@ NAME=kmail-account-wizard
 DESC="KDE mail client wizards"
 
 #package version
-VERSION=17.12.3
+VERSION=19.08.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

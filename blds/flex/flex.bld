@@ -5,7 +5,7 @@ NAME=flex
 DESC="A tool for generating text-scanning programs"
 
 #package version
-VERSION=2.5.39
+VERSION=2.6.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
