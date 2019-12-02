@@ -6974,7 +6974,6 @@ python,libpython3.7m.so
 python,libpython3.7m.so.1.0
 python,libpython3.so
 python-caja,libcaja-python.so
-python-cheetah,_namemapper.so
 python-notify,_pynotify.so
 python2,libpython2.7.so
 python2,libpython2.7.so.1.0
@@ -8858,14 +8857,6 @@ weston,libweston-2.so.0.0.0
 weston,libweston-desktop-2.so
 weston,libweston-desktop-2.so.0
 weston,libweston-desktop-2.so.0.0.0
-wiredtiger,libleveldb-2.7.0.so
-wiredtiger,libleveldb.so
-wiredtiger,libwiredtiger-2.7.0.so
-wiredtiger,libwiredtiger.so
-wiredtiger,libwiredtiger_bzip2.so
-wiredtiger,libwiredtiger_leveldb-2.7.0.so
-wiredtiger,libwiredtiger_leveldb.so
-wiredtiger,libwiredtiger_lz4.so
 wireless_tools,libiw.so
 wireless_tools,libiw.so.29
 wireshark,dictionary.sofaware
@@ -9095,9 +9086,6 @@ xz,liblzma.so.5.2.2
 yajl,libyajl.so
 yajl,libyajl.so.2
 yajl,libyajl.so.2.1.0
-yaml-cpp,libyaml-cpp.so
-yaml-cpp,libyaml-cpp.so.0.5
-yaml-cpp,libyaml-cpp.so.0.5.3
 yarock,libenginevlc.so
 zeitgeist,libzeitgeist-2.0.so
 zeitgeist,libzeitgeist-2.0.so.0
