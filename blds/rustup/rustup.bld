@@ -1,0 +1,57 @@
+#package name
+NAME=rustup
+
+#Description
+DESC="Rust toolchain instlaller"
+
+#package version
+VERSION=1.20.2
+
+#source location (used by wget)
+SRC=https://github.com/rust-lang/rustup.rs/archive/${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=('curl')
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=('rust')
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    cargo build --release --features no-self-update --bin rustup-init
+    
+    install -Dm755 target/release/rustup-init /root/bldr-inst/usr/bin/rustup
+    for link in "${_binlinks[@]}"; do
+        ln -s /usr/bin/rustup /root/bldr-inst/usr/bin/${link}
+    done
+
+    # Generate completion files.
+    mkdir -p /root/bldr-inst/usr/share/bash-completion/completions
+    /root/bldr-inst/usr/bin/rustup completions bash > /root/bldr-inst/usr/share/bash-completion/completions/rustup
+    mkdir -p /root/bldr-inst/usr/share/fish/completions
+    /root/bldr-inst/usr/bin/rustup completions fish > /root/bldr-inst/usr/share/fish/completions/rustup.fish
+    mkdir -p /root/bldr-inst/usr/share/zsh/site-functions
+    /root/bldr-inst/usr/bin/rustup completions zsh > /root/bldr-inst/usr/share/zsh/site-functions/_rustup
+}
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
+
