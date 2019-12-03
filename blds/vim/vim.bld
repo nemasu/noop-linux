@@ -5,7 +5,7 @@ NAME=vim
 DESC="Amazing text editor"
 
 #package version
-VERSION=8.1.1601
+VERSION=8.1.2383
 
 
 #directory locations, 99.99% of the time this is 1
