@@ -1,0 +1,7 @@
+function postinst() {
+    echo "You'll probably have to run: rustup update stable"
+}
+
+function postup() {
+    echo "You'll probably have to run: rustup self upgrade-data"
+}
