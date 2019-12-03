@@ -5,7 +5,7 @@ NAME=code
 DESC="Visual Studio Code"
 
 #package version
-VERSION=1.39.2
+VERSION=1.40.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -33,6 +33,7 @@ RESTORELIBDB=1
 
 function BuildAndInstall
 {
+    #Repackage for now, needs older node version, and older electron version.
 	if [ ! -e src.tar.gz ]; then
 		wget https://vscode-update.azurewebsites.net/${VERSION}/linux-x64/stable -Osrc.tar.gz
 	fi
