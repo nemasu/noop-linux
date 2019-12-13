@@ -5,7 +5,7 @@ NAME=code
 DESC="Visual Studio Code"
 
 #package version
-VERSION=1.40.2
+VERSION=1.41.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
