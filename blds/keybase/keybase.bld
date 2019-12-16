@@ -5,7 +5,7 @@ NAME=keybase
 DESC="Crypto for everyone!"
 
 #package version
-VERSION=4.6.1
+VERSION=5.1.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -39,9 +39,21 @@ function BuildAndInstall
         git clone --depth=1 https://github.com/keybase/kbfs.git
         cd client && git checkout v${VERSION} && cd ..
     fi
+    export LDFLAGS='-fPIC'
     export KEYBASE_SKIP_32_BIT=1
     ./client/packaging/linux/build_binaries.sh prerelease ./build_dir
     cp -r ./build_dir/binaries/amd64/* /root/bldr-inst/
+
+    #need icons in right spot
+    cd client
+    for i in 16 32 128 256 512; do
+        install -vD media/icons/Keybase.iconset/icon_${i}x${i}.png \
+            /root/bldr-inst/usr/share/icons/hicolor/${i}x${i}/apps/keybase.png;
+    done
+    install -vD media/icons/Keybase.iconset/icon_32x32@2x.png \
+        /root/bldr-inst/usr/share/icons/hicolor/64x64/apps/keybase.png
+    install -vD media/icons/Keybase.iconset/icon_512x512@2x.png \
+        /root/bldr-inst/usr/share/icons/hicolor/1024x1024/apps/keybase.png
 }
 
 #Default HTTP curl new version detection
