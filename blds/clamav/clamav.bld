@@ -1,0 +1,79 @@
+#package name
+NAME=clamav
+
+#Description
+DESC="Antivirus"
+
+#package version
+VERSION=0.102.1
+
+#source location (used by wget)
+SRC=https://www.clamav.net/downloads/production/clamav-${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    sed -E 's|^(Example)$|#\1|' -i etc/{clamd,freshclam,clamav-milter}.conf.sample
+    sed -E 's|#(User) .+|\1 clamav|' -i etc/{clamd,freshclam,clamav-milter}.conf.sample
+    sed -E 's|#(LogFile) .+|\1 /var/log/clamav/clamd.log|' -i etc/clamd.conf.sample
+    sed -E 's|#(LogTime) .+|\1 yes|' -i etc/clamd.conf.sample etc/clamav-milter.conf.sample
+    sed -E 's|#(PidFile) .+|\1 /run/clamav/clamd.pid|' -i etc/clamd.conf.sample
+    sed -E 's|#(TemporaryDirectory) .+|\1 /tmp|' -i etc/{clamd,clamav-milter}.conf.sample
+    sed -E 's|#(LocalSocket) .+|\1 /run/clamav/clamd.ctl|' -i etc/clamd.conf.sample
+    sed -E 's|#(UpdateLogFile) .+|\1 /var/log/clamav/freshclam.log|' -i etc/freshclam.conf.sample
+    sed -E 's|#(DatabaseMirror) .+|\1 database.clamav.net|' -i etc/freshclam.conf.sample
+    sed -E 's|#(NotifyClamd) .+|\1 /etc/clamav/clamd.conf|' -i etc/freshclam.conf.sample
+    sed -E 's|#(PidFile) .+|\1 /run/clamav/freshclam.pid|' -i etc/freshclam.conf.sample
+    sed -E 's|#(LogFile) .+|\1 /var/log/clamav/clamav-milter.log|' -i etc/clamav-milter.conf.sample
+    sed -E 's|#(PidFile) .+|\1 /run/clamav/clamav-milter.pid|' -i etc/clamav-milter.conf.sample
+    sed -E "s|(\\[Unit\\])|\\1\\nWants=network-online.target\\nAfter=network-online.target|" -i freshclam/clamav-freshclam.service.in
+    autoreconf -fiv
+
+    ./configure \
+        --prefix=/usr \
+        --sbindir=/usr/sbin \
+        --sysconfdir=/etc/clamav \
+        --with-dbdir=/var/lib/clamav \
+        --with-user=clamav \
+        --with-group=clamav \
+        --with-system-libmspack \
+        --disable-rpath \
+        --disable-clamav \
+        --disable-llvm \
+        --enable-zlib-vcheck \
+        --enable-clamdtop
+    make -j${BLDR_CORES}
+
+    make DESTDIR=/root/bldr-inst install
+    mv /root/bldr-inst/etc/clamav/freshclam.conf{.sample,}
+    mv /root/bldr-inst/etc/clamav/clamd.conf{.sample,}
+#Uncomment if milter is added
+#    mv /root/bldr-inst/etc/clamav/clamav-milter.conf{.sample,}
+}
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}
+
