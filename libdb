@@ -7854,10 +7854,10 @@ recode,librecode.so.0.0.0
 rtmpdump,librtmp.so
 rtmpdump,librtmp.so.1
 rust,librustc_codegen_llvm-llvm.so
-rust,librustc_driver-a79a142016592d63.so
-rust,librustc_macros-a01467cefd9b511d.so
-rust,libstd-c58a9ae04450c44b.so
-rust,libtest-8928d2fd8d8b722d.so
+rust,librustc_driver-f183e1b0cb95abaa.so
+rust,librustc_macros-04e3ed5cfdca6cae.so
+rust,libstd-adea8dceda5ba2a5.so
+rust,libtest-246376b551bc296e.so
 samba,libCHARSET3-samba4.so
 samba,libHDB-SAMBA4-samba4.so
 samba,libLIBWBCLIENT-OLD-samba4.so
