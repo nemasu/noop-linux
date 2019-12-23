@@ -1,0 +1,51 @@
+#package name
+NAME=crystal
+
+#Description
+DESC="The Crystal language."
+
+#package version
+VERSION=0.32.1
+
+#source location (used by wget)
+SRC=https://github.com/crystal-lang/crystal/archive/${VERSION}.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF=
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    make crystal release=1 progress=true
+
+    install -Dm755 .build/crystal /root/bldr-inst/usr/bin/crystal
+
+    install -dm755 /root/bldr-inst/usr/lib /root/bldr-inst/usr/share/man/man1
+    cp -vr src /root/bldr-inst/usr/lib/crystal
+
+    install -Dm644 man/crystal.1 /root/bldr-inst/usr/share/man/man1/
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

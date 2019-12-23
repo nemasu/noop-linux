@@ -1140,10 +1140,10 @@ gawk,testext.so
 gawk,time.so
 gc,libcord.so
 gc,libcord.so.1
-gc,libcord.so.1.0.3
+gc,libcord.so.1.4.0
 gc,libgc.so
 gc,libgc.so.1
-gc,libgc.so.1.0.3
+gc,libgc.so.1.4.3
 gcc,libcc1plugin.so
 gcc,libcc1plugin.so.0
 gcc,libcc1plugin.so.0.0.0

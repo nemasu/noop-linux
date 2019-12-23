@@ -2,10 +2,10 @@
 NAME=gc
 
 #Description
-DESC="Garbage collector for C and C++"
+DESC="The Boehm-Demers-Weiser conservative C/C++ Garbage Collector."
 
 #package version
-VERSION=7.6.0
+VERSION=8.0.4
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
