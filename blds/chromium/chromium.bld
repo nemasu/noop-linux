@@ -139,7 +139,7 @@ function BuildAndInstall
     wget https://dl.google.com/linux/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION}-1_amd64.deb -Ochrome.deb
     ar x chrome.deb
     tar xf data.tar.xz
-	cp opt/google/chrome/WidevineCdm/_platform_specific/linux_x64/libwidevinecdm.so /root/bldr-inst/usr/lib/chromium/
+	cp -r opt/google/chrome/WidevineCdm /root/bldr-inst/usr/lib/chromium/
     popd
 
     for size in 24 48 64 128 256; do
