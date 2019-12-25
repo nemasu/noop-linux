@@ -9045,6 +9045,7 @@ xcb-util-wm,libxcb-icccm.so.4.0.0
 xcb-util-xrm,libxcb-xrm.so
 xcb-util-xrm,libxcb-xrm.so.0
 xcb-util-xrm,libxcb-xrm.so.0.0.0
+xf86-input-libinput,libinput_drv.so
 xf86-video-intel,libI810XvMC.so
 xf86-video-intel,libI810XvMC.so.1
 xf86-video-intel,libI810XvMC.so.1.0.0

@@ -94,6 +94,7 @@ xf86-input-mouse
 xf86-input-synaptics
 xf86-input-vmmouse
 xf86-input-void
+xf86-input-libinput
 xf86-video-ast
 xf86-video-ati
 xf86-video-dummy

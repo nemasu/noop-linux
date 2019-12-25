@@ -5,7 +5,7 @@ NAME=libinput
 DESC="Library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
 
 #package version
-VERSION=1.11.3
+VERSION=1.14.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -51,6 +51,7 @@ function BuildAndInstall
         --sharedstatedir /var/lib \
         --buildtype      release \
         --wrap-mode      nofallback \
+		-Dudev-dir=/usr/lib/udev \
 		-Dlibwacom=False \
 		-Ddocumentation=false \
         . build 
