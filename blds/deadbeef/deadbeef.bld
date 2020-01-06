@@ -5,14 +5,13 @@ NAME=deadbeef
 DESC="A GTK+ audio player for GNU/Linux."
 
 #package version
-VERSION=0.7.2-2
-DVERSION=0.7.2
+VERSION=1.8.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=http://download.sourceforge.net/deadbeef/deadbeef-${DVERSION}.tar.bz2
+SRC=https://github.com/DeaDBeeF-Player/deadbeef/archive/${VERSION}.tar.gz
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF="--enable-gtk3 --disable-gtk2"
@@ -39,9 +38,9 @@ RESTORELIBDB=
 #Default HTTP curl new version detection
 function Detect
 {
-        LATEST=`curl -s http://deadbeef.sourceforge.net/download.html | grep -E "deadbeef-[0-9\.]*\.tar\.bz2" | sed -e 's/.*deadbeef-\([0-9\.]*\)\.tar\.bz2.*/\1/g'`
+        LATEST=`LatestVersionGitHub https://github.com/DeaDBeeF-Player/deadbeef/releases`
 
-        vercomp $DVERSION $LATEST
+        vercomp $VERSION $LATEST
         if [ $? -eq 2 ];
         then
                         echo "$NAME: New Version Available! - $LATEST"
