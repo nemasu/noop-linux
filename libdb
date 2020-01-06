@@ -8289,13 +8289,13 @@ systemd,libnss_myhostname.so.2
 systemd,libnss_mymachines.so.2
 systemd,libnss_resolve.so.2
 systemd,libnss_systemd.so.2
-systemd,libsystemd-shared-243.so
+systemd,libsystemd-shared-244.so
 systemd,libsystemd.so
 systemd,libsystemd.so.0
-systemd,libsystemd.so.0.27.0
+systemd,libsystemd.so.0.27.1
 systemd,libudev.so
 systemd,libudev.so.1
-systemd,libudev.so.1.6.15
+systemd,libudev.so.1.6.16
 systemsettings,libsystemsettingsview.so
 systemsettings,libsystemsettingsview.so.3
 taglib,libtag.so

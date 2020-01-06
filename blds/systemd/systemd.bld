@@ -5,7 +5,7 @@ NAME=systemd
 DESC="system and service manager"
 
 #package version
-VERSION=243
+VERSION=244
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

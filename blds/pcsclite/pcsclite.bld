@@ -5,7 +5,7 @@ NAME=pcsclite
 DESC="PC/SC Architecture smartcard middleware library"
 
 #package version
-VERSION=1.8.23
+VERSION=1.8.25
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -14,7 +14,7 @@ ISUSR=1
 SRC="https://pcsclite.apdu.fr/files/pcsc-lite-${VERSION}.tar.bz2"
 
 #extra parameters to pass to configure (if not ISSPECIAL)
-EXTRACONF="--enable-filter --enable-ipcdir=/run/pcscd --enable-libudev --enable-usbdropdir=/usr/lib/pcsc/drivers --with-systemdsystemunitdir=/usr/lib/systemd/system"
+EXTRACONF="--enable-libudev --enable-filter --enable-ipcdir=/run/pcscd --enable-usbdropdir=/usr/lib/pcsc/drivers --with-systemdsystemunitdir=/usr/lib/systemd/system"
 
 #autotools, python, perl, cmake, custom
 BUILD=autotools
