@@ -5,8 +5,8 @@ NAME=alsa-firmware
 DESC="ALSA firmware package"
 
 #package version
-VERSION=1.0.29
-DVERSION=1.0.29
+VERSION=1.2.1
+DVERSION=1.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

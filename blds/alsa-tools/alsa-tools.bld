@@ -5,8 +5,8 @@ NAME=alsa-tools
 DESC="Advanced tools for ALSA"
 
 #package version
-VERSION=1.1.5
-DVERSION=1.1.5
+VERSION=1.1.7
+DVERSION=1.1.7
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -34,13 +34,15 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
+    #hdspconf hdsploader hdspmixer removed, hdspconf is not building.
+    #ld10k1, sb16_csp not buliding
 	tools=("as10k1" "echomixer" "envy24control" "hdajackretask" "hda-verb"
-        "hdspconf" "hdsploader" "hdspmixer" "ld10k1" "mixartloader"
-        "pcxhrloader" "rmedigicontrol" "sb16_csp" "seq/sbiload" "sscape_ctl"
+        "mixartloader" "pcxhrloader" "rmedigicontrol" "seq/sbiload" "sscape_ctl"
         "us428control" "usx2yloader" "vxloader")
 
 	for i in ${tools[@]}; do
 		pushd $i
+        autoreconf -vfi
 		./configure --prefix=/usr --sbindir=/usr/bin
 		make -j${BLDR_CORES}
 		make DESTDIR=/root/bldr-inst install

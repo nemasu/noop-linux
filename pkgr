@@ -872,13 +872,22 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     then
         if [ -z "$BLDR_CONTINUE" ];
         then
-            wget --inet4-only $SRC -Osrc
-            if [[ $SRC =~ .*zip$ ]]; then
-				unzip src
-			else
-				tar xf src
-			fi
-            rm src
+
+            if [[ $SRC =~ ^git+.* ]]; then
+                addr=`echo "${SRC}" | sed -e 's/#.*$//g;s/^git+//'`
+                tag=`echo "${SRC}" | sed -e 's/.*#//g'`
+                git clone ${addr} src
+                cd src
+                git checkout ${tag}
+            else
+                wget --inet4-only $SRC -Osrc
+                if [[ $SRC =~ .*zip$ ]]; then
+                    unzip src
+                else
+                    tar xf src
+                fi
+                rm src
+            fi
         fi
         
         cd `ls` || true
@@ -953,7 +962,7 @@ if [ $1 == "--make-bldj" ] || [ $1 == "-m" ]; then
     fi
     if [ "$BUILD" == "meson" ]; then
         mkdir -p build
-        meson-wrap build
+        meson-wrap build $EXTRACONF
         ninja -C build
         DESTDIR=/root/bldr-inst ninja -C build install
     fi

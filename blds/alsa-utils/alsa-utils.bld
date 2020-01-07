@@ -5,7 +5,7 @@ NAME=alsa-utils
 DESC="An alternative implementation of Linux sound support"
 
 #package version
-VERSION=1.1.5
+VERSION=1.2.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

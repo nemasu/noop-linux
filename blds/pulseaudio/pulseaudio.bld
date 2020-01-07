@@ -5,23 +5,23 @@ NAME=pulseaudio
 DESC="A featureful, general-purpose sound server"
 
 #package version
-VERSION=11.1
-DVERSION=11.1
+VERSION=13.0
+DVERSION=13.0
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
 
 #source location (used by wget)
-SRC=
+SRC=git+https://gitlab.freedesktop.org/pulseaudio/pulseaudio#v${DVERSION}
 
 #extra parameters to pass to configure (if not ISSPECIAL)
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=meson
 
 # build/package dependancies
-DEPS=('alsa-lib' 'avahi' 'dbus' 'dbus-glib' 'fftw' 'gconf' 'glib2' 'glibc' 'jack' 'libICE' 'libSM' 'libX11' 'libXau' 'libXdmcp' 'libXext' 'libXi' 'libXtst' 'libcap2' 'libffi' 'libgcrypt' 'libgpg-error' 'libsndfile' 'libtool' 'libxcb' 'lz4' 'openssl1.0' 'orc' 'pcre' 'speex' 'systemd' 'tdb' 'util-linux' 'xz' 'zlib')
+DEPS=
 
 # 'no' to skip calls to strip
 STRIP=
@@ -32,67 +32,30 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-export PKG_CONFIG_PATH=/lib/pkgconfig:/usr/lib/pkgconfig
-
-function BuildAndInstall
-{
-    if [ -z "$BLDR_CONTINUE" ]; then
-        git clone https://anongit.freedesktop.org/git/pulseaudio/pulseaudio
-        cd pulseaudio
-        git checkout f93e372b0b2cb960df04de3f0a8fbea683bb8229 #11.1 check https://cgit.freedesktop.org/pulseaudio/pulseaudio/
-        patch -Np1 -i $BLDRTMPDIR/glibc-104733.to_patch
-        cd ..
-    fi
-   
-    rm $BLDRTMPDIR/glibc-104733.to_patch
-    
-    cd pulseaudio
-    
-    NOCONFIGURE=1 ./bootstrap.sh
-    ./configure $AT_BLDR_CONF --disable-default-build-tests --with-pulsedsp-location='/usr/lib/pulseaudio' --with-udev-rules-dir=/usr/lib/udev/rules.d DATADIRNAME=share
-    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-    make -j${BLDR_CORES}
-    make DESTDIR=/root/bldr-inst install
-
-    pushd /root/bldr-inst
-# Assumes that any volume adjustment is intended by the user, who can control
-# each app's volume. Misbehaving clients can trigger earsplitting volume
-# jumps. App volumes can diverge wildly and cause apps without their own
-# volume control to fall below sink volume; a sink-only volume control will
-# suddenly be unable to make such an app loud enough.
-    sed -e '/flat-volumes/iflat-volumes = no' -i etc/pulse/daemon.conf
-
-# Superseded by socket activation
-    sed -e '/autospawn/iautospawn = no' -i etc/pulse/client.conf
-
-# Disable cork-request module, can result in e.g. media players unpausing
-# when there's a Skype call incoming
-    sed -e 's|/usr/bin/pactl load-module module-x11-cork-request|#&|' -i usr/bin/start-pulseaudio-x11
-
-    rm etc/dbus-1/system.d/pulseaudio-system.conf
-    popd
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect
 {
-        LISTURL=http://freedesktop.org/software/pulseaudio/releases/
-        FILELIST=`GetFileList`
-        LATEST=0
+    LISTURL=http://freedesktop.org/software/pulseaudio/releases/
+    FILELIST=`GetFileList`
+    LATEST=0
 
-        for i in ${FILELIST[@]};
-        do
-                        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
-                        vercomp $LATEST $CURVER
-                        if [ $? -eq 2 ];
-                        then
-                                        LATEST=$CURVER
-                        fi
-        done
-
-        vercomp $DVERSION $LATEST
+    for i in ${FILELIST[@]};
+    do
+        CURVER=`echo $i | sed -e 's/'"${NAME}"'-//g; s/.tar.*//g'`
+        vercomp $LATEST $CURVER
         if [ $? -eq 2 ];
         then
-                        echo "$NAME: New Version Available! - $LATEST"
+            LATEST=$CURVER
         fi
+    done
+
+    vercomp $DVERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
 }

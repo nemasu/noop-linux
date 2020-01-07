@@ -1,5 +1,6 @@
 function postinst() {
     systemctl --global enable pulseaudio.socket
+    glib-compile-schemas /usr/share/glib-2.0/schemas/
 }
 
 function postup() {
