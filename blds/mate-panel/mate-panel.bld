@@ -5,8 +5,8 @@ NAME=mate-panel
 DESC="The MATE Panel (GTK2 version)"
 
 #package version
-VERSION=1.18.4
-DVERSION=1.18.4
+VERSION=1.22.2
+DVERSION=1.22.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -43,8 +43,8 @@ function BuildAndInstall
                 --with-gtk=3.0 \
                 --enable-introspection \
                 --disable-static \
-                --enable-network-manager
-#--with-in-process-applets=all \
+                --enable-network-manager \
+                --with-in-process-applets=all
     make -j${BLDR_CORES}
         make DESTDIR=/root/bldr-inst install
 }

@@ -5,7 +5,7 @@ NAME=vte
 DESC="Virtual Terminal Emulator widget for use with GTK2"
 
 #package version
-VERSION=0.46.1
+VERSION=0.58.3
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -18,7 +18,7 @@ SRC=http://ftp.gnome.org/pub/GNOME/sources/vte/$MAJOR/vte-${VERSION}.tar.xz
 EXTRACONF=
 
 #1 if BuildAndInstall should be called instead of ./configure && make && make install method
-BUILD=custom
+BUILD=meson
 
 # build/package dependancies
 DEPS=('atk' 'cairo' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'gdk-pixbuf' 'glib2' 'glibc' 'gmp' 'gnutls' 'gtk+' 'harfbuzz' 'libX11' 'libXau' 'libXdamage' 'libXdmcp' 'libXext' 'libXfixes' 'libXrender' 'libXxf86vm' 'libdrm' 'libffi' 'libidn' 'libpng' 'libtasn1' 'libxcb' 'libxshmfence' 'mesalib' 'nettle' 'p11-kit' 'pango' 'pcre' 'pcre2' 'pixman' 'wayland' 'zlib')
@@ -32,15 +32,9 @@ PKGDEPS=
 #1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
 RESTORELIBDB=
 
-function BuildAndInstall
-{
-         ./configure --prefix=/usr --sysconfdir=/etc \
-      --libexecdir=/usr/lib/vte \
-      --localstatedir=/var --disable-static \
-      --enable-introspection --enable-gnome-pty-helper
-          make -j${BLDR_CORES}
-          make DESTDIR=/root/bldr-inst install
-}
+#function BuildAndInstall
+#{
+#}
 
 #Default HTTP curl new version detection
 function Detect

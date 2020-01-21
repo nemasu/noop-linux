@@ -5,8 +5,8 @@ NAME=mozo
 DESC="MATE menu editing tool (GTK2 version)"
 
 #package version
-VERSION=1.18.0
-DVERSION=1.18.0
+VERSION=1.22.2
+DVERSION=1.22.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,9 +35,9 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        PYTHON=/usr/bin/python2 ./configure --prefix=/usr
+    ./configure --prefix=/usr
     make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+    make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

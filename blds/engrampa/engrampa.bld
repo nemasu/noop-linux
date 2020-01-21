@@ -5,8 +5,8 @@ NAME=engrampa
 DESC="Archive manipulator for MATE (GTK2 version)"
 
 #package version
-VERSION=1.18.2
-DVERSION=1.18.2
+VERSION=1.22.2
+DVERSION=1.22.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
@@ -35,14 +35,14 @@ RESTORELIBDB=
 
 function BuildAndInstall
 {
-        ./configure \
+    ./configure \
         --prefix=/usr \
         --libexecdir=/usr/lib/engrampa \
         --with-gtk=3.0 \
         --disable-static \
         --disable-packagekit
     make -j${BLDR_CORES}
-        make DESTDIR=/root/bldr-inst install
+    make DESTDIR=/root/bldr-inst install
 }
 
 #Default HTTP curl new version detection

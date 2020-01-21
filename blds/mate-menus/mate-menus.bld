@@ -5,8 +5,8 @@ NAME=mate-menus
 DESC="MATE menu specifications"
 
 #package version
-VERSION=1.18.0
-DVERSION=1.18.0
+VERSION=1.22.1
+DVERSION=1.22.1
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1

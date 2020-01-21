@@ -5,8 +5,8 @@ NAME=eom
 DESC="An image viewing and cataloging program for MATE (GTK2 version)"
 
 #package version
-VERSION=1.18.2
-DVERSION=1.18.2
+VERSION=1.22.2
+DVERSION=1.22.2
 
 #directory locations, 99.99% of the time this is 1
 ISUSR=1
