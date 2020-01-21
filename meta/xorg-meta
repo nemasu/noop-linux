@@ -107,6 +107,7 @@ xf86-video-siliconmotion
 xf86-video-suncg6
 xf86-video-sunffb
 xf86-video-vesa
+xf86-video-vmware
 xf86-video-voodoo
 xscreensaver
 xinit

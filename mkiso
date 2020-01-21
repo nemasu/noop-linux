@@ -44,7 +44,7 @@ grub-install \
 
 #Create fat partition image, 30MB
 dd if=/dev/zero of=/root/iso/boot/efs.img bs=1024 count=30720
-mkfs.vfat /root/iso/boot/efs.img
+mkfs.fat /root/iso/boot/efs.img
 mount /root/iso/boot/efs.img /root/efs
 
 #Get grub config
