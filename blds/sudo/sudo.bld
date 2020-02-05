@@ -1,0 +1,49 @@
+#package name
+NAME=sudo
+
+#Description
+DESC="sudo tool"
+
+#package version
+VERSION=1.8.31
+
+#source location (used by wget)
+SRC=https://www.sudo.ws/sudo/dist/sudo-$VERSION.tar.gz
+
+#extra parameters to pass to configure (if not ISSPECIAL)
+EXTRACONF="--with-rundir=/run/sudo --with-vardir=/var/db/sudo --with-logfac=auth --enable-gcrypt --enable-tmpfiles.d --with-pam --with-sssd --with-ldap --with-ldap-conf-file=/etc/openldap/ldap.conf --with-env-editor --with-all-insults"
+
+#autotools, cmake, perl, python, python3, 32bit, custom
+BUILD=custom
+
+# build/package dependancies
+DEPS=
+
+# 'no' to skip calls to strip
+STRIP=
+
+#array of deps to add to package (ones that are not automatically picked up by pkgr)
+PKGDEPS=
+
+#1 to restore libdb to what it was before pkgr -genmeta is called ( ie. ignore libs )
+RESTORELIBDB=
+
+function BuildAndInstall
+{
+    ./configure $AT_BLDR_CONF ${EXTRACONF}
+    make -j${BLDR_CORES}
+    make DESTDIR=/root/bldr-inst install
+    
+    rm -v /root/bldr-inst/etc/sudoers
+    rm -vrf /root/bldr-inst/run
+}
+
+function Detect() { #LatestVersionGitHub, GetFileList
+    LATEST=0
+
+    vercomp $VERSION $LATEST
+    if [ $? -eq 2 ];
+    then
+        echo "$NAME: New Version Available! - $LATEST"
+    fi
+}

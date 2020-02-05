@@ -8279,8 +8279,9 @@ subversion,libsvn_swig_py-1.so.0.0.0
 subversion,libsvn_wc-1.so
 subversion,libsvn_wc-1.so.0
 subversion,libsvn_wc-1.so.0.0.0
-sudo,sudo_noexec.so
-sudo,sudoers.so
+sudo,libsudo_util.so
+sudo,libsudo_util.so.0
+sudo,libsudo_util.so.0.0.0
 syndication,libKF5Syndication.so
 syndication,libKF5Syndication.so.5
 syndication,libKF5Syndication.so.5.63.0

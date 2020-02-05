@@ -1,0 +1,13 @@
+function preup() {
+    echo "Saving sudoers"
+	mkdir -p /tmp/noop
+    cp -v /etc/sudoers /tmp/noop
+}
+function postup() {
+    if [ -e /tmp/noop/sudoers ];
+    then
+		echo "Restoring old sudoers file"
+		cp -v /tmp/noop/sudoers /etc/
+    fi
+}
+
