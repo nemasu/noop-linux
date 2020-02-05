@@ -1,3 +1,7 @@
+function postinst() {
+    chmod +s /usr/bin/sudo
+}
+
 function preup() {
     echo "Saving sudoers"
 	mkdir -p /tmp/noop
